@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
 }
-group = COOLTU_PKG + '.lib4j'
+group = COOLTU_PKG + '.processor'
 version = COOLTU_VERSION
 
 afterEvaluate {
@@ -11,8 +11,8 @@ afterEvaluate {
             // Creates a Maven publication called "release".
             release(MavenPublication) {
                 from components.java
-                groupId = COOLTU_PKG + '.lib4j'
-                artifactId = 'cooltu_lib4j'
+                groupId = COOLTU_PKG + '.processor'
+                artifactId = 'cooltu_processor'
                 version = COOLTU_VERSION
             }
         }
