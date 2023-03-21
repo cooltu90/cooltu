@@ -27,9 +27,9 @@ java {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.google.auto.service:auto-service:1.0-rc6'
-    implementation project(':cooltu_lib4j')
 //    compileOnly files(org.gradle.internal.jvm.Jvm.current().getToolsJar())
     compileOnly files("${System.properties['java.home']}/../lib/tools.jar")
+    implementation 'com.github.cooltu90:cooltu4j:1.0.2'
 }
 
 
