@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/cooltu_constant" />
             <option value="$PROJECT_DIR$/cooltu_processor" />
             <option value="$PROJECT_DIR$/cooltu_processor_annotation" />
+            <option value="$PROJECT_DIR$/cooltu_processor_modelinterface" />
           </set>
         </option>
       </GradleProjectSettings>

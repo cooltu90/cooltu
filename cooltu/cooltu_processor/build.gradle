@@ -32,6 +32,7 @@ dependencies {
 
     implementation project(':cooltu_constant')
     implementation project(':cooltu_processor_annotation')
+    implementation project(':cooltu_processor_modelinterface')
 
     implementation 'com.github.cooltu90:cooltu4j:' + COOLTU4J_VERSION
 

@@ -26,4 +26,5 @@ java {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':cooltu_constant')
 }
