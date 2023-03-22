@@ -1,4 +1,4 @@
-package cooltu.processor.lib;
+package cooltu.processor.tools;
 
 import static java.util.Objects.requireNonNull;
 

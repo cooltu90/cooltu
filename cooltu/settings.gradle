@@ -17,3 +17,5 @@ dependencyResolutionManagement {
 rootProject.name = "cooltu"
 include ':app'
 include ':cooltu_processor'
+include ':cooltu_processor_annotation'
+include ':cooltu_constant'

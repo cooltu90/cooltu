@@ -29,7 +29,12 @@ dependencies {
     implementation 'com.google.auto.service:auto-service:1.0-rc6'
 //    compileOnly files(org.gradle.internal.jvm.Jvm.current().getToolsJar())
     compileOnly files("${System.properties['java.home']}/../lib/tools.jar")
-    implementation 'com.github.cooltu90:cooltu4j:1.0.2'
+
+    implementation project(':cooltu_constant')
+    implementation project(':cooltu_processor_annotation')
+
+    implementation 'com.github.cooltu90:cooltu4j:1.0.3'
+
 }
 
 
