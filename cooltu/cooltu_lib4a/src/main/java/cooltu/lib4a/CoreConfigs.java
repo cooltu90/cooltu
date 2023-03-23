@@ -7,6 +7,10 @@ import cooltu.lib4j.log.LibLogs;
 
 public abstract class CoreConfigs extends LibConfigs {
 
+    public static CoreConfigs configs() {
+        return (CoreConfigs) LibConfigs.configs();
+    }
+
     @Override
     public void baseLog(int level, String tag, String msg) {
         switch (level) {
@@ -20,5 +24,9 @@ public abstract class CoreConfigs extends LibConfigs {
                 Log.e(tag, msg);
                 break;
         }
+    }
+
+    public float getDensity() {
+        return 360f;
     }
 }

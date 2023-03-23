@@ -1,4 +1,4 @@
 package cooltu.constants;
 
-public class MyClass {
+public class FullName {
 }
