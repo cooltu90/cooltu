@@ -2,6 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
 }
+
 group = COOLTU_PKG + '.' + COOLTU_MODULE_PROCESSOR
 version = COOLTU_VERSION
 
@@ -23,19 +24,15 @@ java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.google.auto.service:auto-service:1.0-rc6'
-//    compileOnly files(org.gradle.internal.jvm.Jvm.current().getToolsJar())
     compileOnly files("${System.properties['java.home']}/../lib/tools.jar")
-
-    implementation project(':cooltu_constant')
+    //    compileOnly files(org.gradle.internal.jvm.Jvm.current().getToolsJar())
+    implementation 'com.google.auto.service:auto-service:1.0.1'
+    // 自定义
+    implementation project(':cooltu_lib_constants')
     implementation project(':cooltu_processor_annotation')
-    implementation project(':cooltu_processor_modelinterface')
-
     implementation 'com.github.cooltu90:cooltu4j:' + COOLTU4J_VERSION
 
 }
-
 

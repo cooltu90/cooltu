@@ -1,12 +1,19 @@
 package com.codingtu.cooltu;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-import cooltu.processor.annotation.ui.ActBase;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-@ActBase(layout = R.layout.activity_main)
+import cooltu.lib4a.logs.Logs;
+
 public class MainActivity extends AppCompatActivity {
 
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Logs.i("mainact");
+    }
 }

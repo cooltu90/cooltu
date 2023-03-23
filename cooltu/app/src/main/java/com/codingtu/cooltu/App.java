@@ -1,15 +1,11 @@
 package com.codingtu.cooltu;
 
-import android.app.Application;
+import cooltu.lib4a.CoreApp;
+import cooltu.lib4j.config.LibConfigs;
 
-import cooltu.processor.annotation.ModuleInfo;
-
-@ModuleInfo(
-        module = "app",
-        baseAct = BaseActivity.class,
-        baseFragment = BaseFragment.class,
-        defaultRPackage = "com.codingtu.cooltu",
-        mockPackage = "",
-        defaultLayout = "")
-public class App extends Application {
+public class App extends CoreApp {
+    @Override
+    protected LibConfigs createConfigs() {
+        return new Configs();
+    }
 }

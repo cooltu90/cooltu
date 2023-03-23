@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = COOLTU_PKG + '.' + COOLTU_MODULE_PROCESSOR_ANNOTATION
+group = COOLTU_PKG + '.' + COOLTU_MODULE_CONSTANT
 version = COOLTU_VERSION
 
 afterEvaluate {
@@ -12,8 +12,8 @@ afterEvaluate {
             // Creates a Maven publication called "release".
             release(MavenPublication) {
                 from components.java
-                groupId = COOLTU_PKG + '.' + COOLTU_MODULE_PROCESSOR_ANNOTATION
-                artifactId = COOLTU + '_' + COOLTU_MODULE_PROCESSOR_ANNOTATION
+                groupId = COOLTU_PKG + '.' + COOLTU_MODULE_CONSTANT
+                artifactId = COOLTU + '_' + COOLTU_MODULE_CONSTANT
                 version = COOLTU_VERSION
             }
         }
