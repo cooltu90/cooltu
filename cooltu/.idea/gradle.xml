@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/cooltu_constant" />
+            <option value="$PROJECT_DIR$/cooltu_lib4j" />
           </set>
         </option>
       </GradleProjectSettings>
