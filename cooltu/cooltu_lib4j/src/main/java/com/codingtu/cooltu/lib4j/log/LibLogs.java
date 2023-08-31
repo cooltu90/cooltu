@@ -69,38 +69,6 @@ public class LibLogs {
         i(tag, sb.toString());
     }
 
-    public static void i(Object msg) {
-        log(LEVEL_INFO, getDefaultTagI(), msg);
-    }
-
-    public static void e(Object msg) {
-        log(LEVEL_ERROR, getDefaultTagE(), msg);
-    }
-
-    public static void w(Object msg) {
-        log(LEVEL_WARNING, getDefaultTagW(), msg);
-    }
-
-    public static void isNull(String name, Object obj) {
-        log(LEVEL_INFO, getDefaultTagI(), name + "==null?" + (obj == null));
-    }
-
-    public static void i(String tag, Object msg) {
-        log(LEVEL_INFO, tag, msg);
-    }
-
-    public static void e(String tag, Object msg) {
-        log(LEVEL_ERROR, tag, msg);
-    }
-
-    public static void w(String tag, Object msg) {
-        log(LEVEL_WARNING, tag, msg);
-    }
-
-    public static void isNull(String tag, String name, Object obj) {
-        log(LEVEL_INFO, tag, name + "==null?" + (obj == null));
-    }
-
     private static <T> void log(int level, String tag, Object msg) {
         if (isLog() && StringTool.isNotBlank(tag)) {
             if (msg == null) {
@@ -216,5 +184,74 @@ public class LibLogs {
         } else {
             getConfigs().baseLog(level, tag, msg);
         }
+    }
+
+
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+
+    public static void i(Object msg) {
+        log(LEVEL_INFO, getDefaultTagI(), msg);
+    }
+
+    public static void e(Object msg) {
+        log(LEVEL_ERROR, getDefaultTagE(), msg);
+    }
+
+    public static void w(Object msg) {
+        log(LEVEL_WARNING, getDefaultTagW(), msg);
+    }
+
+    public static void isNull(String name, Object obj) {
+        log(LEVEL_INFO, getDefaultTagI(), name + "==null?" + (obj == null));
+    }
+
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+    public static void i(Object place, Object msg) {
+        log(LEVEL_INFO, getDefaultTagI(), objPlace(place) + msg);
+    }
+
+    public static void e(Object place, Object msg) {
+        log(LEVEL_ERROR, getDefaultTagE(), objPlace(place) + msg);
+    }
+
+    public static void w(Object place, Object msg) {
+        log(LEVEL_WARNING, getDefaultTagW(), objPlace(place) + msg);
+    }
+
+    public static void isNull(Object place, String name, Object obj) {
+        log(LEVEL_INFO, getDefaultTagI(), objPlace(place) + name + "==null?" + (obj == null));
+    }
+
+    private static String objPlace(Object obj) {
+        return obj.getClass().getCanonicalName() + "：";
+    }
+
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+    public static void i(String tag, Object msg) {
+        log(LEVEL_INFO, tag, msg);
+    }
+
+    public static void e(String tag, Object msg) {
+        log(LEVEL_ERROR, tag, msg);
+    }
+
+    public static void w(String tag, Object msg) {
+        log(LEVEL_WARNING, tag, msg);
+    }
+
+    public static void isNull(String tag, String name, Object obj) {
+        log(LEVEL_INFO, tag, name + "==null?" + (obj == null));
     }
 }
