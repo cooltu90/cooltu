@@ -1,43 +1,37 @@
 package com.codingtu.cooltu.processor.builder.builder;
 
-import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.builder.BuilderType;
-import com.codingtu.cooltu.processor.builder.bean.ActBaseBean;
-import com.codingtu.cooltu.processor.builder.builder.base.BaseBuilder;
-import com.codingtu.cooltu.processor.builder.temp.ActBaseTemp;
-import com.codingtu.cooltu.processor.lib.log.Logs;
+import com.codingtu.cooltu.processor.builder.builderbase.ActBaseBuilderBase;
+import com.codingtu.cooltu.processor.lib.tools.IdTools;
+import com.codingtu.cooltu.processor.lib.tools.NameTools;
 
-import java.util.List;
+@To(ActBaseBuilderBase.class)
+public class ActBaseBuilder extends ActBaseBuilderBase {
 
-@To(ActBaseTemp.class)
-public class ActBaseBuilder extends BaseBuilder {
-    public ActBaseBean actBaseBean;
+    //com.codingtu.cooltu.WelcomeActivity
+    private String actFullName;
+    //com.codingtu.cooltu.R.layout.activity_welcome
+    public IdTools.Id layout;
 
     @Override
     protected BuilderType getBuilderType() {
         return BuilderType.actBase;
     }
 
-
-    @Override
-    public void create() {
-        super.create();
-
-        List<String> tempLines = getTempLines(ActBaseTemp.class);
-
-        List<String> lines = Ts.ts(tempLines).convert(new BaseTs.Convert<String, String>() {
-            @Override
-            public String convert(int index, String s) {
-
-
-
-                return s;
-            }
-        }).get();
-
-        Logs.i(lines);
+    public void setActFullName(String actFullName) {
+        this.actFullName = actFullName;
+        String actBaseFullName = NameTools.getActBaseFullNameByActFullName(this.actFullName);
 
     }
+
+
+    @Override
+    protected void deal() {
+        //actName
+        addTag(actName, NameTools.getJavaSimpleName(actFullName));
+        //处理layout
+        addTag(super.layout, layout.toString());
+    }
+
 }

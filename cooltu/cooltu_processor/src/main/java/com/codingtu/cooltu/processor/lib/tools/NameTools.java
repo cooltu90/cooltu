@@ -4,11 +4,11 @@ import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FileType;
 import com.codingtu.cooltu.constant.Module;
 import com.codingtu.cooltu.constant.Path;
+import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.file.FileTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 
 import java.io.File;
 
@@ -75,6 +75,11 @@ public class NameTools extends StringTool {
                 + FileType.dJAVA;
     }
 
+    public static String getBuilderBaseDir() {
+        return getJavaDir(Module.CORE_PROCESSOR)
+                + ConvertTool.pkgToPath(Pkg.BUILDER_BASE);
+    }
+
     /**********************************************
      *
      * 获取各种dir
@@ -90,4 +95,13 @@ public class NameTools extends StringTool {
         return FileTool.getProjectDir() + Constant.SEPARATOR + module + Path.SRC_MAIN_JAVA;
     }
 
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+    public static String getActBaseFullNameByActFullName(String actFullName) {
+        JavaInfo javaInfoByName = getJavaInfoByName(actFullName);
+        return null;
+    }
 }
