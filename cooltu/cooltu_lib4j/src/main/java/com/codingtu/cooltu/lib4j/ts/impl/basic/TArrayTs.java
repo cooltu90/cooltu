@@ -5,6 +5,8 @@ import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class TArrayTs<T> extends BaseTs<T> {
 
@@ -47,6 +49,11 @@ public class TArrayTs<T> extends BaseTs<T> {
         for (int i = 0; i < count; i++) {
             ts[i] = null;
         }
+    }
+
+    public TArrayTs<T> sort(Comparator<T> comparator) {
+        Arrays.sort(ts, comparator);
+        return this;
     }
 
 
