@@ -19,6 +19,11 @@ public class Configs extends CoreConfigs {
     }
 
     @Override
+    public boolean isLogHttpConnect() {
+        return false;
+    }
+
+    @Override
     public String getDefaultLogTag() {
         return "gptest";
     }
