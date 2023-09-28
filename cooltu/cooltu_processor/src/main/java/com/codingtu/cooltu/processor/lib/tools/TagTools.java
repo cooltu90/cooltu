@@ -2,6 +2,10 @@ package com.codingtu.cooltu.processor.lib.tools;
 
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
+import com.codingtu.cooltu.processor.lib.log.Logs;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TagTools {
 
@@ -41,6 +45,28 @@ public class TagTools {
             end += 1;
         }
         return sb.toString();
+    }
+
+    public static List<String> getTags(String startSign, String endSign, String line) {
+        ArrayList<String> tags = new ArrayList<>();
+        int start = 0;
+        int end = 0;
+        while (true) {
+            start = line.indexOf(startSign, end);
+            if (start < 0) {
+                break;
+            }
+            end = line.indexOf(endSign, start + startSign.length());
+
+            String tag = line.substring(start + startSign.length(), end);
+            if (StringTool.isNotBlank(tag)) {
+                if (!tags.contains(tag)) {
+                    tags.add(tag);
+                }
+            }
+            end += endSign.length();
+        }
+        return tags;
     }
 
 }

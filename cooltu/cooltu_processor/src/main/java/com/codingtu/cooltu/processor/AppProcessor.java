@@ -110,7 +110,15 @@ public class AppProcessor extends AbstractProcessor {
         TagTools.addLnTag(sb, "    protected List<String> getTempLines() {");
         TagTools.addLnTag(sb, "        List<String> lines = new ArrayList<>();");
         for (int i = 0; i < CountTool.count(lines); i++) {
-            TagTools.addLnTag(sb, "        lines.add(\"[line]\");", lines.get(i).replace("\"", "\\\""));
+            String line = lines.get(i);
+
+            List<String> tags = TagTools.getTags("[[", "]]", line);
+            Logs.i(tags);
+
+            List<String> tags1 = TagTools.getTags("<[[", "]>", line);
+            Logs.i(tags1);
+
+            TagTools.addLnTag(sb, "        lines.add(\"[line]\");", line.replace("\"", "\\\""));
         }
         TagTools.addLnTag(sb, "        return lines;");
         TagTools.addLnTag(sb, "    }");

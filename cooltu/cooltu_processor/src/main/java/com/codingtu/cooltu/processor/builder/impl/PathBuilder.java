@@ -19,6 +19,6 @@ public class PathBuilder extends PathBuilderBase {
 package [[pkg]];
 
 public class [[name]] extends [[basePath]] {
-
+<[[xxx]>
 }
 model_temp_end */
