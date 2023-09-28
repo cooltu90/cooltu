@@ -61,7 +61,7 @@ public class FileWriter {
         write(Ts.ts(lines));
     }
 
-    public void write(BaseTs<String> getter) {
+    public void write(BaseTs getter) {
         if (!isCover) {
             if (this.file.exists()) {
                 throw new RuntimeException("文件已经存在");

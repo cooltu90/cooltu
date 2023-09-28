@@ -1,63 +1,20 @@
 package com.codingtu.cooltu.processor.lib.tools;
 
+import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class TagTools {
 
-    public static final String startTag = "<[[";
-    public static final String endTag = "]]>";
 
-    public static List<String> getLines(final Map<String, StringBuilder> tags, List<String> readLines) {
-        final ArrayList<String> lines = new ArrayList<String>();
-        Ts.ls(readLines, new BaseTs.EachTs<String>() {
-            @Override
-            public boolean each(int position, String line) {
-                lines.add(getLine(tags, line));
-                return false;
-            }
-        });
-        return lines;
+    public static void addLnTag(StringBuilder tag, String line, Object... tags) {
+        tag.append(dealLine(line, tags)).append("\r\n");
     }
 
-    public static String getLine(Map<String, StringBuilder> tags, String line) {
-        int tagLen = startTag.length();
-        StringBuilder sb = new StringBuilder();
-        int start = 0;
-        int end = 0;
-        while (true) {
-            start = line.indexOf(startTag, end);
-            if (start > 0) {
-                sb.append(line.substring(end, start));
-            } else if (start < 0) {
-                sb.append(line.substring(end, line.length()));
-                break;
-            }
-            end = line.indexOf(endTag, start);
-
-            String tag = line.substring(start + tagLen, end);
-            if (StringTool.isNotBlank(tag)) {
-
-                StringBuilder tagValue = tags.get(tag);
-                if (tagValue != null) {
-                    sb.append(tagValue.toString());
-                }
-            } else {
-                sb.append("[]");
-            }
-
-            end += tagLen;
+    public static String dealLine(String line, Object... tags) {
+        if (CountTool.isNull(tags)) {
+            return line;
         }
-        return sb.toString();
-    }
 
-    public static String getLine(String line, Object... tags) {
         StringBuilder sb = new StringBuilder();
         int start = 0;
         int end = 0;
@@ -86,55 +43,4 @@ public class TagTools {
         return sb.toString();
     }
 
-    public static List<String> getTags(List<String> lines) {
-        ArrayList<String> tags = new ArrayList<>();
-        Ts.ls(lines, new BaseTs.EachTs<String>() {
-            @Override
-            public boolean each(int position, String line) {
-                getTag(tags, line);
-                return false;
-            }
-        });
-        return tags;
-    }
-
-    public static void getTag(Set<String> tags, String line) {
-        int tagLen = startTag.length();
-        int start = 0;
-        int end = 0;
-        while (true) {
-            start = line.indexOf(startTag, end);
-            if (start < 0) {
-                break;
-            }
-            end = line.indexOf(endTag, start);
-
-            String tag = line.substring(start + tagLen, end);
-            if (StringTool.isNotBlank(tag)) {
-                tags.add(tag);
-            }
-            end += tagLen;
-        }
-    }
-
-    public static void getTag(List<String> tags, String line) {
-        int tagLen = startTag.length();
-        int start = 0;
-        int end = 0;
-        while (true) {
-            start = line.indexOf(startTag, end);
-            if (start < 0) {
-                break;
-            }
-            end = line.indexOf(endTag, start);
-
-            String tag = line.substring(start + tagLen, end);
-            if (StringTool.isNotBlank(tag)) {
-                if (!tags.contains(tag)) {
-                    tags.add(tag);
-                }
-            }
-            end += tagLen;
-        }
-    }
 }

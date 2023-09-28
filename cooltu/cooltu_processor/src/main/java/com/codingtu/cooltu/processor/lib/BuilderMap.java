@@ -4,13 +4,13 @@ import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.builder.BuilderType;
-import com.codingtu.cooltu.processor.builder.builder.base.BaseBuilder;
+import com.codingtu.cooltu.processor.builder.core.CoreBuilder;
 
 import java.util.List;
 import java.util.Map;
 
 public class BuilderMap {
-    public static final Map<Integer, List<BaseBuilder>> MAP = new ListValueMap<>();
+    public static final Map<Integer, List<CoreBuilder>> MAP = new ListValueMap<>();
 
     /**************************************************
      *
@@ -18,11 +18,11 @@ public class BuilderMap {
      *
      **************************************************/
 
-    public static void add(BaseBuilder builder) {
+    public static void add(CoreBuilder builder) {
         add(BuilderType.DEFAULT, builder);
     }
 
-    public static void add(BuilderType type, BaseBuilder builder) {
+    public static void add(BuilderType type, CoreBuilder builder) {
         MAP.get(type.ordinal()).add(builder);
     }
 
@@ -52,10 +52,10 @@ public class BuilderMap {
     }
 
     private static void create(int type) {
-        List<BaseBuilder> models = MAP.get(type);
-        Ts.ls(models, new BaseTs.EachTs<BaseBuilder>() {
+        List<CoreBuilder> models = MAP.get(type);
+        Ts.ls(models, new BaseTs.EachTs<CoreBuilder>() {
             @Override
-            public boolean each(int position, BaseBuilder model) {
+            public boolean each(int position, CoreBuilder model) {
                 model.create();
                 return false;
             }
