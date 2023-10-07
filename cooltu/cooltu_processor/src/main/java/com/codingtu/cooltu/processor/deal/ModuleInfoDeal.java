@@ -3,6 +3,7 @@ package com.codingtu.cooltu.processor.deal;
 import com.codingtu.cooltu.constant.Module;
 import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 
 import javax.lang.model.element.TypeElement;
 

@@ -1,7 +1,9 @@
-package com.codingtu.cooltu.processor.builder;
+package com.codingtu.cooltu.processor;
 
 import com.codingtu.cooltu.processor.annotation.ModuleInfo;
+import com.codingtu.cooltu.processor.annotation.path.Paths;
 import com.codingtu.cooltu.processor.deal.ModuleInfoDeal;
+import com.codingtu.cooltu.processor.deal.PathDeal;
 
 /**************************************************
  *
@@ -13,7 +15,7 @@ public class SupportTypes {
     public static Class[] types() {
         return new Class[]{
                 ModuleInfo.class, ModuleInfoDeal.class,
-//                Paths.class, PathBuilder.class,
+                Paths.class, PathDeal.class
 //                ResFor.class, ResForDeal.class
         };
     }

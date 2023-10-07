@@ -3,7 +3,7 @@ package com.codingtu.cooltu.processor.lib;
 import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
-import com.codingtu.cooltu.processor.builder.BuilderType;
+import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.builder.core.CoreBuilder;
 
 import java.util.List;
