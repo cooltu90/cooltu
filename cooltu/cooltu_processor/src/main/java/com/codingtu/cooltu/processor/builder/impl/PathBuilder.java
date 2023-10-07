@@ -18,12 +18,9 @@ import com.codingtu.cooltu.processor.lib.tools.NameTools;
 public class PathBuilder extends PathBuilderBase {
     private String path;
 
-    public PathBuilder(String baseName) {
+    public PathBuilder(String baseName, String path) {
         super(NameTools.getJavaInfoByName(Pkg.CORE_PATH, baseName + Suffix.PATH));
-        isForce = false;
-    }
-
-    public void setPath(String path) {
+        isForce = true;
         this.path = path;
     }
 
@@ -63,7 +60,6 @@ public class [[name]] extends [[basePath]] {
 ]for]
         );
     }
-
     public static [[name]] root(String root) {
         return new [[name]](root);
     }

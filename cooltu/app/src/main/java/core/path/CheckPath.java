@@ -2,12 +2,12 @@ package core.path;
 
 public class CheckPath extends com.codingtu.cooltu.lib4a.path.BasePath {
 
-    public static CheckPath obtain(String type) {
+    public static CheckPath obtain(String company, String taskName) {
         return root(com.codingtu.cooltu.lib4a.tools.SDCardTool.getSDCard()
-                + addPrexSeparator("Xxx")
-                + addPrexSeparator("xxx")
-                + addPrexSeparator(type)
-                + addPrexSeparator("0")
+                + addPrexSeparator("EnvCheckData")
+                + addPrexSeparator("tasks")
+                + addPrexSeparator(company)
+                + addPrexSeparator(taskName)
 
         );
     }
