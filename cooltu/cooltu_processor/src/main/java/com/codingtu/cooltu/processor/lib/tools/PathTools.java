@@ -15,16 +15,16 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
  *
  * ————获取java目录
  * 传入模块：{@link #getJavaDir(String)}
- * 当前模块：{@link #getJavaDir()}
+ * 当前模块：{@link #getCurrentJavaDir()}
  * processor模块：{@link #getProcessorJavaDir()}
  *
  * ————通过java目录和package获取目录
  * 传入目录：{@link #getPkgDir(String, String)}
- * 当前目录：{@link #getPkgDir(String)}
+ * 当前目录：{@link #getCurrentPkgDir(String)}
  * processor目录：{@link #getProcessorPkgDir(String)}
  *
  * ————获取.java文件的路径
- * 传入目录：{@link #getJavaPath(String, String)}
+ * 传入目录：{@link #getJavaPath(String, String, String)}
  * 当前目录：{@link #getCurrentJavaPath(String, String)}
  * processor目录：{@link #getProcessorJavaPath(String, String)}
  *
@@ -35,13 +35,20 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
  * {@link #getBuilderBase(String)}
  *
  * ————获取JavaInfo
- * 通过包名和简单类名：{@link #getJavaInfoByName(String, String)}
- * 通过全类名：{@link #getJavaInfoByName(String)}
- *
+ * 传入模块：
+ * {@link #getJavaInfo(String, JavaInfo)}
+ * {@link #getJavaInfo(String, String, String)}
+ * {@link #getJavaInfo(String, String)}
+ * 当前模块：
+ * {@link #getCurrentJavaInfo(String, String)}
+ * {@link #getCurrentJavaInfo(String)}
+ * processor模块：
+ * {@link #getProcessorJavaInfo(String, String)}
+ * {@link #getProcessorJavaInfo(String)}
  *
  *
  **************************************************/
-public class NameTools extends StringTool {
+public class PathTools extends StringTool {
 
     /**************************************************
      *
@@ -55,7 +62,7 @@ public class NameTools extends StringTool {
                 + Path.SRC_MAIN_JAVA;
     }
 
-    public static String getJavaDir() {
+    public static String getCurrentJavaDir() {
         return getJavaDir(Module.CURRENT);
     }
 
@@ -69,16 +76,16 @@ public class NameTools extends StringTool {
      *
      **************************************************/
 
-    public static String getPkgDir(String dir, String pkg) {
-        return dir + ConvertTool.pkgToPath(pkg);
+    public static String getPkgDir(String module, String pkg) {
+        return getJavaDir(module) + ConvertTool.pkgToPath(pkg);
     }
 
-    public static String getPkgDir(String pkg) {
-        return getPkgDir(getJavaDir(), pkg);
+    public static String getCurrentPkgDir(String pkg) {
+        return getPkgDir(Module.CURRENT, pkg);
     }
 
     public static String getProcessorPkgDir(String pkg) {
-        return getPkgDir(getProcessorJavaDir(), pkg);
+        return getPkgDir(Module.CORE_PROCESSOR, pkg);
     }
 
     /**************************************************
@@ -86,21 +93,19 @@ public class NameTools extends StringTool {
      * 获取.java文件的路径
      *
      **************************************************/
-
-    public static String getJavaPath(String dir, String name) {
-        return dir
+    public static String getJavaPath(String module, String pkg, String name) {
+        return getPkgDir(module, pkg)
                 + Constant.SEPARATOR
                 + name
                 + FileType.d_JAVA;
     }
 
     public static String getCurrentJavaPath(String pkg, String name) {
-        return getJavaPath(getPkgDir(pkg), name);
+        return getJavaPath(Module.CURRENT, pkg, name);
     }
 
-
     public static String getProcessorJavaPath(String pkg, String name) {
-        return getJavaPath(getProcessorPkgDir(pkg), name);
+        return getJavaPath(Module.CORE_PROCESSOR, pkg, name);
     }
 
     /**************************************************
@@ -128,19 +133,37 @@ public class NameTools extends StringTool {
      * 获取JavaInfo
      *
      **************************************************/
-    public static JavaInfo getJavaInfoByName(String packages, String typeName) {
-        JavaInfo info = new JavaInfo();
-        info.name = typeName;
-        info.fullName = packages + "." + info.name;
-        info.pkg = packages;
-        info.path = getCurrentJavaPath(packages, info.name);
+    private static JavaInfo getJavaInfo(String module, JavaInfo info) {
+        info.path = getJavaPath(module, info.pkg, info.name);
         return info;
     }
 
-    public static JavaInfo getJavaInfoByName(String fullName) {
-        int lastIndexOf = fullName.lastIndexOf(".");
-        return getJavaInfoByName(fullName.substring(0, lastIndexOf), fullName.substring(lastIndexOf + 1));
+    public static JavaInfo getJavaInfo(String module, String pkg, String typeName) {
+        return getJavaInfo(module, new JavaInfo(pkg, typeName));
     }
 
+    public static JavaInfo getJavaInfo(String module, String fullName) {
+        return getJavaInfo(module, new JavaInfo(fullName));
+    }
+
+    public static JavaInfo getCurrentJavaInfo(String pkg, String typeName) {
+        return getJavaInfo(Module.CURRENT, pkg, typeName);
+    }
+
+    public static JavaInfo getCurrentJavaInfo(String fullName) {
+        return getJavaInfo(Module.CURRENT, fullName);
+    }
+
+    public static JavaInfo getProcessorJavaInfo(String fullName) {
+        return getJavaInfo(Module.CORE_PROCESSOR, fullName);
+    }
+
+    public static JavaInfo getProcessorJavaInfo(Object obj) {
+        return getJavaInfo(Module.CORE_PROCESSOR, obj.getClass().getCanonicalName());
+    }
+
+    public static JavaInfo getProcessorJavaInfo(String pkg, String typeName) {
+        return getJavaInfo(Module.CORE_PROCESSOR, pkg, typeName);
+    }
 
 }

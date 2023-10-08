@@ -4,9 +4,9 @@ import com.codingtu.cooltu.constant.FileType;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.constant.Suffix;
+import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.file.list.FileLister;
 import com.codingtu.cooltu.lib4j.file.list.ListFile;
-import com.codingtu.cooltu.lib4j.file.read.FileReader;
 import com.codingtu.cooltu.lib4j.file.write.FileWriter;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
@@ -14,19 +14,21 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.impl.SetTs;
+import com.codingtu.cooltu.processor.bean.SubBuilder;
 import com.codingtu.cooltu.processor.constant.Tags;
 import com.codingtu.cooltu.processor.deal.base.BaseDeal;
 import com.codingtu.cooltu.processor.lib.App;
 import com.codingtu.cooltu.processor.lib.BuilderMap;
-import com.codingtu.cooltu.processor.lib.annotation.BuilderBase;
 import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
-import com.codingtu.cooltu.processor.lib.tools.NameTools;
+import com.codingtu.cooltu.processor.lib.tools.PathTools;
 import com.codingtu.cooltu.processor.lib.tools.TagTools;
+import com.codingtu.cooltu.processor.lib.tools.TempTools;
 import com.google.auto.service.AutoService;
 import com.sun.source.util.Trees;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -46,6 +48,7 @@ public class AppProcessor extends AbstractProcessor {
 
     private Set<String> supportTypes = new HashSet<>();
     private Class[] types;
+    private List<String> builderBaseTempLines;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -54,155 +57,120 @@ public class AppProcessor extends AbstractProcessor {
         IdTools.rScanner = new IdTools.RScanner();
         App.init(processingEnv);
         types = SupportTypes.types();
+        dealBase();
         dealBuilderBase();
         dealSupportTypes();
     }
 
+    private void dealBase() {
+        builderBaseTempLines = TempTools.getTempLines(new File(PathTools.getProcessorJavaInfo(this).path));
+    }
+
     private void dealBuilderBase() {
-        String coreProcessorJavaDir = NameTools.getProcessorJavaDir();
-        FileLister.dir(NameTools.getBuilderImplDir()).list(new ListFile() {
+        String coreProcessorJavaDir = PathTools.getProcessorJavaDir();
+        FileLister.dir(PathTools.getBuilderImplDir()).list(new ListFile() {
             @Override
             public void list(File file) {
                 String path = file.getAbsolutePath().substring(coreProcessorJavaDir.length());
                 path = StringTool.cutSuffix(path, FileType.d_JAVA);
                 String classFullName = ConvertTool.pathToPkg(path);
-                try {
-                    Class builderClass = Class.forName(classFullName);
-                    BuilderBase builderBase = (BuilderBase) builderClass.getAnnotation(BuilderBase.class);
-                    createBuilderBase(file, builderClass, builderBase);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
+                createBuilderBase(file, classFullName);
             }
         });
     }
 
-    private void createBuilderBase(File file, Class builderClass, BuilderBase builderBase) {
-        List<String> lines = FileReader.from(file).readLine();
-        int start = 0;
-        int end = 0;
-        for (int i = 0; i < CountTool.count(lines); i++) {
-            String line = lines.get(i);
-            if (Tags.TEMP_START.equals(line.trim())) {
-                start = i + 1;
-            } else if (Tags.TEMP_END.equals(line.trim())) {
-                end = i;
+    private void createBuilderBase(File file, String classFullName) {
+        SubBuilder subBuilder = new SubBuilder();
+        subBuilder.initTempLines(copyBuilderBaseTempLines());
+
+        JavaInfo builderJavaInfo = PathTools.getProcessorJavaInfo(classFullName);
+        JavaInfo builderBaseJavaInfo = PathTools.getProcessorJavaInfo(Pkg.PROCESSOR_BUILDER_BASE, builderJavaInfo.name + Suffix.PROCESS_BUILDER_BASE);
+        subBuilder.map.get("pkg").append(Pkg.PROCESSOR_BUILDER_BASE);
+        subBuilder.map.get("name").append(builderBaseJavaInfo.name);
+        subBuilder.map.get("base").append(FullName.PROCESS_CORE_BUILDER);
+        subBuilder.map.get("JavaInfo").append(FullName.JAVA_INFO);
+        StringBuilder filedsSb = subBuilder.map.get("fileds");
+        StringBuilder getStringBuilderSb = subBuilder.map.get("getStringBuilder");
+        StringBuilder tempLinesSb = subBuilder.map.get("tempLines");
+        StringBuilder dealLinesInParentSb = subBuilder.map.get("dealLinesInParent");
+
+        List<String> tempLines = TempTools.getTempLines(file);
+        int count = CountTool.count(tempLines);
+
+        List<String> temp = new ArrayList<>();
+        if (count > 0) {
+            Map<String, String> filedsMap = new HashMap<>();
+
+            for (int i = 0; i < count; i++) {
+                String line = tempLines.get(i);
+                if (line.startsWith(Tags.SUB_START)) {
+                    String[] parts = line.split("\\[");
+                    String type = parts[2];
+                    String tag = parts[3];
+                    if (CountTool.count(temp) == 0 && "if".equals(type)) {
+                        TagTools.addLnTag(filedsSb, "    protected boolean is[ObtainMethod];", ConvertTool.toClassType(tag));
+                        TagTools.addLnTag(filedsSb, "    private StringBuilder [obtainMethod]Sb;", tag);
+                    }
+                    temp.add(type);
+                } else if (line.endsWith(Tags.SUB_END)) {
+                    temp.remove(CountTool.count(temp) - 1);
+                } else {
+                    List<String> tags = TagTools.getTags(Tags.DOUBLE_START, Tags.DOUBEL_END, line);
+                    Ts.ls(tags, new BaseTs.EachTs<String>() {
+                        @Override
+                        public boolean each(int position, String tag) {
+                            if (filedsMap.get(tag) == null) {
+                                filedsMap.put(tag, tag);
+                                TagTools.addLnTag(filedsSb, "    protected StringBuilder [pkg];", tag);
+                                TagTools.addLnTag(getStringBuilderSb, "        [pkg] = map.get(\"[pkg]\");", tag, tag);
+                            }
+                            return false;
+                        }
+                    });
+
+                    List<String> mParamTags = TagTools.getTags(Tags.MPARAM_START, Tags.MPARAM_END, line);
+                    Ts.ls(mParamTags, new BaseTs.EachTs<String>() {
+                        @Override
+                        public boolean each(int position, String tag) {
+                            if (filedsMap.get(tag) == null) {
+                                filedsMap.put(tag, tag);
+                                TagTools.addLnTag(filedsSb, "    private StringBuilder [initParams]Sb;", tag);
+                                TagTools.addLnTag(filedsSb, "    protected [Params] [initParams];", FullName.PROCESSOR_PARAMS, tag);
+
+                                TagTools.addLnTag(getStringBuilderSb, "        [pkg]Sb = map.get(\"[pkg]Sb\");", tag, tag);
+                                TagTools.addLnTag(getStringBuilderSb, "        [initParams] = new [Params]();", tag, FullName.PROCESSOR_PARAMS);
+
+                                TagTools.addLnTag(dealLinesInParentSb, "        [initParams]Sb.append([initParams].getMethodParams());", tag, tag);
+                            }
+                            return false;
+                        }
+                    });
+
+                    line = TagTools.dealLine(line, Tags.MPARAM_START, Tags.MPARAM_END, new TagTools.TagValue() {
+                        @Override
+                        public String tagValue(int i, String tag) {
+                            return Tags.DOUBLE_START + tag + "Sb" + Tags.DOUBEL_END;
+                        }
+                    });
+                    TagTools.addLnTag(tempLinesSb, "        lines.add(\"[line]\");", replaceLine(line));
+                }
+
             }
         }
+        FileWriter.to(builderBaseJavaInfo.path).cover().write(subBuilder.getLines());
 
-        if (start == end) {
-            return;
-        }
+    }
 
-        lines = lines.subList(start, end);
-
-
-        StringBuilder sb = new StringBuilder();
-        TagTools.addLnTag(sb, "package [pkg];", Pkg.PROCESSOR_BUILDER_BASE);
-        TagTools.addLnTag(sb, "import [JavaInfo];", FullName.JAVA_INFO);
-        TagTools.addLnTag(sb, "import [Params];", FullName.PROCESSOR_PARAMS);
-        TagTools.addLnTag(sb, "import [CountTool];", FullName.COUNT_TOOL);
-        TagTools.addLnTag(sb, "import java.util.ArrayList;");
-        TagTools.addLnTag(sb, "import [ListValueMap];", FullName.LIST_VALUE_MAP);
-        TagTools.addLnTag(sb, "import java.util.List;");
-        TagTools.addLnTag(sb, "public abstract class [name][Base] extends [base] {", builderClass.getSimpleName(), Suffix.PROCESS_BUILDER_BASE, builderBase.base().getCanonicalName());
-
-        StringBuilder initSb = new StringBuilder();
-        StringBuilder lineSb = new StringBuilder();
-        StringBuilder dealLineSb = new StringBuilder();
-
-        Map<String, String> map = new HashMap<>();
-
-        String forTag = null;
-        int[] index = {0};
-        for (int i = 0; i < CountTool.count(lines); i++) {
-            String line = lines.get(i);
-            Logs.i(line);
-            Logs.i(forTag);
-            Logs.i(line.startsWith(Tags.FOR_END));
-            if (line.startsWith(Tags.FOR_START)) {
-                forTag = line.substring(Tags.FOR_START.length());
-                index[0] = 0;
-                TagTools.addLnTag(sb, "    private StringBuilder [pkg]Sb;", forTag);
-                TagTools.addLnTag(sb, "    protected ListValueMap<Integer, String> [pkg];", forTag);
-                TagTools.addLnTag(initSb, "        [pkg]Sb = map.get(\"[pkg]Sb\");", forTag, forTag);
-                TagTools.addLnTag(initSb, "        [pkg] = new ListValueMap<>();", forTag);
-                TagTools.addLnTag(lineSb, "        lines.add(\"[xx]\");", "[[" + forTag + "Sb]]");
-                TagTools.addLnTag(dealLineSb, "        for (int i = 0; i < CountTool.count([obtainMethod]); i++) {", forTag);
-                TagTools.addLnTag(dealLineSb, "            List<String> lines = [obtainMethod].get(i);", forTag);
-            } else if (line.startsWith(Tags.FOR_END)) {
-                forTag = null;
-                TagTools.addLnTag(dealLineSb, "        }");
-            } else if (StringTool.isNotBlank(forTag)) {
-                List<String> tags = TagTools.getTags("[", "]", line);
-                StringBuilder sb1 = new StringBuilder();
-                Ts.ls(tags, new BaseTs.EachTs<String>() {
-                    @Override
-                    public boolean each(int position, String s) {
-                        sb1.append(", lines.get(").append(index[0]++).append(")");
-                        return false;
-                    }
-                });
-                TagTools.addLnTag(dealLineSb, "            addLnTag([obtainMethod]Sb, \"[line]\"[params]);",
-                        forTag, replaceLine(line), sb1.toString());
-            } else {
-                Ts.ls(TagTools.getTags("[[", "]]", line), new BaseTs.EachTs<String>() {
-                    @Override
-                    public boolean each(int position, String s) {
-                        if (map.get(s) == null) {
-                            map.put(s, s);
-                            TagTools.addLnTag(sb, "    protected StringBuilder [pkg];", s);
-                            TagTools.addLnTag(initSb, "        [pkg] = map.get(\"[pkg]\");", s, s);
-                        }
-                        return false;
-                    }
-                });
-
-                Ts.ls(TagTools.getTags("[mparam[", "]mparam]", line), new BaseTs.EachTs<String>() {
-                    @Override
-                    public boolean each(int position, String s) {
-                        if (map.get(s) == null) {
-                            map.put(s, s);
-                            TagTools.addLnTag(sb, "    private StringBuilder [pkg]Sb;", s);
-                            TagTools.addLnTag(sb, "    protected Params [initParams];", s);
-                            TagTools.addLnTag(initSb, "        [pkg]Sb = map.get(\"[pkg]Sb\");", s, s);
-                            TagTools.addLnTag(initSb, "        [initParams] = new Params();", s);
-                            TagTools.addLnTag(dealLineSb, "        [initParams]Sb.append([initParams].getMethodParams());", s, s);
-                        }
-                        return false;
-                    }
-                });
-
-                line = TagTools.dealLine(line, "[mparam[", "]mparam]", new TagTools.TagValue() {
-                    @Override
-                    public String tagValue(int i, String tag) {
-                        return "[[" + tag + "Sb]]";
-                    }
-                });
-
-                TagTools.addLnTag(lineSb, "        lines.add(\"[line]\");", replaceLine(line));
+    private List<String> copyBuilderBaseTempLines() {
+        ArrayList<String> newLines = new ArrayList<>();
+        Ts.ls(builderBaseTempLines, new BaseTs.EachTs<String>() {
+            @Override
+            public boolean each(int position, String s) {
+                newLines.add(s);
+                return false;
             }
-        }
-        TagTools.addLnTag(sb, "    public [name][Base](JavaInfo info) {", builderClass.getSimpleName(), Suffix.PROCESS_BUILDER_BASE);
-        TagTools.addLnTag(sb, "        super(info);");
-        TagTools.addLnTag(sb, initSb.toString());
-        TagTools.addLnTag(sb, "    }");
-        TagTools.addLnTag(sb, "    @Override");
-        TagTools.addLnTag(sb, "    protected void dealLinesInParent() {");
-        TagTools.addLnTag(sb, dealLineSb.toString());
-        TagTools.addLnTag(sb, "    }");
-
-
-        TagTools.addLnTag(sb, "    @Override");
-        TagTools.addLnTag(sb, "    protected List<String> getTempLines() {");
-        TagTools.addLnTag(sb, "        List<String> lines = new ArrayList<>();");
-        TagTools.addLnTag(sb, lineSb.toString());
-        TagTools.addLnTag(sb, "        return lines;");
-        TagTools.addLnTag(sb, "    }");
-        TagTools.addLnTag(sb, "}");
-
-        String builderBasePath = NameTools.getBuilderBase(builderClass.getSimpleName());
-        FileWriter.to(builderBasePath).cover().write(sb);
+        });
+        return newLines;
     }
 
     private String replaceLine(String line) {
@@ -257,3 +225,28 @@ public class AppProcessor extends AbstractProcessor {
         return true;
     }
 }
+/* model_temp_start
+package [[pkg]];
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class [[name]] extends [[base]] {
+[[fileds]]
+    public [[name]]([[JavaInfo]] info) {
+        super(info);
+[[getStringBuilder]]
+    }
+
+    @Override
+    protected void dealLinesInParent() {
+[[dealLinesInParent]]
+    }
+
+    @Override
+    protected List<String> getTempLines() {
+        List<String> lines = new ArrayList<>();
+[[tempLines]]
+        return lines;
+    }
+}
+model_temp_end */

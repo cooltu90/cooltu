@@ -1,3 +1,27 @@
 1、Dialog中的点击事件和左右两个按钮的设置
 2、RadioGroup增加禁用
 3、增加图片框架（本地缓存、获取等）
+
+
+    private void add() {
+        List<List<String>> strs = new ArrayList<>();
+
+        ArrayList<String> lines1 = new ArrayList<>();
+        lines1.add("0");
+        lines1.add("1");
+        lines1.add("2");
+        strs.add(lines1);
+
+        ArrayList<String> lines2 = new ArrayList<>();
+        lines2.add("0");
+        lines2.add("1");
+        strs.add(lines2);
+
+        ArrayList<String> lines3 = new ArrayList<>();
+        lines3.add("0");
+        lines3.add("1");
+        lines3.add("2");
+        lines3.add("3");
+        lines3.add("4");
+        strs.add(lines3);
+    }

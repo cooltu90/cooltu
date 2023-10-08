@@ -1,40 +1,40 @@
 package com.codingtu.cooltu.processor.builder.base;
-import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
-import com.codingtu.cooltu.processor.lib.param.Params;
-import com.codingtu.cooltu.lib4j.tools.CountTool;
+
+import com.codingtu.cooltu.processor.lib.tools.TagTools;
+
 import java.util.ArrayList;
-import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
 import java.util.List;
+
 public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.builder.core.CoreBuilder {
     protected StringBuilder pkg;
     protected StringBuilder name;
     protected StringBuilder basePath;
-    private StringBuilder initParamsSb;
-    protected Params initParams;
-    protected StringBuilder SDCardTool;
+    protected boolean isObtainMethod;
     private StringBuilder obtainMethodSb;
-    protected ListValueMap<Integer, String> obtainMethod;
-    public PathBuilderBase(JavaInfo info) {
+    private StringBuilder initParamsSb;
+    protected com.codingtu.cooltu.processor.lib.param.Params initParams;
+    protected StringBuilder SDCardTool;
+
+    public PathBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
         pkg = map.get("pkg");
         name = map.get("name");
         basePath = map.get("basePath");
         initParamsSb = map.get("initParamsSb");
-        initParams = new Params();
+        initParams = new com.codingtu.cooltu.processor.lib.param.Params();
         SDCardTool = map.get("SDCardTool");
-        obtainMethodSb = map.get("obtainMethodSb");
-        obtainMethod = new ListValueMap<>();
 
     }
+
     @Override
     protected void dealLinesInParent() {
         initParamsSb.append(initParams.getMethodParams());
-        for (int i = 0; i < CountTool.count(obtainMethod); i++) {
-            List<String> lines = obtainMethod.get(i);
-            addLnTag(obtainMethodSb, "                + addPrexSeparator([value])", lines.get(0));
+        if (isObtainMethod) {
+            addLnTag(obtainMethodSb, "    public static [name] obtain([initParamsSb]) {", name.toString(), initParamsSb.toString());
+            addLnTag(obtainMethodSb, "        return root([[SDCardTool]].getSDCard()", SDCardTool.toString());
         }
-
     }
+
     @Override
     protected List<String> getTempLines() {
         List<String> lines = new ArrayList<>();
@@ -42,11 +42,15 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
         lines.add("");
         lines.add("public class [[name]] extends [[basePath]] {");
         lines.add("");
+        lines.add("[sub[if[obtainMethod");
         lines.add("    public static [[name]] obtain([[initParamsSb]]) {");
         lines.add("        return root([[SDCardTool]].getSDCard()");
-        lines.add("[[obtainMethodSb]]");
+        lines.add("[sub[for[obtainMethodRoot");
+        lines.add("                + addPrexSeparator([value])");
+        lines.add("]sub]for]obtainMethodRoot");
         lines.add("        );");
         lines.add("    }");
+        lines.add("]sub]if]obtainMethod");
         lines.add("");
         lines.add("    public static [[name]] root(String root) {");
         lines.add("        return new [[name]](root);");
@@ -60,4 +64,3 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
         return lines;
     }
 }
-

@@ -17,5 +17,7 @@ public class FullName {
     public static final String LIST_VALUE_MAP = "com.codingtu.cooltu.lib4j.data.map.ListValueMap";
     public static final String PROCESSOR_PARAMS = "com.codingtu.cooltu.processor.lib.param.Params";
     public static final String JAVA_INFO = "com.codingtu.cooltu.lib4j.data.java.JavaInfo";
+    public static final String SUB_BUILDER = "com.codingtu.cooltu.processor.bean.SubBuilder";
+
 
 }

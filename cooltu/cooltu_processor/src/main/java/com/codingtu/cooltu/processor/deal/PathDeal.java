@@ -1,8 +1,6 @@
 package com.codingtu.cooltu.processor.deal;
 
-import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
-import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
@@ -10,11 +8,9 @@ import com.codingtu.cooltu.processor.annotation.path.DirPath;
 import com.codingtu.cooltu.processor.annotation.path.FilePath;
 import com.codingtu.cooltu.processor.annotation.path.Paths;
 import com.codingtu.cooltu.processor.annotation.tools.To;
-import com.codingtu.cooltu.processor.bean.DirPathInfo;
 import com.codingtu.cooltu.processor.builder.impl.PathBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
-import com.codingtu.cooltu.processor.lib.tools.NameTools;
 
 import java.util.HashMap;
 
