@@ -1,10 +1,13 @@
 package com.codingtu.cooltu.processor.bean;
 
+import java.util.List;
+
 public class SubTag {
 
     public String type;
     public String tag;
     public String full;
+    public List<Integer>  forLevels;
 
     public static SubTag start(String line) {
         SubTag subTag = new SubTag();

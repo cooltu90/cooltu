@@ -2,26 +2,20 @@ package com.codingtu.cooltu.processor.builder.impl;
 
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.processor.builder.base.TestBuilderBase;
+import com.codingtu.cooltu.processor.builder.base.TestBuilderBaseTemp;
 import com.codingtu.cooltu.processor.lib.log.Logs;
 
 public class TestBuilder extends TestBuilderBase {
 
     public TestBuilder(JavaInfo info) {
         super(info);
-
         isForce = true;
-
         addTag(pkg, "com.codingtu.cooltu.processor.test");
         addTag(name, "Test");
 
-        linesCounts(4);
-
+        linesCount(4);
         for (int i = 0; i < 4; i++) {
-            lines(i, "name" + i, "name" + i);
-//            linesAddCounts.add(5);
-//            for (int j = 0; j < 5; j++) {
-//                addLinesAdd(i, j, "name" + i, "xx");
-//            }
+            linesAddCount(i, 5);
         }
 
     }
@@ -50,8 +44,6 @@ public class [[name]] {
 [sub[for[lines
         ArrayList<String> [name] = new ArrayList<>();
 [sub[for[linesAdd
-[sub[if[linesAddLine
-]sub]if]linesAddLine
         [name].add("[value]");
 ]sub]for]linesAdd
         strs.add([name]);

@@ -73,6 +73,17 @@ public abstract class CoreBuilder implements Symbol {
      *
      **************************************************/
 
+    private java.util.Map<String, Integer> forCounts;
+
+    protected void forCounts(String key,int count){
+        forCounts.put(key, count);
+    }
+
+    protected int forCounts(String key){
+        return forCounts.get(key);
+    }
+
+
     protected void addValuesMap(List<String> strs, String... ss) {
         Ts.ls(ss, new BaseTs.EachTs<String>() {
             @Override

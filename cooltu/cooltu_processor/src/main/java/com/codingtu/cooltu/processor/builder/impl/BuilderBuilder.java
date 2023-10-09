@@ -22,6 +22,9 @@ import java.util.List;
 import java.util.Map;
 
 public class BuilderBuilder extends BuilderBuilderBase {
+
+    private String forListsName = "forLists";
+
     private Map<String, String> nameMap = new HashMap<>();
 
     public BuilderBuilder(JavaInfo builderJavaInfo, JavaInfo info) {
@@ -59,7 +62,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
                             if (nameMap.get(tag) == null) {
                                 nameMap.put(tag, tag);
                                 addLnTag(fileds, "    protected StringBuilder [pkg];", tag);
-                                addLnTag(getStringBuilder, "        [pkg] = map.get(\"[pkg]\");", tag, tag);
+                                addLnTag(inits, "        [pkg] = map.get(\"[pkg]\");", tag, tag);
                             }
                             return false;
                         }
@@ -74,91 +77,60 @@ public class BuilderBuilder extends BuilderBuilderBase {
 
     private void dealSubLines(int level, SubTag subTagStart, List<String> lines) {
         if ("for".equals(subTagStart.type)) {
-            dealForSubLines(level, subTagStart.tag, lines);
+            dealForSubLines(level, subTagStart, lines);
         }
     }
 
-    private void dealSubLines1(SubTag subTagStart, List<String> lines) {
-        if ("for".equals(subTagStart.type)) {
-            dealForSubLines1(subTagStart.tag, lines);
+    private void dealForSubLines(int level, SubTag lastSubTagStart, List<String> lines) {
+        //forCounts
+        StringBuilder countSb = new StringBuilder();
+        StringBuilder countSb1 = new StringBuilder();
+        for (int i = 0; i < CountTool.count(lastSubTagStart.forLevels); i++) {
+            addTag(countSb, "int i[1], ", i);
+            addTag(countSb1, " + \"-\" + i[1]", i);
         }
-    }
+        addLnTag(forCounts, "    protected void [lines]Count([params]int count) {", lastSubTagStart.tag, countSb.toString());
+        addLnTag(forCounts, "        forCounts(\"for\"[params], count);", countSb1.toString());
+        addLnTag(forCounts, "    }");
 
-    private void dealForSubLines(int level, String tag, List<String> lines) {
-        if (nameMap.get(tag) == null) {
-            nameMap.put(tag, tag);
-            addLnTag(fileds, "    private StringBuilder [pkg]Sb;", tag);
-            addLnTag(fileds, "    private java.util.Map<String, Integer> [lines]Counts;", tag);
-
-            addLnTag(fileds, "    private [ListValueMap]<String, String> [lines]Map;", FullName.LIST_VALUE_MAP, tag);
-
-            addLnTag(getStringBuilder, "        [pkg]Sb = map.get(\"[pkg]\");", tag, tag);
-            addLnTag(getStringBuilder, "        [lines]Counts = new java.util.HashMap<>();", tag);
-            addLnTag(getStringBuilder, "        [lines]Map = new [ListValueMap]<>();", tag, FullName.LIST_VALUE_MAP);
-
-            addLnTag(tempLines, "        lines.add(\"[[" + tag + "]]\");");
-
-            addLnTag(addValuesMaps, "    protected void [lines](int i, String... ss) {", tag);
-            addLnTag(addValuesMaps, "        addMapList([lines]Map, \"for\" + i, ss);", tag);
-            addLnTag(addValuesMaps, "    }", tag);
-
-            addLnTag(addValuesMaps, "    protected void [lines]Counts(int count) {", tag);
-            addLnTag(addValuesMaps, "        [lines]Counts.put(\"for\", count);", tag);
-            addLnTag(addValuesMaps, "    }");
-
-
-            addLnTag(dealLinesInParent, "        for (int i[1] = 0; i[1] < [lines]Counts.get(\"for\"); i[1]++) {"
-                    , level + 1, level + 1, tag, level + 1);
-            addLnTag(dealLinesInParent, "            List<String> lines = [lines]Map.get(\"for\" + i[1]);", tag, level + 1);
-
-            int count = CountTool.count(lines);
-            if (count > 0) {
-                SubTag subTagStart = null;
-                SubTag subTagEnd = null;
-                List<String> subLines = new ArrayList<>();
-                int index = 0;
-                for (int i = 0; i < count; i++) {
-                    String line = lines.get(i);
-                    if (subTagEnd == null && line.startsWith(Tags.SUB_START)) {
-                        subTagStart = SubTag.start(line);
-                        subTagEnd = subTagStart.getEnd();
-                        subLines.clear();
-                    } else if (subTagEnd != null && subTagEnd.full.equals(line)) {
-                        dealSubLines1(subTagStart, subLines);
-                        subTagStart = null;
-                        subTagEnd = null;
-                    } else if (subTagStart != null) {
-                        subLines.add(line);
-                    } else {
-                        List<String> tags = TagTools.getTags(Tags.SINGLE_START, Tags.SINGLE_END, line);
-                        StringBuilder sb = new StringBuilder();
-                        for (int j = 0; j < CountTool.count(tags); j++) {
-                            addTag(sb, ", lines.get([index])", index++);
-                        }
-                        addLnTag(dealLinesInParent, "            addLnTag([lines]Sb, \"[line]\"[params]);", tag, replaceLine(line), sb.toString());
-                    }
+        int count = CountTool.count(lines);
+        if (count > 0) {
+            SubTag subTagStart = null;
+            SubTag subTagEnd = null;
+            List<String> subLines = new ArrayList<>();
+            for (int i = 0; i < count; i++) {
+                String line = lines.get(i);
+                if (subTagEnd == null && line.startsWith(Tags.SUB_START)) {
+                    subTagStart = SubTag.start(line);
+                    subTagEnd = subTagStart.getEnd();
+                    subLines.clear();
+                } else if (subTagEnd != null && subTagEnd.full.equals(line)) {
+                    subTagStart.forLevels = copy(lastSubTagStart.forLevels);
+                    subTagStart.forLevels.add(level);
+                    dealSubLines(level + 1, subTagStart, subLines);
+                    subTagStart = null;
+                    subTagEnd = null;
+                } else if (subTagStart != null) {
+                    subLines.add(line);
+                } else {
 
                 }
+
             }
-
-
-            addLnTag(dealLinesInParent, "        }", tag);
-
         }
 
 
     }
 
-    private void dealForSubLines1(String tag, List<String> lines) {
-        if (nameMap.get(tag) == null) {
-            nameMap.put(tag, tag);
-
-            addLnTag(fileds, "    private java.util.Map<String, Integer> [lines]Counts;", tag);
-
-            addLnTag(getStringBuilder, "        [lines]Counts = new java.util.HashMap<>();", tag);
-
-        }
+    private List<Integer> copy(List<Integer> levels) {
+        return Ts.ts(levels).convert(new BaseTs.Convert<Integer, Integer>() {
+            @Override
+            public Integer convert(int index, Integer integer) {
+                return integer;
+            }
+        }).get();
     }
+
 
     private String replaceLine(String line) {
         return line.replace("\"", "\\\"");
@@ -183,9 +155,9 @@ public abstract class [[name]] extends [[base]] {
 [[fileds]]
     public [[name]]([[JavaInfo]] info) {
         super(info);
-[[getStringBuilder]]
+[[inits]]
     }
-[[addValuesMaps]]
+[[forCounts]]
     @Override
     protected void dealLinesInParent() {
 [[dealLinesInParent]]

@@ -8,8 +8,8 @@ public abstract class BuilderBuilderBase extends com.codingtu.cooltu.processor.b
     protected StringBuilder base;
     protected StringBuilder fileds;
     protected StringBuilder JavaInfo;
-    protected StringBuilder getStringBuilder;
-    protected StringBuilder addValuesMaps;
+    protected StringBuilder inits;
+    protected StringBuilder forCounts;
     protected StringBuilder dealLinesInParent;
     protected StringBuilder tempLines;
 
@@ -20,8 +20,8 @@ public abstract class BuilderBuilderBase extends com.codingtu.cooltu.processor.b
         base = map.get("base");
         fileds = map.get("fileds");
         JavaInfo = map.get("JavaInfo");
-        getStringBuilder = map.get("getStringBuilder");
-        addValuesMaps = map.get("addValuesMaps");
+        inits = map.get("inits");
+        forCounts = map.get("forCounts");
         dealLinesInParent = map.get("dealLinesInParent");
         tempLines = map.get("tempLines");
 
@@ -43,9 +43,9 @@ public abstract class BuilderBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[fileds]]");
         lines.add("    public [[name]]([[JavaInfo]] info) {");
         lines.add("        super(info);");
-        lines.add("[[getStringBuilder]]");
+        lines.add("[[inits]]");
         lines.add("    }");
-        lines.add("[[addValuesMaps]]");
+        lines.add("[[forCounts]]");
         lines.add("    @Override");
         lines.add("    protected void dealLinesInParent() {");
         lines.add("[[dealLinesInParent]]");
