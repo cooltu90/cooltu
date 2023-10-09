@@ -24,29 +24,29 @@ public class PathDeal extends TypeBaseDeal {
 
     @Override
     protected void dealTypeElement(TypeElement te) {
-        Paths paths = te.getAnnotation(Paths.class);
-        String baseName = paths.name();
-        dirMap.put("root", baseName);
-
-        PathBuilder pathBuilder = new PathBuilder(ConvertTool.toClassType(baseName), paths.path());
-        pathMap.put("root", pathBuilder);
-
-        Ts.ls(te.getEnclosedElements(), (position, e) -> {
-            if (e instanceof VariableElement) {
-                VariableElement ve = (VariableElement) e;
-                DirPath dir = ve.getAnnotation(DirPath.class);
-                if (dir != null) {
-                    dealDir(ve, dir);
-                }
-
-                FilePath file = ve.getAnnotation(FilePath.class);
-                if (file != null) {
-                    dealFile(ve, file);
-                }
-
-            }
-            return false;
-        });
+//        Paths paths = te.getAnnotation(Paths.class);
+//        String baseName = paths.name();
+//        dirMap.put("root", baseName);
+//
+//        PathBuilder pathBuilder = new PathBuilder(ConvertTool.toClassType(baseName), paths.path());
+//        pathMap.put("root", pathBuilder);
+//
+//        Ts.ls(te.getEnclosedElements(), (position, e) -> {
+//            if (e instanceof VariableElement) {
+//                VariableElement ve = (VariableElement) e;
+//                DirPath dir = ve.getAnnotation(DirPath.class);
+//                if (dir != null) {
+//                    dealDir(ve, dir);
+//                }
+//
+//                FilePath file = ve.getAnnotation(FilePath.class);
+//                if (file != null) {
+//                    dealFile(ve, file);
+//                }
+//
+//            }
+//            return false;
+//        });
     }
 
     private void dealDir(VariableElement ve, DirPath dir) {

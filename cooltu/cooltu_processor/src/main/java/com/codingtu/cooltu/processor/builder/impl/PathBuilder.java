@@ -24,34 +24,16 @@ public class PathBuilder extends PathBuilderBase {
 
     @Override
     protected void dealLines() {
-        addTag(pkg, Pkg.CORE_PATH);
-        addTag(name, javaInfo.name);
-        addTag(basePath, FullName.BASE_PATH);
-        isObtainMethod = StringTool.isNotBlank(path);
+//        addTag(pkg, Pkg.CORE_PATH);
+//        addTag(name, javaInfo.name);
+//        addTag(basePath, FullName.BASE_PATH);
+//        isObtainMethod = StringTool.isNotBlank(path);
     }
-
 }
 /* model_temp_start
 package [[pkg]];
 
 public class [[name]] extends [[basePath]] {
 
-[sub[if[obtainMethod
-    public static [[name]] obtain([mparam[initParams]mparam]) {
-        return root([[SDCardTool]].getSDCard()
-[sub[for[obtainMethodRoot
-                + addPrexSeparator([value])
-]sub]for]obtainMethodRoot
-        );
-    }
-]sub]if]obtainMethod
-
-    public static [[name]] root(String root) {
-        return new [[name]](root);
-    }
-
-    public [[name]](String root) {
-        super(root);
-    }
 }
 model_temp_end */

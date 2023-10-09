@@ -15,6 +15,8 @@ import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.impl.SetTs;
 import com.codingtu.cooltu.processor.bean.SubBuilder;
+import com.codingtu.cooltu.processor.builder.impl.BuilderBuilder;
+import com.codingtu.cooltu.processor.builder.impl.TestBuilder;
 import com.codingtu.cooltu.processor.constant.Tags;
 import com.codingtu.cooltu.processor.deal.base.BaseDeal;
 import com.codingtu.cooltu.processor.lib.App;
@@ -57,9 +59,30 @@ public class AppProcessor extends AbstractProcessor {
         IdTools.rScanner = new IdTools.RScanner();
         App.init(processingEnv);
         types = SupportTypes.types();
-        dealBase();
-        dealBuilderBase();
+        deal();
+//        dealBase();
+//        dealBuilderBase();
         dealSupportTypes();
+    }
+
+    private void deal() {
+        String coreProcessorJavaDir = PathTools.getProcessorJavaDir();
+        FileLister.dir(PathTools.getBuilderImplDir()).list(new ListFile() {
+            @Override
+            public void list(File file) {
+                String path = file.getAbsolutePath().substring(coreProcessorJavaDir.length());
+                path = StringTool.cutSuffix(path, FileType.d_JAVA);
+                String classFullName = ConvertTool.pathToPkg(path);
+                JavaInfo builderJavaInfo = PathTools.getProcessorJavaInfo(classFullName);
+                JavaInfo builderBaseJavaInfo = PathTools.getProcessorJavaInfo(Pkg.PROCESSOR_BUILDER_BASE, builderJavaInfo.name + Suffix.PROCESS_BUILDER_BASE);
+                new BuilderBuilder(builderJavaInfo, builderBaseJavaInfo);
+            }
+        });
+
+
+//        JavaInfo processorJavaInfo = PathTools.getProcessorJavaInfo("com.codingtu.cooltu.processor.test.Test");
+//        new TestBuilder(processorJavaInfo);
+
     }
 
     private void dealBase() {
@@ -219,7 +242,6 @@ public class AppProcessor extends AbstractProcessor {
                 return false;
             }
         });
-
         BuilderMap.create();
 
         return true;
