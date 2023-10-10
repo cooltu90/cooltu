@@ -1,6 +1,7 @@
 package com.codingtu.cooltu.processor.lib.param;
 
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 
@@ -33,5 +34,9 @@ public class Params {
             }
         });
         return sb.toString();
+    }
+
+    public int count() {
+        return CountTool.count(kvs);
     }
 }

@@ -14,16 +14,16 @@ public class TestBuilder extends TestBuilderBase {
         addTag(pkg, "com.codingtu.cooltu.processor.test");
         addTag(name, "Test");
 
-        linesCount(4);
-        for (int i = 0; i < 4; i++) {
-            int num = Fake.nextInt(1, 8);
-            linesAddCount(i, num);
-            lines(i, "lines" + i, "lines" + i);
-            for (int j = 0; j < num; j++) {
-                linesAdd1If(i, j, true);
-                linesAdd1(i, j, "lines" + i, Fake.name(), Fake.name());
-            }
-        }
+//        linesCount(4);
+//        for (int i = 0; i < 4; i++) {
+//            int num = Fake.nextInt(1, 8);
+//            linesAddCount(i, num);
+//            lines(i, "lines" + i, "lines" + i);
+//            for (int j = 0; j < num; j++) {
+//                linesAdd1If(i, j, true);
+//                linesAdd1(i, j, "lines" + i, Fake.name(), Fake.name());
+//            }
+//        }
 
     }
 
