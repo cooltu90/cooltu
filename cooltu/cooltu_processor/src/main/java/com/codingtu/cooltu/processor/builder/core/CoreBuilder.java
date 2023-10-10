@@ -73,53 +73,34 @@ public abstract class CoreBuilder implements Symbol {
      *
      **************************************************/
 
-    private java.util.Map<String, Integer> forCounts;
-
-    protected void forCounts(String key,int count){
-        forCounts.put(key, count);
+    protected String getForKey(int... ii) {
+        return getKey("for", ii);
     }
 
-    protected int forCounts(String key){
-        return forCounts.get(key);
+    protected String getIfKey(String tag, int... ii) {
+        return getKey("if-" + tag, ii);
     }
 
-
-    protected void addValuesMap(List<String> strs, String... ss) {
-        Ts.ls(ss, new BaseTs.EachTs<String>() {
+    private String getKey(String tag, int... ii) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(tag);
+        Ts.ts(ii).ls(new BaseTs.EachTs<Integer>() {
             @Override
-            public boolean each(int position, String s) {
-                strs.add(s);
+            public boolean each(int position, Integer integer) {
+                sb.append("-").append(integer);
                 return false;
             }
         });
+        return sb.toString();
     }
 
-    protected static List<String> getMapList(Map map, int... is) {
-        for (int i = 0; i < CountTool.count(is); i++) {
-            int index = is[i];
-            if (i != CountTool.count(is) - 1) {
-                Map map1 = (Map) map.get(index);
-                if (map1 == null) {
-                    map.put(index, (map1 = new HashMap()));
-                }
-                map = map1;
-            } else {
-                List<String> lines = (List<String>) map.get(index);
-                if (lines == null) {
-                    map.put(index, (lines = new ArrayList<>()));
-                }
-                return lines;
-            }
-        }
-        return null;
-    }
 
-    protected void addMapList(ListValueMap<String, String> map, String key, String... ss) {
-        List<String> strings = map.get(key);
-        Ts.ls(ss, new BaseTs.EachTs<String>() {
+    protected void addForMap(ListValueMap<String, String> map, String key, String... strs) {
+        List<String> list = map.get(key);
+        Ts.ls(strs, new BaseTs.EachTs<String>() {
             @Override
             public boolean each(int position, String s) {
-                strings.add(s);
+                list.add(s);
                 return false;
             }
         });

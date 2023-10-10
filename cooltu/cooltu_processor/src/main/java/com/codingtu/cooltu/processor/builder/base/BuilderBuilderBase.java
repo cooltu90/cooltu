@@ -10,6 +10,8 @@ public abstract class BuilderBuilderBase extends com.codingtu.cooltu.processor.b
     protected StringBuilder JavaInfo;
     protected StringBuilder inits;
     protected StringBuilder forCounts;
+    protected StringBuilder fors;
+    protected StringBuilder ifs;
     protected StringBuilder dealLinesInParent;
     protected StringBuilder tempLines;
 
@@ -22,10 +24,14 @@ public abstract class BuilderBuilderBase extends com.codingtu.cooltu.processor.b
         JavaInfo = map.get("JavaInfo");
         inits = map.get("inits");
         forCounts = map.get("forCounts");
+        fors = map.get("fors");
+        ifs = map.get("ifs");
         dealLinesInParent = map.get("dealLinesInParent");
         tempLines = map.get("tempLines");
 
     }
+
+
 
     @Override
     protected void dealLinesInParent() {
@@ -46,6 +52,8 @@ public abstract class BuilderBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[inits]]");
         lines.add("    }");
         lines.add("[[forCounts]]");
+        lines.add("[[fors]]");
+        lines.add("[[ifs]]");
         lines.add("    @Override");
         lines.add("    protected void dealLinesInParent() {");
         lines.add("[[dealLinesInParent]]");

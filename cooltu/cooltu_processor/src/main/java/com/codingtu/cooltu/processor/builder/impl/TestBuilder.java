@@ -1,6 +1,7 @@
 package com.codingtu.cooltu.processor.builder.impl;
 
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.fake.Fake;
 import com.codingtu.cooltu.processor.builder.base.TestBuilderBase;
 import com.codingtu.cooltu.processor.builder.base.TestBuilderBaseTemp;
 import com.codingtu.cooltu.processor.lib.log.Logs;
@@ -15,7 +16,13 @@ public class TestBuilder extends TestBuilderBase {
 
         linesCount(4);
         for (int i = 0; i < 4; i++) {
-            linesAddCount(i, 5);
+            int num = Fake.nextInt(1, 8);
+            linesAddCount(i, num);
+            lines(i, "lines" + i, "lines" + i);
+            for (int j = 0; j < num; j++) {
+                linesAdd1If(i, j, true);
+                linesAdd1(i, j, "lines" + i, Fake.name(), Fake.name());
+            }
         }
 
     }
@@ -44,7 +51,9 @@ public class [[name]] {
 [sub[for[lines
         ArrayList<String> [name] = new ArrayList<>();
 [sub[for[linesAdd
-        [name].add("[value]");
+[sub[if[linesAdd1
+        [name].add("[value][v1]");
+]sub]if]linesAdd1
 ]sub]for]linesAdd
         strs.add([name]);
 ]sub]for]lines

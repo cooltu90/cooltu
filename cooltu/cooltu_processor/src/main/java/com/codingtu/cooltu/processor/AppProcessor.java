@@ -80,8 +80,8 @@ public class AppProcessor extends AbstractProcessor {
         });
 
 
-//        JavaInfo processorJavaInfo = PathTools.getProcessorJavaInfo("com.codingtu.cooltu.processor.test.Test");
-//        new TestBuilder(processorJavaInfo);
+        JavaInfo processorJavaInfo = PathTools.getProcessorJavaInfo("com.codingtu.cooltu.processor.test.Test");
+        new TestBuilder(processorJavaInfo);
 
     }
 

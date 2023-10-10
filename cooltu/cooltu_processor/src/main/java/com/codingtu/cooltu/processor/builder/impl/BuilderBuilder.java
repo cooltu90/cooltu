@@ -3,8 +3,8 @@ package com.codingtu.cooltu.processor.builder.impl;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
-import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.bean.SubTag;
@@ -23,7 +23,8 @@ import java.util.Map;
 
 public class BuilderBuilder extends BuilderBuilderBase {
 
-    private String forListsName = "forLists";
+    private String intTag = "i";
+    private String strTag = "s";
 
     private Map<String, String> nameMap = new HashMap<>();
 
@@ -76,24 +77,45 @@ public class BuilderBuilder extends BuilderBuilderBase {
     }
 
     private void dealSubLines(int level, SubTag subTagStart, List<String> lines) {
+//        Logs.i(lines);
+        if (level == 0) {
+            if (nameMap.get(subTagStart.tag) == null) {
+                nameMap.put(subTagStart.tag, subTagStart.tag);
+                addLnTag(fileds, "    private java.util.Map<String, Boolean> [lines]Ifs;", subTagStart.tag);
+                addLnTag(inits, "        [lines]Ifs = new java.util.HashMap<>();", subTagStart.tag);
+                addLnTag(fileds, "    private java.util.Map<String, Integer> [lines]Counts;", subTagStart.tag);
+                addLnTag(inits, "        [lines]Counts = new java.util.HashMap<>();", subTagStart.tag);
+                addLnTag(fileds, "    private StringBuilder [pkg]Sb;", subTagStart.tag);
+                addLnTag(inits, "        [pkg]Sb = map.get(\"[pkg]\");", subTagStart.tag, subTagStart.tag);
+                addLnTag(fileds, "    private [ListValueMap]<String, String> [lines];", FullName.LIST_VALUE_MAP, subTagStart.tag);
+                addLnTag(inits, "        [lines] = new [ListValueMap]<>();", subTagStart.tag, FullName.LIST_VALUE_MAP);
+                addLnTag(tempLines, "        lines.add(\"[[" + subTagStart.tag + "]]\");");
+            }
+            subTagStart.parentTag = subTagStart.tag;
+        }
         if ("for".equals(subTagStart.type)) {
             dealForSubLines(level, subTagStart, lines);
+        } else if ("if".equals(subTagStart.type)) {
+            dealIfSubLines(level, subTagStart, lines);
         }
     }
 
-    private void dealForSubLines(int level, SubTag lastSubTagStart, List<String> lines) {
-        //forCounts
-        StringBuilder countSb = new StringBuilder();
-        StringBuilder countSb1 = new StringBuilder();
-        for (int i = 0; i < CountTool.count(lastSubTagStart.forLevels); i++) {
-            addTag(countSb, "int i[1], ", i);
-            addTag(countSb1, " + \"-\" + i[1]", i);
-        }
-        addLnTag(forCounts, "    protected void [lines]Count([params]int count) {", lastSubTagStart.tag, countSb.toString());
-        addLnTag(forCounts, "        forCounts(\"for\"[params], count);", countSb1.toString());
-        addLnTag(forCounts, "    }");
+    private void dealIfSubLines(int level, SubTag lastSubTagStart, List<String> lines) {
+        int levelsCount = CountTool.count(lastSubTagStart.forLevels);
+        String keys = getIntsValue(levelsCount);
+        String space = getSpaces(levelsCount);
+
+        addLnTag(ifs, "    protected void [linesAdd1]If([params]boolean is) {", lastSubTagStart.tag, getIntsCountParam(levelsCount));
+        addLnTag(ifs, "        [lines]Ifs.put(getIfKey(\"[linesAdd1]\", [params]), is);", lastSubTagStart.parentTag, lastSubTagStart.tag, keys);
+        addLnTag(ifs, "    }");
+
+        addLnTag(dealLinesInParent, "        [space]if ([lines]Ifs.get(getIfKey(\"[tag]\", [params]))) {", space, lastSubTagStart.parentTag, lastSubTagStart.tag, keys);
+        addLnTag(dealLinesInParent, "            [space]List<String> [lines][2] = [lines].get(getIfKey(\"[tag]\", [params]));"
+                , space, lastSubTagStart.parentTag, level, lastSubTagStart.parentTag, lastSubTagStart.tag, keys);
+
 
         int count = CountTool.count(lines);
+        int[] index = {0};
         if (count > 0) {
             SubTag subTagStart = null;
             SubTag subTagEnd = null;
@@ -107,20 +129,166 @@ public class BuilderBuilder extends BuilderBuilderBase {
                 } else if (subTagEnd != null && subTagEnd.full.equals(line)) {
                     subTagStart.forLevels = copy(lastSubTagStart.forLevels);
                     subTagStart.forLevels.add(level);
+                    subTagStart.parentTag = lastSubTagStart.parentTag;
                     dealSubLines(level + 1, subTagStart, subLines);
                     subTagStart = null;
                     subTagEnd = null;
                 } else if (subTagStart != null) {
                     subLines.add(line);
                 } else {
-
+                    List<String> tags = TagTools.getTags(Tags.SINGLE_START, Tags.SINGLE_END, line);
+                    StringBuilder sb = new StringBuilder();
+                    Ts.ls(tags, new BaseTs.EachTs<String>() {
+                        @Override
+                        public boolean each(int position, String s) {
+                            addTag(sb, ", [lines][0].get([0])", lastSubTagStart.parentTag, level, index[0]++);
+                            return false;
+                        }
+                    });
+                    addLnTag(dealLinesInParent, "            [space]addLnTag([lines]Sb, \"[line]\"[params]);"
+                            , space, lastSubTagStart.parentTag, replaceLine(line), sb.toString());
                 }
 
             }
         }
 
+        String strsParam = getStrsParam(index[0]);
+
+        if (StringTool.isNotBlank(strsParam)) {
+            addLnTag(ifs, "    protected void [lines]([countSb][strings]) {"
+                    , lastSubTagStart.tag, getIntsParam(levelsCount), strsParam);
+            addLnTag(ifs, "        addForMap([lines], getIfKey(\"[tag]\", [i0])[strsValue]);"
+                    , lastSubTagStart.parentTag, lastSubTagStart.tag, keys, getStrsValue(index[0]));
+            addLnTag(ifs, "    }");
+        }
+
+        addLnTag(dealLinesInParent, "        [space]}", space);
+
 
     }
+
+    private void dealForSubLines(int level, SubTag lastSubTagStart, List<String> lines) {
+        int levelsCount = CountTool.count(lastSubTagStart.forLevels);
+
+        String keys = getIntsValue(levelsCount);
+        String keys1 = getIntsValue(levelsCount + 1);
+        String space = getSpaces(levelsCount);
+
+        addLnTag(forCounts, "    protected void [lines]Count([params]int count) {", lastSubTagStart.tag, getIntsCountParam(levelsCount));
+        addLnTag(forCounts, "        [lines]Counts.put(getForKey([params]), count);", lastSubTagStart.parentTag, keys);
+        addLnTag(forCounts, "    }");
+
+
+        addLnTag(dealLinesInParent, "        [space]for (int [i][0] = 0; [i][0] < [lines]Counts.get(getForKey([params])); [i][0]++) {"
+                , space, intTag, levelsCount, intTag, levelsCount, lastSubTagStart.parentTag, keys, intTag, levelsCount);
+
+
+        addLnTag(dealLinesInParent, "            [space]List<String> [lines][0] = [lines].get(getForKey([params]));"
+                , space, lastSubTagStart.parentTag, level, lastSubTagStart.parentTag, keys1);
+
+
+        int count = CountTool.count(lines);
+        int[] index = {0};
+        if (count > 0) {
+            SubTag subTagStart = null;
+            SubTag subTagEnd = null;
+            List<String> subLines = new ArrayList<>();
+            for (int i = 0; i < count; i++) {
+                String line = lines.get(i);
+                if (subTagEnd == null && line.startsWith(Tags.SUB_START)) {
+                    subTagStart = SubTag.start(line);
+                    subTagEnd = subTagStart.getEnd();
+                    subLines.clear();
+                } else if (subTagEnd != null && subTagEnd.full.equals(line)) {
+                    subTagStart.forLevels = copy(lastSubTagStart.forLevels);
+                    subTagStart.forLevels.add(level);
+                    subTagStart.parentTag = lastSubTagStart.parentTag;
+                    dealSubLines(level + 1, subTagStart, subLines);
+                    subTagStart = null;
+                    subTagEnd = null;
+                } else if (subTagStart != null) {
+                    subLines.add(line);
+                } else {
+                    List<String> tags = TagTools.getTags(Tags.SINGLE_START, Tags.SINGLE_END, line);
+                    StringBuilder sb = new StringBuilder();
+                    Ts.ls(tags, new BaseTs.EachTs<String>() {
+                        @Override
+                        public boolean each(int position, String s) {
+                            addTag(sb, ", [lines][0].get([0])", lastSubTagStart.parentTag, level, index[0]++);
+                            return false;
+                        }
+                    });
+                    addLnTag(dealLinesInParent, "            [space]addLnTag([lines]Sb, \"[line]\"[params]);"
+                            , space, lastSubTagStart.parentTag, replaceLine(line), sb.toString());
+                }
+
+            }
+        }
+
+        String strsParam = getStrsParam(index[0]);
+
+        if (StringTool.isNotBlank(strsParam)) {
+            addLnTag(fors, "    protected void [lines]([countSb][strings]) {"
+                    , lastSubTagStart.tag, getIntsParam(levelsCount + 1), strsParam);
+            addLnTag(fors, "        addForMap([lines], getForKey([i0])[strsValue]);", lastSubTagStart.parentTag, keys1, getStrsValue(index[0]));
+            addLnTag(fors, "    }");
+        }
+
+        addLnTag(dealLinesInParent, "        [space]}", space);
+
+    }
+
+    private String getIntsCountParam(int num) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < num; i++) {
+            sb.append("int ").append(intTag).append(i).append(", ");
+        }
+        return sb.toString();
+    }
+
+    private String getIntsParam(int num) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < num; i++) {
+            if (i != 0) {
+                sb.append(", ");
+            }
+            sb.append("int ").append(intTag).append(i);
+        }
+        return sb.toString();
+    }
+
+    private String getStrsParam(int num) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < num; i++) {
+
+            sb.append(", String ").append(strTag).append(i);
+        }
+        return sb.toString();
+    }
+
+    private String getSpaces(int times) {
+        return StringTool.repeatString(times, "    ");
+    }
+
+    private String getIntsValue(int num) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < num; i++) {
+            if (i != 0) {
+                sb.append(", ");
+            }
+            sb.append(intTag).append(i);
+        }
+        return sb.toString();
+    }
+
+    private String getStrsValue(int num) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < num; i++) {
+            sb.append(", ").append(strTag).append(i);
+        }
+        return sb.toString();
+    }
+
 
     private List<Integer> copy(List<Integer> levels) {
         return Ts.ts(levels).convert(new BaseTs.Convert<Integer, Integer>() {
@@ -158,6 +326,8 @@ public abstract class [[name]] extends [[base]] {
 [[inits]]
     }
 [[forCounts]]
+[[fors]]
+[[ifs]]
     @Override
     protected void dealLinesInParent() {
 [[dealLinesInParent]]

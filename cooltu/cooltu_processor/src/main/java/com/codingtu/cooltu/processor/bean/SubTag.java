@@ -7,7 +7,8 @@ public class SubTag {
     public String type;
     public String tag;
     public String full;
-    public List<Integer>  forLevels;
+    public List<Integer> forLevels;
+    public String parentTag;
 
     public static SubTag start(String line) {
         SubTag subTag = new SubTag();
