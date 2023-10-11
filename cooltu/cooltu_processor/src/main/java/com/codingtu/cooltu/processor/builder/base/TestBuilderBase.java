@@ -27,15 +27,15 @@ public abstract class TestBuilderBase extends com.codingtu.cooltu.processor.buil
         linesCounts.put(getForKey("linesAdd", i0), count);
     }
 
-    protected void lines(int i0, String s0, String s1) {
-        addForMap(lines, getForKey("lines", i0), s0, s1);
+    protected void lines(int i0, String name) {
+        addForMap(lines, getForKey("lines", i0), name, name);
     }
 
     protected void linesAdd1If(int i0, int i1, boolean is) {
         linesIfs.put(getIfKey("linesAdd1", i0, i1), is);
     }
-    protected void linesAdd1(int i0, int i1, String s0, String s1, String s2) {
-        addForMap(lines, getIfKey("linesAdd1", i0, i1), s0, s1, s2);
+    protected void linesAdd1(int i0, int i1, String name, String value, String v1) {
+        addForMap(lines, getIfKey("linesAdd1", i0, i1), name, value, v1);
     }
 
     @Override

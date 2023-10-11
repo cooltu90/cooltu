@@ -104,13 +104,13 @@ public class PathBuilder extends PathBuilderBase {
                     nums[0]++;
                 } else {
                     String dirName = cutParam(info.dirName);
-                    dirsMethod(nums[1], info.javaName, dirName, info.javaName, dirName);
+                    dirsMethod(nums[1], info.javaName, info.fieldName, dirName);
                     nums[1]++;
                 }
 
 
                 if (info.isFilter) {
-                    dirList(nums[2], FullName.T_LIST_TS, info.javaName, info.fieldName, info.filter, info.filter, FullName.TS, info.fieldName);
+                    dirList(nums[2], FullName.T_LIST_TS, info.javaName, info.fieldName, info.filter, FullName.TS);
                     PathFilterInfo filterInfo = PathFilterDeal.map.get(info.filter);
                     int filterParamsCount = CountTool.count(filterInfo.params);
                     dirListParamCount(nums[2], filterParamsCount);
@@ -120,7 +120,7 @@ public class PathBuilder extends PathBuilderBase {
                         public boolean each(int position, KV<String, String> kv) {
                             dirListParam(nums[2], position, kv.k, kv.v, position == (filterParamsCount - 1) ? "" : ",");
                             Logs.i(kv.k + " " + kv.v);
-                            dirListFilter(nums[2], position, kv.v, kv.v);
+                            dirListFilter(nums[2], position, kv.v);
                             return false;
                         }
                     });
@@ -188,13 +188,14 @@ public class [[name]] extends [[basePath]] {
 [sub[for[fileds
     public [type] [name];
 ]sub]for]fileds
+
 [sub[for[fileFileds
     public [type] [name];
 ]sub]for]fileFileds
 
 [sub[if[obtain
     public static [name] obtain([params]) {
-        return root([SDCardTool].getSDCard()
+        return root([sDCardToolFullName].getSDCard()
 [sub[for[addObtainRoot
                 + addPrexSeparator([path])
 ]sub]for]addObtainRoot
@@ -209,44 +210,44 @@ public class [[name]] extends [[basePath]] {
     public [[name]](String root) {
         super(root);
 [sub[for[initDirs
-        this.[DeleteLabel] = [CheckDeleteLabelPath].root(
+        this.[filedName] = [filedType].root(
                 this.root
-                        + addPrexSeparator("[DeleteLabel]")
+                        + addPrexSeparator("[dirName]")
         );
 ]sub]for]initDirs
 [sub[for[initFiles
-        this.[name] = new [type](
+        this.[filedName] = new [filedType](
                 this.root
-                        + addPrexSeparator("[filename]")
+                        + addPrexSeparator("[fileName]")
                 , "[fileType]"
 [sub[if[initFilesParam
-                , [others]
+                , [othersParam]
 ]sub]if]initFilesParam
         );
 ]sub]for]initFiles
     }
 [sub[for[dirsMethod
-    public [CheckLabelPath] label(String [labelName]) {
-        return new [CheckLabelPath](
+    public [fieldType] [methodName](String [value]) {
+        return new [fieldType](
                 this.root
-                        + addPrexSeparator([labelName])
+                        + addPrexSeparator([value])
         );
     }
 ]sub]for]dirsMethod
 
 [sub[for[dirList
-    public [TListTs]<[CheckLabelPath]> [label]List(
+    public [tListTsFullName]<[fieldType]> [fieldName]List(
 [sub[for[dirListParam
             [type] [name][divider]
 ]sub]for]dirListParam
     ) {
-        [LabelFilter] filter = new [LabelFilter1]();
+        [filterFullName] filter = new [filterFullName]();
 [sub[for[dirListFilter
-        filter.[type] = [type1];
+        filter.[type] = [type];
 ]sub]for]dirListFilter
-        return [Ts].ts(new java.io.File(root()).listFiles()).convert((index, file) -> {
+        return [tsFullName].ts(new java.io.File(root()).listFiles()).convert((index, file) -> {
             if (filter.check(file)) {
-                return [label](file.getName());
+                return [fieldName](file.getName());
             }
             return null;
         });

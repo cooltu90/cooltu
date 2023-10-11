@@ -10,6 +10,7 @@ import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.bean.SubTag;
 import com.codingtu.cooltu.processor.builder.base.BuilderBuilderBase;
 import com.codingtu.cooltu.processor.constant.Tags;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.tools.PathTools;
 import com.codingtu.cooltu.processor.lib.tools.TagTools;
 import com.codingtu.cooltu.processor.lib.tools.TempTools;
@@ -118,6 +119,9 @@ public class BuilderBuilder extends BuilderBuilderBase {
 
         int count = CountTool.count(lines);
         int[] index = {0};
+        StringBuilder strSb = new StringBuilder();
+        StringBuilder strSb1 = new StringBuilder();
+        List<String> subTags = new ArrayList<>();
         if (count > 0) {
             SubTag subTagStart = null;
             SubTag subTagEnd = null;
@@ -137,11 +141,19 @@ public class BuilderBuilder extends BuilderBuilderBase {
                 } else if (subTagStart != null) {
                     subLines.add(line);
                 } else {
-                    List<String> tags = TagTools.getTags(Tags.SINGLE_START, Tags.SINGLE_END, line);
+                    List<String> tags = TagTools.getTags(true, Tags.SINGLE_START, Tags.SINGLE_END, line);
                     StringBuilder sb = new StringBuilder();
                     Ts.ls(tags, new BaseTs.EachTs<String>() {
                         @Override
                         public boolean each(int position, String s) {
+                            if (!subTags.contains(s)) {
+                                if (!CountTool.isNull(subTags)) {
+                                    strSb.append(", ");
+                                }
+                                strSb.append("String ").append(s);
+                                subTags.add(s);
+                            }
+                            strSb1.append(", ").append(s);
                             addTag(sb, ", [lines][0].get([0])", lastSubTagStart.parentTag, level, index[0]++);
                             return false;
                         }
@@ -153,13 +165,13 @@ public class BuilderBuilder extends BuilderBuilderBase {
             }
         }
 
-        String strsParam = getPutMethodStrParams(index[0]);
+        String strsParam = strSb.toString();
 
         if (StringTool.isNotBlank(strsParam)) {
             addLnTag(ifs, "    protected void [lines]([countSb][strings]) {"
                     , lastSubTagStart.tag, ifPutMethodParams, strsParam);
             addLnTag(ifs, "        addForMap([lines], getIfKey(\"[tag]\"[i0])[strsValue]);"
-                    , lastSubTagStart.parentTag, lastSubTagStart.tag, ifKeyParams, getAddForMapStrValue(index[0]));
+                    , lastSubTagStart.parentTag, lastSubTagStart.tag, ifKeyParams, strSb1.toString());
             addLnTag(ifs, "    }");
         }
 
@@ -191,6 +203,9 @@ public class BuilderBuilder extends BuilderBuilderBase {
 
         int count = CountTool.count(lines);
         int[] index = {0};
+        StringBuilder strSb = new StringBuilder();
+        StringBuilder strSb1 = new StringBuilder();
+        List<String> subTags = new ArrayList<>();
         if (count > 0) {
             SubTag subTagStart = null;
             SubTag subTagEnd = null;
@@ -211,11 +226,19 @@ public class BuilderBuilder extends BuilderBuilderBase {
                 } else if (subTagStart != null) {
                     subLines.add(line);
                 } else {
-                    List<String> tags = TagTools.getTags(Tags.SINGLE_START, Tags.SINGLE_END, line);
+                    List<String> tags = TagTools.getTags(true, Tags.SINGLE_START, Tags.SINGLE_END, line);
                     StringBuilder sb = new StringBuilder();
                     Ts.ls(tags, new BaseTs.EachTs<String>() {
                         @Override
                         public boolean each(int position, String s) {
+                            if (!subTags.contains(s)) {
+                                if (!CountTool.isNull(subTags)) {
+                                    strSb.append(", ");
+                                }
+                                strSb.append("String ").append(s);
+                                subTags.add(s);
+                            }
+                            strSb1.append(", ").append(s);
                             addTag(sb, ", [lines][0].get([0])", lastSubTagStart.parentTag, level, index[0]++);
                             return false;
                         }
@@ -227,12 +250,13 @@ public class BuilderBuilder extends BuilderBuilderBase {
             }
         }
 
-        String strsParam = getPutMethodStrParams(index[0]);
+        String strsParam = strSb.toString();
 
         if (StringTool.isNotBlank(strsParam)) {
             addLnTag(fors, "    protected void [lines]([countSb][strings]) {"
                     , lastSubTagStart.tag, getPutMethodIntParams(levelsCount + 1), strsParam);
-            addLnTag(fors, "        addForMap([lines], getForKey(\"[tag]\"[params])[strsValue]);", lastSubTagStart.parentTag, lastSubTagStart.tag, forKeyParams1, getAddForMapStrValue(index[0]));
+            addLnTag(fors, "        addForMap([lines], getForKey(\"[tag]\"[params])[strsValue]);"
+                    , lastSubTagStart.parentTag, lastSubTagStart.tag, forKeyParams1, strSb1.toString());
             addLnTag(fors, "    }");
         }
 

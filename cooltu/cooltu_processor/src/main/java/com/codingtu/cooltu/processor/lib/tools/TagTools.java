@@ -37,6 +37,31 @@ public class TagTools {
         return tags;
     }
 
+    public static List<String> getTags(boolean isRepeat, String startSign, String endSign, String line) {
+        ArrayList<String> tags = new ArrayList<>();
+        int start = 0;
+        int end = 0;
+        while (true) {
+            start = line.indexOf(startSign, end);
+            if (start < 0) {
+                break;
+            }
+            end = line.indexOf(endSign, start + startSign.length());
+            if (end < 0) {
+                break;
+            }
+
+            String tag = line.substring(start + startSign.length(), end);
+            if (StringTool.isNotBlank(tag)) {
+                if (isRepeat || !tags.contains(tag)) {
+                    tags.add(tag);
+                }
+            }
+            end += endSign.length();
+        }
+        return tags;
+    }
+
     public static interface TagValue {
         String tagValue(int i, String tag);
     }
