@@ -21,14 +21,14 @@ public abstract class TestBuilderBase extends com.codingtu.cooltu.processor.buil
 
     }
     protected void linesCount(int count) {
-        linesCounts.put(getForKey(), count);
+        linesCounts.put(getForKey("lines"), count);
     }
     protected void linesAddCount(int i0, int count) {
-        linesCounts.put(getForKey(i0), count);
+        linesCounts.put(getForKey("linesAdd", i0), count);
     }
 
     protected void lines(int i0, String s0, String s1) {
-        addForMap(lines, getForKey(i0), s0, s1);
+        addForMap(lines, getForKey("lines", i0), s0, s1);
     }
 
     protected void linesAdd1If(int i0, int i1, boolean is) {
@@ -40,11 +40,11 @@ public abstract class TestBuilderBase extends com.codingtu.cooltu.processor.buil
 
     @Override
     protected void dealLinesInParent() {
-        for (int i0 = 0; i0 < linesCounts.get(getForKey()); i0++) {
-            List<String> lines0 = lines.get(getForKey(i0));
+        for (int i0 = 0; i0 < linesCounts.get(getForKey("lines")); i0++) {
+            List<String> lines0 = lines.get(getForKey("lines", i0));
             addLnTag(linesSb, "        ArrayList<String> [name] = new ArrayList<>();", lines0.get(0));
-            for (int i1 = 0; i1 < linesCounts.get(getForKey(i0)); i1++) {
-                List<String> lines1 = lines.get(getForKey(i0, i1));
+            for (int i1 = 0; i1 < linesCounts.get(getForKey("linesAdd", i0)); i1++) {
+                List<String> lines1 = lines.get(getForKey("linesAdd", i0, i1));
                 if (linesIfs.get(getIfKey("linesAdd1", i0, i1))) {
                     List<String> lines2 = lines.get(getIfKey("linesAdd1", i0, i1));
                     addLnTag(linesSb, "        [name].add(\"[value][v1]\");", lines2.get(0), lines2.get(1), lines2.get(2));

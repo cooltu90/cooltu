@@ -18,6 +18,13 @@ public class FullName {
     public static final String PROCESSOR_PARAMS = "com.codingtu.cooltu.processor.lib.param.Params";
     public static final String JAVA_INFO = "com.codingtu.cooltu.lib4j.data.java.JavaInfo";
     public static final String SUB_BUILDER = "com.codingtu.cooltu.processor.bean.SubBuilder";
+    //Ts
+    public static final String T_LIST_TS = Pkg.LIB4J_TS + ".impl.basic.TListTs";
+    public static final String TS = Pkg.LIB4J_TS + ".Ts";
+    //PATH
+    public static final String PATH_TEXT_FILE = Pkg.LIB4A_PATH + ".PathTextFile";
+    public static final String PATH_IMAGE_FILE = Pkg.LIB4A_PATH + ".PathImageFile";
+    public static final String PATH_BEAN_FILE = Pkg.LIB4A_PATH + ".PathBeanFile";
 
 
 }

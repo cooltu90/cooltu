@@ -73,8 +73,8 @@ public abstract class CoreBuilder implements Symbol {
      *
      **************************************************/
 
-    protected String getForKey(int... ii) {
-        return getKey("for", ii);
+    protected String getForKey(String tag, int... ii) {
+        return getKey("for-" + tag, ii);
     }
 
     protected String getIfKey(String tag, int... ii) {

@@ -1,9 +1,7 @@
 package com.codingtu.cooltu.processor.builder.impl;
 
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
-import com.codingtu.cooltu.lib4j.fake.Fake;
 import com.codingtu.cooltu.processor.builder.base.TestBuilderBase;
-import com.codingtu.cooltu.processor.builder.base.TestBuilderBaseTemp;
 import com.codingtu.cooltu.processor.lib.log.Logs;
 
 public class TestBuilder extends TestBuilderBase {

@@ -177,16 +177,16 @@ public class BuilderBuilder extends BuilderBuilderBase {
 
 
         addLnTag(forCounts, "    protected void [lines]Count([params]int count) {", lastSubTagStart.tag, getPutMethodIntParams(levelsCount));
-        addLnTag(forCounts, "        [lines]Counts.put(getForKey([params]), count);", lastSubTagStart.parentTag, forKeyParams0);
+        addLnTag(forCounts, "        [lines]Counts.put(getForKey(\"[tag]\"[params]), count);", lastSubTagStart.parentTag, lastSubTagStart.tag, forKeyParams0);
         addLnTag(forCounts, "    }");
 
 
-        addLnTag(dealLinesInParent, "        [space]for (int [i][0] = 0; [i][0] < [lines]Counts.get(getForKey([params])); [i][0]++) {"
-                , space, intTag, levelsCount, intTag, levelsCount, lastSubTagStart.parentTag, forKeyParams0, intTag, levelsCount);
+        addLnTag(dealLinesInParent, "        [space]for (int [i][0] = 0; [i][0] < [lines]Counts.get(getForKey(\"[tag]\"[params])); [i][0]++) {"
+                , space, intTag, levelsCount, intTag, levelsCount, lastSubTagStart.parentTag, lastSubTagStart.tag, forKeyParams0, intTag, levelsCount);
 
 
-        addLnTag(dealLinesInParent, "            [space]List<String> [lines][0] = [lines].get(getForKey([params]));"
-                , space, lastSubTagStart.parentTag, level, lastSubTagStart.parentTag, forKeyParams1);
+        addLnTag(dealLinesInParent, "            [space]List<String> [lines][0] = [lines].get(getForKey(\"[tag]\"[params]));"
+                , space, lastSubTagStart.parentTag, level, lastSubTagStart.parentTag, lastSubTagStart.tag, forKeyParams1);
 
 
         int count = CountTool.count(lines);
@@ -232,7 +232,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
         if (StringTool.isNotBlank(strsParam)) {
             addLnTag(fors, "    protected void [lines]([countSb][strings]) {"
                     , lastSubTagStart.tag, getPutMethodIntParams(levelsCount + 1), strsParam);
-            addLnTag(fors, "        addForMap([lines], getForKey([i0])[strsValue]);", lastSubTagStart.parentTag, forKeyParams1, getAddForMapStrValue(index[0]));
+            addLnTag(fors, "        addForMap([lines], getForKey(\"[tag]\"[params])[strsValue]);", lastSubTagStart.parentTag, lastSubTagStart.tag, forKeyParams1, getAddForMapStrValue(index[0]));
             addLnTag(fors, "    }");
         }
 
@@ -254,7 +254,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
     }
 
     private String getForKeyParams(int num) {
-        return getParams(false, false, num, "", intTag);
+        return getParams(true, false, num, "", intTag);
     }
 
     private String getAddForMapStrValue(int num) {
