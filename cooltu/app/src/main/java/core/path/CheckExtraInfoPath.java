@@ -8,6 +8,7 @@ public class CheckExtraInfoPath extends com.codingtu.cooltu.lib4a.path.BasePath 
 
 
 
+
     public static CheckExtraInfoPath root(String root) {
         return new CheckExtraInfoPath(root);
     }
@@ -21,6 +22,7 @@ public class CheckExtraInfoPath extends com.codingtu.cooltu.lib4a.path.BasePath 
 
 
     }
+
 
 
 

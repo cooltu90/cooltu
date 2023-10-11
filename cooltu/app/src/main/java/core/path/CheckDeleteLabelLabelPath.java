@@ -7,6 +7,7 @@ public class CheckDeleteLabelLabelPath extends com.codingtu.cooltu.lib4a.path.Ba
 
 
 
+
     public static CheckDeleteLabelLabelPath root(String root) {
         return new CheckDeleteLabelLabelPath(root);
     }
@@ -16,6 +17,7 @@ public class CheckDeleteLabelLabelPath extends com.codingtu.cooltu.lib4a.path.Ba
 
 
     }
+
 
 
 

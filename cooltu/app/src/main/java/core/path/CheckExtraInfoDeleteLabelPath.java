@@ -7,6 +7,7 @@ public class CheckExtraInfoDeleteLabelPath extends com.codingtu.cooltu.lib4a.pat
 
 
 
+
     public static CheckExtraInfoDeleteLabelPath root(String root) {
         return new CheckExtraInfoDeleteLabelPath(root);
     }
@@ -16,6 +17,7 @@ public class CheckExtraInfoDeleteLabelPath extends com.codingtu.cooltu.lib4a.pat
 
 
     }
+
     public CheckExtraInfoDeleteLabelLabelPath label(String labelName) {
         return new CheckExtraInfoDeleteLabelLabelPath(
                 this.root

@@ -45,7 +45,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
             List<String> subLines = new ArrayList<>();
             for (int i = 0; i < count; i++) {
                 String line = lines.get(i);
-                if (subTagEnd == null && line.startsWith(Tags.SUB_START)) {
+                if (subTagEnd == null && isSubStart(line)) {
                     subTagStart = SubTag.start(line);
                     subTagEnd = subTagStart.getEnd();
                     subLines.clear();
@@ -77,7 +77,6 @@ public class BuilderBuilder extends BuilderBuilderBase {
     }
 
     private void dealSubLines(int level, SubTag subTagStart, List<String> lines) {
-//        Logs.i(lines);
         if (level == 0) {
             if (nameMap.get(subTagStart.tag) == null) {
                 nameMap.put(subTagStart.tag, subTagStart.tag);
@@ -128,7 +127,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
             List<String> subLines = new ArrayList<>();
             for (int i = 0; i < count; i++) {
                 String line = lines.get(i);
-                if (subTagEnd == null && line.startsWith(Tags.SUB_START)) {
+                if (subTagEnd == null && isSubStart(line)) {
                     subTagStart = SubTag.start(line);
                     subTagEnd = subTagStart.getEnd();
                     subLines.clear();
@@ -212,7 +211,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
             List<String> subLines = new ArrayList<>();
             for (int i = 0; i < count; i++) {
                 String line = lines.get(i);
-                if (subTagEnd == null && line.startsWith(Tags.SUB_START)) {
+                if (subTagEnd == null && isSubStart(line)) {
                     subTagStart = SubTag.start(line);
                     subTagEnd = subTagStart.getEnd();
                     subLines.clear();
@@ -319,6 +318,10 @@ public class BuilderBuilder extends BuilderBuilderBase {
 
     private String replaceLine(String line) {
         return line.replace("\"", "\\\"");
+    }
+
+    private boolean isSubStart(String line) {
+        return line.startsWith(Tags.SUB_FOR) || line.startsWith(Tags.SUB_IF);
     }
 
     @Override

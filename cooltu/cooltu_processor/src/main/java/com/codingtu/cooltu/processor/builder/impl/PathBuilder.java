@@ -185,23 +185,23 @@ package [[pkg]];
 
 public class [[name]] extends [[basePath]] {
 
-[sub[for[fileds
+--------------------------------------------------------------------------------[fileds]
     public [type] [name];
-]sub]for]fileds
+--------------------------------------------------------------------------------[fileds]
 
-[sub[for[fileFileds
+--------------------------------------------------------------------------------[fileFileds]
     public [type] [name];
-]sub]for]fileFileds
+--------------------------------------------------------------------------------[fileFileds]
 
-[sub[if[obtain
+================================================================================[obtain]
     public static [name] obtain([params]) {
         return root([sDCardToolFullName].getSDCard()
-[sub[for[addObtainRoot
+--------------------------------------------------------------------------------[addObtainRoot]
                 + addPrexSeparator([path])
-]sub]for]addObtainRoot
+--------------------------------------------------------------------------------[addObtainRoot]
         );
     }
-]sub]if]obtain
+================================================================================[obtain]
 
     public static [[name]] root(String root) {
         return new [[name]](root);
@@ -209,42 +209,43 @@ public class [[name]] extends [[basePath]] {
 
     public [[name]](String root) {
         super(root);
-[sub[for[initDirs
+--------------------------------------------------------------------------------[initDirs]
         this.[filedName] = [filedType].root(
                 this.root
                         + addPrexSeparator("[dirName]")
         );
-]sub]for]initDirs
-[sub[for[initFiles
+--------------------------------------------------------------------------------[initDirs]
+--------------------------------------------------------------------------------[initFiles]
         this.[filedName] = new [filedType](
                 this.root
                         + addPrexSeparator("[fileName]")
                 , "[fileType]"
-[sub[if[initFilesParam
+================================================================================[initFilesParam]
                 , [othersParam]
-]sub]if]initFilesParam
+================================================================================[initFilesParam]
         );
-]sub]for]initFiles
+--------------------------------------------------------------------------------[initFiles]
     }
-[sub[for[dirsMethod
+
+--------------------------------------------------------------------------------[dirsMethod]
     public [fieldType] [methodName](String [value]) {
         return new [fieldType](
                 this.root
                         + addPrexSeparator([value])
         );
     }
-]sub]for]dirsMethod
+--------------------------------------------------------------------------------[dirsMethod]
 
-[sub[for[dirList
+--------------------------------------------------------------------------------[dirList]
     public [tListTsFullName]<[fieldType]> [fieldName]List(
-[sub[for[dirListParam
+--------------------------------------------------------------------------------[dirListParam]
             [type] [name][divider]
-]sub]for]dirListParam
+--------------------------------------------------------------------------------[dirListParam]
     ) {
         [filterFullName] filter = new [filterFullName]();
-[sub[for[dirListFilter
+--------------------------------------------------------------------------------[dirListFilter]
         filter.[type] = [type];
-]sub]for]dirListFilter
+--------------------------------------------------------------------------------[dirListFilter]
         return [tsFullName].ts(new java.io.File(root()).listFiles()).convert((index, file) -> {
             if (filter.check(file)) {
                 return [fieldName](file.getName());
@@ -252,6 +253,6 @@ public class [[name]] extends [[basePath]] {
             return null;
         });
     }
-]sub]for]dirList
+--------------------------------------------------------------------------------[dirList]
 }
 model_temp_end */

@@ -7,6 +7,7 @@ public class CheckLabelPath extends com.codingtu.cooltu.lib4a.path.BasePath {
 
 
 
+
     public static CheckLabelPath root(String root) {
         return new CheckLabelPath(root);
     }
@@ -16,6 +17,7 @@ public class CheckLabelPath extends com.codingtu.cooltu.lib4a.path.BasePath {
 
 
     }
+
 
 
 

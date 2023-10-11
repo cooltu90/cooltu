@@ -7,6 +7,7 @@ public class CheckPath extends com.codingtu.cooltu.lib4a.path.BasePath {
 
 
 
+
     public static CheckPath obtain(String company, String taskName) {
         return root(com.codingtu.cooltu.lib4a.tools.SDCardTool.getSDCard()
                 + addPrexSeparator("EnvCheckData")
@@ -34,6 +35,7 @@ public class CheckPath extends com.codingtu.cooltu.lib4a.path.BasePath {
 
 
     }
+
     public CheckLabelPath label(String labelName) {
         return new CheckLabelPath(
                 this.root

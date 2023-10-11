@@ -220,6 +220,7 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
         lines.add("public class [[name]] extends [[basePath]] {");
         lines.add("");
         lines.add("[[fileds]]");
+        lines.add("");
         lines.add("[[fileFileds]]");
         lines.add("");
         lines.add("[[obtain]]");
@@ -233,6 +234,7 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
         lines.add("[[initDirs]]");
         lines.add("[[initFiles]]");
         lines.add("    }");
+        lines.add("");
         lines.add("[[dirsMethod]]");
         lines.add("");
         lines.add("[[dirList]]");

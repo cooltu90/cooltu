@@ -3,6 +3,7 @@ package core.path;
 public class CheckDeleteLabelPath extends com.codingtu.cooltu.lib4a.path.BasePath {
 
 
+
     public com.codingtu.cooltu.lib4a.path.PathTextFile i4l_txt;
     public com.codingtu.cooltu.lib4a.path.PathBeanFile<com.codingtu.cooltu.bean.User> user_txt;
 
@@ -29,6 +30,7 @@ public class CheckDeleteLabelPath extends com.codingtu.cooltu.lib4a.path.BasePat
         );
 
     }
+
     public CheckDeleteLabelLabelPath label(String labelName) {
         return new CheckDeleteLabelLabelPath(
                 this.root
