@@ -94,7 +94,7 @@ public class PathBuilder extends PathBuilderBase {
 
         }
 
-        final int[] nums = {0, 0, 0, 0};
+        final int[] nums = {0, 0, 0, 0, 0, 0};
         Ts.ls(dirInfos, new BaseTs.EachTs<DirPathInfo>() {
             @Override
             public boolean each(int position, DirPathInfo info) {
@@ -119,7 +119,6 @@ public class PathBuilder extends PathBuilderBase {
                         @Override
                         public boolean each(int position, KV<String, String> kv) {
                             dirListParam(nums[2], position, kv.k, kv.v, position == (filterParamsCount - 1) ? "" : ",");
-                            Logs.i(kv.k + " " + kv.v);
                             dirListFilter(nums[2], position, kv.v);
                             return false;
                         }
@@ -135,36 +134,61 @@ public class PathBuilder extends PathBuilderBase {
         Ts.ls(fileInfos, new BaseTs.EachTs<FilePathInfo>() {
             @Override
             public boolean each(int position, FilePathInfo info) {
-                if (!isParam(info.fileName)) {
+                String filedType = null;
+                boolean ifParam = false;
 
-                    String filedName = info.fieldFullName;
-                    String filedType = null;
-                    String fileName = info.fileName;
-                    String fileType = info.file.fileType();
-                    boolean ifParam = false;
+                if (info.fileContentType.equals(FileContentType.TXT)) {
+                    if (info.isVoidBean) {
+                        filedType = FullName.PATH_TEXT_FILE;
+                    } else {
+                        filedType = FullName.PATH_BEAN_FILE + "<" + info.beanClass + ">";
+                        ifParam = true;
 
-                    if (info.fileContentType.equals(FileContentType.TXT)) {
-                        if (info.isVoidBean) {
-                            filedType = FullName.PATH_TEXT_FILE;
-                        } else {
-                            filedType = FullName.PATH_BEAN_FILE + "<" + info.beanClass + ">";
-                            ifParam = true;
-
-                        }
-                    } else if (info.fileContentType.equals(FileContentType.PIC)) {
-                        filedType = FullName.PATH_IMAGE_FILE;
                     }
+                } else if (info.fileContentType.equals(FileContentType.PIC)) {
+                    filedType = FullName.PATH_IMAGE_FILE;
+                }
 
+                if (!isParam(info.fileName)) {
                     if (StringTool.isNotBlank(filedType)) {
-                        fileFileds(nums[3], filedType, filedName);
-                        initFiles(nums[3], filedName, filedType, fileName, fileType);
+                        fileFileds(nums[3], filedType, info.fieldFullName);
+                        initFiles(nums[3], info.fieldFullName, filedType, info.fileName, info.file.fileType());
                         initFilesParamIf(nums[3], ifParam);
                         if (ifParam) {
                             initFilesParam(nums[3], info.beanClass + ".class");
                         }
                         nums[3]++;
                     }
+                } else {
+                    if (StringTool.isNotBlank(filedType)) {
+                        filesMethodParamIf(nums[4], ifParam);
+                        if (ifParam) {
+                            filesMethodParam(nums[4], info.beanClass + ".class");
+                        }
+                        filesMethod(nums[4], filedType, info.fieldFullName, cutParam(info.fileName), info.file.fileType());
+                        nums[4]++;
+                    }
+
                 }
+
+                if (info.isFilter && StringTool.isNotBlank(filedType)) {
+                    fileList(nums[5], FullName.T_LIST_TS, filedType, info.fieldFullName, info.filter, FullName.TS);
+                    PathFilterInfo filterInfo = PathFilterDeal.map.get(info.filter);
+                    int filterParamsCount = CountTool.count(filterInfo.params);
+                    fileListParamCount(nums[5], filterParamsCount);
+                    filterParamCount(nums[5], filterParamsCount);
+                    Ts.ls(filterInfo.params, new BaseTs.EachTs<KV<String, String>>() {
+                        @Override
+                        public boolean each(int position, KV<String, String> kv) {
+                            fileListParam(nums[5], position, kv.k, kv.v, position == (filterParamsCount - 1) ? "" : ",");
+                            filterParam(nums[5], position, kv.v);
+                            return false;
+                        }
+                    });
+
+                    nums[5]++;
+                }
+
                 return false;
             }
         });
@@ -177,6 +201,9 @@ public class PathBuilder extends PathBuilderBase {
 
         dirsMethodCount(nums[1]);
         dirListCount(nums[2]);
+
+        filesMethodCount(nums[4]);
+        fileListCount(nums[5]);
 
     }
 }
@@ -254,5 +281,38 @@ public class [[name]] extends [[basePath]] {
         });
     }
 --------------------------------------------------------------------------------[dirList]
+
+--------------------------------------------------------------------------------[filesMethod]
+    public [fieldType] [filedName](String [value]) {
+        return new [fieldType](
+                this.root
+                        + addPrexSeparator([value] + ".txt")
+                , "[fileType]"
+================================================================================[filesMethodParam]
+                , [others]
+================================================================================[filesMethodParam]
+        );
+    }
+--------------------------------------------------------------------------------[filesMethod]
+
+--------------------------------------------------------------------------------[fileList]
+    public [tListTsFullName]<[fieldType]> [fieldName]_list(
+--------------------------------------------------------------------------------[fileListParam]
+            [type] [name][divider]
+--------------------------------------------------------------------------------[fileListParam]
+    ) {
+        [filterFullName] filter = new [filterFullName]();
+--------------------------------------------------------------------------------[filterParam]
+        filter.[name] = [name];
+--------------------------------------------------------------------------------[filterParam]
+        return [tsFullName].ts(new java.io.File(root()).listFiles()).convert((index, file) -> {
+            if (filter.check(file)) {
+                return [fieldName](file.getName());
+            }
+            return null;
+        });
+    }
+--------------------------------------------------------------------------------[fileList]
+
 }
 model_temp_end */

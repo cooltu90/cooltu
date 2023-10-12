@@ -21,4 +21,17 @@ public class CheckDeleteLabelLabelPath extends com.codingtu.cooltu.lib4a.path.Ba
 
 
 
+
+    public com.codingtu.cooltu.lib4a.path.PathBeanFile<com.codingtu.cooltu.bean.User> label_txt(String labelName) {
+        return new com.codingtu.cooltu.lib4a.path.PathBeanFile<com.codingtu.cooltu.bean.User>(
+                this.root
+                        + addPrexSeparator(labelName + ".txt")
+                , "txt"
+                , com.codingtu.cooltu.bean.User.class
+        );
+    }
+
+
+
+
 }

@@ -32,6 +32,14 @@ public class CheckPathConfigs {
     @DirPath(parent = "DeleteLabel", dirName = "{labelName}", fieldName = "label")
     String DeleteLabelLabel;
 
+    @FilePath(
+            parent = "DeleteLabelLabel",
+            fileName = "{labelName}",
+            fieldName = "label",
+            fileType = FileType.TXT,
+            beanClass = User.class)
+    String DeleteLabelLabelLabel;
+
     @DirPath
     String ExtraInfo;
 
@@ -44,5 +52,28 @@ public class CheckPathConfigs {
 
     @DirPath(dirName = "{labelName}", filter = LabelFilter.class)
     String label;
+
+    @FilePath(
+            parent = "label",
+            fileName = "{labelName}",
+            fieldName = "label",
+            fileType = FileType.TXT,
+            beanClass = User.class,
+            filter = LabelFilter.class)
+    String labelTxt;
+
+    @FilePath(
+            parent = "label",
+            fileName = "handle",
+            fieldName = "handle",
+            fileType = FileType.JPG)
+    String handleJpg;
+
+    @FilePath(
+            parent = "label",
+            fileName = "handle.jpg",
+            fieldName = "handle_jpg",
+            fileType = FileType.PNC)
+    String handleJpgPnc;
 
 }
