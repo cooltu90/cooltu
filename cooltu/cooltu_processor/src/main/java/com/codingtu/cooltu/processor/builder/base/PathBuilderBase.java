@@ -323,7 +323,6 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
         lines.add("[[filesMethod]]");
         lines.add("");
         lines.add("[[fileList]]");
-        lines.add("");
         lines.add("}");
 
         return lines;

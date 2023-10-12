@@ -14,14 +14,11 @@ public class SubTag {
     public String parentTag;
 
     public static SubTag start(String line) {
+        List<String> tags = TagTools.getTags(Tags.SINGLE_START, Tags.SINGLE_END, line);
         SubTag subTag = new SubTag();
-        if (line.startsWith(Tags.SUB_FOR)) {
-            subTag.type = "for";
-        } else if (line.startsWith(Tags.SUB_IF)) {
-            subTag.type = "if";
-        }
+        subTag.type = tags.get(1);
         subTag.full = line;
-        subTag.tag = TagTools.getTags(Tags.SINGLE_START, Tags.SINGLE_END, line).get(0);
+        subTag.tag = tags.get(2);
         return subTag;
     }
 

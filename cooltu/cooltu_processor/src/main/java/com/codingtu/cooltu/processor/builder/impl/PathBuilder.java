@@ -212,23 +212,23 @@ package [[pkg]];
 
 public class [[name]] extends [[basePath]] {
 
---------------------------------------------------------------------------------[fileds]
+                                                                                                    [<sub>][for][fileds]
     public [type] [name];
---------------------------------------------------------------------------------[fileds]
+                                                                                                    [<sub>][for][fileds]
 
---------------------------------------------------------------------------------[fileFileds]
+                                                                                                    [<sub>][for][fileFileds]
     public [type] [name];
---------------------------------------------------------------------------------[fileFileds]
+                                                                                                    [<sub>][for][fileFileds]
 
-================================================================================[obtain]
+                                                                                                    [<sub>][if][obtain]
     public static [name] obtain([params]) {
         return root([sDCardToolFullName].getSDCard()
---------------------------------------------------------------------------------[addObtainRoot]
+                                                                                                    [<sub>][for][addObtainRoot]
                 + addPrexSeparator([path])
---------------------------------------------------------------------------------[addObtainRoot]
+                                                                                                    [<sub>][for][addObtainRoot]
         );
     }
-================================================================================[obtain]
+                                                                                                    [<sub>][if][obtain]
 
     public static [[name]] root(String root) {
         return new [[name]](root);
@@ -236,43 +236,43 @@ public class [[name]] extends [[basePath]] {
 
     public [[name]](String root) {
         super(root);
---------------------------------------------------------------------------------[initDirs]
+                                                                                                    [<sub>][for][initDirs]
         this.[filedName] = [filedType].root(
                 this.root
                         + addPrexSeparator("[dirName]")
         );
---------------------------------------------------------------------------------[initDirs]
---------------------------------------------------------------------------------[initFiles]
+                                                                                                    [<sub>][for][initDirs]
+                                                                                                    [<sub>][for][initFiles]
         this.[filedName] = new [filedType](
                 this.root
                         + addPrexSeparator("[fileName]")
                 , "[fileType]"
-================================================================================[initFilesParam]
+                                                                                                    [<sub>][if][initFilesParam]
                 , [othersParam]
-================================================================================[initFilesParam]
+                                                                                                    [<sub>][if][initFilesParam]
         );
---------------------------------------------------------------------------------[initFiles]
+                                                                                                    [<sub>][for][initFiles]
     }
 
---------------------------------------------------------------------------------[dirsMethod]
+                                                                                                    [<sub>][for][dirsMethod]
     public [fieldType] [methodName](String [value]) {
         return new [fieldType](
                 this.root
                         + addPrexSeparator([value])
         );
     }
---------------------------------------------------------------------------------[dirsMethod]
+                                                                                                    [<sub>][for][dirsMethod]
 
---------------------------------------------------------------------------------[dirList]
+                                                                                                    [<sub>][for][dirList]
     public [tListTsFullName]<[fieldType]> [fieldName]List(
---------------------------------------------------------------------------------[dirListParam]
+                                                                                                    [<sub>][for][dirListParam]
             [type] [name][divider]
---------------------------------------------------------------------------------[dirListParam]
+                                                                                                    [<sub>][for][dirListParam]
     ) {
         [filterFullName] filter = new [filterFullName]();
---------------------------------------------------------------------------------[dirListFilter]
+                                                                                                    [<sub>][for][dirListFilter]
         filter.[type] = [type];
---------------------------------------------------------------------------------[dirListFilter]
+                                                                                                    [<sub>][for][dirListFilter]
         return [tsFullName].ts(new java.io.File(root()).listFiles()).convert((index, file) -> {
             if (filter.check(file)) {
                 return [fieldName](file.getName());
@@ -280,31 +280,31 @@ public class [[name]] extends [[basePath]] {
             return null;
         });
     }
---------------------------------------------------------------------------------[dirList]
+                                                                                                    [<sub>][for][dirList]
 
---------------------------------------------------------------------------------[filesMethod]
+                                                                                                    [<sub>][for][filesMethod]
     public [fieldType] [filedName](String [value]) {
         return new [fieldType](
                 this.root
                         + addPrexSeparator([value] + ".txt")
                 , "[fileType]"
-================================================================================[filesMethodParam]
+                                                                                                    [<sub>][if][filesMethodParam]
                 , [others]
-================================================================================[filesMethodParam]
+                                                                                                    [<sub>][if][filesMethodParam]
         );
     }
---------------------------------------------------------------------------------[filesMethod]
+                                                                                                    [<sub>][for][filesMethod]
 
---------------------------------------------------------------------------------[fileList]
+                                                                                                    [<sub>][for][fileList]
     public [tListTsFullName]<[fieldType]> [fieldName]_list(
---------------------------------------------------------------------------------[fileListParam]
+                                                                                                    [<sub>][for][fileListParam]
             [type] [name][divider]
---------------------------------------------------------------------------------[fileListParam]
+                                                                                                    [<sub>][for][fileListParam]
     ) {
         [filterFullName] filter = new [filterFullName]();
---------------------------------------------------------------------------------[filterParam]
+                                                                                                    [<sub>][for][filterParam]
         filter.[name] = [name];
---------------------------------------------------------------------------------[filterParam]
+                                                                                                    [<sub>][for][filterParam]
         return [tsFullName].ts(new java.io.File(root()).listFiles()).convert((index, file) -> {
             if (filter.check(file)) {
                 return [fieldName](file.getName());
@@ -312,7 +312,6 @@ public class [[name]] extends [[basePath]] {
             return null;
         });
     }
---------------------------------------------------------------------------------[fileList]
-
+                                                                                                    [<sub>][for][fileList]
 }
 model_temp_end */

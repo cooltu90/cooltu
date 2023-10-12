@@ -321,7 +321,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
     }
 
     private boolean isSubStart(String line) {
-        return line.startsWith(Tags.SUB_FOR) || line.startsWith(Tags.SUB_IF);
+        return line.contains(Tags.SUB);
     }
 
     @Override

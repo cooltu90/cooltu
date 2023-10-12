@@ -17,8 +17,8 @@ public class SupportTypes {
     public static Class[] types() {
         return new Class[]{
                 ModuleInfo.class, ModuleInfoDeal.class,
-                Paths.class, PathDeal.class,
                 PathFilter.class, PathFilterDeal.class,
+                Paths.class, PathDeal.class,
 //                ResFor.class, ResForDeal.class
         };
     }
