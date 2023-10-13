@@ -172,7 +172,7 @@ public class StringTool {
     }
 
     //严格模式
-    public static String getSubStrictMode(String oriStr, String startStr, String left, String right) {
+    public static String getSub(String oriStr, String startStr, String left, String right) {
         int startIndex = 0;
         if (isNotBlank(startStr)) {
             startIndex = oriStr.indexOf(startStr);
@@ -195,15 +195,8 @@ public class StringTool {
         return oriStr.substring(startIndex, endIndex);
     }
 
-    @Deprecated
-    public static String getSub(String oriStr, String startStr, String left, String right) {
-        int fromIndex = isBlank(startStr) ? 0 : (oriStr.indexOf(startStr) + startStr.length());
-        int startIndex = oriStr.indexOf(left, fromIndex) + left.length();
-        return oriStr.substring(startIndex, oriStr.indexOf(right, startIndex));
-    }
-
     //获取子字符串，但是会判断首尾位置
-    private static String getSubStrictMode(String str, int startIndex, int endIndex) {
+    public static String getSub(String str, int startIndex, int endIndex) {
         int length = str.length();
         if (startIndex > endIndex) {
             int temp = startIndex;
@@ -218,20 +211,6 @@ public class StringTool {
         return str.substring(startIndex, endIndex);
     }
 
-
-    //获取子字符串，但是会判断首尾位置
-    @Deprecated
-    private static String getSub(String str, int startIndex, int endIndex) {
-        int length = str.length();
-        if (startIndex > endIndex) {
-            int temp = startIndex;
-            startIndex = endIndex;
-            endIndex = temp;
-        }
-        startIndex = getIndexInStr(length, startIndex);
-        endIndex = getIndexInStr(length, endIndex);
-        return str.substring(startIndex, endIndex);
-    }
 
     //修改字符串的角标，让角标在字符串的范围内
     private static int getIndexInStr(int length, int num) {
@@ -251,25 +230,14 @@ public class StringTool {
      * bit 为截取几位
      *
      **************************************************/
-    @Deprecated
+
     public static String getSubFromStart(String str, int startIndex, int bit) {
         int endIndex = startIndex + bit;
         return getSub(str, startIndex, endIndex);
     }
 
-    @Deprecated
     public static String getSubFromStart(String str, int bit) {
         return getSubFromStart(str, 0, bit);
-    }
-
-
-    public static String getSubFromStartStrictMode(String str, int startIndex, int bit) {
-        int endIndex = startIndex + bit;
-        return getSubStrictMode(str, startIndex, endIndex);
-    }
-
-    public static String getSubFromStartStrictMode(String str, int bit) {
-        return getSubFromStartStrictMode(str, 0, bit);
     }
 
 
@@ -280,26 +248,14 @@ public class StringTool {
      * bit 为截取几位
      *
      **************************************************/
-    @Deprecated
     public static String getSubFromEnd(String str, int endIndex, int bit) {
         int startIndex = endIndex - bit;
         return getSub(str, startIndex, endIndex);
     }
 
-    @Deprecated
     public static String getSubFromEnd(String str, int bit) {
         return getSubFromEnd(str, str.length(), bit);
     }
-
-    public static String getSubFromEndStrictMode(String str, int endIndex, int bit) {
-        int startIndex = endIndex - bit;
-        return getSubStrictMode(str, startIndex, endIndex);
-    }
-
-    public static String getSubFromEndStrictMode(String str, int bit) {
-        return getSubFromEndStrictMode(str, str.length(), bit);
-    }
-
 
     /**************************************************
      *

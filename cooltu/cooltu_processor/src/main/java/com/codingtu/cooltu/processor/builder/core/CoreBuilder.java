@@ -31,7 +31,7 @@ public abstract class CoreBuilder implements Symbol {
         BuilderMap.add(getBuilderType(), this);
     }
 
-    private BuilderType getBuilderType() {
+    protected BuilderType getBuilderType() {
         return BuilderType.DEFAULT;
     }
 
@@ -45,13 +45,22 @@ public abstract class CoreBuilder implements Symbol {
             return;
         }
         File file = new File(javaInfo.path);
-        if (isForce || !file.exists()) {
+        if (isBuild() && (isForce() || !file.exists())) {
             List<String> lines = getLines();
             if (!CountTool.isNull(lines)) {
                 FileWriter.to(file).cover().write(lines);
             }
         }
     }
+
+    protected boolean isBuild() {
+        return true;
+    }
+
+    protected boolean isForce() {
+        return true;
+    }
+
 
     private List<String> getLines() {
         dealLines();

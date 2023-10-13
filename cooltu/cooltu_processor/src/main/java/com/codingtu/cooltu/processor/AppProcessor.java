@@ -15,8 +15,8 @@ import com.codingtu.cooltu.processor.builder.impl.BuilderBuilder;
 import com.codingtu.cooltu.processor.deal.base.BaseDeal;
 import com.codingtu.cooltu.processor.lib.App;
 import com.codingtu.cooltu.processor.lib.BuilderMap;
+import com.codingtu.cooltu.processor.lib.path.ProcessorPath;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
-import com.codingtu.cooltu.processor.lib.tools.PathTools;
 import com.google.auto.service.AutoService;
 import com.sun.source.util.Trees;
 
@@ -52,15 +52,15 @@ public class AppProcessor extends AbstractProcessor {
     }
 
     private void deal() {
-        String coreProcessorJavaDir = PathTools.getProcessorJavaDir();
-        FileLister.dir(PathTools.getBuilderImplDir()).list(new ListFile() {
+        String coreProcessorJavaDir = ProcessorPath.javaDir();
+        FileLister.dir(ProcessorPath.builderImplDir()).list(new ListFile() {
             @Override
             public void list(File file) {
                 String path = file.getAbsolutePath().substring(coreProcessorJavaDir.length());
                 path = StringTool.cutSuffix(path, FileType.d_JAVA);
                 String classFullName = ConvertTool.pathToPkg(path);
-                JavaInfo builderJavaInfo = PathTools.getProcessorJavaInfo(classFullName);
-                JavaInfo builderBaseJavaInfo = PathTools.getProcessorJavaInfo(Pkg.PROCESSOR_BUILDER_BASE, builderJavaInfo.name + Suffix.PROCESS_BUILDER_BASE);
+                JavaInfo builderJavaInfo = ProcessorPath.javaInfo(classFullName);
+                JavaInfo builderBaseJavaInfo = ProcessorPath.javaInfo(Pkg.PROCESSOR_BUILDER_BASE, builderJavaInfo.name + Suffix.PROCESS_BUILDER_BASE);
                 new BuilderBuilder(builderJavaInfo, builderBaseJavaInfo);
             }
         });

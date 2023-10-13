@@ -7,4 +7,11 @@ import java.lang.annotation.RetentionPolicy;
 public @interface ModuleInfo {
     //模块名
     String module();
+
+    String actPkg();
+
+    Class baseAct();
+
+    //默认的R的包名
+    String rPkg();
 }

@@ -3,15 +3,12 @@ package com.codingtu.cooltu.processor.builder.impl;
 import com.codingtu.cooltu.constant.FileContentType;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
-import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
-import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.TListTs;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.bean.DirPathInfo;
 import com.codingtu.cooltu.processor.bean.FilePathInfo;
@@ -19,10 +16,7 @@ import com.codingtu.cooltu.processor.bean.PathFilterInfo;
 import com.codingtu.cooltu.processor.builder.base.PathBuilderBase;
 import com.codingtu.cooltu.processor.deal.PathDeal;
 import com.codingtu.cooltu.processor.deal.PathFilterDeal;
-import com.codingtu.cooltu.processor.lib.annotation.BuilderBase;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
-import com.codingtu.cooltu.processor.lib.tools.PathTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +29,6 @@ public class PathBuilder extends PathBuilderBase {
 
     public PathBuilder(String path, JavaInfo info) {
         super(info);
-        isForce = true;
         this.path = path;
     }
 
@@ -88,7 +81,7 @@ public class PathBuilder extends PathBuilderBase {
                 }
             });
 
-            obtain(javaInfo.name, params.getMethodParams(), FullName.SDCARD_TOOL);
+            obtainIf(javaInfo.name, params.getMethodParams(), FullName.SDCARD_TOOL);
 
             addObtainRootCount(CountTool.count(split));
 
@@ -155,7 +148,7 @@ public class PathBuilder extends PathBuilderBase {
                         initFiles(nums[3], info.fieldFullName, filedType, info.fileName, info.file.fileType());
                         initFilesParamIf(nums[3], ifParam);
                         if (ifParam) {
-                            initFilesParam(nums[3], info.beanClass + ".class");
+                            initFilesParamIf(nums[3], info.beanClass + ".class");
                         }
                         nums[3]++;
                     }
@@ -163,7 +156,7 @@ public class PathBuilder extends PathBuilderBase {
                     if (StringTool.isNotBlank(filedType)) {
                         filesMethodParamIf(nums[4], ifParam);
                         if (ifParam) {
-                            filesMethodParam(nums[4], info.beanClass + ".class");
+                            filesMethodParamIf(nums[4], info.beanClass + ".class");
                         }
                         filesMethod(nums[4], filedType, info.fieldFullName, cutParam(info.fileName), info.file.fileType());
                         nums[4]++;

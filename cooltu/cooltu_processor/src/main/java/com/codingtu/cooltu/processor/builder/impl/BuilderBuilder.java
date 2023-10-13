@@ -10,8 +10,7 @@ import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.bean.SubTag;
 import com.codingtu.cooltu.processor.builder.base.BuilderBuilderBase;
 import com.codingtu.cooltu.processor.constant.Tags;
-import com.codingtu.cooltu.processor.lib.log.Logs;
-import com.codingtu.cooltu.processor.lib.tools.PathTools;
+import com.codingtu.cooltu.processor.lib.path.ProcessorPath;
 import com.codingtu.cooltu.processor.lib.tools.TagTools;
 import com.codingtu.cooltu.processor.lib.tools.TempTools;
 
@@ -30,7 +29,6 @@ public class BuilderBuilder extends BuilderBuilderBase {
 
     public BuilderBuilder(JavaInfo builderJavaInfo, JavaInfo info) {
         super(info);
-        isForce = true;
 
         List<String> lines = TempTools.getTempLines(new File(builderJavaInfo.path));
         addTag(pkg, Pkg.PROCESSOR_BUILDER_BASE);
@@ -167,7 +165,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
         String strsParam = strSb.toString();
 
         if (StringTool.isNotBlank(strsParam)) {
-            addLnTag(ifs, "    protected void [lines]([countSb][strings]) {"
+            addLnTag(ifs, "    protected void [lines]If([countSb][strings]) {"
                     , lastSubTagStart.tag, ifPutMethodParams, strsParam);
             addLnTag(ifs, "        addForMap([lines], getIfKey(\"[tag]\"[i0])[strsValue]);"
                     , lastSubTagStart.parentTag, lastSubTagStart.tag, ifKeyParams, strSb1.toString());
@@ -331,7 +329,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
 
     @Override
     protected List<String> getTempLines() {
-        return TempTools.getTempLines(new File(PathTools.getProcessorJavaInfo(this).path));
+        return TempTools.getTempLines(new File(ProcessorPath.javaInfo(this).path));
     }
 }
 /* model_temp_start

@@ -7,6 +7,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.SOURCE)
-public @interface Layout {
-    int value();
+public @interface ActBase {
+    Class base() default Void.class;
+
+    int layout() default -1;
 }

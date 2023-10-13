@@ -18,8 +18,8 @@ import com.codingtu.cooltu.processor.bean.DirPathInfo;
 import com.codingtu.cooltu.processor.bean.FilePathInfo;
 import com.codingtu.cooltu.processor.builder.impl.PathBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
+import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
-import com.codingtu.cooltu.processor.lib.tools.PathTools;
 
 import java.util.HashMap;
 
@@ -144,6 +144,6 @@ public class PathDeal extends TypeBaseDeal {
     }
 
     private JavaInfo getJavaInfo(String baseName) {
-        return PathTools.getCurrentJavaInfo(Pkg.CORE_PATH, ConvertTool.toClassType(baseName) + Suffix.PATH);
+        return CurrentPath.javaInfo(Pkg.CORE_PATH, ConvertTool.toClassType(baseName) + Suffix.PATH);
     }
 }

@@ -7,6 +7,8 @@ package com.codingtu.cooltu.constant;
  **************************************************/
 public class FullName {
 
+    public static String BASE_ACT;
+
     public static final String PROCESS_CORE_BUILDER = Pkg.PROCESSOR_BUILDER_CORE + ".CoreBuilder";
     public static final String PROCESS_CORE_BUILDER_FIELD = Pkg.PROCESSOR_BUILDER_CORE + ".FieldCoreBuilder";
     public static final String PROCESS_CORE_BUILDER_METHOD = Pkg.PROCESSOR_BUILDER_CORE + ".MethodCoreBuilder";
@@ -25,6 +27,5 @@ public class FullName {
     public static final String PATH_TEXT_FILE = Pkg.LIB4A_PATH + ".PathTextFile";
     public static final String PATH_IMAGE_FILE = Pkg.LIB4A_PATH + ".PathImageFile";
     public static final String PATH_BEAN_FILE = Pkg.LIB4A_PATH + ".PathBeanFile";
-
 
 }

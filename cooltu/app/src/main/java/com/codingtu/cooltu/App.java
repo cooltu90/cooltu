@@ -3,11 +3,15 @@ package com.codingtu.cooltu;
 import com.codingtu.cooltu.constant.Module;
 import com.codingtu.cooltu.lib4a.CoreApp;
 import com.codingtu.cooltu.lib4a.CoreConfigs;
+import com.codingtu.cooltu.lib4a.act.CoreActivity;
 import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 
 @ModuleInfo(
-        module = Module.APP
+        module = Module.APP,
+        actPkg = "com.codingtu.cooltu.ui",
+        baseAct = CoreActivity.class,
+        rPkg = "com.codingtu.cooltu"
 )
 @CreateAct(
         name = "welcome",
@@ -16,6 +20,6 @@ import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 public class App extends CoreApp {
     @Override
     public CoreConfigs createConfigs() {
-        return null;
+        return new Configs();
     }
 }
