@@ -79,6 +79,10 @@ public class CoreActivity extends AppCompatActivity implements CoreUiInterface {
         });
     }
 
+    protected boolean isLogin() {
+        return false;
+    }
+
     /********************************
      *
      * 对finish方法做扩展

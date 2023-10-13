@@ -1,18 +1,52 @@
 package com.codingtu.cooltu.processor.lib.tools;
 
+import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
 import com.codingtu.cooltu.lib4j.file.read.FileReader;
+import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LayoutTools {
-    public static List<String> read(String layoutName, String parentId, String space) {
+
+    public static class ViewInfo {
+        public ViewInfo parent;
+        public List<ViewInfo> childs = new ArrayList<>();
+        public String tag;
+        public String id;
+        public String fieldName;
+    }
+
+    public static List<ViewInfo> convert(String layoutName) {
+        ViewInfo info = read(layoutName);
+
+        ListValueMap<String, ViewInfo> viewInfoMap = new ListValueMap<>();
+
+        dealViewInfo(viewInfoMap, info);
+        dealViewinfo(viewInfoMap);
+
+        return Ts.ts(viewInfoMap).toList().convert(new BaseTs.Convert<List<LayoutTools.ViewInfo>, LayoutTools.ViewInfo>() {
+            @Override
+            public LayoutTools.ViewInfo convert(int index, List<LayoutTools.ViewInfo> viewInfos) {
+                if (CountTool.isNull(viewInfos)) {
+                    return null;
+                }
+                return viewInfos.get(0);
+            }
+        }).get();
+    }
+
+
+    private static ViewInfo read(String layoutName) {
+        return dealLines(read(layoutName, null, ""));
+    }
+
+    private static List<String> read(String layoutName, String parentId, String space) {
         List<String> lines = FileReader.from(CurrentPath.layout(layoutName)).readLine();
         List<String> newLines = new ArrayList<>();
         int count = CountTool.count(lines);
@@ -55,28 +89,6 @@ public class LayoutTools {
         return newLines;
     }
 
-    public static class ViewInfo {
-        public ViewInfo parent;
-        public List<ViewInfo> childs = new ArrayList<>();
-        public String tag;
-        public String id;
-
-        public void log() {
-            Logs.i(tag + " " + id);
-            int count = CountTool.count(childs);
-            if (count > 0) {
-                for (int i = 0; i < count; i++) {
-                    ViewInfo viewInfo = childs.get(i);
-                    viewInfo.log();
-                }
-            }
-        }
-    }
-
-    public static ViewInfo read(String layoutName) {
-        return dealLines(read(layoutName, null, ""));
-    }
-
     private static ViewInfo dealLines(List<String> lines) {
         ViewInfo info = null;
         ViewInfo startInfo = null;
@@ -101,13 +113,25 @@ public class LayoutTools {
                     if (end < 0) {
                         end = line.length();
                     }
-                    //android.widget
                     info.tag = line.substring(start, end);
+                    if (!info.tag.contains(".")) {
+                        if ("View".equals(info.tag)) {
+                            info.tag = "android.view.View";
+                        } else {
+                            info.tag = "android.widget." + info.tag;
+                        }
+                    }
+
                 }
 
-                if (line.contains("android:id=")) {
+                if (line.contains("android:id=\"@+id")) {
                     String id = StringTool.getSub(line, "android:id=", "@+id/", "\"");
                     info.id = id;
+                    info.fieldName = info.id;
+                } else if (line.contains("android:id=\"@id")) {
+                    String id = StringTool.getSub(line, "android:id=", "@id/", "\"");
+                    info.id = id;
+                    info.fieldName = info.id;
                 }
 
                 if (isEndTagLine(line)) {
@@ -133,5 +157,46 @@ public class LayoutTools {
             }
         }
         return false;
+    }
+
+    private static void dealViewInfo(ListValueMap<String, ViewInfo> viewInfoMap, LayoutTools.ViewInfo viewInfo) {
+        if (viewInfo != null) {
+            if (StringTool.isNotBlank(viewInfo.id)) {
+                viewInfoMap.get(viewInfo.fieldName).add(viewInfo);
+            }
+            Ts.ls(viewInfo.childs, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
+                @Override
+                public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
+                    dealViewInfo(viewInfoMap, viewInfo);
+                    return false;
+                }
+            });
+        }
+    }
+
+    private static void dealViewinfo(ListValueMap<String, ViewInfo> viewInfoMap) {
+        boolean isFinish = true;
+        List<String> keys = Ts.ts(viewInfoMap.keySet()).toList().get();
+        for (String key : keys) {
+            List<LayoutTools.ViewInfo> viewInfos = viewInfoMap.get(key);
+            int count = CountTool.count(viewInfos);
+            if (count > 1) {
+                isFinish = false;
+                viewInfoMap.put(key, null);
+                for (int i = 0; i < count; i++) {
+                    LayoutTools.ViewInfo viewInfo = viewInfos.get(i);
+                    changeFieldName(viewInfo);
+                    viewInfoMap.get(viewInfo.fieldName).add(viewInfo);
+                }
+            }
+        }
+        if (!isFinish) {
+            dealViewinfo(viewInfoMap);
+        }
+    }
+
+
+    private static void changeFieldName(LayoutTools.ViewInfo info) {
+        info.fieldName = info.parent.fieldName + ConvertTool.toClassType(info.fieldName);
     }
 }

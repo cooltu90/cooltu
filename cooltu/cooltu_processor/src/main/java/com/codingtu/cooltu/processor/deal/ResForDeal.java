@@ -1,15 +1,25 @@
 package com.codingtu.cooltu.processor.deal;
 
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
+import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.BuilderType;
+import com.codingtu.cooltu.processor.annotation.res.InBase;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
 import com.codingtu.cooltu.processor.lib.BuilderMap;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
+import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
+import java.util.List;
+
+import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
 
 public class ResForDeal extends TypeBaseDeal {
     @Override
@@ -21,8 +31,37 @@ public class ResForDeal extends TypeBaseDeal {
                 return resFor.value();
             }
         });
-        JavaInfo actBaseJavaInfo = CurrentPath.actBaseJavaInfo(actClass);
-        ActBaseBuilder builder = BuilderMap.find(BuilderType.actBase, actBaseJavaInfo.fullName);
-        
+        ActBaseBuilder builder = CurrentPath.actBaseBuilder(actClass);
+
+        Ts.ls(te.getEnclosedElements(), (position, element) -> {
+            if (element instanceof VariableElement) {
+                VariableElement ve = (VariableElement) element;
+                dealField(actClass, builder, ve);
+            }
+            return false;
+        });
+
+
+    }
+
+    private void dealField(String fullName, ActBaseBuilder builder, VariableElement ve) {
+        InBase inBase = ve.getAnnotation(InBase.class);
+        if (inBase != null) {
+            KV<String, String> kv = ElementTools.getFiledKv(ve);
+            builder.addInBase(kv);
+            xxx(fullName, kv);
+        }
+    }
+
+    private void xxx(String fullName, KV<String, String> kv) {
+        Ts.ls(ActBaseDeal.map.get(fullName), new BaseTs.EachTs<String>() {
+            @Override
+            public boolean each(int position, String actFullName) {
+                ActBaseBuilder builder = CurrentPath.actBaseBuilder(actFullName);
+                builder.removeInBase(kv);
+                xxx(actFullName, kv);
+                return false;
+            }
+        });
     }
 }

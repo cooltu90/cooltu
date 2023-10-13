@@ -127,62 +127,62 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
     }
 
     protected void fileds(int i0, String type, String name) {
-        addForMap(fileds, getForKey("fileds", i0), type, name);
+        addForMap(this.fileds, getForKey("fileds", i0), type, name);
     }
     protected void fileFileds(int i0, String type, String name) {
-        addForMap(fileFileds, getForKey("fileFileds", i0), type, name);
+        addForMap(this.fileFileds, getForKey("fileFileds", i0), type, name);
     }
     protected void addObtainRoot(int i0, String path) {
-        addForMap(obtain, getForKey("addObtainRoot", i0), path);
+        addForMap(this.obtain, getForKey("addObtainRoot", i0), path);
     }
     protected void initDirs(int i0, String filedName, String filedType, String dirName) {
-        addForMap(initDirs, getForKey("initDirs", i0), filedName, filedType, dirName);
+        addForMap(this.initDirs, getForKey("initDirs", i0), filedName, filedType, dirName);
     }
     protected void initFiles(int i0, String filedName, String filedType, String fileName, String fileType) {
-        addForMap(initFiles, getForKey("initFiles", i0), filedName, filedType, fileName, fileType);
+        addForMap(this.initFiles, getForKey("initFiles", i0), filedName, filedType, fileName, fileType);
     }
     protected void dirsMethod(int i0, String fieldType, String methodName, String value) {
-        addForMap(dirsMethod, getForKey("dirsMethod", i0), fieldType, methodName, value, fieldType, value);
+        addForMap(this.dirsMethod, getForKey("dirsMethod", i0), fieldType, methodName, value, fieldType, value);
     }
     protected void dirListParam(int i0, int i1, String type, String name, String divider) {
-        addForMap(dirList, getForKey("dirListParam", i0, i1), type, name, divider);
+        addForMap(this.dirList, getForKey("dirListParam", i0, i1), type, name, divider);
     }
     protected void dirListFilter(int i0, int i1, String type) {
-        addForMap(dirList, getForKey("dirListFilter", i0, i1), type, type);
+        addForMap(this.dirList, getForKey("dirListFilter", i0, i1), type, type);
     }
     protected void dirList(int i0, String tListTsFullName, String fieldType, String fieldName, String filterFullName, String tsFullName) {
-        addForMap(dirList, getForKey("dirList", i0), tListTsFullName, fieldType, fieldName, filterFullName, filterFullName, tsFullName, fieldName);
+        addForMap(this.dirList, getForKey("dirList", i0), tListTsFullName, fieldType, fieldName, filterFullName, filterFullName, tsFullName, fieldName);
     }
     protected void filesMethod(int i0, String fieldType, String filedName, String value, String fileType) {
-        addForMap(filesMethod, getForKey("filesMethod", i0), fieldType, filedName, value, fieldType, value, fileType);
+        addForMap(this.filesMethod, getForKey("filesMethod", i0), fieldType, filedName, value, fieldType, value, fileType);
     }
     protected void fileListParam(int i0, int i1, String type, String name, String divider) {
-        addForMap(fileList, getForKey("fileListParam", i0, i1), type, name, divider);
+        addForMap(this.fileList, getForKey("fileListParam", i0, i1), type, name, divider);
     }
     protected void filterParam(int i0, int i1, String name) {
-        addForMap(fileList, getForKey("filterParam", i0, i1), name, name);
+        addForMap(this.fileList, getForKey("filterParam", i0, i1), name, name);
     }
     protected void fileList(int i0, String tListTsFullName, String fieldType, String fieldName, String filterFullName, String tsFullName) {
-        addForMap(fileList, getForKey("fileList", i0), tListTsFullName, fieldType, fieldName, filterFullName, filterFullName, tsFullName, fieldName);
+        addForMap(this.fileList, getForKey("fileList", i0), tListTsFullName, fieldType, fieldName, filterFullName, filterFullName, tsFullName, fieldName);
     }
 
     protected void obtainIf(boolean is) {
         obtainIfs.put(getIfKey("obtain"), is);
     }
     protected void obtainIf(String name, String params, String sDCardToolFullName) {
-        addForMap(obtain, getIfKey("obtain"), name, params, sDCardToolFullName);
+        addForMap(this.obtain, getIfKey("obtain"), name, params, sDCardToolFullName);
     }
     protected void initFilesParamIf(int i0, boolean is) {
         initFilesIfs.put(getIfKey("initFilesParam", i0), is);
     }
     protected void initFilesParamIf(int i0, String othersParam) {
-        addForMap(initFiles, getIfKey("initFilesParam", i0), othersParam);
+        addForMap(this.initFiles, getIfKey("initFilesParam", i0), othersParam);
     }
     protected void filesMethodParamIf(int i0, boolean is) {
         filesMethodIfs.put(getIfKey("filesMethodParam", i0), is);
     }
     protected void filesMethodParamIf(int i0, String others) {
-        addForMap(filesMethod, getIfKey("filesMethodParam", i0), others);
+        addForMap(this.filesMethod, getIfKey("filesMethodParam", i0), others);
     }
 
     @Override

@@ -8,6 +8,9 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.file.FileTool;
+import com.codingtu.cooltu.processor.BuilderType;
+import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
+import com.codingtu.cooltu.processor.lib.BuilderMap;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 
 /**************************************************
@@ -48,8 +51,16 @@ import com.codingtu.cooltu.processor.lib.tools.IdTools;
  * ┗━━━━━━━━━━━━━━━━━━━┛
  * {@link #layout(String)}
  *
+ *
+ *   ┏━━━━━━━━━━━━━━━━━━━━━━┓
+ *  ┃   ActBaseBuilder   ┃
+ * ┗━━━━━━━━━━━━━━━━━━━━━━┛
+ * {@link #actBaseBuilder(String)}
+ *
  **************************************************/
-public class CurrentPath{
+public class CurrentPath {
+
+    private static JavaInfo javaInfo;
 
     public static String javaDir() {
         return PathTools.javaDir(Module.CURRENT);
@@ -89,5 +100,10 @@ public class CurrentPath{
                 + Constant.SEPARATOR
                 + layoutName
                 + FileType.d_XML;
+    }
+
+    public static ActBaseBuilder actBaseBuilder(String actFullName) {
+        JavaInfo javaInfo = actBaseJavaInfo(actFullName);
+        return BuilderMap.find(BuilderType.actBase, javaInfo.fullName);
     }
 }

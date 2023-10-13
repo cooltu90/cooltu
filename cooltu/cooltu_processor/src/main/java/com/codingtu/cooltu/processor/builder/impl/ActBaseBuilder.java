@@ -1,22 +1,34 @@
 package com.codingtu.cooltu.processor.builder.impl;
 
+import com.codingtu.cooltu.constant.FullName;
+import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
+import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.lib.log.Logs;
+import com.codingtu.cooltu.processor.lib.path.CurrentPath;
+import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @To(ActBaseDeal.class)
 public class ActBaseBuilder extends ActBaseBuilderBase {
 
     private ActBaseInfo info;
-    private int idCount;
+    private List<KV<String, String>> inBases = new ArrayList<>();
+    private HashMap<String, String> inBaseMap = new HashMap<>();
 
     public ActBaseBuilder(JavaInfo info) {
         super(info);
@@ -40,39 +52,102 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
     public void addInfos(ActBaseInfo actBaseInfo) {
         this.info = actBaseInfo;
+
+    }
+
+    public void addInBase(KV<String, String> fieldKv) {
+        inBases.add(fieldKv);
+    }
+
+    public void removeInBase(KV<String, String> kv) {
+        inBaseMap.put(kv.v, kv.v);
+    }
+
+    public ActBaseInfo getActBaseInfo() {
+        return this.info;
     }
 
     @Override
     protected void dealLines() {
+
+        Logs.i("javaInfo:" + javaInfo.fullName);
+
         addTag(pkg, javaInfo.pkg);
         addTag(name, javaInfo.name);
         addTag(baseClass, info.baseClass);
 
-        onCreateIf(info.layout != null);
+        layoutIf(info.layout != null);
         if (info.layout != null) {
-            onCreateIf(info.layout.toString());
+            layoutIf(info.layout.toString());
         }
 
-        dealViewInfo(info.viewInfo);
-
-        viewCount(idCount);
-    }
-
-    private void dealViewInfo(LayoutTools.ViewInfo viewInfo) {
-        if (viewInfo != null) {
-            if (StringTool.isNotBlank(viewInfo.id)) {
-                view(idCount, viewInfo.tag, viewInfo.id);
-                idCount++;
-            }
-            Ts.ls(viewInfo.childs, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
-                @Override
-                public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
-                    dealViewInfo(viewInfo);
-                    return false;
+        final int[] viewCount = {0};
+        findViewCount(CountTool.count(info.viewInfos));
+        Ts.ls(info.viewInfos, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
+            @Override
+            public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
+                if (inBaseMap.get(viewInfo.fieldName) == null) {
+                    view(viewCount[0]++, viewInfo.tag, viewInfo.fieldName);
                 }
-            });
+
+                String parent = "";
+                if (!viewInfo.fieldName.equals(viewInfo.id)) {
+                    parent = viewInfo.parent.fieldName + ".";
+                }
+                findView(position, viewInfo.fieldName, parent, Pkg.R, viewInfo.id);
+                return false;
+            }
+        });
+
+        viewCount(viewCount[0]);
+
+        inBaseCount(CountTool.count(inBases));
+        Ts.ls(inBases, new BaseTs.EachTs<KV<String, String>>() {
+            @Override
+            public boolean each(int position, KV<String, String> kv) {
+                inBase(position, kv.k, kv.v);
+                return false;
+            }
+        });
+
+        final int[] setOnClickCount = {0};
+        Ts.ls(info.clickViews, new BaseTs.EachTs<ClickViewInfo>() {
+            @Override
+            public boolean each(int position, ClickViewInfo info) {
+                Ts.ls(info.ids, new BaseTs.EachTs<IdTools.Id>() {
+                    @Override
+                    public boolean each(int position, IdTools.Id id) {
+                        if (info.inAct.get(position)) {
+                            dealSetOnClick(id, setOnClickCount, getActBaseInfo());
+                        }
+                        return false;
+                    }
+                });
+                return false;
+            }
+        });
+        setOnClickCount(setOnClickCount[0]);
+    }
+
+    private void dealSetOnClick(IdTools.Id id, int[] setOnClickCount, ActBaseInfo actBaseInfo) {
+        Ts.ts(actBaseInfo.viewInfos).convert(new BaseTs.Convert<LayoutTools.ViewInfo, LayoutTools.ViewInfo>() {
+            @Override
+            public LayoutTools.ViewInfo convert(int index, LayoutTools.ViewInfo viewInfo) {
+                if (viewInfo.id.equals(id.rName)) {
+                    setOnClick(setOnClickCount[0], viewInfo.fieldName);
+                    setOnClickCount[0]++;
+                }
+                return null;
+            }
+        });
+        if (actBaseInfo.hasBaseClass()) {
+            ActBaseBuilder builder = CurrentPath.actBaseBuilder(actBaseInfo.baseClass);
+            if (builder != null) {
+                dealSetOnClick(id, setOnClickCount, builder.getActBaseInfo());
+            }
         }
     }
+
 
 }
 /* model_temp_start
@@ -85,15 +160,23 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][view]
     protected [type] [name];
                                                                                                     [<sub>][for][view]
+                                                                                                    [<sub>][for][inBase]
+    protected [type] [name];
+                                                                                                    [<sub>][for][inBase]
 
-                                                                                                    [<sub>][if][onCreate]
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+                                                                                                    [<sub>][if][layout]
         setContentView([layout]);
+                                                                                                    [<sub>][if][layout]
+                                                                                                    [<sub>][for][findView]
+        [fieldName] = [parent]findViewById([rPkg].R.id.[id]);
+                                                                                                    [<sub>][for][findView]
+                                                                                                    [<sub>][for][setOnClick]
+        [fieldName].setOnClickListener(this);
+                                                                                                    [<sub>][for][setOnClick]
     }
-                                                                                                    [<sub>][if][onCreate]
-
     @Override
     public void onClick(View v) {
 

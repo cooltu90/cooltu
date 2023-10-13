@@ -7,7 +7,16 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
 
+    @Override
+    protected void onCreate(android.os.Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
+
+        tv3.setOnClickListener(this);
+        tv3RlRlTv.setOnClickListener(this);
+        tv4RlRlTv.setOnClickListener(this);
+
+    }
     @Override
     public void onClick(View v) {
 

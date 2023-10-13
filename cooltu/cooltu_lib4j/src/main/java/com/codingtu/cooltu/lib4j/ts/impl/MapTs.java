@@ -1,7 +1,10 @@
 package com.codingtu.cooltu.lib4j.ts.impl;
 
 import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.ts.impl.basic.TListTs;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class MapTs<K, V> {
@@ -23,6 +26,18 @@ public class MapTs<K, V> {
                 return mapEach.each(k, ts.get(k));
             }
         });
+    }
+
+    public TListTs<V> toList(){
+        TListTs<V> ttListTs = new TListTs<V>(new ArrayList<V>());
+        ls(new MapEach<K, V>() {
+            @Override
+            public boolean each(K k, V v) {
+                ttListTs.add(v);
+                return false;
+            }
+        });
+        return ttListTs;
     }
 
 

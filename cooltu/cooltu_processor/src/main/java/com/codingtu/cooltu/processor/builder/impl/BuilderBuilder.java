@@ -167,7 +167,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
         if (StringTool.isNotBlank(strsParam)) {
             addLnTag(ifs, "    protected void [lines]If([countSb][strings]) {"
                     , lastSubTagStart.tag, ifPutMethodParams, strsParam);
-            addLnTag(ifs, "        addForMap([lines], getIfKey(\"[tag]\"[i0])[strsValue]);"
+            addLnTag(ifs, "        addForMap(this.[lines], getIfKey(\"[tag]\"[i0])[strsValue]);"
                     , lastSubTagStart.parentTag, lastSubTagStart.tag, ifKeyParams, strSb1.toString());
             addLnTag(ifs, "    }");
         }
@@ -252,7 +252,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
         if (StringTool.isNotBlank(strsParam)) {
             addLnTag(fors, "    protected void [lines]([countSb][strings]) {"
                     , lastSubTagStart.tag, getPutMethodIntParams(levelsCount + 1), strsParam);
-            addLnTag(fors, "        addForMap([lines], getForKey(\"[tag]\"[params])[strsValue]);"
+            addLnTag(fors, "        addForMap(this.[lines], getForKey(\"[tag]\"[params])[strsValue]);"
                     , lastSubTagStart.parentTag, lastSubTagStart.tag, forKeyParams1, strSb1.toString());
             addLnTag(fors, "    }");
         }
