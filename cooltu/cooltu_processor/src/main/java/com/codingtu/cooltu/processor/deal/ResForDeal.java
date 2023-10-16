@@ -13,6 +13,7 @@ import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
 import com.codingtu.cooltu.processor.lib.BuilderMap;
 import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
+import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
 import java.util.List;
@@ -31,12 +32,10 @@ public class ResForDeal extends TypeBaseDeal {
                 return resFor.value();
             }
         });
-        ActBaseBuilder builder = CurrentPath.actBaseBuilder(actClass);
-
         Ts.ls(te.getEnclosedElements(), (position, element) -> {
             if (element instanceof VariableElement) {
                 VariableElement ve = (VariableElement) element;
-                dealField(actClass, builder, ve);
+                dealField(actClass, ve);
             }
             return false;
         });
@@ -44,24 +43,21 @@ public class ResForDeal extends TypeBaseDeal {
 
     }
 
-    private void dealField(String fullName, ActBaseBuilder builder, VariableElement ve) {
+    private void dealField(String fullName,VariableElement ve) {
         InBase inBase = ve.getAnnotation(InBase.class);
         if (inBase != null) {
             KV<String, String> kv = ElementTools.getFiledKv(ve);
-            builder.addInBase(kv);
-            xxx(fullName, kv);
+            BaseTools.getActBaseBuilderWithChilds(fullName, new BaseTs.EachTs<ActBaseBuilder>() {
+                @Override
+                public boolean each(int position, ActBaseBuilder actBaseBuilder) {
+                    if (position == 0) {
+                        actBaseBuilder.addInBase(kv);
+                    }else{
+                        actBaseBuilder.removeInBase(kv);
+                    }
+                    return false;
+                }
+            });
         }
-    }
-
-    private void xxx(String fullName, KV<String, String> kv) {
-        Ts.ls(ActBaseDeal.map.get(fullName), new BaseTs.EachTs<String>() {
-            @Override
-            public boolean each(int position, String actFullName) {
-                ActBaseBuilder builder = CurrentPath.actBaseBuilder(actFullName);
-                builder.removeInBase(kv);
-                xxx(actFullName, kv);
-                return false;
-            }
-        });
     }
 }

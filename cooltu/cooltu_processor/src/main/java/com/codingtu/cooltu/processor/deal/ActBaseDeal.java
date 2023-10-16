@@ -38,6 +38,7 @@ public class ActBaseDeal extends TypeBaseDeal {
         ActBase actBase = te.getAnnotation(ActBase.class);
 
         ActBaseInfo actBaseInfo = new ActBaseInfo();
+        actBaseInfo.act=ElementTools.getType(te);
 
         actBaseInfo.baseClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
             @Override

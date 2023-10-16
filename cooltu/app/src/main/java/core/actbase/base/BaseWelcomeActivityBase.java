@@ -13,7 +13,6 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
     protected android.widget.TextView tv4RlRlTv;
 
 
-
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +29,7 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
 
     }
+
     @Override
     public void onClick(View v) {
 

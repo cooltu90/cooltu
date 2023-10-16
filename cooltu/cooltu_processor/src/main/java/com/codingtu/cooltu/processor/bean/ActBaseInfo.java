@@ -13,6 +13,7 @@ public class ActBaseInfo {
     public String baseClass;
     public List<LayoutTools.ViewInfo> viewInfos;
     public List<ClickViewInfo> clickViews = new ArrayList<>();
+    public String act;
 
 
     public boolean hasBaseClass() {

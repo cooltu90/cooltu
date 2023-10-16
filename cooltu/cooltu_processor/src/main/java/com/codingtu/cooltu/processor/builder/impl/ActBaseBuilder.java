@@ -16,6 +16,7 @@ import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
+import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
@@ -69,9 +70,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
     @Override
     protected void dealLines() {
-
-        Logs.i("javaInfo:" + javaInfo.fullName);
-
         addTag(pkg, javaInfo.pkg);
         addTag(name, javaInfo.name);
         addTag(baseClass, info.baseClass);
@@ -118,7 +116,23 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                     @Override
                     public boolean each(int position, IdTools.Id id) {
                         if (info.inAct.get(position)) {
-                            dealSetOnClick(id, setOnClickCount, getActBaseInfo());
+                            BaseTools.getActBaseInfoWithParents(getActBaseInfo(), new BaseTs.EachTs<ActBaseInfo>() {
+                                @Override
+                                public boolean each(int position, ActBaseInfo actBaseInfo) {
+
+                                    Ts.ts(actBaseInfo.viewInfos).convert(new BaseTs.Convert<LayoutTools.ViewInfo, LayoutTools.ViewInfo>() {
+                                        @Override
+                                        public LayoutTools.ViewInfo convert(int index, LayoutTools.ViewInfo viewInfo) {
+                                            if (viewInfo.id.equals(id.rName)) {
+                                                setOnClick(setOnClickCount[0], viewInfo.fieldName);
+                                                setOnClickCount[0]++;
+                                            }
+                                            return null;
+                                        }
+                                    });
+                                    return false;
+                                }
+                            });
                         }
                         return false;
                     }
@@ -128,26 +142,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         });
         setOnClickCount(setOnClickCount[0]);
     }
-
-    private void dealSetOnClick(IdTools.Id id, int[] setOnClickCount, ActBaseInfo actBaseInfo) {
-        Ts.ts(actBaseInfo.viewInfos).convert(new BaseTs.Convert<LayoutTools.ViewInfo, LayoutTools.ViewInfo>() {
-            @Override
-            public LayoutTools.ViewInfo convert(int index, LayoutTools.ViewInfo viewInfo) {
-                if (viewInfo.id.equals(id.rName)) {
-                    setOnClick(setOnClickCount[0], viewInfo.fieldName);
-                    setOnClickCount[0]++;
-                }
-                return null;
-            }
-        });
-        if (actBaseInfo.hasBaseClass()) {
-            ActBaseBuilder builder = CurrentPath.actBaseBuilder(actBaseInfo.baseClass);
-            if (builder != null) {
-                dealSetOnClick(id, setOnClickCount, builder.getActBaseInfo());
-            }
-        }
-    }
-
 
 }
 /* model_temp_start
