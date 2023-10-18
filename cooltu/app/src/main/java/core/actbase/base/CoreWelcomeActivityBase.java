@@ -3,9 +3,8 @@ package core.actbase.base;
 import android.view.View;
 
 public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.lib4a.act.CoreActivity implements View.OnClickListener {
-
-
     protected android.widget.RelativeLayout tv3;
+    protected java.lang.String fromAct;
 
 
     @Override
@@ -14,10 +13,21 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.lib4a.
 
 
 
+
+
+
+
+
+
     }
     @Override
     public void onClick(View v) {
 
+        switch (v.getId()) {
+
+        }
     }
+
+
 }
 

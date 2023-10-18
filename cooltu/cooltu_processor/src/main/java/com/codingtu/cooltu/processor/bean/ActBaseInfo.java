@@ -1,7 +1,7 @@
 package com.codingtu.cooltu.processor.bean;
 
 import com.codingtu.cooltu.constant.FullName;
-import com.codingtu.cooltu.processor.annotation.res.ClickView;
+import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
@@ -14,6 +14,11 @@ public class ActBaseInfo {
     public List<LayoutTools.ViewInfo> viewInfos;
     public List<ClickViewInfo> clickViews = new ArrayList<>();
     public String act;
+    public List<KV<String, String>> colorStrs = new ArrayList<>();
+    public List<KV<String, IdTools.Id>> colorReses = new ArrayList<>();
+    public List<KV<String, Float>> dps = new ArrayList<>();
+    public List<KV<String, IdTools.Id>> dimens = new ArrayList<>();
+    public List<KV<String, String>> starts = new ArrayList<>();
 
 
     public boolean hasBaseClass() {

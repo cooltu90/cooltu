@@ -8,10 +8,11 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.file.FileTool;
+import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.lib.BuilderMap;
-import com.codingtu.cooltu.processor.lib.tools.IdTools;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 
 /**************************************************
  *
@@ -93,6 +94,11 @@ public class CurrentPath {
         JavaInfo actJavaInfo = javaInfo(actFullName);
         String pkg = Pkg.ACT_BASE + actJavaInfo.pkg.substring(Pkg.ACT.length());
         return javaInfo(pkg, actJavaInfo.name + Suffix.ACT_BASE);
+    }
+
+    public static String actStaticName(String actFullName) {
+        JavaInfo actJavaInfo = javaInfo(actFullName);
+        return ConvertTool.toStaticType(actJavaInfo.name);
     }
 
     public static String layout(String layoutName) {

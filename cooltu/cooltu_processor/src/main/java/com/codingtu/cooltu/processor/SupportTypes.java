@@ -3,7 +3,7 @@ package com.codingtu.cooltu.processor;
 import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.annotation.path.PathFilter;
 import com.codingtu.cooltu.processor.annotation.path.Paths;
-import com.codingtu.cooltu.processor.annotation.res.ActBase;
+import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.ModuleInfoDeal;

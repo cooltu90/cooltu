@@ -7,24 +7,18 @@ import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.impl.MapTs;
-import com.codingtu.cooltu.processor.annotation.res.ActBase;
-import com.codingtu.cooltu.processor.annotation.res.ClickView;
+import com.codingtu.cooltu.processor.annotation.ui.ActBase;
+import com.codingtu.cooltu.processor.annotation.ui.ClickView;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 
@@ -38,7 +32,7 @@ public class ActBaseDeal extends TypeBaseDeal {
         ActBase actBase = te.getAnnotation(ActBase.class);
 
         ActBaseInfo actBaseInfo = new ActBaseInfo();
-        actBaseInfo.act=ElementTools.getType(te);
+        actBaseInfo.act = ElementTools.getType(te);
 
         actBaseInfo.baseClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
             @Override
@@ -50,7 +44,7 @@ public class ActBaseDeal extends TypeBaseDeal {
         if (ClassTool.isVoid(actBaseInfo.baseClass)) {
             actBaseInfo.baseClass = FullName.BASE_ACT;
         } else {
-            map.get(actBaseInfo.baseClass).add(ElementTools.getType(te));
+            map.get(actBaseInfo.baseClass).add(actBaseInfo.act);
         }
 
         if (actBase.layout() > 0) {
@@ -70,7 +64,7 @@ public class ActBaseDeal extends TypeBaseDeal {
             return false;
         });
 
-        JavaInfo actBaseJavaInfo = CurrentPath.actBaseJavaInfo(ElementTools.getType(te));
+        JavaInfo actBaseJavaInfo = CurrentPath.actBaseJavaInfo(actBaseInfo.act);
         ActBaseBuilder actBaseBuilder = new ActBaseBuilder(actBaseJavaInfo);
         actBaseBuilder.addInfos(actBaseInfo);
 
@@ -79,6 +73,9 @@ public class ActBaseDeal extends TypeBaseDeal {
     private void dealClickView(ActBaseInfo actBaseInfo, ClickView clickView, ExecutableElement ee) {
         ClickViewInfo clickViewInfo = new ClickViewInfo();
         clickViewInfo.ids = Ts.ts(IdTools.elementToIds(ee, ClickView.class, clickView.value())).toList().get();
+        clickViewInfo.method = ElementTools.simpleName(ee);
+        clickViewInfo.methodParams = ElementTools.getMethodParamKvs(ee);
+
         int inActCount = CountTool.count(clickView.inAct());
         Ts.ls(clickViewInfo.ids, new BaseTs.EachTs<IdTools.Id>() {
             @Override

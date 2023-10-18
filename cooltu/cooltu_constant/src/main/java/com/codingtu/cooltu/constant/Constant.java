@@ -45,4 +45,6 @@ public class Constant {
 
     public static final String SIGN_TEMP_START = "/* model_temp_start";
     public static final String SIGN_TEMP_END = "model_temp_end */";
+
+    public static final String FROM_ACT = "fromAct";
 }

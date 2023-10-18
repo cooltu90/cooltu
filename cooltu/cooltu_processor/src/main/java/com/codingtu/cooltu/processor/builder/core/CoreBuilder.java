@@ -41,12 +41,19 @@ public abstract class CoreBuilder implements Symbol {
             return;
         }
         File file = new File(javaInfo.path);
-        if (isBuild() && (isForce() || !file.exists())) {
+        if (isGetLines() && (isForce() || !file.exists())) {
             List<String> lines = getLines();
-            if (!CountTool.isNull(lines)) {
+            beforeBuild(lines);
+            if (isBuild() && !CountTool.isNull(lines)) {
                 FileWriter.to(file).cover().write(lines);
             }
         }
+    }
+
+    protected void beforeBuild(List<String> lines) {}
+
+    protected boolean isGetLines() {
+        return true;
     }
 
     protected boolean isBuild() {

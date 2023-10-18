@@ -21,7 +21,7 @@ public class PathFilterDeal extends TypeBaseDeal {
         PathFilterInfo info = new PathFilterInfo();
         info.params = Ts.ts(te.getEnclosedElements()).convert((index, e) -> {
             if (e instanceof VariableElement) {
-                return ElementTools.getFiledKv((VariableElement) e);
+                return ElementTools.getFieldKv((VariableElement) e);
             }
             return null;
         }).get();

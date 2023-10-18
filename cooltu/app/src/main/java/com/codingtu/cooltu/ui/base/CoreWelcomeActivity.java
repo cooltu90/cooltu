@@ -1,8 +1,6 @@
 package com.codingtu.cooltu.ui.base;
 
-import android.view.View;
-
-import com.codingtu.cooltu.processor.annotation.res.ActBase;
+import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 
 import core.actbase.base.CoreWelcomeActivityBase;

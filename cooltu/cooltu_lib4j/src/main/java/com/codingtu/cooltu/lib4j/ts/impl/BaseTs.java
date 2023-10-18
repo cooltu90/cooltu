@@ -1,10 +1,12 @@
 package com.codingtu.cooltu.lib4j.ts.impl;
 
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
+import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.basic.TListTs;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BaseTs<T> implements TsInterface<T> {
 
@@ -169,6 +171,23 @@ public abstract class BaseTs<T> implements TsInterface<T> {
         }
         return Ts.ts(list);
     }
+
+    public <S> TListTs<S> convertList(Convert<T, List<S>> convert) {
+        if (convert == null) {
+            return null;
+        }
+
+        ArrayList<S> list = new ArrayList<>();
+        int count = count();
+        for (int i = 0; i < count; i++) {
+            List<S> ss = convert.convert(i, get(i));
+            if (!CountTool.isNull(ss)) {
+                list.addAll(ss);
+            }
+        }
+        return Ts.ts(list);
+    }
+
 
     /**************************************************
      *

@@ -2,8 +2,15 @@ package com.codingtu.cooltu.processor.lib.tools;
 
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
+import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
+import com.codingtu.cooltu.lib4j.ts.impl.basic.TListTs;
+import com.codingtu.cooltu.processor.lib.param.Params;
+
+import java.util.List;
 
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 
 public class ElementTools {
@@ -24,8 +31,13 @@ public class ElementTools {
         return ConvertTool.toStaticType(simpleName(e));
     }
 
-    public static KV<String, String> getFiledKv(VariableElement ve) {
+    public static KV<String, String> getFieldKv(VariableElement ve) {
         return new KV<>(getType(ve), simpleName(ve));
     }
 
+    public static Params getMethodParamKvs(ExecutableElement ee) {
+        return Params.obtain(Ts.ts(ee.getParameters()).convert((index, ve) -> {
+            return getFieldKv(ve);
+        }).get());
+    }
 }

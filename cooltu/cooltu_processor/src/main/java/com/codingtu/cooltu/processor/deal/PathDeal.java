@@ -59,7 +59,7 @@ public class PathDeal extends TypeBaseDeal {
     }
 
     private void dealDir(VariableElement ve, DirPath dir) {
-        KV<String, String> kv = ElementTools.getFiledKv(ve);
+        KV<String, String> kv = ElementTools.getFieldKv(ve);
         String baseName = dirMap.get(dir.parent());
         String fieldName = dir.fieldName();
         if (StringTool.isBlank(fieldName)) {
@@ -93,7 +93,7 @@ public class PathDeal extends TypeBaseDeal {
     }
 
     private void dealFile(VariableElement ve, FilePath file) {
-        KV<String, String> kv = ElementTools.getFiledKv(ve);
+        KV<String, String> kv = ElementTools.getFieldKv(ve);
 
         PathBuilder parentModel = pathMap.get(file.parent());
         FilePathInfo info = new FilePathInfo();

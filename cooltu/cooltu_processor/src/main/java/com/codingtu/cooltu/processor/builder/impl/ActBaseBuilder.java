@@ -5,7 +5,6 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.BuilderType;
@@ -15,7 +14,6 @@ import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.lib.log.Logs;
-import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
@@ -50,6 +48,17 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         return true;
     }
 
+    @Override
+    protected boolean isGetLines() {
+        return true;
+    }
+
+
+    @Override
+    protected void beforeBuild(List<String> lines) {
+        super.beforeBuild(lines);
+        Logs.i(lines);
+    }
 
     public void addInfos(ActBaseInfo actBaseInfo) {
         this.info = actBaseInfo;
@@ -79,13 +88,14 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             layoutIf(info.layout.toString());
         }
 
-        final int[] viewCount = {0};
+        final int[] fieldCount = {0};
+
         findViewCount(CountTool.count(info.viewInfos));
         Ts.ls(info.viewInfos, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
             @Override
             public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
                 if (inBaseMap.get(viewInfo.fieldName) == null) {
-                    view(viewCount[0]++, viewInfo.tag, viewInfo.fieldName);
+                    field(fieldCount[0]++, viewInfo.tag, viewInfo.fieldName);
                 }
 
                 String parent = "";
@@ -97,25 +107,57 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             }
         });
 
-        viewCount(viewCount[0]);
-
-        inBaseCount(CountTool.count(inBases));
         Ts.ls(inBases, new BaseTs.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
-                inBase(position, kv.k, kv.v);
+                field(fieldCount[0]++, kv.k, kv.v);
                 return false;
             }
         });
 
         final int[] setOnClickCount = {0};
+
+        int clickViewsCount = CountTool.count(info.clickViews);
+
+        onClickMethodsCount(clickViewsCount);
+
+        onClickSwithCount(clickViewsCount);
+
         Ts.ls(info.clickViews, new BaseTs.EachTs<ClickViewInfo>() {
             @Override
-            public boolean each(int position, ClickViewInfo info) {
+            public boolean each(int clickViewInfoIndex, ClickViewInfo info) {
+                onClickMethods(clickViewInfoIndex, info.method, info.methodParams.getMethodParams());
+                onClickSwith(clickViewInfoIndex, info.method);
+                onClickCaseCount(clickViewInfoIndex, CountTool.count(info.ids));
+
+                List<KV<String, String>> kvs = info.methodParams.getKvs();
+                int kvCount = CountTool.count(kvs);
+
+                int[] paramsIndex = {0};
+                onClickSwitchParamsIf(clickViewInfoIndex, false);
+                Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {
+                    @Override
+                    public boolean each(int kvIndex, KV<String, String> kv) {
+                        String divider = (kvIndex != kvCount - 1) ? "," : "";
+                        if (kvIndex == 0 && FullName.VIEW.equals(kv.k)) {
+                            onClickSwitchParamsIf(clickViewInfoIndex, true);
+                            onClickSwitchParamsIf(clickViewInfoIndex, divider);
+                        } else {
+                            onClickSwitchParams(clickViewInfoIndex, paramsIndex[0], kv.k, Pkg.LIB4A, paramsIndex[0] + "", divider);
+                            paramsIndex[0]++;
+                        }
+                        return false;
+                    }
+                });
+
+                onClickSwitchParamsCount(clickViewInfoIndex, paramsIndex[0]);
+
+
                 Ts.ls(info.ids, new BaseTs.EachTs<IdTools.Id>() {
                     @Override
-                    public boolean each(int position, IdTools.Id id) {
-                        if (info.inAct.get(position)) {
+                    public boolean each(int idIndex, IdTools.Id id) {
+                        onClickCase(clickViewInfoIndex, idIndex, id.toString());
+                        if (info.inAct.get(clickViewInfoIndex)) {
                             BaseTools.getActBaseInfoWithParents(getActBaseInfo(), new BaseTs.EachTs<ActBaseInfo>() {
                                 @Override
                                 public boolean each(int position, ActBaseInfo actBaseInfo) {
@@ -141,6 +183,82 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             }
         });
         setOnClickCount(setOnClickCount[0]);
+
+
+        //onclick继承
+        superOnClickIf(info.hasBaseClass());
+
+        //colorStr
+        int count = CountTool.count(info.colorStrs);
+        Ts.ls(info.colorStrs, new BaseTs.EachTs<KV<String, String>>() {
+            @Override
+            public boolean each(int position, KV<String, String> kv) {
+                if (inBaseMap.get(kv.k) == null) {
+                    field(fieldCount[0]++, "int", kv.k);
+                }
+                colorStrInit(position, kv.k, kv.v);
+                return false;
+            }
+        });
+        colorStrInitCount(count);
+
+        //colorRes
+        int colorResCount = CountTool.count(info.colorReses);
+        colorResInitCount(colorResCount);
+        Ts.ls(info.colorReses, new BaseTs.EachTs<KV<String, IdTools.Id>>() {
+            @Override
+            public boolean each(int position, KV<String, IdTools.Id> kv) {
+                if (inBaseMap.get(kv.k) == null) {
+                    field(fieldCount[0]++, "int", kv.k);
+                }
+                colorResInit(position, kv.k, FullName.RESOURCE_TOOL, kv.v.toString());
+                return false;
+            }
+        });
+
+        //dp
+        int dpCount = CountTool.count(info.dps);
+        dpInitCount(dpCount);
+        Ts.ls(info.dps, new BaseTs.EachTs<KV<String, Float>>() {
+            @Override
+            public boolean each(int position, KV<String, Float> kv) {
+                if (inBaseMap.get(kv.k) == null) {
+                    field(fieldCount[0]++, "int", kv.k);
+                }
+                dpInit(position, kv.k, FullName.MOBILE_TOOL, kv.v + "f");
+                return false;
+            }
+        });
+
+        //colorRes
+        int dimenCount = CountTool.count(info.dimens);
+        dimenInitCount(dimenCount);
+        Ts.ls(info.dimens, new BaseTs.EachTs<KV<String, IdTools.Id>>() {
+            @Override
+            public boolean each(int position, KV<String, IdTools.Id> kv) {
+                if (inBaseMap.get(kv.k) == null) {
+                    field(fieldCount[0]++, "int", kv.k);
+                }
+                dimenInit(position, kv.k, FullName.RESOURCE_TOOL, kv.v.toString());
+                return false;
+            }
+        });
+
+        //startField
+        int startCount = CountTool.count(info.starts);
+        startInitCount(startCount);
+        Ts.ls(info.starts, new BaseTs.EachTs<KV<String, String>>() {
+            @Override
+            public boolean each(int position, KV<String, String> kv) {
+                if (inBaseMap.get(kv.v) == null) {
+                    field(fieldCount[0]++, kv.k, kv.v);
+                }
+                startInit(position, kv.v, FullName.PASS);
+                return false;
+            }
+        });
+
+        fieldCount(fieldCount[0]);
     }
 
 }
@@ -150,13 +268,9 @@ package [[pkg]];
 import android.view.View;
 
 public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener {
-
-                                                                                                    [<sub>][for][view]
+                                                                                                    [<sub>][for][field]
     protected [type] [name];
-                                                                                                    [<sub>][for][view]
-                                                                                                    [<sub>][for][inBase]
-    protected [type] [name];
-                                                                                                    [<sub>][for][inBase]
+                                                                                                    [<sub>][for][field]
 
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
@@ -170,11 +284,49 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][setOnClick]
         [fieldName].setOnClickListener(this);
                                                                                                     [<sub>][for][setOnClick]
+                                                                                                    [<sub>][for][colorStrInit]
+        [name] = android.graphics.Color.parseColor("[color]");
+                                                                                                    [<sub>][for][colorStrInit]
+                                                                                                    [<sub>][for][colorResInit]
+        [name] = [resourceToolFullName].getColor([id]);
+                                                                                                    [<sub>][for][colorResInit]
+                                                                                                    [<sub>][for][dpInit]
+        [name] = [mobileToolFullName].dpToPx([value]);
+                                                                                                    [<sub>][for][dpInit]
+                                                                                                    [<sub>][for][dimenInit]
+        [name] = [resourceToolFullName].getDimen([id]);
+                                                                                                    [<sub>][for][dimenInit]
+                                                                                                    [<sub>][for][startInit]
+        [name] = [passFullName].[name](getIntent());
+                                                                                                    [<sub>][for][startInit]
+
     }
     @Override
     public void onClick(View v) {
-
+                                                                                                    [<sub>][if][superOnClick]
+        super.onClick(v);
+                                                                                                    [<sub>][if][superOnClick]
+        switch (v.getId()) {
+                                                                                                    [<sub>][for][onClickSwith]
+                                                                                                    [<sub>][for][onClickCase]
+            case [id]:
+                                                                                                    [<sub>][for][onClickCase]
+                [methodName](
+                                                                                                    [<sub>][if][onClickSwitchParams]
+                        v[divider]
+                                                                                                    [<sub>][if][onClickSwitchParams]
+                                                                                                    [<sub>][for][onClickSwitchParams]
+                        ([type]) v.getTag([pkg].R.id.tag_[index])[divider]
+                                                                                                    [<sub>][for][onClickSwitchParams]
+                );
+                break;
+                                                                                                    [<sub>][for][onClickSwith]
+        }
     }
+
+                                                                                                    [<sub>][for][onClickMethods]
+    protected void [methodName]([params]) {}
+                                                                                                    [<sub>][for][onClickMethods]
 }
 
 model_temp_end */
