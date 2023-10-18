@@ -6,7 +6,7 @@ import retrofit2.adapter.rxjava2.Result;
 
 public interface TestApiService {
 
-    @retrofit2.http.GET("/getObj/{ids}")
+    @retrofit2.http.POST("/getObj/{ids}")
     Flowable<Result<ResponseBody>> getObj(
             @retrofit2.http.Header("token") java.lang.String token,
             @retrofit2.http.Path("ids") java.lang.String id,

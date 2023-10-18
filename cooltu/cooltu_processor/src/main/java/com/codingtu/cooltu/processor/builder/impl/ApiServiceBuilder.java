@@ -1,11 +1,16 @@
 package com.codingtu.cooltu.processor.builder.impl;
 
+import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
+import com.codingtu.cooltu.processor.annotation.net.method.GET;
+import com.codingtu.cooltu.processor.annotation.net.method.POST;
 import com.codingtu.cooltu.processor.builder.base.ApiServiceBuilderBase;
 import com.codingtu.cooltu.processor.lib.log.Logs;
+import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,20 +50,31 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
         addTag(pkg, Pkg.CORE_NET_API);
         addTag(name, javaInfo.name);
 
-        methodCount(0);
-
+        int[] count = {0};
         Ts.ls(methods, new BaseTs.EachTs<ExecutableElement>() {
             @Override
             public boolean each(int position, ExecutableElement ee) {
 
-                
+                GET getMethod = ee.getAnnotation(GET.class);
+                POST postMethod = ee.getAnnotation(POST.class);
 
+                String netType = null;
+                String apiUrl = null;
+                if (getMethod != null) {
+                    netType = FullName.RETROFIT_GET;
+                    apiUrl = getMethod.value();
+                } else if (postMethod != null) {
+                    netType = FullName.RETROFIT_POST;
+                    apiUrl = postMethod.value();
+                }
 
+                if (StringTool.isNotBlank(netType)) {
+                    method(count[0]++, netType, apiUrl, ElementTools.simpleName(ee));
+                }
                 return false;
             }
         });
-
-
+        methodCount(count[0]);
     }
 
 }
