@@ -43,6 +43,13 @@ public class PassBuilder extends PassBuilderBase {
         return true;
     }
 
+
+    @Override
+    protected void beforeBuild(List<String> lines) {
+        super.beforeBuild(lines);
+        //Logs.i(lines);
+    }
+
     @Override
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_TOOLS);
@@ -76,12 +83,6 @@ public class PassBuilder extends PassBuilderBase {
         fieldCount(count[0]);
         methodCount(count[0]);
 
-    }
-
-    @Override
-    protected void beforeBuild(List<String> lines) {
-        super.beforeBuild(lines);
-        //Logs.i(lines);
     }
 }
 /* model_temp_start

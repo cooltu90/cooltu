@@ -25,6 +25,7 @@ public class FullName {
     public static final String SUB_BUILDER = "com.codingtu.cooltu.processor.bean.SubBuilder";
     public static final String PASS = Pkg.CORE_TOOLS + ".Pass";
     public static final String ACT_START = Pkg.CORE_TOOLS + ".ActStart";
+    public static final String NET = Pkg.CORE_TOOLS + ".Net";
     public static final String CODE_4_REQUEST = Pkg.CORE_TOOLS + ".Code4Request";
     //Ts
     public static final String T_LIST_TS = Pkg.LIB4J_TS + ".impl.basic.TListTs";
