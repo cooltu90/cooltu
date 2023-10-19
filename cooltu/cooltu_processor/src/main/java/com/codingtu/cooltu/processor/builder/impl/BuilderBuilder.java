@@ -23,7 +23,6 @@ import java.util.Map;
 public class BuilderBuilder extends BuilderBuilderBase {
 
     private String intTag = "i";
-    private String strTag = "s";
 
     private Map<String, String> nameMap = new HashMap<>();
 
@@ -266,20 +265,12 @@ public class BuilderBuilder extends BuilderBuilderBase {
         return getParams(false, true, count, "int ", intTag);
     }
 
-    private String getPutMethodStrParams(int count) {
-        return getParams(false, false, count, "String ", strTag);
-    }
-
     private String getIfKeyParams(int count) {
         return getParams(true, false, count, "", intTag);
     }
 
     private String getForKeyParams(int num) {
         return getParams(true, false, num, "", intTag);
-    }
-
-    private String getAddForMapStrValue(int num) {
-        return getParams(true, false, num, "", strTag);
     }
 
     private String getParams(boolean isFirst, boolean isLast, int num, String type, String tag) {
