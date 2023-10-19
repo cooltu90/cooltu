@@ -84,6 +84,11 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
                         }
 
                         methodParam(methodIndex, paramIndex, anno, kv.k, kv.v, paramIndex != paramCount - 1 ? "," : "");
+                        annoInfoIf(methodIndex, paramIndex, true);
+                        annoValueNameIf(methodIndex, paramIndex, param.encoded());
+                        annoInfoIf(methodIndex, paramIndex, param.value());
+                        annoEncodeIf(methodIndex, paramIndex, param.encoded());
+
                         return false;
                     });
                 }
@@ -97,6 +102,7 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
             }
         });
         methodCount(count[0]);
+
     }
 
 }
@@ -112,7 +118,7 @@ public interface [[name]] {
     @[netType]("[apiUrl]")
     Flowable<Result<ResponseBody>> [methodName](
                                                                                                     [<sub>][for][methodParam]
-            @[anno] [type] [name][divider]
+            @[anno][if:annoInfo]([if:annoValueName]value = [if:annoValueName]"[value]"[if:annoEncode], encoded = true[if:annoEncode])[if:annoInfo] [type] [name][divider]
                                                                                                     [<sub>][for][methodParam]
     );
                                                                                                     [<sub>][for][method]

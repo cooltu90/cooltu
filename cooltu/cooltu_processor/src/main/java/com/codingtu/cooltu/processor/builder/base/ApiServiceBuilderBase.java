@@ -34,6 +34,18 @@ public abstract class ApiServiceBuilderBase extends com.codingtu.cooltu.processo
         addForMap(this.method, getForKey("method", i0), netType, apiUrl, methodName);
     }
 
+    protected void annoInfoIf(int i0, int i1, boolean is) {
+        methodIfs.put(getIfKey("annoInfo", i0, i1), is);
+    }
+    protected void annoValueNameIf(int i0, int i1, boolean is) {
+        methodIfs.put(getIfKey("annoValueName", i0, i1), is);
+    }
+    protected void annoEncodeIf(int i0, int i1, boolean is) {
+        methodIfs.put(getIfKey("annoEncode", i0, i1), is);
+    }
+    protected void annoInfoIf(int i0, int i1, String value) {
+        addForMap(this.method, getIfKey("annoInfo", i0, i1), value);
+    }
 
     @Override
     protected void dealLinesInParent() {
@@ -43,7 +55,22 @@ public abstract class ApiServiceBuilderBase extends com.codingtu.cooltu.processo
             addLnTag(methodSb, "    Flowable<Result<ResponseBody>> [methodName](", method0.get(2));
             for (int i1 = 0; i1 < methodCounts.get(getForKey("methodParam", i0)); i1++) {
                 List<String> method1 = method.get(getForKey("methodParam", i0, i1));
-                addLnTag(methodSb, "            @[anno] [type] [name][divider]", method1.get(0), method1.get(1), method1.get(2), method1.get(3));
+                StringBuilder annoInfoSb = new StringBuilder();
+                if (methodIfs.get(getIfKey("annoInfo", i0, i1))) {
+                    List<String> method2 = method.get(getIfKey("annoInfo", i0, i1));
+                    StringBuilder annoValueNameSb = new StringBuilder();
+                    if (methodIfs.get(getIfKey("annoValueName", i0, i1))) {
+                        List<String> method3 = method.get(getIfKey("annoValueName", i0, i1));
+                        addTag(annoValueNameSb, "value = ");
+                    }
+                    StringBuilder annoEncodeSb = new StringBuilder();
+                    if (methodIfs.get(getIfKey("annoEncode", i0, i1))) {
+                        List<String> method3 = method.get(getIfKey("annoEncode", i0, i1));
+                        addTag(annoEncodeSb, ", encoded = true");
+                    }
+                    addTag(annoInfoSb, "([annoValueName]\"[value]\"[annoEncode])", annoValueNameSb.toString(), method2.get(0), annoEncodeSb.toString());
+                }
+                addLnTag(methodSb, "            @[anno][annoInfo] [type] [name][divider]", method1.get(0), annoInfoSb.toString(), method1.get(1), method1.get(2), method1.get(3));
             }
             addLnTag(methodSb, "    );");
         }
