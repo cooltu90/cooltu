@@ -40,6 +40,10 @@ public class FullName {
     public static final String STRING = "java.lang.String";
     public static final String RETROFIT_GET = "retrofit2.http.GET";
     public static final String RETROFIT_POST = "retrofit2.http.POST";
+    public static final String RETROFIT_HEADER = "retrofit2.http.Header";
+    public static final String RETROFIT_PATH = "retrofit2.http.Path";
+    public static final String RETROFIT_QUERY = "retrofit2.http.Query";
+    public static final String RETROFIT_BODY = "retrofit2.http.Body";
 
 
 }

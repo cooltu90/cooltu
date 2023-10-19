@@ -23,7 +23,13 @@ public abstract class ApiServiceBuilderBase extends com.codingtu.cooltu.processo
     protected void methodCount(int count) {
         methodCounts.put(getForKey("method"), count);
     }
+    protected void methodParamCount(int i0, int count) {
+        methodCounts.put(getForKey("methodParam", i0), count);
+    }
 
+    protected void methodParam(int i0, int i1, String anno, String type, String name, String divider) {
+        addForMap(this.method, getForKey("methodParam", i0, i1), anno, type, name, divider);
+    }
     protected void method(int i0, String netType, String apiUrl, String methodName) {
         addForMap(this.method, getForKey("method", i0), netType, apiUrl, methodName);
     }
@@ -35,6 +41,10 @@ public abstract class ApiServiceBuilderBase extends com.codingtu.cooltu.processo
             List<String> method0 = method.get(getForKey("method", i0));
             addLnTag(methodSb, "    @[netType](\"[apiUrl]\")", method0.get(0), method0.get(1));
             addLnTag(methodSb, "    Flowable<Result<ResponseBody>> [methodName](", method0.get(2));
+            for (int i1 = 0; i1 < methodCounts.get(getForKey("methodParam", i0)); i1++) {
+                List<String> method1 = method.get(getForKey("methodParam", i0, i1));
+                addLnTag(methodSb, "            @[anno] [type] [name][divider]", method1.get(0), method1.get(1), method1.get(2), method1.get(3));
+            }
             addLnTag(methodSb, "    );");
         }
 
