@@ -289,6 +289,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
                 start = j;
             } else if (c == ']') {
                 String tag = line.substring(start + 1, j);
+                boolean isDeal = false;
                 for (int i = 0; i < CountTool.count(lineTagSigns); i++) {
                     String lineTagSign = lineTagSigns[i];
                     if (tag.startsWith(lineTagSign)) {
@@ -314,8 +315,12 @@ public class BuilderBuilder extends BuilderBuilderBase {
                         lineSb.append("[").append(realTag).append("]");
 
                         addTag(valuesSb, ", [tag]Sb.toString()", realTag);
+                        isDeal = true;
                         continue;
                     }
+                }
+                if (isDeal) {
+                    continue;
                 }
                 if (!subTags.contains(tag)) {
                     if (!CountTool.isNull(subTags)) {

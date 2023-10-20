@@ -47,22 +47,18 @@ public class NetBuilder extends NetBuilderBase {
     protected void beforeBuild(List<String> lines) {
         super.beforeBuild(lines);
         //Logs.i(lines);
-
-        int[] fieldCount={0};
-        Ts.ls(infos, new BaseTs.EachTs<NetInfo>() {
-            @Override
-            public boolean each(int position, NetInfo netInfo) {
-                fieldCount();
-                return false;
-            }
-        });
-
-        fieldCount(0);
     }
 
     @Override
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_NET);
+        Ts.ls(infos, new BaseTs.EachTs<NetInfo>() {
+            @Override
+            public boolean each(int position, NetInfo netInfo) {
+                return false;
+            }
+        });
+        fieldCount(0);
     }
 
 }
