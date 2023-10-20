@@ -23,6 +23,7 @@ public class FullName {
     public static final String PROCESSOR_PARAMS = "com.codingtu.cooltu.processor.lib.param.Params";
     public static final String JAVA_INFO = "com.codingtu.cooltu.lib4j.data.java.JavaInfo";
     public static final String SUB_BUILDER = "com.codingtu.cooltu.processor.bean.SubBuilder";
+    public static final String CORE_SEND_PARAMS = "com.codingtu.cooltu.lib4a.net.bean.CoreSendParams";
     public static final String PASS = Pkg.CORE_TOOLS + ".Pass";
     public static final String ACT_START = Pkg.CORE_TOOLS + ".ActStart";
     public static final String NET = Pkg.CORE_TOOLS + ".Net";
@@ -44,6 +45,7 @@ public class FullName {
     public static final String RETROFIT_PATH = "retrofit2.http.Path";
     public static final String RETROFIT_QUERY = "retrofit2.http.Query";
     public static final String RETROFIT_BODY = "retrofit2.http.Body";
+    public static final String OKHTTP_REQUEST_BODY = "okhttp3.RequestBody";
 
 
 }

@@ -51,6 +51,7 @@ public abstract class ApiServiceBuilderBase extends com.codingtu.cooltu.processo
     protected void dealLinesInParent() {
         for (int i0 = 0; i0 < methodCounts.get(getForKey("method")); i0++) {
             List<String> method0 = method.get(getForKey("method", i0));
+            addLnTag(methodSb, "");
             addLnTag(methodSb, "    @[netType](\"[apiUrl]\")", method0.get(0), method0.get(1));
             addLnTag(methodSb, "    Flowable<Result<ResponseBody>> [methodName](", method0.get(2));
             for (int i1 = 0; i1 < methodCounts.get(getForKey("methodParam", i0)); i1++) {

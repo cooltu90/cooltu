@@ -1,0 +1,65 @@
+package com.codingtu.cooltu.processor.builder.impl;
+
+import com.codingtu.cooltu.constant.FullName;
+import com.codingtu.cooltu.constant.Pkg;
+import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.tools.CountTool;
+import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
+import com.codingtu.cooltu.processor.builder.base.NetParamsBuilderBase;
+import com.codingtu.cooltu.processor.lib.log.Logs;
+import com.codingtu.cooltu.processor.lib.param.Params;
+
+import java.util.List;
+
+public class NetParamsBuilder extends NetParamsBuilderBase {
+    private final Params params;
+
+    public NetParamsBuilder(JavaInfo info, Params params) {
+        super(info);
+        this.params = params;
+    }
+
+    @Override
+    protected boolean isBuild() {
+        return true;
+    }
+
+    @Override
+    protected boolean isGetLines() {
+        return true;
+    }
+
+    @Override
+    protected void beforeBuild(List<String> lines) {
+        super.beforeBuild(lines);
+        Logs.i(lines);
+    }
+
+    @Override
+    protected void dealLines() {
+        addTag(pkg, Pkg.CORE_NET_PARAMS);
+        addTag(coreSendParamsFullName, FullName.CORE_SEND_PARAMS);
+        addTag(name, javaInfo.name);
+
+        Ts.ls(params.getKvs(), new BaseTs.EachTs<KV<String, String>>() {
+            @Override
+            public boolean each(int position, KV<String, String> kv) {
+                field(position, kv.k, kv.v);
+                return false;
+            }
+        });
+
+        fieldCount(CountTool.count(params.getKvs()));
+    }
+}
+/* model_temp_start
+package [[pkg]];
+
+public class [[name]] extends [[coreSendParamsFullName]]{
+                                                                                                    [<sub>][for][field]
+    public [type] [name];
+                                                                                                    [<sub>][for][field]
+}
+model_temp_end */

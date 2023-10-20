@@ -37,7 +37,7 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
 
     @Override
     protected boolean isBuild() {
-        return false;
+        return true;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
     @Override
     protected void beforeBuild(List<String> lines) {
         super.beforeBuild(lines);
-        Logs.i(lines);
+        //Logs.i(lines);
     }
 
     @Override
@@ -95,8 +95,46 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
 
                 POST postMethod = ee.getAnnotation(POST.class);
                 if (postMethod != null) {
-                    method(count[0]++, FullName.RETROFIT_POST, postMethod.value(), ElementTools.simpleName(ee));
-                    methodParamCount(methodIndex, 0);
+                    if (postMethod.isJsonBody()) {
+                        method(count[0]++, FullName.RETROFIT_POST, postMethod.value(), ElementTools.simpleName(ee));
+                        methodParamCount(methodIndex, 1);
+                        methodParam(methodIndex, 0, FullName.RETROFIT_BODY, FullName.OKHTTP_REQUEST_BODY, "body", "");
+                        annoInfoIf(methodIndex, 0, false);
+                    } else {
+                        method(count[0]++, FullName.RETROFIT_POST, postMethod.value(), ElementTools.simpleName(ee));
+                        List<? extends VariableElement> parameters = ee.getParameters();
+                        int paramCount = CountTool.count(parameters);
+                        methodParamCount(methodIndex, paramCount);
+                        Ts.ls(parameters, (paramIndex, element) -> {
+                            KV<String, String> kv = ElementTools.getFieldKv(element);
+                            Param param = element.getAnnotation(Param.class);
+                            String anno = FullName.RETROFIT_QUERY;
+                            String type = kv.k;
+                            String value = kv.v;
+
+                            switch (param.type()) {
+                                case ParamType.PATH:
+                                    anno = FullName.RETROFIT_PATH;
+                                    break;
+                                case ParamType.HEADER:
+                                    anno = FullName.RETROFIT_HEADER;
+                                    break;
+                                case ParamType.JSON_BODY:
+                                    anno = FullName.RETROFIT_BODY;
+                                    type = FullName.OKHTTP_REQUEST_BODY;
+                                    value = "body";
+                                    break;
+                            }
+
+                            methodParam(methodIndex, paramIndex, anno, type, value, paramIndex != paramCount - 1 ? "," : "");
+                            annoInfoIf(methodIndex, paramIndex, param.type() != ParamType.JSON_BODY);
+                            annoValueNameIf(methodIndex, paramIndex, param.encoded());
+                            annoInfoIf(methodIndex, paramIndex, StringTool.isBlank(param.value()) ? kv.v : param.value());
+                            annoEncodeIf(methodIndex, paramIndex, param.encoded());
+
+                            return false;
+                        });
+                    }
                 }
                 return false;
             }
@@ -115,6 +153,7 @@ import retrofit2.adapter.rxjava2.Result;
 
 public interface [[name]] {
                                                                                                     [<sub>][for][method]
+
     @[netType]("[apiUrl]")
     Flowable<Result<ResponseBody>> [methodName](
                                                                                                     [<sub>][for][methodParam]

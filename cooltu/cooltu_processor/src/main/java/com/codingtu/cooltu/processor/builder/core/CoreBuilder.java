@@ -14,6 +14,7 @@ import com.codingtu.cooltu.processor.lib.tools.TagTools;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 public abstract class CoreBuilder implements Symbol {
     public boolean isForce;
@@ -50,7 +51,8 @@ public abstract class CoreBuilder implements Symbol {
         }
     }
 
-    protected void beforeBuild(List<String> lines) {}
+    protected void beforeBuild(List<String> lines) {
+    }
 
     protected boolean isGetLines() {
         return true;
@@ -84,6 +86,14 @@ public abstract class CoreBuilder implements Symbol {
      *
      *
      **************************************************/
+
+    protected void count(Map<String, Integer> counts, String key) {
+        Integer count = counts.get(key);
+        if (count == null) {
+            count = 0;
+        }
+        counts.put(key, count + 1);
+    }
 
     protected String getForKey(String tag, int... ii) {
         return getKey("for-" + tag, ii);

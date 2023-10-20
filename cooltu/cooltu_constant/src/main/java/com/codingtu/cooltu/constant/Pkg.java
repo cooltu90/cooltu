@@ -16,5 +16,6 @@ public class Pkg {
     public static final String CORE_TOOLS = "core.tools";
     public static final String CORE_NET = "core.net";
     public static final String CORE_NET_API = CORE_NET + ".api";
+    public static final String CORE_NET_PARAMS = CORE_NET + ".params";
 
 }

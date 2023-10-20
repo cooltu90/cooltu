@@ -2,16 +2,20 @@ package com.codingtu.cooltu.processor.builder.base;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.builder.core.CoreBuilder {
+public abstract class NetParamsBuilderBase extends com.codingtu.cooltu.processor.builder.core.CoreBuilder {
     protected StringBuilder pkg;
+    protected StringBuilder name;
+    protected StringBuilder coreSendParamsFullName;
     private java.util.Map<String, Boolean> fieldIfs;
     private java.util.Map<String, Integer> fieldCounts;
     private StringBuilder fieldSb;
     private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> field;
 
-    public NetBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
+    public NetParamsBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
         pkg = map.get("pkg");
+        name = map.get("name");
+        coreSendParamsFullName = map.get("coreSendParamsFullName");
         fieldIfs = new java.util.HashMap<>();
         fieldCounts = new java.util.HashMap<>();
         fieldSb = map.get("field");
@@ -22,8 +26,8 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
         fieldCounts.put(getForKey("field"), count);
     }
 
-    protected void field(int i0, String name, String value) {
-        addForMap(this.field, getForKey("field", i0), name, value);
+    protected void field(int i0, String type, String name) {
+        addForMap(this.field, getForKey("field", i0), type, name);
     }
 
 
@@ -31,7 +35,7 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
     protected void dealLinesInParent() {
         for (int i0 = 0; i0 < fieldCounts.get(getForKey("field")); i0++) {
             List<String> field0 = field.get(getForKey("field", i0));
-            addLnTag(fieldSb, "    private static final String [name] = \"[value]\";", field0.get(0), field0.get(1));
+            addLnTag(fieldSb, "    public [type] [name];", field0.get(0), field0.get(1));
         }
 
     }
@@ -41,11 +45,9 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
         List<String> lines = new ArrayList<>();
         lines.add("package [[pkg]];");
         lines.add("");
-        lines.add("public class Net {");
+        lines.add("public class [[name]] extends [[coreSendParamsFullName]]{");
         lines.add("[[field]]");
-        lines.add("");
         lines.add("}");
-        lines.add("");
 
         return lines;
     }

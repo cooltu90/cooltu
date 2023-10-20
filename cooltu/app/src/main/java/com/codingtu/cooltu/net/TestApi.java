@@ -22,8 +22,14 @@ public interface TestApi {
     public String addObj(String name, int age);
 
     @POST(value = "/addObj", baseUrl = "https://wwww.sddfsdfsd.com")
-    public String addObj(
+    public String addObj1(
             @Param(type = ParamType.JSON_BODY) User user
     );
+
+    @POST(value = "/addObj", baseUrl = "https://wwww.sddfsdfsd.com")
+    public String addObj(
+            @Param String name,
+            @Param int age,
+            @Param String parent);
 
 }
