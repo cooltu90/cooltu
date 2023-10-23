@@ -104,7 +104,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
         String keyParams1 = isFor ? getKeyParams(levelsCount + 1) : null;
         String keyParams2 = isFor ? keyParams1 : keyParams0;
         StringBuilder tagSb = isFor ? fors : ifs;
-        String tag0 = isFor ? "" : "If";
+        String tag0 = isFor ? "" : "";
         String tag1 = isFor ? "For" : "If";
         String space = getSpaces(level);
         String putMethodParams = isFor ? getPutMethodIntParams(levelsCount + 1) : getPutMethodIntParams(levelsCount);
@@ -155,17 +155,6 @@ public class BuilderBuilder extends BuilderBuilderBase {
             }
         };
     }
-
-    private static interface MethodDeal {
-        public void deal(int level, int levelsCount, SubTag subTag, String keyParams0, String keyParams1, String space);
-    }
-
-
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
 
     private void method(StringBuilder sb, SubTag subTag, String tag0, String tag1, String strsParam, String strsValue,
                         String putMethodParams, String keyParams, String space) {
@@ -291,6 +280,10 @@ public class BuilderBuilder extends BuilderBuilderBase {
         public void deal(boolean isFor, int level, SubTag lastSubTag,
                          List<String> subTags, StringBuilder strsParamSb, StringBuilder strsValueSb,
                          int[] listCounts, String writeLine, String sbName, String space);
+    }
+
+    private static interface MethodDeal {
+        public void deal(int level, int levelsCount, SubTag subTag, String keyParams0, String keyParams1, String space);
     }
 
     private String getPutMethodIntParams(int count) {

@@ -86,7 +86,7 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
                         methodParam(methodIndex, paramIndex, anno, kv.k, kv.v, paramIndex != paramCount - 1 ? "," : "");
                         annoInfoIf(methodIndex, paramIndex, true);
                         annoValueNameIf(methodIndex, paramIndex, param.encoded());
-                        annoInfoIf(methodIndex, paramIndex, param.value());
+                        annoInfo(methodIndex, paramIndex, param.value());
                         annoEncodeIf(methodIndex, paramIndex, param.encoded());
 
                         return false;
@@ -129,7 +129,7 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
                             methodParam(methodIndex, paramIndex, anno, type, value, paramIndex != paramCount - 1 ? "," : "");
                             annoInfoIf(methodIndex, paramIndex, param.type() != ParamType.JSON_BODY);
                             annoValueNameIf(methodIndex, paramIndex, param.encoded());
-                            annoInfoIf(methodIndex, paramIndex, StringTool.isBlank(param.value()) ? kv.v : param.value());
+                            annoInfo(methodIndex, paramIndex, StringTool.isBlank(param.value()) ? kv.v : param.value());
                             annoEncodeIf(methodIndex, paramIndex, param.encoded());
 
                             return false;

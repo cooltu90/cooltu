@@ -81,7 +81,7 @@ public class PathBuilder extends PathBuilderBase {
                 }
             });
 
-            obtainIf(javaInfo.name, params.getMethodParams(), FullName.SDCARD_TOOL);
+            obtain(javaInfo.name, params.getMethodParams(), FullName.SDCARD_TOOL);
 
             addObtainRootCount(CountTool.count(split));
 
@@ -148,7 +148,7 @@ public class PathBuilder extends PathBuilderBase {
                         initFiles(nums[3], info.fieldFullName, filedType, info.fileName, info.file.fileType());
                         initFilesParamIf(nums[3], ifParam);
                         if (ifParam) {
-                            initFilesParamIf(nums[3], info.beanClass + ".class");
+                            initFilesParam(nums[3], info.beanClass + ".class");
                         }
                         nums[3]++;
                     }
@@ -156,7 +156,7 @@ public class PathBuilder extends PathBuilderBase {
                     if (StringTool.isNotBlank(filedType)) {
                         filesMethodParamIf(nums[4], ifParam);
                         if (ifParam) {
-                            filesMethodParamIf(nums[4], info.beanClass + ".class");
+                            filesMethodParam(nums[4], info.beanClass + ".class");
                         }
                         filesMethod(nums[4], filedType, info.fieldFullName, cutParam(info.fileName), info.file.fileType());
                         nums[4]++;
