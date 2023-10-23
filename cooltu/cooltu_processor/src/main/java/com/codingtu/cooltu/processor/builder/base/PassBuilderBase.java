@@ -29,8 +29,14 @@ public abstract class PassBuilderBase extends com.codingtu.cooltu.processor.buil
     protected void fieldCount(int count) {
         fieldCounts.put(getForKey("field"), count);
     }
+    protected void fieldCountAdd() {
+        count(fieldCounts, getForKey("field"));
+    }
     protected void methodCount(int count) {
         methodCounts.put(getForKey("method"), count);
+    }
+    protected void methodCountAdd() {
+        count(methodCounts, getForKey("method"));
     }
 
     protected void field(int i0, String name, String value) {

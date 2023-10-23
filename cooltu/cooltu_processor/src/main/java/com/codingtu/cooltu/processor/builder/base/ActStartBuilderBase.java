@@ -21,8 +21,14 @@ public abstract class ActStartBuilderBase extends com.codingtu.cooltu.processor.
     protected void methodCount(int count) {
         methodCounts.put(getForKey("method"), count);
     }
+    protected void methodCountAdd() {
+        count(methodCounts, getForKey("method"));
+    }
     protected void methodIntentCount(int i0, int count) {
         methodCounts.put(getForKey("methodIntent", i0), count);
+    }
+    protected void methodIntentCountAdd(int i0) {
+        count(methodCounts, getForKey("methodIntent", i0));
     }
 
     protected void methodIntent(int i0, int i1, String fieldName, String value) {

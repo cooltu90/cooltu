@@ -113,38 +113,74 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void fieldCount(int count) {
         fieldCounts.put(getForKey("field"), count);
     }
+    protected void fieldCountAdd() {
+        count(fieldCounts, getForKey("field"));
+    }
     protected void findViewCount(int count) {
         findViewCounts.put(getForKey("findView"), count);
+    }
+    protected void findViewCountAdd() {
+        count(findViewCounts, getForKey("findView"));
     }
     protected void setOnClickCount(int count) {
         setOnClickCounts.put(getForKey("setOnClick"), count);
     }
+    protected void setOnClickCountAdd() {
+        count(setOnClickCounts, getForKey("setOnClick"));
+    }
     protected void colorStrInitCount(int count) {
         colorStrInitCounts.put(getForKey("colorStrInit"), count);
+    }
+    protected void colorStrInitCountAdd() {
+        count(colorStrInitCounts, getForKey("colorStrInit"));
     }
     protected void colorResInitCount(int count) {
         colorResInitCounts.put(getForKey("colorResInit"), count);
     }
+    protected void colorResInitCountAdd() {
+        count(colorResInitCounts, getForKey("colorResInit"));
+    }
     protected void dpInitCount(int count) {
         dpInitCounts.put(getForKey("dpInit"), count);
+    }
+    protected void dpInitCountAdd() {
+        count(dpInitCounts, getForKey("dpInit"));
     }
     protected void dimenInitCount(int count) {
         dimenInitCounts.put(getForKey("dimenInit"), count);
     }
+    protected void dimenInitCountAdd() {
+        count(dimenInitCounts, getForKey("dimenInit"));
+    }
     protected void startInitCount(int count) {
         startInitCounts.put(getForKey("startInit"), count);
+    }
+    protected void startInitCountAdd() {
+        count(startInitCounts, getForKey("startInit"));
     }
     protected void onClickSwithCount(int count) {
         onClickSwithCounts.put(getForKey("onClickSwith"), count);
     }
+    protected void onClickSwithCountAdd() {
+        count(onClickSwithCounts, getForKey("onClickSwith"));
+    }
     protected void onClickCaseCount(int i0, int count) {
         onClickSwithCounts.put(getForKey("onClickCase", i0), count);
+    }
+    protected void onClickCaseCountAdd(int i0) {
+        count(onClickSwithCounts, getForKey("onClickCase", i0));
     }
     protected void onClickSwitchParamsCount(int i0, int count) {
         onClickSwithCounts.put(getForKey("onClickSwitchParams", i0), count);
     }
+    protected void onClickSwitchParamsCountAdd(int i0) {
+        count(onClickSwithCounts, getForKey("onClickSwitchParams", i0));
+    }
     protected void onClickMethodsCount(int count) {
         onClickMethodsCounts.put(getForKey("onClickMethods"), count);
+    }
+    protected void onClickMethodsCountAdd() {
+        count(onClickMethodsCounts, getForKey("onClickMethods"));
     }
 
     protected void field(int i0, String type, String name) {

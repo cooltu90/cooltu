@@ -21,6 +21,9 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
     protected void fieldCount(int count) {
         fieldCounts.put(getForKey("field"), count);
     }
+    protected void fieldCountAdd() {
+        count(fieldCounts, getForKey("field"));
+    }
 
     protected void field(int i0, String name, String value) {
         addForMap(this.field, getForKey("field", i0), name, value);

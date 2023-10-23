@@ -89,41 +89,80 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
     protected void filedsCount(int count) {
         filedsCounts.put(getForKey("fileds"), count);
     }
+    protected void filedsCountAdd() {
+        count(filedsCounts, getForKey("fileds"));
+    }
     protected void fileFiledsCount(int count) {
         fileFiledsCounts.put(getForKey("fileFileds"), count);
+    }
+    protected void fileFiledsCountAdd() {
+        count(fileFiledsCounts, getForKey("fileFileds"));
     }
     protected void addObtainRootCount(int count) {
         obtainCounts.put(getForKey("addObtainRoot"), count);
     }
+    protected void addObtainRootCountAdd() {
+        count(obtainCounts, getForKey("addObtainRoot"));
+    }
     protected void initDirsCount(int count) {
         initDirsCounts.put(getForKey("initDirs"), count);
+    }
+    protected void initDirsCountAdd() {
+        count(initDirsCounts, getForKey("initDirs"));
     }
     protected void initFilesCount(int count) {
         initFilesCounts.put(getForKey("initFiles"), count);
     }
+    protected void initFilesCountAdd() {
+        count(initFilesCounts, getForKey("initFiles"));
+    }
     protected void dirsMethodCount(int count) {
         dirsMethodCounts.put(getForKey("dirsMethod"), count);
+    }
+    protected void dirsMethodCountAdd() {
+        count(dirsMethodCounts, getForKey("dirsMethod"));
     }
     protected void dirListCount(int count) {
         dirListCounts.put(getForKey("dirList"), count);
     }
+    protected void dirListCountAdd() {
+        count(dirListCounts, getForKey("dirList"));
+    }
     protected void dirListParamCount(int i0, int count) {
         dirListCounts.put(getForKey("dirListParam", i0), count);
+    }
+    protected void dirListParamCountAdd(int i0) {
+        count(dirListCounts, getForKey("dirListParam", i0));
     }
     protected void dirListFilterCount(int i0, int count) {
         dirListCounts.put(getForKey("dirListFilter", i0), count);
     }
+    protected void dirListFilterCountAdd(int i0) {
+        count(dirListCounts, getForKey("dirListFilter", i0));
+    }
     protected void filesMethodCount(int count) {
         filesMethodCounts.put(getForKey("filesMethod"), count);
+    }
+    protected void filesMethodCountAdd() {
+        count(filesMethodCounts, getForKey("filesMethod"));
     }
     protected void fileListCount(int count) {
         fileListCounts.put(getForKey("fileList"), count);
     }
+    protected void fileListCountAdd() {
+        count(fileListCounts, getForKey("fileList"));
+    }
     protected void fileListParamCount(int i0, int count) {
         fileListCounts.put(getForKey("fileListParam", i0), count);
     }
+    protected void fileListParamCountAdd(int i0) {
+        count(fileListCounts, getForKey("fileListParam", i0));
+    }
     protected void filterParamCount(int i0, int count) {
         fileListCounts.put(getForKey("filterParam", i0), count);
+    }
+    protected void filterParamCountAdd(int i0) {
+        count(fileListCounts, getForKey("filterParam", i0));
     }
 
     protected void fileds(int i0, String type, String name) {

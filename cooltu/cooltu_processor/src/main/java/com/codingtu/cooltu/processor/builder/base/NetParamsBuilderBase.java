@@ -25,6 +25,9 @@ public abstract class NetParamsBuilderBase extends com.codingtu.cooltu.processor
     protected void fieldCount(int count) {
         fieldCounts.put(getForKey("field"), count);
     }
+    protected void fieldCountAdd() {
+        count(fieldCounts, getForKey("field"));
+    }
 
     protected void field(int i0, String type, String name) {
         addForMap(this.field, getForKey("field", i0), type, name);
