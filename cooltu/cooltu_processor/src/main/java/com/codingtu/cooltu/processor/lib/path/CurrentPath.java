@@ -12,7 +12,6 @@ import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.lib.BuilderMap;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 
 /**************************************************
  *
@@ -57,6 +56,18 @@ import com.codingtu.cooltu.processor.lib.log.Logs;
  *  ┃   ActBaseBuilder   ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━┛
  * {@link #actBaseBuilder(String)}
+ *
+ *   ┏━━━━━━━━━━━━━━━━━━┓
+ *  ┃   sendParams   ┃
+ * ┗━━━━━━━━━━━━━━━━━━┛
+ * JavaInfo：{@link #sendParams(String)}
+ * FullName：{@link #sendParamsFullName(String)}
+ *
+ *   ┏━━━━━━━━━━━━━━━━━━┓
+ *  ┃   apiService   ┃
+ * ┗━━━━━━━━━━━━━━━━━━┛
+ * JavaInfo：{@link #apiService(String)}
+ * FullName：{@link #apiServiceFullName(String)}
  *
  **************************************************/
 public class CurrentPath {
@@ -112,4 +123,24 @@ public class CurrentPath {
         JavaInfo javaInfo = actBaseJavaInfo(actFullName);
         return BuilderMap.find(BuilderType.actBase, javaInfo.fullName);
     }
+
+    public static String sendParamsFullName(String methodName) {
+        return Pkg.CORE_NET_PARAMS
+                + "."
+                + ConvertTool.toClassType(methodName)
+                + Suffix.NET_PARAMS;
+    }
+
+    public static JavaInfo sendParams(String methodName) {
+        return javaInfo(sendParamsFullName(methodName));
+    }
+
+    public static String apiServiceFullName(String apiName) {
+        return Pkg.CORE_NET_API + "." + apiName + Suffix.API_SERVICE;
+    }
+
+    public static JavaInfo apiService(String apiName) {
+        return javaInfo(apiServiceFullName(apiName));
+    }
+
 }

@@ -32,6 +32,13 @@ public class Params {
         kvs.add(kv);
     }
 
+    public void add(KV<String, String> kv) {
+        if (kvs == null) {
+            kvs = new ArrayList<>();
+        }
+        kvs.add(kv);
+    }
+
     public String getMethodParams() {
         StringBuilder sb = new StringBuilder();
         Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {

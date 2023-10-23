@@ -1,13 +1,10 @@
 package com.codingtu.cooltu.processor.deal;
 
-import com.codingtu.cooltu.constant.FullName;
-import com.codingtu.cooltu.constant.Pkg;
-import com.codingtu.cooltu.constant.Suffix;
-import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
-import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.net.Apis;
+import com.codingtu.cooltu.processor.annotation.net.method.GET;
+import com.codingtu.cooltu.processor.annotation.net.method.POST;
 import com.codingtu.cooltu.processor.bean.NetInfo;
 import com.codingtu.cooltu.processor.builder.impl.ApiServiceBuilder;
 import com.codingtu.cooltu.processor.builder.impl.NetBuilder;
@@ -25,23 +22,32 @@ public class NetDeal extends TypeBaseDeal {
 
         Apis apis = te.getAnnotation(Apis.class);
         String apiName = ElementTools.simpleName(te);
-        JavaInfo javaInfo = CurrentPath.javaInfo(Pkg.CORE_NET_API + "." + apiName + Suffix.API_SERVICE);
-        ApiServiceBuilder apiServiceBuilder = new ApiServiceBuilder(javaInfo);
+        ApiServiceBuilder apiServiceBuilder = new ApiServiceBuilder(CurrentPath.apiService(apiName));
 
         Ts.ls(te.getEnclosedElements(), (position, element) -> {
             if (element instanceof ExecutableElement) {
                 ExecutableElement ee = (ExecutableElement) element;
                 apiServiceBuilder.addMethod(ee);
                 if (!CountTool.isNull(ee.getParameters())) {
-                    new NetParamsBuilder(CurrentPath.javaInfo(
-                            Pkg.CORE_NET_PARAMS
-                                    + "."
-                                    + ConvertTool.toClassType(ElementTools.simpleName(element))
-                                    + Suffix.NET_PARAMS),ElementTools.getMethodParamKvs(ee));
+                    new NetParamsBuilder(CurrentPath.sendParams(ElementTools.simpleName(element)), ElementTools.getMethodParamKvs(ee));
                 }
 
+                GET get = ee.getAnnotation(GET.class);
+                POST post = ee.getAnnotation(POST.class);
                 NetInfo netInfo = new NetInfo();
-
+                netInfo.methodName = ElementTools.simpleName(ee);
+                netInfo.apisBaseUrl = apis.baseUrl();
+                netInfo.apisName = ElementTools.simpleName(te);
+                netInfo.isGet = get != null;
+                if (netInfo.isGet) {
+                    netInfo.methodValue = get.value();
+                    netInfo.methodBaseUrl = get.baseUrl();
+                } else {
+                    netInfo.methodValue = post.value();
+                    netInfo.methodBaseUrl = post.baseUrl();
+                    netInfo.isJsonBody = post.isJsonBody();
+                }
+                netInfo.params = ee.getParameters();
 
                 NetBuilder.BUILDER.addNetInfo(netInfo);
 

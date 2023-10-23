@@ -133,9 +133,13 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                 List<KV<String, String>> kvs = info.methodParams.getKvs();
                 int kvCount = CountTool.count(kvs);
 
-                int[] paramsIndex = {0};
                 onClickSwitchParamsIf(clickViewInfoIndex, false);
+                onClickSwitchParamsCount(clickViewInfoIndex, 0);
+
                 Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {
+
+                    private int paramsIndex;
+
                     @Override
                     public boolean each(int kvIndex, KV<String, String> kv) {
                         String divider = (kvIndex != kvCount - 1) ? "," : "";
@@ -143,15 +147,13 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                             onClickSwitchParamsIf(clickViewInfoIndex, true);
                             onClickSwitchParamsIf(clickViewInfoIndex, divider);
                         } else {
-                            onClickSwitchParams(clickViewInfoIndex, paramsIndex[0], kv.k, Pkg.LIB4A, paramsIndex[0] + "", divider);
-                            paramsIndex[0]++;
+                            onClickSwitchParams(clickViewInfoIndex, paramsIndex, kv.k, Pkg.LIB4A, paramsIndex + "", divider);
+                            paramsIndex++;
+                            onClickSwitchParamsCountAdd(clickViewInfoIndex);
                         }
                         return false;
                     }
                 });
-
-                onClickSwitchParamsCount(clickViewInfoIndex, paramsIndex[0]);
-
 
                 Ts.ls(info.ids, new BaseTs.EachTs<IdTools.Id>() {
                     @Override

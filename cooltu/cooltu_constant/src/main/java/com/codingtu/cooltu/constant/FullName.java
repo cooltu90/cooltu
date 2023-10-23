@@ -19,14 +19,17 @@ public class FullName {
     public static final String MOBILE_TOOL = "com.codingtu.cooltu.lib4a.tools.MobileTool";
     public static final String ACT_TOOL = "com.codingtu.cooltu.lib4a.tools.ActTool";
     public static final String COUNT_TOOL = "com.codingtu.cooltu.lib4j.tools.CountTool";
+    public static final String NET_TOOL = "com.codingtu.cooltu.lib4a.net.NetTool";
     public static final String LIST_VALUE_MAP = "com.codingtu.cooltu.lib4j.data.map.ListValueMap";
     public static final String PROCESSOR_PARAMS = "com.codingtu.cooltu.processor.lib.param.Params";
     public static final String JAVA_INFO = "com.codingtu.cooltu.lib4j.data.java.JavaInfo";
     public static final String SUB_BUILDER = "com.codingtu.cooltu.processor.bean.SubBuilder";
     public static final String CORE_SEND_PARAMS = "com.codingtu.cooltu.lib4a.net.bean.CoreSendParams";
+    public static final String CORE_CONFIGS = "com.codingtu.cooltu.lib4a.CoreConfigs";
+    public static final String API = "com.codingtu.cooltu.lib4a.net.api.API";
     public static final String PASS = Pkg.CORE_TOOLS + ".Pass";
     public static final String ACT_START = Pkg.CORE_TOOLS + ".ActStart";
-    public static final String NET = Pkg.CORE_TOOLS + ".Net";
+    public static final String NET = Pkg.CORE_NET + ".Net";
     public static final String CODE_4_REQUEST = Pkg.CORE_TOOLS + ".Code4Request";
     //Ts
     public static final String T_LIST_TS = Pkg.LIB4J_TS + ".impl.basic.TListTs";
@@ -35,7 +38,9 @@ public class FullName {
     public static final String PATH_TEXT_FILE = Pkg.LIB4A_PATH + ".PathTextFile";
     public static final String PATH_IMAGE_FILE = Pkg.LIB4A_PATH + ".PathImageFile";
     public static final String PATH_BEAN_FILE = Pkg.LIB4A_PATH + ".PathBeanFile";
-
+    //JSON
+    public static final String JO = Pkg.LIB4J_JSON + ".base.JO";
+    public static final String JSON_TOOL = Pkg.LIB4J_JSON + ".JsonTool";
     //不变的
     public static final String VIEW = "android.view.View";
     public static final String STRING = "java.lang.String";

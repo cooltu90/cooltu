@@ -8,7 +8,7 @@ import com.codingtu.cooltu.processor.annotation.net.ParamType;
 import com.codingtu.cooltu.processor.annotation.net.method.GET;
 import com.codingtu.cooltu.processor.annotation.net.method.POST;
 
-@Apis(baseUrl = "http://www.xxxxxxxxx.com")
+@Apis
 public interface TestApi {
 
     @GET("/getObj/{ids}")
@@ -27,7 +27,7 @@ public interface TestApi {
     );
 
     @POST(value = "/addObj", baseUrl = "https://wwww.sddfsdfsd.com")
-    public String addObj(
+    public String addObj2(
             @Param String name,
             @Param int age,
             @Param String parent);

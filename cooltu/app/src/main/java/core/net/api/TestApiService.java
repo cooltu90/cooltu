@@ -24,7 +24,7 @@ public interface TestApiService {
     );
 
     @retrofit2.http.POST("/addObj")
-    Flowable<Result<ResponseBody>> addObj(
+    Flowable<Result<ResponseBody>> addObj2(
             @retrofit2.http.Query("name") java.lang.String name,
             @retrofit2.http.Query("age") int age,
             @retrofit2.http.Query("parent") java.lang.String parent
