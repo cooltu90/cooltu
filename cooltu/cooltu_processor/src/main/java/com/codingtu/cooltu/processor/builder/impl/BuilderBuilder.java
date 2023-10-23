@@ -109,40 +109,20 @@ public class BuilderBuilder extends BuilderBuilderBase {
     }
 
     private void dealIfSubLines(int level, SubTag lastSubTagStart, List<String> lines) {
-        dealIfSubLines(level, lastSubTagStart, addLnTagTemp, lastSubTagStart.parentTag, new Deal() {
-            @Override
-            public void deal(boolean isFor, int level, SubTag lastSubTag, List<String> subTags, StringBuilder strsParamSb, StringBuilder strsValueSb, int[] listCounts, String writeLine, String sbName, String space) {
-                dealLines(isFor, level, lastSubTag, lines, subTags, strsParamSb, strsValueSb, listCounts, writeLine, sbName, space);
-            }
-        });
+        dealIfSubLines(level, lastSubTagStart, addLnTagTemp, lastSubTagStart.parentTag, getLinesDeal(lines));
 
     }
 
     private void dealIfSubLines(int level, SubTag lastSubTagStart, String line) {
-        dealIfSubLines(level, lastSubTagStart, addTagTemp, lastSubTagStart.tag, new Deal() {
-            @Override
-            public void deal(boolean isFor, int level, SubTag lastSubTag, List<String> subTags, StringBuilder strsParamSb, StringBuilder strsValueSb, int[] listCounts, String writeLine, String sbName, String space) {
-                dealLine(isFor, level, lastSubTag, line, subTags, strsParamSb, strsValueSb, listCounts, writeLine, sbName, space);
-            }
-        });
+        dealIfSubLines(level, lastSubTagStart, addTagTemp, lastSubTagStart.tag, getLineDeal(line));
     }
 
     private void dealForSubLines(int level, SubTag lastSubTagStart, List<String> lines) {
-        dealForSubLines(level, lastSubTagStart, addLnTagTemp, lastSubTagStart.parentTag, new Deal() {
-            @Override
-            public void deal(boolean isFor, int level, SubTag lastSubTag, List<String> subTags, StringBuilder strsParamSb, StringBuilder strsValueSb, int[] listCounts, String writeLine, String sbName, String space) {
-                dealLines(isFor, level, lastSubTag, lines, subTags, strsParamSb, strsValueSb, listCounts, writeLine, sbName, space);
-            }
-        });
+        dealForSubLines(level, lastSubTagStart, addLnTagTemp, lastSubTagStart.parentTag, getLinesDeal(lines));
     }
 
     private void dealForSubLines(int level, SubTag lastSubTagStart, String line) {
-        dealForSubLines(level, lastSubTagStart, addTagTemp, lastSubTagStart.tag, new Deal() {
-            @Override
-            public void deal(boolean isFor, int level, SubTag lastSubTag, List<String> subTags, StringBuilder strsParamSb, StringBuilder strsValueSb, int[] listCounts, String writeLine, String sbName, String space) {
-                dealLine(isFor, level, lastSubTag, line, subTags, strsParamSb, strsValueSb, listCounts, writeLine, sbName, space);
-            }
-        });
+        dealForSubLines(level, lastSubTagStart, addTagTemp, lastSubTagStart.tag, getLineDeal(line));
 
     }
 
@@ -227,109 +207,112 @@ public class BuilderBuilder extends BuilderBuilderBase {
         addLnTag(dealLinesInParent, "        [space]}", space);
     }
 
+    private Deal getLinesDeal(List<String> lines) {
+        return new Deal() {
+            @Override
+            public void deal(boolean isFor, int level, SubTag lastSubTagStart, List<String> subTags, StringBuilder strsParamSb, StringBuilder strsValueSb, int[] listCounts, String writeLine, String sbName, String space) {
+                int count = CountTool.count(lines);
+                if (count > 0) {
+                    SubTag subTagStart = null;
+                    SubTag subTagEnd = null;
+                    List<String> subLines = new ArrayList<>();
+                    for (int i = 0; i < count; i++) {
+                        String line = lines.get(i);
+                        if (subTagEnd == null && isSubStart(line)) {
+                            subTagStart = SubTag.start(line);
+                            subTagEnd = subTagStart.getEnd();
+                            subLines.clear();
+                        } else if (subTagEnd != null && subTagEnd.full.equals(line)) {
+                            subTagStart.forLevels = copy(lastSubTagStart.forLevels);
+                            if (isFor)
+                                subTagStart.forLevels.add(level);
+                            subTagStart.parentTag = lastSubTagStart.parentTag;
+                            dealSubLines(level + 1, subTagStart, subLines);
+                            subTagStart = null;
+                            subTagEnd = null;
+                        } else if (subTagStart != null) {
+                            subLines.add(line);
+                        } else {
+                            getLineDeal(line).deal(isFor, level, lastSubTagStart, subTags, strsParamSb, strsValueSb, listCounts, writeLine, sbName, space);
+                        }
 
-    private void dealLines(boolean isFor, int level, SubTag lastSubTagStart, List<String> lines,
-                           List<String> subTags, StringBuilder strsParamSb, StringBuilder strsValueSb,
-                           int[] listCounts, String writeLine, String sbName, String space) {
-        int count = CountTool.count(lines);
-        if (count > 0) {
-            SubTag subTagStart = null;
-            SubTag subTagEnd = null;
-            List<String> subLines = new ArrayList<>();
-            for (int i = 0; i < count; i++) {
-                String line = lines.get(i);
-                if (subTagEnd == null && isSubStart(line)) {
-                    subTagStart = SubTag.start(line);
-                    subTagEnd = subTagStart.getEnd();
-                    subLines.clear();
-                } else if (subTagEnd != null && subTagEnd.full.equals(line)) {
-                    subTagStart.forLevels = copy(lastSubTagStart.forLevels);
-                    if (isFor)
-                        subTagStart.forLevels.add(level);
-                    subTagStart.parentTag = lastSubTagStart.parentTag;
-                    dealSubLines(level + 1, subTagStart, subLines);
-                    subTagStart = null;
-                    subTagEnd = null;
-                } else if (subTagStart != null) {
-                    subLines.add(line);
-                } else {
-                    dealLine(isFor, level, lastSubTagStart, line, subTags, strsParamSb, strsValueSb, listCounts, writeLine, sbName, space);
-                }
-
-            }
-        }
-    }
-
-
-    private void dealLine(boolean isFor, int level, SubTag lastSubTag, String line,
-                          List<String> subTags, StringBuilder strsParamSb, StringBuilder strsValueSb,
-                          int[] listCounts, String writeLine, String sbName, String space) {
-        int start = 0;
-        StringBuilder lineSb = new StringBuilder();
-        StringBuilder valuesSb = new StringBuilder();
-        for (int j = 0; j < line.length(); j++) {
-            char c = line.charAt(j);
-            if (c == '[') {
-                lineSb.append(line, start, j);
-                start = j;
-            } else if (c == ']') {
-                String tag = line.substring(start + 1, j);
-                boolean isDeal = false;
-                for (int i = 0; i < CountTool.count(lineTagSigns); i++) {
-                    String lineTagSign = lineTagSigns[i];
-                    if (tag.startsWith(lineTagSign)) {
-                        String realTag = tag.substring("if:".length());
-                        addLnTag(dealLinesInParent, "            [space]StringBuilder [tag]Sb = new StringBuilder();"
-                                , space, realTag);
-
-                        tag = "[" + tag + "]";
-                        int i1 = line.indexOf(tag, j);
-                        String ifs = line.substring(start + tag.length(), i1);
-
-                        SubTag subTag = new SubTag();
-                        subTag.type = lineTags[i];
-                        subTag.tag = realTag;
-                        subTag.parentTag = lastSubTag.parentTag;
-                        subTag.forLevels = copy(lastSubTag.forLevels);
-                        if (isFor)
-                            subTag.forLevels.add(level);
-                        dealSubLines(level + 1, subTag, ifs);
-
-                        start = i1 + tag.length();
-                        j = start;
-                        lineSb.append("[").append(realTag).append("]");
-
-                        addTag(valuesSb, ", [tag]Sb.toString()", realTag);
-                        isDeal = true;
-                        continue;
                     }
                 }
-                if (isDeal) {
-                    continue;
-                }
-                if (!subTags.contains(tag)) {
-                    if (!CountTool.isNull(subTags)) {
-                        strsParamSb.append(", ");
-                    }
-                    strsParamSb.append("String ").append(tag);
-                    subTags.add(tag);
-                }
-                strsValueSb.append(", ").append(tag);
-                addTag(valuesSb, ", [lines][0].get([0])", lastSubTag.parentTag, level, listCounts[0]++);
-
-                lineSb.append(line.substring(start, j + 1));
-                start = j + 1;
             }
-        }
-
-        if (start != line.length()) {
-            lineSb.append(line.substring(start));
-        }
-
-        addLnTag(dealLinesInParent, writeLine
-                , space, sbName, replaceLine(lineSb.toString()), valuesSb.toString());
+        };
     }
 
+    private Deal getLineDeal(String line) {
+        return new Deal() {
+            @Override
+            public void deal(boolean isFor, int level, SubTag lastSubTag, List<String> subTags, StringBuilder strsParamSb, StringBuilder strsValueSb, int[] listCounts, String writeLine, String sbName, String space) {
+                int start = 0;
+                StringBuilder lineSb = new StringBuilder();
+                StringBuilder valuesSb = new StringBuilder();
+                for (int j = 0; j < line.length(); j++) {
+                    char c = line.charAt(j);
+                    if (c == '[') {
+                        lineSb.append(line, start, j);
+                        start = j;
+                    } else if (c == ']') {
+                        String tag = line.substring(start + 1, j);
+                        boolean isDeal = false;
+                        for (int i = 0; i < CountTool.count(lineTagSigns); i++) {
+                            String lineTagSign = lineTagSigns[i];
+                            if (tag.startsWith(lineTagSign)) {
+                                String realTag = tag.substring("if:".length());
+                                addLnTag(dealLinesInParent, "            [space]StringBuilder [tag]Sb = new StringBuilder();"
+                                        , space, realTag);
+
+                                tag = "[" + tag + "]";
+                                int i1 = line.indexOf(tag, j);
+                                String ifs = line.substring(start + tag.length(), i1);
+
+                                SubTag subTag = new SubTag();
+                                subTag.type = lineTags[i];
+                                subTag.tag = realTag;
+                                subTag.parentTag = lastSubTag.parentTag;
+                                subTag.forLevels = copy(lastSubTag.forLevels);
+                                if (isFor)
+                                    subTag.forLevels.add(level);
+                                dealSubLines(level + 1, subTag, ifs);
+
+                                start = i1 + tag.length();
+                                j = start;
+                                lineSb.append("[").append(realTag).append("]");
+
+                                addTag(valuesSb, ", [tag]Sb.toString()", realTag);
+                                isDeal = true;
+                                continue;
+                            }
+                        }
+                        if (isDeal) {
+                            continue;
+                        }
+                        if (!subTags.contains(tag)) {
+                            if (!CountTool.isNull(subTags)) {
+                                strsParamSb.append(", ");
+                            }
+                            strsParamSb.append("String ").append(tag);
+                            subTags.add(tag);
+                        }
+                        strsValueSb.append(", ").append(tag);
+                        addTag(valuesSb, ", [lines][0].get([0])", lastSubTag.parentTag, level, listCounts[0]++);
+
+                        lineSb.append(line.substring(start, j + 1));
+                        start = j + 1;
+                    }
+                }
+
+                if (start != line.length()) {
+                    lineSb.append(line.substring(start));
+                }
+
+                addLnTag(dealLinesInParent, writeLine
+                        , space, sbName, replaceLine(lineSb.toString()), valuesSb.toString());
+            }
+        };
+    }
 
     private static interface Deal {
         public void deal(boolean isFor, int level, SubTag lastSubTag,
