@@ -85,7 +85,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
         layoutIf(info.layout != null);
         if (info.layout != null) {
-            layout(info.layout.toString());
+            layoutIf(info.layout.toString());
         }
 
         final int[] fieldCount = {0};
@@ -141,7 +141,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                         String divider = (kvIndex != kvCount - 1) ? "," : "";
                         if (kvIndex == 0 && FullName.VIEW.equals(kv.k)) {
                             onClickSwitchParamsIf(clickViewInfoIndex, true);
-                            onClickSwitchParams(clickViewInfoIndex, divider);
+                            onClickSwitchParamsIf(clickViewInfoIndex, divider);
                         } else {
                             onClickSwitchParams(clickViewInfoIndex, paramsIndex[0], kv.k, Pkg.LIB4A, paramsIndex[0] + "", divider);
                             paramsIndex[0]++;

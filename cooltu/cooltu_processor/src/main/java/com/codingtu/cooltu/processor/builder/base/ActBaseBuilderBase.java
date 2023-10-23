@@ -187,7 +187,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void layoutIf(boolean is) {
         layoutIfs.put(getIfKey("layout"), is);
     }
-    protected void layout(String layout) {
+    protected void layoutIf(String layout) {
         addForMap(this.layout, getIfKey("layout"), layout);
     }
     protected void superOnClickIf(boolean is) {
@@ -196,7 +196,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void onClickSwitchParamsIf(int i0, boolean is) {
         onClickSwithIfs.put(getIfKey("onClickSwitchParams", i0), is);
     }
-    protected void onClickSwitchParams(int i0, String divider) {
+    protected void onClickSwitchParamsIf(int i0, String divider) {
         addForMap(this.onClickSwith, getIfKey("onClickSwitchParams", i0), divider);
     }
 

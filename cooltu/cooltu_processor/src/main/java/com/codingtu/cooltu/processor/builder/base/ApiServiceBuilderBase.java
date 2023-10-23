@@ -43,7 +43,7 @@ public abstract class ApiServiceBuilderBase extends com.codingtu.cooltu.processo
     protected void annoEncodeIf(int i0, int i1, boolean is) {
         methodIfs.put(getIfKey("annoEncode", i0, i1), is);
     }
-    protected void annoInfo(int i0, int i1, String value) {
+    protected void annoInfoIf(int i0, int i1, String value) {
         addForMap(this.method, getIfKey("annoInfo", i0, i1), value);
     }
 

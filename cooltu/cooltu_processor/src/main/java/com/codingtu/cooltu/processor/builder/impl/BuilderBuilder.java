@@ -104,7 +104,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
         String keyParams1 = isFor ? getKeyParams(levelsCount + 1) : null;
         String keyParams2 = isFor ? keyParams1 : keyParams0;
         StringBuilder tagSb = isFor ? fors : ifs;
-        String tag0 = isFor ? "" : "";
+        String tag0 = isFor ? "" : "If";
         String tag1 = isFor ? "For" : "If";
         String space = getSpaces(level);
         String putMethodParams = isFor ? getPutMethodIntParams(levelsCount + 1) : getPutMethodIntParams(levelsCount);
