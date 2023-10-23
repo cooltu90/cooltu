@@ -94,36 +94,18 @@ public class BuilderBuilder extends BuilderBuilderBase {
             subTagStart.parentTag = subTagStart.tag;
         }
         if ("for".equals(subTagStart.type)) {
-            dealForSubLines(level, subTagStart, lines);
+            dealForSubLines(level, subTagStart, addLnTagTemp, subTagStart.parentTag, getLinesDeal(lines));
         } else if ("if".equals(subTagStart.type)) {
-            dealIfSubLines(level, subTagStart, lines);
+            dealIfSubLines(level, subTagStart, addLnTagTemp, subTagStart.parentTag, getLinesDeal(lines));
         }
     }
 
     private void dealSubLines(int level, SubTag subTagStart, String line) {
         if ("for".equals(subTagStart.type)) {
-            dealForSubLines(level, subTagStart, line);
+            dealForSubLines(level, subTagStart, addTagTemp, subTagStart.tag, getLineDeal(line));
         } else if ("if".equals(subTagStart.type)) {
-            dealIfSubLines(level, subTagStart, line);
+            dealIfSubLines(level, subTagStart, addTagTemp, subTagStart.tag, getLineDeal(line));
         }
-    }
-
-    private void dealIfSubLines(int level, SubTag lastSubTagStart, List<String> lines) {
-        dealIfSubLines(level, lastSubTagStart, addLnTagTemp, lastSubTagStart.parentTag, getLinesDeal(lines));
-
-    }
-
-    private void dealIfSubLines(int level, SubTag lastSubTagStart, String line) {
-        dealIfSubLines(level, lastSubTagStart, addTagTemp, lastSubTagStart.tag, getLineDeal(line));
-    }
-
-    private void dealForSubLines(int level, SubTag lastSubTagStart, List<String> lines) {
-        dealForSubLines(level, lastSubTagStart, addLnTagTemp, lastSubTagStart.parentTag, getLinesDeal(lines));
-    }
-
-    private void dealForSubLines(int level, SubTag lastSubTagStart, String line) {
-        dealForSubLines(level, lastSubTagStart, addTagTemp, lastSubTagStart.tag, getLineDeal(line));
-
     }
 
     private void dealIfSubLines(int level, SubTag lastSubTagStart, String writeLine, String sbName, Deal deal) {
@@ -194,6 +176,13 @@ public class BuilderBuilder extends BuilderBuilderBase {
         addLnTag(dealLinesInParent, "            [space]List<String> [lines][0] = [lines].get(getForKey(\"[tag]\"[params]));"
                 , space, subTag.parentTag, level, subTag.parentTag, subTag.tag, forKeyParams1);
     }
+
+
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
 
     private void method(StringBuilder sb, SubTag subTag, String tag0, String tag1, String strsParam, String strsValue,
                         String putMethodParams, String keyParams, String space) {
@@ -320,11 +309,6 @@ public class BuilderBuilder extends BuilderBuilderBase {
                          int[] listCounts, String writeLine, String sbName, String space);
     }
 
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
     private String getPutMethodIntParams(int count) {
         return getParams(false, true, count, "int ", intTag);
     }
