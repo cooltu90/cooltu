@@ -38,5 +38,6 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.lib4a.
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
 
     }
+
 }
 

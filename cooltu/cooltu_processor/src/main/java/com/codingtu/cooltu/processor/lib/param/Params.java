@@ -2,6 +2,7 @@ package com.codingtu.cooltu.processor.lib.param;
 
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 
@@ -81,4 +82,30 @@ public class Params {
     public int count() {
         return CountTool.count(kvs);
     }
+
+    public String getParam(Convert convert) {
+        StringBuilder sb = new StringBuilder();
+
+        int index = 0;
+        int count = CountTool.count(kvs);
+        if (count > 0) {
+            for (int i = 0; i < count; i++) {
+                KV<String, String> kv = kvs.get(i);
+                String convertStr = convert.convert(i, kv);
+                if (StringTool.isNotBlank(convertStr)) {
+                    if (index != 0) {
+                        sb.append(", ");
+                    }
+                    sb.append(convertStr);
+                    index++;
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+    public static interface Convert {
+        String convert(int index, KV<String, String> kv);
+    }
+
 }

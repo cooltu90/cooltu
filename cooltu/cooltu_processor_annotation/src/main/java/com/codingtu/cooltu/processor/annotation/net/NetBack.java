@@ -5,5 +5,5 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.SOURCE)
 public @interface NetBack {
-    boolean mock() default false;
+    Class mock() default Void.class;
 }

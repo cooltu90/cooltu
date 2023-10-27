@@ -13,6 +13,7 @@ public class ActBaseInfo {
     public String baseClass;
     public List<LayoutTools.ViewInfo> viewInfos;
     public List<ClickViewInfo> clickViews = new ArrayList<>();
+    public List<NetBackInfo> netBacks = new ArrayList<>();
     public String act;
     public List<KV<String, String>> colorStrs = new ArrayList<>();
     public List<KV<String, IdTools.Id>> colorReses = new ArrayList<>();

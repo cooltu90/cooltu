@@ -2,19 +2,28 @@ package com.codingtu.cooltu.processor.builder.impl;
 
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
+import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.tools.ClassTool;
+import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
+import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
+import com.codingtu.cooltu.processor.deal.NetDeal;
 import com.codingtu.cooltu.processor.lib.log.Logs;
+import com.codingtu.cooltu.processor.lib.param.Params;
+import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
+import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
@@ -265,7 +274,49 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         fieldCount(fieldCount[0]);
 
         acceptCount(0);
+        Ts.ls(info.netBacks, new BaseTs.EachTs<NetBackInfo>() {
+            @Override
+            public boolean each(int position, NetBackInfo netBackInfo) {
+                String methodName = ElementTools.simpleName(netBackInfo.method);
 
+                String methodBaseName = StringTool.cutSuffix(methodName, Suffix.NET_BACK);
+
+                String netBackFullName = CurrentPath.netBackFullName(methodBaseName);
+                String sendParamsFullName = CurrentPath.sendParamsFullName(methodBaseName);
+
+                Params params = ElementTools.getMethodParamKvs(netBackInfo.method);
+                String paramStr = params.getParam(new Params.Convert() {
+                    @Override
+                    public String convert(int index, KV<String, String> kv) {
+                        if (ClassTool.isType(kv.k, netBackFullName)) {
+                            return "this";
+                        }
+
+                        if (ClassTool.isType(kv.k, sendParamsFullName)) {
+                            return "(" + sendParamsFullName + ")params";
+                        }
+
+                        String returnType = NetDeal.RETURN_TYPES.get(netBackFullName);
+                        if (ClassTool.isType(kv.k, returnType)) {
+                            if (ClassTool.isList(returnType)) {
+                                String beanType = StringTool.getSub(returnType, "List", "<", ">");
+                                return ConvertTool.toMethodType(CurrentPath.javaInfo(beanType).name) + "s";
+                            } else {
+                                return ConvertTool.toMethodType(CurrentPath.javaInfo(returnType).name);
+                            }
+                        } else if (ClassTool.isList(kv.k)) {
+
+                        }
+
+                        return null;
+                    }
+                });
+
+                accept(position, methodName, netBackFullName, FullName.CORE_SEND_PARAMS, paramStr);
+                acceptCountAdd();
+                return false;
+            }
+        });
 
     }
 

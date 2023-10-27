@@ -2,11 +2,10 @@ package core.actbase;
 
 import android.view.View;
 
-import com.codingtu.cooltu.bean.User;
-import com.codingtu.cooltu.lib4a.net.bean.CoreSendParams;
-
 import java.util.List;
 
+import core.net.back.GetObjBack;
+import core.net.params.GetObjParams;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
@@ -56,15 +55,18 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         if ("getObjBack".equals(code)) {
             new core.net.back.GetObjBack() {
                 @Override
-                public void accept(String code, Result<ResponseBody> result, CoreSendParams params, List objs) {
+                public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
                     super.accept(code, result, params, objs);
-                    getObjBack(user);
+                    getObjBack(this, (GetObjParams) params, objs);
                 }
             }.accept(code, result, params, objs);
         }
+
     }
 
-    public void getObjBack(User user) {
+    private void getObjBack(GetObjBack back, GetObjParams params, List objs) {
+
     }
+
 }
 

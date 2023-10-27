@@ -1,5 +1,6 @@
 package com.codingtu.cooltu.processor.deal;
 
+import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.net.Apis;
@@ -14,10 +15,15 @@ import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
+import java.util.HashMap;
+
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 
 public class NetDeal extends TypeBaseDeal {
+
+    public static final HashMap<String, String> RETURN_TYPES = new HashMap<>();
+
     @Override
     protected void dealTypeElement(TypeElement te) {
 
@@ -30,10 +36,14 @@ public class NetDeal extends TypeBaseDeal {
                 ExecutableElement ee = (ExecutableElement) element;
                 apiServiceBuilder.addMethod(ee);
                 if (!CountTool.isNull(ee.getParameters())) {
-                    new NetParamsBuilder(CurrentPath.sendParams(ElementTools.simpleName(element)), ElementTools.getMethodParamKvs(ee));
+                    new NetParamsBuilder(CurrentPath.sendParams(ElementTools.simpleName(ee)), ElementTools.getMethodParamKvs(ee));
                 }
 
-                new NetBackBuilder(CurrentPath.netBack(ElementTools.simpleName(element)), ee);
+                JavaInfo netBackJavaInfo = CurrentPath.netBack(ElementTools.simpleName(ee));
+                String returnType = ee.getReturnType().toString();
+                RETURN_TYPES.put(netBackJavaInfo.fullName, returnType);
+
+                new NetBackBuilder(netBackJavaInfo, ee);
 
                 GET get = ee.getAnnotation(GET.class);
                 POST post = ee.getAnnotation(POST.class);

@@ -66,5 +66,6 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
 
     }
+
 }
 
