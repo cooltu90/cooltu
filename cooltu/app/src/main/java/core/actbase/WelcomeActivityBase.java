@@ -2,7 +2,15 @@ package core.actbase;
 
 import android.view.View;
 
-public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.BaseWelcomeActivity implements View.OnClickListener {
+import com.codingtu.cooltu.bean.User;
+import com.codingtu.cooltu.lib4a.net.bean.CoreSendParams;
+
+import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.adapter.rxjava2.Result;
+
+public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.BaseWelcomeActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
     protected int textColor;
     protected int tvColor;
     protected int dp;
@@ -15,7 +23,6 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
 
         textColor = android.graphics.Color.parseColor("#ffffff");
@@ -33,6 +40,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
     }
+
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -43,5 +51,20 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     }
 
 
+    @Override
+    public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
+        if ("getObjBack".equals(code)) {
+            new core.net.back.GetObjBack() {
+                @Override
+                public void accept(String code, Result<ResponseBody> result, CoreSendParams params, List objs) {
+                    super.accept(code, result, params, objs);
+                    getObjBack(user);
+                }
+            }.accept(code, result, params, objs);
+        }
+    }
+
+    public void getObjBack(User user) {
+    }
 }
 

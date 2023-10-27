@@ -2,7 +2,12 @@ package core.actbase.base;
 
 import android.view.View;
 
-public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.base.CoreWelcomeActivity implements View.OnClickListener {
+import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.adapter.rxjava2.Result;
+
+public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.base.CoreWelcomeActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
     protected android.widget.RelativeLayout tv3Rl;
     protected android.widget.RelativeLayout tv4;
     protected android.widget.TextView tv6;
@@ -57,5 +62,9 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
     protected void tv3Click() {}
 
+    @Override
+    public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
+
+    }
 }
 

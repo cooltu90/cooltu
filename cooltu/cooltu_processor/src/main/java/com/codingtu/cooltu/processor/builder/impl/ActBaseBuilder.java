@@ -45,7 +45,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
     @Override
     protected boolean isBuild() {
-        return true;
+        return false;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
     @Override
     protected void beforeBuild(List<String> lines) {
         super.beforeBuild(lines);
-        //Logs.i(lines);
+        Logs.i(lines);
     }
 
     public void addInfos(ActBaseInfo actBaseInfo) {
@@ -82,6 +82,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         addTag(pkg, javaInfo.pkg);
         addTag(name, javaInfo.name);
         addTag(baseClass, info.baseClass);
+        addTag(netBackIFullName, FullName.NET_BACK_I);
+        addTag(coreSendParamsFullName, FullName.CORE_SEND_PARAMS);
 
         layoutIf(info.layout != null);
         if (info.layout != null) {
@@ -261,6 +263,10 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         });
 
         fieldCount(fieldCount[0]);
+
+        acceptCount(0);
+
+
     }
 
 }
@@ -269,7 +275,12 @@ package [[pkg]];
 
 import android.view.View;
 
-public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener {
+import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.adapter.rxjava2.Result;
+
+public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, [[netBackIFullName]] {
                                                                                                     [<sub>][for][field]
     protected [type] [name];
                                                                                                     [<sub>][for][field]
@@ -329,6 +340,21 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][onClickMethods]
     protected void [methodName]([params]) {}
                                                                                                     [<sub>][for][onClickMethods]
+    @Override
+    public void accept(String code, Result<ResponseBody> result, [[coreSendParamsFullName]] params, List objs) {
+                                                                                                    [<sub>][for][accept]
+        if ("[methodName]".equals(code)) {
+            new [netBackFullName]() {
+                @Override
+                public void accept(String code, Result<ResponseBody> result, [coreSendParamsFullName] params, List objs) {
+                    super.accept(code, result, params, objs);
+                    [methodName]([params]);
+                }
+            }.accept(code, result, params, objs);
+        }
+                                                                                                    [<sub>][for][accept]
+    }
+
 }
 
 model_temp_end */

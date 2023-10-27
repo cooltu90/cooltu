@@ -18,15 +18,20 @@ public class FullName {
     public static final String RESOURCE_TOOL = "com.codingtu.cooltu.lib4a.tools.ResourceTool";
     public static final String MOBILE_TOOL = "com.codingtu.cooltu.lib4a.tools.MobileTool";
     public static final String ACT_TOOL = "com.codingtu.cooltu.lib4a.tools.ActTool";
+    public static final String STRING_TOOL = "com.codingtu.cooltu.lib4j.tools.StringTool";
     public static final String COUNT_TOOL = "com.codingtu.cooltu.lib4j.tools.CountTool";
-    public static final String NET_TOOL = "com.codingtu.cooltu.lib4a.net.NetTool";
     public static final String LIST_VALUE_MAP = "com.codingtu.cooltu.lib4j.data.map.ListValueMap";
     public static final String PROCESSOR_PARAMS = "com.codingtu.cooltu.processor.lib.param.Params";
     public static final String JAVA_INFO = "com.codingtu.cooltu.lib4j.data.java.JavaInfo";
     public static final String SUB_BUILDER = "com.codingtu.cooltu.processor.bean.SubBuilder";
-    public static final String CORE_SEND_PARAMS = "com.codingtu.cooltu.lib4a.net.bean.CoreSendParams";
     public static final String CORE_CONFIGS = "com.codingtu.cooltu.lib4a.CoreConfigs";
-    public static final String API = "com.codingtu.cooltu.lib4a.net.api.API";
+    //net
+    public static final String NET_TOOL = Pkg.LIB4A_NET + ".NetTool";
+    public static final String CORE_SEND_PARAMS = Pkg.LIB4A_NET + ".bean.CoreSendParams";
+    public static final String API = Pkg.LIB4A_NET + ".api.API";
+    public static final String NET_BACK_I = Pkg.LIB4A_NET + ".netback.NetBackI";
+    public static final String NET_BACK = Pkg.LIB4A_NET + ".netback.NetBack";
+    //core_tools
     public static final String PASS = Pkg.CORE_TOOLS + ".Pass";
     public static final String ACT_START = Pkg.CORE_TOOLS + ".ActStart";
     public static final String NET = Pkg.CORE_NET + ".Net";

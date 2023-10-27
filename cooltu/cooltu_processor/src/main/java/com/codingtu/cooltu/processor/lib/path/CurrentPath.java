@@ -143,4 +143,14 @@ public class CurrentPath {
         return javaInfo(apiServiceFullName(apiName));
     }
 
+    public static String netBackFullName(String methodName) {
+        return Pkg.CORE_NET_BACK
+                + "."
+                + ConvertTool.toClassType(methodName)
+                + Suffix.NET_BACK;
+    }
+
+    public static JavaInfo netBack(String methodName) {
+        return javaInfo(netBackFullName(methodName));
+    }
 }

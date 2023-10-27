@@ -18,5 +18,7 @@ public class Pkg {
     public static final String CORE_NET = "core.net";
     public static final String CORE_NET_API = CORE_NET + ".api";
     public static final String CORE_NET_PARAMS = CORE_NET + ".params";
+    public static final String CORE_NET_BACK = CORE_NET + ".back";
+    public static final String LIB4A_NET = "com.codingtu.cooltu.lib4a.net";
 
 }

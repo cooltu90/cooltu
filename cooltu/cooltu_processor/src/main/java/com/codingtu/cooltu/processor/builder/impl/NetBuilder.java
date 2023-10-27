@@ -14,7 +14,6 @@ import com.codingtu.cooltu.processor.annotation.net.Param;
 import com.codingtu.cooltu.processor.annotation.net.ParamType;
 import com.codingtu.cooltu.processor.bean.NetInfo;
 import com.codingtu.cooltu.processor.builder.base.NetBuilderBase;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
@@ -53,7 +52,7 @@ public class NetBuilder extends NetBuilderBase {
     @Override
     protected void beforeBuild(List<String> lines) {
         super.beforeBuild(lines);
-        Logs.i(lines);
+        //Logs.i(lines);
     }
 
     @Override
@@ -64,7 +63,7 @@ public class NetBuilder extends NetBuilderBase {
         Ts.ls(infos, new BaseTs.EachTs<NetInfo>() {
             @Override
             public boolean each(int position, NetInfo netInfo) {
-                addField(ConvertTool.toStaticType(netInfo.methodName), netInfo.methodName + Suffix.NET_METHOD);
+                addField(ConvertTool.toStaticType(netInfo.methodName), netInfo.methodName + Suffix.NET_BACK);
                 return false;
             }
         });

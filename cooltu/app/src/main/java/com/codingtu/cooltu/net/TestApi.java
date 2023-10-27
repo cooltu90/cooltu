@@ -8,6 +8,8 @@ import com.codingtu.cooltu.processor.annotation.net.ParamType;
 import com.codingtu.cooltu.processor.annotation.net.method.GET;
 import com.codingtu.cooltu.processor.annotation.net.method.POST;
 
+import java.util.List;
+
 @Apis
 public interface TestApi {
 
@@ -19,7 +21,7 @@ public interface TestApi {
     );
 
     @POST(value = "/addObj", isJsonBody = true, baseUrl = "https://wwww.sddfsdfsd.com")
-    public String addObj(String name, int age);
+    public List<User> addObj(String name, int age);
 
     @POST(value = "/addObj", baseUrl = "https://wwww.sddfsdfsd.com")
     public String addObj1(

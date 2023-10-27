@@ -6,6 +6,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected StringBuilder pkg;
     protected StringBuilder name;
     protected StringBuilder baseClass;
+    protected StringBuilder netBackIFullName;
     private java.util.Map<String, Boolean> fieldIfs;
     private java.util.Map<String, Integer> fieldCounts;
     private StringBuilder fieldSb;
@@ -54,12 +55,18 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     private java.util.Map<String, Integer> onClickMethodsCounts;
     private StringBuilder onClickMethodsSb;
     private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> onClickMethods;
+    protected StringBuilder coreSendParamsFullName;
+    private java.util.Map<String, Boolean> acceptIfs;
+    private java.util.Map<String, Integer> acceptCounts;
+    private StringBuilder acceptSb;
+    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> accept;
 
     public ActBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
         pkg = map.get("pkg");
         name = map.get("name");
         baseClass = map.get("baseClass");
+        netBackIFullName = map.get("netBackIFullName");
         fieldIfs = new java.util.HashMap<>();
         fieldCounts = new java.util.HashMap<>();
         fieldSb = map.get("field");
@@ -108,6 +115,11 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         onClickMethodsCounts = new java.util.HashMap<>();
         onClickMethodsSb = map.get("onClickMethods");
         onClickMethods = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        coreSendParamsFullName = map.get("coreSendParamsFullName");
+        acceptIfs = new java.util.HashMap<>();
+        acceptCounts = new java.util.HashMap<>();
+        acceptSb = map.get("accept");
+        accept = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
     protected void fieldCount(int count) {
@@ -182,6 +194,12 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void onClickMethodsCountAdd() {
         count(onClickMethodsCounts, getForKey("onClickMethods"));
     }
+    protected void acceptCount(int count) {
+        acceptCounts.put(getForKey("accept"), count);
+    }
+    protected void acceptCountAdd() {
+        count(acceptCounts, getForKey("accept"));
+    }
 
     protected void field(int i0, String type, String name) {
         addForMap(this.field, getForKey("field", i0), type, name);
@@ -218,6 +236,9 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     }
     protected void onClickMethods(int i0, String methodName, String params) {
         addForMap(this.onClickMethods, getForKey("onClickMethods", i0), methodName, params);
+    }
+    protected void accept(int i0, String methodName, String netBackFullName, String coreSendParamsFullName, String params) {
+        addForMap(this.accept, getForKey("accept", i0), methodName, netBackFullName, coreSendParamsFullName, methodName, params);
     }
 
     protected void layoutIf(boolean is) {
@@ -300,6 +321,18 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> onClickMethods0 = onClickMethods.get(getForKey("onClickMethods", i0));
             addLnTag(onClickMethodsSb, "    protected void [methodName]([params]) {}", onClickMethods0.get(0), onClickMethods0.get(1));
         }
+        for (int i0 = 0; i0 < acceptCounts.get(getForKey("accept")); i0++) {
+            List<String> accept0 = accept.get(getForKey("accept", i0));
+            addLnTag(acceptSb, "        if (\"[methodName]\".equals(code)) {", accept0.get(0));
+            addLnTag(acceptSb, "            new [netBackFullName]() {", accept0.get(1));
+            addLnTag(acceptSb, "                @Override");
+            addLnTag(acceptSb, "                public void accept(String code, Result<ResponseBody> result, [coreSendParamsFullName] params, List objs) {", accept0.get(2));
+            addLnTag(acceptSb, "                    super.accept(code, result, params, objs);");
+            addLnTag(acceptSb, "                    [methodName]([params]);", accept0.get(3), accept0.get(4));
+            addLnTag(acceptSb, "                }");
+            addLnTag(acceptSb, "            }.accept(code, result, params, objs);");
+            addLnTag(acceptSb, "        }");
+        }
 
     }
 
@@ -310,7 +343,12 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("");
         lines.add("import android.view.View;");
         lines.add("");
-        lines.add("public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener {");
+        lines.add("import java.util.List;");
+        lines.add("");
+        lines.add("import okhttp3.ResponseBody;");
+        lines.add("import retrofit2.adapter.rxjava2.Result;");
+        lines.add("");
+        lines.add("public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, [[netBackIFullName]] {");
         lines.add("[[field]]");
         lines.add("");
         lines.add("    @Override");
@@ -335,6 +373,11 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("    }");
         lines.add("");
         lines.add("[[onClickMethods]]");
+        lines.add("    @Override");
+        lines.add("    public void accept(String code, Result<ResponseBody> result, [[coreSendParamsFullName]] params, List objs) {");
+        lines.add("[[accept]]");
+        lines.add("    }");
+        lines.add("");
         lines.add("}");
         lines.add("");
 

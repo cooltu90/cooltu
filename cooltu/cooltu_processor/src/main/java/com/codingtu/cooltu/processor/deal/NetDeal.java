@@ -7,6 +7,7 @@ import com.codingtu.cooltu.processor.annotation.net.method.GET;
 import com.codingtu.cooltu.processor.annotation.net.method.POST;
 import com.codingtu.cooltu.processor.bean.NetInfo;
 import com.codingtu.cooltu.processor.builder.impl.ApiServiceBuilder;
+import com.codingtu.cooltu.processor.builder.impl.NetBackBuilder;
 import com.codingtu.cooltu.processor.builder.impl.NetBuilder;
 import com.codingtu.cooltu.processor.builder.impl.NetParamsBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
@@ -31,6 +32,8 @@ public class NetDeal extends TypeBaseDeal {
                 if (!CountTool.isNull(ee.getParameters())) {
                     new NetParamsBuilder(CurrentPath.sendParams(ElementTools.simpleName(element)), ElementTools.getMethodParamKvs(ee));
                 }
+
+                new NetBackBuilder(CurrentPath.netBack(ElementTools.simpleName(element)), ee);
 
                 GET get = ee.getAnnotation(GET.class);
                 POST post = ee.getAnnotation(POST.class);
