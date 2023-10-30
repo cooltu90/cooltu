@@ -16,4 +16,6 @@ public @interface CreateAct {
     Class baseClass() default Void.class;
 
     String screenOrientation() default ScreenOrientationType.PHONE;
+
+    int layoutTemp();
 }

@@ -50,30 +50,16 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
-        if ("getObjBack".equals(code)) {
-            new core.net.back.GetObjBack() {
-                @Override
-                public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
-                    super.accept(code, result, params, objs);
-                    getObjBack(this, (core.net.params.GetObjParams)params, user, objs);
-                }
-            }.accept(code, result, params, objs);
-        }
 
     }
-    protected void getObjBack(core.net.back.GetObjBack back, core.net.params.GetObjParams params, com.codingtu.cooltu.bean.User user, java.util.List objs) {}
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == core.tools.Code4Request.WELCOME_ACTIVITY) {
-                welcomeActivityBack(core.tools.Pass.user(data), core.tools.Pass.users(data), core.tools.Pass.name(data));
-            }
 
         }
     }
-    protected void welcomeActivityBack(com.codingtu.cooltu.bean.User user, java.util.List<com.codingtu.cooltu.bean.User> users, java.lang.String name) {}
 
 }
 

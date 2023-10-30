@@ -12,6 +12,7 @@ import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.lib.BuilderMap;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 
 /**************************************************
  *
@@ -152,5 +153,16 @@ public class CurrentPath {
 
     public static JavaInfo netBack(String methodName) {
         return javaInfo(netBackFullName(methodName));
+    }
+
+    public static JavaInfo actRes(String packages, String name) {
+        String pkg = Pkg.ACT_RES + packages.substring(Pkg.ACT.length());
+        String resName = ConvertTool.toClassType(name) + Suffix.ACTIVITY_RES;
+        return javaInfo(pkg + "." + resName);
+    }
+
+    public static JavaInfo act(String packages, String name) {
+        String resName = ConvertTool.toClassType(name) + Suffix.ACTIVITY;
+        return javaInfo(packages + "." + resName);
     }
 }

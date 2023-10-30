@@ -5,6 +5,7 @@ import com.codingtu.cooltu.constant.Module;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.processor.annotation.ModuleInfo;
+import com.codingtu.cooltu.processor.builder.impl.ActBackIntentBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
 
 import javax.lang.model.element.TypeElement;
@@ -22,5 +23,6 @@ public class ModuleInfoDeal extends TypeBaseDeal {
             }
         });
         Pkg.R = moduleInfo.rPkg();
+        ActBackIntentBuilder builder = ActBackIntentBuilder.BUILDER;
     }
 }

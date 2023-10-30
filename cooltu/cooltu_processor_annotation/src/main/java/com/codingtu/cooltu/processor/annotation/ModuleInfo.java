@@ -14,4 +14,5 @@ public @interface ModuleInfo {
 
     //默认的R的包名
     String rPkg();
+
 }

@@ -6,6 +6,7 @@ import com.codingtu.cooltu.lib4a.CoreConfigs;
 import com.codingtu.cooltu.lib4a.act.CoreActivity;
 import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.annotation.create.CreateAct;
+import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
 
 @ModuleInfo(
         module = Module.APP,
@@ -14,8 +15,10 @@ import com.codingtu.cooltu.processor.annotation.create.CreateAct;
         rPkg = "com.codingtu.cooltu"
 )
 @CreateAct(
-        name = "welcome",
-        packages = "com.codingtu.cooltu.ui"
+        name = "step_one",
+        packages = "com.codingtu.cooltu.ui",
+        baseClass = CoreActivity.class,
+        layoutTemp = R.layout.layout_temp
 )
 public class App extends CoreApp {
     @Override

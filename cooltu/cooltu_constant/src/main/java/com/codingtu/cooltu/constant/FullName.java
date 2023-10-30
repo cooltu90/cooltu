@@ -25,6 +25,15 @@ public class FullName {
     public static final String JAVA_INFO = "com.codingtu.cooltu.lib4j.data.java.JavaInfo";
     public static final String SUB_BUILDER = "com.codingtu.cooltu.processor.bean.SubBuilder";
     public static final String CORE_CONFIGS = "com.codingtu.cooltu.lib4a.CoreConfigs";
+    //actbase
+    public static final String TO_SHORT_NAME = "To";
+    public static final String TO = Pkg.ANNOTATION_TOOLS + "." + TO_SHORT_NAME;
+    //actbase
+    public static final String ACT_BASE_SHORT_NAME = "ActBase";
+    public static final String ACT_BASE = Pkg.ANNOTATION_UI + "." + ACT_BASE_SHORT_NAME;
+    //res
+    public static final String RES_FOR_SHORT_NAME = "ResFor";
+    public static final String RES_FOR = Pkg.ANNOTATION_RES + "." + RES_FOR_SHORT_NAME;
     //net
     public static final String NET_TOOL = Pkg.LIB4A_NET + ".NetTool";
     public static final String CORE_SEND_PARAMS = Pkg.LIB4A_NET + ".bean.CoreSendParams";

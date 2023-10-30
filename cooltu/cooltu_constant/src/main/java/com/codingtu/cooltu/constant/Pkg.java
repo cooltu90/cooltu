@@ -13,6 +13,7 @@ public class Pkg {
     public static final String LIB4A_PATH = LIB4A + ".path";
     public static final String LIB4J_TS = "com.codingtu.cooltu.lib4j.ts";
     public static final String ACT_BASE = "core.actbase";
+    public static final String ACT_RES = "core.actres";
     public static final String CORE_TOOLS = "core.tools";
     public static final String LIB4J_JSON = "com.codingtu.cooltu.lib4j.json";
     public static final String CORE_NET = "core.net";
@@ -20,5 +21,8 @@ public class Pkg {
     public static final String CORE_NET_PARAMS = CORE_NET + ".params";
     public static final String CORE_NET_BACK = CORE_NET + ".back";
     public static final String LIB4A_NET = "com.codingtu.cooltu.lib4a.net";
+    public static final String ANNOTATION_RES = "com.codingtu.cooltu.processor.annotation.res";
+    public static final String ANNOTATION_UI = "com.codingtu.cooltu.processor.annotation.ui";
+    public static final String ANNOTATION_TOOLS = "com.codingtu.cooltu.processor.annotation.tools";
 
 }
