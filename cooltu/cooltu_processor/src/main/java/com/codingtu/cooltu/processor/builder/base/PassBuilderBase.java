@@ -42,10 +42,28 @@ public abstract class PassBuilderBase extends com.codingtu.cooltu.processor.buil
     protected void field(int i0, String name, String value) {
         addForMap(this.field, getForKey("field", i0), name, value);
     }
-    protected void method(int i0, String type, String methodName, String methodType, String fieldName, String defaultValue) {
-        addForMap(this.method, getForKey("method", i0), type, methodName, methodType, fieldName, defaultValue);
+    protected void method(int i0, String type, String methodName) {
+        addForMap(this.method, getForKey("method", i0), type, methodName);
     }
 
+    protected void isBeanIf(int i0, boolean is) {
+        methodIfs.put(getIfKey("isBean", i0), is);
+    }
+    protected void isBeanIf(int i0, String jsonToolFullName, String beanClass, String fieldName) {
+        addForMap(this.method, getIfKey("isBean", i0), jsonToolFullName, beanClass, fieldName);
+    }
+    protected void isBeanListIf(int i0, boolean is) {
+        methodIfs.put(getIfKey("isBeanList", i0), is);
+    }
+    protected void isBeanListIf(int i0, String jsonToolFullName, String beanClass, String fieldName) {
+        addForMap(this.method, getIfKey("isBeanList", i0), jsonToolFullName, beanClass, fieldName);
+    }
+    protected void isOtherIf(int i0, boolean is) {
+        methodIfs.put(getIfKey("isOther", i0), is);
+    }
+    protected void isOtherIf(int i0, String methodType, String fieldName, String defaultValue) {
+        addForMap(this.method, getIfKey("isOther", i0), methodType, fieldName, defaultValue);
+    }
 
     @Override
     protected void dealLinesInParent() {
@@ -56,7 +74,18 @@ public abstract class PassBuilderBase extends com.codingtu.cooltu.processor.buil
         for (int i0 = 0; i0 < methodCounts.get(getForKey("method")); i0++) {
             List<String> method0 = method.get(getForKey("method", i0));
             addLnTag(methodSb, "    public static final [type] [methodName](Intent data) {", method0.get(0), method0.get(1));
-            addLnTag(methodSb, "        return data.get[methodType]Extra([fieldName][defaultValue]);", method0.get(2), method0.get(3), method0.get(4));
+            if (methodIfs.get(getIfKey("isBean", i0))) {
+                List<String> method1 = method.get(getIfKey("isBean", i0));
+                addLnTag(methodSb, "        return [jsonToolFullName].toBean([beanClass].class, data.getStringExtra([fieldName]));", method1.get(0), method1.get(1), method1.get(2));
+            }
+            if (methodIfs.get(getIfKey("isBeanList", i0))) {
+                List<String> method1 = method.get(getIfKey("isBeanList", i0));
+                addLnTag(methodSb, "        return [jsonToolFullName].toBeanList([beanClass].class, data.getStringExtra([fieldName]));", method1.get(0), method1.get(1), method1.get(2));
+            }
+            if (methodIfs.get(getIfKey("isOther", i0))) {
+                List<String> method1 = method.get(getIfKey("isOther", i0));
+                addLnTag(methodSb, "        return data.get[methodType]Extra([fieldName][defaultValue]);", method1.get(0), method1.get(1), method1.get(2));
+            }
             addLnTag(methodSb, "    }");
         }
 

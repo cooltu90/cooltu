@@ -6,9 +6,11 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.builder.base.PassBuilderBase;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 
 import java.util.ArrayList;
@@ -30,7 +32,10 @@ public class PassBuilder extends PassBuilderBase {
     }
 
     public void add(KV<String, String> kv) {
-        kvs.add(kv);
+        if (names.get(kv.v) == null) {
+            names.put(kv.v, kv.v);
+            kvs.add(kv);
+        }
     }
 
     @Override
@@ -54,34 +59,53 @@ public class PassBuilder extends PassBuilderBase {
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_TOOLS);
 
-        int[] count = {0};
+        fieldCount(0);
+        methodCount(0);
         Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
-                if (names.get(kv.v) == null) {
-                    names.put(kv.v, kv.v);
-                    String fieldName = ConvertTool.toStaticType(kv.v);
-                    field(count[0], fieldName, kv.v);
-                    if (ClassTool.isInt(kv.k)) {
-                        method(count[0], "int", kv.v, "Int", fieldName, ", -1");
-                    } else if (ClassTool.isString(kv.k)) {
-                        method(count[0], "String", kv.v, "String", fieldName, "");
-                    } else if (ClassTool.isLong(kv.k)) {
-                        method(count[0], "long", kv.v, "Long", fieldName, ", -1");
-                    } else if (ClassTool.isDouble(kv.k)) {
-                        method(count[0], "double", kv.v, "Double", fieldName, ", -1");
-                    } else if (ClassTool.isFloat(kv.k)) {
-                        method(count[0], "float", kv.v, "Float", fieldName, ", -1");
-                    } else if (ClassTool.isBoolean(kv.k)) {
-                        method(count[0], "boolean", kv.v, "Boolean", fieldName, ", false");
-                    }
-                    count[0]++;
+
+                String fieldName = ConvertTool.toStaticType(kv.v);
+                field(position, fieldName, kv.v);
+                isBeanIf(position, false);
+                isBeanListIf(position, false);
+                isOtherIf(position, true);
+                if (ClassTool.isInt(kv.k)) {
+                    method(position, "int", kv.v);
+                    isOtherIf(position, "Int", fieldName, ", -1");
+                } else if (ClassTool.isString(kv.k)) {
+                    method(position, "String", kv.v);
+                    isOtherIf(position, "String", fieldName, "");
+                } else if (ClassTool.isLong(kv.k)) {
+                    method(position, "long", kv.v);
+                    isOtherIf(position, "Long", fieldName, ", -1");
+                } else if (ClassTool.isDouble(kv.k)) {
+                    method(position, "double", kv.v);
+                    isOtherIf(position, "Double", fieldName, ", -1");
+                } else if (ClassTool.isFloat(kv.k)) {
+                    method(position, "float", kv.v);
+                    isOtherIf(position, "Float", fieldName, ", -1");
+                } else if (ClassTool.isBoolean(kv.k)) {
+                    method(position, "boolean", kv.v);
+                    isOtherIf(position, "Boolean", fieldName, ", false");
+                } else if (ClassTool.isList(kv.k)) {
+                    isBeanListIf(position, true);
+                    isOtherIf(position, false);
+                    String beanType = StringTool.getSub(kv.k, "List", "<", ">");
+                    method(position, kv.k, kv.v);
+                    isBeanListIf(position, FullName.JSON_TOOL, beanType, fieldName);
+                } else {
+                    isBeanIf(position, true);
+                    isOtherIf(position, false);
+                    method(position, kv.k, kv.v);
+                    isBeanIf(position, FullName.JSON_TOOL, kv.k, fieldName);
                 }
+
+                fieldCountAdd();
+                methodCountAdd();
                 return false;
             }
         });
-        fieldCount(count[0]);
-        methodCount(count[0]);
 
     }
 }
@@ -96,7 +120,15 @@ public class Pass {
                                                                                                     [<sub>][for][field]
                                                                                                     [<sub>][for][method]
     public static final [type] [methodName](Intent data) {
+                                                                                                    [<sub>][if][isBean]
+        return [jsonToolFullName].toBean([beanClass].class, data.getStringExtra([fieldName]));
+                                                                                                    [<sub>][if][isBean]
+                                                                                                    [<sub>][if][isBeanList]
+        return [jsonToolFullName].toBeanList([beanClass].class, data.getStringExtra([fieldName]));
+                                                                                                    [<sub>][if][isBeanList]
+                                                                                                    [<sub>][if][isOther]
         return data.get[methodType]Extra([fieldName][defaultValue]);
+                                                                                                    [<sub>][if][isOther]
     }
                                                                                                     [<sub>][for][method]
 

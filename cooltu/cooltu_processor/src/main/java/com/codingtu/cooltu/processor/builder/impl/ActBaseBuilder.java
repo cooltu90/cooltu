@@ -13,6 +13,7 @@ import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.annotation.tools.To;
+import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
@@ -30,6 +31,8 @@ import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.lang.model.element.ExecutableElement;
 
 @To(ActBaseDeal.class)
 public class ActBaseBuilder extends ActBaseBuilderBase {
@@ -54,7 +57,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
     @Override
     protected boolean isBuild() {
-        return false;
+        return true;
     }
 
     @Override
@@ -340,6 +343,45 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             }
         });
 
+        actBackCount(0);
+        actBackMethodCount(0);
+        Ts.ls(info.actBacks, new BaseTs.EachTs<ActBack>() {
+            @Override
+            public boolean each(int actBackIndex, ActBack actBack) {
+                ExecutableElement ee = info.actBackMethods.get(actBackIndex);
+                String methodName = ElementTools.simpleName(ee);
+
+                String fromClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                    @Override
+                    public Object get() {
+                        return actBack.value();
+                    }
+                });
+
+                JavaInfo fromJavaInfo = CurrentPath.javaInfo(fromClass);
+
+                actBack(actBackIndex, actBackIndex == 0 ? "if" : "else if", FullName.CODE_4_REQUEST, ConvertTool.toStaticType(fromJavaInfo.name), methodName);
+                actBackCountAdd();
+
+                actBackParamCount(actBackIndex, 0);
+                Params params = ElementTools.getMethodParamKvs(ee);
+                params.ls(new BaseTs.EachTs<KV<String, String>>() {
+                    @Override
+                    public boolean each(int paramIndex, KV<String, String> kv) {
+                        actBackParamCountAdd(actBackIndex);
+                        actBackParam(actBackIndex, paramIndex, FullName.PASS, kv.v);
+                        actBackParamDividerIf(actBackIndex, paramIndex, paramIndex != (CountTool.count(ee.getParameters()) - 1));
+                        return false;
+                    }
+                });
+
+                actBackMethod(actBackIndex, methodName, params.getMethodParams());
+
+                actBackMethodCountAdd();
+                return false;
+            }
+        });
+
     }
 
 }
@@ -434,9 +476,16 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     protected void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-
+                                                                                                    [<sub>][for][actBack]
+            [ifSign] (requestCode == [code4RequestFullName].[code]) {
+                [methodName]([for:actBackParam][passFullName].[name](data)[if:actBackParamDivider], [if:actBackParamDivider][for:actBackParam]);
+            }
+                                                                                                    [<sub>][for][actBack]
         }
     }
+                                                                                                    [<sub>][for][actBackMethod]
+    protected void [methodName]([params]) {}
+                                                                                                    [<sub>][for][actBackMethod]
 }
 
 model_temp_end */

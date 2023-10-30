@@ -35,7 +35,7 @@ public class NetBackBuilder extends NetBackBuilderBase {
     @Override
     protected void beforeBuild(List<String> lines) {
         super.beforeBuild(lines);
-        Logs.i(lines);
+        //Logs.i(lines);
     }
 
     @Override

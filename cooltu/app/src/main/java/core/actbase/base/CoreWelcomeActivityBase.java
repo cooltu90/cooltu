@@ -46,5 +46,6 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.lib4a.
 
         }
     }
+
 }
 

@@ -2,11 +2,14 @@ package com.codingtu.cooltu.processor.bean;
 
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.lang.model.element.ExecutableElement;
 
 public class ActBaseInfo {
     public IdTools.Id layout;
@@ -20,6 +23,9 @@ public class ActBaseInfo {
     public List<KV<String, Float>> dps = new ArrayList<>();
     public List<KV<String, IdTools.Id>> dimens = new ArrayList<>();
     public List<KV<String, String>> starts = new ArrayList<>();
+
+    public List<ActBack> actBacks = new ArrayList<>();
+    public List<ExecutableElement> actBackMethods = new ArrayList<>();
 
 
     public boolean hasBaseClass() {

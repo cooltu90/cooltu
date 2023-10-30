@@ -64,6 +64,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     private java.util.Map<String, Integer> acceptMethodCounts;
     private StringBuilder acceptMethodSb;
     private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> acceptMethod;
+    private java.util.Map<String, Boolean> actBackIfs;
+    private java.util.Map<String, Integer> actBackCounts;
+    private StringBuilder actBackSb;
+    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> actBack;
+    private java.util.Map<String, Boolean> actBackMethodIfs;
+    private java.util.Map<String, Integer> actBackMethodCounts;
+    private StringBuilder actBackMethodSb;
+    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> actBackMethod;
 
     public ActBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -128,6 +136,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         acceptMethodCounts = new java.util.HashMap<>();
         acceptMethodSb = map.get("acceptMethod");
         acceptMethod = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        actBackIfs = new java.util.HashMap<>();
+        actBackCounts = new java.util.HashMap<>();
+        actBackSb = map.get("actBack");
+        actBack = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        actBackMethodIfs = new java.util.HashMap<>();
+        actBackMethodCounts = new java.util.HashMap<>();
+        actBackMethodSb = map.get("actBackMethod");
+        actBackMethod = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
     protected void fieldCount(int count) {
@@ -214,6 +230,24 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void acceptMethodCountAdd() {
         count(acceptMethodCounts, getForKey("acceptMethod"));
     }
+    protected void actBackCount(int count) {
+        actBackCounts.put(getForKey("actBack"), count);
+    }
+    protected void actBackCountAdd() {
+        count(actBackCounts, getForKey("actBack"));
+    }
+    protected void actBackParamCount(int i0, int count) {
+        actBackCounts.put(getForKey("actBackParam", i0), count);
+    }
+    protected void actBackParamCountAdd(int i0) {
+        count(actBackCounts, getForKey("actBackParam", i0));
+    }
+    protected void actBackMethodCount(int count) {
+        actBackMethodCounts.put(getForKey("actBackMethod"), count);
+    }
+    protected void actBackMethodCountAdd() {
+        count(actBackMethodCounts, getForKey("actBackMethod"));
+    }
 
     protected void field(int i0, String type, String name) {
         addForMap(this.field, getForKey("field", i0), type, name);
@@ -257,6 +291,15 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void acceptMethod(int i0, String methodName, String params) {
         addForMap(this.acceptMethod, getForKey("acceptMethod", i0), methodName, params);
     }
+    protected void actBackParam(int i0, int i1, String passFullName, String name) {
+        addForMap(this.actBack, getForKey("actBackParam", i0, i1), passFullName, name);
+    }
+    protected void actBack(int i0, String ifSign, String code4RequestFullName, String code, String methodName) {
+        addForMap(this.actBack, getForKey("actBack", i0), ifSign, code4RequestFullName, code, methodName);
+    }
+    protected void actBackMethod(int i0, String methodName, String params) {
+        addForMap(this.actBackMethod, getForKey("actBackMethod", i0), methodName, params);
+    }
 
     protected void layoutIf(boolean is) {
         layoutIfs.put(getIfKey("layout"), is);
@@ -272,6 +315,9 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     }
     protected void onClickSwitchParamsIf(int i0, String divider) {
         addForMap(this.onClickSwith, getIfKey("onClickSwitchParams", i0), divider);
+    }
+    protected void actBackParamDividerIf(int i0, int i1, boolean is) {
+        actBackIfs.put(getIfKey("actBackParamDivider", i0, i1), is);
     }
 
     @Override
@@ -354,6 +400,26 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> acceptMethod0 = acceptMethod.get(getForKey("acceptMethod", i0));
             addLnTag(acceptMethodSb, "    protected void [methodName]([params]) {}", acceptMethod0.get(0), acceptMethod0.get(1));
         }
+        for (int i0 = 0; i0 < actBackCounts.get(getForKey("actBack")); i0++) {
+            List<String> actBack0 = actBack.get(getForKey("actBack", i0));
+            addLnTag(actBackSb, "            [ifSign] (requestCode == [code4RequestFullName].[code]) {", actBack0.get(0), actBack0.get(1), actBack0.get(2));
+            StringBuilder actBackParamSb = new StringBuilder();
+            for (int i1 = 0; i1 < actBackCounts.get(getForKey("actBackParam", i0)); i1++) {
+                List<String> actBack1 = actBack.get(getForKey("actBackParam", i0, i1));
+                StringBuilder actBackParamDividerSb = new StringBuilder();
+                if (actBackIfs.get(getIfKey("actBackParamDivider", i0, i1))) {
+                    List<String> actBack2 = actBack.get(getIfKey("actBackParamDivider", i0, i1));
+                    addTag(actBackParamDividerSb, ", ");
+                }
+                addTag(actBackParamSb, "[passFullName].[name](data)[actBackParamDivider]", actBack1.get(0), actBack1.get(1), actBackParamDividerSb.toString());
+            }
+            addLnTag(actBackSb, "                [methodName]([actBackParam]);", actBack0.get(3), actBackParamSb.toString());
+            addLnTag(actBackSb, "            }");
+        }
+        for (int i0 = 0; i0 < actBackMethodCounts.get(getForKey("actBackMethod")); i0++) {
+            List<String> actBackMethod0 = actBackMethod.get(getForKey("actBackMethod", i0));
+            addLnTag(actBackMethodSb, "    protected void [methodName]([params]) {}", actBackMethod0.get(0), actBackMethod0.get(1));
+        }
 
     }
 
@@ -403,9 +469,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("    protected void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {");
         lines.add("        super.onActivityResult(requestCode, resultCode, data);");
         lines.add("        if (resultCode == RESULT_OK) {");
-        lines.add("");
+        lines.add("[[actBack]]");
         lines.add("        }");
         lines.add("    }");
+        lines.add("[[actBackMethod]]");
         lines.add("}");
         lines.add("");
 

@@ -225,7 +225,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
                         for (int i = 0; i < CountTool.count(lineTagSigns); i++) {
                             String lineTagSign = lineTagSigns[i];
                             if (tag.startsWith(lineTagSign)) {
-                                String realTag = tag.substring("if:".length());
+                                String realTag = tag.substring(lineTagSign.length());
                                 addLnTag(dealLinesInParent, "            [space]StringBuilder [tag]Sb = new StringBuilder();"
                                         , space, realTag);
 

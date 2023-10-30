@@ -104,6 +104,10 @@ public class Params {
         return sb.toString();
     }
 
+    public void ls(BaseTs.EachTs<KV<String, String>> eachTs) {
+        Ts.ls(kvs, eachTs);
+    }
+
     public static interface Convert {
         String convert(int index, KV<String, String> kv);
     }

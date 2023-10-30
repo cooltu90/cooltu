@@ -2,12 +2,14 @@ package com.codingtu.cooltu.processor.deal;
 
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.annotation.net.NetBack;
+import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
 import com.codingtu.cooltu.processor.annotation.tools.To;
@@ -15,14 +17,18 @@ import com.codingtu.cooltu.processor.bean.ActBaseInfo;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
+import com.codingtu.cooltu.processor.builder.impl.PassBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
+import java.util.List;
+
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
 
 @To(ActBaseBuilder.class)
 public class ActBaseDeal extends TypeBaseDeal {
@@ -67,6 +73,11 @@ public class ActBaseDeal extends TypeBaseDeal {
                     dealNetBack(actBaseInfo, netBack, ee);
                 }
 
+                ActBack actBack = ee.getAnnotation(ActBack.class);
+                if (actBack != null) {
+                    dealActBack(actBaseInfo, actBack, ee);
+                }
+
             }
 
             return false;
@@ -75,6 +86,23 @@ public class ActBaseDeal extends TypeBaseDeal {
         JavaInfo actBaseJavaInfo = CurrentPath.actBaseJavaInfo(actBaseInfo.act);
         ActBaseBuilder actBaseBuilder = new ActBaseBuilder(actBaseJavaInfo);
         actBaseBuilder.addInfos(actBaseInfo);
+
+    }
+
+    private void dealActBack(ActBaseInfo actBaseInfo, ActBack actBack, ExecutableElement ee) {
+        actBaseInfo.actBacks.add(actBack);
+        actBaseInfo.actBackMethods.add(ee);
+
+        List<? extends VariableElement> parameters = ee.getParameters();
+
+        ElementTools.getMethodParamKvs(ee).ls(new BaseTs.EachTs<KV<String, String>>() {
+            @Override
+            public boolean each(int position, KV<String, String> kv) {
+                PassBuilder.BUILDER.add(kv);
+                return false;
+            }
+        });
+
 
     }
 

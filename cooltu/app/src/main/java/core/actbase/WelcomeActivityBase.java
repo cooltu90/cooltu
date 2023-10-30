@@ -4,7 +4,6 @@ import android.view.View;
 
 import java.util.List;
 
-import core.tools.Pass;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
@@ -23,6 +22,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         super.onCreate(savedInstanceState);
 
 
+
         textColor = android.graphics.Color.parseColor("#ffffff");
 
         tvColor = com.codingtu.cooltu.lib4a.tools.ResourceTool.getColor(com.codingtu.cooltu.R.color.black);
@@ -38,7 +38,6 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
     }
-
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -56,27 +55,25 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
                 @Override
                 public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
                     super.accept(code, result, params, objs);
-                    getObjBack(this, (core.net.params.GetObjParams) params, user, objs);
+                    getObjBack(this, (core.net.params.GetObjParams)params, user, objs);
                 }
             }.accept(code, result, params, objs);
         }
 
     }
-
-    protected void getObjBack(core.net.back.GetObjBack back, core.net.params.GetObjParams params, com.codingtu.cooltu.bean.User user, java.util.List objs) {
-    }
+    protected void getObjBack(core.net.back.GetObjBack back, core.net.params.GetObjParams params, com.codingtu.cooltu.bean.User user, java.util.List objs) {}
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == core.tools.Code4Request.WELCOME_ACTIVITY) {
-                baseWelcomeActivityBack(Pass.age(data));
+                welcomeActivityBack(core.tools.Pass.user(data), core.tools.Pass.users(data));
             }
+
         }
     }
+    protected void welcomeActivityBack(com.codingtu.cooltu.bean.User user, java.util.List<com.codingtu.cooltu.bean.User> users) {}
 
-    protected void baseWelcomeActivityBack(int age) {
-    }
 }
 
