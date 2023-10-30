@@ -16,6 +16,7 @@ import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
+import com.codingtu.cooltu.processor.builder.impl.ActBackIntentBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.PassBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
@@ -24,6 +25,7 @@ import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.lang.model.element.ExecutableElement;
@@ -93,8 +95,6 @@ public class ActBaseDeal extends TypeBaseDeal {
         actBaseInfo.actBacks.add(actBack);
         actBaseInfo.actBackMethods.add(ee);
 
-        List<? extends VariableElement> parameters = ee.getParameters();
-
         ElementTools.getMethodParamKvs(ee).ls(new BaseTs.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
@@ -102,6 +102,8 @@ public class ActBaseDeal extends TypeBaseDeal {
                 return false;
             }
         });
+
+        ActBackIntentBuilder.BUILDER.add(actBack, ee);
 
 
     }

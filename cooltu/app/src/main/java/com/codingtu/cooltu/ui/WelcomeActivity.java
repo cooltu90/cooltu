@@ -36,7 +36,7 @@ public class WelcomeActivity extends WelcomeActivityBase {
     }
 
     @ActBack(WelcomeActivity.class)
-    public void welcomeActivityBack(User user,List<User> users) {
+    public void welcomeActivityBack(User user,List<User> users,String name) {
 
     }
 

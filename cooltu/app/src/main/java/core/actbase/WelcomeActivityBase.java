@@ -68,12 +68,12 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == core.tools.Code4Request.WELCOME_ACTIVITY) {
-                welcomeActivityBack(core.tools.Pass.user(data), core.tools.Pass.users(data));
+                welcomeActivityBack(core.tools.Pass.user(data), core.tools.Pass.users(data), core.tools.Pass.name(data));
             }
 
         }
     }
-    protected void welcomeActivityBack(com.codingtu.cooltu.bean.User user, java.util.List<com.codingtu.cooltu.bean.User> users) {}
+    protected void welcomeActivityBack(com.codingtu.cooltu.bean.User user, java.util.List<com.codingtu.cooltu.bean.User> users, java.lang.String name) {}
 
 }
 

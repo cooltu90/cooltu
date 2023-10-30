@@ -36,6 +36,7 @@ public class FullName {
     public static final String ACT_START = Pkg.CORE_TOOLS + ".ActStart";
     public static final String NET = Pkg.CORE_NET + ".Net";
     public static final String CODE_4_REQUEST = Pkg.CORE_TOOLS + ".Code4Request";
+    public static final String ACT_BACK_INTENT = Pkg.CORE_TOOLS + ".ActBackIntent";
     //Ts
     public static final String T_LIST_TS = Pkg.LIB4J_TS + ".impl.basic.TListTs";
     public static final String TS = Pkg.LIB4J_TS + ".Ts";
