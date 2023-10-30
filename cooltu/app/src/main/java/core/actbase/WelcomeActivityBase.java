@@ -4,8 +4,7 @@ import android.view.View;
 
 import java.util.List;
 
-import core.net.back.GetObjBack;
-import core.net.params.GetObjParams;
+import core.tools.Pass;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
@@ -14,9 +13,9 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected int tvColor;
     protected int dp;
     protected int dp1;
+    protected java.lang.String fromAct;
     protected java.lang.String name;
     protected int age;
-    protected boolean isTest;
 
 
     @Override
@@ -57,16 +56,27 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
                 @Override
                 public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
                     super.accept(code, result, params, objs);
-                    getObjBack(this, (GetObjParams) params, objs);
+                    getObjBack(this, (core.net.params.GetObjParams) params, user, objs);
                 }
             }.accept(code, result, params, objs);
         }
 
     }
 
-    private void getObjBack(GetObjBack back, GetObjParams params, List objs) {
-
+    protected void getObjBack(core.net.back.GetObjBack back, core.net.params.GetObjParams params, com.codingtu.cooltu.bean.User user, java.util.List objs) {
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == core.tools.Code4Request.WELCOME_ACTIVITY) {
+                baseWelcomeActivityBack(Pass.age(data));
+            }
+        }
+    }
+
+    protected void baseWelcomeActivityBack(int age) {
+    }
 }
 

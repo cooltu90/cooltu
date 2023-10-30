@@ -15,6 +15,6 @@ public class CoreWelcomeActivityRes {
     RelativeLayout tv3;
 
     @InBase
-    String fromAct;
+    boolean isTest;
 
 }

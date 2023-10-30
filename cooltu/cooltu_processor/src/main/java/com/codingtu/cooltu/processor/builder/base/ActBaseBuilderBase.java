@@ -60,6 +60,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     private java.util.Map<String, Integer> acceptCounts;
     private StringBuilder acceptSb;
     private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> accept;
+    private java.util.Map<String, Boolean> acceptMethodIfs;
+    private java.util.Map<String, Integer> acceptMethodCounts;
+    private StringBuilder acceptMethodSb;
+    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> acceptMethod;
 
     public ActBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -120,6 +124,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         acceptCounts = new java.util.HashMap<>();
         acceptSb = map.get("accept");
         accept = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        acceptMethodIfs = new java.util.HashMap<>();
+        acceptMethodCounts = new java.util.HashMap<>();
+        acceptMethodSb = map.get("acceptMethod");
+        acceptMethod = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
     protected void fieldCount(int count) {
@@ -200,6 +208,12 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void acceptCountAdd() {
         count(acceptCounts, getForKey("accept"));
     }
+    protected void acceptMethodCount(int count) {
+        acceptMethodCounts.put(getForKey("acceptMethod"), count);
+    }
+    protected void acceptMethodCountAdd() {
+        count(acceptMethodCounts, getForKey("acceptMethod"));
+    }
 
     protected void field(int i0, String type, String name) {
         addForMap(this.field, getForKey("field", i0), type, name);
@@ -239,6 +253,9 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     }
     protected void accept(int i0, String methodName, String netBackFullName, String coreSendParamsFullName, String params) {
         addForMap(this.accept, getForKey("accept", i0), methodName, netBackFullName, coreSendParamsFullName, methodName, params);
+    }
+    protected void acceptMethod(int i0, String methodName, String params) {
+        addForMap(this.acceptMethod, getForKey("acceptMethod", i0), methodName, params);
     }
 
     protected void layoutIf(boolean is) {
@@ -333,6 +350,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             addLnTag(acceptSb, "            }.accept(code, result, params, objs);");
             addLnTag(acceptSb, "        }");
         }
+        for (int i0 = 0; i0 < acceptMethodCounts.get(getForKey("acceptMethod")); i0++) {
+            List<String> acceptMethod0 = acceptMethod.get(getForKey("acceptMethod", i0));
+            addLnTag(acceptMethodSb, "    protected void [methodName]([params]) {}", acceptMethod0.get(0), acceptMethod0.get(1));
+        }
 
     }
 
@@ -377,7 +398,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("    public void accept(String code, Result<ResponseBody> result, [[coreSendParamsFullName]] params, List objs) {");
         lines.add("[[accept]]");
         lines.add("    }");
+        lines.add("[[acceptMethod]]");
+        lines.add("    @Override");
+        lines.add("    protected void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {");
+        lines.add("        super.onActivityResult(requestCode, resultCode, data);");
+        lines.add("        if (resultCode == RESULT_OK) {");
         lines.add("");
+        lines.add("        }");
+        lines.add("    }");
         lines.add("}");
         lines.add("");
 

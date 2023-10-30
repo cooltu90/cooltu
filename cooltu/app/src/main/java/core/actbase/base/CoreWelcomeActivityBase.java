@@ -9,7 +9,7 @@ import retrofit2.adapter.rxjava2.Result;
 
 public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.lib4a.act.CoreActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
     protected android.widget.RelativeLayout tv3;
-    protected java.lang.String fromAct;
+    protected boolean isTest;
 
 
     @Override
@@ -39,5 +39,12 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.lib4a.
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+
+        }
+    }
 }
 

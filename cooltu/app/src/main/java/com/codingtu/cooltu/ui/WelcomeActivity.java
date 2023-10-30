@@ -8,8 +8,11 @@ import com.codingtu.cooltu.net.GetObjMock;
 import com.codingtu.cooltu.processor.annotation.net.NetBack;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
+import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
+
+import java.util.List;
 
 import core.actbase.WelcomeActivityBase;
 import core.actres.WelcomeActivityRes;
@@ -27,8 +30,13 @@ public class WelcomeActivity extends WelcomeActivityBase {
     }
 
 
-    @NetBack(mock = GetObjMock.class)
-    public void getObjBack(GetObjBack back, GetObjParams params, User user) {
+    @NetBack
+    public void getObjBack(GetObjBack back, GetObjParams params, User user, List objs) {
 
+    }
+
+    @ActBack(BaseWelcomeActivity.class)
+    public void baseWelcomeActivityBack(User user) {
+        
     }
 }
