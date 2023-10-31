@@ -5,20 +5,14 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 
 import com.codingtu.cooltu.lib4a.CoreApp;
-import com.codingtu.cooltu.lib4a.act.CoreActivity;
+import com.codingtu.cooltu.lib4a.act.ui.core.CoreUiInterface;
 
 public class PermissionTool {
     public static void check(Activity act, int code, String... permissions) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!allow(permissions)) {
-                act.requestPermissions(permissions, code);
-            } else if (act instanceof PermissionBack) {
-                act.onRequestPermissionsResult(code, permissions, getAllows(permissions));
-                //((PermissionBack) act).back(code, permissions, getAllows(permissions));
-            }
-        } else if (act instanceof CoreActivity) {
-            //act.onRequestPermissionsResult(code,permissions,getAllows(permissions));
-            ((CoreActivity) act).onRequestPermissionsResultInCore(code, permissions, getAllows(permissions));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !allow(permissions)) {
+            act.requestPermissions(permissions, code);
+        } else if (act instanceof CoreUiInterface) {
+            ((CoreUiInterface) act).getBase().onRequestPermissionsResult(code, permissions, getAllows(permissions));
         }
     }
 

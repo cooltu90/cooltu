@@ -16,21 +16,21 @@ import android.provider.MediaStore;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.FileProvider;
 
-import java.io.File;
-
 import com.codingtu.cooltu.lib4a.CoreConfigs;
 import com.codingtu.cooltu.lib4a.CoreRequestCode;
-import com.codingtu.cooltu.lib4a.act.CoreUiInterface;
+import com.codingtu.cooltu.lib4a.act.ui.core.CoreUiInterface;
 import com.codingtu.cooltu.lib4a.act.OnActBack;
 import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.permission.PermissionBack;
 import com.codingtu.cooltu.lib4a.permission.PermissionTool;
 import com.codingtu.cooltu.lib4a.tools.ToastTool;
 
+import java.io.File;
+
 public final class ImageGetter implements PermissionBack, OnActBack {
 
     private ImageGetterBack back;
-    private Activity act;
+    private CoreUiInterface act;
     private File outputImage;
 
     public static interface ImageGetterBack {
@@ -40,57 +40,55 @@ public final class ImageGetter implements PermissionBack, OnActBack {
     private ImageGetter() {
     }
 
-    public static void getPicFromCamera(Activity act, ImageGetterBack back) {
+    public static void getPicFromCamera(CoreUiInterface act, ImageGetterBack back) {
         new ImageGetter().getPicByCamera(act, back);
     }
 
-    public static void getPicFromGallery(Activity act, ImageGetterBack back) {
+    public static void getPicFromGallery(CoreUiInterface act, ImageGetterBack back) {
         new ImageGetter().getPicByGallery(act, back);
     }
 
-    public static void getVideoFromCamera(Activity act, ImageGetterBack back) {
+    public static void getVideoFromCamera(CoreUiInterface act, ImageGetterBack back) {
         new ImageGetter().getVideoByCamera(act, back);
     }
 
-    public static void getVideoFromGallery(Activity act, ImageGetterBack back) {
+    public static void getVideoFromGallery(CoreUiInterface act, ImageGetterBack back) {
         new ImageGetter().getVideoByGallery(act, back);
     }
 
-    private void getVideoByCamera(Activity act, ImageGetterBack back) {
+    private void getVideoByCamera(CoreUiInterface act, ImageGetterBack back) {
         from(act, back, CoreRequestCode.GET_VIDEO_BY_CAMERA);
     }
 
-    private void getVideoByGallery(Activity act, ImageGetterBack back) {
+    private void getVideoByGallery(CoreUiInterface act, ImageGetterBack back) {
         from(act, back, CoreRequestCode.GET_VIDEO_BY_GALLERY);
     }
 
-    private void getPicByCamera(Activity act, ImageGetterBack back) {
+    private void getPicByCamera(CoreUiInterface act, ImageGetterBack back) {
         from(act, back, CoreRequestCode.GET_PIC_BY_CAMERA);
     }
 
-    private void getPicByGallery(Activity act, ImageGetterBack back) {
+    private void getPicByGallery(CoreUiInterface act, ImageGetterBack back) {
         from(act, back, CoreRequestCode.GET_PIC_BY_GALLERY);
     }
 
-    private void from(Activity act, ImageGetterBack back, int code) {
+    private void from(CoreUiInterface act, ImageGetterBack back, int code) {
         this.act = act;
         this.back = back;
-        if (act instanceof CoreUiInterface) {
-            ((CoreUiInterface) act).addPermissionBack(this);
-            ((CoreUiInterface) act).addOnActBack(this);
-        }
+        act.getBase().addPermissionBack(this);
+        act.getBase().addOnActBack(this);
         switch (code) {
             case CoreRequestCode.GET_PIC_BY_CAMERA:
-                PermissionTool.check(act, code, Manifest.permission.CAMERA);
+                PermissionTool.check(act.getAct(), code, Manifest.permission.CAMERA);
                 break;
             case CoreRequestCode.GET_VIDEO_BY_CAMERA:
-                PermissionTool.check(act, code, Manifest.permission.CAMERA);
+                PermissionTool.check(act.getAct(), code, Manifest.permission.CAMERA);
                 break;
             case CoreRequestCode.GET_PIC_BY_GALLERY:
-                PermissionTool.check(act, code, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                PermissionTool.check(act.getAct(), code, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 break;
             case CoreRequestCode.GET_VIDEO_BY_GALLERY:
-                PermissionTool.check(act, code, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                PermissionTool.check(act.getAct(), code, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 break;
         }
 
@@ -132,7 +130,7 @@ public final class ImageGetter implements PermissionBack, OnActBack {
     private void getByGallery(String type, int code) {
         Intent intentToPickPic = new Intent(Intent.ACTION_PICK, null);
         intentToPickPic.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, type);
-        act.startActivityForResult(intentToPickPic, code);
+        act.getAct().startActivityForResult(intentToPickPic, code);
     }
 
     private void getPicByCamera() {
@@ -159,11 +157,11 @@ public final class ImageGetter implements PermissionBack, OnActBack {
             Intent intent = new Intent(type);
             if (Build.VERSION.SDK_INT >= 24) {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider
-                        .getUriForFile(act, CoreConfigs.configs().getImageGetterFileProvider(), outputImage));
+                        .getUriForFile(act.getAct(), CoreConfigs.configs().getImageGetterFileProvider(), outputImage));
             } else {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputImage));
             }
-            act.startActivityForResult(intent, code);
+            act.getAct().startActivityForResult(intent, code);
         } catch (Exception e) {
             act = null;
             imageBack(null);
@@ -176,8 +174,8 @@ public final class ImageGetter implements PermissionBack, OnActBack {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                ((CoreUiInterface) act).removePermissionBack(ImageGetter.this);
-                ((CoreUiInterface) act).removeOnActBack(ImageGetter.this);
+                ((CoreUiInterface) act).getBase().removePermissionBack(ImageGetter.this);
+                ((CoreUiInterface) act).getBase().removeOnActBack(ImageGetter.this);
 
                 ImageGetter.this.act = null;
                 ImageGetter.this.back = null;
@@ -242,7 +240,7 @@ public final class ImageGetter implements PermissionBack, OnActBack {
     private String handleImageOnKitKat(Intent data) {
         String imagePath = null;
         Uri uri = data.getData();
-        if (DocumentsContract.isDocumentUri(act, uri)) {
+        if (DocumentsContract.isDocumentUri(act.getAct(), uri)) {
             String docId = DocumentsContract.getDocumentId(uri);
             if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
                 String id = docId.split(":")[1];
@@ -280,7 +278,7 @@ public final class ImageGetter implements PermissionBack, OnActBack {
     @SuppressLint("Range")
     private String getImagePath(Uri uri, String selection) {
         String path = null;
-        Cursor cursor = act.getContentResolver().query(uri, null, selection, null, null);
+        Cursor cursor = act.getAct().getContentResolver().query(uri, null, selection, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));

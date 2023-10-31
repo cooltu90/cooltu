@@ -9,7 +9,7 @@ import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 
 import com.codingtu.cooltu.lib4a.R;
-import com.codingtu.cooltu.lib4a.act.CoreUiInterface;
+import com.codingtu.cooltu.lib4a.act.ui.core.CoreUiInterface;
 import com.codingtu.cooltu.lib4a.act.OnDestroy;
 import com.codingtu.cooltu.lib4a.act.WhenKeyDown;
 import com.codingtu.cooltu.lib4a.tools.DestoryTool;
@@ -116,7 +116,7 @@ public abstract class LayerView extends RelativeLayout implements OnDestroy {
         });
 
         if (context instanceof CoreUiInterface) {
-            ((CoreUiInterface) context).addWhenKeyDown(new WhenKeyDown() {
+            ((CoreUiInterface) context).getBase().addWhenKeyDown(new WhenKeyDown() {
                 @Override
                 public boolean onKeyDown(int keyCode, KeyEvent event) {
                     if (keyCode == KeyEvent.KEYCODE_BACK && isShow()) {

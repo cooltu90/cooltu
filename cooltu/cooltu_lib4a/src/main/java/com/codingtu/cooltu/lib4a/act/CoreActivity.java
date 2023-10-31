@@ -10,13 +10,13 @@ import android.view.ViewTreeObserver;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.codingtu.cooltu.lib4a.act.ui.core.CoreActInterface;
+import com.codingtu.cooltu.lib4a.act.ui.CoreUiBase;
 import com.codingtu.cooltu.lib4a.bus.Bus;
 import com.codingtu.cooltu.lib4a.bus.BusStation;
-import com.codingtu.cooltu.lib4a.permission.PermissionBack;
 import com.codingtu.cooltu.lib4a.tools.ActTool;
 import com.codingtu.cooltu.lib4a.tools.ScreenAdaptationTool;
 import com.codingtu.cooltu.lib4a.tools.StatusBarTool;
-import com.codingtu.cooltu.lib4a.tools.ToastTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
@@ -24,13 +24,16 @@ import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CoreActivity extends AppCompatActivity implements CoreUiInterface {
+public class CoreActivity extends AppCompatActivity implements CoreActInterface {
 
     protected ViewGroup rootView;
+    protected CoreUiBase base;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        base = new CoreUiBase();
+        base.addPermissionBack(this);
         ScreenAdaptationTool.setCustomDensity(this);
         initStatusBar();
         ActivityManager.getInstance().add(this);
@@ -39,7 +42,7 @@ public class CoreActivity extends AppCompatActivity implements CoreUiInterface {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        destroyAll();
+        getBase().destroyAll();
         removeBuses();
         ActivityManager.getInstance().remove(this);
     }
@@ -71,7 +74,7 @@ public class CoreActivity extends AppCompatActivity implements CoreUiInterface {
     }
 
     protected void forbidKeyBack() {
-        addWhenKeyDown(new WhenBackKeyDown() {
+        getBase().addWhenKeyDown(new WhenBackKeyDown() {
             @Override
             public boolean onBack(KeyEvent event) {
                 return true;
@@ -128,169 +131,6 @@ public class CoreActivity extends AppCompatActivity implements CoreUiInterface {
         setResult(RESULT_OK, data);
     }
 
-    /**********************************************
-     *
-     * getThis
-     *
-     **********************************************/
-    protected Activity getThis() {
-        return this;
-    }
-
-    /**********************************************
-     *
-     * toast
-     *
-     **********************************************/
-    public void toast(String str) {
-        ToastTool.toast(str);
-    }
-
-    /************************************************
-     *
-     *
-     *
-     ************************************************/
-
-    protected List<WhenKeyDown> whenKeyDowns;
-
-    protected List<WhenKeyDown> getWhenKeyDowns() {
-        if (whenKeyDowns == null)
-            whenKeyDowns = new ArrayList<WhenKeyDown>();
-        return whenKeyDowns;
-    }
-
-    public void addWhenKeyDown(WhenKeyDown whenKeyDown) {
-        getWhenKeyDowns().add(whenKeyDown);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        final boolean[] b = {false};
-        List<WhenKeyDown> whenKeyDowns = getWhenKeyDowns();
-        Ts.ls(whenKeyDowns, new BaseTs.EachTs<WhenKeyDown>() {
-            @Override
-            public boolean each(int position, WhenKeyDown whenKeyDown) {
-                if (whenKeyDown.onKeyDown(keyCode, event)) {
-                    b[0] = true;
-                }
-                return false;
-            }
-        });
-        return b[0] ? b[0] : super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public void removeWhenKeyDown(WhenKeyDown whenKeyDown) {
-        getWhenKeyDowns().remove(whenKeyDown);
-    }
-
-    /************************************************
-     *
-     *
-     *
-     ************************************************/
-
-    protected List<PermissionBack> permissionHelpers;
-
-    public List<PermissionBack> getPermissionHelpers() {
-        if (permissionHelpers == null)
-            permissionHelpers = new ArrayList<PermissionBack>();
-        return permissionHelpers;
-    }
-
-    @Override
-    public void addPermissionBack(PermissionBack back) {
-        getPermissionHelpers().add(back);
-
-    }
-
-    @Override
-    public void removePermissionBack(PermissionBack back) {
-        getPermissionHelpers().remove(back);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        onRequestPermissionsResultInCore(requestCode, permissions, grantResults);
-    }
-
-    public void onRequestPermissionsResultInCore(int requestCode, String[] permissions,
-                                                 int[] grantResults) {
-        Ts.ls(getPermissionHelpers(), new BaseTs.EachTs<PermissionBack>() {
-            @Override
-            public boolean each(int position, PermissionBack helper) {
-                helper.back(requestCode, permissions, grantResults);
-                return false;
-            }
-        });
-    }
-
-    /************************************************
-     *
-     *
-     *
-     ************************************************/
-    protected List<OnActBack> onActBacks;
-
-    public List<OnActBack> getOnActBacks() {
-        if (onActBacks == null)
-            onActBacks = new ArrayList<OnActBack>();
-        return onActBacks;
-    }
-
-    @Override
-    public void addOnActBack(OnActBack onActBack) {
-        getOnActBacks().add(onActBack);
-    }
-
-    @Override
-    public void removeOnActBack(OnActBack onActBack) {
-        getOnActBacks().remove(onActBack);
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Ts.ls(getOnActBacks(), new BaseTs.EachTs<OnActBack>() {
-            @Override
-            public boolean each(int position, OnActBack back) {
-                back.onActivityResult(requestCode, resultCode, data);
-                return false;
-            }
-        });
-    }
-
-    /************************************************
-     *
-     *
-     *
-     ************************************************/
-    protected List<OnDestroy> onDestroys;
-
-    public List<OnDestroy> getOnDestroys() {
-        if (onDestroys == null)
-            onDestroys = new ArrayList<OnDestroy>();
-        return onDestroys;
-    }
-
-    @Override
-    public void add(OnDestroy onDestroy) {
-        getOnDestroys().add(onDestroy);
-    }
-
-    @Override
-    public void destroyAll() {
-        Ts.ls(getOnDestroys(), new BaseTs.EachTs<OnDestroy>() {
-            @Override
-            public boolean each(int position, OnDestroy onDestroy) {
-                onDestroy.destroy();
-                return false;
-            }
-        });
-    }
-
     /**************************************************
      *
      *
@@ -315,5 +155,57 @@ public class CoreActivity extends AppCompatActivity implements CoreUiInterface {
         busMap = null;
     }
 
+    /**************************************************
+     *
+     * 分割线
+     *
+     **************************************************/
+    @Override
+    public CoreUiBase getBase() {
+        return this.base;
+    }
+
+    @Override
+    public Activity getAct() {
+        return this;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        getBase().onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void back(int requestCode, String[] permissions, int[] grantResults) {
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getBase().onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        boolean b = getBase().onKeyDown(keyCode, event);
+        return b ? b : super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void toast(String str) {
+        getBase().toast(str);
+    }
+
+    @Override
+    public void add(OnDestroy onDestroy) {
+        getBase().add(onDestroy);
+    }
+
+    @Override
+    public void destroyAll() {
+        getBase().destroyAll();
+    }
 
 }
