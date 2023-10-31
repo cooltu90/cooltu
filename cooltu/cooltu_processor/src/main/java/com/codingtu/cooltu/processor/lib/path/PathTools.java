@@ -11,6 +11,11 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
 /**************************************************
  *
  *   ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
+ *  ┃   模块下的 main 目录   ┃
+ * ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
+ * {@link #mainDir(String)}
+ *
+ *   ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
  *  ┃   模块下的 java 目录   ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
  * {@link #javaDir(String)}
@@ -34,6 +39,18 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
  *
  **************************************************/
 public class PathTools extends StringTool {
+
+    /**************************************************
+     *
+     * 模块下的 main 目录
+     *
+     **************************************************/
+    protected static String mainDir(String module) {
+        return FileTool.getProjectDir()
+                + Constant.SEPARATOR
+                + module
+                + Path.SRC_MAIN;
+    }
 
     /**************************************************
      *

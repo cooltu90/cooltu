@@ -7,6 +7,7 @@ import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class LayoutTools {
                         isInclude = false;
                     }
                 } else {
-                    if (!line.startsWith("<?xml") && StringTool.isNotBlank(line)) {
+                    if (!line.startsWith("<?xml") && StringTool.isNotBlank(line)&&StringTool.isNotBlank(space)) {
                         if (CountTool.isNull(newLines)) {
                             newLines.add(space + line);
                             newLines.add(space + "    android:id=\"@+id/" + parentId + "\"");
@@ -90,6 +91,10 @@ public class LayoutTools {
     }
 
     private static ViewInfo dealLines(List<String> lines) {
+
+        Logs.i(lines);
+
+
         ViewInfo info = null;
         ViewInfo startInfo = null;
         int count = CountTool.count(lines);

@@ -16,7 +16,7 @@ public class ActResBuilder extends ActResBuilderBase {
 
     @Override
     protected boolean isBuild() {
-        return false;
+        return true;
     }
 
     @Override

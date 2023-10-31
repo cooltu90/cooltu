@@ -25,12 +25,8 @@ import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.VariableElement;
 
 @To(ActBaseBuilder.class)
 public class ActBaseDeal extends TypeBaseDeal {
@@ -85,7 +81,7 @@ public class ActBaseDeal extends TypeBaseDeal {
             return false;
         });
 
-        JavaInfo actBaseJavaInfo = CurrentPath.actBaseJavaInfo(actBaseInfo.act);
+        JavaInfo actBaseJavaInfo = CurrentPath.actBase(actBaseInfo.act);
         ActBaseBuilder actBaseBuilder = new ActBaseBuilder(actBaseJavaInfo);
         actBaseBuilder.addInfos(actBaseInfo);
 

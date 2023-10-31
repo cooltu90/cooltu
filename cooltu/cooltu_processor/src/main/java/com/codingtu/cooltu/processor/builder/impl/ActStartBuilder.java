@@ -37,6 +37,10 @@ public class ActStartBuilder extends ActStartBuilderBase {
         map.get(actFullName).get(index).add(kv);
     }
 
+    public void add(String actFullName){
+        map.get(actFullName).get(0);
+    }
+
     @Override
     protected boolean isBuild() {
         return true;
@@ -61,16 +65,15 @@ public class ActStartBuilder extends ActStartBuilderBase {
         Ts.ts(map.keySet()).ls(new SetTs.SetEach<String>() {
             @Override
             public boolean each(String actFullName) {
-                ListValueMap<Integer, KV<String, String>> map1 = map.get(actFullName);
-                if (!map1.containsKey(0)) {
-                    map1.get(0);
+                ListValueMap<Integer, KV<String, String>> actMap = map.get(actFullName);
+                if (!actMap.containsKey(0)) {
+                    actMap.get(0);
                 }
 
-                Ts.ts(map1.keySet()).ls(new SetTs.SetEach<Integer>() {
+                Ts.ts(actMap.keySet()).ls(new SetTs.SetEach<Integer>() {
                     @Override
                     public boolean each(Integer integer) {
-
-                        List<KV<String, String>> kvs = map1.get(integer);
+                        List<KV<String, String>> kvs = actMap.get(integer);
                         Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {
                             @Override
                             public boolean each(int position, KV<String, String> kv) {

@@ -33,6 +33,7 @@ import javax.lang.model.element.VariableElement;
 public class ResForDeal extends TypeBaseDeal {
 
     private boolean noStart;
+    private boolean hasStartGroup;
 
     @Override
     protected void dealTypeElement(TypeElement te) {
@@ -52,6 +53,12 @@ public class ResForDeal extends TypeBaseDeal {
             }
             return false;
         });
+
+
+        if (!noStart && !hasStartGroup) {
+            Code4RequestBuilder.BUILDER.add(actClass);
+            ActStartBuilder.BUILDER.add(actClass);
+        }
 
 
     }
@@ -102,6 +109,7 @@ public class ResForDeal extends TypeBaseDeal {
         if (!noStart) {
             StartGroup startGroup = ve.getAnnotation(StartGroup.class);
             if (startGroup != null) {
+                hasStartGroup = true;
                 if (CountTool.isNull(actBaseInfo.starts)) {
                     actBaseInfo.starts.add(new KV<>(FullName.STRING, Constant.FROM_ACT));
                 }
