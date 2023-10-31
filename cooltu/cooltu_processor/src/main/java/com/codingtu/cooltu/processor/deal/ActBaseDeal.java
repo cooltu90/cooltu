@@ -13,7 +13,7 @@ import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
 import com.codingtu.cooltu.processor.annotation.tools.To;
-import com.codingtu.cooltu.processor.annotation.ui.PermissionBack;
+import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
@@ -78,9 +78,9 @@ public class ActBaseDeal extends TypeBaseDeal {
                     dealActBack(actBaseInfo, actBack, ee);
                 }
 
-                PermissionBack permissionBack = ee.getAnnotation(PermissionBack.class);
-                if (permissionBack != null) {
-                    dealPermissionBack(actBaseInfo, permissionBack, ee);
+                Permission permission = ee.getAnnotation(Permission.class);
+                if (permission != null) {
+                    dealPermissionBack(actBaseInfo, permission, ee);
                 }
 
             }
@@ -94,8 +94,8 @@ public class ActBaseDeal extends TypeBaseDeal {
 
     }
 
-    private void dealPermissionBack(ActBaseInfo actBaseInfo, PermissionBack permissionBack, ExecutableElement ee) {
-        PermissionBuilder.BUILDER.add(permissionBack, ee);
+    private void dealPermissionBack(ActBaseInfo actBaseInfo, Permission permission, ExecutableElement ee) {
+        PermissionBuilder.BUILDER.add(permission, ee);
     }
 
     private void dealActBack(ActBaseInfo actBaseInfo, ActBack actBack, ExecutableElement ee) {

@@ -2,14 +2,12 @@ package com.codingtu.cooltu.processor.builder.impl;
 
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
-import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
-import com.codingtu.cooltu.processor.annotation.ui.PermissionBack;
+import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.builder.base.PermissionBuilderBase;
 import com.codingtu.cooltu.processor.lib.log.Logs;
-import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
@@ -22,15 +20,15 @@ public class PermissionBuilder extends PermissionBuilderBase {
 
     public static final PermissionBuilder BUILDER = new PermissionBuilder();
 
-    private List<PermissionBack> backs = new ArrayList<>();
+    private List<Permission> backs = new ArrayList<>();
     private List<ExecutableElement> ees = new ArrayList<>();
 
     public PermissionBuilder() {
         super(CurrentPath.javaInfo(FullName.PERMISSIONS));
     }
 
-    public void add(PermissionBack permissionBack, ExecutableElement ee) {
-        this.backs.add(permissionBack);
+    public void add(Permission permission, ExecutableElement ee) {
+        this.backs.add(permission);
         this.ees.add(ee);
     }
 
@@ -50,9 +48,9 @@ public class PermissionBuilder extends PermissionBuilderBase {
         addTag(pkg, Pkg.CORE_TOOLS);
         fieldCount(0);
         methodCount(0);
-        Ts.ls(backs, new BaseTs.EachTs<PermissionBack>() {
+        Ts.ls(backs, new BaseTs.EachTs<Permission>() {
             @Override
-            public boolean each(int methodIndex, PermissionBack permissionBack) {
+            public boolean each(int methodIndex, Permission permissionBack) {
                 ExecutableElement ee = ees.get(methodIndex);
 
                 String methodName = ElementTools.simpleName(ee);

@@ -6,7 +6,7 @@ import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
-import com.codingtu.cooltu.processor.annotation.ui.PermissionBack;
+import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
 
 import core.actbase.WelcomeActivityBase;
@@ -18,7 +18,7 @@ import core.actres.WelcomeActivityRes;
 public class WelcomeActivity extends WelcomeActivityBase {
 
 
-    @PermissionBack({
+    @Permission({
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
     })
