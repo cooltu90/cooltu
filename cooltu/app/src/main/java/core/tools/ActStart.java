@@ -4,6 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 
 public class ActStart {
+    public static final void stepOneActivity(Activity act) {
+        Intent intent = new Intent(act, com.codingtu.cooltu.ui.StepOneActivity.class);
+        intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
+        com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.STEP_ONE_ACTIVITY);
+    }
     public static final void welcomeActivity(Activity act) {
         Intent intent = new Intent(act, com.codingtu.cooltu.ui.WelcomeActivity.class);
         intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
