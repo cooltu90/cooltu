@@ -9,16 +9,20 @@ import com.codingtu.cooltu.processor.lib.log.Logs;
 import java.util.List;
 
 public class CreateActBuilder extends CreateActBuilderBase {
+    private final JavaInfo actResJavaInfo;
+    private final JavaInfo actBaseJavaInfo;
     private String layoutName;
 
-    public CreateActBuilder(JavaInfo info, String layout) {
+    public CreateActBuilder(JavaInfo info, String layout, JavaInfo actResJavaInfo, JavaInfo actBaseJavaInfo) {
         super(info);
         this.layoutName = layout;
+        this.actResJavaInfo = actResJavaInfo;
+        this.actBaseJavaInfo = actBaseJavaInfo;
     }
 
     @Override
     protected boolean isBuild() {
-        return false;
+        return true;
     }
 
     @Override
@@ -34,7 +38,7 @@ public class CreateActBuilder extends CreateActBuilderBase {
     @Override
     protected void beforeBuild(List<String> lines) {
         super.beforeBuild(lines);
-        Logs.i(lines);
+        //Logs.i(lines);
     }
 
     @Override
@@ -47,6 +51,9 @@ public class CreateActBuilder extends CreateActBuilderBase {
         addTag(toFullName, FullName.TO);
         addTag(to, FullName.TO_SHORT_NAME);
         addTag(layout, layoutName);
+        addTag(baseFullName, actBaseJavaInfo.fullName);
+        addTag(resFullName, actResJavaInfo.fullName);
+
     }
 }
 /* model_temp_start
