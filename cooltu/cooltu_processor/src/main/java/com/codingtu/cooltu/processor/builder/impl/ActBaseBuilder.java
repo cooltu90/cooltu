@@ -376,7 +376,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                 });
 
                 actBackMethod(actBackIndex, methodName, params.getMethodParams());
-
                 actBackMethodCountAdd();
                 return false;
             }
@@ -486,6 +485,10 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][actBackMethod]
     protected void [methodName]([params]) {}
                                                                                                     [<sub>][for][actBackMethod]
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }
 
 model_temp_end */

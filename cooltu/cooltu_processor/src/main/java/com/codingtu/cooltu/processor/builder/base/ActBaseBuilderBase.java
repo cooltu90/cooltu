@@ -473,6 +473,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("        }");
         lines.add("    }");
         lines.add("[[actBackMethod]]");
+        lines.add("    @Override");
+        lines.add("    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {");
+        lines.add("        super.onRequestPermissionsResult(requestCode, permissions, grantResults);");
+        lines.add("    }");
         lines.add("}");
         lines.add("");
 

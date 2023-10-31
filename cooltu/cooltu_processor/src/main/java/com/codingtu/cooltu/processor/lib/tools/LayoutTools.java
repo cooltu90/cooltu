@@ -91,10 +91,6 @@ public class LayoutTools {
     }
 
     private static ViewInfo dealLines(List<String> lines) {
-
-        Logs.i(lines);
-
-
         ViewInfo info = null;
         ViewInfo startInfo = null;
         int count = CountTool.count(lines);

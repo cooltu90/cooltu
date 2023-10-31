@@ -47,5 +47,9 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.lib4a.
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }
 

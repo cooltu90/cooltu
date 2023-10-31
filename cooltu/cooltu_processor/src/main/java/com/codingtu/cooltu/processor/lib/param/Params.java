@@ -5,6 +5,9 @@ import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
+import com.codingtu.cooltu.lib4j.ts.impl.TsInterface;
+import com.codingtu.cooltu.lib4j.ts.impl.basic.TArrayTs;
+import com.codingtu.cooltu.lib4j.ts.impl.basic.TListTs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +102,31 @@ public class Params {
                     sb.append(convertStr);
                     index++;
                 }
+            }
+        }
+        return sb.toString();
+    }
+
+    public static <S> String getParam(S[] ss, BaseTs.Convert<S, String> convert) {
+        return getParam(new TArrayTs(ss), convert);
+    }
+
+    public static <S> String getParam(List<S> ss, BaseTs.Convert<S, String> convert) {
+        return getParam(new TListTs<>(ss), convert);
+    }
+
+    public static <S> String getParam(TsInterface<S> ts, BaseTs.Convert<S, String> convert) {
+        StringBuilder sb = new StringBuilder();
+        int index = 0;
+        int count = ts.count();
+        for (int i = 0; i < count; i++) {
+            String convertStr = convert.convert(i, ts.get(i));
+            if (StringTool.isNotBlank(convertStr)) {
+                if (index != 0) {
+                    sb.append(", ");
+                }
+                sb.append(convertStr);
+                index++;
             }
         }
         return sb.toString();

@@ -61,5 +61,9 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }
 

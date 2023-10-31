@@ -13,12 +13,14 @@ import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
 import com.codingtu.cooltu.processor.annotation.tools.To;
+import com.codingtu.cooltu.processor.annotation.ui.PermissionBack;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.builder.impl.ActBackIntentBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.PassBuilder;
+import com.codingtu.cooltu.processor.builder.impl.PermissionBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
@@ -76,6 +78,11 @@ public class ActBaseDeal extends TypeBaseDeal {
                     dealActBack(actBaseInfo, actBack, ee);
                 }
 
+                PermissionBack permissionBack = ee.getAnnotation(PermissionBack.class);
+                if (permissionBack != null) {
+                    dealPermissionBack(actBaseInfo, permissionBack, ee);
+                }
+
             }
 
             return false;
@@ -85,6 +92,10 @@ public class ActBaseDeal extends TypeBaseDeal {
         ActBaseBuilder actBaseBuilder = new ActBaseBuilder(actBaseJavaInfo);
         actBaseBuilder.addInfos(actBaseInfo);
 
+    }
+
+    private void dealPermissionBack(ActBaseInfo actBaseInfo, PermissionBack permissionBack, ExecutableElement ee) {
+        PermissionBuilder.BUILDER.add(permissionBack, ee);
     }
 
     private void dealActBack(ActBaseInfo actBaseInfo, ActBack actBack, ExecutableElement ee) {
@@ -100,8 +111,6 @@ public class ActBaseDeal extends TypeBaseDeal {
         });
 
         ActBackIntentBuilder.BUILDER.add(actBack, ee);
-
-
     }
 
     private void dealNetBack(ActBaseInfo actBaseInfo, NetBack netBack, ExecutableElement ee) {

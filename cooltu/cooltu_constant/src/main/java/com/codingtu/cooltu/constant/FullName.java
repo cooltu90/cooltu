@@ -14,17 +14,23 @@ public class FullName {
     public static final String PROCESS_CORE_BUILDER_METHOD = Pkg.PROCESSOR_BUILDER_CORE + ".MethodCoreBuilder";
     public static final String PROCESS_CORE_BUILDER_TYPE = Pkg.PROCESSOR_BUILDER_CORE + ".TypeCoreBuilder";
     public static final String BASE_PATH = "com.codingtu.cooltu.lib4a.path.BasePath";
-    public static final String SDCARD_TOOL = "com.codingtu.cooltu.lib4a.tools.SDCardTool";
-    public static final String RESOURCE_TOOL = "com.codingtu.cooltu.lib4a.tools.ResourceTool";
-    public static final String MOBILE_TOOL = "com.codingtu.cooltu.lib4a.tools.MobileTool";
-    public static final String ACT_TOOL = "com.codingtu.cooltu.lib4a.tools.ActTool";
-    public static final String STRING_TOOL = "com.codingtu.cooltu.lib4j.tools.StringTool";
-    public static final String COUNT_TOOL = "com.codingtu.cooltu.lib4j.tools.CountTool";
     public static final String LIST_VALUE_MAP = "com.codingtu.cooltu.lib4j.data.map.ListValueMap";
     public static final String PROCESSOR_PARAMS = "com.codingtu.cooltu.processor.lib.param.Params";
     public static final String JAVA_INFO = "com.codingtu.cooltu.lib4j.data.java.JavaInfo";
     public static final String SUB_BUILDER = "com.codingtu.cooltu.processor.bean.SubBuilder";
     public static final String CORE_CONFIGS = "com.codingtu.cooltu.lib4a.CoreConfigs";
+    //lib4j_tools
+    public static final String STRING_TOOL = Pkg.LIB4J_TOOLS + ".StringTool";
+    public static final String COUNT_TOOL = Pkg.LIB4J_TOOLS + ".CountTool";
+    //lib4a_tools
+    public static final String MOBILE_TOOL = Pkg.LIB4A_TOOLS + ".MobileTool";
+    public static final String SDCARD_TOOL = Pkg.LIB4A_TOOLS + ".SDCardTool";
+    public static final String ACT_TOOL = Pkg.LIB4A_TOOLS + ".ActTool";
+    public static final String RESOURCE_TOOL = Pkg.LIB4A_TOOLS + ".ResourceTool";
+    public static final String PERMISSION_TOOL = Pkg.LIB4A_PERMISSION + ".PermissionTool";
+    //permission
+    public static final String PERMISSIONS_SHORT_NAME = "Permissions";
+    public static final String PERMISSIONS = Pkg.CORE_TOOLS + "." + PERMISSIONS_SHORT_NAME;
     //actbase
     public static final String TO_SHORT_NAME = "To";
     public static final String TO = Pkg.ANNOTATION_TOOLS + "." + TO_SHORT_NAME;
