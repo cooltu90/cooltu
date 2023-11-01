@@ -2,14 +2,12 @@ package core.actbase;
 
 import android.view.View;
 
-import com.codingtu.cooltu.lib4a.ui.act.CoreActivity;
-
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class StepOneActivityBase extends CoreActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
+public abstract class StepOneActivityBase extends com.codingtu.cooltu.lib4a.ui.act.CoreActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
 
 
     @Override
@@ -38,6 +36,8 @@ public abstract class StepOneActivityBase extends CoreActivity implements View.O
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
 
+
+
     }
 
     @Override
@@ -49,8 +49,10 @@ public abstract class StepOneActivityBase extends CoreActivity implements View.O
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    public void back(int requestCode, String[] permissions, int[] grantResults) {
+        super.back(requestCode, permissions, grantResults);
+
     }
+
 }
 

@@ -50,6 +50,9 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
+        super.accept(code, result, params, objs);
+
+
 
     }
 
@@ -62,8 +65,10 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    public void back(int requestCode, String[] permissions, int[] grantResults) {
+        super.back(requestCode, permissions, grantResults);
+
     }
+
 }
 

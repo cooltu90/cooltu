@@ -3,6 +3,7 @@ package com.codingtu.cooltu.processor.bean;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
+import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
@@ -26,6 +27,9 @@ public class ActBaseInfo {
 
     public List<ActBack> actBacks = new ArrayList<>();
     public List<ExecutableElement> actBackMethods = new ArrayList<>();
+
+    public List<Permission> permissions = new ArrayList<>();
+    public List<ExecutableElement> permissionMethods = new ArrayList<>();
 
 
     public boolean hasBaseClass() {

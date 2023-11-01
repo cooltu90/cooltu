@@ -18,12 +18,5 @@ import core.actres.WelcomeActivityRes;
 public class WelcomeActivity extends WelcomeActivityBase {
 
 
-    @Permission({
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA
-    })
-    public void check() {
-
-    }
 
 }

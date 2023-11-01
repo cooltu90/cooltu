@@ -57,6 +57,20 @@ public class Params {
         });
         return sb.toString();
     }
+    public String getParams() {
+        StringBuilder sb = new StringBuilder();
+        Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {
+            @Override
+            public boolean each(int position, KV<String, String> kv) {
+                if (position != 0) {
+                    sb.append(", ");
+                }
+                sb.append(kv.v);
+                return false;
+            }
+        });
+        return sb.toString();
+    }
 
     public String getMethodParams(boolean hasFirst, boolean hasNext) {
         StringBuilder sb = new StringBuilder();

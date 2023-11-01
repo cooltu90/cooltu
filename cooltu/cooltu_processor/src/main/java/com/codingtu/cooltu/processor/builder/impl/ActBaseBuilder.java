@@ -14,6 +14,7 @@ import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
+import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
@@ -33,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.VariableElement;
 
 @To(ActBaseDeal.class)
 public class ActBaseBuilder extends ActBaseBuilderBase {
@@ -74,7 +76,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
     public void addInfos(ActBaseInfo actBaseInfo) {
         this.info = actBaseInfo;
-
     }
 
     public void addInBase(KV<String, String> fieldKv) {
@@ -276,6 +277,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
         fieldCount(fieldCount[0]);
 
+        //accept
+        superAcceptIf(info.hasBaseClass());
         acceptCount(0);
         acceptMethodCount(0);
         Ts.ls(info.netBacks, new BaseTs.EachTs<NetBackInfo>() {
@@ -381,6 +384,40 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             }
         });
 
+        permissionBackCount(0);
+        permissionBackMethodCount(0);
+        Ts.ls(info.permissions, new BaseTs.EachTs<Permission>() {
+            @Override
+            public boolean each(int permissionIndex, Permission permission) {
+                ExecutableElement ee = info.permissionMethods.get(permissionIndex);
+
+                String methodName = ElementTools.simpleName(ee);
+                String methodNameStatic = ConvertTool.toStaticType(methodName);
+
+                String actName = CurrentPath.javaInfo(ElementTools.getParentType(ee)).name;
+                String actNameStatic = ConvertTool.toStaticType(actName);
+
+                permissionBack(permissionIndex, permissionIndex == 0 ? "if" : "else if",
+                        FullName.PERMISSIONS, methodNameStatic, actNameStatic, methodName);
+                permissionBackCountAdd();
+
+                boolean isParam = !CountTool.isNull(ee.getParameters());
+
+                allowIf(permissionIndex, isParam);
+                if (isParam) {
+                    allowIf(permissionIndex, FullName.PERMISSION_TOOL);
+                }
+
+
+                permissionBackMethodCountAdd();
+                permissionBackMethod(permissionIndex, methodName);
+
+                allowParamIf(permissionIndex, isParam);
+
+                return false;
+            }
+        });
+
     }
 
 }
@@ -456,6 +493,10 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][onClickMethods]
     @Override
     public void accept(String code, Result<ResponseBody> result, [[coreSendParamsFullName]] params, List objs) {
+                                                                                                    [<sub>][if][superAccept]
+        super.accept(code, result, params, objs);
+                                                                                                    [<sub>][if][superAccept]
+
                                                                                                     [<sub>][for][accept]
         if ("[methodName]".equals(code)) {
             new [netBackFullName]() {
@@ -486,9 +527,17 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     protected void [methodName]([params]) {}
                                                                                                     [<sub>][for][actBackMethod]
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    public void back(int requestCode, String[] permissions, int[] grantResults) {
+        super.back(requestCode, permissions, grantResults);
+                                                                                                    [<sub>][for][permissionBack]
+        [ifSign] (requestCode == [permissionsFullName].CODE_[methodNameStatic]_IN_[actStaticName]) {
+            [methodName]([if:allow][permissionToolFullName].allow(grantResults)[if:allow]);
+        }
+                                                                                                    [<sub>][for][permissionBack]
     }
+                                                                                                    [<sub>][for][permissionBackMethod]
+    protected void [methodName]([if:allowParam]boolean isAllow[if:allowParam]) {}
+                                                                                                    [<sub>][for][permissionBackMethod]
 }
 
 model_temp_end */

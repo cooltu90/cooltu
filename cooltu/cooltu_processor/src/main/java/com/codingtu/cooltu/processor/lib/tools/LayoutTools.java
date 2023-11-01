@@ -76,8 +76,8 @@ public class LayoutTools {
                         isInclude = false;
                     }
                 } else {
-                    if (!line.startsWith("<?xml") && StringTool.isNotBlank(line)&&StringTool.isNotBlank(space)) {
-                        if (CountTool.isNull(newLines)) {
+                    if (!line.startsWith("<?xml") && StringTool.isNotBlank(line)) {
+                        if (CountTool.isNull(newLines) && space.length() > 0) {
                             newLines.add(space + line);
                             newLines.add(space + "    android:id=\"@+id/" + parentId + "\"");
                         } else {

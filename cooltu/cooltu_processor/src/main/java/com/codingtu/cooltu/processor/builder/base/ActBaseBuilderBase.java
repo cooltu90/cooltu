@@ -56,6 +56,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     private StringBuilder onClickMethodsSb;
     private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> onClickMethods;
     protected StringBuilder coreSendParamsFullName;
+    private java.util.Map<String, Boolean> superAcceptIfs;
+    private java.util.Map<String, Integer> superAcceptCounts;
+    private StringBuilder superAcceptSb;
+    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> superAccept;
     private java.util.Map<String, Boolean> acceptIfs;
     private java.util.Map<String, Integer> acceptCounts;
     private StringBuilder acceptSb;
@@ -72,6 +76,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     private java.util.Map<String, Integer> actBackMethodCounts;
     private StringBuilder actBackMethodSb;
     private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> actBackMethod;
+    private java.util.Map<String, Boolean> permissionBackIfs;
+    private java.util.Map<String, Integer> permissionBackCounts;
+    private StringBuilder permissionBackSb;
+    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> permissionBack;
+    private java.util.Map<String, Boolean> permissionBackMethodIfs;
+    private java.util.Map<String, Integer> permissionBackMethodCounts;
+    private StringBuilder permissionBackMethodSb;
+    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> permissionBackMethod;
 
     public ActBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -128,6 +140,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         onClickMethodsSb = map.get("onClickMethods");
         onClickMethods = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         coreSendParamsFullName = map.get("coreSendParamsFullName");
+        superAcceptIfs = new java.util.HashMap<>();
+        superAcceptCounts = new java.util.HashMap<>();
+        superAcceptSb = map.get("superAccept");
+        superAccept = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         acceptIfs = new java.util.HashMap<>();
         acceptCounts = new java.util.HashMap<>();
         acceptSb = map.get("accept");
@@ -144,6 +160,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         actBackMethodCounts = new java.util.HashMap<>();
         actBackMethodSb = map.get("actBackMethod");
         actBackMethod = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        permissionBackIfs = new java.util.HashMap<>();
+        permissionBackCounts = new java.util.HashMap<>();
+        permissionBackSb = map.get("permissionBack");
+        permissionBack = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        permissionBackMethodIfs = new java.util.HashMap<>();
+        permissionBackMethodCounts = new java.util.HashMap<>();
+        permissionBackMethodSb = map.get("permissionBackMethod");
+        permissionBackMethod = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
     protected void fieldCount(int count) {
@@ -248,6 +272,18 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void actBackMethodCountAdd() {
         count(actBackMethodCounts, getForKey("actBackMethod"));
     }
+    protected void permissionBackCount(int count) {
+        permissionBackCounts.put(getForKey("permissionBack"), count);
+    }
+    protected void permissionBackCountAdd() {
+        count(permissionBackCounts, getForKey("permissionBack"));
+    }
+    protected void permissionBackMethodCount(int count) {
+        permissionBackMethodCounts.put(getForKey("permissionBackMethod"), count);
+    }
+    protected void permissionBackMethodCountAdd() {
+        count(permissionBackMethodCounts, getForKey("permissionBackMethod"));
+    }
 
     protected void field(int i0, String type, String name) {
         addForMap(this.field, getForKey("field", i0), type, name);
@@ -300,6 +336,12 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void actBackMethod(int i0, String methodName, String params) {
         addForMap(this.actBackMethod, getForKey("actBackMethod", i0), methodName, params);
     }
+    protected void permissionBack(int i0, String ifSign, String permissionsFullName, String methodNameStatic, String actStaticName, String methodName) {
+        addForMap(this.permissionBack, getForKey("permissionBack", i0), ifSign, permissionsFullName, methodNameStatic, actStaticName, methodName);
+    }
+    protected void permissionBackMethod(int i0, String methodName) {
+        addForMap(this.permissionBackMethod, getForKey("permissionBackMethod", i0), methodName);
+    }
 
     protected void layoutIf(boolean is) {
         layoutIfs.put(getIfKey("layout"), is);
@@ -316,8 +358,20 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void onClickSwitchParamsIf(int i0, String divider) {
         addForMap(this.onClickSwith, getIfKey("onClickSwitchParams", i0), divider);
     }
+    protected void superAcceptIf(boolean is) {
+        superAcceptIfs.put(getIfKey("superAccept"), is);
+    }
     protected void actBackParamDividerIf(int i0, int i1, boolean is) {
         actBackIfs.put(getIfKey("actBackParamDivider", i0, i1), is);
+    }
+    protected void allowIf(int i0, boolean is) {
+        permissionBackIfs.put(getIfKey("allow", i0), is);
+    }
+    protected void allowIf(int i0, String permissionToolFullName) {
+        addForMap(this.permissionBack, getIfKey("allow", i0), permissionToolFullName);
+    }
+    protected void allowParamIf(int i0, boolean is) {
+        permissionBackMethodIfs.put(getIfKey("allowParam", i0), is);
     }
 
     @Override
@@ -384,6 +438,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> onClickMethods0 = onClickMethods.get(getForKey("onClickMethods", i0));
             addLnTag(onClickMethodsSb, "    protected void [methodName]([params]) {}", onClickMethods0.get(0), onClickMethods0.get(1));
         }
+        if (superAcceptIfs.get(getIfKey("superAccept"))) {
+            List<String> superAccept0 = superAccept.get(getIfKey("superAccept"));
+            addLnTag(superAcceptSb, "        super.accept(code, result, params, objs);");
+        }
         for (int i0 = 0; i0 < acceptCounts.get(getForKey("accept")); i0++) {
             List<String> accept0 = accept.get(getForKey("accept", i0));
             addLnTag(acceptSb, "        if (\"[methodName]\".equals(code)) {", accept0.get(0));
@@ -419,6 +477,26 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         for (int i0 = 0; i0 < actBackMethodCounts.get(getForKey("actBackMethod")); i0++) {
             List<String> actBackMethod0 = actBackMethod.get(getForKey("actBackMethod", i0));
             addLnTag(actBackMethodSb, "    protected void [methodName]([params]) {}", actBackMethod0.get(0), actBackMethod0.get(1));
+        }
+        for (int i0 = 0; i0 < permissionBackCounts.get(getForKey("permissionBack")); i0++) {
+            List<String> permissionBack0 = permissionBack.get(getForKey("permissionBack", i0));
+            addLnTag(permissionBackSb, "        [ifSign] (requestCode == [permissionsFullName].CODE_[methodNameStatic]_IN_[actStaticName]) {", permissionBack0.get(0), permissionBack0.get(1), permissionBack0.get(2), permissionBack0.get(3));
+            StringBuilder allowSb = new StringBuilder();
+            if (permissionBackIfs.get(getIfKey("allow", i0))) {
+                List<String> permissionBack1 = permissionBack.get(getIfKey("allow", i0));
+                addTag(allowSb, "[permissionToolFullName].allow(grantResults)", permissionBack1.get(0));
+            }
+            addLnTag(permissionBackSb, "            [methodName]([allow]);", permissionBack0.get(4), allowSb.toString());
+            addLnTag(permissionBackSb, "        }");
+        }
+        for (int i0 = 0; i0 < permissionBackMethodCounts.get(getForKey("permissionBackMethod")); i0++) {
+            List<String> permissionBackMethod0 = permissionBackMethod.get(getForKey("permissionBackMethod", i0));
+            StringBuilder allowParamSb = new StringBuilder();
+            if (permissionBackMethodIfs.get(getIfKey("allowParam", i0))) {
+                List<String> permissionBackMethod1 = permissionBackMethod.get(getIfKey("allowParam", i0));
+                addTag(allowParamSb, "boolean isAllow");
+            }
+            addLnTag(permissionBackMethodSb, "    protected void [methodName]([allowParam]) {}", permissionBackMethod0.get(0), allowParamSb.toString());
         }
 
     }
@@ -462,6 +540,8 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[onClickMethods]]");
         lines.add("    @Override");
         lines.add("    public void accept(String code, Result<ResponseBody> result, [[coreSendParamsFullName]] params, List objs) {");
+        lines.add("[[superAccept]]");
+        lines.add("");
         lines.add("[[accept]]");
         lines.add("    }");
         lines.add("[[acceptMethod]]");
@@ -474,9 +554,11 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("    }");
         lines.add("[[actBackMethod]]");
         lines.add("    @Override");
-        lines.add("    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {");
-        lines.add("        super.onRequestPermissionsResult(requestCode, permissions, grantResults);");
+        lines.add("    public void back(int requestCode, String[] permissions, int[] grantResults) {");
+        lines.add("        super.back(requestCode, permissions, grantResults);");
+        lines.add("[[permissionBack]]");
         lines.add("    }");
+        lines.add("[[permissionBackMethod]]");
         lines.add("}");
         lines.add("");
 

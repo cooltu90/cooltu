@@ -96,6 +96,8 @@ public class ActBaseDeal extends TypeBaseDeal {
 
     private void dealPermissionBack(ActBaseInfo actBaseInfo, Permission permission, ExecutableElement ee) {
         PermissionBuilder.BUILDER.add(permission, ee);
+        actBaseInfo.permissions.add(permission);
+        actBaseInfo.permissionMethods.add(ee);
     }
 
     private void dealActBack(ActBaseInfo actBaseInfo, ActBack actBack, ExecutableElement ee) {
