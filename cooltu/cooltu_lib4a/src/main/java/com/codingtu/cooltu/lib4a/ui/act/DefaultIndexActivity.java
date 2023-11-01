@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4a.act;
+package com.codingtu.cooltu.lib4a.ui.act;
 
 import android.os.Bundle;
 import android.view.View;

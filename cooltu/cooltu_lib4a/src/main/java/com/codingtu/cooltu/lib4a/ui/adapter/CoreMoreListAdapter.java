@@ -1,10 +1,10 @@
-package com.codingtu.cooltu.lib4a.act.adapter;
+package com.codingtu.cooltu.lib4a.ui.adapter;
 
 import android.view.ViewGroup;
 
-import com.codingtu.cooltu.lib4a.act.viewholder.CoreAdapterVH;
-import com.codingtu.cooltu.lib4a.act.viewholder.MoreVH;
-import com.codingtu.cooltu.lib4a.act.viewholder.NullVH;
+import com.codingtu.cooltu.lib4a.ui.adapter.viewholder.CoreAdapterVH;
+import com.codingtu.cooltu.lib4a.ui.adapter.viewholder.MoreVH;
+import com.codingtu.cooltu.lib4a.ui.adapter.viewholder.NullVH;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 
 import java.lang.reflect.Constructor;

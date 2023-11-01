@@ -5,8 +5,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.codingtu.cooltu.lib4a.R;
-import com.codingtu.cooltu.lib4a.act.Destroys;
-import com.codingtu.cooltu.lib4a.act.OnDestroy;
+import com.codingtu.cooltu.lib4a.uicore.Destroys;
+import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 
 public class AddMinusEt implements View.OnClickListener, OnDestroy {

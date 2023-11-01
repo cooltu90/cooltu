@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4a.act;
+package com.codingtu.cooltu.lib4a.ui.act;
 
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +26,7 @@ public abstract class CoreTagActivity extends CoreActivity {
     }
 
     @Override
-    protected void onCreateComplete() {
+    public void onCreateComplete() {
         super.onCreateComplete();
         bts = getBts();
 

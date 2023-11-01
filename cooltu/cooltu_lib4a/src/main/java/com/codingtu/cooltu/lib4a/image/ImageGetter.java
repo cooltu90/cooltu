@@ -18,8 +18,8 @@ import androidx.core.content.FileProvider;
 
 import com.codingtu.cooltu.lib4a.CoreConfigs;
 import com.codingtu.cooltu.lib4a.CoreRequestCode;
-import com.codingtu.cooltu.lib4a.act.ui.core.CoreUiInterface;
-import com.codingtu.cooltu.lib4a.act.OnActBack;
+import com.codingtu.cooltu.lib4a.uicore.CoreUiInterface;
+import com.codingtu.cooltu.lib4a.uicore.OnActBack;
 import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.permission.PermissionBack;
 import com.codingtu.cooltu.lib4a.permission.PermissionTool;

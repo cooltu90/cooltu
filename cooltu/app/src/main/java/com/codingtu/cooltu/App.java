@@ -3,10 +3,9 @@ package com.codingtu.cooltu;
 import com.codingtu.cooltu.constant.Module;
 import com.codingtu.cooltu.lib4a.CoreApp;
 import com.codingtu.cooltu.lib4a.CoreConfigs;
-import com.codingtu.cooltu.lib4a.act.CoreActivity;
+import com.codingtu.cooltu.lib4a.ui.act.CoreActivity;
 import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.annotation.create.CreateAct;
-import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
 
 @ModuleInfo(
         module = Module.APP,

@@ -9,9 +9,9 @@ import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 
 import com.codingtu.cooltu.lib4a.R;
-import com.codingtu.cooltu.lib4a.act.ui.core.CoreUiInterface;
-import com.codingtu.cooltu.lib4a.act.OnDestroy;
-import com.codingtu.cooltu.lib4a.act.WhenKeyDown;
+import com.codingtu.cooltu.lib4a.uicore.CoreUiInterface;
+import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
+import com.codingtu.cooltu.lib4a.uicore.WhenKeyDown;
 import com.codingtu.cooltu.lib4a.tools.DestoryTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4a.view.attrs.Attrs;

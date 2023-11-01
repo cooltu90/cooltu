@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.codingtu.cooltu.lib4a.act.OnDestroy;
+import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
 import com.codingtu.cooltu.lib4a.tools.DestoryTool;
 
 public class CoreEditText extends androidx.appcompat.widget.AppCompatEditText implements OnDestroy {

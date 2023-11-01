@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4a.act;
+package com.codingtu.cooltu.lib4a.uicore;
 
 import android.app.Activity;
 

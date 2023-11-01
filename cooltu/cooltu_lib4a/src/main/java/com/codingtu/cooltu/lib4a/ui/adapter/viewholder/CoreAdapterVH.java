@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4a.act.viewholder;
+package com.codingtu.cooltu.lib4a.ui.adapter.viewholder;
 
 import android.view.ViewGroup;
 

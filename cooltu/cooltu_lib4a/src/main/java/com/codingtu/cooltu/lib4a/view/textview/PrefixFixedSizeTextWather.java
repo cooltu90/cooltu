@@ -2,8 +2,8 @@ package com.codingtu.cooltu.lib4a.view.textview;
 
 import android.widget.EditText;
 
-import com.codingtu.cooltu.lib4a.act.Destroys;
-import com.codingtu.cooltu.lib4a.act.OnDestroy;
+import com.codingtu.cooltu.lib4a.uicore.Destroys;
+import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 

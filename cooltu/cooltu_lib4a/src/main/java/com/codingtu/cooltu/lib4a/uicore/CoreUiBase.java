@@ -1,31 +1,27 @@
-package com.codingtu.cooltu.lib4a.act.ui;
+package com.codingtu.cooltu.lib4a.uicore;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.view.KeyEvent;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
-import com.codingtu.cooltu.lib4a.act.OnActBack;
-import com.codingtu.cooltu.lib4a.act.OnDestroy;
-import com.codingtu.cooltu.lib4a.act.WhenKeyDown;
-import com.codingtu.cooltu.lib4a.act.ui.core.CoreUiInterface;
 import com.codingtu.cooltu.lib4a.permission.PermissionBack;
+import com.codingtu.cooltu.lib4a.tools.ScreenAdaptationTool;
+import com.codingtu.cooltu.lib4a.tools.StatusBarTool;
 import com.codingtu.cooltu.lib4a.tools.ToastTool;
+import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CoreUiBase implements CoreUiInterface {
-
-    @Override
-    public CoreUiBase getBase() {
-        return this;
-    }
+public class CoreUiBase {
 
     /**************************************************
      *
-     *
+     * Permission
      *
      **************************************************/
     protected List<PermissionBack> permissionBacks;
@@ -56,14 +52,9 @@ public class CoreUiBase implements CoreUiInterface {
         });
     }
 
-    @Override
-    public void back(int requestCode, String[] permissions, int[] grantResults) {
-
-    }
-
     /**************************************************
      *
-     *
+     * OnActBack
      *
      **************************************************/
     protected List<OnActBack> onActBacks;
@@ -94,7 +85,7 @@ public class CoreUiBase implements CoreUiInterface {
 
     /**************************************************
      *
-     *
+     * WhenKeyDown
      *
      **************************************************/
     protected List<WhenKeyDown> whenKeyDowns;
@@ -130,7 +121,7 @@ public class CoreUiBase implements CoreUiInterface {
 
     /**************************************************
      *
-     *
+     * OnDestroy
      *
      **************************************************/
     protected List<OnDestroy> onDestroys;
@@ -165,9 +156,64 @@ public class CoreUiBase implements CoreUiInterface {
         ToastTool.toast(str);
     }
 
-    @Override
-    public Activity getAct() {
-        return null;
+    public void finish(CoreUiInterface coreUi) {
+        coreUi.beforeFinish();
+        coreUi.superFinish();
+        coreUi.setFinishAnimation();
+        coreUi.afterFinish();
+    }
+
+    public void finishToNewPage(CoreUiInterface coreUi) {
+        coreUi.beforeFinish();
+        coreUi.superFinish();
+        coreUi.afterFinish();
+    }
+
+    public void setResultOk(CoreUiInterface coreUi) {
+        coreUi.getAct().setResult(Activity.RESULT_OK);
+    }
+
+    public void setResultOk(CoreUiInterface coreUi, Intent data) {
+        coreUi.getAct().setResult(Activity.RESULT_OK, data);
+    }
+
+    public void onCreate(CoreUiInterface coreUi, PermissionBack back) {
+        addPermissionBack(back);
+        ScreenAdaptationTool.setCustomDensity(coreUi.getAct());
+        coreUi.initStatusBar(coreUi.getAct());
+        ActivityManager.getInstance().add(coreUi.getAct());
+    }
+
+    public void initStatusBar(Activity act) {
+        StatusBarTool.translucentAndDark(act);
+    }
+
+    public void onDestroy(CoreUiInterface coreUi) {
+        destroyAll();
+        ActivityManager.getInstance().remove(coreUi.getAct());
+    }
+
+    public void forbidKeyBack() {
+        addWhenKeyDown(new WhenBackKeyDown() {
+            @Override
+            public boolean onBack(KeyEvent event) {
+                return true;
+            }
+        });
+    }
+
+    private ViewGroup rootView;
+
+    public void setContentView(CoreUiInterface coreUi) {
+        rootView = ViewTool.getRootViewGroup(coreUi.getAct());
+        rootView.getViewTreeObserver()
+                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        coreUi.onViewInitComplete();
+                        rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                });
     }
 
 }

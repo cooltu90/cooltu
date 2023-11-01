@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.codingtu.cooltu.lib4a.act.OnDestroy;
+import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
 import com.codingtu.cooltu.lib4a.tools.DestoryTool;
 
 public class CoreView extends View implements OnDestroy {

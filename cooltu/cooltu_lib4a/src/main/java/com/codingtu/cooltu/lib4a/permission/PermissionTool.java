@@ -5,7 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 
 import com.codingtu.cooltu.lib4a.CoreApp;
-import com.codingtu.cooltu.lib4a.act.ui.core.CoreUiInterface;
+import com.codingtu.cooltu.lib4a.uicore.CoreUiInterface;
 
 public class PermissionTool {
     public static void check(Activity act, int code, String... permissions) {

@@ -1,11 +1,11 @@
-package com.codingtu.cooltu.lib4a.act.adapter;
+package com.codingtu.cooltu.lib4a.ui.adapter;
 
 import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.codingtu.cooltu.lib4a.R;
-import com.codingtu.cooltu.lib4a.act.viewholder.CoreAdapterVH;
+import com.codingtu.cooltu.lib4a.ui.adapter.viewholder.CoreAdapterVH;
 
 public abstract class CoreAdapter<VH extends CoreAdapterVH> extends RecyclerView.Adapter<VH> {
 

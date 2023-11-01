@@ -1,7 +1,7 @@
 package com.codingtu.cooltu.lib4a.thread;
 
-import com.codingtu.cooltu.lib4a.act.Destroys;
-import com.codingtu.cooltu.lib4a.act.OnDestroy;
+import com.codingtu.cooltu.lib4a.uicore.Destroys;
+import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
