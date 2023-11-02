@@ -1,5 +1,6 @@
 package com.codingtu.cooltu.processor.builder.impl;
 
+import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.constant.Suffix;
@@ -20,6 +21,7 @@ import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
+import com.codingtu.cooltu.processor.deal.FormBeanDeal;
 import com.codingtu.cooltu.processor.deal.NetDeal;
 import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
@@ -38,6 +40,7 @@ import javax.lang.model.element.VariableElement;
 
 @To(ActBaseDeal.class)
 public class ActBaseBuilder extends ActBaseBuilderBase {
+
 
     private ActBaseInfo info;
     private List<KV<String, String>> inBases = new ArrayList<>();
@@ -71,7 +74,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
     @Override
     protected void beforeBuild(List<String> lines) {
         super.beforeBuild(lines);
-        //Logs.i(lines);
+        if (javaInfo.name.equals("FormActivityBase")) {
+            Logs.i(lines);
+        }
     }
 
     public void addInfos(ActBaseInfo actBaseInfo) {
@@ -110,7 +115,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             @Override
             public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
                 if (inBaseMap.get(viewInfo.fieldName) == null) {
-                    field(fieldCount[0]++, viewInfo.tag, viewInfo.fieldName);
+                    field(fieldCount[0]++, Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
                 }
 
                 String parent = "";
@@ -125,7 +130,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         Ts.ls(inBases, new BaseTs.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
-                field(fieldCount[0]++, kv.k, kv.v);
+                field(fieldCount[0]++, Constant.SIGN_PROTECTED, kv.k, kv.v);
                 return false;
             }
         });
@@ -211,7 +216,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 if (inBaseMap.get(kv.k) == null) {
-                    field(fieldCount[0]++, "int", kv.k);
+                    field(fieldCount[0]++, Constant.SIGN_PROTECTED, "int", kv.k);
                 }
                 colorStrInit(position, kv.k, kv.v);
                 return false;
@@ -226,7 +231,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             @Override
             public boolean each(int position, KV<String, IdTools.Id> kv) {
                 if (inBaseMap.get(kv.k) == null) {
-                    field(fieldCount[0]++, "int", kv.k);
+                    field(fieldCount[0]++, Constant.SIGN_PROTECTED, "int", kv.k);
                 }
                 colorResInit(position, kv.k, FullName.RESOURCE_TOOL, kv.v.toString());
                 return false;
@@ -240,7 +245,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             @Override
             public boolean each(int position, KV<String, Float> kv) {
                 if (inBaseMap.get(kv.k) == null) {
-                    field(fieldCount[0]++, "int", kv.k);
+                    field(fieldCount[0]++, Constant.SIGN_PROTECTED, "int", kv.k);
                 }
                 dpInit(position, kv.k, FullName.MOBILE_TOOL, kv.v + "f");
                 return false;
@@ -254,7 +259,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             @Override
             public boolean each(int position, KV<String, IdTools.Id> kv) {
                 if (inBaseMap.get(kv.k) == null) {
-                    field(fieldCount[0]++, "int", kv.k);
+                    field(fieldCount[0]++, Constant.SIGN_PROTECTED, "int", kv.k);
                 }
                 dimenInit(position, kv.k, FullName.RESOURCE_TOOL, kv.v.toString());
                 return false;
@@ -268,14 +273,12 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 if (inBaseMap.get(kv.v) == null) {
-                    field(fieldCount[0]++, kv.k, kv.v);
+                    field(fieldCount[0]++, Constant.SIGN_PROTECTED, kv.k, kv.v);
                 }
                 startInit(position, kv.v, FullName.PASS);
                 return false;
             }
         });
-
-        fieldCount(fieldCount[0]);
 
         //accept
         superAcceptIf(info.hasBaseClass());
@@ -418,6 +421,38 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             }
         });
 
+        onCreateCompleteInitIf(!info.hasChild());
+
+        //form
+        if (info.form != null) {
+            String formBeanClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                @Override
+                public Object get() {
+                    return info.form.value();
+                }
+            });
+            String name = FormBeanDeal.MAP.get(formBeanClass);
+            if (StringTool.isBlank(name)) {
+                name = ConvertTool.toMethodType(CurrentPath.javaInfo(formBeanClass).name);
+            }
+            field(fieldCount[0]++, Constant.SIGN_PROTECTED, formBeanClass, name);
+            field(fieldCount[0]++, Constant.SIGN_PROTECTED, "boolean", "initFormBean");
+            field(fieldCount[0]++, Constant.SIGN_PUBLIC, "BindHandler", "bindHandler");
+
+            bindHandlerIf(true);
+            bindHandlerIf(formBeanClass, name);
+
+            formInitIf(true);
+            formInitIf(name, formBeanClass);
+
+
+        } else {
+            bindHandlerIf(false);
+            formInitIf(false);
+        }
+
+        fieldCount(fieldCount[0]);
+
     }
 
 }
@@ -433,7 +468,7 @@ import retrofit2.adapter.rxjava2.Result;
 
 public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, [[netBackIFullName]] {
                                                                                                     [<sub>][for][field]
-    protected [type] [name];
+    [sign] [type] [name];
                                                                                                     [<sub>][for][field]
 
     @Override
@@ -463,8 +498,18 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][startInit]
         [name] = [passFullName].[name](getIntent());
                                                                                                     [<sub>][for][startInit]
-
+                                                                                                    [<sub>][if][formInit]
+        if ([name] == null) {
+            [name] = new [type]();
+            initFormBean = true;
+        }
+        bindHandler = new BindHandler([name]);
+                                                                                                    [<sub>][if][formInit]
+                                                                                                    [<sub>][if][onCreateCompleteInit]
+        onCreateComplete();
+                                                                                                    [<sub>][if][onCreateCompleteInit]
     }
+
     @Override
     public void onClick(View v) {
                                                                                                     [<sub>][if][superOnClick]
@@ -538,6 +583,20 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][permissionBackMethod]
     protected void [methodName]([if:allowParam]boolean isAllow[if:allowParam]) {}
                                                                                                     [<sub>][for][permissionBackMethod]
+                                                                                                    [<sub>][if][bindHandler]
+    public static class BindHandler extends android.os.Handler {
+        private [beanType] [beanName];
+
+        public BindHandler([beanType] [beanName]) {
+            this.[beanName] = [beanName];
+        }
+
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+        }
+    }
+                                                                                                    [<sub>][if][bindHandler]
 }
 
 model_temp_end */

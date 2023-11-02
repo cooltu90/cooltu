@@ -23,7 +23,10 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.lib4a.ui.a
 
 
 
+        onCreateComplete();
+
     }
+
     @Override
     public void onClick(View v) {
 
@@ -53,6 +56,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.lib4a.ui.a
         super.back(requestCode, permissions, grantResults);
 
     }
+
 
 }
 

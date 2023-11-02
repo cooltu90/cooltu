@@ -8,6 +8,7 @@ import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**************************************************
@@ -78,6 +79,18 @@ public class BaseTools {
      * 获取全部子类ActBaseBuilder（包括自己）
      *
      **************************************************/
+    public static List<ActBaseBuilder> getActBaseBuilderWithChilds(String parent) {
+        ArrayList<ActBaseBuilder> list = new ArrayList<>();
+        getActBaseBuilderWithChilds(parent, new BaseTs.EachTs<ActBaseBuilder>() {
+            @Override
+            public boolean each(int position, ActBaseBuilder actBaseBuilder) {
+                list.add(actBaseBuilder);
+                return false;
+            }
+        });
+        return list;
+    }
+
 
     public static void getActBaseBuilderWithChilds(String parent, BaseTs.EachTs<ActBaseBuilder> eachTs) {
         getActBaseBuilderWithChilds(parent, new int[]{0}, eachTs);

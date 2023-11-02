@@ -2,8 +2,14 @@ package com.codingtu.cooltu.processor.bean;
 
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.tools.CountTool;
+import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
+import com.codingtu.cooltu.processor.annotation.form.Form;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
+import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
+import com.codingtu.cooltu.processor.lib.log.Logs;
+import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
@@ -30,10 +36,15 @@ public class ActBaseInfo {
 
     public List<Permission> permissions = new ArrayList<>();
     public List<ExecutableElement> permissionMethods = new ArrayList<>();
+    public Form form;
 
 
     public boolean hasBaseClass() {
         return !FullName.BASE_ACT.equals(baseClass);
+    }
+
+    public boolean hasChild() {
+        return CountTool.count(BaseTools.getActBaseBuilderWithChilds(act)) > 1;
     }
 
 }

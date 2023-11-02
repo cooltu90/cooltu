@@ -1,6 +1,7 @@
 package com.codingtu.cooltu.ui;
 
 import android.Manifest;
+import android.os.Bundle;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.processor.annotation.tools.To;
@@ -11,6 +12,7 @@ import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
 
 import core.actbase.WelcomeActivityBase;
 import core.actres.WelcomeActivityRes;
+import core.tools.ActStart;
 
 @To(WelcomeActivityRes.class)
 @ToRes(R.layout.activity_welcome)
@@ -18,5 +20,9 @@ import core.actres.WelcomeActivityRes;
 public class WelcomeActivity extends WelcomeActivityBase {
 
 
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ActStart.formActivity(getAct());
+    }
 }

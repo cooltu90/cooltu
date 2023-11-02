@@ -44,7 +44,9 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
 
 
+
     }
+
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -87,6 +89,7 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
     }
     protected void check(boolean isAllow) {}
+
 
 }
 

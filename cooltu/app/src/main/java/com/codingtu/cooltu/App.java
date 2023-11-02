@@ -14,7 +14,7 @@ import com.codingtu.cooltu.processor.annotation.create.CreateAct;
         rPkg = "com.codingtu.cooltu"
 )
 @CreateAct(
-        name = "step_one",
+        name = "form",
         packages = "com.codingtu.cooltu.ui",
         baseClass = CoreActivity.class,
         layoutTemp = R.layout.layout_temp

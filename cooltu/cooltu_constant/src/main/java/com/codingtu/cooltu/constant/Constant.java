@@ -42,9 +42,11 @@ public class Constant {
     //文件分割
     public static final String SEPARATOR = File.separator;
 
-
     public static final String SIGN_TEMP_START = "/* model_temp_start";
     public static final String SIGN_TEMP_END = "model_temp_end */";
 
     public static final String FROM_ACT = "fromAct";
+
+    public static final String SIGN_PROTECTED = "protected";
+    public static final String SIGN_PUBLIC = "public";
 }

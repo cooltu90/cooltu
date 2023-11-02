@@ -8,6 +8,7 @@ import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
+import com.codingtu.cooltu.processor.annotation.form.Form;
 import com.codingtu.cooltu.processor.annotation.net.NetBack;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
@@ -87,6 +88,8 @@ public class ActBaseDeal extends TypeBaseDeal {
 
             return false;
         });
+
+        actBaseInfo.form = te.getAnnotation(Form.class);
 
         JavaInfo actBaseJavaInfo = CurrentPath.actBase(actBaseInfo.act);
         ActBaseBuilder actBaseBuilder = new ActBaseBuilder(actBaseJavaInfo);

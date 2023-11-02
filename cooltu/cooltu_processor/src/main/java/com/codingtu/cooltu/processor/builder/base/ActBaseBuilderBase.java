@@ -43,6 +43,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     private java.util.Map<String, Integer> startInitCounts;
     private StringBuilder startInitSb;
     private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> startInit;
+    private java.util.Map<String, Boolean> formInitIfs;
+    private java.util.Map<String, Integer> formInitCounts;
+    private StringBuilder formInitSb;
+    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> formInit;
+    private java.util.Map<String, Boolean> onCreateCompleteInitIfs;
+    private java.util.Map<String, Integer> onCreateCompleteInitCounts;
+    private StringBuilder onCreateCompleteInitSb;
+    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> onCreateCompleteInit;
     private java.util.Map<String, Boolean> superOnClickIfs;
     private java.util.Map<String, Integer> superOnClickCounts;
     private StringBuilder superOnClickSb;
@@ -84,6 +92,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     private java.util.Map<String, Integer> permissionBackMethodCounts;
     private StringBuilder permissionBackMethodSb;
     private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> permissionBackMethod;
+    private java.util.Map<String, Boolean> bindHandlerIfs;
+    private java.util.Map<String, Integer> bindHandlerCounts;
+    private StringBuilder bindHandlerSb;
+    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> bindHandler;
 
     public ActBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -127,6 +139,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         startInitCounts = new java.util.HashMap<>();
         startInitSb = map.get("startInit");
         startInit = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        formInitIfs = new java.util.HashMap<>();
+        formInitCounts = new java.util.HashMap<>();
+        formInitSb = map.get("formInit");
+        formInit = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        onCreateCompleteInitIfs = new java.util.HashMap<>();
+        onCreateCompleteInitCounts = new java.util.HashMap<>();
+        onCreateCompleteInitSb = map.get("onCreateCompleteInit");
+        onCreateCompleteInit = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         superOnClickIfs = new java.util.HashMap<>();
         superOnClickCounts = new java.util.HashMap<>();
         superOnClickSb = map.get("superOnClick");
@@ -168,6 +188,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         permissionBackMethodCounts = new java.util.HashMap<>();
         permissionBackMethodSb = map.get("permissionBackMethod");
         permissionBackMethod = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        bindHandlerIfs = new java.util.HashMap<>();
+        bindHandlerCounts = new java.util.HashMap<>();
+        bindHandlerSb = map.get("bindHandler");
+        bindHandler = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
     protected void fieldCount(int count) {
@@ -285,8 +309,8 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         count(permissionBackMethodCounts, getForKey("permissionBackMethod"));
     }
 
-    protected void field(int i0, String type, String name) {
-        addForMap(this.field, getForKey("field", i0), type, name);
+    protected void field(int i0, String sign, String type, String name) {
+        addForMap(this.field, getForKey("field", i0), sign, type, name);
     }
     protected void findView(int i0, String fieldName, String parent, String rPkg, String id) {
         addForMap(this.findView, getForKey("findView", i0), fieldName, parent, rPkg, id);
@@ -349,6 +373,15 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void layoutIf(String layout) {
         addForMap(this.layout, getIfKey("layout"), layout);
     }
+    protected void formInitIf(boolean is) {
+        formInitIfs.put(getIfKey("formInit"), is);
+    }
+    protected void formInitIf(String name, String type) {
+        addForMap(this.formInit, getIfKey("formInit"), name, name, type, name);
+    }
+    protected void onCreateCompleteInitIf(boolean is) {
+        onCreateCompleteInitIfs.put(getIfKey("onCreateCompleteInit"), is);
+    }
     protected void superOnClickIf(boolean is) {
         superOnClickIfs.put(getIfKey("superOnClick"), is);
     }
@@ -373,12 +406,18 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void allowParamIf(int i0, boolean is) {
         permissionBackMethodIfs.put(getIfKey("allowParam", i0), is);
     }
+    protected void bindHandlerIf(boolean is) {
+        bindHandlerIfs.put(getIfKey("bindHandler"), is);
+    }
+    protected void bindHandlerIf(String beanType, String beanName) {
+        addForMap(this.bindHandler, getIfKey("bindHandler"), beanType, beanName, beanType, beanName, beanName, beanName);
+    }
 
     @Override
     protected void dealLinesInParent() {
         for (int i0 = 0; i0 < fieldCounts.get(getForKey("field")); i0++) {
             List<String> field0 = field.get(getForKey("field", i0));
-            addLnTag(fieldSb, "    protected [type] [name];", field0.get(0), field0.get(1));
+            addLnTag(fieldSb, "    [sign] [type] [name];", field0.get(0), field0.get(1), field0.get(2));
         }
         if (layoutIfs.get(getIfKey("layout"))) {
             List<String> layout0 = layout.get(getIfKey("layout"));
@@ -411,6 +450,18 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         for (int i0 = 0; i0 < startInitCounts.get(getForKey("startInit")); i0++) {
             List<String> startInit0 = startInit.get(getForKey("startInit", i0));
             addLnTag(startInitSb, "        [name] = [passFullName].[name](getIntent());", startInit0.get(0), startInit0.get(1), startInit0.get(2));
+        }
+        if (formInitIfs.get(getIfKey("formInit"))) {
+            List<String> formInit0 = formInit.get(getIfKey("formInit"));
+            addLnTag(formInitSb, "        if ([name] == null) {", formInit0.get(0));
+            addLnTag(formInitSb, "            [name] = new [type]();", formInit0.get(1), formInit0.get(2));
+            addLnTag(formInitSb, "            initFormBean = true;");
+            addLnTag(formInitSb, "        }");
+            addLnTag(formInitSb, "        bindHandler = new BindHandler([name]);", formInit0.get(3));
+        }
+        if (onCreateCompleteInitIfs.get(getIfKey("onCreateCompleteInit"))) {
+            List<String> onCreateCompleteInit0 = onCreateCompleteInit.get(getIfKey("onCreateCompleteInit"));
+            addLnTag(onCreateCompleteInitSb, "        onCreateComplete();");
         }
         if (superOnClickIfs.get(getIfKey("superOnClick"))) {
             List<String> superOnClick0 = superOnClick.get(getIfKey("superOnClick"));
@@ -498,6 +549,21 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             }
             addLnTag(permissionBackMethodSb, "    protected void [methodName]([allowParam]) {}", permissionBackMethod0.get(0), allowParamSb.toString());
         }
+        if (bindHandlerIfs.get(getIfKey("bindHandler"))) {
+            List<String> bindHandler0 = bindHandler.get(getIfKey("bindHandler"));
+            addLnTag(bindHandlerSb, "    public static class BindHandler extends android.os.Handler {");
+            addLnTag(bindHandlerSb, "        private [beanType] [beanName];", bindHandler0.get(0), bindHandler0.get(1));
+            addLnTag(bindHandlerSb, "");
+            addLnTag(bindHandlerSb, "        public BindHandler([beanType] [beanName]) {", bindHandler0.get(2), bindHandler0.get(3));
+            addLnTag(bindHandlerSb, "            this.[beanName] = [beanName];", bindHandler0.get(4), bindHandler0.get(5));
+            addLnTag(bindHandlerSb, "        }");
+            addLnTag(bindHandlerSb, "");
+            addLnTag(bindHandlerSb, "        @Override");
+            addLnTag(bindHandlerSb, "        public void handleMessage(android.os.Message msg) {");
+            addLnTag(bindHandlerSb, "            super.handleMessage(msg);");
+            addLnTag(bindHandlerSb, "        }");
+            addLnTag(bindHandlerSb, "    }");
+        }
 
     }
 
@@ -527,8 +593,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[dpInit]]");
         lines.add("[[dimenInit]]");
         lines.add("[[startInit]]");
-        lines.add("");
+        lines.add("[[formInit]]");
+        lines.add("[[onCreateCompleteInit]]");
         lines.add("    }");
+        lines.add("");
         lines.add("    @Override");
         lines.add("    public void onClick(View v) {");
         lines.add("[[superOnClick]]");
@@ -559,6 +627,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[permissionBack]]");
         lines.add("    }");
         lines.add("[[permissionBackMethod]]");
+        lines.add("[[bindHandler]]");
         lines.add("}");
         lines.add("");
 
