@@ -1,5 +1,7 @@
 package com.codingtu.cooltu.ui;
 
+import android.widget.EditText;
+
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.Forms;
 import com.codingtu.cooltu.processor.annotation.form.Form;
@@ -13,6 +15,8 @@ import core.actres.FormActivityRes;
 @Form(Forms.class)
 @ActBase(layout = R.layout.activity_form)
 public class FormActivity extends FormActivityBase {
+
+
 
 }
 

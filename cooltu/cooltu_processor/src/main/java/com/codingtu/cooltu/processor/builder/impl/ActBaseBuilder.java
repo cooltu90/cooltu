@@ -13,10 +13,15 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.BuilderType;
+import com.codingtu.cooltu.processor.annotation.form.view.BindEdieText;
+import com.codingtu.cooltu.processor.annotation.form.FormBean;
+import com.codingtu.cooltu.processor.annotation.form.FormType;
+import com.codingtu.cooltu.processor.annotation.form.view.BindTextView;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
+import com.codingtu.cooltu.processor.bean.BindInfo;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
@@ -36,6 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 
 @To(ActBaseDeal.class)
@@ -431,7 +437,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                     return info.form.value();
                 }
             });
-            String name = FormBeanDeal.MAP.get(formBeanClass);
+            TypeElement formBeanTe = FormBeanDeal.MAP.get(formBeanClass);
+
+            String name = formBeanTe.getAnnotation(FormBean.class).value();
             if (StringTool.isBlank(name)) {
                 name = ConvertTool.toMethodType(CurrentPath.javaInfo(formBeanClass).name);
             }
@@ -445,6 +453,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             formInitIf(true);
             formInitIf(name, formBeanClass);
 
+            dealFormBean(formBeanTe);
+
 
         } else {
             bindHandlerIf(false);
@@ -453,6 +463,29 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
         fieldCount(fieldCount[0]);
 
+    }
+
+    private void dealFormBean(TypeElement te) {
+
+        HashMap<Integer, Integer> indexMap = new HashMap<>();
+
+        Ts.ts(te.getEnclosedElements()).ls((position, element) -> {
+            if (element instanceof VariableElement) {
+                VariableElement ve = (VariableElement) element;
+                BindEdieText bindEdieText = ve.getAnnotation(BindEdieText.class);
+                if (bindEdieText != null) {
+                    String viewName = bindEdieText.name();
+                    if (StringTool.isBlank(viewName)) {
+                        IdTools.Id id = IdTools.elementToId(ve, BindEdieText.class, bindEdieText.value());
+                        viewName = id.rName;
+                    }
+                    Integer index = indexMap.get(FormType.EDIT_TEXT);
+
+                }
+
+            }
+            return false;
+        });
     }
 
 }
