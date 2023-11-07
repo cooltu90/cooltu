@@ -1,77 +1,73 @@
 package com.codingtu.cooltu.lib4a.download;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-
-import androidx.annotation.NonNull;
-
-import com.codingtu.cooltu.constant.DownloadStatus;
-import com.codingtu.cooltu.lib4a.net.NetTool;
-import com.codingtu.cooltu.lib4a.net.api.CreateApi;
-import com.codingtu.cooltu.lib4a.net.bean.CoreSendParams;
-import com.codingtu.cooltu.lib4a.net.netback.NetBackI;
+import com.codingtu.cooltu.lib4a.net.interceptor.HeaderInterceptor;
+import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.FileCallback;
+import com.lzy.okgo.model.Progress;
+import com.lzy.okgo.model.Response;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Flowable;
-import okhttp3.ResponseBody;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.Result;
+public class Download implements OnDestroy {
 
-public class Download {
+    public static interface OnProgress {
+        public void onProgress(long totalLen, long currentSize);
+    }
 
-    private String baseUrl;
+    public static interface OnStart {
+        public void onStart();
+    }
+
+    public static interface OnError {
+        public void onError(Throwable throwable);
+
+    }
+
+    public static interface OnFinish {
+        public void onFinish(File file);
+    }
+
+
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+
     private String url;
     private File file;
     private File dir;
     private String fileName;
-    private DownloadCallBack callBack;
+    private String tag;
+    private Long timeout;
+    private HeaderInterceptor headerInterceptor;
 
-    public Handler handler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
+    private OnFinish onFinish;
+    private OnError onError;
+    private OnProgress onProgress;
+    private OnStart onStart;
 
-            switch (msg.what) {
-                case DownloadStatus.START:
-                    callBack.onStart();
-                    break;
-                case DownloadStatus.FAIL:
-                    callBack.onFail((Throwable) msg.obj);
-                    break;
-                case DownloadStatus.FINISH:
-                    callBack.onFinish((String) msg.obj);
-                    break;
-                case DownloadStatus.PROGRESS:
-                    long[] ls = (long[]) msg.obj;
-                    callBack.onProgress(ls[0], ls[1]);
-                    break;
-            }
-        }
-    };
 
+    public Download() {
+    }
 
     public static Download url(String url) {
         Download download = new Download();
-        int i = url.indexOf("/", url.indexOf(":") + 3);
-        download.baseUrl = url.substring(0, i + 1);
-        download.url = url.substring(i + 1);
+        download.url = url;
+        download.tag = "download";
         return download;
     }
 
-    public static Download url(String baseUrl, String url) {
-        Download download = new Download();
-        download.baseUrl = baseUrl;
-        download.url = url;
-        return download;
+    @Override
+    public void destroy() {
+        onFinish = null;
+        onError = null;
+        onProgress = null;
+        onStart = null;
+        headerInterceptor = null;
     }
 
     public Download fileDir(String dir) {
@@ -98,111 +94,124 @@ public class Download {
         return this;
     }
 
-    public Download callBack(DownloadCallBack callBack) {
-        this.callBack = callBack;
+    public Download tag(String tag) {
+        this.tag = tag;
         return this;
     }
 
-    public void start() {
-        if (StringTool.isBlank(baseUrl) || StringTool.isBlank(url)) {
+    public Download timeout(Long timeout) {
+        this.timeout = timeout;
+        return this;
+    }
+
+    public Download headerInterceptor(HeaderInterceptor headerInterceptor) {
+        this.headerInterceptor = headerInterceptor;
+        return this;
+    }
+
+    public Download error(OnError onError) {
+        this.onError = onError;
+        return this;
+    }
+
+    public Download finish(OnFinish onFinish) {
+        this.onFinish = onFinish;
+        return this;
+    }
+
+    public Download progress(OnProgress onProgress) {
+        this.onProgress = onProgress;
+        return this;
+    }
+
+    public Download start(OnStart onStart) {
+        this.onStart = onStart;
+        return this;
+    }
+
+
+    public void download() {
+        if (StringTool.isBlank(url)) {
+            onError(new RuntimeException("下载链接为空"));
             return;
         }
 
         if (file == null) {
             if (dir == null) {
+                onError(new RuntimeException("未指定下载保存路径"));
                 return;
             }
             if (StringTool.isBlank(fileName)) {
                 fileName = url.substring(url.lastIndexOf("/") + 1);
             }
             file = new File(dir, fileName);
+        } else {
+            dir = file.getParentFile();
+            fileName = file.getName();
         }
 
-        NetTool.api(new CreateApi() {
+        if (onStart != null) {
+            onStart.onStart();
+        }
+
+        FileCallback fileCallback = new FileCallback(dir.getAbsolutePath(), fileName) {
             @Override
-            public Flowable<Result<ResponseBody>> create(Retrofit retrofit, CoreSendParams params) {
-                return retrofit.create(DownloadService.class).download(url);
+            public void onSuccess(Response<File> response) {
+                if (onFinish != null) {
+                    onFinish.onFinish(response.body());
+                }
+                destroy();
             }
-        }, "downloadBack", baseUrl, null).io(new NetBackI() {
+
             @Override
-            public void accept(String code, Result<ResponseBody> result, CoreSendParams params, List objs) {
-                if (result.isError()) {
-                    handler.sendMessage(obtainOnFailMessage(result.error()));
-                } else {
-                    writeFileFromIS(file, result.response().body().byteStream(), result.response().body().contentLength());
+            public void onError(Response<File> response) {
+                super.onError(response);
+                Download.this.onError(response.getException());
+            }
+
+            @Override
+            public void downloadProgress(Progress progress) {
+                super.downloadProgress(progress);
+                if (onProgress != null) {
+                    onProgress.onProgress(progress.totalSize, progress.currentSize);
                 }
             }
-        });
+        };
 
-    }
-
-    private static int sBufferSize = 8192;
-
-    private void writeFileFromIS(File file, InputStream is, long totalLength) {
-        //开始下载
-        handler.sendEmptyMessage(DownloadStatus.START);
-
-        //创建文件
-        if (!file.exists()) {
-            if (!file.getParentFile().exists())
-                file.getParentFile().mkdir();
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                handler.sendMessage(obtainOnFailMessage(e));
-            }
+        OkGo okGo = OkGo.getInstance();
+        if (timeout != null && headerInterceptor != null) {
+            okGo.setOkHttpClient(
+                    okGo.getOkHttpClient()
+                            .newBuilder()
+                            .connectTimeout(timeout, TimeUnit.MILLISECONDS)
+                            .addInterceptor(headerInterceptor)
+                            .build()
+            );
+        } else if (timeout != null) {
+            okGo.setOkHttpClient(
+                    okGo.getOkHttpClient()
+                            .newBuilder()
+                            .connectTimeout(timeout, TimeUnit.MILLISECONDS)
+                            .build()
+            );
+        } else if (headerInterceptor != null) {
+            okGo.setOkHttpClient(
+                    okGo.getOkHttpClient()
+                            .newBuilder()
+                            .addInterceptor(headerInterceptor)
+                            .build()
+            );
         }
+        okGo.<File>get(url)
+                .tag(tag)
+                .execute(fileCallback);
+    }
 
-        OutputStream os = null;
-        long currentLength = 0;
-        try {
-            os = new BufferedOutputStream(new FileOutputStream(file));
-            byte data[] = new byte[sBufferSize];
-            int len;
-            while ((len = is.read(data, 0, sBufferSize)) != -1) {
-                os.write(data, 0, len);
-                currentLength += len;
-                //计算当前下载进度
-                handler.sendMessage(obtainOnProgressMessage(totalLength, currentLength));
-            }
-            //下载完成，并返回保存的文件路径
-            handler.sendMessage(obtainOnFinishMessage(file.getAbsolutePath()));
-        } catch (IOException e) {
-            handler.sendMessage(obtainOnFailMessage(e));
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                if (os != null) {
-                    os.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    private void onError(Throwable throwable) {
+        if (onError != null) {
+            onError.onError(throwable);
         }
-    }
-
-    private Message obtainMessage(int what, Object obj) {
-        Message message = Message.obtain();
-        message.what = what;
-        message.obj = obj;
-        return message;
-    }
-
-    private Message obtainOnFailMessage(Throwable error) {
-        return obtainMessage(DownloadStatus.FAIL, error);
-    }
-
-    private Message obtainOnFinishMessage(String path) {
-        return obtainMessage(DownloadStatus.FINISH, path);
-    }
-
-    private Message obtainOnProgressMessage(long totalLen, long currentLen) {
-        long[] longs = {totalLen, currentLen};
-        return obtainMessage(DownloadStatus.PROGRESS, longs);
+        destroy();
     }
 
 }

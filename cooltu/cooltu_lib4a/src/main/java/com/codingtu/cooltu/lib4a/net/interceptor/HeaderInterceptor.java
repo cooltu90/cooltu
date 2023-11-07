@@ -21,9 +21,9 @@ public abstract class HeaderInterceptor implements Interceptor {
             KVS publicHeaders = null;
 
             if ("GET".equals(method)) {
-                publicHeaders = getPublicHeaders("GET", NetTool.getParamsGet(request));
+                publicHeaders = getPublicHeaders(request, "GET", NetTool.getParamsGet(request));
             } else {
-                publicHeaders = getPublicHeaders("POST", NetTool.getParamsPost(request));
+                publicHeaders = getPublicHeaders(request, "POST", NetTool.getParamsPost(request));
             }
 
             if (publicHeaders != null) {
@@ -40,6 +40,6 @@ public abstract class HeaderInterceptor implements Interceptor {
         return chain.proceed(request);
     }
 
-    protected abstract KVS getPublicHeaders(String Method, KVS params);
+    protected abstract KVS getPublicHeaders(Request request, String Method, KVS params);
 
 }

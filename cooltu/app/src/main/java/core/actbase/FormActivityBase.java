@@ -2,9 +2,6 @@ package core.actbase;
 
 import android.view.View;
 
-import com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher;
-import com.codingtu.cooltu.processor.annotation.form.FormType;
-
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -28,13 +25,11 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         nameEt2 = findViewById(com.codingtu.cooltu.R.id.nameEt2);
         nameEt3 = findViewById(com.codingtu.cooltu.R.id.nameEt3);
 
-        onCreateComplete();
 
-    }
 
-    @Override
-    public void onCreateComplete() {
-        super.onCreateComplete();
+
+
+
 
         if (formmmm == null) {
             formmmm = new com.codingtu.cooltu.bean.Forms();
@@ -42,7 +37,8 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         }
         bindHandler = new BindHandler(formmmm);
 
-        nameEt1.addTextChangedListener(new HandlerTextWatcher(bindHandler, FormType.EDIT_TEXT, 0));
+        onCreateComplete();
+
     }
 
     @Override
@@ -56,6 +52,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
+
 
 
     }
