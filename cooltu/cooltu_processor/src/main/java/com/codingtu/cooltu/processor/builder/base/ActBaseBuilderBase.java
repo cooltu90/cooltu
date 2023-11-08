@@ -242,6 +242,18 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void startInitCountAdd() {
         count(startInitCounts, getForKey("startInit"));
     }
+    protected void editTextInitCount(int count) {
+        formInitCounts.put(getForKey("editTextInit"), count);
+    }
+    protected void editTextInitCountAdd() {
+        count(formInitCounts, getForKey("editTextInit"));
+    }
+    protected void textViewInitCount(int count) {
+        formInitCounts.put(getForKey("textViewInit"), count);
+    }
+    protected void textViewInitCountAdd() {
+        count(formInitCounts, getForKey("textViewInit"));
+    }
     protected void onClickSwithCount(int count) {
         onClickSwithCounts.put(getForKey("onClickSwith"), count);
     }
@@ -308,6 +320,18 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void permissionBackMethodCountAdd() {
         count(permissionBackMethodCounts, getForKey("permissionBackMethod"));
     }
+    protected void handlerEditTextItemCount(int count) {
+        bindHandlerCounts.put(getForKey("handlerEditTextItem"), count);
+    }
+    protected void handlerEditTextItemCountAdd() {
+        count(bindHandlerCounts, getForKey("handlerEditTextItem"));
+    }
+    protected void handlerTextViewItemCount(int count) {
+        bindHandlerCounts.put(getForKey("handlerTextViewItem"), count);
+    }
+    protected void handlerTextViewItemCountAdd() {
+        count(bindHandlerCounts, getForKey("handlerTextViewItem"));
+    }
 
     protected void field(int i0, String sign, String type, String name) {
         addForMap(this.field, getForKey("field", i0), sign, type, name);
@@ -332,6 +356,12 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     }
     protected void startInit(int i0, String name, String passFullName) {
         addForMap(this.startInit, getForKey("startInit", i0), name, passFullName, name);
+    }
+    protected void editTextInit(int i0, String name, String handlerTextWatcherFullName, String formTypeFullName, String type, String index) {
+        addForMap(this.formInit, getForKey("editTextInit", i0), name, handlerTextWatcherFullName, formTypeFullName, type, index);
+    }
+    protected void textViewInit(int i0, String name, String handlerTextWatcherFullName, String formTypeFullName, String type, String index) {
+        addForMap(this.formInit, getForKey("textViewInit", i0), name, handlerTextWatcherFullName, formTypeFullName, type, index);
     }
     protected void onClickCase(int i0, int i1, String id) {
         addForMap(this.onClickSwith, getForKey("onClickCase", i0, i1), id);
@@ -365,6 +395,12 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     }
     protected void permissionBackMethod(int i0, String methodName) {
         addForMap(this.permissionBackMethod, getForKey("permissionBackMethod", i0), methodName);
+    }
+    protected void handlerEditTextItem(int i0, String index, String beanName, String field) {
+        addForMap(this.bindHandler, getForKey("handlerEditTextItem", i0), index, beanName, field);
+    }
+    protected void handlerTextViewItem(int i0, String index, String beanName, String field) {
+        addForMap(this.bindHandler, getForKey("handlerTextViewItem", i0), index, beanName, field);
     }
 
     protected void layoutIf(boolean is) {
@@ -408,6 +444,18 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     }
     protected void bindHandlerIf(boolean is) {
         bindHandlerIfs.put(getIfKey("bindHandler"), is);
+    }
+    protected void handlerEditTextIf(boolean is) {
+        bindHandlerIfs.put(getIfKey("handlerEditText"), is);
+    }
+    protected void handlerEditTextIf(String formTypeFullName, String type) {
+        addForMap(this.bindHandler, getIfKey("handlerEditText"), formTypeFullName, type);
+    }
+    protected void handlerTextViewIf(boolean is) {
+        bindHandlerIfs.put(getIfKey("handlerTextView"), is);
+    }
+    protected void handlerTextViewIf(String formTypeFullName, String type) {
+        addForMap(this.bindHandler, getIfKey("handlerTextView"), formTypeFullName, type);
     }
     protected void bindHandlerIf(String beanType, String beanName) {
         addForMap(this.bindHandler, getIfKey("bindHandler"), beanType, beanName, beanType, beanName, beanName, beanName);
@@ -458,6 +506,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             addLnTag(formInitSb, "            initFormBean = true;");
             addLnTag(formInitSb, "        }");
             addLnTag(formInitSb, "        bindHandler = new BindHandler([name]);", formInit0.get(3));
+            for (int i0 = 0; i0 < formInitCounts.get(getForKey("editTextInit")); i0++) {
+                List<String> formInit1 = formInit.get(getForKey("editTextInit", i0));
+                addLnTag(formInitSb, "        [name].addTextChangedListener(new [handlerTextWatcherFullName](bindHandler, [formTypeFullName].[type], [index]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
+            }
+            for (int i0 = 0; i0 < formInitCounts.get(getForKey("textViewInit")); i0++) {
+                List<String> formInit1 = formInit.get(getForKey("textViewInit", i0));
+                addLnTag(formInitSb, "        [name].addTextChangedListener(new [handlerTextWatcherFullName](bindHandler, [formTypeFullName].[type], [index]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
+            }
         }
         if (onCreateCompleteInitIfs.get(getIfKey("onCreateCompleteInit"))) {
             List<String> onCreateCompleteInit0 = onCreateCompleteInit.get(getIfKey("onCreateCompleteInit"));
@@ -561,6 +617,32 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             addLnTag(bindHandlerSb, "        @Override");
             addLnTag(bindHandlerSb, "        public void handleMessage(android.os.Message msg) {");
             addLnTag(bindHandlerSb, "            super.handleMessage(msg);");
+            if (bindHandlerIfs.get(getIfKey("handlerEditText"))) {
+                List<String> bindHandler1 = bindHandler.get(getIfKey("handlerEditText"));
+                addLnTag(bindHandlerSb, "            if (msg.what == [formTypeFullName].[type]) {", bindHandler1.get(0), bindHandler1.get(1));
+                addLnTag(bindHandlerSb, "                switch (msg.arg1) {");
+                for (int i0 = 0; i0 < bindHandlerCounts.get(getForKey("handlerEditTextItem")); i0++) {
+                    List<String> bindHandler2 = bindHandler.get(getForKey("handlerEditTextItem", i0));
+                    addLnTag(bindHandlerSb, "                    case [index]:", bindHandler2.get(0));
+                    addLnTag(bindHandlerSb, "                        [beanName].[field] = (java.lang.String) msg.obj;", bindHandler2.get(1), bindHandler2.get(2));
+                    addLnTag(bindHandlerSb, "                        break;");
+                }
+                addLnTag(bindHandlerSb, "                }");
+                addLnTag(bindHandlerSb, "            }");
+            }
+            if (bindHandlerIfs.get(getIfKey("handlerTextView"))) {
+                List<String> bindHandler1 = bindHandler.get(getIfKey("handlerTextView"));
+                addLnTag(bindHandlerSb, "            if (msg.what == [formTypeFullName].[type]) {", bindHandler1.get(0), bindHandler1.get(1));
+                addLnTag(bindHandlerSb, "                switch (msg.arg1) {");
+                for (int i0 = 0; i0 < bindHandlerCounts.get(getForKey("handlerTextViewItem")); i0++) {
+                    List<String> bindHandler2 = bindHandler.get(getForKey("handlerTextViewItem", i0));
+                    addLnTag(bindHandlerSb, "                    case [index]:", bindHandler2.get(0));
+                    addLnTag(bindHandlerSb, "                        [beanName].[field] = (java.lang.String) msg.obj;", bindHandler2.get(1), bindHandler2.get(2));
+                    addLnTag(bindHandlerSb, "                        break;");
+                }
+                addLnTag(bindHandlerSb, "                }");
+                addLnTag(bindHandlerSb, "            }");
+            }
             addLnTag(bindHandlerSb, "        }");
             addLnTag(bindHandlerSb, "    }");
         }

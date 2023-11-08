@@ -453,7 +453,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             formInitIf(true);
             formInitIf(name, formBeanClass);
 
-            dealFormBean(formBeanTe);
+            dealFormBean(formBeanTe, name);
 
 
         } else {
@@ -465,10 +465,13 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
     }
 
-    private void dealFormBean(TypeElement te) {
+    private void dealFormBean(TypeElement te, String beanName) {
 
         HashMap<Integer, Integer> indexMap = new HashMap<>();
 
+        editTextInitCount(0);
+        handlerEditTextItemCount(0);
+        handlerTextViewItemCount(0);
         Ts.ts(te.getEnclosedElements()).ls((position, element) -> {
             if (element instanceof VariableElement) {
                 VariableElement ve = (VariableElement) element;
@@ -480,7 +483,44 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                         viewName = id.rName;
                     }
                     Integer index = indexMap.get(FormType.EDIT_TEXT);
+                    if (index == null) {
+                        index = 0;
+                    }
+                    String type = "EDIT_TEXT";
 
+                    editTextInit(index, viewName, FullName.HANDLER_TEXT_WATCHER, FullName.FORM_TYPE, type, "" + index);
+                    editTextInitCountAdd();
+                    //
+                    handlerEditTextIf(true);
+                    handlerEditTextIf(FullName.FORM_TYPE, type);
+
+                    handlerEditTextItem(index, index + "", beanName, ElementTools.simpleName(ve));
+                    handlerEditTextItemCountAdd();
+                    indexMap.put(FormType.EDIT_TEXT, index + 1);
+                }
+
+                BindTextView bindTextView = ve.getAnnotation(BindTextView.class);
+                if (bindTextView != null) {
+                    String viewName = bindTextView.name();
+                    if (StringTool.isBlank(viewName)) {
+                        IdTools.Id id = IdTools.elementToId(ve, BindTextView.class, bindTextView.value());
+                        viewName = id.rName;
+                    }
+                    Integer index = indexMap.get(FormType.TEXT_VIEW);
+                    if (index == null) {
+                        index = 0;
+                    }
+                    String type = "TEXT_VIEW";
+
+                    textViewInit(index, viewName, FullName.HANDLER_TEXT_WATCHER, FullName.FORM_TYPE, type, "" + index);
+                    textViewInitCountAdd();
+                    //
+                    handlerTextViewIf(true);
+                    handlerTextViewIf(FullName.FORM_TYPE, type);
+
+                    handlerTextViewItem(index, index + "", beanName, ElementTools.simpleName(ve));
+                    handlerTextViewItemCountAdd();
+                    indexMap.put(FormType.TEXT_VIEW, index + 1);
                 }
 
             }
@@ -537,6 +577,12 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
             initFormBean = true;
         }
         bindHandler = new BindHandler([name]);
+                                                                                                    [<sub>][for][editTextInit]
+        [name].addTextChangedListener(new [handlerTextWatcherFullName](bindHandler, [formTypeFullName].[type], [index]));
+                                                                                                    [<sub>][for][editTextInit]
+                                                                                                    [<sub>][for][textViewInit]
+        [name].addTextChangedListener(new [handlerTextWatcherFullName](bindHandler, [formTypeFullName].[type], [index]));
+                                                                                                    [<sub>][for][textViewInit]
                                                                                                     [<sub>][if][formInit]
                                                                                                     [<sub>][if][onCreateCompleteInit]
         onCreateComplete();
@@ -627,6 +673,28 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
+                                                                                                    [<sub>][if][handlerEditText]
+            if (msg.what == [formTypeFullName].[type]) {
+                switch (msg.arg1) {
+                                                                                                    [<sub>][for][handlerEditTextItem]
+                    case [index]:
+                        [beanName].[field] = (java.lang.String) msg.obj;
+                        break;
+                                                                                                    [<sub>][for][handlerEditTextItem]
+                }
+            }
+                                                                                                    [<sub>][if][handlerEditText]
+                                                                                                    [<sub>][if][handlerTextView]
+            if (msg.what == [formTypeFullName].[type]) {
+                switch (msg.arg1) {
+                                                                                                    [<sub>][for][handlerTextViewItem]
+                    case [index]:
+                        [beanName].[field] = (java.lang.String) msg.obj;
+                        break;
+                                                                                                    [<sub>][for][handlerTextViewItem]
+                }
+            }
+                                                                                                    [<sub>][if][handlerTextView]
         }
     }
                                                                                                     [<sub>][if][bindHandler]
