@@ -63,9 +63,13 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+            if (requestCode == core.tools.Code4Request.STEP_ONE_ACTIVITY) {
+                stepOneActivityBack(core.tools.Pass.user(data), core.tools.Pass.xxx(data));
+            }
 
         }
     }
+    protected void stepOneActivityBack(com.codingtu.cooltu.bean.User user, java.lang.String xxx) {}
 
     @Override
     public void back(int requestCode, String[] permissions, int[] grantResults) {

@@ -4,8 +4,10 @@ import android.Manifest;
 import android.os.Bundle;
 
 import com.codingtu.cooltu.R;
+import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
+import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
@@ -25,4 +27,10 @@ public class WelcomeActivity extends WelcomeActivityBase {
         super.onCreate(savedInstanceState);
         ActStart.formActivity(getAct());
     }
+
+    @ActBack(StepOneActivity.class)
+    public void stepOneActivityBack(User user,String xxx) {
+
+    }
+
 }
