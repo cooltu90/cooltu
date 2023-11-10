@@ -22,7 +22,7 @@ public abstract class Code4RequestBuilderBase extends com.codingtu.cooltu.proces
         fieldCounts.put(getForKey("field"), count);
     }
     protected void fieldCountAdd() {
-        count(fieldCounts, getForKey("field"));
+        countAdd(fieldCounts, getForKey("field"));
     }
 
     protected void field(int i0, String name, String value) {
@@ -32,7 +32,7 @@ public abstract class Code4RequestBuilderBase extends com.codingtu.cooltu.proces
 
     @Override
     protected void dealLinesInParent() {
-        for (int i0 = 0; i0 < fieldCounts.get(getForKey("field")); i0++) {
+        for (int i0 = 0; i0 < count(fieldCounts, getForKey("field")); i0++) {
             List<String> field0 = field.get(getForKey("field", i0));
             addLnTag(fieldSb, "    public static final int [name] = [value];", field0.get(0), field0.get(1));
         }

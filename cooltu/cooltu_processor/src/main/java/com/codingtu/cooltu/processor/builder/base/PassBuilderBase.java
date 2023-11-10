@@ -30,13 +30,13 @@ public abstract class PassBuilderBase extends com.codingtu.cooltu.processor.buil
         fieldCounts.put(getForKey("field"), count);
     }
     protected void fieldCountAdd() {
-        count(fieldCounts, getForKey("field"));
+        countAdd(fieldCounts, getForKey("field"));
     }
     protected void methodCount(int count) {
         methodCounts.put(getForKey("method"), count);
     }
     protected void methodCountAdd() {
-        count(methodCounts, getForKey("method"));
+        countAdd(methodCounts, getForKey("method"));
     }
 
     protected void field(int i0, String name, String value) {
@@ -67,11 +67,11 @@ public abstract class PassBuilderBase extends com.codingtu.cooltu.processor.buil
 
     @Override
     protected void dealLinesInParent() {
-        for (int i0 = 0; i0 < fieldCounts.get(getForKey("field")); i0++) {
+        for (int i0 = 0; i0 < count(fieldCounts, getForKey("field")); i0++) {
             List<String> field0 = field.get(getForKey("field", i0));
             addLnTag(fieldSb, "    public static final String [name] = \"[value]\";", field0.get(0), field0.get(1));
         }
-        for (int i0 = 0; i0 < methodCounts.get(getForKey("method")); i0++) {
+        for (int i0 = 0; i0 < count(methodCounts, getForKey("method")); i0++) {
             List<String> method0 = method.get(getForKey("method", i0));
             addLnTag(methodSb, "    public static final [type] [methodName](Intent data) {", method0.get(0), method0.get(1));
             if (methodIfs.get(getIfKey("isBean", i0))) {

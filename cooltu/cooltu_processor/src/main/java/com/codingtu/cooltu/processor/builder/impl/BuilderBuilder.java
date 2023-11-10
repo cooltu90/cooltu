@@ -146,11 +146,11 @@ public class BuilderBuilder extends BuilderBuilderBase {
                 addLnTag(forCounts, "    }");
 
                 addLnTag(forCounts, "    protected void [lines]CountAdd([params]) {", subTag.tag, getPutMethodIntParams1(levelsCount));
-                addLnTag(forCounts, "        count([lines]Counts, getForKey(\"[tag]\"[params]));", subTag.parentTag, subTag.tag, keyParams0);
+                addLnTag(forCounts, "        countAdd([lines]Counts, getForKey(\"[tag]\"[params]));", subTag.parentTag, subTag.tag, keyParams0);
                 addLnTag(forCounts, "    }");
 
 
-                addLnTag(dealLinesInParent, "        [space]for (int [i][0] = 0; [i][0] < [lines]Counts.get(getForKey(\"[tag]\"[params])); [i][0]++) {"
+                addLnTag(dealLinesInParent, "        [space]for (int [i][0] = 0; [i][0] < count([lines]Counts, getForKey(\"[tag]\"[params])); [i][0]++) {"
                         , space, intTag, levelsCount, intTag, levelsCount, subTag.parentTag, subTag.tag, keyParams0, intTag, levelsCount);
 
 

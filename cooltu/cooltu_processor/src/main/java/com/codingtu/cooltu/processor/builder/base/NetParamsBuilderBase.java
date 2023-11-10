@@ -26,7 +26,7 @@ public abstract class NetParamsBuilderBase extends com.codingtu.cooltu.processor
         fieldCounts.put(getForKey("field"), count);
     }
     protected void fieldCountAdd() {
-        count(fieldCounts, getForKey("field"));
+        countAdd(fieldCounts, getForKey("field"));
     }
 
     protected void field(int i0, String type, String name) {
@@ -36,7 +36,7 @@ public abstract class NetParamsBuilderBase extends com.codingtu.cooltu.processor
 
     @Override
     protected void dealLinesInParent() {
-        for (int i0 = 0; i0 < fieldCounts.get(getForKey("field")); i0++) {
+        for (int i0 = 0; i0 < count(fieldCounts, getForKey("field")); i0++) {
             List<String> field0 = field.get(getForKey("field", i0));
             addLnTag(fieldSb, "    public [type] [name];", field0.get(0), field0.get(1));
         }

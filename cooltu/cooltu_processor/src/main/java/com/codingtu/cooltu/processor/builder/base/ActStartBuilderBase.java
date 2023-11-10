@@ -22,13 +22,13 @@ public abstract class ActStartBuilderBase extends com.codingtu.cooltu.processor.
         methodCounts.put(getForKey("method"), count);
     }
     protected void methodCountAdd() {
-        count(methodCounts, getForKey("method"));
+        countAdd(methodCounts, getForKey("method"));
     }
     protected void methodIntentCount(int i0, int count) {
         methodCounts.put(getForKey("methodIntent", i0), count);
     }
     protected void methodIntentCountAdd(int i0) {
-        count(methodCounts, getForKey("methodIntent", i0));
+        countAdd(methodCounts, getForKey("methodIntent", i0));
     }
 
     protected void methodIntent(int i0, int i1, String fieldName, String value) {
@@ -41,12 +41,12 @@ public abstract class ActStartBuilderBase extends com.codingtu.cooltu.processor.
 
     @Override
     protected void dealLinesInParent() {
-        for (int i0 = 0; i0 < methodCounts.get(getForKey("method")); i0++) {
+        for (int i0 = 0; i0 < count(methodCounts, getForKey("method")); i0++) {
             List<String> method0 = method.get(getForKey("method", i0));
             addLnTag(methodSb, "    public static final void [methodName](Activity act[param]) {", method0.get(0), method0.get(1));
             addLnTag(methodSb, "        Intent intent = new Intent(act, [actFullName].class);", method0.get(2));
             addLnTag(methodSb, "        intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());");
-            for (int i1 = 0; i1 < methodCounts.get(getForKey("methodIntent", i0)); i1++) {
+            for (int i1 = 0; i1 < count(methodCounts, getForKey("methodIntent", i0)); i1++) {
                 List<String> method1 = method.get(getForKey("methodIntent", i0, i1));
                 addLnTag(methodSb, "        intent.putExtra(Pass.[fieldName], [value]);", method1.get(0), method1.get(1));
             }

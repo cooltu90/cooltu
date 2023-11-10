@@ -198,139 +198,139 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         fieldCounts.put(getForKey("field"), count);
     }
     protected void fieldCountAdd() {
-        count(fieldCounts, getForKey("field"));
+        countAdd(fieldCounts, getForKey("field"));
     }
     protected void findViewCount(int count) {
         findViewCounts.put(getForKey("findView"), count);
     }
     protected void findViewCountAdd() {
-        count(findViewCounts, getForKey("findView"));
+        countAdd(findViewCounts, getForKey("findView"));
     }
     protected void setOnClickCount(int count) {
         setOnClickCounts.put(getForKey("setOnClick"), count);
     }
     protected void setOnClickCountAdd() {
-        count(setOnClickCounts, getForKey("setOnClick"));
+        countAdd(setOnClickCounts, getForKey("setOnClick"));
     }
     protected void colorStrInitCount(int count) {
         colorStrInitCounts.put(getForKey("colorStrInit"), count);
     }
     protected void colorStrInitCountAdd() {
-        count(colorStrInitCounts, getForKey("colorStrInit"));
+        countAdd(colorStrInitCounts, getForKey("colorStrInit"));
     }
     protected void colorResInitCount(int count) {
         colorResInitCounts.put(getForKey("colorResInit"), count);
     }
     protected void colorResInitCountAdd() {
-        count(colorResInitCounts, getForKey("colorResInit"));
+        countAdd(colorResInitCounts, getForKey("colorResInit"));
     }
     protected void dpInitCount(int count) {
         dpInitCounts.put(getForKey("dpInit"), count);
     }
     protected void dpInitCountAdd() {
-        count(dpInitCounts, getForKey("dpInit"));
+        countAdd(dpInitCounts, getForKey("dpInit"));
     }
     protected void dimenInitCount(int count) {
         dimenInitCounts.put(getForKey("dimenInit"), count);
     }
     protected void dimenInitCountAdd() {
-        count(dimenInitCounts, getForKey("dimenInit"));
+        countAdd(dimenInitCounts, getForKey("dimenInit"));
     }
     protected void startInitCount(int count) {
         startInitCounts.put(getForKey("startInit"), count);
     }
     protected void startInitCountAdd() {
-        count(startInitCounts, getForKey("startInit"));
+        countAdd(startInitCounts, getForKey("startInit"));
     }
     protected void editTextInitCount(int count) {
         formInitCounts.put(getForKey("editTextInit"), count);
     }
     protected void editTextInitCountAdd() {
-        count(formInitCounts, getForKey("editTextInit"));
+        countAdd(formInitCounts, getForKey("editTextInit"));
     }
     protected void textViewInitCount(int count) {
         formInitCounts.put(getForKey("textViewInit"), count);
     }
     protected void textViewInitCountAdd() {
-        count(formInitCounts, getForKey("textViewInit"));
+        countAdd(formInitCounts, getForKey("textViewInit"));
     }
     protected void onClickSwithCount(int count) {
         onClickSwithCounts.put(getForKey("onClickSwith"), count);
     }
     protected void onClickSwithCountAdd() {
-        count(onClickSwithCounts, getForKey("onClickSwith"));
+        countAdd(onClickSwithCounts, getForKey("onClickSwith"));
     }
     protected void onClickCaseCount(int i0, int count) {
         onClickSwithCounts.put(getForKey("onClickCase", i0), count);
     }
     protected void onClickCaseCountAdd(int i0) {
-        count(onClickSwithCounts, getForKey("onClickCase", i0));
+        countAdd(onClickSwithCounts, getForKey("onClickCase", i0));
     }
     protected void onClickSwitchParamsCount(int i0, int count) {
         onClickSwithCounts.put(getForKey("onClickSwitchParams", i0), count);
     }
     protected void onClickSwitchParamsCountAdd(int i0) {
-        count(onClickSwithCounts, getForKey("onClickSwitchParams", i0));
+        countAdd(onClickSwithCounts, getForKey("onClickSwitchParams", i0));
     }
     protected void onClickMethodsCount(int count) {
         onClickMethodsCounts.put(getForKey("onClickMethods"), count);
     }
     protected void onClickMethodsCountAdd() {
-        count(onClickMethodsCounts, getForKey("onClickMethods"));
+        countAdd(onClickMethodsCounts, getForKey("onClickMethods"));
     }
     protected void acceptCount(int count) {
         acceptCounts.put(getForKey("accept"), count);
     }
     protected void acceptCountAdd() {
-        count(acceptCounts, getForKey("accept"));
+        countAdd(acceptCounts, getForKey("accept"));
     }
     protected void acceptMethodCount(int count) {
         acceptMethodCounts.put(getForKey("acceptMethod"), count);
     }
     protected void acceptMethodCountAdd() {
-        count(acceptMethodCounts, getForKey("acceptMethod"));
+        countAdd(acceptMethodCounts, getForKey("acceptMethod"));
     }
     protected void actBackCount(int count) {
         actBackCounts.put(getForKey("actBack"), count);
     }
     protected void actBackCountAdd() {
-        count(actBackCounts, getForKey("actBack"));
+        countAdd(actBackCounts, getForKey("actBack"));
     }
     protected void actBackParamCount(int i0, int count) {
         actBackCounts.put(getForKey("actBackParam", i0), count);
     }
     protected void actBackParamCountAdd(int i0) {
-        count(actBackCounts, getForKey("actBackParam", i0));
+        countAdd(actBackCounts, getForKey("actBackParam", i0));
     }
     protected void actBackMethodCount(int count) {
         actBackMethodCounts.put(getForKey("actBackMethod"), count);
     }
     protected void actBackMethodCountAdd() {
-        count(actBackMethodCounts, getForKey("actBackMethod"));
+        countAdd(actBackMethodCounts, getForKey("actBackMethod"));
     }
     protected void permissionBackCount(int count) {
         permissionBackCounts.put(getForKey("permissionBack"), count);
     }
     protected void permissionBackCountAdd() {
-        count(permissionBackCounts, getForKey("permissionBack"));
+        countAdd(permissionBackCounts, getForKey("permissionBack"));
     }
     protected void permissionBackMethodCount(int count) {
         permissionBackMethodCounts.put(getForKey("permissionBackMethod"), count);
     }
     protected void permissionBackMethodCountAdd() {
-        count(permissionBackMethodCounts, getForKey("permissionBackMethod"));
+        countAdd(permissionBackMethodCounts, getForKey("permissionBackMethod"));
     }
     protected void handlerEditTextItemCount(int count) {
         bindHandlerCounts.put(getForKey("handlerEditTextItem"), count);
     }
     protected void handlerEditTextItemCountAdd() {
-        count(bindHandlerCounts, getForKey("handlerEditTextItem"));
+        countAdd(bindHandlerCounts, getForKey("handlerEditTextItem"));
     }
     protected void handlerTextViewItemCount(int count) {
         bindHandlerCounts.put(getForKey("handlerTextViewItem"), count);
     }
     protected void handlerTextViewItemCountAdd() {
-        count(bindHandlerCounts, getForKey("handlerTextViewItem"));
+        countAdd(bindHandlerCounts, getForKey("handlerTextViewItem"));
     }
 
     protected void field(int i0, String sign, String type, String name) {
@@ -463,7 +463,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
 
     @Override
     protected void dealLinesInParent() {
-        for (int i0 = 0; i0 < fieldCounts.get(getForKey("field")); i0++) {
+        for (int i0 = 0; i0 < count(fieldCounts, getForKey("field")); i0++) {
             List<String> field0 = field.get(getForKey("field", i0));
             addLnTag(fieldSb, "    [sign] [type] [name];", field0.get(0), field0.get(1), field0.get(2));
         }
@@ -471,31 +471,31 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> layout0 = layout.get(getIfKey("layout"));
             addLnTag(layoutSb, "        setContentView([layout]);", layout0.get(0));
         }
-        for (int i0 = 0; i0 < findViewCounts.get(getForKey("findView")); i0++) {
+        for (int i0 = 0; i0 < count(findViewCounts, getForKey("findView")); i0++) {
             List<String> findView0 = findView.get(getForKey("findView", i0));
             addLnTag(findViewSb, "        [fieldName] = [parent]findViewById([rPkg].R.id.[id]);", findView0.get(0), findView0.get(1), findView0.get(2), findView0.get(3));
         }
-        for (int i0 = 0; i0 < setOnClickCounts.get(getForKey("setOnClick")); i0++) {
+        for (int i0 = 0; i0 < count(setOnClickCounts, getForKey("setOnClick")); i0++) {
             List<String> setOnClick0 = setOnClick.get(getForKey("setOnClick", i0));
             addLnTag(setOnClickSb, "        [fieldName].setOnClickListener(this);", setOnClick0.get(0));
         }
-        for (int i0 = 0; i0 < colorStrInitCounts.get(getForKey("colorStrInit")); i0++) {
+        for (int i0 = 0; i0 < count(colorStrInitCounts, getForKey("colorStrInit")); i0++) {
             List<String> colorStrInit0 = colorStrInit.get(getForKey("colorStrInit", i0));
             addLnTag(colorStrInitSb, "        [name] = android.graphics.Color.parseColor(\"[color]\");", colorStrInit0.get(0), colorStrInit0.get(1));
         }
-        for (int i0 = 0; i0 < colorResInitCounts.get(getForKey("colorResInit")); i0++) {
+        for (int i0 = 0; i0 < count(colorResInitCounts, getForKey("colorResInit")); i0++) {
             List<String> colorResInit0 = colorResInit.get(getForKey("colorResInit", i0));
             addLnTag(colorResInitSb, "        [name] = [resourceToolFullName].getColor([id]);", colorResInit0.get(0), colorResInit0.get(1), colorResInit0.get(2));
         }
-        for (int i0 = 0; i0 < dpInitCounts.get(getForKey("dpInit")); i0++) {
+        for (int i0 = 0; i0 < count(dpInitCounts, getForKey("dpInit")); i0++) {
             List<String> dpInit0 = dpInit.get(getForKey("dpInit", i0));
             addLnTag(dpInitSb, "        [name] = [mobileToolFullName].dpToPx([value]);", dpInit0.get(0), dpInit0.get(1), dpInit0.get(2));
         }
-        for (int i0 = 0; i0 < dimenInitCounts.get(getForKey("dimenInit")); i0++) {
+        for (int i0 = 0; i0 < count(dimenInitCounts, getForKey("dimenInit")); i0++) {
             List<String> dimenInit0 = dimenInit.get(getForKey("dimenInit", i0));
             addLnTag(dimenInitSb, "        [name] = [resourceToolFullName].getDimen([id]);", dimenInit0.get(0), dimenInit0.get(1), dimenInit0.get(2));
         }
-        for (int i0 = 0; i0 < startInitCounts.get(getForKey("startInit")); i0++) {
+        for (int i0 = 0; i0 < count(startInitCounts, getForKey("startInit")); i0++) {
             List<String> startInit0 = startInit.get(getForKey("startInit", i0));
             addLnTag(startInitSb, "        [name] = [passFullName].[name](getIntent());", startInit0.get(0), startInit0.get(1), startInit0.get(2));
         }
@@ -506,11 +506,11 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             addLnTag(formInitSb, "            initFormBean = true;");
             addLnTag(formInitSb, "        }");
             addLnTag(formInitSb, "        bindHandler = new BindHandler([name]);", formInit0.get(3));
-            for (int i0 = 0; i0 < formInitCounts.get(getForKey("editTextInit")); i0++) {
+            for (int i0 = 0; i0 < count(formInitCounts, getForKey("editTextInit")); i0++) {
                 List<String> formInit1 = formInit.get(getForKey("editTextInit", i0));
                 addLnTag(formInitSb, "        [name].addTextChangedListener(new [handlerTextWatcherFullName](bindHandler, [formTypeFullName].[type], [index]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
             }
-            for (int i0 = 0; i0 < formInitCounts.get(getForKey("textViewInit")); i0++) {
+            for (int i0 = 0; i0 < count(formInitCounts, getForKey("textViewInit")); i0++) {
                 List<String> formInit1 = formInit.get(getForKey("textViewInit", i0));
                 addLnTag(formInitSb, "        [name].addTextChangedListener(new [handlerTextWatcherFullName](bindHandler, [formTypeFullName].[type], [index]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
             }
@@ -523,9 +523,9 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> superOnClick0 = superOnClick.get(getIfKey("superOnClick"));
             addLnTag(superOnClickSb, "        super.onClick(v);");
         }
-        for (int i0 = 0; i0 < onClickSwithCounts.get(getForKey("onClickSwith")); i0++) {
+        for (int i0 = 0; i0 < count(onClickSwithCounts, getForKey("onClickSwith")); i0++) {
             List<String> onClickSwith0 = onClickSwith.get(getForKey("onClickSwith", i0));
-            for (int i1 = 0; i1 < onClickSwithCounts.get(getForKey("onClickCase", i0)); i1++) {
+            for (int i1 = 0; i1 < count(onClickSwithCounts, getForKey("onClickCase", i0)); i1++) {
                 List<String> onClickSwith1 = onClickSwith.get(getForKey("onClickCase", i0, i1));
                 addLnTag(onClickSwithSb, "            case [id]:", onClickSwith1.get(0));
             }
@@ -534,14 +534,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 List<String> onClickSwith1 = onClickSwith.get(getIfKey("onClickSwitchParams", i0));
                 addLnTag(onClickSwithSb, "                        v[divider]", onClickSwith1.get(0));
             }
-            for (int i1 = 0; i1 < onClickSwithCounts.get(getForKey("onClickSwitchParams", i0)); i1++) {
+            for (int i1 = 0; i1 < count(onClickSwithCounts, getForKey("onClickSwitchParams", i0)); i1++) {
                 List<String> onClickSwith1 = onClickSwith.get(getForKey("onClickSwitchParams", i0, i1));
                 addLnTag(onClickSwithSb, "                        ([type]) v.getTag([pkg].R.id.tag_[index])[divider]", onClickSwith1.get(0), onClickSwith1.get(1), onClickSwith1.get(2), onClickSwith1.get(3));
             }
             addLnTag(onClickSwithSb, "                );");
             addLnTag(onClickSwithSb, "                break;");
         }
-        for (int i0 = 0; i0 < onClickMethodsCounts.get(getForKey("onClickMethods")); i0++) {
+        for (int i0 = 0; i0 < count(onClickMethodsCounts, getForKey("onClickMethods")); i0++) {
             List<String> onClickMethods0 = onClickMethods.get(getForKey("onClickMethods", i0));
             addLnTag(onClickMethodsSb, "    protected void [methodName]([params]) {}", onClickMethods0.get(0), onClickMethods0.get(1));
         }
@@ -549,7 +549,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> superAccept0 = superAccept.get(getIfKey("superAccept"));
             addLnTag(superAcceptSb, "        super.accept(code, result, params, objs);");
         }
-        for (int i0 = 0; i0 < acceptCounts.get(getForKey("accept")); i0++) {
+        for (int i0 = 0; i0 < count(acceptCounts, getForKey("accept")); i0++) {
             List<String> accept0 = accept.get(getForKey("accept", i0));
             addLnTag(acceptSb, "        if (\"[methodName]\".equals(code)) {", accept0.get(0));
             addLnTag(acceptSb, "            new [netBackFullName]() {", accept0.get(1));
@@ -561,15 +561,15 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             addLnTag(acceptSb, "            }.accept(code, result, params, objs);");
             addLnTag(acceptSb, "        }");
         }
-        for (int i0 = 0; i0 < acceptMethodCounts.get(getForKey("acceptMethod")); i0++) {
+        for (int i0 = 0; i0 < count(acceptMethodCounts, getForKey("acceptMethod")); i0++) {
             List<String> acceptMethod0 = acceptMethod.get(getForKey("acceptMethod", i0));
             addLnTag(acceptMethodSb, "    protected void [methodName]([params]) {}", acceptMethod0.get(0), acceptMethod0.get(1));
         }
-        for (int i0 = 0; i0 < actBackCounts.get(getForKey("actBack")); i0++) {
+        for (int i0 = 0; i0 < count(actBackCounts, getForKey("actBack")); i0++) {
             List<String> actBack0 = actBack.get(getForKey("actBack", i0));
             addLnTag(actBackSb, "            [ifSign] (requestCode == [code4RequestFullName].[code]) {", actBack0.get(0), actBack0.get(1), actBack0.get(2));
             StringBuilder actBackParamSb = new StringBuilder();
-            for (int i1 = 0; i1 < actBackCounts.get(getForKey("actBackParam", i0)); i1++) {
+            for (int i1 = 0; i1 < count(actBackCounts, getForKey("actBackParam", i0)); i1++) {
                 List<String> actBack1 = actBack.get(getForKey("actBackParam", i0, i1));
                 StringBuilder actBackParamDividerSb = new StringBuilder();
                 if (actBackIfs.get(getIfKey("actBackParamDivider", i0, i1))) {
@@ -581,11 +581,11 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             addLnTag(actBackSb, "                [methodName]([actBackParam]);", actBack0.get(3), actBackParamSb.toString());
             addLnTag(actBackSb, "            }");
         }
-        for (int i0 = 0; i0 < actBackMethodCounts.get(getForKey("actBackMethod")); i0++) {
+        for (int i0 = 0; i0 < count(actBackMethodCounts, getForKey("actBackMethod")); i0++) {
             List<String> actBackMethod0 = actBackMethod.get(getForKey("actBackMethod", i0));
             addLnTag(actBackMethodSb, "    protected void [methodName]([params]) {}", actBackMethod0.get(0), actBackMethod0.get(1));
         }
-        for (int i0 = 0; i0 < permissionBackCounts.get(getForKey("permissionBack")); i0++) {
+        for (int i0 = 0; i0 < count(permissionBackCounts, getForKey("permissionBack")); i0++) {
             List<String> permissionBack0 = permissionBack.get(getForKey("permissionBack", i0));
             addLnTag(permissionBackSb, "        [ifSign] (requestCode == [permissionsFullName].CODE_[methodNameStatic]_IN_[actStaticName]) {", permissionBack0.get(0), permissionBack0.get(1), permissionBack0.get(2), permissionBack0.get(3));
             StringBuilder allowSb = new StringBuilder();
@@ -596,7 +596,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             addLnTag(permissionBackSb, "            [methodName]([allow]);", permissionBack0.get(4), allowSb.toString());
             addLnTag(permissionBackSb, "        }");
         }
-        for (int i0 = 0; i0 < permissionBackMethodCounts.get(getForKey("permissionBackMethod")); i0++) {
+        for (int i0 = 0; i0 < count(permissionBackMethodCounts, getForKey("permissionBackMethod")); i0++) {
             List<String> permissionBackMethod0 = permissionBackMethod.get(getForKey("permissionBackMethod", i0));
             StringBuilder allowParamSb = new StringBuilder();
             if (permissionBackMethodIfs.get(getIfKey("allowParam", i0))) {
@@ -621,7 +621,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 List<String> bindHandler1 = bindHandler.get(getIfKey("handlerEditText"));
                 addLnTag(bindHandlerSb, "            if (msg.what == [formTypeFullName].[type]) {", bindHandler1.get(0), bindHandler1.get(1));
                 addLnTag(bindHandlerSb, "                switch (msg.arg1) {");
-                for (int i0 = 0; i0 < bindHandlerCounts.get(getForKey("handlerEditTextItem")); i0++) {
+                for (int i0 = 0; i0 < count(bindHandlerCounts, getForKey("handlerEditTextItem")); i0++) {
                     List<String> bindHandler2 = bindHandler.get(getForKey("handlerEditTextItem", i0));
                     addLnTag(bindHandlerSb, "                    case [index]:", bindHandler2.get(0));
                     addLnTag(bindHandlerSb, "                        [beanName].[field] = (java.lang.String) msg.obj;", bindHandler2.get(1), bindHandler2.get(2));
@@ -634,7 +634,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 List<String> bindHandler1 = bindHandler.get(getIfKey("handlerTextView"));
                 addLnTag(bindHandlerSb, "            if (msg.what == [formTypeFullName].[type]) {", bindHandler1.get(0), bindHandler1.get(1));
                 addLnTag(bindHandlerSb, "                switch (msg.arg1) {");
-                for (int i0 = 0; i0 < bindHandlerCounts.get(getForKey("handlerTextViewItem")); i0++) {
+                for (int i0 = 0; i0 < count(bindHandlerCounts, getForKey("handlerTextViewItem")); i0++) {
                     List<String> bindHandler2 = bindHandler.get(getForKey("handlerTextViewItem", i0));
                     addLnTag(bindHandlerSb, "                    case [index]:", bindHandler2.get(0));
                     addLnTag(bindHandlerSb, "                        [beanName].[field] = (java.lang.String) msg.obj;", bindHandler2.get(1), bindHandler2.get(2));

@@ -90,79 +90,79 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
         filedsCounts.put(getForKey("fileds"), count);
     }
     protected void filedsCountAdd() {
-        count(filedsCounts, getForKey("fileds"));
+        countAdd(filedsCounts, getForKey("fileds"));
     }
     protected void fileFiledsCount(int count) {
         fileFiledsCounts.put(getForKey("fileFileds"), count);
     }
     protected void fileFiledsCountAdd() {
-        count(fileFiledsCounts, getForKey("fileFileds"));
+        countAdd(fileFiledsCounts, getForKey("fileFileds"));
     }
     protected void addObtainRootCount(int count) {
         obtainCounts.put(getForKey("addObtainRoot"), count);
     }
     protected void addObtainRootCountAdd() {
-        count(obtainCounts, getForKey("addObtainRoot"));
+        countAdd(obtainCounts, getForKey("addObtainRoot"));
     }
     protected void initDirsCount(int count) {
         initDirsCounts.put(getForKey("initDirs"), count);
     }
     protected void initDirsCountAdd() {
-        count(initDirsCounts, getForKey("initDirs"));
+        countAdd(initDirsCounts, getForKey("initDirs"));
     }
     protected void initFilesCount(int count) {
         initFilesCounts.put(getForKey("initFiles"), count);
     }
     protected void initFilesCountAdd() {
-        count(initFilesCounts, getForKey("initFiles"));
+        countAdd(initFilesCounts, getForKey("initFiles"));
     }
     protected void dirsMethodCount(int count) {
         dirsMethodCounts.put(getForKey("dirsMethod"), count);
     }
     protected void dirsMethodCountAdd() {
-        count(dirsMethodCounts, getForKey("dirsMethod"));
+        countAdd(dirsMethodCounts, getForKey("dirsMethod"));
     }
     protected void dirListCount(int count) {
         dirListCounts.put(getForKey("dirList"), count);
     }
     protected void dirListCountAdd() {
-        count(dirListCounts, getForKey("dirList"));
+        countAdd(dirListCounts, getForKey("dirList"));
     }
     protected void dirListParamCount(int i0, int count) {
         dirListCounts.put(getForKey("dirListParam", i0), count);
     }
     protected void dirListParamCountAdd(int i0) {
-        count(dirListCounts, getForKey("dirListParam", i0));
+        countAdd(dirListCounts, getForKey("dirListParam", i0));
     }
     protected void dirListFilterCount(int i0, int count) {
         dirListCounts.put(getForKey("dirListFilter", i0), count);
     }
     protected void dirListFilterCountAdd(int i0) {
-        count(dirListCounts, getForKey("dirListFilter", i0));
+        countAdd(dirListCounts, getForKey("dirListFilter", i0));
     }
     protected void filesMethodCount(int count) {
         filesMethodCounts.put(getForKey("filesMethod"), count);
     }
     protected void filesMethodCountAdd() {
-        count(filesMethodCounts, getForKey("filesMethod"));
+        countAdd(filesMethodCounts, getForKey("filesMethod"));
     }
     protected void fileListCount(int count) {
         fileListCounts.put(getForKey("fileList"), count);
     }
     protected void fileListCountAdd() {
-        count(fileListCounts, getForKey("fileList"));
+        countAdd(fileListCounts, getForKey("fileList"));
     }
     protected void fileListParamCount(int i0, int count) {
         fileListCounts.put(getForKey("fileListParam", i0), count);
     }
     protected void fileListParamCountAdd(int i0) {
-        count(fileListCounts, getForKey("fileListParam", i0));
+        countAdd(fileListCounts, getForKey("fileListParam", i0));
     }
     protected void filterParamCount(int i0, int count) {
         fileListCounts.put(getForKey("filterParam", i0), count);
     }
     protected void filterParamCountAdd(int i0) {
-        count(fileListCounts, getForKey("filterParam", i0));
+        countAdd(fileListCounts, getForKey("filterParam", i0));
     }
 
     protected void fileds(int i0, String type, String name) {
@@ -226,11 +226,11 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
 
     @Override
     protected void dealLinesInParent() {
-        for (int i0 = 0; i0 < filedsCounts.get(getForKey("fileds")); i0++) {
+        for (int i0 = 0; i0 < count(filedsCounts, getForKey("fileds")); i0++) {
             List<String> fileds0 = fileds.get(getForKey("fileds", i0));
             addLnTag(filedsSb, "    public [type] [name];", fileds0.get(0), fileds0.get(1));
         }
-        for (int i0 = 0; i0 < fileFiledsCounts.get(getForKey("fileFileds")); i0++) {
+        for (int i0 = 0; i0 < count(fileFiledsCounts, getForKey("fileFileds")); i0++) {
             List<String> fileFileds0 = fileFileds.get(getForKey("fileFileds", i0));
             addLnTag(fileFiledsSb, "    public [type] [name];", fileFileds0.get(0), fileFileds0.get(1));
         }
@@ -238,21 +238,21 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
             List<String> obtain0 = obtain.get(getIfKey("obtain"));
             addLnTag(obtainSb, "    public static [name] obtain([params]) {", obtain0.get(0), obtain0.get(1));
             addLnTag(obtainSb, "        return root([sDCardToolFullName].getSDCard()", obtain0.get(2));
-            for (int i0 = 0; i0 < obtainCounts.get(getForKey("addObtainRoot")); i0++) {
+            for (int i0 = 0; i0 < count(obtainCounts, getForKey("addObtainRoot")); i0++) {
                 List<String> obtain1 = obtain.get(getForKey("addObtainRoot", i0));
                 addLnTag(obtainSb, "                + addPrexSeparator([path])", obtain1.get(0));
             }
             addLnTag(obtainSb, "        );");
             addLnTag(obtainSb, "    }");
         }
-        for (int i0 = 0; i0 < initDirsCounts.get(getForKey("initDirs")); i0++) {
+        for (int i0 = 0; i0 < count(initDirsCounts, getForKey("initDirs")); i0++) {
             List<String> initDirs0 = initDirs.get(getForKey("initDirs", i0));
             addLnTag(initDirsSb, "        this.[filedName] = [filedType].root(", initDirs0.get(0), initDirs0.get(1));
             addLnTag(initDirsSb, "                this.root");
             addLnTag(initDirsSb, "                        + addPrexSeparator(\"[dirName]\")", initDirs0.get(2));
             addLnTag(initDirsSb, "        );");
         }
-        for (int i0 = 0; i0 < initFilesCounts.get(getForKey("initFiles")); i0++) {
+        for (int i0 = 0; i0 < count(initFilesCounts, getForKey("initFiles")); i0++) {
             List<String> initFiles0 = initFiles.get(getForKey("initFiles", i0));
             addLnTag(initFilesSb, "        this.[filedName] = new [filedType](", initFiles0.get(0), initFiles0.get(1));
             addLnTag(initFilesSb, "                this.root");
@@ -264,7 +264,7 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
             }
             addLnTag(initFilesSb, "        );");
         }
-        for (int i0 = 0; i0 < dirsMethodCounts.get(getForKey("dirsMethod")); i0++) {
+        for (int i0 = 0; i0 < count(dirsMethodCounts, getForKey("dirsMethod")); i0++) {
             List<String> dirsMethod0 = dirsMethod.get(getForKey("dirsMethod", i0));
             addLnTag(dirsMethodSb, "    public [fieldType] [methodName](String [value]) {", dirsMethod0.get(0), dirsMethod0.get(1), dirsMethod0.get(2));
             addLnTag(dirsMethodSb, "        return new [fieldType](", dirsMethod0.get(3));
@@ -273,16 +273,16 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
             addLnTag(dirsMethodSb, "        );");
             addLnTag(dirsMethodSb, "    }");
         }
-        for (int i0 = 0; i0 < dirListCounts.get(getForKey("dirList")); i0++) {
+        for (int i0 = 0; i0 < count(dirListCounts, getForKey("dirList")); i0++) {
             List<String> dirList0 = dirList.get(getForKey("dirList", i0));
             addLnTag(dirListSb, "    public [tListTsFullName]<[fieldType]> [fieldName]List(", dirList0.get(0), dirList0.get(1), dirList0.get(2));
-            for (int i1 = 0; i1 < dirListCounts.get(getForKey("dirListParam", i0)); i1++) {
+            for (int i1 = 0; i1 < count(dirListCounts, getForKey("dirListParam", i0)); i1++) {
                 List<String> dirList1 = dirList.get(getForKey("dirListParam", i0, i1));
                 addLnTag(dirListSb, "            [type] [name][divider]", dirList1.get(0), dirList1.get(1), dirList1.get(2));
             }
             addLnTag(dirListSb, "    ) {");
             addLnTag(dirListSb, "        [filterFullName] filter = new [filterFullName]();", dirList0.get(3), dirList0.get(4));
-            for (int i1 = 0; i1 < dirListCounts.get(getForKey("dirListFilter", i0)); i1++) {
+            for (int i1 = 0; i1 < count(dirListCounts, getForKey("dirListFilter", i0)); i1++) {
                 List<String> dirList1 = dirList.get(getForKey("dirListFilter", i0, i1));
                 addLnTag(dirListSb, "        filter.[type] = [type];", dirList1.get(0), dirList1.get(1));
             }
@@ -294,7 +294,7 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
             addLnTag(dirListSb, "        });");
             addLnTag(dirListSb, "    }");
         }
-        for (int i0 = 0; i0 < filesMethodCounts.get(getForKey("filesMethod")); i0++) {
+        for (int i0 = 0; i0 < count(filesMethodCounts, getForKey("filesMethod")); i0++) {
             List<String> filesMethod0 = filesMethod.get(getForKey("filesMethod", i0));
             addLnTag(filesMethodSb, "    public [fieldType] [filedName](String [value]) {", filesMethod0.get(0), filesMethod0.get(1), filesMethod0.get(2));
             addLnTag(filesMethodSb, "        return new [fieldType](", filesMethod0.get(3));
@@ -308,16 +308,16 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
             addLnTag(filesMethodSb, "        );");
             addLnTag(filesMethodSb, "    }");
         }
-        for (int i0 = 0; i0 < fileListCounts.get(getForKey("fileList")); i0++) {
+        for (int i0 = 0; i0 < count(fileListCounts, getForKey("fileList")); i0++) {
             List<String> fileList0 = fileList.get(getForKey("fileList", i0));
             addLnTag(fileListSb, "    public [tListTsFullName]<[fieldType]> [fieldName]_list(", fileList0.get(0), fileList0.get(1), fileList0.get(2));
-            for (int i1 = 0; i1 < fileListCounts.get(getForKey("fileListParam", i0)); i1++) {
+            for (int i1 = 0; i1 < count(fileListCounts, getForKey("fileListParam", i0)); i1++) {
                 List<String> fileList1 = fileList.get(getForKey("fileListParam", i0, i1));
                 addLnTag(fileListSb, "            [type] [name][divider]", fileList1.get(0), fileList1.get(1), fileList1.get(2));
             }
             addLnTag(fileListSb, "    ) {");
             addLnTag(fileListSb, "        [filterFullName] filter = new [filterFullName]();", fileList0.get(3), fileList0.get(4));
-            for (int i1 = 0; i1 < fileListCounts.get(getForKey("filterParam", i0)); i1++) {
+            for (int i1 = 0; i1 < count(fileListCounts, getForKey("filterParam", i0)); i1++) {
                 List<String> fileList1 = fileList.get(getForKey("filterParam", i0, i1));
                 addLnTag(fileListSb, "        filter.[name] = [name];", fileList1.get(0), fileList1.get(1));
             }

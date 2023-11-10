@@ -87,12 +87,20 @@ public abstract class CoreBuilder implements Symbol {
      *
      **************************************************/
 
-    protected void count(Map<String, Integer> counts, String key) {
+    protected void countAdd(Map<String, Integer> counts, String key) {
         Integer count = counts.get(key);
         if (count == null) {
             count = 0;
         }
         counts.put(key, count + 1);
+    }
+
+    protected int count(Map<String, Integer> counts, String key) {
+        Integer count = counts.get(key);
+        if (count == null) {
+            count = 0;
+        }
+        return count;
     }
 
     protected String getForKey(String tag, int... ii) {

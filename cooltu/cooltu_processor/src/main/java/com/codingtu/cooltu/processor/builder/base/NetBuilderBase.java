@@ -30,31 +30,31 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
         fieldCounts.put(getForKey("field"), count);
     }
     protected void fieldCountAdd() {
-        count(fieldCounts, getForKey("field"));
+        countAdd(fieldCounts, getForKey("field"));
     }
     protected void methodCount(int count) {
         methodCounts.put(getForKey("method"), count);
     }
     protected void methodCountAdd() {
-        count(methodCounts, getForKey("method"));
+        countAdd(methodCounts, getForKey("method"));
     }
     protected void sendParamsSetCount(int i0, int count) {
         methodCounts.put(getForKey("sendParamsSet", i0), count);
     }
     protected void sendParamsSetCountAdd(int i0) {
-        count(methodCounts, getForKey("sendParamsSet", i0));
+        countAdd(methodCounts, getForKey("sendParamsSet", i0));
     }
     protected void postJsonBodySetCount(int i0, int count) {
         methodCounts.put(getForKey("postJsonBodySet", i0), count);
     }
     protected void postJsonBodySetCountAdd(int i0) {
-        count(methodCounts, getForKey("postJsonBodySet", i0));
+        countAdd(methodCounts, getForKey("postJsonBodySet", i0));
     }
     protected void methodParamsCount(int i0, int count) {
         methodCounts.put(getForKey("methodParams", i0), count);
     }
     protected void methodParamsCountAdd(int i0) {
-        count(methodCounts, getForKey("methodParams", i0));
+        countAdd(methodCounts, getForKey("methodParams", i0));
     }
 
     protected void field(int i0, String name, String value) {
@@ -94,17 +94,17 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
 
     @Override
     protected void dealLinesInParent() {
-        for (int i0 = 0; i0 < fieldCounts.get(getForKey("field")); i0++) {
+        for (int i0 = 0; i0 < count(fieldCounts, getForKey("field")); i0++) {
             List<String> field0 = field.get(getForKey("field", i0));
             addLnTag(fieldSb, "    private static final String [name] = \"[value]\";", field0.get(0), field0.get(1));
         }
-        for (int i0 = 0; i0 < methodCounts.get(getForKey("method")); i0++) {
+        for (int i0 = 0; i0 < count(methodCounts, getForKey("method")); i0++) {
             List<String> method0 = method.get(getForKey("method", i0));
             addLnTag(methodSb, "    public static [apiFullName] [methodName]([methodParams]) {", method0.get(0), method0.get(1), method0.get(2));
             if (methodIfs.get(getIfKey("sendParams", i0))) {
                 List<String> method1 = method.get(getIfKey("sendParams", i0));
                 addLnTag(methodSb, "        [sendParamFullName] params = new [sendParamFullName]();", method1.get(0), method1.get(1));
-                for (int i1 = 0; i1 < methodCounts.get(getForKey("sendParamsSet", i0)); i1++) {
+                for (int i1 = 0; i1 < count(methodCounts, getForKey("sendParamsSet", i0)); i1++) {
                     List<String> method2 = method.get(getForKey("sendParamsSet", i0, i1));
                     addLnTag(methodSb, "        params.[name] = [value];", method2.get(0), method2.get(1));
                 }
@@ -117,14 +117,14 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
             if (methodIfs.get(getIfKey("postJsonBody", i0))) {
                 List<String> method1 = method.get(getIfKey("postJsonBody", i0));
                 addLnTag(methodSb, "            [joFullName] jo = [jsonToolFullName].createJO();", method1.get(0), method1.get(1));
-                for (int i1 = 0; i1 < methodCounts.get(getForKey("postJsonBodySet", i0)); i1++) {
+                for (int i1 = 0; i1 < count(methodCounts, getForKey("postJsonBodySet", i0)); i1++) {
                     List<String> method2 = method.get(getForKey("postJsonBodySet", i0, i1));
                     addLnTag(methodSb, "            jo.put(\"[key]\", paramsGet.[name]);", method2.get(0), method2.get(1));
                 }
             }
             addLnTag(methodSb, "");
             addLnTag(methodSb, "            return retrofit.create([serviceFullName].class).[methodName](", method0.get(4), method0.get(5));
-            for (int i1 = 0; i1 < methodCounts.get(getForKey("methodParams", i0)); i1++) {
+            for (int i1 = 0; i1 < count(methodCounts, getForKey("methodParams", i0)); i1++) {
                 List<String> method1 = method.get(getForKey("methodParams", i0, i1));
                 addLnTag(methodSb, "                    [name][divider]", method1.get(0), method1.get(1));
             }

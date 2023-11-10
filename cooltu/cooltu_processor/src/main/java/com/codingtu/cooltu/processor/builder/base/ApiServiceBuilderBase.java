@@ -24,13 +24,13 @@ public abstract class ApiServiceBuilderBase extends com.codingtu.cooltu.processo
         methodCounts.put(getForKey("method"), count);
     }
     protected void methodCountAdd() {
-        count(methodCounts, getForKey("method"));
+        countAdd(methodCounts, getForKey("method"));
     }
     protected void methodParamCount(int i0, int count) {
         methodCounts.put(getForKey("methodParam", i0), count);
     }
     protected void methodParamCountAdd(int i0) {
-        count(methodCounts, getForKey("methodParam", i0));
+        countAdd(methodCounts, getForKey("methodParam", i0));
     }
 
     protected void methodParam(int i0, int i1, String anno, String type, String name, String divider) {
@@ -55,12 +55,12 @@ public abstract class ApiServiceBuilderBase extends com.codingtu.cooltu.processo
 
     @Override
     protected void dealLinesInParent() {
-        for (int i0 = 0; i0 < methodCounts.get(getForKey("method")); i0++) {
+        for (int i0 = 0; i0 < count(methodCounts, getForKey("method")); i0++) {
             List<String> method0 = method.get(getForKey("method", i0));
             addLnTag(methodSb, "");
             addLnTag(methodSb, "    @[netType](\"[apiUrl]\")", method0.get(0), method0.get(1));
             addLnTag(methodSb, "    Flowable<Result<ResponseBody>> [methodName](", method0.get(2));
-            for (int i1 = 0; i1 < methodCounts.get(getForKey("methodParam", i0)); i1++) {
+            for (int i1 = 0; i1 < count(methodCounts, getForKey("methodParam", i0)); i1++) {
                 List<String> method1 = method.get(getForKey("methodParam", i0, i1));
                 StringBuilder annoInfoSb = new StringBuilder();
                 if (methodIfs.get(getIfKey("annoInfo", i0, i1))) {

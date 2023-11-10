@@ -22,13 +22,13 @@ public abstract class ActBackIntentBuilderBase extends com.codingtu.cooltu.proce
         methodCounts.put(getForKey("method"), count);
     }
     protected void methodCountAdd() {
-        count(methodCounts, getForKey("method"));
+        countAdd(methodCounts, getForKey("method"));
     }
     protected void methodParamCount(int i0, int count) {
         methodCounts.put(getForKey("methodParam", i0), count);
     }
     protected void methodParamCountAdd(int i0) {
-        count(methodCounts, getForKey("methodParam", i0));
+        countAdd(methodCounts, getForKey("methodParam", i0));
     }
 
     protected void method(int i0, String methodName, String params) {
@@ -50,11 +50,11 @@ public abstract class ActBackIntentBuilderBase extends com.codingtu.cooltu.proce
 
     @Override
     protected void dealLinesInParent() {
-        for (int i0 = 0; i0 < methodCounts.get(getForKey("method")); i0++) {
+        for (int i0 = 0; i0 < count(methodCounts, getForKey("method")); i0++) {
             List<String> method0 = method.get(getForKey("method", i0));
             addLnTag(methodSb, "    public static Intent [methodName]([params]) {", method0.get(0), method0.get(1));
             addLnTag(methodSb, "        Intent intent = new Intent();");
-            for (int i1 = 0; i1 < methodCounts.get(getForKey("methodParam", i0)); i1++) {
+            for (int i1 = 0; i1 < count(methodCounts, getForKey("methodParam", i0)); i1++) {
                 List<String> method1 = method.get(getForKey("methodParam", i0, i1));
                 if (methodIfs.get(getIfKey("methodParamOther", i0, i1))) {
                     List<String> method2 = method.get(getIfKey("methodParamOther", i0, i1));

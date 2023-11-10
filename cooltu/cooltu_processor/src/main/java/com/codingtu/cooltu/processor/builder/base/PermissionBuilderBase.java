@@ -30,19 +30,19 @@ public abstract class PermissionBuilderBase extends com.codingtu.cooltu.processo
         fieldCounts.put(getForKey("field"), count);
     }
     protected void fieldCountAdd() {
-        count(fieldCounts, getForKey("field"));
+        countAdd(fieldCounts, getForKey("field"));
     }
     protected void methodCount(int count) {
         methodCounts.put(getForKey("method"), count);
     }
     protected void methodCountAdd() {
-        count(methodCounts, getForKey("method"));
+        countAdd(methodCounts, getForKey("method"));
     }
     protected void permissionCount(int i0, int count) {
         methodCounts.put(getForKey("permission", i0), count);
     }
     protected void permissionCountAdd(int i0) {
-        count(methodCounts, getForKey("permission", i0));
+        countAdd(methodCounts, getForKey("permission", i0));
     }
 
     protected void field(int i0, String methodName, String act, String value) {
@@ -58,15 +58,15 @@ public abstract class PermissionBuilderBase extends com.codingtu.cooltu.processo
 
     @Override
     protected void dealLinesInParent() {
-        for (int i0 = 0; i0 < fieldCounts.get(getForKey("field")); i0++) {
+        for (int i0 = 0; i0 < count(fieldCounts, getForKey("field")); i0++) {
             List<String> field0 = field.get(getForKey("field", i0));
             addLnTag(fieldSb, "    public static final int CODE_[methodName]_IN_[act] = [value];", field0.get(0), field0.get(1), field0.get(2));
         }
-        for (int i0 = 0; i0 < methodCounts.get(getForKey("method")); i0++) {
+        for (int i0 = 0; i0 < count(methodCounts, getForKey("method")); i0++) {
             List<String> method0 = method.get(getForKey("method", i0));
             addLnTag(methodSb, "    public static void [methodName]In[act](Activity act) {", method0.get(0), method0.get(1));
             addLnTag(methodSb, "        [permissionToolFullName].check(act, CODE_[methodNameStatic]_IN_[actStatic]", method0.get(2), method0.get(3), method0.get(4));
-            for (int i1 = 0; i1 < methodCounts.get(getForKey("permission", i0)); i1++) {
+            for (int i1 = 0; i1 < count(methodCounts, getForKey("permission", i0)); i1++) {
                 List<String> method1 = method.get(getForKey("permission", i0, i1));
                 addLnTag(methodSb, "                , \"[value]\"", method1.get(0));
             }
