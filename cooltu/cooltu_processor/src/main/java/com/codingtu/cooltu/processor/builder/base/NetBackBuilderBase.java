@@ -5,15 +5,15 @@ import java.util.List;
 public abstract class NetBackBuilderBase extends com.codingtu.cooltu.processor.builder.core.CoreBuilder {
     protected StringBuilder name;
     protected StringBuilder netBackFullName;
-    private java.util.Map<String, Boolean> fieldIfs;
-    private java.util.Map<String, Integer> fieldCounts;
-    private StringBuilder fieldSb;
-    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> field;
+    protected java.util.Map<String, Boolean> fieldIfs;
+    protected java.util.Map<String, Integer> fieldCounts;
+    protected StringBuilder fieldSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> field;
     protected StringBuilder coreSendParamsFullName;
-    private java.util.Map<String, Boolean> acceptIfs;
-    private java.util.Map<String, Integer> acceptCounts;
-    private StringBuilder acceptSb;
-    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> accept;
+    protected java.util.Map<String, Boolean> acceptIfs;
+    protected java.util.Map<String, Integer> acceptCounts;
+    protected StringBuilder acceptSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> accept;
 
     public NetBackBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);

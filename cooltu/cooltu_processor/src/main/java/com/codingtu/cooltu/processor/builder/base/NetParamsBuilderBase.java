@@ -6,10 +6,10 @@ public abstract class NetParamsBuilderBase extends com.codingtu.cooltu.processor
     protected StringBuilder pkg;
     protected StringBuilder name;
     protected StringBuilder coreSendParamsFullName;
-    private java.util.Map<String, Boolean> fieldIfs;
-    private java.util.Map<String, Integer> fieldCounts;
-    private StringBuilder fieldSb;
-    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> field;
+    protected java.util.Map<String, Boolean> fieldIfs;
+    protected java.util.Map<String, Integer> fieldCounts;
+    protected StringBuilder fieldSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> field;
 
     public NetParamsBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);

@@ -4,14 +4,14 @@ import java.util.List;
 
 public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.builder.core.CoreBuilder {
     protected StringBuilder pkg;
-    private java.util.Map<String, Boolean> fieldIfs;
-    private java.util.Map<String, Integer> fieldCounts;
-    private StringBuilder fieldSb;
-    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> field;
-    private java.util.Map<String, Boolean> methodIfs;
-    private java.util.Map<String, Integer> methodCounts;
-    private StringBuilder methodSb;
-    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> method;
+    protected java.util.Map<String, Boolean> fieldIfs;
+    protected java.util.Map<String, Integer> fieldCounts;
+    protected StringBuilder fieldSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> field;
+    protected java.util.Map<String, Boolean> methodIfs;
+    protected java.util.Map<String, Integer> methodCounts;
+    protected StringBuilder methodSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> method;
 
     public NetBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);

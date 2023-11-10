@@ -4,10 +4,10 @@ import java.util.List;
 
 public abstract class ActStartBuilderBase extends com.codingtu.cooltu.processor.builder.core.CoreBuilder {
     protected StringBuilder pkg;
-    private java.util.Map<String, Boolean> methodIfs;
-    private java.util.Map<String, Integer> methodCounts;
-    private StringBuilder methodSb;
-    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> method;
+    protected java.util.Map<String, Boolean> methodIfs;
+    protected java.util.Map<String, Integer> methodCounts;
+    protected StringBuilder methodSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> method;
 
     public ActStartBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);

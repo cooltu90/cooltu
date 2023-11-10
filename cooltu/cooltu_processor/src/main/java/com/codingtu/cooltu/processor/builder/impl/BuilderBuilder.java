@@ -81,13 +81,13 @@ public class BuilderBuilder extends BuilderBuilderBase {
         if (level == 0) {
             if (nameMap.get(subTagStart.tag) == null) {
                 nameMap.put(subTagStart.tag, subTagStart.tag);
-                addLnTag(fileds, "    private java.util.Map<String, Boolean> [lines]Ifs;", subTagStart.tag);
+                addLnTag(fileds, "    protected java.util.Map<String, Boolean> [lines]Ifs;", subTagStart.tag);
                 addLnTag(inits, "        [lines]Ifs = new java.util.HashMap<>();", subTagStart.tag);
-                addLnTag(fileds, "    private java.util.Map<String, Integer> [lines]Counts;", subTagStart.tag);
+                addLnTag(fileds, "    protected java.util.Map<String, Integer> [lines]Counts;", subTagStart.tag);
                 addLnTag(inits, "        [lines]Counts = new java.util.HashMap<>();", subTagStart.tag);
-                addLnTag(fileds, "    private StringBuilder [pkg]Sb;", subTagStart.tag);
+                addLnTag(fileds, "    protected StringBuilder [pkg]Sb;", subTagStart.tag);
                 addLnTag(inits, "        [pkg]Sb = map.get(\"[pkg]\");", subTagStart.tag, subTagStart.tag);
-                addLnTag(fileds, "    private [ListValueMap]<String, String> [lines];", FullName.LIST_VALUE_MAP, subTagStart.tag);
+                addLnTag(fileds, "    protected [ListValueMap]<String, String> [lines];", FullName.LIST_VALUE_MAP, subTagStart.tag);
                 addLnTag(inits, "        [lines] = new [ListValueMap]<>();", subTagStart.tag, FullName.LIST_VALUE_MAP);
                 addLnTag(tempLines, "        lines.add(\"[[" + subTagStart.tag + "]]\");");
             }

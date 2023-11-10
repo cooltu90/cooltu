@@ -136,6 +136,26 @@ public abstract class CoreBuilder implements Symbol {
         });
     }
 
+
+    protected void addForMap(java.util.Map<String, Integer> counts, ListValueMap<String, String> map,
+                             String key, int[] keys, String... strs) {
+        key = getForKey(key, keys);
+        int count = count(counts, key);
+        List<String> list = map.get(keyAppend(key, count));
+        Ts.ls(strs, new BaseTs.EachTs<String>() {
+            @Override
+            public boolean each(int position, String s) {
+                list.add(s);
+                return false;
+            }
+        });
+        countAdd(counts, key);
+    }
+
+    private String keyAppend(String key, int i) {
+        return key + "-" + i;
+    }
+
     public void addLnTag(StringBuilder tag, String line, Object... tags) {
         tag.append(dealLine(line, tags)).append("\r\n");
     }

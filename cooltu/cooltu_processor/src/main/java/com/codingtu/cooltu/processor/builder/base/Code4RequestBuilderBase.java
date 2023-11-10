@@ -4,10 +4,10 @@ import java.util.List;
 
 public abstract class Code4RequestBuilderBase extends com.codingtu.cooltu.processor.builder.core.CoreBuilder {
     protected StringBuilder pkg;
-    private java.util.Map<String, Boolean> fieldIfs;
-    private java.util.Map<String, Integer> fieldCounts;
-    private StringBuilder fieldSb;
-    private com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> field;
+    protected java.util.Map<String, Boolean> fieldIfs;
+    protected java.util.Map<String, Integer> fieldCounts;
+    protected StringBuilder fieldSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> field;
 
     public Code4RequestBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
