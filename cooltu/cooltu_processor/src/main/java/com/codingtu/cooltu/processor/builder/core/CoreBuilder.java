@@ -170,13 +170,12 @@ public abstract class CoreBuilder implements Symbol {
         if (params == null) {
             params = new ArrayList<>();
         }
-        if (hasPre) {
-            params.add(0, "");
-        }
-        if (hasNext) {
-            params.add("");
-        }
         StringBuilder sb = new StringBuilder();
+        int count = CountTool.count(params);
+
+        if (hasPre && count != 0) {
+            sb.append(", ");
+        }
         Ts.ls(params, new BaseTs.EachTs<String>() {
             @Override
             public boolean each(int position, String param) {
@@ -187,6 +186,11 @@ public abstract class CoreBuilder implements Symbol {
                 return false;
             }
         });
+        if (hasNext) {
+            if (hasPre || count > 0) {
+                sb.append(", ");
+            }
+        }
         return sb.toString();
     }
 
