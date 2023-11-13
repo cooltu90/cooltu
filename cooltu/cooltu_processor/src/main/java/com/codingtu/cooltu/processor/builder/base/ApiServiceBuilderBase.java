@@ -30,17 +30,26 @@ public abstract class ApiServiceBuilderBase extends com.codingtu.cooltu.processo
         countAdd(methodCounts, getForKey("method"));
     }
 
-    protected void annoInfoIf(int i0, int i1, boolean is) {
+    protected void isAnnoInfo(int i0, int i1, boolean is) {
         methodIfs.put(getIfKey("annoInfo", i0, i1), is);
     }
-    protected void annoValueNameIf(int i0, int i1, boolean is) {
+    protected void isAnnoValueName(int i0, int i1, boolean is) {
         methodIfs.put(getIfKey("annoValueName", i0, i1), is);
     }
-    protected void annoEncodeIf(int i0, int i1, boolean is) {
+    protected void annoValueNameIf(int i0, int i1) {
+        addForMap(this.method, getIfKey("annoValueName", i0, i1));
+        methodIfs.put(getIfKey("annoValueName", i0, i1), true);
+    }
+    protected void isAnnoEncode(int i0, int i1, boolean is) {
         methodIfs.put(getIfKey("annoEncode", i0, i1), is);
+    }
+    protected void annoEncodeIf(int i0, int i1) {
+        addForMap(this.method, getIfKey("annoEncode", i0, i1));
+        methodIfs.put(getIfKey("annoEncode", i0, i1), true);
     }
     protected void annoInfoIf(int i0, int i1, String value) {
         addForMap(this.method, getIfKey("annoInfo", i0, i1), value);
+        methodIfs.put(getIfKey("annoInfo", i0, i1), true);
     }
 
     @Override

@@ -288,62 +288,89 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         countAdd(bindHandlerCounts, getForKey("handlerTextViewItem"));
     }
 
-    protected void layoutIf(boolean is) {
+    protected void isLayout(boolean is) {
         layoutIfs.put(getIfKey("layout"), is);
     }
     protected void layoutIf(String layout) {
         addForMap(this.layout, getIfKey("layout"), layout);
+        layoutIfs.put(getIfKey("layout"), true);
     }
-    protected void formInitIf(boolean is) {
+    protected void isFormInit(boolean is) {
         formInitIfs.put(getIfKey("formInit"), is);
     }
     protected void formInitIf(String name, String type) {
         addForMap(this.formInit, getIfKey("formInit"), name, name, type, name);
+        formInitIfs.put(getIfKey("formInit"), true);
     }
-    protected void onCreateCompleteInitIf(boolean is) {
+    protected void isOnCreateCompleteInit(boolean is) {
         onCreateCompleteInitIfs.put(getIfKey("onCreateCompleteInit"), is);
     }
-    protected void superOnClickIf(boolean is) {
+    protected void onCreateCompleteInitIf() {
+        addForMap(this.onCreateCompleteInit, getIfKey("onCreateCompleteInit"));
+        onCreateCompleteInitIfs.put(getIfKey("onCreateCompleteInit"), true);
+    }
+    protected void isSuperOnClick(boolean is) {
         superOnClickIfs.put(getIfKey("superOnClick"), is);
     }
-    protected void onClickSwitchParamsIf(int i0, boolean is) {
+    protected void superOnClickIf() {
+        addForMap(this.superOnClick, getIfKey("superOnClick"));
+        superOnClickIfs.put(getIfKey("superOnClick"), true);
+    }
+    protected void isOnClickSwitchParams(int i0, boolean is) {
         onClickSwithIfs.put(getIfKey("onClickSwitchParams", i0), is);
     }
     protected void onClickSwitchParamsIf(int i0, String divider) {
         addForMap(this.onClickSwith, getIfKey("onClickSwitchParams", i0), divider);
+        onClickSwithIfs.put(getIfKey("onClickSwitchParams", i0), true);
     }
-    protected void superAcceptIf(boolean is) {
+    protected void isSuperAccept(boolean is) {
         superAcceptIfs.put(getIfKey("superAccept"), is);
     }
-    protected void actBackParamDividerIf(int i0, int i1, boolean is) {
+    protected void superAcceptIf() {
+        addForMap(this.superAccept, getIfKey("superAccept"));
+        superAcceptIfs.put(getIfKey("superAccept"), true);
+    }
+    protected void isActBackParamDivider(int i0, int i1, boolean is) {
         actBackIfs.put(getIfKey("actBackParamDivider", i0, i1), is);
     }
-    protected void allowIf(int i0, boolean is) {
+    protected void actBackParamDividerIf(int i0, int i1) {
+        addForMap(this.actBack, getIfKey("actBackParamDivider", i0, i1));
+        actBackIfs.put(getIfKey("actBackParamDivider", i0, i1), true);
+    }
+    protected void isAllow(int i0, boolean is) {
         permissionBackIfs.put(getIfKey("allow", i0), is);
     }
     protected void allowIf(int i0, String permissionToolFullName) {
         addForMap(this.permissionBack, getIfKey("allow", i0), permissionToolFullName);
+        permissionBackIfs.put(getIfKey("allow", i0), true);
     }
-    protected void allowParamIf(int i0, boolean is) {
+    protected void isAllowParam(int i0, boolean is) {
         permissionBackMethodIfs.put(getIfKey("allowParam", i0), is);
     }
-    protected void bindHandlerIf(boolean is) {
+    protected void allowParamIf(int i0) {
+        addForMap(this.permissionBackMethod, getIfKey("allowParam", i0));
+        permissionBackMethodIfs.put(getIfKey("allowParam", i0), true);
+    }
+    protected void isBindHandler(boolean is) {
         bindHandlerIfs.put(getIfKey("bindHandler"), is);
     }
-    protected void handlerEditTextIf(boolean is) {
+    protected void isHandlerEditText(boolean is) {
         bindHandlerIfs.put(getIfKey("handlerEditText"), is);
     }
     protected void handlerEditTextIf(String formTypeFullName, String type) {
         addForMap(this.bindHandler, getIfKey("handlerEditText"), formTypeFullName, type);
+        bindHandlerIfs.put(getIfKey("handlerEditText"), true);
     }
-    protected void handlerTextViewIf(boolean is) {
+    protected void isHandlerTextView(boolean is) {
         bindHandlerIfs.put(getIfKey("handlerTextView"), is);
     }
     protected void handlerTextViewIf(String formTypeFullName, String type) {
         addForMap(this.bindHandler, getIfKey("handlerTextView"), formTypeFullName, type);
+        bindHandlerIfs.put(getIfKey("handlerTextView"), true);
     }
     protected void bindHandlerIf(String beanType, String beanName) {
         addForMap(this.bindHandler, getIfKey("bindHandler"), beanType, beanName, beanType, beanName, beanName, beanName);
+        bindHandlerIfs.put(getIfKey("bindHandler"), true);
     }
 
     @Override

@@ -102,12 +102,8 @@ public class ActBackIntentBuilder extends ActBackIntentBuilderBase {
                     @Override
                     public boolean each(int paramIndex, KV<String, String> kv) {
                         if (ClassTool.isBaseClass(kv.k)) {
-                            methodParamOtherIf(methodIndex, paramIndex, true);
-                            methodParamBeanIf(methodIndex, paramIndex, false);
                             methodParamOtherIf(methodIndex, paramIndex, FullName.PASS, ConvertTool.toStaticType(kv.v), kv.v);
                         } else {
-                            methodParamOtherIf(methodIndex, paramIndex, false);
-                            methodParamBeanIf(methodIndex, paramIndex, true);
                             methodParamBeanIf(methodIndex, paramIndex, FullName.PASS, ConvertTool.toStaticType(kv.v), FullName.JSON_TOOL, kv.v);
                         }
                         methodParam(methodIndex, paramIndex);

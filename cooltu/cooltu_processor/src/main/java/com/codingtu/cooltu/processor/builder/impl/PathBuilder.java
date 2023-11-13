@@ -62,7 +62,6 @@ public class PathBuilder extends PathBuilderBase {
 
         boolean isRoot = StringTool.isNotBlank(this.path);
 
-        obtainIf(isRoot);
         if (isRoot) {
             String[] split = this.path.split("/");
 
@@ -141,7 +140,6 @@ public class PathBuilder extends PathBuilderBase {
                     if (StringTool.isNotBlank(filedType)) {
                         fileFileds(nums[3], filedType, info.fieldFullName);
                         initFiles(nums[3], info.fieldFullName, filedType, info.fileName, info.file.fileType());
-                        initFilesParamIf(nums[3], ifParam);
                         if (ifParam) {
                             initFilesParamIf(nums[3], info.beanClass + ".class");
                         }
@@ -149,7 +147,6 @@ public class PathBuilder extends PathBuilderBase {
                     }
                 } else {
                     if (StringTool.isNotBlank(filedType)) {
-                        filesMethodParamIf(nums[4], ifParam);
                         if (ifParam) {
                             filesMethodParamIf(nums[4], info.beanClass + ".class");
                         }

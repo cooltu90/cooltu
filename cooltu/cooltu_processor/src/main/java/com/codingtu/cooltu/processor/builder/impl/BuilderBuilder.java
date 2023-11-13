@@ -3,6 +3,7 @@ package com.codingtu.cooltu.processor.builder.impl;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
@@ -124,7 +125,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
             public void deal(int level, int levelsCount, SubTag subTag, String keyParams0, String keyParams1, String space) {
                 String ifPutMethodParams = getPutMethodIntParams(levelsCount);
 
-                addLnTag(ifs, "    protected void [linesAdd1]If([params]boolean is) {", subTag.tag, ifPutMethodParams);
+                addLnTag(ifs, "    protected void is[linesAdd1]([params]boolean is) {", ConvertTool.toClassType(subTag.tag), ifPutMethodParams);
                 addLnTag(ifs, "        [lines]Ifs.put(getIfKey(\"[linesAdd1]\"[params]), is);"
                         , subTag.parentTag, subTag.tag, keyParams0);
                 addLnTag(ifs, "    }");
@@ -163,13 +164,13 @@ public class BuilderBuilder extends BuilderBuilderBase {
     private void method(StringBuilder sb, SubTag subTag, String tag0, String strsParam, List<String> methodParams, String strsValue,
                         String keyParams0, String keyParams, String space) {
         if ("If".equals(tag0)) {
-            if (StringTool.isNotBlank(strsParam)) {
-                addLnTag(sb, "    protected void [lines]If([params]) {"
-                        , subTag.tag, getParams(methodParams));
-                addLnTag(sb, "        addForMap(this.[lines], get[For]Key(\"[tag]\"[params])[strsValue]);"
-                        , subTag.parentTag, tag0, subTag.tag, keyParams, strsValue);
-                addLnTag(sb, "    }");
-            }
+            addLnTag(sb, "    protected void [lines]If([params]) {"
+                    , subTag.tag, getParams(methodParams));
+            addLnTag(sb, "        addForMap(this.[lines], get[For]Key(\"[tag]\"[params])[strsValue]);"
+                    , subTag.parentTag, tag0, subTag.tag, keyParams, strsValue);
+            addLnTag(sb, "        [lines]Ifs.put(getIfKey(\"[linesAdd1]\"[params]), true);"
+                    , subTag.parentTag, subTag.tag, keyParams);
+            addLnTag(sb, "    }");
         } else {
             addLnTag(sb, "    protected void [lines]([params]) {"
                     , subTag.tag, getParams(methodParams));

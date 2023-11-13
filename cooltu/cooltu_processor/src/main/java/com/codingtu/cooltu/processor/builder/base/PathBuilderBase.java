@@ -140,23 +140,26 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
         countAdd(fileListCounts, getForKey("fileList"));
     }
 
-    protected void obtainIf(boolean is) {
+    protected void isObtain(boolean is) {
         obtainIfs.put(getIfKey("obtain"), is);
     }
     protected void obtainIf(String name, String params, String sDCardToolFullName) {
         addForMap(this.obtain, getIfKey("obtain"), name, params, sDCardToolFullName);
+        obtainIfs.put(getIfKey("obtain"), true);
     }
-    protected void initFilesParamIf(int i0, boolean is) {
+    protected void isInitFilesParam(int i0, boolean is) {
         initFilesIfs.put(getIfKey("initFilesParam", i0), is);
     }
     protected void initFilesParamIf(int i0, String othersParam) {
         addForMap(this.initFiles, getIfKey("initFilesParam", i0), othersParam);
+        initFilesIfs.put(getIfKey("initFilesParam", i0), true);
     }
-    protected void filesMethodParamIf(int i0, boolean is) {
+    protected void isFilesMethodParam(int i0, boolean is) {
         filesMethodIfs.put(getIfKey("filesMethodParam", i0), is);
     }
     protected void filesMethodParamIf(int i0, String others) {
         addForMap(this.filesMethod, getIfKey("filesMethodParam", i0), others);
+        filesMethodIfs.put(getIfKey("filesMethodParam", i0), true);
     }
 
     @Override

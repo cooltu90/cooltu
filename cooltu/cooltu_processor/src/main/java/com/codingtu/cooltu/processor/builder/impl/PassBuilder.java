@@ -65,9 +65,6 @@ public class PassBuilder extends PassBuilderBase {
 
                 String fieldName = ConvertTool.toStaticType(kv.v);
                 field(position, fieldName, kv.v);
-                isBeanIf(position, false);
-                isBeanListIf(position, false);
-                isOtherIf(position, true);
                 if (ClassTool.isInt(kv.k)) {
                     method(position, "int", kv.v);
                     isOtherIf(position, "Int", fieldName, ", -1");
@@ -87,14 +84,10 @@ public class PassBuilder extends PassBuilderBase {
                     method(position, "boolean", kv.v);
                     isOtherIf(position, "Boolean", fieldName, ", false");
                 } else if (ClassTool.isList(kv.k)) {
-                    isBeanListIf(position, true);
-                    isOtherIf(position, false);
                     String beanType = StringTool.getSub(kv.k, "List", "<", ">");
                     method(position, kv.k, kv.v);
                     isBeanListIf(position, FullName.JSON_TOOL, beanType, fieldName);
                 } else {
-                    isBeanIf(position, true);
-                    isOtherIf(position, false);
                     method(position, kv.k, kv.v);
                     isBeanIf(position, FullName.JSON_TOOL, kv.k, fieldName);
                 }

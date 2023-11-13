@@ -48,23 +48,26 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
         countAdd(methodCounts, getForKey("method"));
     }
 
-    protected void sendParamsIf(int i0, boolean is) {
+    protected void isSendParams(int i0, boolean is) {
         methodIfs.put(getIfKey("sendParams", i0), is);
     }
     protected void sendParamsIf(int i0, String sendParamFullName) {
         addForMap(this.method, getIfKey("sendParams", i0), sendParamFullName, sendParamFullName);
+        methodIfs.put(getIfKey("sendParams", i0), true);
     }
-    protected void sendParamsGetIf(int i0, boolean is) {
+    protected void isSendParamsGet(int i0, boolean is) {
         methodIfs.put(getIfKey("sendParamsGet", i0), is);
     }
     protected void sendParamsGetIf(int i0, String sendParamFullName) {
         addForMap(this.method, getIfKey("sendParamsGet", i0), sendParamFullName, sendParamFullName);
+        methodIfs.put(getIfKey("sendParamsGet", i0), true);
     }
-    protected void postJsonBodyIf(int i0, boolean is) {
+    protected void isPostJsonBody(int i0, boolean is) {
         methodIfs.put(getIfKey("postJsonBody", i0), is);
     }
     protected void postJsonBodyIf(int i0, String joFullName, String jsonToolFullName) {
         addForMap(this.method, getIfKey("postJsonBody", i0), joFullName, jsonToolFullName);
+        methodIfs.put(getIfKey("postJsonBody", i0), true);
     }
 
     @Override

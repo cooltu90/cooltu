@@ -80,15 +80,12 @@ public class NetBuilder extends NetBuilderBase {
                 }
 
                 boolean hasParams = !CountTool.isNull(netInfo.params);
-                sendParamsIf(methodIndex, hasParams);
-                sendParamsGetIf(methodIndex, hasParams);
                 if (hasParams) {
                     String sendParamsFullName = CurrentPath.sendParamsFullName(netInfo.methodName);
                     sendParamsIf(methodIndex, sendParamsFullName);
                     sendParamsGetIf(methodIndex, sendParamsFullName);
                 }
 
-                postJsonBodyIf(methodIndex, netInfo.isJsonBody);
                 if (netInfo.isJsonBody) {
                     postJsonBodyIf(methodIndex, FullName.JO, FullName.JSON_TOOL);
                 }

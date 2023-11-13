@@ -109,7 +109,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         addTag(netBackIFullName, FullName.NET_BACK_I);
         addTag(coreSendParamsFullName, FullName.CORE_SEND_PARAMS);
 
-        layoutIf(info.layout != null);
         if (info.layout != null) {
             layoutIf(info.layout.toString());
         }
@@ -150,17 +149,13 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                 List<KV<String, String>> kvs = info.methodParams.getKvs();
                 int kvCount = CountTool.count(kvs);
 
-                onClickSwitchParamsIf(clickViewInfoIndex, false);
-
                 Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {
-
                     private int paramsIndex;
 
                     @Override
                     public boolean each(int kvIndex, KV<String, String> kv) {
                         String divider = (kvIndex != kvCount - 1) ? "," : "";
                         if (kvIndex == 0 && FullName.VIEW.equals(kv.k)) {
-                            onClickSwitchParamsIf(clickViewInfoIndex, true);
                             onClickSwitchParamsIf(clickViewInfoIndex, divider);
                         } else {
                             onClickSwitchParams(clickViewInfoIndex, paramsIndex, kv.k, Pkg.LIB4A, paramsIndex + "", divider);
@@ -202,7 +197,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
 
         //onclick继承
-        superOnClickIf(info.hasBaseClass());
+        isSuperOnClick(info.hasBaseClass());
 
         //colorStr
         Ts.ls(info.colorStrs, new BaseTs.EachTs<KV<String, String>>() {
@@ -265,7 +260,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         });
 
         //accept
-        superAcceptIf(info.hasBaseClass());
+        isSuperAccept(info.hasBaseClass());
         Ts.ls(info.netBacks, new BaseTs.EachTs<NetBackInfo>() {
             @Override
             public boolean each(int position, NetBackInfo netBackInfo) {
@@ -351,7 +346,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                     @Override
                     public boolean each(int paramIndex, KV<String, String> kv) {
                         actBackParam(actBackIndex, paramIndex, FullName.PASS, kv.v);
-                        actBackParamDividerIf(actBackIndex, paramIndex, paramIndex != (CountTool.count(ee.getParameters()) - 1));
+                        isActBackParamDivider(actBackIndex, paramIndex, paramIndex != (CountTool.count(ee.getParameters()) - 1));
                         return false;
                     }
                 });
@@ -376,21 +371,19 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                         FullName.PERMISSIONS, methodNameStatic, actNameStatic, methodName);
 
                 boolean isParam = !CountTool.isNull(ee.getParameters());
-
-                allowIf(permissionIndex, isParam);
                 if (isParam) {
                     allowIf(permissionIndex, FullName.PERMISSION_TOOL);
                 }
 
                 permissionBackMethod(permissionIndex, methodName);
 
-                allowParamIf(permissionIndex, isParam);
+                isAllowParam(permissionIndex, isParam);
 
                 return false;
             }
         });
 
-        onCreateCompleteInitIf(!info.hasChild());
+        isOnCreateCompleteInit(!info.hasChild());
 
         //form
         if (info.form != null) {
@@ -409,19 +402,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             field(fieldCount[0]++, Constant.SIGN_PROTECTED, formBeanClass, name);
             field(fieldCount[0]++, Constant.SIGN_PROTECTED, "boolean", "initFormBean");
             field(fieldCount[0]++, Constant.SIGN_PUBLIC, "BindHandler", "bindHandler");
-
-            bindHandlerIf(true);
             bindHandlerIf(formBeanClass, name);
-
-            formInitIf(true);
             formInitIf(name, formBeanClass);
-
             dealFormBean(formBeanTe, name);
-
-
-        } else {
-            bindHandlerIf(false);
-            formInitIf(false);
         }
 
 
@@ -449,7 +432,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
                     editTextInit(index, viewName, FullName.HANDLER_TEXT_WATCHER, FullName.FORM_TYPE, type, "" + index);
                     //
-                    handlerEditTextIf(true);
                     handlerEditTextIf(FullName.FORM_TYPE, type);
 
                     handlerEditTextItem(index, index + "", beanName, ElementTools.simpleName(ve));
@@ -471,7 +453,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
                     textViewInit(index, viewName, FullName.HANDLER_TEXT_WATCHER, FullName.FORM_TYPE, type, "" + index);
                     //
-                    handlerTextViewIf(true);
                     handlerTextViewIf(FullName.FORM_TYPE, type);
 
                     handlerTextViewItem(index, index + "", beanName, ElementTools.simpleName(ve));

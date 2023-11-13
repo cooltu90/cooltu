@@ -28,17 +28,19 @@ public abstract class ActBackIntentBuilderBase extends com.codingtu.cooltu.proce
         countAdd(methodCounts, getForKey("method"));
     }
 
-    protected void methodParamOtherIf(int i0, int i1, boolean is) {
+    protected void isMethodParamOther(int i0, int i1, boolean is) {
         methodIfs.put(getIfKey("methodParamOther", i0, i1), is);
     }
     protected void methodParamOtherIf(int i0, int i1, String passFullName, String field, String param) {
         addForMap(this.method, getIfKey("methodParamOther", i0, i1), passFullName, field, param);
+        methodIfs.put(getIfKey("methodParamOther", i0, i1), true);
     }
-    protected void methodParamBeanIf(int i0, int i1, boolean is) {
+    protected void isMethodParamBean(int i0, int i1, boolean is) {
         methodIfs.put(getIfKey("methodParamBean", i0, i1), is);
     }
     protected void methodParamBeanIf(int i0, int i1, String passFullName, String field, String jsonToolFullName, String param) {
         addForMap(this.method, getIfKey("methodParamBean", i0, i1), passFullName, field, jsonToolFullName, param);
+        methodIfs.put(getIfKey("methodParamBean", i0, i1), true);
     }
 
     @Override

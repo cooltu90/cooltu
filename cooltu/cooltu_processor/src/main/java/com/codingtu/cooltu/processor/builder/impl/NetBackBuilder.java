@@ -46,28 +46,17 @@ public class NetBackBuilder extends NetBackBuilderBase {
 
         String typeName = ee.getReturnType().toString();
         if (ClassTool.isType(typeName, void.class, Void.class)) {
-            fieldIf(false);
-            acceptIf(false);
+
         } else if (ClassTool.isList(typeName)) {
-            fieldIf(true);
             String beanType = StringTool.getSub(typeName, "List", "<", ">");
             String name = ConvertTool.toMethodType(CurrentPath.javaInfo(beanType).name) + "s";
             fieldIf(typeName, name);
-            //
-            acceptIf(true);
             acceptIf(FullName.STRING_TOOL, name, FullName.JSON_TOOL, "toBeanList", beanType);
-
         } else if (ClassTool.isString(typeName)) {
-            fieldIf(false);
-            acceptIf(false);
+
         } else {
-
             String name = ConvertTool.toMethodType(CurrentPath.javaInfo(typeName).name);
-
-            fieldIf(true);
             fieldIf(typeName, name);
-            //
-            acceptIf(true);
             acceptIf(FullName.STRING_TOOL, name, FullName.JSON_TOOL, "toBean", typeName);
         }
 

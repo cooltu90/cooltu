@@ -83,10 +83,9 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
                         }
 
                         methodParam(methodIndex, paramIndex, anno, kv.k, kv.v, paramIndex != paramCount - 1 ? "," : "");
-                        annoInfoIf(methodIndex, paramIndex, true);
-                        annoValueNameIf(methodIndex, paramIndex, param.encoded());
+                        isAnnoValueName(methodIndex, paramIndex, param.encoded());
                         annoInfoIf(methodIndex, paramIndex, param.value());
-                        annoEncodeIf(methodIndex, paramIndex, param.encoded());
+                        isAnnoEncode(methodIndex, paramIndex, param.encoded());
 
                         return false;
                     });
@@ -97,7 +96,6 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
                     if (postMethod.isJsonBody()) {
                         method(count[0]++, FullName.RETROFIT_POST, postMethod.value(), ElementTools.simpleName(ee));
                         methodParam(methodIndex, 0, FullName.RETROFIT_BODY, FullName.OKHTTP_REQUEST_BODY, "body", "");
-                        annoInfoIf(methodIndex, 0, false);
                     } else {
                         method(count[0]++, FullName.RETROFIT_POST, postMethod.value(), ElementTools.simpleName(ee));
                         List<? extends VariableElement> parameters = ee.getParameters();
@@ -124,10 +122,11 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
                             }
 
                             methodParam(methodIndex, paramIndex, anno, type, value, paramIndex != paramCount - 1 ? "," : "");
-                            annoInfoIf(methodIndex, paramIndex, param.type() != ParamType.JSON_BODY);
-                            annoValueNameIf(methodIndex, paramIndex, param.encoded());
-                            annoInfoIf(methodIndex, paramIndex, StringTool.isBlank(param.value()) ? kv.v : param.value());
-                            annoEncodeIf(methodIndex, paramIndex, param.encoded());
+                            isAnnoValueName(methodIndex, paramIndex, param.encoded());
+                            if (param.type() != ParamType.JSON_BODY) {
+                                annoInfoIf(methodIndex, paramIndex, StringTool.isBlank(param.value()) ? kv.v : param.value());
+                            }
+                            isAnnoEncode(methodIndex, paramIndex, param.encoded());
 
                             return false;
                         });

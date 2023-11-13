@@ -32,17 +32,19 @@ public abstract class NetBackBuilderBase extends com.codingtu.cooltu.processor.b
     }
 
 
-    protected void fieldIf(boolean is) {
+    protected void isField(boolean is) {
         fieldIfs.put(getIfKey("field"), is);
     }
     protected void fieldIf(String type, String name) {
         addForMap(this.field, getIfKey("field"), type, name);
+        fieldIfs.put(getIfKey("field"), true);
     }
-    protected void acceptIf(boolean is) {
+    protected void isAccept(boolean is) {
         acceptIfs.put(getIfKey("accept"), is);
     }
     protected void acceptIf(String stringToolFullName, String name, String jsonToolFullName, String method, String type) {
         addForMap(this.accept, getIfKey("accept"), stringToolFullName, name, jsonToolFullName, method, type);
+        acceptIfs.put(getIfKey("accept"), true);
     }
 
     @Override

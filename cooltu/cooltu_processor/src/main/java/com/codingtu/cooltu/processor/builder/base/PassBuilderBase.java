@@ -36,23 +36,26 @@ public abstract class PassBuilderBase extends com.codingtu.cooltu.processor.buil
         countAdd(methodCounts, getForKey("method"));
     }
 
-    protected void isBeanIf(int i0, boolean is) {
+    protected void isIsBean(int i0, boolean is) {
         methodIfs.put(getIfKey("isBean", i0), is);
     }
     protected void isBeanIf(int i0, String jsonToolFullName, String beanClass, String fieldName) {
         addForMap(this.method, getIfKey("isBean", i0), jsonToolFullName, beanClass, fieldName);
+        methodIfs.put(getIfKey("isBean", i0), true);
     }
-    protected void isBeanListIf(int i0, boolean is) {
+    protected void isIsBeanList(int i0, boolean is) {
         methodIfs.put(getIfKey("isBeanList", i0), is);
     }
     protected void isBeanListIf(int i0, String jsonToolFullName, String beanClass, String fieldName) {
         addForMap(this.method, getIfKey("isBeanList", i0), jsonToolFullName, beanClass, fieldName);
+        methodIfs.put(getIfKey("isBeanList", i0), true);
     }
-    protected void isOtherIf(int i0, boolean is) {
+    protected void isIsOther(int i0, boolean is) {
         methodIfs.put(getIfKey("isOther", i0), is);
     }
     protected void isOtherIf(int i0, String methodType, String fieldName, String defaultValue) {
         addForMap(this.method, getIfKey("isOther", i0), methodType, fieldName, defaultValue);
+        methodIfs.put(getIfKey("isOther", i0), true);
     }
 
     @Override
