@@ -156,6 +156,11 @@ public abstract class CoreBuilder implements Symbol {
         return key + "-" + i;
     }
 
+    protected boolean isIf(Map<String, Boolean> ifs, String key) {
+        Boolean aBoolean = ifs.get(key);
+        return aBoolean == null ? false : aBoolean;
+    }
+
     public void addLnTag(StringBuilder tag, String line, Object... tags) {
         tag.append(dealLine(line, tags)).append("\r\n");
     }

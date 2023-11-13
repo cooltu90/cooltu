@@ -129,7 +129,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
                         , subTag.parentTag, subTag.tag, keyParams0);
                 addLnTag(ifs, "    }");
 
-                addLnTag(dealLinesInParent, "        [space]if ([lines]Ifs.get(getIfKey(\"[tag]\"[params]))) {"
+                addLnTag(dealLinesInParent, "        [space]if (isIf([lines]Ifs, getIfKey(\"[tag]\"[params]))) {"
                         , space, subTag.parentTag, subTag.tag, keyParams0);
                 addLnTag(dealLinesInParent, "            [space]List<String> [lines][2] = [lines].get(getIfKey(\"[tag]\"[params]));"
                         , space, subTag.parentTag, level, subTag.parentTag, subTag.tag, keyParams0);

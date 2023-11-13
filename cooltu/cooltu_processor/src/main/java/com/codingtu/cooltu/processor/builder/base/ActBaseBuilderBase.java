@@ -467,7 +467,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> field0 = field.get(getForKey("field", i0));
             addLnTag(fieldSb, "    [sign] [type] [name];", field0.get(0), field0.get(1), field0.get(2));
         }
-        if (layoutIfs.get(getIfKey("layout"))) {
+        if (isIf(layoutIfs, getIfKey("layout"))) {
             List<String> layout0 = layout.get(getIfKey("layout"));
             addLnTag(layoutSb, "        setContentView([layout]);", layout0.get(0));
         }
@@ -499,7 +499,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> startInit0 = startInit.get(getForKey("startInit", i0));
             addLnTag(startInitSb, "        [name] = [passFullName].[name](getIntent());", startInit0.get(0), startInit0.get(1), startInit0.get(2));
         }
-        if (formInitIfs.get(getIfKey("formInit"))) {
+        if (isIf(formInitIfs, getIfKey("formInit"))) {
             List<String> formInit0 = formInit.get(getIfKey("formInit"));
             addLnTag(formInitSb, "        if ([name] == null) {", formInit0.get(0));
             addLnTag(formInitSb, "            [name] = new [type]();", formInit0.get(1), formInit0.get(2));
@@ -515,11 +515,11 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 addLnTag(formInitSb, "        [name].addTextChangedListener(new [handlerTextWatcherFullName](bindHandler, [formTypeFullName].[type], [index]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
             }
         }
-        if (onCreateCompleteInitIfs.get(getIfKey("onCreateCompleteInit"))) {
+        if (isIf(onCreateCompleteInitIfs, getIfKey("onCreateCompleteInit"))) {
             List<String> onCreateCompleteInit0 = onCreateCompleteInit.get(getIfKey("onCreateCompleteInit"));
             addLnTag(onCreateCompleteInitSb, "        onCreateComplete();");
         }
-        if (superOnClickIfs.get(getIfKey("superOnClick"))) {
+        if (isIf(superOnClickIfs, getIfKey("superOnClick"))) {
             List<String> superOnClick0 = superOnClick.get(getIfKey("superOnClick"));
             addLnTag(superOnClickSb, "        super.onClick(v);");
         }
@@ -530,7 +530,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 addLnTag(onClickSwithSb, "            case [id]:", onClickSwith1.get(0));
             }
             addLnTag(onClickSwithSb, "                [methodName](", onClickSwith0.get(0));
-            if (onClickSwithIfs.get(getIfKey("onClickSwitchParams", i0))) {
+            if (isIf(onClickSwithIfs, getIfKey("onClickSwitchParams", i0))) {
                 List<String> onClickSwith1 = onClickSwith.get(getIfKey("onClickSwitchParams", i0));
                 addLnTag(onClickSwithSb, "                        v[divider]", onClickSwith1.get(0));
             }
@@ -545,7 +545,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> onClickMethods0 = onClickMethods.get(getForKey("onClickMethods", i0));
             addLnTag(onClickMethodsSb, "    protected void [methodName]([params]) {}", onClickMethods0.get(0), onClickMethods0.get(1));
         }
-        if (superAcceptIfs.get(getIfKey("superAccept"))) {
+        if (isIf(superAcceptIfs, getIfKey("superAccept"))) {
             List<String> superAccept0 = superAccept.get(getIfKey("superAccept"));
             addLnTag(superAcceptSb, "        super.accept(code, result, params, objs);");
         }
@@ -572,7 +572,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             for (int i1 = 0; i1 < count(actBackCounts, getForKey("actBackParam", i0)); i1++) {
                 List<String> actBack1 = actBack.get(getForKey("actBackParam", i0, i1));
                 StringBuilder actBackParamDividerSb = new StringBuilder();
-                if (actBackIfs.get(getIfKey("actBackParamDivider", i0, i1))) {
+                if (isIf(actBackIfs, getIfKey("actBackParamDivider", i0, i1))) {
                     List<String> actBack2 = actBack.get(getIfKey("actBackParamDivider", i0, i1));
                     addTag(actBackParamDividerSb, ", ");
                 }
@@ -589,7 +589,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> permissionBack0 = permissionBack.get(getForKey("permissionBack", i0));
             addLnTag(permissionBackSb, "        [ifSign] (requestCode == [permissionsFullName].CODE_[methodNameStatic]_IN_[actStaticName]) {", permissionBack0.get(0), permissionBack0.get(1), permissionBack0.get(2), permissionBack0.get(3));
             StringBuilder allowSb = new StringBuilder();
-            if (permissionBackIfs.get(getIfKey("allow", i0))) {
+            if (isIf(permissionBackIfs, getIfKey("allow", i0))) {
                 List<String> permissionBack1 = permissionBack.get(getIfKey("allow", i0));
                 addTag(allowSb, "[permissionToolFullName].allow(grantResults)", permissionBack1.get(0));
             }
@@ -599,13 +599,13 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         for (int i0 = 0; i0 < count(permissionBackMethodCounts, getForKey("permissionBackMethod")); i0++) {
             List<String> permissionBackMethod0 = permissionBackMethod.get(getForKey("permissionBackMethod", i0));
             StringBuilder allowParamSb = new StringBuilder();
-            if (permissionBackMethodIfs.get(getIfKey("allowParam", i0))) {
+            if (isIf(permissionBackMethodIfs, getIfKey("allowParam", i0))) {
                 List<String> permissionBackMethod1 = permissionBackMethod.get(getIfKey("allowParam", i0));
                 addTag(allowParamSb, "boolean isAllow");
             }
             addLnTag(permissionBackMethodSb, "    protected void [methodName]([allowParam]) {}", permissionBackMethod0.get(0), allowParamSb.toString());
         }
-        if (bindHandlerIfs.get(getIfKey("bindHandler"))) {
+        if (isIf(bindHandlerIfs, getIfKey("bindHandler"))) {
             List<String> bindHandler0 = bindHandler.get(getIfKey("bindHandler"));
             addLnTag(bindHandlerSb, "    public static class BindHandler extends android.os.Handler {");
             addLnTag(bindHandlerSb, "        private [beanType] [beanName];", bindHandler0.get(0), bindHandler0.get(1));
@@ -617,7 +617,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             addLnTag(bindHandlerSb, "        @Override");
             addLnTag(bindHandlerSb, "        public void handleMessage(android.os.Message msg) {");
             addLnTag(bindHandlerSb, "            super.handleMessage(msg);");
-            if (bindHandlerIfs.get(getIfKey("handlerEditText"))) {
+            if (isIf(bindHandlerIfs, getIfKey("handlerEditText"))) {
                 List<String> bindHandler1 = bindHandler.get(getIfKey("handlerEditText"));
                 addLnTag(bindHandlerSb, "            if (msg.what == [formTypeFullName].[type]) {", bindHandler1.get(0), bindHandler1.get(1));
                 addLnTag(bindHandlerSb, "                switch (msg.arg1) {");
@@ -630,7 +630,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 addLnTag(bindHandlerSb, "                }");
                 addLnTag(bindHandlerSb, "            }");
             }
-            if (bindHandlerIfs.get(getIfKey("handlerTextView"))) {
+            if (isIf(bindHandlerIfs, getIfKey("handlerTextView"))) {
                 List<String> bindHandler1 = bindHandler.get(getIfKey("handlerTextView"));
                 addLnTag(bindHandlerSb, "            if (msg.what == [formTypeFullName].[type]) {", bindHandler1.get(0), bindHandler1.get(1));
                 addLnTag(bindHandlerSb, "                switch (msg.arg1) {");

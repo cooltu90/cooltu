@@ -101,7 +101,7 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
         for (int i0 = 0; i0 < count(methodCounts, getForKey("method")); i0++) {
             List<String> method0 = method.get(getForKey("method", i0));
             addLnTag(methodSb, "    public static [apiFullName] [methodName]([methodParams]) {", method0.get(0), method0.get(1), method0.get(2));
-            if (methodIfs.get(getIfKey("sendParams", i0))) {
+            if (isIf(methodIfs, getIfKey("sendParams", i0))) {
                 List<String> method1 = method.get(getIfKey("sendParams", i0));
                 addLnTag(methodSb, "        [sendParamFullName] params = new [sendParamFullName]();", method1.get(0), method1.get(1));
                 for (int i1 = 0; i1 < count(methodCounts, getForKey("sendParamsSet", i0)); i1++) {
@@ -110,11 +110,11 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
                 }
             }
             addLnTag(methodSb, "        return [netToolFullName].api((retrofit, ps) -> {", method0.get(3));
-            if (methodIfs.get(getIfKey("sendParamsGet", i0))) {
+            if (isIf(methodIfs, getIfKey("sendParamsGet", i0))) {
                 List<String> method1 = method.get(getIfKey("sendParamsGet", i0));
                 addLnTag(methodSb, "            [sendParamFullName] paramsGet = ([sendParamFullName]) ps;", method1.get(0), method1.get(1));
             }
-            if (methodIfs.get(getIfKey("postJsonBody", i0))) {
+            if (isIf(methodIfs, getIfKey("postJsonBody", i0))) {
                 List<String> method1 = method.get(getIfKey("postJsonBody", i0));
                 addLnTag(methodSb, "            [joFullName] jo = [jsonToolFullName].createJO();", method1.get(0), method1.get(1));
                 for (int i1 = 0; i1 < count(methodCounts, getForKey("postJsonBodySet", i0)); i1++) {

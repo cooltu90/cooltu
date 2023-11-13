@@ -234,7 +234,7 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
             List<String> fileFileds0 = fileFileds.get(getForKey("fileFileds", i0));
             addLnTag(fileFiledsSb, "    public [type] [name];", fileFileds0.get(0), fileFileds0.get(1));
         }
-        if (obtainIfs.get(getIfKey("obtain"))) {
+        if (isIf(obtainIfs, getIfKey("obtain"))) {
             List<String> obtain0 = obtain.get(getIfKey("obtain"));
             addLnTag(obtainSb, "    public static [name] obtain([params]) {", obtain0.get(0), obtain0.get(1));
             addLnTag(obtainSb, "        return root([sDCardToolFullName].getSDCard()", obtain0.get(2));
@@ -258,7 +258,7 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
             addLnTag(initFilesSb, "                this.root");
             addLnTag(initFilesSb, "                        + addPrexSeparator(\"[fileName]\")", initFiles0.get(2));
             addLnTag(initFilesSb, "                , \"[fileType]\"", initFiles0.get(3));
-            if (initFilesIfs.get(getIfKey("initFilesParam", i0))) {
+            if (isIf(initFilesIfs, getIfKey("initFilesParam", i0))) {
                 List<String> initFiles1 = initFiles.get(getIfKey("initFilesParam", i0));
                 addLnTag(initFilesSb, "                , [othersParam]", initFiles1.get(0));
             }
@@ -301,7 +301,7 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
             addLnTag(filesMethodSb, "                this.root");
             addLnTag(filesMethodSb, "                        + addPrexSeparator([value] + \".txt\")", filesMethod0.get(4));
             addLnTag(filesMethodSb, "                , \"[fileType]\"", filesMethod0.get(5));
-            if (filesMethodIfs.get(getIfKey("filesMethodParam", i0))) {
+            if (isIf(filesMethodIfs, getIfKey("filesMethodParam", i0))) {
                 List<String> filesMethod1 = filesMethod.get(getIfKey("filesMethodParam", i0));
                 addLnTag(filesMethodSb, "                , [others]", filesMethod1.get(0));
             }

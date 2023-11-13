@@ -74,15 +74,15 @@ public abstract class PassBuilderBase extends com.codingtu.cooltu.processor.buil
         for (int i0 = 0; i0 < count(methodCounts, getForKey("method")); i0++) {
             List<String> method0 = method.get(getForKey("method", i0));
             addLnTag(methodSb, "    public static final [type] [methodName](Intent data) {", method0.get(0), method0.get(1));
-            if (methodIfs.get(getIfKey("isBean", i0))) {
+            if (isIf(methodIfs, getIfKey("isBean", i0))) {
                 List<String> method1 = method.get(getIfKey("isBean", i0));
                 addLnTag(methodSb, "        return [jsonToolFullName].toBean([beanClass].class, data.getStringExtra([fieldName]));", method1.get(0), method1.get(1), method1.get(2));
             }
-            if (methodIfs.get(getIfKey("isBeanList", i0))) {
+            if (isIf(methodIfs, getIfKey("isBeanList", i0))) {
                 List<String> method1 = method.get(getIfKey("isBeanList", i0));
                 addLnTag(methodSb, "        return [jsonToolFullName].toBeanList([beanClass].class, data.getStringExtra([fieldName]));", method1.get(0), method1.get(1), method1.get(2));
             }
-            if (methodIfs.get(getIfKey("isOther", i0))) {
+            if (isIf(methodIfs, getIfKey("isOther", i0))) {
                 List<String> method1 = method.get(getIfKey("isOther", i0));
                 addLnTag(methodSb, "        return data.get[methodType]Extra([fieldName][defaultValue]);", method1.get(0), method1.get(1), method1.get(2));
             }

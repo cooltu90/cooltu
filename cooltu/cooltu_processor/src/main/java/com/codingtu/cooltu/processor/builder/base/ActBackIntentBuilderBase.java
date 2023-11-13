@@ -56,11 +56,11 @@ public abstract class ActBackIntentBuilderBase extends com.codingtu.cooltu.proce
             addLnTag(methodSb, "        Intent intent = new Intent();");
             for (int i1 = 0; i1 < count(methodCounts, getForKey("methodParam", i0)); i1++) {
                 List<String> method1 = method.get(getForKey("methodParam", i0, i1));
-                if (methodIfs.get(getIfKey("methodParamOther", i0, i1))) {
+                if (isIf(methodIfs, getIfKey("methodParamOther", i0, i1))) {
                     List<String> method2 = method.get(getIfKey("methodParamOther", i0, i1));
                     addLnTag(methodSb, "        intent.putExtra([passFullName].[field], [param]);", method2.get(0), method2.get(1), method2.get(2));
                 }
-                if (methodIfs.get(getIfKey("methodParamBean", i0, i1))) {
+                if (isIf(methodIfs, getIfKey("methodParamBean", i0, i1))) {
                     List<String> method2 = method.get(getIfKey("methodParamBean", i0, i1));
                     addLnTag(methodSb, "        intent.putExtra([passFullName].[field], [jsonToolFullName].toJson([param]));", method2.get(0), method2.get(1), method2.get(2), method2.get(3));
                 }

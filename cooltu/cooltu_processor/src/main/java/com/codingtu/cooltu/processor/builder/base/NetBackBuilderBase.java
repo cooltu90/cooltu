@@ -47,11 +47,11 @@ public abstract class NetBackBuilderBase extends com.codingtu.cooltu.processor.b
 
     @Override
     protected void dealLinesInParent() {
-        if (fieldIfs.get(getIfKey("field"))) {
+        if (isIf(fieldIfs, getIfKey("field"))) {
             List<String> field0 = field.get(getIfKey("field"));
             addLnTag(fieldSb, "    public [type] [name];", field0.get(0), field0.get(1));
         }
-        if (acceptIfs.get(getIfKey("accept"))) {
+        if (isIf(acceptIfs, getIfKey("accept"))) {
             List<String> accept0 = accept.get(getIfKey("accept"));
             addLnTag(acceptSb, "        if ([stringToolFullName].isNotBlank(json)) {", accept0.get(0));
             addLnTag(acceptSb, "            [name] = [jsonToolFullName].[method]([type].class, json);", accept0.get(1), accept0.get(2), accept0.get(3), accept0.get(4));

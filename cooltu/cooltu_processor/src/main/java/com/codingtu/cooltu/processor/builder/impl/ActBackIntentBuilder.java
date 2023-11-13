@@ -45,6 +45,7 @@ public class ActBackIntentBuilder extends ActBackIntentBuilderBase {
             }
         });
 
+
         JavaInfo actBackJavaInfo = CurrentPath.javaInfo(actBackClass);
         String methodName = StringTool.cutSuffix(ConvertTool.toMethodType(actBackJavaInfo.name), Suffix.ACTIVITY);
 

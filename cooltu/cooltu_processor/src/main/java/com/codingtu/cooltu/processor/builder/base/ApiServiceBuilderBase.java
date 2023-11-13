@@ -63,15 +63,15 @@ public abstract class ApiServiceBuilderBase extends com.codingtu.cooltu.processo
             for (int i1 = 0; i1 < count(methodCounts, getForKey("methodParam", i0)); i1++) {
                 List<String> method1 = method.get(getForKey("methodParam", i0, i1));
                 StringBuilder annoInfoSb = new StringBuilder();
-                if (methodIfs.get(getIfKey("annoInfo", i0, i1))) {
+                if (isIf(methodIfs, getIfKey("annoInfo", i0, i1))) {
                     List<String> method2 = method.get(getIfKey("annoInfo", i0, i1));
                     StringBuilder annoValueNameSb = new StringBuilder();
-                    if (methodIfs.get(getIfKey("annoValueName", i0, i1))) {
+                    if (isIf(methodIfs, getIfKey("annoValueName", i0, i1))) {
                         List<String> method3 = method.get(getIfKey("annoValueName", i0, i1));
                         addTag(annoValueNameSb, "value = ");
                     }
                     StringBuilder annoEncodeSb = new StringBuilder();
-                    if (methodIfs.get(getIfKey("annoEncode", i0, i1))) {
+                    if (isIf(methodIfs, getIfKey("annoEncode", i0, i1))) {
                         List<String> method3 = method.get(getIfKey("annoEncode", i0, i1));
                         addTag(annoEncodeSb, ", encoded = true");
                     }
