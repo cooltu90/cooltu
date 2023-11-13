@@ -194,213 +194,98 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         bindHandler = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
-    protected void fieldCount(int count) {
-        fieldCounts.put(getForKey("field"), count);
-    }
-    protected void fieldCountAdd() {
-        countAdd(fieldCounts, getForKey("field"));
-    }
-    protected void findViewCount(int count) {
-        findViewCounts.put(getForKey("findView"), count);
-    }
-    protected void findViewCountAdd() {
-        countAdd(findViewCounts, getForKey("findView"));
-    }
-    protected void setOnClickCount(int count) {
-        setOnClickCounts.put(getForKey("setOnClick"), count);
-    }
-    protected void setOnClickCountAdd() {
-        countAdd(setOnClickCounts, getForKey("setOnClick"));
-    }
-    protected void colorStrInitCount(int count) {
-        colorStrInitCounts.put(getForKey("colorStrInit"), count);
-    }
-    protected void colorStrInitCountAdd() {
-        countAdd(colorStrInitCounts, getForKey("colorStrInit"));
-    }
-    protected void colorResInitCount(int count) {
-        colorResInitCounts.put(getForKey("colorResInit"), count);
-    }
-    protected void colorResInitCountAdd() {
-        countAdd(colorResInitCounts, getForKey("colorResInit"));
-    }
-    protected void dpInitCount(int count) {
-        dpInitCounts.put(getForKey("dpInit"), count);
-    }
-    protected void dpInitCountAdd() {
-        countAdd(dpInitCounts, getForKey("dpInit"));
-    }
-    protected void dimenInitCount(int count) {
-        dimenInitCounts.put(getForKey("dimenInit"), count);
-    }
-    protected void dimenInitCountAdd() {
-        countAdd(dimenInitCounts, getForKey("dimenInit"));
-    }
-    protected void startInitCount(int count) {
-        startInitCounts.put(getForKey("startInit"), count);
-    }
-    protected void startInitCountAdd() {
-        countAdd(startInitCounts, getForKey("startInit"));
-    }
-    protected void editTextInitCount(int count) {
-        formInitCounts.put(getForKey("editTextInit"), count);
-    }
-    protected void editTextInitCountAdd() {
-        countAdd(formInitCounts, getForKey("editTextInit"));
-    }
-    protected void textViewInitCount(int count) {
-        formInitCounts.put(getForKey("textViewInit"), count);
-    }
-    protected void textViewInitCountAdd() {
-        countAdd(formInitCounts, getForKey("textViewInit"));
-    }
-    protected void onClickSwithCount(int count) {
-        onClickSwithCounts.put(getForKey("onClickSwith"), count);
-    }
-    protected void onClickSwithCountAdd() {
-        countAdd(onClickSwithCounts, getForKey("onClickSwith"));
-    }
-    protected void onClickCaseCount(int i0, int count) {
-        onClickSwithCounts.put(getForKey("onClickCase", i0), count);
-    }
-    protected void onClickCaseCountAdd(int i0) {
-        countAdd(onClickSwithCounts, getForKey("onClickCase", i0));
-    }
-    protected void onClickSwitchParamsCount(int i0, int count) {
-        onClickSwithCounts.put(getForKey("onClickSwitchParams", i0), count);
-    }
-    protected void onClickSwitchParamsCountAdd(int i0) {
-        countAdd(onClickSwithCounts, getForKey("onClickSwitchParams", i0));
-    }
-    protected void onClickMethodsCount(int count) {
-        onClickMethodsCounts.put(getForKey("onClickMethods"), count);
-    }
-    protected void onClickMethodsCountAdd() {
-        countAdd(onClickMethodsCounts, getForKey("onClickMethods"));
-    }
-    protected void acceptCount(int count) {
-        acceptCounts.put(getForKey("accept"), count);
-    }
-    protected void acceptCountAdd() {
-        countAdd(acceptCounts, getForKey("accept"));
-    }
-    protected void acceptMethodCount(int count) {
-        acceptMethodCounts.put(getForKey("acceptMethod"), count);
-    }
-    protected void acceptMethodCountAdd() {
-        countAdd(acceptMethodCounts, getForKey("acceptMethod"));
-    }
-    protected void actBackCount(int count) {
-        actBackCounts.put(getForKey("actBack"), count);
-    }
-    protected void actBackCountAdd() {
-        countAdd(actBackCounts, getForKey("actBack"));
-    }
-    protected void actBackParamCount(int i0, int count) {
-        actBackCounts.put(getForKey("actBackParam", i0), count);
-    }
-    protected void actBackParamCountAdd(int i0) {
-        countAdd(actBackCounts, getForKey("actBackParam", i0));
-    }
-    protected void actBackMethodCount(int count) {
-        actBackMethodCounts.put(getForKey("actBackMethod"), count);
-    }
-    protected void actBackMethodCountAdd() {
-        countAdd(actBackMethodCounts, getForKey("actBackMethod"));
-    }
-    protected void permissionBackCount(int count) {
-        permissionBackCounts.put(getForKey("permissionBack"), count);
-    }
-    protected void permissionBackCountAdd() {
-        countAdd(permissionBackCounts, getForKey("permissionBack"));
-    }
-    protected void permissionBackMethodCount(int count) {
-        permissionBackMethodCounts.put(getForKey("permissionBackMethod"), count);
-    }
-    protected void permissionBackMethodCountAdd() {
-        countAdd(permissionBackMethodCounts, getForKey("permissionBackMethod"));
-    }
-    protected void handlerEditTextItemCount(int count) {
-        bindHandlerCounts.put(getForKey("handlerEditTextItem"), count);
-    }
-    protected void handlerEditTextItemCountAdd() {
-        countAdd(bindHandlerCounts, getForKey("handlerEditTextItem"));
-    }
-    protected void handlerTextViewItemCount(int count) {
-        bindHandlerCounts.put(getForKey("handlerTextViewItem"), count);
-    }
-    protected void handlerTextViewItemCountAdd() {
-        countAdd(bindHandlerCounts, getForKey("handlerTextViewItem"));
-    }
 
     protected void field(int i0, String sign, String type, String name) {
         addForMap(this.field, getForKey("field", i0), sign, type, name);
+        countAdd(fieldCounts, getForKey("field"));
     }
     protected void findView(int i0, String fieldName, String parent, String rPkg, String id) {
         addForMap(this.findView, getForKey("findView", i0), fieldName, parent, rPkg, id);
+        countAdd(findViewCounts, getForKey("findView"));
     }
     protected void setOnClick(int i0, String fieldName) {
         addForMap(this.setOnClick, getForKey("setOnClick", i0), fieldName);
+        countAdd(setOnClickCounts, getForKey("setOnClick"));
     }
     protected void colorStrInit(int i0, String name, String color) {
         addForMap(this.colorStrInit, getForKey("colorStrInit", i0), name, color);
+        countAdd(colorStrInitCounts, getForKey("colorStrInit"));
     }
     protected void colorResInit(int i0, String name, String resourceToolFullName, String id) {
         addForMap(this.colorResInit, getForKey("colorResInit", i0), name, resourceToolFullName, id);
+        countAdd(colorResInitCounts, getForKey("colorResInit"));
     }
     protected void dpInit(int i0, String name, String mobileToolFullName, String value) {
         addForMap(this.dpInit, getForKey("dpInit", i0), name, mobileToolFullName, value);
+        countAdd(dpInitCounts, getForKey("dpInit"));
     }
     protected void dimenInit(int i0, String name, String resourceToolFullName, String id) {
         addForMap(this.dimenInit, getForKey("dimenInit", i0), name, resourceToolFullName, id);
+        countAdd(dimenInitCounts, getForKey("dimenInit"));
     }
     protected void startInit(int i0, String name, String passFullName) {
         addForMap(this.startInit, getForKey("startInit", i0), name, passFullName, name);
+        countAdd(startInitCounts, getForKey("startInit"));
     }
     protected void editTextInit(int i0, String name, String handlerTextWatcherFullName, String formTypeFullName, String type, String index) {
         addForMap(this.formInit, getForKey("editTextInit", i0), name, handlerTextWatcherFullName, formTypeFullName, type, index);
+        countAdd(formInitCounts, getForKey("editTextInit"));
     }
     protected void textViewInit(int i0, String name, String handlerTextWatcherFullName, String formTypeFullName, String type, String index) {
         addForMap(this.formInit, getForKey("textViewInit", i0), name, handlerTextWatcherFullName, formTypeFullName, type, index);
+        countAdd(formInitCounts, getForKey("textViewInit"));
     }
     protected void onClickCase(int i0, int i1, String id) {
         addForMap(this.onClickSwith, getForKey("onClickCase", i0, i1), id);
+        countAdd(onClickSwithCounts, getForKey("onClickCase", i0));
     }
     protected void onClickSwitchParams(int i0, int i1, String type, String pkg, String index, String divider) {
         addForMap(this.onClickSwith, getForKey("onClickSwitchParams", i0, i1), type, pkg, index, divider);
+        countAdd(onClickSwithCounts, getForKey("onClickSwitchParams", i0));
     }
     protected void onClickSwith(int i0, String methodName) {
         addForMap(this.onClickSwith, getForKey("onClickSwith", i0), methodName);
+        countAdd(onClickSwithCounts, getForKey("onClickSwith"));
     }
     protected void onClickMethods(int i0, String methodName, String params) {
         addForMap(this.onClickMethods, getForKey("onClickMethods", i0), methodName, params);
+        countAdd(onClickMethodsCounts, getForKey("onClickMethods"));
     }
     protected void accept(int i0, String methodName, String netBackFullName, String coreSendParamsFullName, String params) {
         addForMap(this.accept, getForKey("accept", i0), methodName, netBackFullName, coreSendParamsFullName, methodName, params);
+        countAdd(acceptCounts, getForKey("accept"));
     }
     protected void acceptMethod(int i0, String methodName, String params) {
         addForMap(this.acceptMethod, getForKey("acceptMethod", i0), methodName, params);
+        countAdd(acceptMethodCounts, getForKey("acceptMethod"));
     }
     protected void actBackParam(int i0, int i1, String passFullName, String name) {
         addForMap(this.actBack, getForKey("actBackParam", i0, i1), passFullName, name);
+        countAdd(actBackCounts, getForKey("actBackParam", i0));
     }
     protected void actBack(int i0, String ifSign, String code4RequestFullName, String code, String methodName) {
         addForMap(this.actBack, getForKey("actBack", i0), ifSign, code4RequestFullName, code, methodName);
+        countAdd(actBackCounts, getForKey("actBack"));
     }
     protected void actBackMethod(int i0, String methodName, String params) {
         addForMap(this.actBackMethod, getForKey("actBackMethod", i0), methodName, params);
+        countAdd(actBackMethodCounts, getForKey("actBackMethod"));
     }
     protected void permissionBack(int i0, String ifSign, String permissionsFullName, String methodNameStatic, String actStaticName, String methodName) {
         addForMap(this.permissionBack, getForKey("permissionBack", i0), ifSign, permissionsFullName, methodNameStatic, actStaticName, methodName);
+        countAdd(permissionBackCounts, getForKey("permissionBack"));
     }
     protected void permissionBackMethod(int i0, String methodName) {
         addForMap(this.permissionBackMethod, getForKey("permissionBackMethod", i0), methodName);
+        countAdd(permissionBackMethodCounts, getForKey("permissionBackMethod"));
     }
     protected void handlerEditTextItem(int i0, String index, String beanName, String field) {
         addForMap(this.bindHandler, getForKey("handlerEditTextItem", i0), index, beanName, field);
+        countAdd(bindHandlerCounts, getForKey("handlerEditTextItem"));
     }
     protected void handlerTextViewItem(int i0, String index, String beanName, String field) {
         addForMap(this.bindHandler, getForKey("handlerTextViewItem", i0), index, beanName, field);
+        countAdd(bindHandlerCounts, getForKey("handlerTextViewItem"));
     }
 
     protected void layoutIf(boolean is) {

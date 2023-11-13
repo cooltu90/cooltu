@@ -104,18 +104,18 @@ public class BuilderBuilder extends BuilderBuilderBase {
         String keyParams1 = isFor ? getKeyParams(levelsCount + 1) : null;
         String keyParams2 = isFor ? keyParams1 : keyParams0;
         StringBuilder tagSb = isFor ? fors : ifs;
-        String tag0 = isFor ? "" : "If";
-        String tag1 = isFor ? "For" : "If";
+        String tag0 = isFor ? "For" : "If";
         String space = getSpaces(level);
-        String putMethodParams = isFor ? getPutMethodIntParams(levelsCount + 1) : getPutMethodIntParams(levelsCount);
+        //String putMethodParams = isFor ? getPutMethodIntParams(levelsCount + 1) : getPutMethodIntParams(levelsCount);
+        List<String> methodParams = isFor ? getMethodIntParams(levelsCount + 1) : getMethodIntParams(levelsCount);
 
         int[] listCounts = {0};
         List<String> subTags = new ArrayList<>();
         StringBuilder strsParamSb = new StringBuilder();
         StringBuilder strsValueSb = new StringBuilder();
         methodDeal.deal(level, levelsCount, subTagStart, keyParams0, keyParams1, space);
-        deal.deal(isFor, level, subTagStart, subTags, strsParamSb, strsValueSb, listCounts, addTemp, tag, space);
-        method(tagSb, subTagStart, tag0, tag1, strsParamSb.toString(), strsValueSb.toString(), putMethodParams, keyParams2, space);
+        deal.deal(isFor, level, subTagStart, subTags, strsParamSb, methodParams, strsValueSb, listCounts, addTemp, tag, space);
+        method(tagSb, subTagStart, tag0, strsParamSb.toString(), methodParams, strsValueSb.toString(), keyParams0, keyParams2, space);
     }
 
     private MethodDeal getIfMethodDeal() {
@@ -141,13 +141,13 @@ public class BuilderBuilder extends BuilderBuilderBase {
         return new MethodDeal() {
             @Override
             public void deal(int level, int levelsCount, SubTag subTag, String keyParams0, String keyParams1, String space) {
-                addLnTag(forCounts, "    protected void [lines]Count([params]int count) {", subTag.tag, getPutMethodIntParams(levelsCount));
-                addLnTag(forCounts, "        [lines]Counts.put(getForKey(\"[tag]\"[params]), count);", subTag.parentTag, subTag.tag, keyParams0);
-                addLnTag(forCounts, "    }");
+//                addLnTag(forCounts, "    protected void [lines]Count([params]int count) {", subTag.tag, getPutMethodIntParams(levelsCount));
+//                addLnTag(forCounts, "        [lines]Counts.put(getForKey(\"[tag]\"[params]), count);", subTag.parentTag, subTag.tag, keyParams0);
+//                addLnTag(forCounts, "    }");
 
-                addLnTag(forCounts, "    protected void [lines]CountAdd([params]) {", subTag.tag, getPutMethodIntParams1(levelsCount));
-                addLnTag(forCounts, "        countAdd([lines]Counts, getForKey(\"[tag]\"[params]));", subTag.parentTag, subTag.tag, keyParams0);
-                addLnTag(forCounts, "    }");
+//                addLnTag(forCounts, "    protected void [lines]CountAdd([params]) {", subTag.tag, getPutMethodIntParams1(levelsCount));
+//                addLnTag(forCounts, "        countAdd([lines]Counts, getForKey(\"[tag]\"[params]));", subTag.parentTag, subTag.tag, keyParams0);
+//                addLnTag(forCounts, "    }");
 
 
                 addLnTag(dealLinesInParent, "        [space]for (int [i][0] = 0; [i][0] < count([lines]Counts, getForKey(\"[tag]\"[params])); [i][0]++) {"
@@ -160,22 +160,33 @@ public class BuilderBuilder extends BuilderBuilderBase {
         };
     }
 
-    private void method(StringBuilder sb, SubTag subTag, String tag0, String tag1, String strsParam, String strsValue,
-                        String putMethodParams, String keyParams, String space) {
-        if (StringTool.isNotBlank(strsParam)) {
-            addLnTag(sb, "    protected void [lines][for]([countSb][strings]) {"
-                    , subTag.tag, tag0, putMethodParams, strsParam);
+    private void method(StringBuilder sb, SubTag subTag, String tag0, String strsParam, List<String> methodParams, String strsValue,
+                        String keyParams0, String keyParams, String space) {
+        if ("If".equals(tag0)) {
+            if (StringTool.isNotBlank(strsParam)) {
+                addLnTag(sb, "    protected void [lines]If([params]) {"
+                        , subTag.tag, getParams(methodParams));
+                addLnTag(sb, "        addForMap(this.[lines], get[For]Key(\"[tag]\"[params])[strsValue]);"
+                        , subTag.parentTag, tag0, subTag.tag, keyParams, strsValue);
+                addLnTag(sb, "    }");
+            }
+        } else {
+            addLnTag(sb, "    protected void [lines]([params]) {"
+                    , subTag.tag, getParams(methodParams));
             addLnTag(sb, "        addForMap(this.[lines], get[For]Key(\"[tag]\"[params])[strsValue]);"
-                    , subTag.parentTag, tag1, subTag.tag, keyParams, strsValue);
+                    , subTag.parentTag, tag0, subTag.tag, keyParams, strsValue);
+            addLnTag(sb, "        countAdd([lines]Counts, getForKey(\"[tag]\"[params]));", subTag.parentTag, subTag.tag, keyParams0);
             addLnTag(sb, "    }");
         }
         addLnTag(dealLinesInParent, "        [space]}", space);
+
     }
 
     private Deal getLinesDeal(List<String> lines) {
         return new Deal() {
             @Override
-            public void deal(boolean isFor, int level, SubTag lastSubTagStart, List<String> subTags, StringBuilder strsParamSb, StringBuilder strsValueSb, int[] listCounts, String writeLine, String sbName, String space) {
+            public void deal(boolean isFor, int level, SubTag lastSubTagStart, List<String> subTags,
+                             StringBuilder strsParamSb, List<String> methodParams, StringBuilder strsValueSb, int[] listCounts, String writeLine, String sbName, String space) {
                 int count = CountTool.count(lines);
                 if (count > 0) {
                     SubTag subTagStart = null;
@@ -198,7 +209,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
                         } else if (subTagStart != null) {
                             subLines.add(line);
                         } else {
-                            getLineDeal(line).deal(isFor, level, lastSubTagStart, subTags, strsParamSb, strsValueSb, listCounts, writeLine, sbName, space);
+                            getLineDeal(line).deal(isFor, level, lastSubTagStart, subTags, strsParamSb, methodParams, strsValueSb, listCounts, writeLine, sbName, space);
                         }
 
                     }
@@ -210,7 +221,8 @@ public class BuilderBuilder extends BuilderBuilderBase {
     private Deal getLineDeal(String line) {
         return new Deal() {
             @Override
-            public void deal(boolean isFor, int level, SubTag lastSubTag, List<String> subTags, StringBuilder strsParamSb, StringBuilder strsValueSb, int[] listCounts, String writeLine, String sbName, String space) {
+            public void deal(boolean isFor, int level, SubTag lastSubTag, List<String> subTags,
+                             StringBuilder strsParamSb, List<String> methodParams, StringBuilder strsValueSb, int[] listCounts, String writeLine, String sbName, String space) {
                 int start = 0;
                 StringBuilder lineSb = new StringBuilder();
                 StringBuilder valuesSb = new StringBuilder();
@@ -260,6 +272,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
                                 strsParamSb.append(", ");
                             }
                             strsParamSb.append("String ").append(tag);
+                            methodParams.add("String " + tag);
                             subTags.add(tag);
                         }
                         strsValueSb.append(", ").append(tag);
@@ -282,7 +295,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
 
     private static interface Deal {
         public void deal(boolean isFor, int level, SubTag lastSubTag,
-                         List<String> subTags, StringBuilder strsParamSb, StringBuilder strsValueSb,
+                         List<String> subTags, StringBuilder strsParamSb, List<String> methodParams, StringBuilder strsValueSb,
                          int[] listCounts, String writeLine, String sbName, String space);
     }
 

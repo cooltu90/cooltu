@@ -18,24 +18,14 @@ public abstract class ActStartBuilderBase extends com.codingtu.cooltu.processor.
         method = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
-    protected void methodCount(int count) {
-        methodCounts.put(getForKey("method"), count);
-    }
-    protected void methodCountAdd() {
-        countAdd(methodCounts, getForKey("method"));
-    }
-    protected void methodIntentCount(int i0, int count) {
-        methodCounts.put(getForKey("methodIntent", i0), count);
-    }
-    protected void methodIntentCountAdd(int i0) {
-        countAdd(methodCounts, getForKey("methodIntent", i0));
-    }
 
     protected void methodIntent(int i0, int i1, String fieldName, String value) {
         addForMap(this.method, getForKey("methodIntent", i0, i1), fieldName, value);
+        countAdd(methodCounts, getForKey("methodIntent", i0));
     }
     protected void method(int i0, String methodName, String param, String actFullName, String actToolFullName, String codeName) {
         addForMap(this.method, getForKey("method", i0), methodName, param, actFullName, actToolFullName, codeName);
+        countAdd(methodCounts, getForKey("method"));
     }
 
 

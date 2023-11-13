@@ -86,123 +86,58 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
         fileList = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
-    protected void filedsCount(int count) {
-        filedsCounts.put(getForKey("fileds"), count);
-    }
-    protected void filedsCountAdd() {
-        countAdd(filedsCounts, getForKey("fileds"));
-    }
-    protected void fileFiledsCount(int count) {
-        fileFiledsCounts.put(getForKey("fileFileds"), count);
-    }
-    protected void fileFiledsCountAdd() {
-        countAdd(fileFiledsCounts, getForKey("fileFileds"));
-    }
-    protected void addObtainRootCount(int count) {
-        obtainCounts.put(getForKey("addObtainRoot"), count);
-    }
-    protected void addObtainRootCountAdd() {
-        countAdd(obtainCounts, getForKey("addObtainRoot"));
-    }
-    protected void initDirsCount(int count) {
-        initDirsCounts.put(getForKey("initDirs"), count);
-    }
-    protected void initDirsCountAdd() {
-        countAdd(initDirsCounts, getForKey("initDirs"));
-    }
-    protected void initFilesCount(int count) {
-        initFilesCounts.put(getForKey("initFiles"), count);
-    }
-    protected void initFilesCountAdd() {
-        countAdd(initFilesCounts, getForKey("initFiles"));
-    }
-    protected void dirsMethodCount(int count) {
-        dirsMethodCounts.put(getForKey("dirsMethod"), count);
-    }
-    protected void dirsMethodCountAdd() {
-        countAdd(dirsMethodCounts, getForKey("dirsMethod"));
-    }
-    protected void dirListCount(int count) {
-        dirListCounts.put(getForKey("dirList"), count);
-    }
-    protected void dirListCountAdd() {
-        countAdd(dirListCounts, getForKey("dirList"));
-    }
-    protected void dirListParamCount(int i0, int count) {
-        dirListCounts.put(getForKey("dirListParam", i0), count);
-    }
-    protected void dirListParamCountAdd(int i0) {
-        countAdd(dirListCounts, getForKey("dirListParam", i0));
-    }
-    protected void dirListFilterCount(int i0, int count) {
-        dirListCounts.put(getForKey("dirListFilter", i0), count);
-    }
-    protected void dirListFilterCountAdd(int i0) {
-        countAdd(dirListCounts, getForKey("dirListFilter", i0));
-    }
-    protected void filesMethodCount(int count) {
-        filesMethodCounts.put(getForKey("filesMethod"), count);
-    }
-    protected void filesMethodCountAdd() {
-        countAdd(filesMethodCounts, getForKey("filesMethod"));
-    }
-    protected void fileListCount(int count) {
-        fileListCounts.put(getForKey("fileList"), count);
-    }
-    protected void fileListCountAdd() {
-        countAdd(fileListCounts, getForKey("fileList"));
-    }
-    protected void fileListParamCount(int i0, int count) {
-        fileListCounts.put(getForKey("fileListParam", i0), count);
-    }
-    protected void fileListParamCountAdd(int i0) {
-        countAdd(fileListCounts, getForKey("fileListParam", i0));
-    }
-    protected void filterParamCount(int i0, int count) {
-        fileListCounts.put(getForKey("filterParam", i0), count);
-    }
-    protected void filterParamCountAdd(int i0) {
-        countAdd(fileListCounts, getForKey("filterParam", i0));
-    }
 
     protected void fileds(int i0, String type, String name) {
         addForMap(this.fileds, getForKey("fileds", i0), type, name);
+        countAdd(filedsCounts, getForKey("fileds"));
     }
     protected void fileFileds(int i0, String type, String name) {
         addForMap(this.fileFileds, getForKey("fileFileds", i0), type, name);
+        countAdd(fileFiledsCounts, getForKey("fileFileds"));
     }
     protected void addObtainRoot(int i0, String path) {
         addForMap(this.obtain, getForKey("addObtainRoot", i0), path);
+        countAdd(obtainCounts, getForKey("addObtainRoot"));
     }
     protected void initDirs(int i0, String filedName, String filedType, String dirName) {
         addForMap(this.initDirs, getForKey("initDirs", i0), filedName, filedType, dirName);
+        countAdd(initDirsCounts, getForKey("initDirs"));
     }
     protected void initFiles(int i0, String filedName, String filedType, String fileName, String fileType) {
         addForMap(this.initFiles, getForKey("initFiles", i0), filedName, filedType, fileName, fileType);
+        countAdd(initFilesCounts, getForKey("initFiles"));
     }
     protected void dirsMethod(int i0, String fieldType, String methodName, String value) {
         addForMap(this.dirsMethod, getForKey("dirsMethod", i0), fieldType, methodName, value, fieldType, value);
+        countAdd(dirsMethodCounts, getForKey("dirsMethod"));
     }
     protected void dirListParam(int i0, int i1, String type, String name, String divider) {
         addForMap(this.dirList, getForKey("dirListParam", i0, i1), type, name, divider);
+        countAdd(dirListCounts, getForKey("dirListParam", i0));
     }
     protected void dirListFilter(int i0, int i1, String type) {
         addForMap(this.dirList, getForKey("dirListFilter", i0, i1), type, type);
+        countAdd(dirListCounts, getForKey("dirListFilter", i0));
     }
     protected void dirList(int i0, String tListTsFullName, String fieldType, String fieldName, String filterFullName, String tsFullName) {
         addForMap(this.dirList, getForKey("dirList", i0), tListTsFullName, fieldType, fieldName, filterFullName, filterFullName, tsFullName, fieldName);
+        countAdd(dirListCounts, getForKey("dirList"));
     }
     protected void filesMethod(int i0, String fieldType, String filedName, String value, String fileType) {
         addForMap(this.filesMethod, getForKey("filesMethod", i0), fieldType, filedName, value, fieldType, value, fileType);
+        countAdd(filesMethodCounts, getForKey("filesMethod"));
     }
     protected void fileListParam(int i0, int i1, String type, String name, String divider) {
         addForMap(this.fileList, getForKey("fileListParam", i0, i1), type, name, divider);
+        countAdd(fileListCounts, getForKey("fileListParam", i0));
     }
     protected void filterParam(int i0, int i1, String name) {
         addForMap(this.fileList, getForKey("filterParam", i0, i1), name, name);
+        countAdd(fileListCounts, getForKey("filterParam", i0));
     }
     protected void fileList(int i0, String tListTsFullName, String fieldType, String fieldName, String filterFullName, String tsFullName) {
         addForMap(this.fileList, getForKey("fileList", i0), tListTsFullName, fieldType, fieldName, filterFullName, filterFullName, tsFullName, fieldName);
+        countAdd(fileListCounts, getForKey("fileList"));
     }
 
     protected void obtainIf(boolean is) {

@@ -13,6 +13,7 @@ import com.codingtu.cooltu.processor.lib.BuilderMap;
 import com.codingtu.cooltu.processor.lib.tools.TagTools;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -159,6 +160,50 @@ public abstract class CoreBuilder implements Symbol {
     protected boolean isIf(Map<String, Boolean> ifs, String key) {
         Boolean aBoolean = ifs.get(key);
         return aBoolean == null ? false : aBoolean;
+    }
+
+    protected String getParams(List<String> params){
+        return getParams(params,false,false);
+    }
+
+    protected String getParams(List<String> params, boolean hasPre, boolean hasNext) {
+        if (params == null) {
+            params = new ArrayList<>();
+        }
+        if (hasPre) {
+            params.add(0, "");
+        }
+        if (hasNext) {
+            params.add("");
+        }
+        StringBuilder sb = new StringBuilder();
+        Ts.ls(params, new BaseTs.EachTs<String>() {
+            @Override
+            public boolean each(int position, String param) {
+                if (position != 0) {
+                    sb.append(", ");
+                }
+                sb.append(param);
+                return false;
+            }
+        });
+        return sb.toString();
+    }
+
+    protected List<String> getMethodIntParams(int num) {
+        ArrayList<String> params = new ArrayList<>();
+        for (int i = 0; i < num; i++) {
+            params.add("int i" + i);
+        }
+        return params;
+    }
+
+    protected List<String> getUseMethodIntParams(int num) {
+        ArrayList<String> params = new ArrayList<>();
+        for (int i = 0; i < num; i++) {
+            params.add("i" + i);
+        }
+        return params;
     }
 
     public void addLnTag(StringBuilder tag, String line, Object... tags) {

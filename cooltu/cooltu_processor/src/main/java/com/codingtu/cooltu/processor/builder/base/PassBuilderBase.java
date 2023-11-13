@@ -26,24 +26,14 @@ public abstract class PassBuilderBase extends com.codingtu.cooltu.processor.buil
         method = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
-    protected void fieldCount(int count) {
-        fieldCounts.put(getForKey("field"), count);
-    }
-    protected void fieldCountAdd() {
-        countAdd(fieldCounts, getForKey("field"));
-    }
-    protected void methodCount(int count) {
-        methodCounts.put(getForKey("method"), count);
-    }
-    protected void methodCountAdd() {
-        countAdd(methodCounts, getForKey("method"));
-    }
 
     protected void field(int i0, String name, String value) {
         addForMap(this.field, getForKey("field", i0), name, value);
+        countAdd(fieldCounts, getForKey("field"));
     }
     protected void method(int i0, String type, String methodName) {
         addForMap(this.method, getForKey("method", i0), type, methodName);
+        countAdd(methodCounts, getForKey("method"));
     }
 
     protected void isBeanIf(int i0, boolean is) {

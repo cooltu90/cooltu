@@ -58,8 +58,6 @@ public class NetBuilder extends NetBuilderBase {
     @Override
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_NET);
-        fieldCount(0);
-        methodCount(CountTool.count(infos));
         Ts.ls(infos, new BaseTs.EachTs<NetInfo>() {
             @Override
             public boolean each(int position, NetInfo netInfo) {
@@ -96,7 +94,6 @@ public class NetBuilder extends NetBuilderBase {
                 }
 
                 Params params = Params.obtain(null);
-                methodParamsCount(methodIndex, 0);
                 Ts.ls(netInfo.params, (paramIndex, ve) -> {
                     Default aDefault = ve.getAnnotation(Default.class);
                     Param param = ve.getAnnotation(Param.class);
@@ -108,17 +105,12 @@ public class NetBuilder extends NetBuilderBase {
                         sendParamsSet(methodIndex, paramIndex, kv.v, "\"" + aDefault.value() + "\"");
                     }
 
-                    sendParamsSetCountAdd(methodIndex);
-
                     if (netInfo.isJsonBody) {
                         postJsonBodySet(methodIndex, paramIndex, kv.v, kv.v);
-                        postJsonBodySetCountAdd(methodIndex);
                     } else if (param.type() == ParamType.JSON_BODY) {
                         methodParams(methodIndex, 0, FullName.NET_TOOL + ".toJsonBody(" + FullName.JSON_TOOL + ".toJson(paramsGet." + kv.v + "))", "");
-                        methodParamsCountAdd(methodIndex);
                     } else {
                         methodParams(methodIndex, paramIndex, "paramsGet." + kv.v, paramIndex != CountTool.count(netInfo.params) - 1 ? "," : "");
-                        methodParamsCountAdd(methodIndex);
                     }
 
                     return false;
@@ -126,7 +118,6 @@ public class NetBuilder extends NetBuilderBase {
 
                 if (netInfo.isJsonBody) {
                     methodParams(methodIndex, 0, FullName.NET_TOOL + ".toJsonBody(jo.toJson())", "");
-                    methodParamsCountAdd(methodIndex);
                 }
 
                 String serviceFullName = CurrentPath.apiServiceFullName(netInfo.apisName);
@@ -141,7 +132,6 @@ public class NetBuilder extends NetBuilderBase {
     private void addField(String name, String value) {
         if (!nameMap.containsKey(name)) {
             field(CountTool.count(nameMap), name, value);
-            fieldCountAdd();
             nameMap.put(name, name);
         }
     }

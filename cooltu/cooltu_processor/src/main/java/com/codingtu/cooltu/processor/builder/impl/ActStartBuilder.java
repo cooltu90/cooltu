@@ -37,7 +37,7 @@ public class ActStartBuilder extends ActStartBuilderBase {
         map.get(actFullName).get(index).add(kv);
     }
 
-    public void add(String actFullName){
+    public void add(String actFullName) {
         map.get(actFullName).get(0);
     }
 
@@ -60,7 +60,6 @@ public class ActStartBuilder extends ActStartBuilderBase {
     @Override
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_TOOLS);
-
         int[] index = {0};
         Ts.ts(map.keySet()).ls(new SetTs.SetEach<String>() {
             @Override
@@ -69,7 +68,6 @@ public class ActStartBuilder extends ActStartBuilderBase {
                 if (!actMap.containsKey(0)) {
                     actMap.get(0);
                 }
-
                 Ts.ts(actMap.keySet()).ls(new SetTs.SetEach<Integer>() {
                     @Override
                     public boolean each(Integer integer) {
@@ -81,22 +79,16 @@ public class ActStartBuilder extends ActStartBuilderBase {
                                 return false;
                             }
                         });
-
                         Params params = Params.obtain(kvs);
                         String methodParams = params.getMethodParams(true, false);
                         method(index[0], ConvertTool.toMethodType(CurrentPath.javaInfo(actFullName).name), methodParams, actFullName, FullName.ACT_TOOL, CurrentPath.actStaticName(actFullName));
-                        methodIntentCount(index[0], CountTool.count(kvs));
                         index[0]++;
                         return false;
                     }
                 });
-
                 return false;
             }
         });
-
-        methodCount(index[0]);
-
     }
 }
 /* model_temp_start

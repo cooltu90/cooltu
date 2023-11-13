@@ -116,7 +116,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
         final int[] fieldCount = {0};
 
-        findViewCount(CountTool.count(info.viewInfos));
         Ts.ls(info.viewInfos, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
             @Override
             public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
@@ -142,25 +141,16 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         });
 
         final int[] setOnClickCount = {0};
-
-        int clickViewsCount = CountTool.count(info.clickViews);
-
-        onClickMethodsCount(clickViewsCount);
-
-        onClickSwithCount(clickViewsCount);
-
         Ts.ls(info.clickViews, new BaseTs.EachTs<ClickViewInfo>() {
             @Override
             public boolean each(int clickViewInfoIndex, ClickViewInfo info) {
                 onClickMethods(clickViewInfoIndex, info.method, info.methodParams.getMethodParams());
                 onClickSwith(clickViewInfoIndex, info.method);
-                onClickCaseCount(clickViewInfoIndex, CountTool.count(info.ids));
 
                 List<KV<String, String>> kvs = info.methodParams.getKvs();
                 int kvCount = CountTool.count(kvs);
 
                 onClickSwitchParamsIf(clickViewInfoIndex, false);
-                onClickSwitchParamsCount(clickViewInfoIndex, 0);
 
                 Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {
 
@@ -175,7 +165,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                         } else {
                             onClickSwitchParams(clickViewInfoIndex, paramsIndex, kv.k, Pkg.LIB4A, paramsIndex + "", divider);
                             paramsIndex++;
-                            onClickSwitchParamsCountAdd(clickViewInfoIndex);
                         }
                         return false;
                     }
@@ -210,14 +199,12 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                 return false;
             }
         });
-        setOnClickCount(setOnClickCount[0]);
 
 
         //onclick继承
         superOnClickIf(info.hasBaseClass());
 
         //colorStr
-        int count = CountTool.count(info.colorStrs);
         Ts.ls(info.colorStrs, new BaseTs.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
@@ -228,11 +215,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                 return false;
             }
         });
-        colorStrInitCount(count);
 
         //colorRes
-        int colorResCount = CountTool.count(info.colorReses);
-        colorResInitCount(colorResCount);
         Ts.ls(info.colorReses, new BaseTs.EachTs<KV<String, IdTools.Id>>() {
             @Override
             public boolean each(int position, KV<String, IdTools.Id> kv) {
@@ -245,8 +229,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         });
 
         //dp
-        int dpCount = CountTool.count(info.dps);
-        dpInitCount(dpCount);
         Ts.ls(info.dps, new BaseTs.EachTs<KV<String, Float>>() {
             @Override
             public boolean each(int position, KV<String, Float> kv) {
@@ -259,8 +241,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         });
 
         //colorRes
-        int dimenCount = CountTool.count(info.dimens);
-        dimenInitCount(dimenCount);
         Ts.ls(info.dimens, new BaseTs.EachTs<KV<String, IdTools.Id>>() {
             @Override
             public boolean each(int position, KV<String, IdTools.Id> kv) {
@@ -273,8 +253,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         });
 
         //startField
-        int startCount = CountTool.count(info.starts);
-        startInitCount(startCount);
         Ts.ls(info.starts, new BaseTs.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
@@ -288,8 +266,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
         //accept
         superAcceptIf(info.hasBaseClass());
-        acceptCount(0);
-        acceptMethodCount(0);
         Ts.ls(info.netBacks, new BaseTs.EachTs<NetBackInfo>() {
             @Override
             public boolean each(int position, NetBackInfo netBackInfo) {
@@ -338,7 +314,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                 });
 
                 accept(position, methodName, netBackFullName, FullName.CORE_SEND_PARAMS, paramStr);
-                acceptCountAdd();
 
 
                 String methodParamStr = params.getParam(new Params.Convert() {
@@ -350,13 +325,10 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
 
                 acceptMethod(position, methodName, methodParamStr);
-                acceptMethodCountAdd();
                 return false;
             }
         });
 
-        actBackCount(0);
-        actBackMethodCount(0);
         Ts.ls(info.actBacks, new BaseTs.EachTs<ActBack>() {
             @Override
             public boolean each(int actBackIndex, ActBack actBack) {
@@ -373,14 +345,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                 JavaInfo fromJavaInfo = CurrentPath.javaInfo(fromClass);
 
                 actBack(actBackIndex, actBackIndex == 0 ? "if" : "else if", FullName.CODE_4_REQUEST, ConvertTool.toStaticType(fromJavaInfo.name), methodName);
-                actBackCountAdd();
 
-                actBackParamCount(actBackIndex, 0);
                 Params params = ElementTools.getMethodParamKvs(ee);
                 params.ls(new BaseTs.EachTs<KV<String, String>>() {
                     @Override
                     public boolean each(int paramIndex, KV<String, String> kv) {
-                        actBackParamCountAdd(actBackIndex);
                         actBackParam(actBackIndex, paramIndex, FullName.PASS, kv.v);
                         actBackParamDividerIf(actBackIndex, paramIndex, paramIndex != (CountTool.count(ee.getParameters()) - 1));
                         return false;
@@ -388,13 +357,10 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                 });
 
                 actBackMethod(actBackIndex, methodName, params.getMethodParams());
-                actBackMethodCountAdd();
                 return false;
             }
         });
 
-        permissionBackCount(0);
-        permissionBackMethodCount(0);
         Ts.ls(info.permissions, new BaseTs.EachTs<Permission>() {
             @Override
             public boolean each(int permissionIndex, Permission permission) {
@@ -408,7 +374,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
                 permissionBack(permissionIndex, permissionIndex == 0 ? "if" : "else if",
                         FullName.PERMISSIONS, methodNameStatic, actNameStatic, methodName);
-                permissionBackCountAdd();
 
                 boolean isParam = !CountTool.isNull(ee.getParameters());
 
@@ -417,8 +382,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                     allowIf(permissionIndex, FullName.PERMISSION_TOOL);
                 }
 
-
-                permissionBackMethodCountAdd();
                 permissionBackMethod(permissionIndex, methodName);
 
                 allowParamIf(permissionIndex, isParam);
@@ -461,7 +424,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             formInitIf(false);
         }
 
-        fieldCount(fieldCount[0]);
 
     }
 
@@ -469,9 +431,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
         HashMap<Integer, Integer> indexMap = new HashMap<>();
 
-        editTextInitCount(0);
-        handlerEditTextItemCount(0);
-        handlerTextViewItemCount(0);
         Ts.ts(te.getEnclosedElements()).ls((position, element) -> {
             if (element instanceof VariableElement) {
                 VariableElement ve = (VariableElement) element;
@@ -489,13 +448,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                     String type = "EDIT_TEXT";
 
                     editTextInit(index, viewName, FullName.HANDLER_TEXT_WATCHER, FullName.FORM_TYPE, type, "" + index);
-                    editTextInitCountAdd();
                     //
                     handlerEditTextIf(true);
                     handlerEditTextIf(FullName.FORM_TYPE, type);
 
                     handlerEditTextItem(index, index + "", beanName, ElementTools.simpleName(ve));
-                    handlerEditTextItemCountAdd();
                     indexMap.put(FormType.EDIT_TEXT, index + 1);
                 }
 
@@ -513,13 +470,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                     String type = "TEXT_VIEW";
 
                     textViewInit(index, viewName, FullName.HANDLER_TEXT_WATCHER, FullName.FORM_TYPE, type, "" + index);
-                    textViewInitCountAdd();
                     //
                     handlerTextViewIf(true);
                     handlerTextViewIf(FullName.FORM_TYPE, type);
 
                     handlerTextViewItem(index, index + "", beanName, ElementTools.simpleName(ve));
-                    handlerTextViewItemCountAdd();
                     indexMap.put(FormType.TEXT_VIEW, index + 1);
                 }
 

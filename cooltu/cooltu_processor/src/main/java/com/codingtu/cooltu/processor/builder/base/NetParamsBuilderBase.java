@@ -22,15 +22,10 @@ public abstract class NetParamsBuilderBase extends com.codingtu.cooltu.processor
         field = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
-    protected void fieldCount(int count) {
-        fieldCounts.put(getForKey("field"), count);
-    }
-    protected void fieldCountAdd() {
-        countAdd(fieldCounts, getForKey("field"));
-    }
 
     protected void field(int i0, String type, String name) {
         addForMap(this.field, getForKey("field", i0), type, name);
+        countAdd(fieldCounts, getForKey("field"));
     }
 
 

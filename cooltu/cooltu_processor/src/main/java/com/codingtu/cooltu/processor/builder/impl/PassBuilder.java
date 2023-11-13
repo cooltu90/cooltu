@@ -59,8 +59,6 @@ public class PassBuilder extends PassBuilderBase {
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_TOOLS);
 
-        fieldCount(0);
-        methodCount(0);
         Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
@@ -101,8 +99,6 @@ public class PassBuilder extends PassBuilderBase {
                     isBeanIf(position, FullName.JSON_TOOL, kv.k, fieldName);
                 }
 
-                fieldCountAdd();
-                methodCountAdd();
                 return false;
             }
         });

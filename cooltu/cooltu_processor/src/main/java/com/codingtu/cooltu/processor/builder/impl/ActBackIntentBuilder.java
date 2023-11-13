@@ -93,24 +93,14 @@ public class ActBackIntentBuilder extends ActBackIntentBuilderBase {
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_TOOLS);
 
-        methodCount(0);
-
         Ts.ls(methodNames, new BaseTs.EachTs<String>() {
             @Override
             public boolean each(int methodIndex, String methodName) {
-
                 Params params = methodParams.get(methodIndex);
-
                 method(methodIndex, methodName, params.getMethodParams());
-
-                methodCountAdd();
-
-                methodParamCount(methodIndex, 0);
-
                 params.ls(new BaseTs.EachTs<KV<String, String>>() {
                     @Override
                     public boolean each(int paramIndex, KV<String, String> kv) {
-
                         if (ClassTool.isBaseClass(kv.k)) {
                             methodParamOtherIf(methodIndex, paramIndex, true);
                             methodParamBeanIf(methodIndex, paramIndex, false);
@@ -120,9 +110,7 @@ public class ActBackIntentBuilder extends ActBackIntentBuilderBase {
                             methodParamBeanIf(methodIndex, paramIndex, true);
                             methodParamBeanIf(methodIndex, paramIndex, FullName.PASS, ConvertTool.toStaticType(kv.v), FullName.JSON_TOOL, kv.v);
                         }
-
-
-                        methodParamCountAdd(methodIndex);
+                        methodParam(methodIndex, paramIndex);
                         return false;
                     }
                 });

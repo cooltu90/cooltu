@@ -68,7 +68,6 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
 
                     List<? extends VariableElement> parameters = ee.getParameters();
                     int paramCount = CountTool.count(parameters);
-                    methodParamCount(methodIndex, paramCount);
                     Ts.ls(parameters, (paramIndex, element) -> {
                         KV<String, String> kv = ElementTools.getFieldKv(element);
                         Param param = element.getAnnotation(Param.class);
@@ -97,14 +96,12 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
                 if (postMethod != null) {
                     if (postMethod.isJsonBody()) {
                         method(count[0]++, FullName.RETROFIT_POST, postMethod.value(), ElementTools.simpleName(ee));
-                        methodParamCount(methodIndex, 1);
                         methodParam(methodIndex, 0, FullName.RETROFIT_BODY, FullName.OKHTTP_REQUEST_BODY, "body", "");
                         annoInfoIf(methodIndex, 0, false);
                     } else {
                         method(count[0]++, FullName.RETROFIT_POST, postMethod.value(), ElementTools.simpleName(ee));
                         List<? extends VariableElement> parameters = ee.getParameters();
                         int paramCount = CountTool.count(parameters);
-                        methodParamCount(methodIndex, paramCount);
                         Ts.ls(parameters, (paramIndex, element) -> {
                             KV<String, String> kv = ElementTools.getFieldKv(element);
                             Param param = element.getAnnotation(Param.class);
@@ -139,8 +136,6 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
                 return false;
             }
         });
-        methodCount(count[0]);
-
     }
 
 }

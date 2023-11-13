@@ -50,8 +50,6 @@ public class NetParamsBuilder extends NetParamsBuilderBase {
                 return false;
             }
         });
-
-        fieldCount(CountTool.count(params.getKvs()));
     }
 }
 /* model_temp_start

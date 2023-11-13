@@ -46,8 +46,6 @@ public class PermissionBuilder extends PermissionBuilderBase {
     @Override
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_TOOLS);
-        fieldCount(0);
-        methodCount(0);
         Ts.ls(backs, new BaseTs.EachTs<Permission>() {
             @Override
             public boolean each(int methodIndex, Permission permissionBack) {
@@ -59,17 +57,13 @@ public class PermissionBuilder extends PermissionBuilderBase {
                 String actStatic = ConvertTool.toStaticType(actName);
 
                 field(methodIndex, methodNameStatic, actStatic, "" + methodIndex);
-                fieldCountAdd();
 
                 method(methodIndex, methodName, actName, FullName.PERMISSION_TOOL, methodNameStatic, actStatic);
-                methodCountAdd();
 
-                permissionCount(methodIndex, 0);
                 Ts.ls(permissionBack.value(), new BaseTs.EachTs<String>() {
                     @Override
                     public boolean each(int permissionIndex, String permission) {
                         permission(methodIndex, permissionIndex, permission);
-                        permissionCountAdd(methodIndex);
                         return false;
                     }
                 });

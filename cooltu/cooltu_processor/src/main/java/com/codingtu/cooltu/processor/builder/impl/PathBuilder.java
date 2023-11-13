@@ -82,9 +82,6 @@ public class PathBuilder extends PathBuilderBase {
             });
 
             obtainIf(javaInfo.name, params.getMethodParams(), FullName.SDCARD_TOOL);
-
-            addObtainRootCount(CountTool.count(split));
-
         }
 
         final int[] nums = {0, 0, 0, 0, 0, 0};
@@ -106,8 +103,6 @@ public class PathBuilder extends PathBuilderBase {
                     dirList(nums[2], FullName.T_LIST_TS, info.javaName, info.fieldName, info.filter, FullName.TS);
                     PathFilterInfo filterInfo = PathFilterDeal.map.get(info.filter);
                     int filterParamsCount = CountTool.count(filterInfo.params);
-                    dirListParamCount(nums[2], filterParamsCount);
-                    dirListFilterCount(nums[2], filterParamsCount);
                     Ts.ls(filterInfo.params, new BaseTs.EachTs<KV<String, String>>() {
                         @Override
                         public boolean each(int position, KV<String, String> kv) {
@@ -168,8 +163,6 @@ public class PathBuilder extends PathBuilderBase {
                     fileList(nums[5], FullName.T_LIST_TS, filedType, info.fieldFullName, info.filter, FullName.TS);
                     PathFilterInfo filterInfo = PathFilterDeal.map.get(info.filter);
                     int filterParamsCount = CountTool.count(filterInfo.params);
-                    fileListParamCount(nums[5], filterParamsCount);
-                    filterParamCount(nums[5], filterParamsCount);
                     Ts.ls(filterInfo.params, new BaseTs.EachTs<KV<String, String>>() {
                         @Override
                         public boolean each(int position, KV<String, String> kv) {
@@ -181,23 +174,9 @@ public class PathBuilder extends PathBuilderBase {
 
                     nums[5]++;
                 }
-
                 return false;
             }
         });
-
-        filedsCount(nums[0]);
-        initDirsCount(nums[0]);
-
-        fileFiledsCount(nums[3]);
-        initFilesCount(nums[3]);
-
-        dirsMethodCount(nums[1]);
-        dirListCount(nums[2]);
-
-        filesMethodCount(nums[4]);
-        fileListCount(nums[5]);
-
     }
 }
 /* model_temp_start

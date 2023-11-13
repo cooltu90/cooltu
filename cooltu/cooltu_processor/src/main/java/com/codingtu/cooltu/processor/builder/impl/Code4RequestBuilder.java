@@ -46,8 +46,6 @@ public class Code4RequestBuilder extends Code4RequestBuilderBase {
     @Override
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_TOOLS);
-        int count = CountTool.count(fullNames);
-        fieldCount(count);
         Ts.ts(fullNames.keySet()).ls(new BaseTs.EachTs<String>() {
             @Override
             public boolean each(int position, String s) {
