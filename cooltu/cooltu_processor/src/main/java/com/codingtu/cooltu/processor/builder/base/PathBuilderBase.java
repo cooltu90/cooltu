@@ -86,6 +86,45 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
         fileList = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
+    protected int filedsCount() {
+        return count(filedsCounts, getForKey("fileds"));
+    }
+    protected int fileFiledsCount() {
+        return count(fileFiledsCounts, getForKey("fileFileds"));
+    }
+    protected int addObtainRootCount() {
+        return count(obtainCounts, getForKey("addObtainRoot"));
+    }
+    protected int initDirsCount() {
+        return count(initDirsCounts, getForKey("initDirs"));
+    }
+    protected int initFilesCount() {
+        return count(initFilesCounts, getForKey("initFiles"));
+    }
+    protected int dirsMethodCount() {
+        return count(dirsMethodCounts, getForKey("dirsMethod"));
+    }
+    protected int dirListCount() {
+        return count(dirListCounts, getForKey("dirList"));
+    }
+    protected int dirListParamCount(int i0) {
+        return count(dirListCounts, getForKey("dirListParam", i0));
+    }
+    protected int dirListFilterCount(int i0) {
+        return count(dirListCounts, getForKey("dirListFilter", i0));
+    }
+    protected int filesMethodCount() {
+        return count(filesMethodCounts, getForKey("filesMethod"));
+    }
+    protected int fileListCount() {
+        return count(fileListCounts, getForKey("fileList"));
+    }
+    protected int fileListParamCount(int i0) {
+        return count(fileListCounts, getForKey("fileListParam", i0));
+    }
+    protected int filterParamCount(int i0) {
+        return count(fileListCounts, getForKey("filterParam", i0));
+    }
 
     protected void fileds(int i0, String type, String name) {
         addForMap(this.fileds, getForKey("fileds", i0), type, name);

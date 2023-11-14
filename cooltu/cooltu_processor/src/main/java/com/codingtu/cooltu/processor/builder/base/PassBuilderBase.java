@@ -26,6 +26,12 @@ public abstract class PassBuilderBase extends com.codingtu.cooltu.processor.buil
         method = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
+    protected int fieldCount() {
+        return count(fieldCounts, getForKey("field"));
+    }
+    protected int methodCount() {
+        return count(methodCounts, getForKey("method"));
+    }
 
     protected void field(int i0, String name, String value) {
         addForMap(this.field, getForKey("field", i0), name, value);

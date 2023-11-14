@@ -26,6 +26,21 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
         method = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
+    protected int fieldCount() {
+        return count(fieldCounts, getForKey("field"));
+    }
+    protected int methodCount() {
+        return count(methodCounts, getForKey("method"));
+    }
+    protected int sendParamsSetCount(int i0) {
+        return count(methodCounts, getForKey("sendParamsSet", i0));
+    }
+    protected int postJsonBodySetCount(int i0) {
+        return count(methodCounts, getForKey("postJsonBodySet", i0));
+    }
+    protected int methodParamsCount(int i0) {
+        return count(methodCounts, getForKey("methodParams", i0));
+    }
 
     protected void field(int i0, String name, String value) {
         addForMap(this.field, getForKey("field", i0), name, value);

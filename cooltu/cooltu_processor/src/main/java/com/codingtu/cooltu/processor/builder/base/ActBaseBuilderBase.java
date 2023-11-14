@@ -194,6 +194,75 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         bindHandler = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
+    protected int fieldCount() {
+        return count(fieldCounts, getForKey("field"));
+    }
+    protected int findViewCount() {
+        return count(findViewCounts, getForKey("findView"));
+    }
+    protected int setOnClickCount() {
+        return count(setOnClickCounts, getForKey("setOnClick"));
+    }
+    protected int colorStrInitCount() {
+        return count(colorStrInitCounts, getForKey("colorStrInit"));
+    }
+    protected int colorResInitCount() {
+        return count(colorResInitCounts, getForKey("colorResInit"));
+    }
+    protected int dpInitCount() {
+        return count(dpInitCounts, getForKey("dpInit"));
+    }
+    protected int dimenInitCount() {
+        return count(dimenInitCounts, getForKey("dimenInit"));
+    }
+    protected int startInitCount() {
+        return count(startInitCounts, getForKey("startInit"));
+    }
+    protected int editTextInitCount() {
+        return count(formInitCounts, getForKey("editTextInit"));
+    }
+    protected int textViewInitCount() {
+        return count(formInitCounts, getForKey("textViewInit"));
+    }
+    protected int onClickSwithCount() {
+        return count(onClickSwithCounts, getForKey("onClickSwith"));
+    }
+    protected int onClickCaseCount(int i0) {
+        return count(onClickSwithCounts, getForKey("onClickCase", i0));
+    }
+    protected int onClickSwitchParamsCount(int i0) {
+        return count(onClickSwithCounts, getForKey("onClickSwitchParams", i0));
+    }
+    protected int onClickMethodsCount() {
+        return count(onClickMethodsCounts, getForKey("onClickMethods"));
+    }
+    protected int acceptCount() {
+        return count(acceptCounts, getForKey("accept"));
+    }
+    protected int acceptMethodCount() {
+        return count(acceptMethodCounts, getForKey("acceptMethod"));
+    }
+    protected int actBackCount() {
+        return count(actBackCounts, getForKey("actBack"));
+    }
+    protected int actBackParamCount(int i0) {
+        return count(actBackCounts, getForKey("actBackParam", i0));
+    }
+    protected int actBackMethodCount() {
+        return count(actBackMethodCounts, getForKey("actBackMethod"));
+    }
+    protected int permissionBackCount() {
+        return count(permissionBackCounts, getForKey("permissionBack"));
+    }
+    protected int permissionBackMethodCount() {
+        return count(permissionBackMethodCounts, getForKey("permissionBackMethod"));
+    }
+    protected int handlerEditTextItemCount() {
+        return count(bindHandlerCounts, getForKey("handlerEditTextItem"));
+    }
+    protected int handlerTextViewItemCount() {
+        return count(bindHandlerCounts, getForKey("handlerTextViewItem"));
+    }
 
     protected void field(int i0, String sign, String type, String name) {
         addForMap(this.field, getForKey("field", i0), sign, type, name);

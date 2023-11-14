@@ -20,6 +20,12 @@ public abstract class ApiServiceBuilderBase extends com.codingtu.cooltu.processo
         method = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
+    protected int methodCount() {
+        return count(methodCounts, getForKey("method"));
+    }
+    protected int methodParamCount(int i0) {
+        return count(methodCounts, getForKey("methodParam", i0));
+    }
 
     protected void methodParam(int i0, int i1, String anno, String type, String name, String divider) {
         addForMap(this.method, getForKey("methodParam", i0, i1), anno, type, name, divider);

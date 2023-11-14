@@ -26,6 +26,15 @@ public abstract class PermissionBuilderBase extends com.codingtu.cooltu.processo
         method = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
+    protected int fieldCount() {
+        return count(fieldCounts, getForKey("field"));
+    }
+    protected int methodCount() {
+        return count(methodCounts, getForKey("method"));
+    }
+    protected int permissionCount(int i0) {
+        return count(methodCounts, getForKey("permission", i0));
+    }
 
     protected void field(int i0, String methodName, String act, String value) {
         addForMap(this.field, getForKey("field", i0), methodName, act, value);

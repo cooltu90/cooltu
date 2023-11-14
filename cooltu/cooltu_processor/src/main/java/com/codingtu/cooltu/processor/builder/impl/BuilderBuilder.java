@@ -125,7 +125,6 @@ public class BuilderBuilder extends BuilderBuilderBase {
                 String keyParams0 = getParams(useIntParam0, true, false);
                 String ifPutMethodParams = getParams(getMethodIntParams(levelsCount), false, true);
 
-
                 addLnTag(ifs, "    protected void is[linesAdd1]([params]boolean is) {"
                         , ConvertTool.toClassType(subTag.tag), ifPutMethodParams);
                 addLnTag(ifs, "        [lines]Ifs.put(getIfKey(\"[linesAdd1]\"[params]), is);"
@@ -146,6 +145,12 @@ public class BuilderBuilder extends BuilderBuilderBase {
             public void deal(int level, int levelsCount, SubTag subTag, List<String> useIntParam0, List<String> useIntParam1, String space) {
                 String keyParams0 = getParams(useIntParam0, true, false);
                 String keyParams1 = getParams(useIntParam1, true, false);
+                String params = getParams(getMethodIntParams(levelsCount));
+
+                addLnTag(forCounts, "    protected int [lines]Count([params]) {", subTag.tag, params);
+                addLnTag(forCounts, "        return count([lines]Counts, getForKey(\"[tag]\"[params]));", subTag.parentTag, subTag.tag, keyParams0);
+                addLnTag(forCounts, "    }");
+
 
                 addLnTag(dealLinesInParent, "        [space]for (int [i][0] = 0; [i][0] < count([lines]Counts, getForKey(\"[tag]\"[params])); [i][0]++) {"
                         , space, intTag, levelsCount, intTag, levelsCount, subTag.parentTag, subTag.tag, keyParams0, intTag, levelsCount);

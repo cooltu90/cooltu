@@ -18,6 +18,12 @@ public abstract class ActBackIntentBuilderBase extends com.codingtu.cooltu.proce
         method = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
+    protected int methodCount() {
+        return count(methodCounts, getForKey("method"));
+    }
+    protected int methodParamCount(int i0) {
+        return count(methodCounts, getForKey("methodParam", i0));
+    }
 
     protected void methodParam(int i0, int i1) {
         addForMap(this.method, getForKey("methodParam", i0, i1));

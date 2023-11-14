@@ -18,6 +18,9 @@ public abstract class Code4RequestBuilderBase extends com.codingtu.cooltu.proces
         field = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
+    protected int fieldCount() {
+        return count(fieldCounts, getForKey("field"));
+    }
 
     protected void field(int i0, String name, String value) {
         addForMap(this.field, getForKey("field", i0), name, value);
