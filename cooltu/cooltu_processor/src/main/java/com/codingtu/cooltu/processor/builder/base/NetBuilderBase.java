@@ -26,59 +26,50 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
         method = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
+
     protected int fieldCount() {
         return count(fieldCounts, getForKey("field"));
     }
-    protected int methodCount() {
-        return count(methodCounts, getForKey("method"));
-    }
-    protected int sendParamsSetCount(int i0) {
-        return count(methodCounts, getForKey("sendParamsSet", i0));
-    }
-    protected int postJsonBodySetCount(int i0) {
-        return count(methodCounts, getForKey("postJsonBodySet", i0));
-    }
-    protected int methodParamsCount(int i0) {
-        return count(methodCounts, getForKey("methodParams", i0));
-    }
-
     protected void field(int i0, String name, String value) {
         addForMap(this.field, getForKey("field", i0), name, value);
         countAdd(fieldCounts, getForKey("field"));
+    }
+    protected int sendParamsSetCount(int i0) {
+        return count(methodCounts, getForKey("sendParamsSet", i0));
     }
     protected void sendParamsSet(int i0, int i1, String name, String value) {
         addForMap(this.method, getForKey("sendParamsSet", i0, i1), name, value);
         countAdd(methodCounts, getForKey("sendParamsSet", i0));
     }
+    protected int postJsonBodySetCount(int i0) {
+        return count(methodCounts, getForKey("postJsonBodySet", i0));
+    }
     protected void postJsonBodySet(int i0, int i1, String key, String name) {
         addForMap(this.method, getForKey("postJsonBodySet", i0, i1), key, name);
         countAdd(methodCounts, getForKey("postJsonBodySet", i0));
     }
+    protected int methodParamsCount(int i0) {
+        return count(methodCounts, getForKey("methodParams", i0));
+    }
     protected void methodParams(int i0, int i1, String name, String divider) {
         addForMap(this.method, getForKey("methodParams", i0, i1), name, divider);
         countAdd(methodCounts, getForKey("methodParams", i0));
+    }
+    protected int methodCount() {
+        return count(methodCounts, getForKey("method"));
     }
     protected void method(int i0, String apiFullName, String methodName, String methodParams, String netToolFullName, String serviceFullName, String methodTag, String baseUrl) {
         addForMap(this.method, getForKey("method", i0), apiFullName, methodName, methodParams, netToolFullName, serviceFullName, methodName, methodTag, baseUrl);
         countAdd(methodCounts, getForKey("method"));
     }
 
-    protected void isSendParams(int i0, boolean is) {
-        methodIfs.put(getIfKey("sendParams", i0), is);
-    }
     protected void sendParamsIf(int i0, String sendParamFullName) {
         addForMap(this.method, getIfKey("sendParams", i0), sendParamFullName, sendParamFullName);
         methodIfs.put(getIfKey("sendParams", i0), true);
     }
-    protected void isSendParamsGet(int i0, boolean is) {
-        methodIfs.put(getIfKey("sendParamsGet", i0), is);
-    }
     protected void sendParamsGetIf(int i0, String sendParamFullName) {
         addForMap(this.method, getIfKey("sendParamsGet", i0), sendParamFullName, sendParamFullName);
         methodIfs.put(getIfKey("sendParamsGet", i0), true);
-    }
-    protected void isPostJsonBody(int i0, boolean is) {
-        methodIfs.put(getIfKey("postJsonBody", i0), is);
     }
     protected void postJsonBodyIf(int i0, String joFullName, String jsonToolFullName) {
         addForMap(this.method, getIfKey("postJsonBody", i0), joFullName, jsonToolFullName);

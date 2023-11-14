@@ -26,38 +26,29 @@ public abstract class PassBuilderBase extends com.codingtu.cooltu.processor.buil
         method = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
+
     protected int fieldCount() {
         return count(fieldCounts, getForKey("field"));
     }
-    protected int methodCount() {
-        return count(methodCounts, getForKey("method"));
-    }
-
     protected void field(int i0, String name, String value) {
         addForMap(this.field, getForKey("field", i0), name, value);
         countAdd(fieldCounts, getForKey("field"));
+    }
+    protected int methodCount() {
+        return count(methodCounts, getForKey("method"));
     }
     protected void method(int i0, String type, String methodName) {
         addForMap(this.method, getForKey("method", i0), type, methodName);
         countAdd(methodCounts, getForKey("method"));
     }
 
-    protected void isIsBean(int i0, boolean is) {
-        methodIfs.put(getIfKey("isBean", i0), is);
-    }
     protected void isBeanIf(int i0, String jsonToolFullName, String beanClass, String fieldName) {
         addForMap(this.method, getIfKey("isBean", i0), jsonToolFullName, beanClass, fieldName);
         methodIfs.put(getIfKey("isBean", i0), true);
     }
-    protected void isIsBeanList(int i0, boolean is) {
-        methodIfs.put(getIfKey("isBeanList", i0), is);
-    }
     protected void isBeanListIf(int i0, String jsonToolFullName, String beanClass, String fieldName) {
         addForMap(this.method, getIfKey("isBeanList", i0), jsonToolFullName, beanClass, fieldName);
         methodIfs.put(getIfKey("isBeanList", i0), true);
-    }
-    protected void isIsOther(int i0, boolean is) {
-        methodIfs.put(getIfKey("isOther", i0), is);
     }
     protected void isOtherIf(int i0, String methodType, String fieldName, String defaultValue) {
         addForMap(this.method, getIfKey("isOther", i0), methodType, fieldName, defaultValue);

@@ -194,178 +194,172 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         bindHandler = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
+
     protected int fieldCount() {
         return count(fieldCounts, getForKey("field"));
     }
-    protected int findViewCount() {
-        return count(findViewCounts, getForKey("findView"));
-    }
-    protected int setOnClickCount() {
-        return count(setOnClickCounts, getForKey("setOnClick"));
-    }
-    protected int colorStrInitCount() {
-        return count(colorStrInitCounts, getForKey("colorStrInit"));
-    }
-    protected int colorResInitCount() {
-        return count(colorResInitCounts, getForKey("colorResInit"));
-    }
-    protected int dpInitCount() {
-        return count(dpInitCounts, getForKey("dpInit"));
-    }
-    protected int dimenInitCount() {
-        return count(dimenInitCounts, getForKey("dimenInit"));
-    }
-    protected int startInitCount() {
-        return count(startInitCounts, getForKey("startInit"));
-    }
-    protected int editTextInitCount() {
-        return count(formInitCounts, getForKey("editTextInit"));
-    }
-    protected int textViewInitCount() {
-        return count(formInitCounts, getForKey("textViewInit"));
-    }
-    protected int onClickSwithCount() {
-        return count(onClickSwithCounts, getForKey("onClickSwith"));
-    }
-    protected int onClickCaseCount(int i0) {
-        return count(onClickSwithCounts, getForKey("onClickCase", i0));
-    }
-    protected int onClickSwitchParamsCount(int i0) {
-        return count(onClickSwithCounts, getForKey("onClickSwitchParams", i0));
-    }
-    protected int onClickMethodsCount() {
-        return count(onClickMethodsCounts, getForKey("onClickMethods"));
-    }
-    protected int acceptCount() {
-        return count(acceptCounts, getForKey("accept"));
-    }
-    protected int acceptMethodCount() {
-        return count(acceptMethodCounts, getForKey("acceptMethod"));
-    }
-    protected int actBackCount() {
-        return count(actBackCounts, getForKey("actBack"));
-    }
-    protected int actBackParamCount(int i0) {
-        return count(actBackCounts, getForKey("actBackParam", i0));
-    }
-    protected int actBackMethodCount() {
-        return count(actBackMethodCounts, getForKey("actBackMethod"));
-    }
-    protected int permissionBackCount() {
-        return count(permissionBackCounts, getForKey("permissionBack"));
-    }
-    protected int permissionBackMethodCount() {
-        return count(permissionBackMethodCounts, getForKey("permissionBackMethod"));
-    }
-    protected int handlerEditTextItemCount() {
-        return count(bindHandlerCounts, getForKey("handlerEditTextItem"));
-    }
-    protected int handlerTextViewItemCount() {
-        return count(bindHandlerCounts, getForKey("handlerTextViewItem"));
-    }
-
     protected void field(int i0, String sign, String type, String name) {
         addForMap(this.field, getForKey("field", i0), sign, type, name);
         countAdd(fieldCounts, getForKey("field"));
+    }
+    protected int findViewCount() {
+        return count(findViewCounts, getForKey("findView"));
     }
     protected void findView(int i0, String fieldName, String parent, String rPkg, String id) {
         addForMap(this.findView, getForKey("findView", i0), fieldName, parent, rPkg, id);
         countAdd(findViewCounts, getForKey("findView"));
     }
+    protected int setOnClickCount() {
+        return count(setOnClickCounts, getForKey("setOnClick"));
+    }
     protected void setOnClick(int i0, String fieldName) {
         addForMap(this.setOnClick, getForKey("setOnClick", i0), fieldName);
         countAdd(setOnClickCounts, getForKey("setOnClick"));
+    }
+    protected int colorStrInitCount() {
+        return count(colorStrInitCounts, getForKey("colorStrInit"));
     }
     protected void colorStrInit(int i0, String name, String color) {
         addForMap(this.colorStrInit, getForKey("colorStrInit", i0), name, color);
         countAdd(colorStrInitCounts, getForKey("colorStrInit"));
     }
+    protected int colorResInitCount() {
+        return count(colorResInitCounts, getForKey("colorResInit"));
+    }
     protected void colorResInit(int i0, String name, String resourceToolFullName, String id) {
         addForMap(this.colorResInit, getForKey("colorResInit", i0), name, resourceToolFullName, id);
         countAdd(colorResInitCounts, getForKey("colorResInit"));
+    }
+    protected int dpInitCount() {
+        return count(dpInitCounts, getForKey("dpInit"));
     }
     protected void dpInit(int i0, String name, String mobileToolFullName, String value) {
         addForMap(this.dpInit, getForKey("dpInit", i0), name, mobileToolFullName, value);
         countAdd(dpInitCounts, getForKey("dpInit"));
     }
+    protected int dimenInitCount() {
+        return count(dimenInitCounts, getForKey("dimenInit"));
+    }
     protected void dimenInit(int i0, String name, String resourceToolFullName, String id) {
         addForMap(this.dimenInit, getForKey("dimenInit", i0), name, resourceToolFullName, id);
         countAdd(dimenInitCounts, getForKey("dimenInit"));
+    }
+    protected int startInitCount() {
+        return count(startInitCounts, getForKey("startInit"));
     }
     protected void startInit(int i0, String name, String passFullName) {
         addForMap(this.startInit, getForKey("startInit", i0), name, passFullName, name);
         countAdd(startInitCounts, getForKey("startInit"));
     }
+    protected int editTextInitCount() {
+        return count(formInitCounts, getForKey("editTextInit"));
+    }
     protected void editTextInit(int i0, String name, String handlerTextWatcherFullName, String formTypeFullName, String type, String index) {
         addForMap(this.formInit, getForKey("editTextInit", i0), name, handlerTextWatcherFullName, formTypeFullName, type, index);
         countAdd(formInitCounts, getForKey("editTextInit"));
+    }
+    protected int textViewInitCount() {
+        return count(formInitCounts, getForKey("textViewInit"));
     }
     protected void textViewInit(int i0, String name, String handlerTextWatcherFullName, String formTypeFullName, String type, String index) {
         addForMap(this.formInit, getForKey("textViewInit", i0), name, handlerTextWatcherFullName, formTypeFullName, type, index);
         countAdd(formInitCounts, getForKey("textViewInit"));
     }
+    protected int onClickCaseCount(int i0) {
+        return count(onClickSwithCounts, getForKey("onClickCase", i0));
+    }
     protected void onClickCase(int i0, int i1, String id) {
         addForMap(this.onClickSwith, getForKey("onClickCase", i0, i1), id);
         countAdd(onClickSwithCounts, getForKey("onClickCase", i0));
+    }
+    protected int onClickSwitchParamsCount(int i0) {
+        return count(onClickSwithCounts, getForKey("onClickSwitchParams", i0));
     }
     protected void onClickSwitchParams(int i0, int i1, String type, String pkg, String index, String divider) {
         addForMap(this.onClickSwith, getForKey("onClickSwitchParams", i0, i1), type, pkg, index, divider);
         countAdd(onClickSwithCounts, getForKey("onClickSwitchParams", i0));
     }
+    protected int onClickSwithCount() {
+        return count(onClickSwithCounts, getForKey("onClickSwith"));
+    }
     protected void onClickSwith(int i0, String methodName) {
         addForMap(this.onClickSwith, getForKey("onClickSwith", i0), methodName);
         countAdd(onClickSwithCounts, getForKey("onClickSwith"));
+    }
+    protected int onClickMethodsCount() {
+        return count(onClickMethodsCounts, getForKey("onClickMethods"));
     }
     protected void onClickMethods(int i0, String methodName, String params) {
         addForMap(this.onClickMethods, getForKey("onClickMethods", i0), methodName, params);
         countAdd(onClickMethodsCounts, getForKey("onClickMethods"));
     }
+    protected int acceptCount() {
+        return count(acceptCounts, getForKey("accept"));
+    }
     protected void accept(int i0, String methodName, String netBackFullName, String coreSendParamsFullName, String params) {
         addForMap(this.accept, getForKey("accept", i0), methodName, netBackFullName, coreSendParamsFullName, methodName, params);
         countAdd(acceptCounts, getForKey("accept"));
+    }
+    protected int acceptMethodCount() {
+        return count(acceptMethodCounts, getForKey("acceptMethod"));
     }
     protected void acceptMethod(int i0, String methodName, String params) {
         addForMap(this.acceptMethod, getForKey("acceptMethod", i0), methodName, params);
         countAdd(acceptMethodCounts, getForKey("acceptMethod"));
     }
+    protected int actBackParamCount(int i0) {
+        return count(actBackCounts, getForKey("actBackParam", i0));
+    }
     protected void actBackParam(int i0, int i1, String passFullName, String name) {
         addForMap(this.actBack, getForKey("actBackParam", i0, i1), passFullName, name);
         countAdd(actBackCounts, getForKey("actBackParam", i0));
+    }
+    protected int actBackCount() {
+        return count(actBackCounts, getForKey("actBack"));
     }
     protected void actBack(int i0, String ifSign, String code4RequestFullName, String code, String methodName) {
         addForMap(this.actBack, getForKey("actBack", i0), ifSign, code4RequestFullName, code, methodName);
         countAdd(actBackCounts, getForKey("actBack"));
     }
+    protected int actBackMethodCount() {
+        return count(actBackMethodCounts, getForKey("actBackMethod"));
+    }
     protected void actBackMethod(int i0, String methodName, String params) {
         addForMap(this.actBackMethod, getForKey("actBackMethod", i0), methodName, params);
         countAdd(actBackMethodCounts, getForKey("actBackMethod"));
+    }
+    protected int permissionBackCount() {
+        return count(permissionBackCounts, getForKey("permissionBack"));
     }
     protected void permissionBack(int i0, String ifSign, String permissionsFullName, String methodNameStatic, String actStaticName, String methodName) {
         addForMap(this.permissionBack, getForKey("permissionBack", i0), ifSign, permissionsFullName, methodNameStatic, actStaticName, methodName);
         countAdd(permissionBackCounts, getForKey("permissionBack"));
     }
+    protected int permissionBackMethodCount() {
+        return count(permissionBackMethodCounts, getForKey("permissionBackMethod"));
+    }
     protected void permissionBackMethod(int i0, String methodName) {
         addForMap(this.permissionBackMethod, getForKey("permissionBackMethod", i0), methodName);
         countAdd(permissionBackMethodCounts, getForKey("permissionBackMethod"));
     }
+    protected int handlerEditTextItemCount() {
+        return count(bindHandlerCounts, getForKey("handlerEditTextItem"));
+    }
     protected void handlerEditTextItem(int i0, String index, String beanName, String field) {
         addForMap(this.bindHandler, getForKey("handlerEditTextItem", i0), index, beanName, field);
         countAdd(bindHandlerCounts, getForKey("handlerEditTextItem"));
+    }
+    protected int handlerTextViewItemCount() {
+        return count(bindHandlerCounts, getForKey("handlerTextViewItem"));
     }
     protected void handlerTextViewItem(int i0, String index, String beanName, String field) {
         addForMap(this.bindHandler, getForKey("handlerTextViewItem", i0), index, beanName, field);
         countAdd(bindHandlerCounts, getForKey("handlerTextViewItem"));
     }
 
-    protected void isLayout(boolean is) {
-        layoutIfs.put(getIfKey("layout"), is);
-    }
     protected void layoutIf(String layout) {
         addForMap(this.layout, getIfKey("layout"), layout);
         layoutIfs.put(getIfKey("layout"), true);
-    }
-    protected void isFormInit(boolean is) {
-        formInitIfs.put(getIfKey("formInit"), is);
     }
     protected void formInitIf(String name, String type) {
         addForMap(this.formInit, getIfKey("formInit"), name, name, type, name);
@@ -374,19 +368,8 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void isOnCreateCompleteInit(boolean is) {
         onCreateCompleteInitIfs.put(getIfKey("onCreateCompleteInit"), is);
     }
-    protected void onCreateCompleteInitIf() {
-        addForMap(this.onCreateCompleteInit, getIfKey("onCreateCompleteInit"));
-        onCreateCompleteInitIfs.put(getIfKey("onCreateCompleteInit"), true);
-    }
     protected void isSuperOnClick(boolean is) {
         superOnClickIfs.put(getIfKey("superOnClick"), is);
-    }
-    protected void superOnClickIf() {
-        addForMap(this.superOnClick, getIfKey("superOnClick"));
-        superOnClickIfs.put(getIfKey("superOnClick"), true);
-    }
-    protected void isOnClickSwitchParams(int i0, boolean is) {
-        onClickSwithIfs.put(getIfKey("onClickSwitchParams", i0), is);
     }
     protected void onClickSwitchParamsIf(int i0, String divider) {
         addForMap(this.onClickSwith, getIfKey("onClickSwitchParams", i0), divider);
@@ -395,19 +378,8 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void isSuperAccept(boolean is) {
         superAcceptIfs.put(getIfKey("superAccept"), is);
     }
-    protected void superAcceptIf() {
-        addForMap(this.superAccept, getIfKey("superAccept"));
-        superAcceptIfs.put(getIfKey("superAccept"), true);
-    }
     protected void isActBackParamDivider(int i0, int i1, boolean is) {
         actBackIfs.put(getIfKey("actBackParamDivider", i0, i1), is);
-    }
-    protected void actBackParamDividerIf(int i0, int i1) {
-        addForMap(this.actBack, getIfKey("actBackParamDivider", i0, i1));
-        actBackIfs.put(getIfKey("actBackParamDivider", i0, i1), true);
-    }
-    protected void isAllow(int i0, boolean is) {
-        permissionBackIfs.put(getIfKey("allow", i0), is);
     }
     protected void allowIf(int i0, String permissionToolFullName) {
         addForMap(this.permissionBack, getIfKey("allow", i0), permissionToolFullName);
@@ -416,22 +388,9 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void isAllowParam(int i0, boolean is) {
         permissionBackMethodIfs.put(getIfKey("allowParam", i0), is);
     }
-    protected void allowParamIf(int i0) {
-        addForMap(this.permissionBackMethod, getIfKey("allowParam", i0));
-        permissionBackMethodIfs.put(getIfKey("allowParam", i0), true);
-    }
-    protected void isBindHandler(boolean is) {
-        bindHandlerIfs.put(getIfKey("bindHandler"), is);
-    }
-    protected void isHandlerEditText(boolean is) {
-        bindHandlerIfs.put(getIfKey("handlerEditText"), is);
-    }
     protected void handlerEditTextIf(String formTypeFullName, String type) {
         addForMap(this.bindHandler, getIfKey("handlerEditText"), formTypeFullName, type);
         bindHandlerIfs.put(getIfKey("handlerEditText"), true);
-    }
-    protected void isHandlerTextView(boolean is) {
-        bindHandlerIfs.put(getIfKey("handlerTextView"), is);
     }
     protected void handlerTextViewIf(String formTypeFullName, String type) {
         addForMap(this.bindHandler, getIfKey("handlerTextView"), formTypeFullName, type);

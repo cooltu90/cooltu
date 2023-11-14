@@ -115,7 +115,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
         List<String> subTags = new ArrayList<>();
         methodDeal.deal(level, levelsCount, subTagStart, useIntParam0, useIntParam1, space);
         deal.deal(isFor, level, subTagStart, subTags, methodParams, useMethodStrParams, listCounts, addTemp, tag, space);
-        method(tagSb, subTagStart, tag0, methodParams, useMethodStrParams, useIntParam0, useIntParam2, space);
+        method(levelsCount, tagSb, subTagStart, tag0, methodParams, useMethodStrParams, useIntParam0, useIntParam2, space);
     }
 
     private MethodDeal getIfMethodDeal() {
@@ -123,13 +123,13 @@ public class BuilderBuilder extends BuilderBuilderBase {
             @Override
             public void deal(int level, int levelsCount, SubTag subTag, List<String> useIntParam0, List<String> useIntParam1, String space) {
                 String keyParams0 = getParams(useIntParam0, true, false);
-                String ifPutMethodParams = getParams(getMethodIntParams(levelsCount), false, true);
+                //String ifPutMethodParams = getParams(getMethodIntParams(levelsCount), false, true);
 
-                addLnTag(ifs, "    protected void is[linesAdd1]([params]boolean is) {"
-                        , ConvertTool.toClassType(subTag.tag), ifPutMethodParams);
-                addLnTag(ifs, "        [lines]Ifs.put(getIfKey(\"[linesAdd1]\"[params]), is);"
-                        , subTag.parentTag, subTag.tag, keyParams0);
-                addLnTag(ifs, "    }");
+//                addLnTag(ifs, "    protected void is[linesAdd1]([params]boolean is) {"
+//                        , ConvertTool.toClassType(subTag.tag), ifPutMethodParams);
+//                addLnTag(ifs, "        [lines]Ifs.put(getIfKey(\"[linesAdd1]\"[params]), is);"
+//                        , subTag.parentTag, subTag.tag, keyParams0);
+//                addLnTag(ifs, "    }");
 
                 addLnTag(dealLinesInParent, "        [space]if (isIf([lines]Ifs, getIfKey(\"[tag]\"[params]))) {"
                         , space, subTag.parentTag, subTag.tag, keyParams0);
@@ -145,11 +145,13 @@ public class BuilderBuilder extends BuilderBuilderBase {
             public void deal(int level, int levelsCount, SubTag subTag, List<String> useIntParam0, List<String> useIntParam1, String space) {
                 String keyParams0 = getParams(useIntParam0, true, false);
                 String keyParams1 = getParams(useIntParam1, true, false);
-                String params = getParams(getMethodIntParams(levelsCount));
+//                String params = getParams(getMethodIntParams(levelsCount));
 
-                addLnTag(forCounts, "    protected int [lines]Count([params]) {", subTag.tag, params);
-                addLnTag(forCounts, "        return count([lines]Counts, getForKey(\"[tag]\"[params]));", subTag.parentTag, subTag.tag, keyParams0);
-                addLnTag(forCounts, "    }");
+//                addLnTag(forCounts, "    protected int [lines]Count([params]) {"
+//                        , subTag.tag, params);
+//                addLnTag(forCounts, "        return count([lines]Counts, getForKey(\"[tag]\"[params]));"
+//                        , subTag.parentTag, subTag.tag, keyParams0);
+//                addLnTag(forCounts, "    }");
 
 
                 addLnTag(dealLinesInParent, "        [space]for (int [i][0] = 0; [i][0] < count([lines]Counts, getForKey(\"[tag]\"[params])); [i][0]++) {"
@@ -162,21 +164,41 @@ public class BuilderBuilder extends BuilderBuilderBase {
         };
     }
 
-    private void method(StringBuilder sb, SubTag subTag, String tag0, List<String> methodParams, List<String> useMethodStrParams,
+    private void method(int levelsCount, StringBuilder sb, SubTag subTag, String tag0, List<String> methodParams, List<String> useMethodStrParams,
                         List<String> useIntParam0, List<String> useIntParam2, String space) {
         Logs.i(useIntParam2);
         String keyParams0 = getParams(useIntParam0, true, false);
         String keyParams = getParams(useIntParam2, true, false);
 
         if ("If".equals(tag0)) {
-            addLnTag(sb, "    protected void [lines]If([params]) {"
-                    , subTag.tag, getParams(methodParams));
-            addLnTag(sb, "        addForMap(this.[lines], getIfKey(\"[tag]\"[params])[strsValue]);"
-                    , subTag.parentTag, subTag.tag, keyParams, getParams(useMethodStrParams, true, false));
-            addLnTag(sb, "        [lines]Ifs.put(getIfKey(\"[tag]\"[params]), true);"
-                    , subTag.parentTag, subTag.tag, keyParams);
-            addLnTag(sb, "    }");
+            String ifPutMethodParams = getParams(getMethodIntParams(levelsCount), false, true);
+
+            if (CountTool.isNull(useMethodStrParams)) {
+                addLnTag(sb, "    protected void is[linesAdd1]([params]boolean is) {"
+                        , ConvertTool.toClassType(subTag.tag), ifPutMethodParams);
+                addLnTag(sb, "        [lines]Ifs.put(getIfKey(\"[linesAdd1]\"[params]), is);"
+                        , subTag.parentTag, subTag.tag, keyParams0);
+                addLnTag(sb, "    }");
+            }else{
+                addLnTag(sb, "    protected void [lines]If([params]) {"
+                        , subTag.tag, getParams(methodParams));
+                addLnTag(sb, "        addForMap(this.[lines], getIfKey(\"[tag]\"[params])[strsValue]);"
+                        , subTag.parentTag, subTag.tag, keyParams, getParams(useMethodStrParams, true, false));
+                addLnTag(sb, "        [lines]Ifs.put(getIfKey(\"[tag]\"[params]), true);"
+                        , subTag.parentTag, subTag.tag, keyParams);
+                addLnTag(sb, "    }");
+            }
         } else {
+
+            String params = getParams(getMethodIntParams(levelsCount));
+
+            addLnTag(sb, "    protected int [lines]Count([params]) {"
+                    , subTag.tag, params);
+            addLnTag(sb, "        return count([lines]Counts, getForKey(\"[tag]\"[params]));"
+                    , subTag.parentTag, subTag.tag, keyParams0);
+            addLnTag(sb, "    }");
+
+
             addLnTag(sb, "    protected void [lines]([params]) {"
                     , subTag.tag, getParams(methodParams));
             addLnTag(sb, "        addForMap(this.[lines], getForKey(\"[tag]\"[params])[strsValue]);"

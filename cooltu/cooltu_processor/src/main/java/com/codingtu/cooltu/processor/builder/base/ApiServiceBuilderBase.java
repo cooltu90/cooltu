@@ -20,38 +20,27 @@ public abstract class ApiServiceBuilderBase extends com.codingtu.cooltu.processo
         method = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
-    protected int methodCount() {
-        return count(methodCounts, getForKey("method"));
-    }
+
     protected int methodParamCount(int i0) {
         return count(methodCounts, getForKey("methodParam", i0));
     }
-
     protected void methodParam(int i0, int i1, String anno, String type, String name, String divider) {
         addForMap(this.method, getForKey("methodParam", i0, i1), anno, type, name, divider);
         countAdd(methodCounts, getForKey("methodParam", i0));
+    }
+    protected int methodCount() {
+        return count(methodCounts, getForKey("method"));
     }
     protected void method(int i0, String netType, String apiUrl, String methodName) {
         addForMap(this.method, getForKey("method", i0), netType, apiUrl, methodName);
         countAdd(methodCounts, getForKey("method"));
     }
 
-    protected void isAnnoInfo(int i0, int i1, boolean is) {
-        methodIfs.put(getIfKey("annoInfo", i0, i1), is);
-    }
     protected void isAnnoValueName(int i0, int i1, boolean is) {
         methodIfs.put(getIfKey("annoValueName", i0, i1), is);
     }
-    protected void annoValueNameIf(int i0, int i1) {
-        addForMap(this.method, getIfKey("annoValueName", i0, i1));
-        methodIfs.put(getIfKey("annoValueName", i0, i1), true);
-    }
     protected void isAnnoEncode(int i0, int i1, boolean is) {
         methodIfs.put(getIfKey("annoEncode", i0, i1), is);
-    }
-    protected void annoEncodeIf(int i0, int i1) {
-        addForMap(this.method, getIfKey("annoEncode", i0, i1));
-        methodIfs.put(getIfKey("annoEncode", i0, i1), true);
     }
     protected void annoInfoIf(int i0, int i1, String value) {
         addForMap(this.method, getIfKey("annoInfo", i0, i1), value);
