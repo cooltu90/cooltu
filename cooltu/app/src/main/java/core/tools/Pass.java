@@ -6,6 +6,7 @@ public class Pass {
     public static final String FROM_ACT = "fromAct";
     public static final String USER = "user";
     public static final String XXX = "xxx";
+    public static final String FORMS = "forms";
     public static final String NAME = "name";
     public static final String AGE = "age";
     public static final String IS_TEST = "isTest";
@@ -18,6 +19,9 @@ public class Pass {
     }
     public static final String xxx(Intent data) {
         return data.getStringExtra(XXX);
+    }
+    public static final com.codingtu.cooltu.bean.Forms forms(Intent data) {
+        return com.codingtu.cooltu.lib4j.json.JsonTool.toBean(com.codingtu.cooltu.bean.Forms.class, data.getStringExtra(FORMS));
     }
     public static final String name(Intent data) {
         return data.getStringExtra(NAME);

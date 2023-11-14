@@ -4,9 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 
 public class ActStart {
-    public static final void formActivity(Activity act) {
+    public static final void formActivity(Activity act, com.codingtu.cooltu.bean.Forms forms) {
         Intent intent = new Intent(act, com.codingtu.cooltu.ui.FormActivity.class);
         intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
+        intent.putExtra(Pass.FORMS, com.codingtu.cooltu.lib4j.json.JsonTool.toJson(forms));
         com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.FORM_ACTIVITY);
     }
     public static final void stepOneActivity(Activity act) {

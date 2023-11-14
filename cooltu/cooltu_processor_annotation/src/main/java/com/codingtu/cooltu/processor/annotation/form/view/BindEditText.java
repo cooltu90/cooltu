@@ -4,8 +4,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.SOURCE)
-public @interface BindEdieText {
+public @interface BindEditText {
     int value() default -1;
 
     String name() default "";
+
+    boolean echo() default true;
+
+    String prompt() default "";
+
 }

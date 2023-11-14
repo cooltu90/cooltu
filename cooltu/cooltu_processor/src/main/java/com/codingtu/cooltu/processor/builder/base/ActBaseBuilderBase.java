@@ -96,6 +96,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> bindHandlerCounts;
     protected StringBuilder bindHandlerSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> bindHandler;
+    protected java.util.Map<String, Boolean> checkFormsIfs;
+    protected java.util.Map<String, Integer> checkFormsCounts;
+    protected StringBuilder checkFormsSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> checkForms;
 
     public ActBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -192,6 +196,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         bindHandlerCounts = new java.util.HashMap<>();
         bindHandlerSb = map.get("bindHandler");
         bindHandler = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        checkFormsIfs = new java.util.HashMap<>();
+        checkFormsCounts = new java.util.HashMap<>();
+        checkFormsSb = map.get("checkForms");
+        checkForms = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
 
@@ -264,6 +272,34 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void textViewInit(int i0, String name, String handlerTextWatcherFullName, String formTypeFullName, String type, String index) {
         addForMap(this.formInit, getForKey("textViewInit", i0), name, handlerTextWatcherFullName, formTypeFullName, type, index);
         countAdd(formInitCounts, getForKey("textViewInit"));
+    }
+    protected int etEchoWithParseCount() {
+        return count(formInitCounts, getForKey("etEchoWithParse"));
+    }
+    protected void etEchoWithParse(int i0, String viewToolFullName, String view, String parse, String bean, String field) {
+        addForMap(this.formInit, getForKey("etEchoWithParse", i0), viewToolFullName, view, parse, bean, field);
+        countAdd(formInitCounts, getForKey("etEchoWithParse"));
+    }
+    protected int etEchoCount() {
+        return count(formInitCounts, getForKey("etEcho"));
+    }
+    protected void etEcho(int i0, String viewToolFullName, String view, String bean, String field) {
+        addForMap(this.formInit, getForKey("etEcho", i0), viewToolFullName, view, bean, field);
+        countAdd(formInitCounts, getForKey("etEcho"));
+    }
+    protected int tvEchoWithParseCount() {
+        return count(formInitCounts, getForKey("tvEchoWithParse"));
+    }
+    protected void tvEchoWithParse(int i0, String viewToolFullName, String view, String parse, String bean, String field) {
+        addForMap(this.formInit, getForKey("tvEchoWithParse", i0), viewToolFullName, view, parse, bean, field);
+        countAdd(formInitCounts, getForKey("tvEchoWithParse"));
+    }
+    protected int tvEchoCount() {
+        return count(formInitCounts, getForKey("tvEcho"));
+    }
+    protected void tvEcho(int i0, String viewToolFullName, String view, String bean, String field) {
+        addForMap(this.formInit, getForKey("tvEcho", i0), viewToolFullName, view, bean, field);
+        countAdd(formInitCounts, getForKey("tvEcho"));
     }
     protected int onClickCaseCount(int i0) {
         return count(onClickSwithCounts, getForKey("onClickCase", i0));
@@ -349,12 +385,54 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.bindHandler, getForKey("handlerEditTextItem", i0), index, beanName, field);
         countAdd(bindHandlerCounts, getForKey("handlerEditTextItem"));
     }
+    protected int handlerParseEtItemCount() {
+        return count(bindHandlerCounts, getForKey("handlerParseEtItem"));
+    }
+    protected void handlerParseEtItem(int i0, String index, String beanName, String field, String parse) {
+        addForMap(this.bindHandler, getForKey("handlerParseEtItem", i0), index, beanName, field, parse);
+        countAdd(bindHandlerCounts, getForKey("handlerParseEtItem"));
+    }
     protected int handlerTextViewItemCount() {
         return count(bindHandlerCounts, getForKey("handlerTextViewItem"));
     }
     protected void handlerTextViewItem(int i0, String index, String beanName, String field) {
         addForMap(this.bindHandler, getForKey("handlerTextViewItem", i0), index, beanName, field);
         countAdd(bindHandlerCounts, getForKey("handlerTextViewItem"));
+    }
+    protected int handlerParseTvItemCount() {
+        return count(bindHandlerCounts, getForKey("handlerParseTvItem"));
+    }
+    protected void handlerParseTvItem(int i0, String index, String beanName, String field, String parse) {
+        addForMap(this.bindHandler, getForKey("handlerParseTvItem", i0), index, beanName, field, parse);
+        countAdd(bindHandlerCounts, getForKey("handlerParseTvItem"));
+    }
+    protected int checkEtCount() {
+        return count(checkFormsCounts, getForKey("checkEt"));
+    }
+    protected void checkEt(int i0, String stringToolFullName, String bean, String field, String promp) {
+        addForMap(this.checkForms, getForKey("checkEt", i0), stringToolFullName, bean, field, promp);
+        countAdd(checkFormsCounts, getForKey("checkEt"));
+    }
+    protected int checkEtWithClassCount() {
+        return count(checkFormsCounts, getForKey("checkEtWithClass"));
+    }
+    protected void checkEtWithClass(int i0, String checkClass, String bean, String field, String promp) {
+        addForMap(this.checkForms, getForKey("checkEtWithClass", i0), checkClass, bean, bean, field, promp);
+        countAdd(checkFormsCounts, getForKey("checkEtWithClass"));
+    }
+    protected int checkTvCount() {
+        return count(checkFormsCounts, getForKey("checkTv"));
+    }
+    protected void checkTv(int i0, String stringToolFullName, String bean, String field, String promp) {
+        addForMap(this.checkForms, getForKey("checkTv", i0), stringToolFullName, bean, field, promp);
+        countAdd(checkFormsCounts, getForKey("checkTv"));
+    }
+    protected int checkTvWithClassCount() {
+        return count(checkFormsCounts, getForKey("checkTvWithClass"));
+    }
+    protected void checkTvWithClass(int i0, String checkClass, String bean, String field, String promp) {
+        addForMap(this.checkForms, getForKey("checkTvWithClass", i0), checkClass, bean, bean, field, promp);
+        countAdd(checkFormsCounts, getForKey("checkTvWithClass"));
     }
 
     protected void layoutIf(String layout) {
@@ -399,6 +477,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected void bindHandlerIf(String beanType, String beanName) {
         addForMap(this.bindHandler, getIfKey("bindHandler"), beanType, beanName, beanType, beanName, beanName, beanName);
         bindHandlerIfs.put(getIfKey("bindHandler"), true);
+    }
+    protected void checkFormsIf(String bean) {
+        addForMap(this.checkForms, getIfKey("checkForms"), bean);
+        checkFormsIfs.put(getIfKey("checkForms"), true);
     }
 
     @Override
@@ -454,6 +536,24 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 List<String> formInit1 = formInit.get(getForKey("textViewInit", i0));
                 addLnTag(formInitSb, "        [name].addTextChangedListener(new [handlerTextWatcherFullName](bindHandler, [formTypeFullName].[type], [index]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
             }
+            addLnTag(formInitSb, "        if (!initFormBean) {");
+            for (int i0 = 0; i0 < count(formInitCounts, getForKey("etEchoWithParse")); i0++) {
+                List<String> formInit1 = formInit.get(getForKey("etEchoWithParse", i0));
+                addLnTag(formInitSb, "            [viewToolFullName].setText([view], new [parse]().toView([bean].[field]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
+            }
+            for (int i0 = 0; i0 < count(formInitCounts, getForKey("etEcho")); i0++) {
+                List<String> formInit1 = formInit.get(getForKey("etEcho", i0));
+                addLnTag(formInitSb, "            [viewToolFullName].setText([view], [bean].[field]);", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3));
+            }
+            for (int i0 = 0; i0 < count(formInitCounts, getForKey("tvEchoWithParse")); i0++) {
+                List<String> formInit1 = formInit.get(getForKey("tvEchoWithParse", i0));
+                addLnTag(formInitSb, "            [viewToolFullName].setText([view], new [parse]().toView([bean].[field]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
+            }
+            for (int i0 = 0; i0 < count(formInitCounts, getForKey("tvEcho")); i0++) {
+                List<String> formInit1 = formInit.get(getForKey("tvEcho", i0));
+                addLnTag(formInitSb, "            [viewToolFullName].setText([view], [bean].[field]);", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3));
+            }
+            addLnTag(formInitSb, "        }");
         }
         if (isIf(onCreateCompleteInitIfs, getIfKey("onCreateCompleteInit"))) {
             List<String> onCreateCompleteInit0 = onCreateCompleteInit.get(getIfKey("onCreateCompleteInit"));
@@ -567,6 +667,12 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                     addLnTag(bindHandlerSb, "                        [beanName].[field] = (java.lang.String) msg.obj;", bindHandler2.get(1), bindHandler2.get(2));
                     addLnTag(bindHandlerSb, "                        break;");
                 }
+                for (int i0 = 0; i0 < count(bindHandlerCounts, getForKey("handlerParseEtItem")); i0++) {
+                    List<String> bindHandler2 = bindHandler.get(getForKey("handlerParseEtItem", i0));
+                    addLnTag(bindHandlerSb, "                    case [index]:", bindHandler2.get(0));
+                    addLnTag(bindHandlerSb, "                        [beanName].[field] = new [parse]().toBean(msg.obj);", bindHandler2.get(1), bindHandler2.get(2), bindHandler2.get(3));
+                    addLnTag(bindHandlerSb, "                        break;");
+                }
                 addLnTag(bindHandlerSb, "                }");
                 addLnTag(bindHandlerSb, "            }");
             }
@@ -580,11 +686,51 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                     addLnTag(bindHandlerSb, "                        [beanName].[field] = (java.lang.String) msg.obj;", bindHandler2.get(1), bindHandler2.get(2));
                     addLnTag(bindHandlerSb, "                        break;");
                 }
+                for (int i0 = 0; i0 < count(bindHandlerCounts, getForKey("handlerParseTvItem")); i0++) {
+                    List<String> bindHandler2 = bindHandler.get(getForKey("handlerParseTvItem", i0));
+                    addLnTag(bindHandlerSb, "                    case [index]:", bindHandler2.get(0));
+                    addLnTag(bindHandlerSb, "                        [beanName].[field] = new [parse]().toBean(msg.obj);", bindHandler2.get(1), bindHandler2.get(2), bindHandler2.get(3));
+                    addLnTag(bindHandlerSb, "                        break;");
+                }
                 addLnTag(bindHandlerSb, "                }");
                 addLnTag(bindHandlerSb, "            }");
             }
             addLnTag(bindHandlerSb, "        }");
             addLnTag(bindHandlerSb, "    }");
+        }
+        if (isIf(checkFormsIfs, getIfKey("checkForms"))) {
+            List<String> checkForms0 = checkForms.get(getIfKey("checkForms"));
+            addLnTag(checkFormsSb, "    protected boolean check[bean]() {", checkForms0.get(0));
+            for (int i0 = 0; i0 < count(checkFormsCounts, getForKey("checkEt")); i0++) {
+                List<String> checkForms1 = checkForms.get(getForKey("checkEt", i0));
+                addLnTag(checkFormsSb, "        if ([stringToolFullName].isBlank([bean].[field])) {", checkForms1.get(0), checkForms1.get(1), checkForms1.get(2));
+                addLnTag(checkFormsSb, "            toast(\"[promp]\");", checkForms1.get(3));
+                addLnTag(checkFormsSb, "            return false;");
+                addLnTag(checkFormsSb, "        }");
+            }
+            for (int i0 = 0; i0 < count(checkFormsCounts, getForKey("checkEtWithClass")); i0++) {
+                List<String> checkForms1 = checkForms.get(getForKey("checkEtWithClass", i0));
+                addLnTag(checkFormsSb, "        if (new [checkClass]().check([bean], [bean].[field])) {", checkForms1.get(0), checkForms1.get(1), checkForms1.get(2), checkForms1.get(3));
+                addLnTag(checkFormsSb, "            toast(\"[promp]\");", checkForms1.get(4));
+                addLnTag(checkFormsSb, "            return false;");
+                addLnTag(checkFormsSb, "        }");
+            }
+            for (int i0 = 0; i0 < count(checkFormsCounts, getForKey("checkTv")); i0++) {
+                List<String> checkForms1 = checkForms.get(getForKey("checkTv", i0));
+                addLnTag(checkFormsSb, "        if ([stringToolFullName].isBlank([bean].[field])) {", checkForms1.get(0), checkForms1.get(1), checkForms1.get(2));
+                addLnTag(checkFormsSb, "            toast(\"[promp]\");", checkForms1.get(3));
+                addLnTag(checkFormsSb, "            return false;");
+                addLnTag(checkFormsSb, "        }");
+            }
+            for (int i0 = 0; i0 < count(checkFormsCounts, getForKey("checkTvWithClass")); i0++) {
+                List<String> checkForms1 = checkForms.get(getForKey("checkTvWithClass", i0));
+                addLnTag(checkFormsSb, "        if (new [checkClass]().check([bean], [bean].[field])) {", checkForms1.get(0), checkForms1.get(1), checkForms1.get(2), checkForms1.get(3));
+                addLnTag(checkFormsSb, "            toast(\"[promp]\");", checkForms1.get(4));
+                addLnTag(checkFormsSb, "            return false;");
+                addLnTag(checkFormsSb, "        }");
+            }
+            addLnTag(checkFormsSb, "        return true;");
+            addLnTag(checkFormsSb, "    }");
         }
 
     }
@@ -650,6 +796,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("    }");
         lines.add("[[permissionBackMethod]]");
         lines.add("[[bindHandler]]");
+        lines.add("[[checkForms]]");
         lines.add("}");
         lines.add("");
 

@@ -5,6 +5,7 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
 import com.codingtu.cooltu.lib4j.data.map.ValueMap;
+import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
@@ -75,7 +76,13 @@ public class ActStartBuilder extends ActStartBuilderBase {
                         Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {
                             @Override
                             public boolean each(int position, KV<String, String> kv) {
-                                methodIntent(index[0], position, ConvertTool.toStaticType(kv.v), kv.v);
+                                if (ClassTool.isBaseClass(kv.k)) {
+                                    methodIntent(index[0], position, ConvertTool.toStaticType(kv.v), kv.v);
+                                } else {
+                                    methodIntent(index[0], position, ConvertTool.toStaticType(kv.v),
+                                            FullName.JSON_TOOL + ".toJson(" + kv.v + ")");
+                                }
+
                                 return false;
                             }
                         });

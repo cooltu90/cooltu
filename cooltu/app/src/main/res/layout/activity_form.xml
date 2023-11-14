@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="10dp"
-        android:text="name"
+        android:text="xxx"
         android:textColor="#000"
         android:textSize="14sp" />
 

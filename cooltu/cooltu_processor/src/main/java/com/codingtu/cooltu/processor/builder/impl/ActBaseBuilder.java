@@ -13,7 +13,9 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.BuilderType;
-import com.codingtu.cooltu.processor.annotation.form.view.BindEdieText;
+import com.codingtu.cooltu.processor.annotation.form.FormCheck;
+import com.codingtu.cooltu.processor.annotation.form.FormParse;
+import com.codingtu.cooltu.processor.annotation.form.view.BindEditText;
 import com.codingtu.cooltu.processor.annotation.form.FormBean;
 import com.codingtu.cooltu.processor.annotation.form.FormType;
 import com.codingtu.cooltu.processor.annotation.form.view.BindTextView;
@@ -21,7 +23,6 @@ import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
-import com.codingtu.cooltu.processor.bean.BindInfo;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
@@ -51,6 +52,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
     private ActBaseInfo info;
     private List<KV<String, String>> inBases = new ArrayList<>();
     private HashMap<String, String> inBaseMap = new HashMap<>();
+    private HashMap<String, String> fieldMap = new HashMap<>();
 
     public ActBaseBuilder(JavaInfo info) {
         super(info);
@@ -113,14 +115,10 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             layoutIf(info.layout.toString());
         }
 
-        final int[] fieldCount = {0};
-
         Ts.ls(info.viewInfos, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
             @Override
             public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
-                if (inBaseMap.get(viewInfo.fieldName) == null) {
-                    field(fieldCount[0]++, Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
-                }
+                addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
 
                 String parent = "";
                 if (!viewInfo.fieldName.equals(viewInfo.id)) {
@@ -134,7 +132,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         Ts.ls(inBases, new BaseTs.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
-                field(fieldCount[0]++, Constant.SIGN_PROTECTED, kv.k, kv.v);
+                addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
                 return false;
             }
         });
@@ -203,9 +201,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         Ts.ls(info.colorStrs, new BaseTs.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
-                if (inBaseMap.get(kv.k) == null) {
-                    field(fieldCount[0]++, Constant.SIGN_PROTECTED, "int", kv.k);
-                }
+                addField(Constant.SIGN_PROTECTED, "int", kv.k);
                 colorStrInit(position, kv.k, kv.v);
                 return false;
             }
@@ -215,9 +211,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         Ts.ls(info.colorReses, new BaseTs.EachTs<KV<String, IdTools.Id>>() {
             @Override
             public boolean each(int position, KV<String, IdTools.Id> kv) {
-                if (inBaseMap.get(kv.k) == null) {
-                    field(fieldCount[0]++, Constant.SIGN_PROTECTED, "int", kv.k);
-                }
+                addField(Constant.SIGN_PROTECTED, "int", kv.k);
                 colorResInit(position, kv.k, FullName.RESOURCE_TOOL, kv.v.toString());
                 return false;
             }
@@ -227,9 +221,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         Ts.ls(info.dps, new BaseTs.EachTs<KV<String, Float>>() {
             @Override
             public boolean each(int position, KV<String, Float> kv) {
-                if (inBaseMap.get(kv.k) == null) {
-                    field(fieldCount[0]++, Constant.SIGN_PROTECTED, "int", kv.k);
-                }
+                addField(Constant.SIGN_PROTECTED, "int", kv.k);
                 dpInit(position, kv.k, FullName.MOBILE_TOOL, kv.v + "f");
                 return false;
             }
@@ -239,9 +231,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         Ts.ls(info.dimens, new BaseTs.EachTs<KV<String, IdTools.Id>>() {
             @Override
             public boolean each(int position, KV<String, IdTools.Id> kv) {
-                if (inBaseMap.get(kv.k) == null) {
-                    field(fieldCount[0]++, Constant.SIGN_PROTECTED, "int", kv.k);
-                }
+                addField(Constant.SIGN_PROTECTED, "int", kv.k);
                 dimenInit(position, kv.k, FullName.RESOURCE_TOOL, kv.v.toString());
                 return false;
             }
@@ -251,9 +241,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         Ts.ls(info.starts, new BaseTs.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
-                if (inBaseMap.get(kv.v) == null) {
-                    field(fieldCount[0]++, Constant.SIGN_PROTECTED, kv.k, kv.v);
-                }
+                addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
                 startInit(position, kv.v, FullName.PASS);
                 return false;
             }
@@ -395,19 +383,27 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             });
             TypeElement formBeanTe = FormBeanDeal.MAP.get(formBeanClass);
 
+            String formBeanSimpleName = CurrentPath.javaInfo(formBeanClass).name;
+
             String name = formBeanTe.getAnnotation(FormBean.class).value();
             if (StringTool.isBlank(name)) {
-                name = ConvertTool.toMethodType(CurrentPath.javaInfo(formBeanClass).name);
+                name = ConvertTool.toMethodType(formBeanSimpleName);
             }
-            field(fieldCount[0]++, Constant.SIGN_PROTECTED, formBeanClass, name);
-            field(fieldCount[0]++, Constant.SIGN_PROTECTED, "boolean", "initFormBean");
-            field(fieldCount[0]++, Constant.SIGN_PUBLIC, "BindHandler", "bindHandler");
+            addField(Constant.SIGN_PROTECTED, formBeanClass, name);
+            addField(Constant.SIGN_PROTECTED, "boolean", "initFormBean");
+            addField(Constant.SIGN_PUBLIC, "BindHandler", "bindHandler");
             bindHandlerIf(formBeanClass, name);
             formInitIf(name, formBeanClass);
+            checkFormsIf(formBeanSimpleName);
             dealFormBean(formBeanTe, name);
         }
+    }
 
-
+    private void addField(String sign, String type, String name) {
+        if (inBaseMap.get(name) == null && fieldMap.get(name) == null) {
+            fieldMap.put(name, name);
+            field(fieldCount(), sign, type, name);
+        }
     }
 
     private void dealFormBean(TypeElement te, String beanName) {
@@ -417,25 +413,60 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
         Ts.ts(te.getEnclosedElements()).ls((position, element) -> {
             if (element instanceof VariableElement) {
                 VariableElement ve = (VariableElement) element;
-                BindEdieText bindEdieText = ve.getAnnotation(BindEdieText.class);
-                if (bindEdieText != null) {
-                    String viewName = bindEdieText.name();
+                BindEditText bindEditText = ve.getAnnotation(BindEditText.class);
+                if (bindEditText != null) {
+                    String viewName = bindEditText.name();
                     if (StringTool.isBlank(viewName)) {
-                        IdTools.Id id = IdTools.elementToId(ve, BindEdieText.class, bindEdieText.value());
+                        IdTools.Id id = IdTools.elementToId(ve, BindEditText.class, bindEditText.value());
                         viewName = id.rName;
                     }
                     Integer index = indexMap.get(FormType.EDIT_TEXT);
                     if (index == null) {
                         index = 0;
                     }
-                    String type = "EDIT_TEXT";
+                    indexMap.put(FormType.EDIT_TEXT, index + 1);
 
+                    String type = "EDIT_TEXT";
                     editTextInit(index, viewName, FullName.HANDLER_TEXT_WATCHER, FullName.FORM_TYPE, type, "" + index);
-                    //
                     handlerEditTextIf(FullName.FORM_TYPE, type);
 
-                    handlerEditTextItem(index, index + "", beanName, ElementTools.simpleName(ve));
-                    indexMap.put(FormType.EDIT_TEXT, index + 1);
+                    FormParse formParse = ve.getAnnotation(FormParse.class);
+                    String parseClass = null;
+                    if (formParse != null) {
+                        parseClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                            @Override
+                            public Object get() {
+                                return formParse.value();
+                            }
+                        });
+                    }
+
+                    String field = ElementTools.simpleName(ve);
+                    if (StringTool.isNotBlank(parseClass) && !ClassTool.isVoid(parseClass)) {
+                        if (bindEditText.echo())
+                            etEchoWithParse(etEchoWithParseCount(), FullName.VIEW_TOOL, viewName, parseClass, beanName, field);
+                        handlerParseEtItem(handlerParseEtItemCount(), index + "", beanName, field, parseClass);
+                    } else {
+                        if (bindEditText.echo())
+                            etEcho(etEchoCount(), FullName.VIEW_TOOL, viewName, beanName, field);
+                        handlerEditTextItem(handlerEditTextItemCount(), index + "", beanName, field);
+                    }
+
+                    FormCheck formCheck = ve.getAnnotation(FormCheck.class);
+                    if (formCheck != null) {
+                        String checkClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                            @Override
+                            public Object get() {
+                                return formCheck.checkClass();
+                            }
+                        });
+
+                        if (StringTool.isNotBlank(checkClass) && !ClassTool.isVoid(checkClass)) {
+                            checkEtWithClass(checkEtWithClassCount(), checkClass, beanName, field, formCheck.prompt());
+                        } else {
+                            checkEt(checkEtCount(), FullName.STRING_TOOL, beanName, field, formCheck.prompt());
+                        }
+                    }
                 }
 
                 BindTextView bindTextView = ve.getAnnotation(BindTextView.class);
@@ -449,18 +480,55 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                     if (index == null) {
                         index = 0;
                     }
-                    String type = "TEXT_VIEW";
+                    indexMap.put(FormType.TEXT_VIEW, index + 1);
 
+                    String type = "TEXT_VIEW";
                     textViewInit(index, viewName, FullName.HANDLER_TEXT_WATCHER, FullName.FORM_TYPE, type, "" + index);
-                    //
                     handlerTextViewIf(FullName.FORM_TYPE, type);
 
-                    handlerTextViewItem(index, index + "", beanName, ElementTools.simpleName(ve));
-                    indexMap.put(FormType.TEXT_VIEW, index + 1);
+                    String parseClass = null;
+                    FormParse formParse = ve.getAnnotation(FormParse.class);
+                    if (formParse != null) {
+                        parseClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                            @Override
+                            public Object get() {
+                                return formParse.value();
+                            }
+                        });
+                    }
+
+                    String field = ElementTools.simpleName(ve);
+                    if (StringTool.isNotBlank(parseClass) && !ClassTool.isVoid(parseClass)) {
+                        if (bindTextView.echo())
+                            tvEchoWithParse(tvEchoWithParseCount(), FullName.VIEW_TOOL, viewName, parseClass, beanName, field);
+                        handlerParseTvItem(handlerParseTvItemCount(), index + "", beanName, field, parseClass);
+                    } else {
+                        if (bindTextView.echo())
+                            tvEcho(tvEchoCount(), FullName.VIEW_TOOL, viewName, beanName, field);
+                        handlerTextViewItem(handlerTextViewItemCount(), index + "", beanName, field);
+                    }
+
+                    FormCheck formCheck = ve.getAnnotation(FormCheck.class);
+                    if (formCheck != null) {
+                        String checkClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                            @Override
+                            public Object get() {
+                                return formCheck.checkClass();
+                            }
+                        });
+
+                        if (StringTool.isNotBlank(checkClass) && !ClassTool.isVoid(checkClass)) {
+                            checkTvWithClass(checkTvWithClassCount(), checkClass, beanName, field, formCheck.prompt());
+                        } else {
+                            checkTv(checkTvCount(), FullName.STRING_TOOL, beanName, field, formCheck.prompt());
+                        }
+                    }
+
                 }
 
             }
             return false;
+
         });
     }
 
@@ -519,6 +587,20 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][textViewInit]
         [name].addTextChangedListener(new [handlerTextWatcherFullName](bindHandler, [formTypeFullName].[type], [index]));
                                                                                                     [<sub>][for][textViewInit]
+        if (!initFormBean) {
+                                                                                                    [<sub>][for][etEchoWithParse]
+            [viewToolFullName].setText([view], new [parse]().toView([bean].[field]));
+                                                                                                    [<sub>][for][etEchoWithParse]
+                                                                                                    [<sub>][for][etEcho]
+            [viewToolFullName].setText([view], [bean].[field]);
+                                                                                                    [<sub>][for][etEcho]
+                                                                                                    [<sub>][for][tvEchoWithParse]
+            [viewToolFullName].setText([view], new [parse]().toView([bean].[field]));
+                                                                                                    [<sub>][for][tvEchoWithParse]
+                                                                                                    [<sub>][for][tvEcho]
+            [viewToolFullName].setText([view], [bean].[field]);
+                                                                                                    [<sub>][for][tvEcho]
+        }
                                                                                                     [<sub>][if][formInit]
                                                                                                     [<sub>][if][onCreateCompleteInit]
         onCreateComplete();
@@ -617,6 +699,11 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                         [beanName].[field] = (java.lang.String) msg.obj;
                         break;
                                                                                                     [<sub>][for][handlerEditTextItem]
+                                                                                                    [<sub>][for][handlerParseEtItem]
+                    case [index]:
+                        [beanName].[field] = new [parse]().toBean(msg.obj);
+                        break;
+                                                                                                    [<sub>][for][handlerParseEtItem]
                 }
             }
                                                                                                     [<sub>][if][handlerEditText]
@@ -628,12 +715,46 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                         [beanName].[field] = (java.lang.String) msg.obj;
                         break;
                                                                                                     [<sub>][for][handlerTextViewItem]
+                                                                                                    [<sub>][for][handlerParseTvItem]
+                    case [index]:
+                        [beanName].[field] = new [parse]().toBean(msg.obj);
+                        break;
+                                                                                                    [<sub>][for][handlerParseTvItem]
                 }
             }
                                                                                                     [<sub>][if][handlerTextView]
         }
     }
                                                                                                     [<sub>][if][bindHandler]
+                                                                                                    [<sub>][if][checkForms]
+    protected boolean check[bean]() {
+                                                                                                    [<sub>][for][checkEt]
+        if ([stringToolFullName].isBlank([bean].[field])) {
+            toast("[promp]");
+            return false;
+        }
+                                                                                                    [<sub>][for][checkEt]
+                                                                                                    [<sub>][for][checkEtWithClass]
+        if (new [checkClass]().check([bean], [bean].[field])) {
+            toast("[promp]");
+            return false;
+        }
+                                                                                                    [<sub>][for][checkEtWithClass]
+                                                                                                    [<sub>][for][checkTv]
+        if ([stringToolFullName].isBlank([bean].[field])) {
+            toast("[promp]");
+            return false;
+        }
+                                                                                                    [<sub>][for][checkTv]
+                                                                                                    [<sub>][for][checkTvWithClass]
+        if (new [checkClass]().check([bean], [bean].[field])) {
+            toast("[promp]");
+            return false;
+        }
+                                                                                                    [<sub>][for][checkTvWithClass]
+        return true;
+    }
+                                                                                                    [<sub>][if][checkForms]
 }
 
 model_temp_end */

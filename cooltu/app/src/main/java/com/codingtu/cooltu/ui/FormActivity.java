@@ -23,12 +23,11 @@ public class FormActivity extends FormActivityBase {
 
     @ClickView(R.id.bt)
     public void btClick() {
-        ViewTool.setText(nameTv,"sdfsdf");
-
+        ViewTool.setText(nameTv, "sdfsdf");
         HandlerTool.getMainHandler().post(new Runnable() {
             @Override
             public void run() {
-                Logs.i(formmmm);
+                Logs.i(forms);
             }
         });
     }

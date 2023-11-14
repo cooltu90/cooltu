@@ -8,4 +8,6 @@ public @interface BindTextView {
     int value() default -1;
 
     String name() default "";
+
+    boolean echo() default true;
 }

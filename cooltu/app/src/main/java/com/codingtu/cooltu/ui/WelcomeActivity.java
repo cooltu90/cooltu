@@ -4,6 +4,7 @@ import android.Manifest;
 import android.os.Bundle;
 
 import com.codingtu.cooltu.R;
+import com.codingtu.cooltu.bean.Forms;
 import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
@@ -25,11 +26,13 @@ public class WelcomeActivity extends WelcomeActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActStart.formActivity(getAct());
+        Forms forms = new Forms();
+        forms.name1 = "SSSSS";
+        ActStart.formActivity(getAct(), forms);
     }
 
     @ActBack(StepOneActivity.class)
-    public void stepOneActivityBack(User user,String xxx) {
+    public void stepOneActivityBack(User user, String xxx) {
 
     }
 
