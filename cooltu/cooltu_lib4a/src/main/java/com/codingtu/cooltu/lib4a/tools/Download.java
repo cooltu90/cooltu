@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4a.download;
+package com.codingtu.cooltu.lib4a.tools;
 
 import com.codingtu.cooltu.lib4a.net.interceptor.HeaderInterceptor;
 import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
@@ -51,7 +51,7 @@ public class Download implements OnDestroy {
     private OnStart onStart;
 
 
-    public Download() {
+    Download() {
     }
 
     public static Download url(String url) {

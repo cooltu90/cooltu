@@ -79,7 +79,9 @@ public class ConnectTool {
         } else {
             //有运行的
             ConnectDevice connectDeviceLocal = getLocalCachedConnectDevice(connectType);
-            if (connectDeviceLocal == null || connectDevice.baseData.deviceType == connectDeviceLocal.baseData.deviceType) {
+            if (connectDeviceLocal == null ||
+                    (connectDevice.baseData.deviceType == connectDeviceLocal.baseData.deviceType
+                            && connectDevice.baseData.mac.equals(connectDeviceLocal.baseData.mac))) {
                 //有正在运行的相关设备，说明连接成功
                 addCallBack(connectType, connectCallBack);
                 connectCallBack.connectSuccess(connectDevice);
@@ -112,6 +114,8 @@ public class ConnectTool {
     }
 
     public static void dealMsg(ConnectDevice connectDevice, int msgType, Object obj) {
+        ResponseData[] datas = msgType == ConnectStatus.READ ? connectDevice.parseResponseDatas((byte[]) obj) : null;
+
         List<ConnectCallBack> connectCallBacks = callbacks().get(connectDevice.baseData.connectType);
         Ts.ls(connectCallBacks, new BaseTs.EachTs<ConnectCallBack>() {
             @Override
@@ -124,7 +128,6 @@ public class ConnectTool {
                         connectCallBack.connectSuccess(connectDevice);
                         break;
                     case ConnectStatus.READ:
-                        ResponseData[] datas = connectDevice.parseResponseDatas((byte[]) obj);
                         int count = CountTool.count(datas);
                         if (count > 0) {
                             for (int i = 0; i < count; i++) {

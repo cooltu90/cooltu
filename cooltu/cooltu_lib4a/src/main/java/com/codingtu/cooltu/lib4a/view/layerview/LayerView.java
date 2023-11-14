@@ -35,6 +35,7 @@ public abstract class LayerView extends RelativeLayout implements OnDestroy {
     private boolean isHiddenWhenShadowClick = true;
     private boolean isHiddenWhenBackClick = true;
     protected boolean stopAnimation;
+    private int hiddenStatus = LayerEventType.HIDDEN_FINISHED;
 
     public LayerView(Context context) {
         this(context, null);
@@ -107,6 +108,7 @@ public abstract class LayerView extends RelativeLayout implements OnDestroy {
             public void onAnimationEnd(Animation animation) {
                 sendEvent(LayerEventType.HIDDEN_FINISHED);
                 ViewTool.gone(LayerView.this);
+                hiddenStatus = LayerEventType.HIDDEN_FINISHED;
             }
 
             @Override
@@ -193,15 +195,18 @@ public abstract class LayerView extends RelativeLayout implements OnDestroy {
     }
 
     public void hidden(LayerListener layerListener) {
-        if (layerListener != null) {
-            this.layerListener = layerListener;
-        }
-        sendEvent(LayerEventType.HIDDEN_START);
-        if (!stopAnimation) {
-            shadowView.startAnimation(hiddenShadowAnim);
-        } else {
-            ViewTool.gone(this);
-            sendEvent(LayerEventType.HIDDEN_FINISHED);
+        if (hiddenStatus == LayerEventType.HIDDEN_FINISHED) {
+            hiddenStatus = LayerEventType.HIDDEN_START;
+            if (layerListener != null) {
+                this.layerListener = layerListener;
+            }
+            sendEvent(LayerEventType.HIDDEN_START);
+            if (!stopAnimation) {
+                shadowView.startAnimation(hiddenShadowAnim);
+            } else {
+                ViewTool.gone(this);
+                sendEvent(LayerEventType.HIDDEN_FINISHED);
+            }
         }
     }
 

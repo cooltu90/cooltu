@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4a.zip;
+package com.codingtu.cooltu.lib4a.tools;
 
 import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FileType;
@@ -36,7 +36,7 @@ public class Zip implements OnDestroy {
     }
 
     public static interface OnFinish {
-        public void onFinish(long totalLen);
+        public void onFinish(File file);
     }
 
 
@@ -66,6 +66,7 @@ public class Zip implements OnDestroy {
     private OnError onError;
     private OnFinish onFinish;
     private OnStart onStart;
+    private long lastTime;
 
     private Zip(File src) {
         this.src = src;
@@ -103,7 +104,7 @@ public class Zip implements OnDestroy {
         return this;
     }
 
-    public Zip filter(Pass pass) {
+    public Zip pass(Pass pass) {
         this.pass = pass;
         return this;
     }
@@ -149,7 +150,7 @@ public class Zip implements OnDestroy {
         }
 
         if (cacheSize == null) {
-            cacheSize = 1024;
+            cacheSize = 1024 * 512;
         }
 
         if (onStart != null) {
@@ -161,7 +162,7 @@ public class Zip implements OnDestroy {
                     public void subscribe(ObservableEmitter<Long> emitter) throws Exception {
                         String zipPath = desc.getAbsolutePath();
                         totalLen = getLength(src);
-
+                        lastTime = System.currentTimeMillis();
                         zip(src, zipPath, emitter);
                         emitter.onNext(totalLen);
                     }
@@ -177,7 +178,7 @@ public class Zip implements OnDestroy {
                         if (currentLen == totalLen) {
                             //完成
                             if (onFinish != null) {
-                                onFinish.onFinish(totalLen);
+                                onFinish.onFinish(desc);
                             }
                             destroy();
                         }
@@ -242,8 +243,12 @@ public class Zip implements OnDestroy {
                 out.write(buff, 0, len);
                 zipedLen += len;
 
-                if (zipedLen < totalLen)
-                    emitter.onNext(zipedLen);
+                long nowTime = System.currentTimeMillis();
+                if (nowTime - lastTime > 100) {
+                    if (zipedLen < totalLen)
+                        emitter.onNext(zipedLen);
+                    lastTime = nowTime;
+                }
 
             }
         } catch (Exception e) {
