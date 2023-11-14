@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 
-import com.codingtu.cooltu.lib4a.view.layerview.listener.LayerListener;
-
 public class CenterLayerView extends LayerView {
     private View dialogView;
     private ScaleAnimation showScaleAnim;
@@ -125,8 +123,8 @@ public class CenterLayerView extends LayerView {
     }
 
     @Override
-    public void hidden(LayerListener layerListener) {
-        super.hidden(layerListener);
+    protected void hiddenAnimation() {
+        super.hiddenAnimation();
         dialogView.startAnimation(hiddenScaleAnim);
     }
 }

@@ -9,11 +9,12 @@ import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 
 import com.codingtu.cooltu.lib4a.R;
+import com.codingtu.cooltu.lib4a.log.Logs;
+import com.codingtu.cooltu.lib4a.tools.DestoryTool;
+import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4a.uicore.CoreUiInterface;
 import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
 import com.codingtu.cooltu.lib4a.uicore.WhenKeyDown;
-import com.codingtu.cooltu.lib4a.tools.DestoryTool;
-import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4a.view.attrs.Attrs;
 import com.codingtu.cooltu.lib4a.view.attrs.AttrsTools;
 import com.codingtu.cooltu.lib4a.view.attrs.GetAttrs;
@@ -109,6 +110,7 @@ public abstract class LayerView extends RelativeLayout implements OnDestroy {
                 sendEvent(LayerEventType.HIDDEN_FINISHED);
                 ViewTool.gone(LayerView.this);
                 hiddenStatus = LayerEventType.HIDDEN_FINISHED;
+                Logs.i("onAnimationEnd");
             }
 
             @Override
@@ -190,12 +192,12 @@ public abstract class LayerView extends RelativeLayout implements OnDestroy {
         return layerEvent;
     }
 
-    public void hidden() {
+    public final void hidden() {
         hidden(null);
     }
 
-    public void hidden(LayerListener layerListener) {
-        if (hiddenStatus == LayerEventType.HIDDEN_FINISHED) {
+    public final void hidden(LayerListener layerListener) {
+        if (hiddenStatus == LayerEventType.HIDDEN_FINISHED && ViewTool.isVisible(this)) {
             hiddenStatus = LayerEventType.HIDDEN_START;
             if (layerListener != null) {
                 this.layerListener = layerListener;
@@ -203,11 +205,17 @@ public abstract class LayerView extends RelativeLayout implements OnDestroy {
             sendEvent(LayerEventType.HIDDEN_START);
             if (!stopAnimation) {
                 shadowView.startAnimation(hiddenShadowAnim);
+                hiddenAnimation();
             } else {
                 ViewTool.gone(this);
                 sendEvent(LayerEventType.HIDDEN_FINISHED);
+                hiddenStatus = LayerEventType.HIDDEN_FINISHED;
             }
         }
+    }
+
+    protected void hiddenAnimation() {
+
     }
 
     @Override

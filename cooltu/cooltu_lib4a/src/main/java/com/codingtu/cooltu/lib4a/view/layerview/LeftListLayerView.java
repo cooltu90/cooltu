@@ -10,7 +10,6 @@ import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
-import com.codingtu.cooltu.lib4a.view.layerview.listener.LayerListener;
 
 public class LeftListLayerView extends LayerView {
     private View dialogView;
@@ -120,8 +119,8 @@ public class LeftListLayerView extends LayerView {
     }
 
     @Override
-    public void hidden(LayerListener layerListener) {
-        super.hidden(layerListener);
+    protected void hiddenAnimation() {
+        super.hiddenAnimation();
         dialogView.startAnimation(hiddenAnimationSet);
     }
 }

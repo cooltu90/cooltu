@@ -12,7 +12,7 @@ import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4a.view.layerview.RelativeLayerView;
 import com.codingtu.cooltu.lib4a.view.layerview.listener.OnHiddenFinished;
 
-public class ToastDialog implements OnDestroy {
+public final class ToastDialog implements OnDestroy {
 
     private Activity act;
     private RelativeLayerView rlv;
@@ -84,6 +84,6 @@ public class ToastDialog implements OnDestroy {
     }
 
     public void hidden() {
-        rlv.hidden();
+        hidden(null);
     }
 }

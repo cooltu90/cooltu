@@ -11,7 +11,7 @@ import com.codingtu.cooltu.lib4a.tools.InflateTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4a.view.layerview.RelativeLayerView;
 
-public class Dialog implements View.OnClickListener, OnDestroy {
+public final class Dialog implements View.OnClickListener, OnDestroy {
 
     private Activity act;
     private String title;
