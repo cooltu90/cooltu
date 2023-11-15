@@ -11,6 +11,7 @@ import com.codingtu.cooltu.processor.annotation.form.FormParse;
 import com.codingtu.cooltu.processor.annotation.form.view.BindEditText;
 import com.codingtu.cooltu.processor.annotation.form.FormBean;
 import com.codingtu.cooltu.processor.annotation.form.view.BindRadioGroup;
+import com.codingtu.cooltu.processor.annotation.form.view.BindSeekBar;
 import com.codingtu.cooltu.processor.annotation.form.view.BindTextView;
 
 @FormBean
@@ -41,6 +42,14 @@ public class Forms extends CoreBean {
     @FormParse(TypeParse.class)
     @FormCheck(prompt = "请选择类型1")
     public String type1;
+
+    @BindSeekBar(R.id.timeSb)
+    @FormParse(TypeParse.class)
+    @FormCheck(prompt = "请选择时间")
+    public String time;
+    @BindSeekBar(R.id.timeSb1)
+//    @FormCheck(prompt = "请选择时间")
+    public int time1;
 
 }
 

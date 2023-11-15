@@ -3,44 +3,45 @@ package com.codingtu.cooltu.processor.builder.subdeal;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.processor.annotation.form.FormType;
-import com.codingtu.cooltu.processor.annotation.form.view.BindEditText;
+import com.codingtu.cooltu.processor.annotation.form.view.BindSeekBar;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.FormTools;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.lang.model.element.VariableElement;
 
-public class BindEditTextDeal {
+public class BindSeekBarDeal {
 
-    public static void deal(ActBaseBuilder builder, String beanName, Map<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
-                            VariableElement ve, BindEditText bindEditText) {
-        String type = "EDIT_TEXT";
-        int typeInt = FormType.EDIT_TEXT;
-        String viewName = FormTools.getViewName(bindEditText.name(), ve, BindEditText.class, bindEditText.value());
+    public static void deal(ActBaseBuilder builder, String beanName, HashMap<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
+                            VariableElement ve, BindSeekBar bindSeekBar) {
+        String type = "SEEK_BAR";
+        int typeInt = FormType.SEEK_BAR;
+        String viewName = FormTools.getViewName(bindSeekBar.name(), ve, BindSeekBar.class, bindSeekBar.value());
         int index = FormTools.getIndex(indexMap, typeInt);
         int typeIndex = FormTools.getTypeIndex(builder, typeIndexMap, type, typeInt);
 
-        builder.editTextInit(index, viewName, FullName.HANDLER_TEXT_WATCHER, FullName.FORM_TYPE, type, "" + index);
+        builder.seekBarBind(builder.seekBarBindCount(), viewName, FullName.HANDLER_ON_SEEK_BAR_CHANGE_LISTENER, FullName.FORM_TYPE, type, index + "");
 
         String parseClass = FormTools.getFormParse(ve);
         String field = ElementTools.simpleName(ve);
-
         if (ClassTool.isNotVoid(parseClass)) {
-            if (bindEditText.echo()) {
-                builder.etEchoWithParse(builder.etEchoWithParseCount(), FullName.VIEW_TOOL, viewName, parseClass, beanName, field);
+            if (bindSeekBar.echo()) {
+                builder.seekBarEchoWithParse(builder.seekBarEchoWithParseCount(), viewName, parseClass, beanName, field);
             }
             builder.handlerParseItem(typeIndex, builder.handlerParseItemCount(typeIndex), index + "", beanName, field, parseClass);
         } else {
-            if (bindEditText.echo()) {
-                builder.etEcho(builder.etEchoCount(), FullName.VIEW_TOOL, viewName, beanName, field);
+            if (bindSeekBar.echo()) {
+                builder.seekBarEcho(builder.seekBarEchoCount(), viewName, beanName, field);
             }
             int handleIndex = builder.handlerItemCount(typeIndex);
             builder.handlerItem(typeIndex, handleIndex, index + "");
-            builder.handlerItemStringIf(typeIndex, handleIndex, beanName, field);
+            builder.handlerItemIntIf(typeIndex, handleIndex, beanName, field);
         }
 
         FormTools.addCheck(builder, beanName, ve, field);
     }
+
 }

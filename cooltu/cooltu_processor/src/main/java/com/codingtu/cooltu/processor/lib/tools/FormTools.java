@@ -7,6 +7,7 @@ import com.codingtu.cooltu.processor.annotation.form.FormCheck;
 import com.codingtu.cooltu.processor.annotation.form.FormParse;
 import com.codingtu.cooltu.processor.annotation.form.FormType;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
+import com.codingtu.cooltu.processor.lib.param.Params;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +30,15 @@ public class FormTools {
             index = 0;
         }
         indexMap.put(formType, index + 1);
+        return index;
+    }
+
+    public static int getTypeIndex(ActBaseBuilder builder, Map<Integer, Integer> typeIndexMap, String type, int formType) {
+        Integer index = typeIndexMap.get(formType);
+        if (index == null) {
+            typeIndexMap.put(formType, index = builder.handlerCount());
+            builder.handler(index, FullName.FORM_TYPE, type);
+        }
         return index;
     }
 

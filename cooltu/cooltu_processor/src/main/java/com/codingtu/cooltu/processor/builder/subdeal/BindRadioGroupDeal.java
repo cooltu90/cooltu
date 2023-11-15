@@ -16,15 +16,20 @@ import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.FormTools;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.lang.model.element.VariableElement;
 
 public class BindRadioGroupDeal {
 
-    public static void deal(ActBaseBuilder builder, String beanName, HashMap<Integer, Integer> indexMap, VariableElement ve, BindRadioGroup bindRadioGroup) {
+    public static void deal(ActBaseBuilder builder, String beanName, HashMap<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
+                            VariableElement ve, BindRadioGroup bindRadioGroup) {
+        String type = "RADIO_GROUP";
+        int typeInt = FormType.RADIO_GROUP;
         String viewName = FormTools.getViewName(bindRadioGroup.name(), ve, BindRadioGroup.class, bindRadioGroup.value());
         int index = FormTools.getIndex(indexMap, FormType.RADIO_GROUP);
-        String type = "RADIO_GROUP";
+        int typeIndex = FormTools.getTypeIndex(builder, typeIndexMap, type, typeInt);
+
 
         String onSetItemClassFullName = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
             @Override
@@ -52,7 +57,7 @@ public class BindRadioGroupDeal {
             if (bindRadioGroup.echo()) {
                 builder.rgEchoWithParse(builder.rgEchoWithParseCount(), viewName, parseClass, beanName, field);
             }
-            builder.handlerParseRgItem(builder.handlerParseRgItemCount(), index + "", beanName, field, parseClass);
+            builder.handlerParseItem(typeIndex, builder.handlerParseItemCount(typeIndex), index + "", beanName, field, parseClass);
         } else {
             String param = Params.getParam(bindRadioGroup.strItems(), new BaseTs.Convert<String, String>() {
                 @Override
@@ -64,9 +69,10 @@ public class BindRadioGroupDeal {
             if (bindRadioGroup.echo()) {
                 builder.rgEcho(builder.rgEchoCount(), viewName, FullName.DEFAULT_RADIO_GROUP_TO_STRING, param, beanName, field);
             }
-            builder.handlerRgItem(builder.handlerRgItemCount(), index + "", beanName, field, FullName.DEFAULT_RADIO_GROUP_TO_STRING, param);
+            int handleIndex = builder.handlerItemCount(typeIndex);
+            builder.handlerItem(typeIndex, handleIndex, index + "");
+            builder.handlerItemRgIf(typeIndex, handleIndex, beanName, field, FullName.DEFAULT_RADIO_GROUP_TO_STRING, param);
         }
-        builder.handlerRgIf(FullName.FORM_TYPE, type);
 
         FormTools.addCheck(builder, beanName, ve, field);
 

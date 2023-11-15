@@ -287,6 +287,13 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.formInit, getForKey("rgBind", i0), viewName, handlerOnSelectChangeFullName, formTypeFullName, type, index);
         countAdd(formInitCounts, getForKey("rgBind"));
     }
+    public int seekBarBindCount() {
+        return count(formInitCounts, getForKey("seekBarBind"));
+    }
+    public void seekBarBind(int i0, String name, String handlerOnSeekBarChangeListenerFullName, String formTypeFullName, String type, String index) {
+        addForMap(this.formInit, getForKey("seekBarBind", i0), name, handlerOnSeekBarChangeListenerFullName, formTypeFullName, type, index);
+        countAdd(formInitCounts, getForKey("seekBarBind"));
+    }
     public int etEchoWithParseCount() {
         return count(formInitCounts, getForKey("etEchoWithParse"));
     }
@@ -328,6 +335,20 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     public void rgEchoWithParse(int i0, String viewName, String parse, String bean, String field) {
         addForMap(this.formInit, getForKey("rgEchoWithParse", i0), viewName, parse, bean, field);
         countAdd(formInitCounts, getForKey("rgEchoWithParse"));
+    }
+    public int seekBarEchoCount() {
+        return count(formInitCounts, getForKey("seekBarEcho"));
+    }
+    public void seekBarEcho(int i0, String viewName, String bean, String field) {
+        addForMap(this.formInit, getForKey("seekBarEcho", i0), viewName, bean, field);
+        countAdd(formInitCounts, getForKey("seekBarEcho"));
+    }
+    public int seekBarEchoWithParseCount() {
+        return count(formInitCounts, getForKey("seekBarEchoWithParse"));
+    }
+    public void seekBarEchoWithParse(int i0, String viewName, String parse, String bean, String field) {
+        addForMap(this.formInit, getForKey("seekBarEchoWithParse", i0), viewName, parse, bean, field);
+        countAdd(formInitCounts, getForKey("seekBarEchoWithParse"));
     }
     public int onClickCaseCount(int i0) {
         return count(onClickSwithCounts, getForKey("onClickCase", i0));
@@ -406,47 +427,26 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.permissionBackMethod, getForKey("permissionBackMethod", i0), methodName);
         countAdd(permissionBackMethodCounts, getForKey("permissionBackMethod"));
     }
-    public int handlerEditTextItemCount() {
-        return count(bindHandlerCounts, getForKey("handlerEditTextItem"));
+    public int handlerItemCount(int i0) {
+        return count(bindHandlerCounts, getForKey("handlerItem", i0));
     }
-    public void handlerEditTextItem(int i0, String index, String beanName, String field) {
-        addForMap(this.bindHandler, getForKey("handlerEditTextItem", i0), index, beanName, field);
-        countAdd(bindHandlerCounts, getForKey("handlerEditTextItem"));
+    public void handlerItem(int i0, int i1, String index) {
+        addForMap(this.bindHandler, getForKey("handlerItem", i0, i1), index);
+        countAdd(bindHandlerCounts, getForKey("handlerItem", i0));
     }
-    public int handlerParseEtItemCount() {
-        return count(bindHandlerCounts, getForKey("handlerParseEtItem"));
+    public int handlerParseItemCount(int i0) {
+        return count(bindHandlerCounts, getForKey("handlerParseItem", i0));
     }
-    public void handlerParseEtItem(int i0, String index, String beanName, String field, String parse) {
-        addForMap(this.bindHandler, getForKey("handlerParseEtItem", i0), index, beanName, field, parse);
-        countAdd(bindHandlerCounts, getForKey("handlerParseEtItem"));
+    public void handlerParseItem(int i0, int i1, String index, String beanName, String field, String parse) {
+        addForMap(this.bindHandler, getForKey("handlerParseItem", i0, i1), index, beanName, field, parse);
+        countAdd(bindHandlerCounts, getForKey("handlerParseItem", i0));
     }
-    public int handlerTextViewItemCount() {
-        return count(bindHandlerCounts, getForKey("handlerTextViewItem"));
+    public int handlerCount() {
+        return count(bindHandlerCounts, getForKey("handler"));
     }
-    public void handlerTextViewItem(int i0, String index, String beanName, String field) {
-        addForMap(this.bindHandler, getForKey("handlerTextViewItem", i0), index, beanName, field);
-        countAdd(bindHandlerCounts, getForKey("handlerTextViewItem"));
-    }
-    public int handlerParseTvItemCount() {
-        return count(bindHandlerCounts, getForKey("handlerParseTvItem"));
-    }
-    public void handlerParseTvItem(int i0, String index, String beanName, String field, String parse) {
-        addForMap(this.bindHandler, getForKey("handlerParseTvItem", i0), index, beanName, field, parse);
-        countAdd(bindHandlerCounts, getForKey("handlerParseTvItem"));
-    }
-    public int handlerRgItemCount() {
-        return count(bindHandlerCounts, getForKey("handlerRgItem"));
-    }
-    public void handlerRgItem(int i0, String index, String beanName, String field, String defaultRadioGroupToStringFullName, String items) {
-        addForMap(this.bindHandler, getForKey("handlerRgItem", i0), index, beanName, field, defaultRadioGroupToStringFullName, items);
-        countAdd(bindHandlerCounts, getForKey("handlerRgItem"));
-    }
-    public int handlerParseRgItemCount() {
-        return count(bindHandlerCounts, getForKey("handlerParseRgItem"));
-    }
-    public void handlerParseRgItem(int i0, String index, String beanName, String field, String parse) {
-        addForMap(this.bindHandler, getForKey("handlerParseRgItem", i0), index, beanName, field, parse);
-        countAdd(bindHandlerCounts, getForKey("handlerParseRgItem"));
+    public void handler(int i0, String formTypeFullName, String type) {
+        addForMap(this.bindHandler, getForKey("handler", i0), formTypeFullName, type);
+        countAdd(bindHandlerCounts, getForKey("handler"));
     }
     public int checkCount() {
         return count(checkFormsCounts, getForKey("check"));
@@ -491,17 +491,17 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     public void isAllowParam(int i0, boolean is) {
         permissionBackMethodIfs.put(getIfKey("allowParam", i0), is);
     }
-    public void handlerEditTextIf(String formTypeFullName, String type) {
-        addForMap(this.bindHandler, getIfKey("handlerEditText"), formTypeFullName, type);
-        bindHandlerIfs.put(getIfKey("handlerEditText"), true);
+    public void handlerItemStringIf(int i0, int i1, String beanName, String field) {
+        addForMap(this.bindHandler, getIfKey("handlerItemString", i0, i1), beanName, field);
+        bindHandlerIfs.put(getIfKey("handlerItemString", i0, i1), true);
     }
-    public void handlerTextViewIf(String formTypeFullName, String type) {
-        addForMap(this.bindHandler, getIfKey("handlerTextView"), formTypeFullName, type);
-        bindHandlerIfs.put(getIfKey("handlerTextView"), true);
+    public void handlerItemRgIf(int i0, int i1, String beanName, String field, String defaultRadioGroupToStringFullName, String items) {
+        addForMap(this.bindHandler, getIfKey("handlerItemRg", i0, i1), beanName, field, defaultRadioGroupToStringFullName, items);
+        bindHandlerIfs.put(getIfKey("handlerItemRg", i0, i1), true);
     }
-    public void handlerRgIf(String formTypeFullName, String type) {
-        addForMap(this.bindHandler, getIfKey("handlerRg"), formTypeFullName, type);
-        bindHandlerIfs.put(getIfKey("handlerRg"), true);
+    public void handlerItemIntIf(int i0, int i1, String beanName, String field) {
+        addForMap(this.bindHandler, getIfKey("handlerItemInt", i0, i1), beanName, field);
+        bindHandlerIfs.put(getIfKey("handlerItemInt", i0, i1), true);
     }
     public void bindHandlerIf(String beanType, String beanName) {
         addForMap(this.bindHandler, getIfKey("bindHandler"), beanType, beanName, beanType, beanName, beanName, beanName);
@@ -588,6 +588,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 List<String> formInit1 = formInit.get(getForKey("rgBind", i0));
                 addLnTag(formInitSb, "        [viewName]Rg.addOnSelectChange(new [handlerOnSelectChangeFullName](bindHandler, [formTypeFullName].[type], [index]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
             }
+            for (int i0 = 0; i0 < count(formInitCounts, getForKey("seekBarBind")); i0++) {
+                List<String> formInit1 = formInit.get(getForKey("seekBarBind", i0));
+                addLnTag(formInitSb, "        [name].setOnSeekBarChangeListener(new [handlerOnSeekBarChangeListenerFullName](bindHandler, [formTypeFullName].[type], [index]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
+            }
             addLnTag(formInitSb, "        if (!initFormBean) {");
             for (int i0 = 0; i0 < count(formInitCounts, getForKey("etEchoWithParse")); i0++) {
                 List<String> formInit1 = formInit.get(getForKey("etEchoWithParse", i0));
@@ -612,6 +616,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             for (int i0 = 0; i0 < count(formInitCounts, getForKey("rgEchoWithParse")); i0++) {
                 List<String> formInit1 = formInit.get(getForKey("rgEchoWithParse", i0));
                 addLnTag(formInitSb, "            [viewName]Rg.setSelected(new [parse]().toView([bean].[field]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3));
+            }
+            for (int i0 = 0; i0 < count(formInitCounts, getForKey("seekBarEcho")); i0++) {
+                List<String> formInit1 = formInit.get(getForKey("seekBarEcho", i0));
+                addLnTag(formInitSb, "            [viewName].setProgress([bean].[field]);", formInit1.get(0), formInit1.get(1), formInit1.get(2));
+            }
+            for (int i0 = 0; i0 < count(formInitCounts, getForKey("seekBarEchoWithParse")); i0++) {
+                List<String> formInit1 = formInit.get(getForKey("seekBarEchoWithParse", i0));
+                addLnTag(formInitSb, "            [viewName].setProgress(new [parse]().toView([bean].[field]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3));
             }
             addLnTag(formInitSb, "        }");
         }
@@ -717,18 +729,29 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             addLnTag(bindHandlerSb, "        @Override");
             addLnTag(bindHandlerSb, "        public void handleMessage(android.os.Message msg) {");
             addLnTag(bindHandlerSb, "            super.handleMessage(msg);");
-            if (isIf(bindHandlerIfs, getIfKey("handlerEditText"))) {
-                List<String> bindHandler1 = bindHandler.get(getIfKey("handlerEditText"));
+            for (int i0 = 0; i0 < count(bindHandlerCounts, getForKey("handler")); i0++) {
+                List<String> bindHandler1 = bindHandler.get(getForKey("handler", i0));
                 addLnTag(bindHandlerSb, "            if (msg.what == [formTypeFullName].[type]) {", bindHandler1.get(0), bindHandler1.get(1));
                 addLnTag(bindHandlerSb, "                switch (msg.arg1) {");
-                for (int i0 = 0; i0 < count(bindHandlerCounts, getForKey("handlerEditTextItem")); i0++) {
-                    List<String> bindHandler2 = bindHandler.get(getForKey("handlerEditTextItem", i0));
+                for (int i1 = 0; i1 < count(bindHandlerCounts, getForKey("handlerItem", i0)); i1++) {
+                    List<String> bindHandler2 = bindHandler.get(getForKey("handlerItem", i0, i1));
                     addLnTag(bindHandlerSb, "                    case [index]:", bindHandler2.get(0));
-                    addLnTag(bindHandlerSb, "                        [beanName].[field] = (java.lang.String) msg.obj;", bindHandler2.get(1), bindHandler2.get(2));
+                    if (isIf(bindHandlerIfs, getIfKey("handlerItemString", i0, i1))) {
+                        List<String> bindHandler3 = bindHandler.get(getIfKey("handlerItemString", i0, i1));
+                        addLnTag(bindHandlerSb, "                        [beanName].[field] = (java.lang.String) msg.obj;", bindHandler3.get(0), bindHandler3.get(1));
+                    }
+                    if (isIf(bindHandlerIfs, getIfKey("handlerItemRg", i0, i1))) {
+                        List<String> bindHandler3 = bindHandler.get(getIfKey("handlerItemRg", i0, i1));
+                        addLnTag(bindHandlerSb, "                        [beanName].[field] = new [defaultRadioGroupToStringFullName]([items]).toBean(msg.obj);", bindHandler3.get(0), bindHandler3.get(1), bindHandler3.get(2), bindHandler3.get(3));
+                    }
+                    if (isIf(bindHandlerIfs, getIfKey("handlerItemInt", i0, i1))) {
+                        List<String> bindHandler3 = bindHandler.get(getIfKey("handlerItemInt", i0, i1));
+                        addLnTag(bindHandlerSb, "                        [beanName].[field] = (int) msg.obj;", bindHandler3.get(0), bindHandler3.get(1));
+                    }
                     addLnTag(bindHandlerSb, "                        break;");
                 }
-                for (int i0 = 0; i0 < count(bindHandlerCounts, getForKey("handlerParseEtItem")); i0++) {
-                    List<String> bindHandler2 = bindHandler.get(getForKey("handlerParseEtItem", i0));
+                for (int i1 = 0; i1 < count(bindHandlerCounts, getForKey("handlerParseItem", i0)); i1++) {
+                    List<String> bindHandler2 = bindHandler.get(getForKey("handlerParseItem", i0, i1));
                     addLnTag(bindHandlerSb, "                    case [index]:", bindHandler2.get(0));
                     addLnTag(bindHandlerSb, "                        [beanName].[field] = new [parse]().toBean(msg.obj);", bindHandler2.get(1), bindHandler2.get(2), bindHandler2.get(3));
                     addLnTag(bindHandlerSb, "                        break;");
@@ -736,44 +759,9 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 addLnTag(bindHandlerSb, "                }");
                 addLnTag(bindHandlerSb, "            }");
             }
-            if (isIf(bindHandlerIfs, getIfKey("handlerTextView"))) {
-                List<String> bindHandler1 = bindHandler.get(getIfKey("handlerTextView"));
-                addLnTag(bindHandlerSb, "            if (msg.what == [formTypeFullName].[type]) {", bindHandler1.get(0), bindHandler1.get(1));
-                addLnTag(bindHandlerSb, "                switch (msg.arg1) {");
-                for (int i0 = 0; i0 < count(bindHandlerCounts, getForKey("handlerTextViewItem")); i0++) {
-                    List<String> bindHandler2 = bindHandler.get(getForKey("handlerTextViewItem", i0));
-                    addLnTag(bindHandlerSb, "                    case [index]:", bindHandler2.get(0));
-                    addLnTag(bindHandlerSb, "                        [beanName].[field] = (java.lang.String) msg.obj;", bindHandler2.get(1), bindHandler2.get(2));
-                    addLnTag(bindHandlerSb, "                        break;");
-                }
-                for (int i0 = 0; i0 < count(bindHandlerCounts, getForKey("handlerParseTvItem")); i0++) {
-                    List<String> bindHandler2 = bindHandler.get(getForKey("handlerParseTvItem", i0));
-                    addLnTag(bindHandlerSb, "                    case [index]:", bindHandler2.get(0));
-                    addLnTag(bindHandlerSb, "                        [beanName].[field] = new [parse]().toBean(msg.obj);", bindHandler2.get(1), bindHandler2.get(2), bindHandler2.get(3));
-                    addLnTag(bindHandlerSb, "                        break;");
-                }
-                addLnTag(bindHandlerSb, "                }");
-                addLnTag(bindHandlerSb, "            }");
-            }
-            if (isIf(bindHandlerIfs, getIfKey("handlerRg"))) {
-                List<String> bindHandler1 = bindHandler.get(getIfKey("handlerRg"));
-                addLnTag(bindHandlerSb, "            if (msg.what == [formTypeFullName].[type]) {", bindHandler1.get(0), bindHandler1.get(1));
-                addLnTag(bindHandlerSb, "                switch (msg.arg1) {");
-                for (int i0 = 0; i0 < count(bindHandlerCounts, getForKey("handlerRgItem")); i0++) {
-                    List<String> bindHandler2 = bindHandler.get(getForKey("handlerRgItem", i0));
-                    addLnTag(bindHandlerSb, "                    case [index]:", bindHandler2.get(0));
-                    addLnTag(bindHandlerSb, "                        [beanName].[field] = new [defaultRadioGroupToStringFullName]([items]).toBean(msg.obj);", bindHandler2.get(1), bindHandler2.get(2), bindHandler2.get(3), bindHandler2.get(4));
-                    addLnTag(bindHandlerSb, "                        break;");
-                }
-                for (int i0 = 0; i0 < count(bindHandlerCounts, getForKey("handlerParseRgItem")); i0++) {
-                    List<String> bindHandler2 = bindHandler.get(getForKey("handlerParseRgItem", i0));
-                    addLnTag(bindHandlerSb, "                    case [index]:", bindHandler2.get(0));
-                    addLnTag(bindHandlerSb, "                        [beanName].[field] = new [parse]().toBean(msg.obj);", bindHandler2.get(1), bindHandler2.get(2), bindHandler2.get(3));
-                    addLnTag(bindHandlerSb, "                        break;");
-                }
-                addLnTag(bindHandlerSb, "                }");
-                addLnTag(bindHandlerSb, "            }");
-            }
+            addLnTag(bindHandlerSb, "");
+            addLnTag(bindHandlerSb, "");
+            addLnTag(bindHandlerSb, "");
             addLnTag(bindHandlerSb, "        }");
             addLnTag(bindHandlerSb, "    }");
         }

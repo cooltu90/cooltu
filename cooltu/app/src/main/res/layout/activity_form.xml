@@ -99,6 +99,17 @@
             android:textSize="14sp" />
     </LinearLayout>
 
+    <SeekBar
+        android:id="@+id/timeSb"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:max="150" />
+    <SeekBar
+        android:id="@+id/timeSb1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:max="150" />
+
     <Button
         android:id="@+id/bt"
         android:layout_width="match_parent"

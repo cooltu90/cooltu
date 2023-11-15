@@ -8,6 +8,7 @@ import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
 public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.CoreActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
+    protected android.widget.SeekBar timeSb;
     protected android.widget.TextView nameTv;
     protected android.widget.Button bt;
     protected android.widget.EditText nameEt1;
@@ -15,6 +16,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
     protected android.widget.LinearLayout radios1;
     protected android.widget.EditText nameEt2;
     protected android.widget.EditText nameEt3;
+    protected android.widget.SeekBar timeSb1;
     protected java.lang.String fromAct;
     protected com.codingtu.cooltu.bean.Forms forms;
     protected boolean initFormBean;
@@ -29,6 +31,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         super.onCreate(savedInstanceState);
         setContentView(com.codingtu.cooltu.R.layout.activity_form);
 
+        timeSb = findViewById(com.codingtu.cooltu.R.id.timeSb);
         nameTv = findViewById(com.codingtu.cooltu.R.id.nameTv);
         bt = findViewById(com.codingtu.cooltu.R.id.bt);
         nameEt1 = findViewById(com.codingtu.cooltu.R.id.nameEt1);
@@ -36,11 +39,9 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         radios1 = findViewById(com.codingtu.cooltu.R.id.radios1);
         nameEt2 = findViewById(com.codingtu.cooltu.R.id.nameEt2);
         nameEt3 = findViewById(com.codingtu.cooltu.R.id.nameEt3);
+        timeSb1 = findViewById(com.codingtu.cooltu.R.id.timeSb1);
 
         bt.setOnClickListener(this);
-
-
-
 
 
         fromAct = core.tools.Pass.fromAct(getIntent());
@@ -65,12 +66,16 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         nameTv.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.TEXT_VIEW, 0));
         radiosRg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.RADIO_GROUP, 0));
         radios1Rg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.RADIO_GROUP, 1));
+        timeSb.setOnSeekBarChangeListener(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSeekBarChangeListener(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.SEEK_BAR, 0));
+        timeSb1.setOnSeekBarChangeListener(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSeekBarChangeListener(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.SEEK_BAR, 1));
         if (!initFormBean) {
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(nameEt1, new com.codingtu.cooltu.form.Name1Parse().toView(forms.name1));
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(nameEt3, forms.name3);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(nameTv, forms.name4);
             radiosRg.setSelected(new com.codingtu.cooltu.lib4a.form.DefaultRadioGroupToString("r1", "r2", "r3").toView(forms.type));
             radios1Rg.setSelected(new com.codingtu.cooltu.form.TypeParse().toView(forms.type1));
+            timeSb1.setProgress(forms.time1);
+            timeSb.setProgress(new com.codingtu.cooltu.form.TypeParse().toView(forms.time));
         }
 
         onCreateComplete();
@@ -89,11 +94,11 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         }
     }
 
-    protected void btClick() {}
+    protected void btClick() {
+    }
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
-
 
 
     }
@@ -152,6 +157,18 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
                         break;
                 }
             }
+            if (msg.what == com.codingtu.cooltu.processor.annotation.form.FormType.SEEK_BAR) {
+                switch (msg.arg1) {
+                    case 1:
+                        forms.time1 = (int) msg.obj;
+                        break;
+                    case 0:
+                        forms.time = new com.codingtu.cooltu.form.TypeParse().toBean(msg.obj);
+                        break;
+                }
+            }
+
+
         }
     }
 
@@ -178,6 +195,10 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         }
         if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(forms.type1)) {
             toast("请选择类型1");
+            return false;
+        }
+        if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(forms.time)) {
+            toast("请选择时间");
             return false;
         }
         return true;

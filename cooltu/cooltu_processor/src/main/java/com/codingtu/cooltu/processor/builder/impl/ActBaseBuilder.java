@@ -14,8 +14,10 @@ import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.annotation.form.FormBean;
+import com.codingtu.cooltu.processor.annotation.form.FormType;
 import com.codingtu.cooltu.processor.annotation.form.view.BindEditText;
 import com.codingtu.cooltu.processor.annotation.form.view.BindRadioGroup;
+import com.codingtu.cooltu.processor.annotation.form.view.BindSeekBar;
 import com.codingtu.cooltu.processor.annotation.form.view.BindTextView;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
@@ -26,6 +28,7 @@ import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.builder.subdeal.BindEditTextDeal;
 import com.codingtu.cooltu.processor.builder.subdeal.BindRadioGroupDeal;
+import com.codingtu.cooltu.processor.builder.subdeal.BindSeekBarDeal;
 import com.codingtu.cooltu.processor.builder.subdeal.BindTextViewDeal;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.FormBeanDeal;
@@ -411,23 +414,29 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
     private void dealFormBean(TypeElement te, String beanName) {
         HashMap<Integer, Integer> indexMap = new HashMap<>();
+        HashMap<Integer, Integer> typeIndexMap = new HashMap<>();
         Ts.ts(te.getEnclosedElements()).ls((position, element) -> {
             if (element instanceof VariableElement) {
                 VariableElement ve = (VariableElement) element;
                 BindEditText bindEditText = ve.getAnnotation(BindEditText.class);
                 if (bindEditText != null) {
-                    BindEditTextDeal.deal(ActBaseBuilder.this, beanName, indexMap, ve, bindEditText);
+                    BindEditTextDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, ve, bindEditText);
                 }
 
                 BindTextView bindTextView = ve.getAnnotation(BindTextView.class);
                 if (bindTextView != null) {
-                    BindTextViewDeal.deal(ActBaseBuilder.this, beanName, indexMap, ve, bindTextView);
+                    BindTextViewDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, ve, bindTextView);
 
                 }
 
                 BindRadioGroup bindRadioGroup = ve.getAnnotation(BindRadioGroup.class);
                 if (bindRadioGroup != null) {
-                    BindRadioGroupDeal.deal(ActBaseBuilder.this, beanName, indexMap, ve, bindRadioGroup);
+                    BindRadioGroupDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, ve, bindRadioGroup);
+                }
+
+                BindSeekBar bindSeekBar = ve.getAnnotation(BindSeekBar.class);
+                if (bindSeekBar != null) {
+                    BindSeekBarDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, ve, bindSeekBar);
                 }
             }
             return false;
@@ -500,6 +509,9 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][rgBind]
         [viewName]Rg.addOnSelectChange(new [handlerOnSelectChangeFullName](bindHandler, [formTypeFullName].[type], [index]));
                                                                                                     [<sub>][for][rgBind]
+                                                                                                    [<sub>][for][seekBarBind]
+        [name].setOnSeekBarChangeListener(new [handlerOnSeekBarChangeListenerFullName](bindHandler, [formTypeFullName].[type], [index]));
+                                                                                                    [<sub>][for][seekBarBind]
         if (!initFormBean) {
                                                                                                     [<sub>][for][etEchoWithParse]
             [viewToolFullName].setText([view], new [parse]().toView([bean].[field]));
@@ -519,6 +531,12 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][rgEchoWithParse]
             [viewName]Rg.setSelected(new [parse]().toView([bean].[field]));
                                                                                                     [<sub>][for][rgEchoWithParse]
+                                                                                                    [<sub>][for][seekBarEcho]
+            [viewName].setProgress([bean].[field]);
+                                                                                                    [<sub>][for][seekBarEcho]
+                                                                                                    [<sub>][for][seekBarEchoWithParse]
+            [viewName].setProgress(new [parse]().toView([bean].[field]));
+                                                                                                    [<sub>][for][seekBarEchoWithParse]
         }
                                                                                                     [<sub>][if][formInit]
                                                                                                     [<sub>][if][onCreateCompleteInit]
@@ -610,54 +628,33 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
-                                                                                                    [<sub>][if][handlerEditText]
+                                                                                                    [<sub>][for][handler]
             if (msg.what == [formTypeFullName].[type]) {
                 switch (msg.arg1) {
-                                                                                                    [<sub>][for][handlerEditTextItem]
+                                                                                                    [<sub>][for][handlerItem]
                     case [index]:
+                                                                                                    [<sub>][if][handlerItemString]
                         [beanName].[field] = (java.lang.String) msg.obj;
-                        break;
-                                                                                                    [<sub>][for][handlerEditTextItem]
-                                                                                                    [<sub>][for][handlerParseEtItem]
-                    case [index]:
-                        [beanName].[field] = new [parse]().toBean(msg.obj);
-                        break;
-                                                                                                    [<sub>][for][handlerParseEtItem]
-                }
-            }
-                                                                                                    [<sub>][if][handlerEditText]
-                                                                                                    [<sub>][if][handlerTextView]
-            if (msg.what == [formTypeFullName].[type]) {
-                switch (msg.arg1) {
-                                                                                                    [<sub>][for][handlerTextViewItem]
-                    case [index]:
-                        [beanName].[field] = (java.lang.String) msg.obj;
-                        break;
-                                                                                                    [<sub>][for][handlerTextViewItem]
-                                                                                                    [<sub>][for][handlerParseTvItem]
-                    case [index]:
-                        [beanName].[field] = new [parse]().toBean(msg.obj);
-                        break;
-                                                                                                    [<sub>][for][handlerParseTvItem]
-                }
-            }
-                                                                                                    [<sub>][if][handlerTextView]
-                                                                                                    [<sub>][if][handlerRg]
-            if (msg.what == [formTypeFullName].[type]) {
-                switch (msg.arg1) {
-                                                                                                    [<sub>][for][handlerRgItem]
-                    case [index]:
+                                                                                                    [<sub>][if][handlerItemString]
+                                                                                                    [<sub>][if][handlerItemRg]
                         [beanName].[field] = new [defaultRadioGroupToStringFullName]([items]).toBean(msg.obj);
+                                                                                                    [<sub>][if][handlerItemRg]
+                                                                                                    [<sub>][if][handlerItemInt]
+                        [beanName].[field] = (int) msg.obj;
+                                                                                                    [<sub>][if][handlerItemInt]
                         break;
-                                                                                                    [<sub>][for][handlerRgItem]
-                                                                                                    [<sub>][for][handlerParseRgItem]
+                                                                                                    [<sub>][for][handlerItem]
+                                                                                                    [<sub>][for][handlerParseItem]
                     case [index]:
                         [beanName].[field] = new [parse]().toBean(msg.obj);
                         break;
-                                                                                                    [<sub>][for][handlerParseRgItem]
+                                                                                                    [<sub>][for][handlerParseItem]
                 }
             }
-                                                                                                    [<sub>][if][handlerRg]
+                                                                                                    [<sub>][for][handler]
+
+
+
         }
     }
                                                                                                     [<sub>][if][bindHandler]

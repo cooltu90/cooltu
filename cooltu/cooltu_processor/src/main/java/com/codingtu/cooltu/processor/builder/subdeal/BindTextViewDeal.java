@@ -14,39 +14,37 @@ import com.codingtu.cooltu.processor.lib.tools.FormTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.lang.model.element.VariableElement;
 
 public class BindTextViewDeal {
 
-    public static void deal(ActBaseBuilder builder, String beanName, HashMap<Integer, Integer> indexMap, VariableElement ve, BindTextView bindTextView) {
-        String viewName = FormTools.getViewName(bindTextView.name(), ve, BindTextView.class, bindTextView.value());
-        int index = FormTools.getIndex(indexMap, FormType.TEXT_VIEW);
+    public static void deal(ActBaseBuilder builder, String beanName, Map<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
+                            VariableElement ve, BindTextView bindTextView) {
         String type = "TEXT_VIEW";
+        int typeInt = FormType.TEXT_VIEW;
+        String viewName = FormTools.getViewName(bindTextView.name(), ve, BindTextView.class, bindTextView.value());
+        int index = FormTools.getIndex(indexMap, typeInt);
+        int typeIndex = FormTools.getTypeIndex(builder, typeIndexMap, type, typeInt);
 
         builder.textViewInit(index, viewName, FullName.HANDLER_TEXT_WATCHER, FullName.FORM_TYPE, type, "" + index);
-        builder.handlerTextViewIf(FullName.FORM_TYPE, type);
 
-        String parseClass = null;
-        FormParse formParse = ve.getAnnotation(FormParse.class);
-        if (formParse != null) {
-            parseClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
-                @Override
-                public Object get() {
-                    return formParse.value();
-                }
-            });
-        }
-
+        String parseClass = FormTools.getFormParse(ve);
         String field = ElementTools.simpleName(ve);
+
         if (ClassTool.isNotVoid(parseClass)) {
-            if (bindTextView.echo())
+            if (bindTextView.echo()) {
                 builder.tvEchoWithParse(builder.tvEchoWithParseCount(), FullName.VIEW_TOOL, viewName, parseClass, beanName, field);
-            builder.handlerParseTvItem(builder.handlerParseTvItemCount(), index + "", beanName, field, parseClass);
+            }
+            builder.handlerParseItem(typeIndex, builder.handlerParseItemCount(typeIndex), index + "", beanName, field, parseClass);
         } else {
-            if (bindTextView.echo())
+            if (bindTextView.echo()) {
                 builder.tvEcho(builder.tvEchoCount(), FullName.VIEW_TOOL, viewName, beanName, field);
-            builder.handlerTextViewItem(builder.handlerTextViewItemCount(), index + "", beanName, field);
+            }
+            int handleIndex = builder.handlerItemCount(typeIndex);
+            builder.handlerItem(typeIndex, handleIndex, index + "");
+            builder.handlerItemStringIf(typeIndex, handleIndex, beanName, field);
         }
 
         FormTools.addCheck(builder, beanName, ve, field);
