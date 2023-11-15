@@ -137,13 +137,13 @@ public class BuilderBuilder extends BuilderBuilderBase {
         if (isFor) {
             String params = getParams(getMethodIntParams(levelsCount));
 
-            addLnTag(tagSb, "    protected int [lines]Count([params]) {"
+            addLnTag(tagSb, "    public int [lines]Count([params]) {"
                     , subTagStart.tag, params);
             addLnTag(tagSb, "        return count([lines]Counts, getForKey(\"[tag]\"[params]));"
                     , subTagStart.parentTag, subTagStart.tag, keyParams0);
             addLnTag(tagSb, "    }");
 
-            addLnTag(tagSb, "    protected void [lines]([params]) {"
+            addLnTag(tagSb, "    public void [lines]([params]) {"
                     , subTagStart.tag, methodParamsStr);
             addLnTag(tagSb, "        addForMap(this.[lines], getForKey(\"[tag]\"[params])[strsValue]);"
                     , subTagStart.parentTag, subTagStart.tag, keyParams2, addForMapStrParams);
@@ -153,13 +153,13 @@ public class BuilderBuilder extends BuilderBuilderBase {
         } else {
             String params = getParams(getMethodIntParams(levelsCount), false, true);
             if (CountTool.isNull(useMethodStrParams)) {
-                addLnTag(tagSb, "    protected void is[linesAdd1]([params]boolean is) {"
+                addLnTag(tagSb, "    public void is[linesAdd1]([params]boolean is) {"
                         , ConvertTool.toClassType(subTagStart.tag), params);
                 addLnTag(tagSb, "        [lines]Ifs.put(getIfKey(\"[linesAdd1]\"[params]), is);"
                         , subTagStart.parentTag, subTagStart.tag, keyParams0);
                 addLnTag(tagSb, "    }");
             } else {
-                addLnTag(tagSb, "    protected void [lines]If([params]) {"
+                addLnTag(tagSb, "    public void [lines]If([params]) {"
                         , subTagStart.tag, methodParamsStr);
                 addLnTag(tagSb, "        addForMap(this.[lines], getIfKey(\"[tag]\"[params])[strsValue]);"
                         , subTagStart.parentTag, subTagStart.tag, keyParams2, addForMapStrParams);

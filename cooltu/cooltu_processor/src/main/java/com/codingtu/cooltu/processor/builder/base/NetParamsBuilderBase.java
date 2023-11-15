@@ -23,10 +23,10 @@ public abstract class NetParamsBuilderBase extends com.codingtu.cooltu.processor
 
     }
 
-    protected int fieldCount() {
+    public int fieldCount() {
         return count(fieldCounts, getForKey("field"));
     }
-    protected void field(int i0, String type, String name) {
+    public void field(int i0, String type, String name) {
         addForMap(this.field, getForKey("field", i0), type, name);
         countAdd(fieldCounts, getForKey("field"));
     }

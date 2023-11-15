@@ -19,26 +19,26 @@ public abstract class ActBackIntentBuilderBase extends com.codingtu.cooltu.proce
 
     }
 
-    protected int methodParamCount(int i0) {
+    public int methodParamCount(int i0) {
         return count(methodCounts, getForKey("methodParam", i0));
     }
-    protected void methodParam(int i0, int i1) {
+    public void methodParam(int i0, int i1) {
         addForMap(this.method, getForKey("methodParam", i0, i1));
         countAdd(methodCounts, getForKey("methodParam", i0));
     }
-    protected int methodCount() {
+    public int methodCount() {
         return count(methodCounts, getForKey("method"));
     }
-    protected void method(int i0, String methodName, String params) {
+    public void method(int i0, String methodName, String params) {
         addForMap(this.method, getForKey("method", i0), methodName, params);
         countAdd(methodCounts, getForKey("method"));
     }
 
-    protected void methodParamOtherIf(int i0, int i1, String passFullName, String field, String param) {
+    public void methodParamOtherIf(int i0, int i1, String passFullName, String field, String param) {
         addForMap(this.method, getIfKey("methodParamOther", i0, i1), passFullName, field, param);
         methodIfs.put(getIfKey("methodParamOther", i0, i1), true);
     }
-    protected void methodParamBeanIf(int i0, int i1, String passFullName, String field, String jsonToolFullName, String param) {
+    public void methodParamBeanIf(int i0, int i1, String passFullName, String field, String jsonToolFullName, String param) {
         addForMap(this.method, getIfKey("methodParamBean", i0, i1), passFullName, field, jsonToolFullName, param);
         methodIfs.put(getIfKey("methodParamBean", i0, i1), true);
     }

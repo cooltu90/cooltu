@@ -203,282 +203,319 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
 
     }
 
-    protected int fieldCount() {
+    public int fieldCount() {
         return count(fieldCounts, getForKey("field"));
     }
-    protected void field(int i0, String sign, String type, String name) {
+    public void field(int i0, String sign, String type, String name) {
         addForMap(this.field, getForKey("field", i0), sign, type, name);
         countAdd(fieldCounts, getForKey("field"));
     }
-    protected int findViewCount() {
+    public int findViewCount() {
         return count(findViewCounts, getForKey("findView"));
     }
-    protected void findView(int i0, String fieldName, String parent, String rPkg, String id) {
+    public void findView(int i0, String fieldName, String parent, String rPkg, String id) {
         addForMap(this.findView, getForKey("findView", i0), fieldName, parent, rPkg, id);
         countAdd(findViewCounts, getForKey("findView"));
     }
-    protected int setOnClickCount() {
+    public int setOnClickCount() {
         return count(setOnClickCounts, getForKey("setOnClick"));
     }
-    protected void setOnClick(int i0, String fieldName) {
+    public void setOnClick(int i0, String fieldName) {
         addForMap(this.setOnClick, getForKey("setOnClick", i0), fieldName);
         countAdd(setOnClickCounts, getForKey("setOnClick"));
     }
-    protected int colorStrInitCount() {
+    public int colorStrInitCount() {
         return count(colorStrInitCounts, getForKey("colorStrInit"));
     }
-    protected void colorStrInit(int i0, String name, String color) {
+    public void colorStrInit(int i0, String name, String color) {
         addForMap(this.colorStrInit, getForKey("colorStrInit", i0), name, color);
         countAdd(colorStrInitCounts, getForKey("colorStrInit"));
     }
-    protected int colorResInitCount() {
+    public int colorResInitCount() {
         return count(colorResInitCounts, getForKey("colorResInit"));
     }
-    protected void colorResInit(int i0, String name, String resourceToolFullName, String id) {
+    public void colorResInit(int i0, String name, String resourceToolFullName, String id) {
         addForMap(this.colorResInit, getForKey("colorResInit", i0), name, resourceToolFullName, id);
         countAdd(colorResInitCounts, getForKey("colorResInit"));
     }
-    protected int dpInitCount() {
+    public int dpInitCount() {
         return count(dpInitCounts, getForKey("dpInit"));
     }
-    protected void dpInit(int i0, String name, String mobileToolFullName, String value) {
+    public void dpInit(int i0, String name, String mobileToolFullName, String value) {
         addForMap(this.dpInit, getForKey("dpInit", i0), name, mobileToolFullName, value);
         countAdd(dpInitCounts, getForKey("dpInit"));
     }
-    protected int dimenInitCount() {
+    public int dimenInitCount() {
         return count(dimenInitCounts, getForKey("dimenInit"));
     }
-    protected void dimenInit(int i0, String name, String resourceToolFullName, String id) {
+    public void dimenInit(int i0, String name, String resourceToolFullName, String id) {
         addForMap(this.dimenInit, getForKey("dimenInit", i0), name, resourceToolFullName, id);
         countAdd(dimenInitCounts, getForKey("dimenInit"));
     }
-    protected int startInitCount() {
+    public int startInitCount() {
         return count(startInitCounts, getForKey("startInit"));
     }
-    protected void startInit(int i0, String name, String passFullName) {
+    public void startInit(int i0, String name, String passFullName) {
         addForMap(this.startInit, getForKey("startInit", i0), name, passFullName, name);
         countAdd(startInitCounts, getForKey("startInit"));
     }
-    protected int editTextInitCount() {
+    public int rgInitCount() {
+        return count(formInitCounts, getForKey("rgInit"));
+    }
+    public void rgInit(int i0, String viewName, String radioGroupFullName, String onSetItem, String rPkg) {
+        addForMap(this.formInit, getForKey("rgInit", i0), viewName, viewName, radioGroupFullName, viewName, onSetItem, viewName, rPkg, viewName);
+        countAdd(formInitCounts, getForKey("rgInit"));
+    }
+    public int editTextInitCount() {
         return count(formInitCounts, getForKey("editTextInit"));
     }
-    protected void editTextInit(int i0, String name, String handlerTextWatcherFullName, String formTypeFullName, String type, String index) {
+    public void editTextInit(int i0, String name, String handlerTextWatcherFullName, String formTypeFullName, String type, String index) {
         addForMap(this.formInit, getForKey("editTextInit", i0), name, handlerTextWatcherFullName, formTypeFullName, type, index);
         countAdd(formInitCounts, getForKey("editTextInit"));
     }
-    protected int textViewInitCount() {
+    public int textViewInitCount() {
         return count(formInitCounts, getForKey("textViewInit"));
     }
-    protected void textViewInit(int i0, String name, String handlerTextWatcherFullName, String formTypeFullName, String type, String index) {
+    public void textViewInit(int i0, String name, String handlerTextWatcherFullName, String formTypeFullName, String type, String index) {
         addForMap(this.formInit, getForKey("textViewInit", i0), name, handlerTextWatcherFullName, formTypeFullName, type, index);
         countAdd(formInitCounts, getForKey("textViewInit"));
     }
-    protected int etEchoWithParseCount() {
+    public int rgBindCount() {
+        return count(formInitCounts, getForKey("rgBind"));
+    }
+    public void rgBind(int i0, String viewName, String handlerOnSelectChangeFullName, String formTypeFullName, String type, String index) {
+        addForMap(this.formInit, getForKey("rgBind", i0), viewName, handlerOnSelectChangeFullName, formTypeFullName, type, index);
+        countAdd(formInitCounts, getForKey("rgBind"));
+    }
+    public int etEchoWithParseCount() {
         return count(formInitCounts, getForKey("etEchoWithParse"));
     }
-    protected void etEchoWithParse(int i0, String viewToolFullName, String view, String parse, String bean, String field) {
+    public void etEchoWithParse(int i0, String viewToolFullName, String view, String parse, String bean, String field) {
         addForMap(this.formInit, getForKey("etEchoWithParse", i0), viewToolFullName, view, parse, bean, field);
         countAdd(formInitCounts, getForKey("etEchoWithParse"));
     }
-    protected int etEchoCount() {
+    public int etEchoCount() {
         return count(formInitCounts, getForKey("etEcho"));
     }
-    protected void etEcho(int i0, String viewToolFullName, String view, String bean, String field) {
+    public void etEcho(int i0, String viewToolFullName, String view, String bean, String field) {
         addForMap(this.formInit, getForKey("etEcho", i0), viewToolFullName, view, bean, field);
         countAdd(formInitCounts, getForKey("etEcho"));
     }
-    protected int tvEchoWithParseCount() {
+    public int tvEchoWithParseCount() {
         return count(formInitCounts, getForKey("tvEchoWithParse"));
     }
-    protected void tvEchoWithParse(int i0, String viewToolFullName, String view, String parse, String bean, String field) {
+    public void tvEchoWithParse(int i0, String viewToolFullName, String view, String parse, String bean, String field) {
         addForMap(this.formInit, getForKey("tvEchoWithParse", i0), viewToolFullName, view, parse, bean, field);
         countAdd(formInitCounts, getForKey("tvEchoWithParse"));
     }
-    protected int tvEchoCount() {
+    public int tvEchoCount() {
         return count(formInitCounts, getForKey("tvEcho"));
     }
-    protected void tvEcho(int i0, String viewToolFullName, String view, String bean, String field) {
+    public void tvEcho(int i0, String viewToolFullName, String view, String bean, String field) {
         addForMap(this.formInit, getForKey("tvEcho", i0), viewToolFullName, view, bean, field);
         countAdd(formInitCounts, getForKey("tvEcho"));
     }
-    protected int onClickCaseCount(int i0) {
+    public int rgEchoCount() {
+        return count(formInitCounts, getForKey("rgEcho"));
+    }
+    public void rgEcho(int i0, String viewName, String defaultRadioGroupToStringFullName, String items, String bean, String field) {
+        addForMap(this.formInit, getForKey("rgEcho", i0), viewName, defaultRadioGroupToStringFullName, items, bean, field);
+        countAdd(formInitCounts, getForKey("rgEcho"));
+    }
+    public int rgEchoWithParseCount() {
+        return count(formInitCounts, getForKey("rgEchoWithParse"));
+    }
+    public void rgEchoWithParse(int i0, String viewName, String parse, String bean, String field) {
+        addForMap(this.formInit, getForKey("rgEchoWithParse", i0), viewName, parse, bean, field);
+        countAdd(formInitCounts, getForKey("rgEchoWithParse"));
+    }
+    public int onClickCaseCount(int i0) {
         return count(onClickSwithCounts, getForKey("onClickCase", i0));
     }
-    protected void onClickCase(int i0, int i1, String id) {
+    public void onClickCase(int i0, int i1, String id) {
         addForMap(this.onClickSwith, getForKey("onClickCase", i0, i1), id);
         countAdd(onClickSwithCounts, getForKey("onClickCase", i0));
     }
-    protected int onClickSwitchParamsCount(int i0) {
+    public int onClickSwitchParamsCount(int i0) {
         return count(onClickSwithCounts, getForKey("onClickSwitchParams", i0));
     }
-    protected void onClickSwitchParams(int i0, int i1, String type, String pkg, String index, String divider) {
+    public void onClickSwitchParams(int i0, int i1, String type, String pkg, String index, String divider) {
         addForMap(this.onClickSwith, getForKey("onClickSwitchParams", i0, i1), type, pkg, index, divider);
         countAdd(onClickSwithCounts, getForKey("onClickSwitchParams", i0));
     }
-    protected int onClickSwithCount() {
+    public int onClickSwithCount() {
         return count(onClickSwithCounts, getForKey("onClickSwith"));
     }
-    protected void onClickSwith(int i0, String methodName) {
+    public void onClickSwith(int i0, String methodName) {
         addForMap(this.onClickSwith, getForKey("onClickSwith", i0), methodName);
         countAdd(onClickSwithCounts, getForKey("onClickSwith"));
     }
-    protected int onClickMethodsCount() {
+    public int onClickMethodsCount() {
         return count(onClickMethodsCounts, getForKey("onClickMethods"));
     }
-    protected void onClickMethods(int i0, String methodName, String params) {
+    public void onClickMethods(int i0, String methodName, String params) {
         addForMap(this.onClickMethods, getForKey("onClickMethods", i0), methodName, params);
         countAdd(onClickMethodsCounts, getForKey("onClickMethods"));
     }
-    protected int acceptCount() {
+    public int acceptCount() {
         return count(acceptCounts, getForKey("accept"));
     }
-    protected void accept(int i0, String methodName, String netBackFullName, String coreSendParamsFullName, String params) {
+    public void accept(int i0, String methodName, String netBackFullName, String coreSendParamsFullName, String params) {
         addForMap(this.accept, getForKey("accept", i0), methodName, netBackFullName, coreSendParamsFullName, methodName, params);
         countAdd(acceptCounts, getForKey("accept"));
     }
-    protected int acceptMethodCount() {
+    public int acceptMethodCount() {
         return count(acceptMethodCounts, getForKey("acceptMethod"));
     }
-    protected void acceptMethod(int i0, String methodName, String params) {
+    public void acceptMethod(int i0, String methodName, String params) {
         addForMap(this.acceptMethod, getForKey("acceptMethod", i0), methodName, params);
         countAdd(acceptMethodCounts, getForKey("acceptMethod"));
     }
-    protected int actBackParamCount(int i0) {
+    public int actBackParamCount(int i0) {
         return count(actBackCounts, getForKey("actBackParam", i0));
     }
-    protected void actBackParam(int i0, int i1, String passFullName, String name) {
+    public void actBackParam(int i0, int i1, String passFullName, String name) {
         addForMap(this.actBack, getForKey("actBackParam", i0, i1), passFullName, name);
         countAdd(actBackCounts, getForKey("actBackParam", i0));
     }
-    protected int actBackCount() {
+    public int actBackCount() {
         return count(actBackCounts, getForKey("actBack"));
     }
-    protected void actBack(int i0, String ifSign, String code4RequestFullName, String code, String methodName) {
+    public void actBack(int i0, String ifSign, String code4RequestFullName, String code, String methodName) {
         addForMap(this.actBack, getForKey("actBack", i0), ifSign, code4RequestFullName, code, methodName);
         countAdd(actBackCounts, getForKey("actBack"));
     }
-    protected int actBackMethodCount() {
+    public int actBackMethodCount() {
         return count(actBackMethodCounts, getForKey("actBackMethod"));
     }
-    protected void actBackMethod(int i0, String methodName, String params) {
+    public void actBackMethod(int i0, String methodName, String params) {
         addForMap(this.actBackMethod, getForKey("actBackMethod", i0), methodName, params);
         countAdd(actBackMethodCounts, getForKey("actBackMethod"));
     }
-    protected int permissionBackCount() {
+    public int permissionBackCount() {
         return count(permissionBackCounts, getForKey("permissionBack"));
     }
-    protected void permissionBack(int i0, String ifSign, String permissionsFullName, String methodNameStatic, String actStaticName, String methodName) {
+    public void permissionBack(int i0, String ifSign, String permissionsFullName, String methodNameStatic, String actStaticName, String methodName) {
         addForMap(this.permissionBack, getForKey("permissionBack", i0), ifSign, permissionsFullName, methodNameStatic, actStaticName, methodName);
         countAdd(permissionBackCounts, getForKey("permissionBack"));
     }
-    protected int permissionBackMethodCount() {
+    public int permissionBackMethodCount() {
         return count(permissionBackMethodCounts, getForKey("permissionBackMethod"));
     }
-    protected void permissionBackMethod(int i0, String methodName) {
+    public void permissionBackMethod(int i0, String methodName) {
         addForMap(this.permissionBackMethod, getForKey("permissionBackMethod", i0), methodName);
         countAdd(permissionBackMethodCounts, getForKey("permissionBackMethod"));
     }
-    protected int handlerEditTextItemCount() {
+    public int handlerEditTextItemCount() {
         return count(bindHandlerCounts, getForKey("handlerEditTextItem"));
     }
-    protected void handlerEditTextItem(int i0, String index, String beanName, String field) {
+    public void handlerEditTextItem(int i0, String index, String beanName, String field) {
         addForMap(this.bindHandler, getForKey("handlerEditTextItem", i0), index, beanName, field);
         countAdd(bindHandlerCounts, getForKey("handlerEditTextItem"));
     }
-    protected int handlerParseEtItemCount() {
+    public int handlerParseEtItemCount() {
         return count(bindHandlerCounts, getForKey("handlerParseEtItem"));
     }
-    protected void handlerParseEtItem(int i0, String index, String beanName, String field, String parse) {
+    public void handlerParseEtItem(int i0, String index, String beanName, String field, String parse) {
         addForMap(this.bindHandler, getForKey("handlerParseEtItem", i0), index, beanName, field, parse);
         countAdd(bindHandlerCounts, getForKey("handlerParseEtItem"));
     }
-    protected int handlerTextViewItemCount() {
+    public int handlerTextViewItemCount() {
         return count(bindHandlerCounts, getForKey("handlerTextViewItem"));
     }
-    protected void handlerTextViewItem(int i0, String index, String beanName, String field) {
+    public void handlerTextViewItem(int i0, String index, String beanName, String field) {
         addForMap(this.bindHandler, getForKey("handlerTextViewItem", i0), index, beanName, field);
         countAdd(bindHandlerCounts, getForKey("handlerTextViewItem"));
     }
-    protected int handlerParseTvItemCount() {
+    public int handlerParseTvItemCount() {
         return count(bindHandlerCounts, getForKey("handlerParseTvItem"));
     }
-    protected void handlerParseTvItem(int i0, String index, String beanName, String field, String parse) {
+    public void handlerParseTvItem(int i0, String index, String beanName, String field, String parse) {
         addForMap(this.bindHandler, getForKey("handlerParseTvItem", i0), index, beanName, field, parse);
         countAdd(bindHandlerCounts, getForKey("handlerParseTvItem"));
     }
-    protected int checkEtCount() {
-        return count(checkFormsCounts, getForKey("checkEt"));
+    public int handlerRgItemCount() {
+        return count(bindHandlerCounts, getForKey("handlerRgItem"));
     }
-    protected void checkEt(int i0, String stringToolFullName, String bean, String field, String promp) {
-        addForMap(this.checkForms, getForKey("checkEt", i0), stringToolFullName, bean, field, promp);
-        countAdd(checkFormsCounts, getForKey("checkEt"));
+    public void handlerRgItem(int i0, String index, String beanName, String field, String defaultRadioGroupToStringFullName, String items) {
+        addForMap(this.bindHandler, getForKey("handlerRgItem", i0), index, beanName, field, defaultRadioGroupToStringFullName, items);
+        countAdd(bindHandlerCounts, getForKey("handlerRgItem"));
     }
-    protected int checkEtWithClassCount() {
-        return count(checkFormsCounts, getForKey("checkEtWithClass"));
+    public int handlerParseRgItemCount() {
+        return count(bindHandlerCounts, getForKey("handlerParseRgItem"));
     }
-    protected void checkEtWithClass(int i0, String checkClass, String bean, String field, String promp) {
-        addForMap(this.checkForms, getForKey("checkEtWithClass", i0), checkClass, bean, bean, field, promp);
-        countAdd(checkFormsCounts, getForKey("checkEtWithClass"));
+    public void handlerParseRgItem(int i0, String index, String beanName, String field, String parse) {
+        addForMap(this.bindHandler, getForKey("handlerParseRgItem", i0), index, beanName, field, parse);
+        countAdd(bindHandlerCounts, getForKey("handlerParseRgItem"));
     }
-    protected int checkTvCount() {
-        return count(checkFormsCounts, getForKey("checkTv"));
+    public int checkCount() {
+        return count(checkFormsCounts, getForKey("check"));
     }
-    protected void checkTv(int i0, String stringToolFullName, String bean, String field, String promp) {
-        addForMap(this.checkForms, getForKey("checkTv", i0), stringToolFullName, bean, field, promp);
-        countAdd(checkFormsCounts, getForKey("checkTv"));
-    }
-    protected int checkTvWithClassCount() {
-        return count(checkFormsCounts, getForKey("checkTvWithClass"));
-    }
-    protected void checkTvWithClass(int i0, String checkClass, String bean, String field, String promp) {
-        addForMap(this.checkForms, getForKey("checkTvWithClass", i0), checkClass, bean, bean, field, promp);
-        countAdd(checkFormsCounts, getForKey("checkTvWithClass"));
+    public void check(int i0) {
+        addForMap(this.checkForms, getForKey("check", i0));
+        countAdd(checkFormsCounts, getForKey("check"));
     }
 
-    protected void layoutIf(String layout) {
+    public void layoutIf(String layout) {
         addForMap(this.layout, getIfKey("layout"), layout);
         layoutIfs.put(getIfKey("layout"), true);
     }
-    protected void formInitIf(String name, String type) {
-        addForMap(this.formInit, getIfKey("formInit"), name, name, type, name);
+    public void rgOnSetItemInitIf(int i0, String name, String type) {
+        addForMap(this.formInit, getIfKey("rgOnSetItemInit", i0), name, type);
+        formInitIfs.put(getIfKey("rgOnSetItemInit", i0), true);
+    }
+    public void formInitIf(String name, String type) {
+        addForMap(this.formInit, getIfKey("formInit"), name, name, name, type, name);
         formInitIfs.put(getIfKey("formInit"), true);
     }
-    protected void isOnCreateCompleteInit(boolean is) {
+    public void isOnCreateCompleteInit(boolean is) {
         onCreateCompleteInitIfs.put(getIfKey("onCreateCompleteInit"), is);
     }
-    protected void isSuperOnClick(boolean is) {
+    public void isSuperOnClick(boolean is) {
         superOnClickIfs.put(getIfKey("superOnClick"), is);
     }
-    protected void onClickSwitchParamsIf(int i0, String divider) {
+    public void onClickSwitchParamsIf(int i0, String divider) {
         addForMap(this.onClickSwith, getIfKey("onClickSwitchParams", i0), divider);
         onClickSwithIfs.put(getIfKey("onClickSwitchParams", i0), true);
     }
-    protected void isSuperAccept(boolean is) {
+    public void isSuperAccept(boolean is) {
         superAcceptIfs.put(getIfKey("superAccept"), is);
     }
-    protected void isActBackParamDivider(int i0, int i1, boolean is) {
+    public void isActBackParamDivider(int i0, int i1, boolean is) {
         actBackIfs.put(getIfKey("actBackParamDivider", i0, i1), is);
     }
-    protected void allowIf(int i0, String permissionToolFullName) {
+    public void allowIf(int i0, String permissionToolFullName) {
         addForMap(this.permissionBack, getIfKey("allow", i0), permissionToolFullName);
         permissionBackIfs.put(getIfKey("allow", i0), true);
     }
-    protected void isAllowParam(int i0, boolean is) {
+    public void isAllowParam(int i0, boolean is) {
         permissionBackMethodIfs.put(getIfKey("allowParam", i0), is);
     }
-    protected void handlerEditTextIf(String formTypeFullName, String type) {
+    public void handlerEditTextIf(String formTypeFullName, String type) {
         addForMap(this.bindHandler, getIfKey("handlerEditText"), formTypeFullName, type);
         bindHandlerIfs.put(getIfKey("handlerEditText"), true);
     }
-    protected void handlerTextViewIf(String formTypeFullName, String type) {
+    public void handlerTextViewIf(String formTypeFullName, String type) {
         addForMap(this.bindHandler, getIfKey("handlerTextView"), formTypeFullName, type);
         bindHandlerIfs.put(getIfKey("handlerTextView"), true);
     }
-    protected void bindHandlerIf(String beanType, String beanName) {
+    public void handlerRgIf(String formTypeFullName, String type) {
+        addForMap(this.bindHandler, getIfKey("handlerRg"), formTypeFullName, type);
+        bindHandlerIfs.put(getIfKey("handlerRg"), true);
+    }
+    public void bindHandlerIf(String beanType, String beanName) {
         addForMap(this.bindHandler, getIfKey("bindHandler"), beanType, beanName, beanType, beanName, beanName, beanName);
         bindHandlerIfs.put(getIfKey("bindHandler"), true);
     }
-    protected void checkFormsIf(String bean) {
+    public void checkStringIf(int i0, String stringToolFullName, String bean, String field, String promp) {
+        addForMap(this.checkForms, getIfKey("checkString", i0), stringToolFullName, bean, field, promp);
+        checkFormsIfs.put(getIfKey("checkString", i0), true);
+    }
+    public void checkWithDealIf(int i0, String checkClass, String bean, String field, String promp) {
+        addForMap(this.checkForms, getIfKey("checkWithDeal", i0), checkClass, bean, bean, field, promp);
+        checkFormsIfs.put(getIfKey("checkWithDeal", i0), true);
+    }
+    public void checkFormsIf(String bean) {
         addForMap(this.checkForms, getIfKey("checkForms"), bean);
         checkFormsIfs.put(getIfKey("checkForms"), true);
     }
@@ -523,11 +560,22 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         }
         if (isIf(formInitIfs, getIfKey("formInit"))) {
             List<String> formInit0 = formInit.get(getIfKey("formInit"));
-            addLnTag(formInitSb, "        if ([name] == null) {", formInit0.get(0));
-            addLnTag(formInitSb, "            [name] = new [type]();", formInit0.get(1), formInit0.get(2));
+            for (int i0 = 0; i0 < count(formInitCounts, getForKey("rgInit")); i0++) {
+                List<String> formInit1 = formInit.get(getForKey("rgInit", i0));
+                addLnTag(formInitSb, "        //[viewName]Rg", formInit1.get(0));
+                if (isIf(formInitIfs, getIfKey("rgOnSetItemInit", i0))) {
+                    List<String> formInit2 = formInit.get(getIfKey("rgOnSetItemInit", i0));
+                    addLnTag(formInitSb, "        [name] = new [type]();", formInit2.get(0), formInit2.get(1));
+                }
+                addLnTag(formInitSb, "        [viewName]Rg = [radioGroupFullName].obtain(this).setBts([viewName]).setOnSetItem([onSetItem]);", formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
+                addLnTag(formInitSb, "        [viewName].setTag([rPkg].R.id.tag_0, [viewName]Rg);", formInit1.get(5), formInit1.get(6), formInit1.get(7));
+            }
+            addLnTag(formInitSb, "        //[name]", formInit0.get(0));
+            addLnTag(formInitSb, "        if ([name] == null) {", formInit0.get(1));
+            addLnTag(formInitSb, "            [name] = new [type]();", formInit0.get(2), formInit0.get(3));
             addLnTag(formInitSb, "            initFormBean = true;");
             addLnTag(formInitSb, "        }");
-            addLnTag(formInitSb, "        bindHandler = new BindHandler([name]);", formInit0.get(3));
+            addLnTag(formInitSb, "        bindHandler = new BindHandler([name]);", formInit0.get(4));
             for (int i0 = 0; i0 < count(formInitCounts, getForKey("editTextInit")); i0++) {
                 List<String> formInit1 = formInit.get(getForKey("editTextInit", i0));
                 addLnTag(formInitSb, "        [name].addTextChangedListener(new [handlerTextWatcherFullName](bindHandler, [formTypeFullName].[type], [index]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
@@ -535,6 +583,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             for (int i0 = 0; i0 < count(formInitCounts, getForKey("textViewInit")); i0++) {
                 List<String> formInit1 = formInit.get(getForKey("textViewInit", i0));
                 addLnTag(formInitSb, "        [name].addTextChangedListener(new [handlerTextWatcherFullName](bindHandler, [formTypeFullName].[type], [index]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
+            }
+            for (int i0 = 0; i0 < count(formInitCounts, getForKey("rgBind")); i0++) {
+                List<String> formInit1 = formInit.get(getForKey("rgBind", i0));
+                addLnTag(formInitSb, "        [viewName]Rg.addOnSelectChange(new [handlerOnSelectChangeFullName](bindHandler, [formTypeFullName].[type], [index]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
             }
             addLnTag(formInitSb, "        if (!initFormBean) {");
             for (int i0 = 0; i0 < count(formInitCounts, getForKey("etEchoWithParse")); i0++) {
@@ -552,6 +604,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             for (int i0 = 0; i0 < count(formInitCounts, getForKey("tvEcho")); i0++) {
                 List<String> formInit1 = formInit.get(getForKey("tvEcho", i0));
                 addLnTag(formInitSb, "            [viewToolFullName].setText([view], [bean].[field]);", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3));
+            }
+            for (int i0 = 0; i0 < count(formInitCounts, getForKey("rgEcho")); i0++) {
+                List<String> formInit1 = formInit.get(getForKey("rgEcho", i0));
+                addLnTag(formInitSb, "            [viewName]Rg.setSelected(new [defaultRadioGroupToStringFullName]([items]).toView([bean].[field]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
+            }
+            for (int i0 = 0; i0 < count(formInitCounts, getForKey("rgEchoWithParse")); i0++) {
+                List<String> formInit1 = formInit.get(getForKey("rgEchoWithParse", i0));
+                addLnTag(formInitSb, "            [viewName]Rg.setSelected(new [parse]().toView([bean].[field]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3));
             }
             addLnTag(formInitSb, "        }");
         }
@@ -695,39 +755,47 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 addLnTag(bindHandlerSb, "                }");
                 addLnTag(bindHandlerSb, "            }");
             }
+            if (isIf(bindHandlerIfs, getIfKey("handlerRg"))) {
+                List<String> bindHandler1 = bindHandler.get(getIfKey("handlerRg"));
+                addLnTag(bindHandlerSb, "            if (msg.what == [formTypeFullName].[type]) {", bindHandler1.get(0), bindHandler1.get(1));
+                addLnTag(bindHandlerSb, "                switch (msg.arg1) {");
+                for (int i0 = 0; i0 < count(bindHandlerCounts, getForKey("handlerRgItem")); i0++) {
+                    List<String> bindHandler2 = bindHandler.get(getForKey("handlerRgItem", i0));
+                    addLnTag(bindHandlerSb, "                    case [index]:", bindHandler2.get(0));
+                    addLnTag(bindHandlerSb, "                        [beanName].[field] = new [defaultRadioGroupToStringFullName]([items]).toBean(msg.obj);", bindHandler2.get(1), bindHandler2.get(2), bindHandler2.get(3), bindHandler2.get(4));
+                    addLnTag(bindHandlerSb, "                        break;");
+                }
+                for (int i0 = 0; i0 < count(bindHandlerCounts, getForKey("handlerParseRgItem")); i0++) {
+                    List<String> bindHandler2 = bindHandler.get(getForKey("handlerParseRgItem", i0));
+                    addLnTag(bindHandlerSb, "                    case [index]:", bindHandler2.get(0));
+                    addLnTag(bindHandlerSb, "                        [beanName].[field] = new [parse]().toBean(msg.obj);", bindHandler2.get(1), bindHandler2.get(2), bindHandler2.get(3));
+                    addLnTag(bindHandlerSb, "                        break;");
+                }
+                addLnTag(bindHandlerSb, "                }");
+                addLnTag(bindHandlerSb, "            }");
+            }
             addLnTag(bindHandlerSb, "        }");
             addLnTag(bindHandlerSb, "    }");
         }
         if (isIf(checkFormsIfs, getIfKey("checkForms"))) {
             List<String> checkForms0 = checkForms.get(getIfKey("checkForms"));
             addLnTag(checkFormsSb, "    protected boolean check[bean]() {", checkForms0.get(0));
-            for (int i0 = 0; i0 < count(checkFormsCounts, getForKey("checkEt")); i0++) {
-                List<String> checkForms1 = checkForms.get(getForKey("checkEt", i0));
-                addLnTag(checkFormsSb, "        if ([stringToolFullName].isBlank([bean].[field])) {", checkForms1.get(0), checkForms1.get(1), checkForms1.get(2));
-                addLnTag(checkFormsSb, "            toast(\"[promp]\");", checkForms1.get(3));
-                addLnTag(checkFormsSb, "            return false;");
-                addLnTag(checkFormsSb, "        }");
-            }
-            for (int i0 = 0; i0 < count(checkFormsCounts, getForKey("checkEtWithClass")); i0++) {
-                List<String> checkForms1 = checkForms.get(getForKey("checkEtWithClass", i0));
-                addLnTag(checkFormsSb, "        if (new [checkClass]().check([bean], [bean].[field])) {", checkForms1.get(0), checkForms1.get(1), checkForms1.get(2), checkForms1.get(3));
-                addLnTag(checkFormsSb, "            toast(\"[promp]\");", checkForms1.get(4));
-                addLnTag(checkFormsSb, "            return false;");
-                addLnTag(checkFormsSb, "        }");
-            }
-            for (int i0 = 0; i0 < count(checkFormsCounts, getForKey("checkTv")); i0++) {
-                List<String> checkForms1 = checkForms.get(getForKey("checkTv", i0));
-                addLnTag(checkFormsSb, "        if ([stringToolFullName].isBlank([bean].[field])) {", checkForms1.get(0), checkForms1.get(1), checkForms1.get(2));
-                addLnTag(checkFormsSb, "            toast(\"[promp]\");", checkForms1.get(3));
-                addLnTag(checkFormsSb, "            return false;");
-                addLnTag(checkFormsSb, "        }");
-            }
-            for (int i0 = 0; i0 < count(checkFormsCounts, getForKey("checkTvWithClass")); i0++) {
-                List<String> checkForms1 = checkForms.get(getForKey("checkTvWithClass", i0));
-                addLnTag(checkFormsSb, "        if (new [checkClass]().check([bean], [bean].[field])) {", checkForms1.get(0), checkForms1.get(1), checkForms1.get(2), checkForms1.get(3));
-                addLnTag(checkFormsSb, "            toast(\"[promp]\");", checkForms1.get(4));
-                addLnTag(checkFormsSb, "            return false;");
-                addLnTag(checkFormsSb, "        }");
+            for (int i0 = 0; i0 < count(checkFormsCounts, getForKey("check")); i0++) {
+                List<String> checkForms1 = checkForms.get(getForKey("check", i0));
+                if (isIf(checkFormsIfs, getIfKey("checkString", i0))) {
+                    List<String> checkForms2 = checkForms.get(getIfKey("checkString", i0));
+                    addLnTag(checkFormsSb, "        if ([stringToolFullName].isBlank([bean].[field])) {", checkForms2.get(0), checkForms2.get(1), checkForms2.get(2));
+                    addLnTag(checkFormsSb, "            toast(\"[promp]\");", checkForms2.get(3));
+                    addLnTag(checkFormsSb, "            return false;");
+                    addLnTag(checkFormsSb, "        }");
+                }
+                if (isIf(checkFormsIfs, getIfKey("checkWithDeal", i0))) {
+                    List<String> checkForms2 = checkForms.get(getIfKey("checkWithDeal", i0));
+                    addLnTag(checkFormsSb, "        if (new [checkClass]().check([bean], [bean].[field])) {", checkForms2.get(0), checkForms2.get(1), checkForms2.get(2), checkForms2.get(3));
+                    addLnTag(checkFormsSb, "            toast(\"[promp]\");", checkForms2.get(4));
+                    addLnTag(checkFormsSb, "            return false;");
+                    addLnTag(checkFormsSb, "        }");
+                }
             }
             addLnTag(checkFormsSb, "        return true;");
             addLnTag(checkFormsSb, "    }");

@@ -11,12 +11,17 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
     protected android.widget.TextView nameTv;
     protected android.widget.Button bt;
     protected android.widget.EditText nameEt1;
+    protected android.widget.LinearLayout radios;
+    protected android.widget.LinearLayout radios1;
     protected android.widget.EditText nameEt2;
     protected android.widget.EditText nameEt3;
     protected java.lang.String fromAct;
     protected com.codingtu.cooltu.bean.Forms forms;
     protected boolean initFormBean;
     public BindHandler bindHandler;
+    protected com.codingtu.cooltu.form.TypeOnSetItem typeOnSetItem;
+    protected com.codingtu.cooltu.lib4a.view.combine.RadioGroup radiosRg;
+    protected com.codingtu.cooltu.lib4a.view.combine.RadioGroup radios1Rg;
 
 
     @Override
@@ -27,6 +32,8 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         nameTv = findViewById(com.codingtu.cooltu.R.id.nameTv);
         bt = findViewById(com.codingtu.cooltu.R.id.bt);
         nameEt1 = findViewById(com.codingtu.cooltu.R.id.nameEt1);
+        radios = findViewById(com.codingtu.cooltu.R.id.radios);
+        radios1 = findViewById(com.codingtu.cooltu.R.id.radios1);
         nameEt2 = findViewById(com.codingtu.cooltu.R.id.nameEt2);
         nameEt3 = findViewById(com.codingtu.cooltu.R.id.nameEt3);
 
@@ -39,6 +46,14 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         fromAct = core.tools.Pass.fromAct(getIntent());
         forms = core.tools.Pass.forms(getIntent());
 
+        //radiosRg
+        typeOnSetItem = new com.codingtu.cooltu.form.TypeOnSetItem();
+        radiosRg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(radios).setOnSetItem(typeOnSetItem);
+        radios.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, radiosRg);
+        //radios1Rg
+        radios1Rg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(radios1).setOnSetItem(typeOnSetItem);
+        radios1.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, radios1Rg);
+        //forms
         if (forms == null) {
             forms = new com.codingtu.cooltu.bean.Forms();
             initFormBean = true;
@@ -48,10 +63,14 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         nameEt2.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.EDIT_TEXT, 1));
         nameEt3.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.EDIT_TEXT, 2));
         nameTv.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.TEXT_VIEW, 0));
+        radiosRg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.RADIO_GROUP, 0));
+        radios1Rg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.RADIO_GROUP, 1));
         if (!initFormBean) {
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(nameEt1, new com.codingtu.cooltu.form.Name1Parse().toView(forms.name1));
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(nameEt3, forms.name3);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(nameTv, forms.name4);
+            radiosRg.setSelected(new com.codingtu.cooltu.lib4a.form.DefaultRadioGroupToString("r1", "r2", "r3").toView(forms.type));
+            radios1Rg.setSelected(new com.codingtu.cooltu.form.TypeParse().toView(forms.type1));
         }
 
         onCreateComplete();
@@ -123,6 +142,16 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
                         break;
                 }
             }
+            if (msg.what == com.codingtu.cooltu.processor.annotation.form.FormType.RADIO_GROUP) {
+                switch (msg.arg1) {
+                    case 0:
+                        forms.type = new com.codingtu.cooltu.lib4a.form.DefaultRadioGroupToString("r1", "r2", "r3").toBean(msg.obj);
+                        break;
+                    case 1:
+                        forms.type1 = new com.codingtu.cooltu.form.TypeParse().toBean(msg.obj);
+                        break;
+                }
+            }
         }
     }
 
@@ -141,6 +170,14 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         }
         if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(forms.name4)) {
             toast("请输入name4");
+            return false;
+        }
+        if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(forms.type)) {
+            toast("请选择类型");
+            return false;
+        }
+        if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(forms.type1)) {
+            toast("请选择类型1");
             return false;
         }
         return true;

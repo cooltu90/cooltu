@@ -19,17 +19,17 @@ public abstract class ActStartBuilderBase extends com.codingtu.cooltu.processor.
 
     }
 
-    protected int methodIntentCount(int i0) {
+    public int methodIntentCount(int i0) {
         return count(methodCounts, getForKey("methodIntent", i0));
     }
-    protected void methodIntent(int i0, int i1, String fieldName, String value) {
+    public void methodIntent(int i0, int i1, String fieldName, String value) {
         addForMap(this.method, getForKey("methodIntent", i0, i1), fieldName, value);
         countAdd(methodCounts, getForKey("methodIntent", i0));
     }
-    protected int methodCount() {
+    public int methodCount() {
         return count(methodCounts, getForKey("method"));
     }
-    protected void method(int i0, String methodName, String param, String actFullName, String actToolFullName, String codeName) {
+    public void method(int i0, String methodName, String param, String actFullName, String actToolFullName, String codeName) {
         addForMap(this.method, getForKey("method", i0), methodName, param, actFullName, actToolFullName, codeName);
         countAdd(methodCounts, getForKey("method"));
     }

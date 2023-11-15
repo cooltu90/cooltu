@@ -20,7 +20,10 @@ public class FullName {
     public static final String SUB_BUILDER = "com.codingtu.cooltu.processor.bean.SubBuilder";
     public static final String CORE_CONFIGS = "com.codingtu.cooltu.lib4a.CoreConfigs";
     public static final String HANDLER_TEXT_WATCHER = "com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher";
+    public static final String HANDLER_ON_SELECT_CHANGE = "com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange";
+    public static final String DEFAULT_RADIO_GROUP_TO_STRING = "com.codingtu.cooltu.lib4a.form.DefaultRadioGroupToString";
     public static final String FORM_TYPE = "com.codingtu.cooltu.processor.annotation.form.FormType";
+    public static final String RADIO_GROUP = "com.codingtu.cooltu.lib4a.view.combine.RadioGroup";
     //lib4j_tools
     public static final String STRING_TOOL = Pkg.LIB4J_TOOLS + ".StringTool";
     public static final String COUNT_TOOL = Pkg.LIB4J_TOOLS + ".CountTool";

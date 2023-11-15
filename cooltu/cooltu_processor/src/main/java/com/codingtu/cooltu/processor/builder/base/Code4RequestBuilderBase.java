@@ -19,10 +19,10 @@ public abstract class Code4RequestBuilderBase extends com.codingtu.cooltu.proces
 
     }
 
-    protected int fieldCount() {
+    public int fieldCount() {
         return count(fieldCounts, getForKey("field"));
     }
-    protected void field(int i0, String name, String value) {
+    public void field(int i0, String name, String value) {
         addForMap(this.field, getForKey("field", i0), name, value);
         countAdd(fieldCounts, getForKey("field"));
     }

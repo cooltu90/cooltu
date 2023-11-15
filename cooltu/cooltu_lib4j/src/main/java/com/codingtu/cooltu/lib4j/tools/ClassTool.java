@@ -17,6 +17,10 @@ public class ClassTool {
         return isGivenClass(Void.class, name);
     }
 
+    public static boolean isNotVoid(String name) {
+        return StringTool.isNotBlank(name) && !ClassTool.isVoid(name);
+    }
+
     public static boolean isString(String name) {
         return isGivenClass(String.class, name);
     }
