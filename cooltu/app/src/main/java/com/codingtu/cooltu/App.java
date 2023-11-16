@@ -22,9 +22,9 @@ import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
         layoutTemp = R.layout.layout_temp
 )
 @CreateAdapter(
-        name = "good",
+        name = "food",
         packages = "com.codingtu.cooltu.ui.adapter",
-        type = AdapterType.DEFAULT_LIST,
+        type = AdapterType.DEFAULT_MORE_LIST,
         layoutTemp = R.layout.layout_temp
 )
 public class App extends CoreApp {

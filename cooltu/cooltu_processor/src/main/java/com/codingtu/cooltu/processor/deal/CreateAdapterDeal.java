@@ -3,12 +3,11 @@ package com.codingtu.cooltu.processor.deal;
 import com.codingtu.cooltu.constant.AdapterType;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.file.copy.FileCopy;
-import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
 import com.codingtu.cooltu.processor.builder.impl.DefaultListAdapterBuilder;
+import com.codingtu.cooltu.processor.builder.impl.DefaultListMoreAdapterBuilder;
 import com.codingtu.cooltu.processor.builder.impl.VhBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 
@@ -37,6 +36,8 @@ public class CreateAdapterDeal extends TypeBaseDeal {
         AdapterType type = createAdapter.type();
         if (type == AdapterType.DEFAULT_LIST) {
             new DefaultListAdapterBuilder(adapterJavaInfo, vh, name);
+        } else if (type == AdapterType.DEFAULT_MORE_LIST) {
+            new DefaultListMoreAdapterBuilder(adapterJavaInfo, vh, name);
         }
     }
 }

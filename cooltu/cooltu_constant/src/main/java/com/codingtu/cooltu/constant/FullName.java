@@ -24,6 +24,8 @@ public class FullName {
     public static final String CORE_ADAPTER_VH = "com.codingtu.cooltu.lib4a.ui.adapter.viewholder.CoreAdapterVH";
     public static final String CORE_LIST_ADAPTER_SHORT_NAME = "CoreListAdapter";
     public static final String CORE_LIST_ADAPTER = "com.codingtu.cooltu.lib4a.ui.adapter." + CORE_LIST_ADAPTER_SHORT_NAME;
+    public static final String CORE_MORE_LIST_ADAPTER_SHORT_NAME = "CoreMoreListAdapter";
+    public static final String CORE_MORE_LIST_ADAPTER = "com.codingtu.cooltu.lib4a.ui.adapter." + CORE_MORE_LIST_ADAPTER_SHORT_NAME;
     //view
     public static final String HANDLER_TEXT_WATCHER = "com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher";
     public static final String HANDLER_ON_SELECT_CHANGE = "com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange";
