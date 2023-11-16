@@ -15,11 +15,13 @@ import javax.lang.model.element.VariableElement;
 
 public class BindSeekBarDeal {
 
-    public static void deal(ActBaseBuilder builder, String beanName, HashMap<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
+    public static void deal(ActBaseBuilder builder, String beanName, Map<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
+                            Map<Integer, String> viewMap,
                             VariableElement ve, BindSeekBar bindSeekBar) {
         String type = "SEEK_BAR";
         int typeInt = FormType.SEEK_BAR;
         String viewName = FormTools.getViewName(bindSeekBar.name(), ve, BindSeekBar.class, bindSeekBar.value());
+        viewMap.put(bindSeekBar.value(), viewName);
         int index = FormTools.getIndex(indexMap, typeInt);
         int typeIndex = FormTools.getTypeIndex(builder, typeIndexMap, type, typeInt);
 
@@ -41,7 +43,7 @@ public class BindSeekBarDeal {
             builder.handlerItemIntIf(typeIndex, handleIndex, beanName, field);
         }
 
-        FormTools.addCheck(builder, beanName, ve, field);
+        FormTools.addCheck(builder, beanName, ve, field, FormType.SEEK_BAR, viewName);
     }
 
 }

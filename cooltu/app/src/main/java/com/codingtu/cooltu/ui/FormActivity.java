@@ -36,7 +36,7 @@ public class FormActivity extends FormActivityBase {
         HandlerTool.getMainHandler().post(new Runnable() {
             @Override
             public void run() {
-                Logs.i(forms);
+                Logs.i(forms.toJson());
             }
         });
     }

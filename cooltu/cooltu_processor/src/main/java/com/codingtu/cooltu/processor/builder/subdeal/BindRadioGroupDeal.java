@@ -22,11 +22,13 @@ import javax.lang.model.element.VariableElement;
 
 public class BindRadioGroupDeal {
 
-    public static void deal(ActBaseBuilder builder, String beanName, HashMap<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
+    public static void deal(ActBaseBuilder builder, String beanName, Map<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
+                            Map<Integer, String> viewMap,
                             VariableElement ve, BindRadioGroup bindRadioGroup) {
         String type = "RADIO_GROUP";
         int typeInt = FormType.RADIO_GROUP;
         String viewName = FormTools.getViewName(bindRadioGroup.name(), ve, BindRadioGroup.class, bindRadioGroup.value());
+        viewMap.put(bindRadioGroup.value(), viewName);
         int index = FormTools.getIndex(indexMap, FormType.RADIO_GROUP);
         int typeIndex = FormTools.getTypeIndex(builder, typeIndexMap, type, typeInt);
 
@@ -74,7 +76,7 @@ public class BindRadioGroupDeal {
             builder.handlerItemRgIf(typeIndex, handleIndex, beanName, field, FullName.DEFAULT_RADIO_GROUP_TO_STRING, param);
         }
 
-        FormTools.addCheck(builder, beanName, ve, field);
+        FormTools.addCheck(builder, beanName, ve, field, FormType.RADIO_GROUP, viewName);
 
     }
 }

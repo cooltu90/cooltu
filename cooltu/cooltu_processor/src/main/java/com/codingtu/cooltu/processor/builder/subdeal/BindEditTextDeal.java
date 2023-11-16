@@ -15,10 +15,12 @@ import javax.lang.model.element.VariableElement;
 public class BindEditTextDeal {
 
     public static void deal(ActBaseBuilder builder, String beanName, Map<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
+                            Map<Integer, String> viewMap,
                             VariableElement ve, BindEditText bindEditText) {
         String type = "EDIT_TEXT";
         int typeInt = FormType.EDIT_TEXT;
         String viewName = FormTools.getViewName(bindEditText.name(), ve, BindEditText.class, bindEditText.value());
+        viewMap.put(bindEditText.value(), viewName);
         int index = FormTools.getIndex(indexMap, typeInt);
         int typeIndex = FormTools.getTypeIndex(builder, typeIndexMap, type, typeInt);
 
@@ -41,6 +43,6 @@ public class BindEditTextDeal {
             builder.handlerItemStringIf(typeIndex, handleIndex, beanName, field);
         }
 
-        FormTools.addCheck(builder, beanName, ve, field);
+        FormTools.addCheck(builder, beanName, ve, field, FormType.EDIT_TEXT, viewName);
     }
 }

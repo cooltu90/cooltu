@@ -1,12 +1,12 @@
 package com.codingtu.cooltu.lib4a.form;
 
+import android.view.View;
+
 public interface FormLink {
 
-    FormLink setTarget(Object target);
-
-    void link();
-
-    FormLink setSrcs(Object... srcs);
+    FormLink setViews(View... views);
 
     FormLink setBean(Object bean);
+
+    void link();
 }

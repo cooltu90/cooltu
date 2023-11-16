@@ -16,6 +16,7 @@ import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.annotation.form.FormBean;
 import com.codingtu.cooltu.processor.annotation.form.FormType;
 import com.codingtu.cooltu.processor.annotation.form.view.BindEditText;
+import com.codingtu.cooltu.processor.annotation.form.view.BindMulti;
 import com.codingtu.cooltu.processor.annotation.form.view.BindRadioGroup;
 import com.codingtu.cooltu.processor.annotation.form.view.BindSeekBar;
 import com.codingtu.cooltu.processor.annotation.form.view.BindTextView;
@@ -27,6 +28,7 @@ import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.builder.subdeal.BindEditTextDeal;
+import com.codingtu.cooltu.processor.builder.subdeal.BindMultiDeal;
 import com.codingtu.cooltu.processor.builder.subdeal.BindRadioGroupDeal;
 import com.codingtu.cooltu.processor.builder.subdeal.BindSeekBarDeal;
 import com.codingtu.cooltu.processor.builder.subdeal.BindTextViewDeal;
@@ -44,6 +46,7 @@ import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
@@ -396,7 +399,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             addField(Constant.SIGN_PROTECTED, formBeanClass, name);
             addField(Constant.SIGN_PROTECTED, "boolean", "initFormBean");
             addField(Constant.SIGN_PUBLIC, "BindHandler", "bindHandler");
-            bindHandlerIf(formBeanClass, name);
+            bindHandlerIf(formBeanClass, name, FullName.FORM_LINK, FullName.LIST_VALUE_MAP, FullName.TS);
             formInitIf(name, formBeanClass);
             checkFormsIf(formBeanSimpleName);
             dealFormBean(formBeanTe, name);
@@ -413,30 +416,37 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
     }
 
     private void dealFormBean(TypeElement te, String beanName) {
-        HashMap<Integer, Integer> indexMap = new HashMap<>();
-        HashMap<Integer, Integer> typeIndexMap = new HashMap<>();
+        Map<Integer, Integer> indexMap = new HashMap<>();
+        Map<Integer, Integer> typeIndexMap = new HashMap<>();
+        Map<Integer, String> viewMap = new HashMap<>();
+
         Ts.ts(te.getEnclosedElements()).ls((position, element) -> {
             if (element instanceof VariableElement) {
                 VariableElement ve = (VariableElement) element;
                 BindEditText bindEditText = ve.getAnnotation(BindEditText.class);
                 if (bindEditText != null) {
-                    BindEditTextDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, ve, bindEditText);
+                    BindEditTextDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewMap, ve, bindEditText);
                 }
 
                 BindTextView bindTextView = ve.getAnnotation(BindTextView.class);
                 if (bindTextView != null) {
-                    BindTextViewDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, ve, bindTextView);
+                    BindTextViewDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewMap, ve, bindTextView);
 
                 }
 
                 BindRadioGroup bindRadioGroup = ve.getAnnotation(BindRadioGroup.class);
                 if (bindRadioGroup != null) {
-                    BindRadioGroupDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, ve, bindRadioGroup);
+                    BindRadioGroupDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewMap, ve, bindRadioGroup);
                 }
 
                 BindSeekBar bindSeekBar = ve.getAnnotation(BindSeekBar.class);
                 if (bindSeekBar != null) {
-                    BindSeekBarDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, ve, bindSeekBar);
+                    BindSeekBarDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewMap, ve, bindSeekBar);
+                }
+
+                BindMulti bindMulti = ve.getAnnotation(BindMulti.class);
+                if (bindMulti != null) {
+                    BindMultiDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewMap, ve, bindMulti);
                 }
             }
             return false;
@@ -512,6 +522,14 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][seekBarBind]
         [name].setOnSeekBarChangeListener(new [handlerOnSeekBarChangeListenerFullName](bindHandler, [formTypeFullName].[type], [index]));
                                                                                                     [<sub>][for][seekBarBind]
+                                                                                                    [<sub>][for][bindMulti]
+        [formLinkFullName] [linkName] = new [linkType](this)
+                .setBean([beanName])
+                .setViews([views]);
+                                                                                                    [<sub>][for][addLink]
+        bindHandler.addLink([viewId], [linkName]);
+                                                                                                    [<sub>][for][addLink]
+                                                                                                    [<sub>][for][bindMulti]
         if (!initFormBean) {
                                                                                                     [<sub>][for][etEchoWithParse]
             [viewToolFullName].setText([view], new [parse]().toView([bean].[field]));
@@ -649,12 +667,48 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                         [beanName].[field] = new [parse]().toBean(msg.obj);
                         break;
                                                                                                     [<sub>][for][handlerParseItem]
+                                                                                                    [<sub>][for][handlerItems]
+                    case [index]:
+                                                                                                    [<sub>][if][handlerItemString]
+                        [beanName].[field] = (java.lang.String) msg.obj;
+                                                                                                    [<sub>][if][handlerItemString]
+                                                                                                    [<sub>][if][handlerItemRg]
+                        [beanName].[field] = new [defaultRadioGroupToStringFullName]([items]).toBean(msg.obj);
+                                                                                                    [<sub>][if][handlerItemRg]
+                                                                                                    [<sub>][if][handlerItemInt]
+                        [beanName].[field] = (int) msg.obj;
+                                                                                                    [<sub>][if][handlerItemInt]
+                                                                                                    [<sub>][if][handlerItemParse]
+                        [beanName].[field] = new [parse]().toBean(msg.obj);
+                                                                                                    [<sub>][if][handlerItemParse]
+                                                                                                    [<sub>][if][handlerItemLink]
+                        link([viewId]);
+                                                                                                    [<sub>][if][handlerItemLink]
+
+                        break;
+                                                                                                    [<sub>][for][handlerItems]
                 }
             }
                                                                                                     [<sub>][for][handler]
+        }
 
+        public void addLink(int viewId, [formLinkFullName] link) {
+            getLinks().get(viewId).add(link);
+        }
 
+        private [listValueMapFullName]<Integer, [formLinkFullName]> links;
 
+        private [listValueMapFullName]<Integer, [formLinkFullName]> getLinks() {
+            if (links == null) {
+                links = new [listValueMapFullName]<>();
+            }
+            return links;
+        }
+        private void link(int id) {
+            [tsFullName].ls(getLinks().get(id), (position, formLink) -> {
+                formLink.link();
+                return false;
+            });
         }
     }
                                                                                                     [<sub>][if][bindHandler]
@@ -673,6 +727,12 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
             return false;
         }
                                                                                                     [<sub>][if][checkWithDeal]
+                                                                                                    [<sub>][if][checkRg]
+        if (new [defaultRadioGroupFormCheckFullName]().check([bean], [viewName]Rg.getSelected())) {
+            toast("[promp]");
+            return false;
+        }
+                                                                                                    [<sub>][if][checkRg]
                                                                                                     [<sub>][for][check]
         return true;
     }

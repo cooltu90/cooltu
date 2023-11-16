@@ -1,6 +1,8 @@
 package com.codingtu.cooltu.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.codingtu.cooltu.R;
+import com.codingtu.cooltu.form.AddressLink;
 import com.codingtu.cooltu.form.Name1FormCheck;
 import com.codingtu.cooltu.form.Name1Parse;
 import com.codingtu.cooltu.form.TypeOnSetItem;
@@ -10,6 +12,7 @@ import com.codingtu.cooltu.processor.annotation.form.FormCheck;
 import com.codingtu.cooltu.processor.annotation.form.FormParse;
 import com.codingtu.cooltu.processor.annotation.form.view.BindEditText;
 import com.codingtu.cooltu.processor.annotation.form.FormBean;
+import com.codingtu.cooltu.processor.annotation.form.view.BindMulti;
 import com.codingtu.cooltu.processor.annotation.form.view.BindRadioGroup;
 import com.codingtu.cooltu.processor.annotation.form.view.BindSeekBar;
 import com.codingtu.cooltu.processor.annotation.form.view.BindTextView;
@@ -47,9 +50,30 @@ public class Forms extends CoreBean {
     @FormParse(TypeParse.class)
     @FormCheck(prompt = "请选择时间")
     public String time;
+
     @BindSeekBar(R.id.timeSb1)
 //    @FormCheck(prompt = "请选择时间")
     public int time1;
+
+    @BindEditText(R.id.provinceEt)
+    @FormCheck(prompt = "请输入省份")
+    @JSONField(serialize = false)
+    public String province;
+
+    @BindEditText(R.id.cityEt)
+    @FormCheck(prompt = "请输入城市")
+    @JSONField(serialize = false)
+    public String city;
+
+    @BindEditText(R.id.areaEt)
+    @FormCheck(prompt = "请输入区域")
+    @JSONField(serialize = false)
+    public String area;
+
+    @BindMulti(ids = {R.id.provinceEt, R.id.cityEt, R.id.areaEt, R.id.addressEt}, link = AddressLink.class)
+    @BindEditText(R.id.addressEt)
+    @FormCheck(prompt = "请输入地址")
+    public String address;
 
 }
 

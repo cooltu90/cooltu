@@ -14,17 +14,21 @@ public class FullName {
     public static final String PROCESS_CORE_BUILDER_METHOD = Pkg.PROCESSOR_BUILDER_CORE + ".MethodCoreBuilder";
     public static final String PROCESS_CORE_BUILDER_TYPE = Pkg.PROCESSOR_BUILDER_CORE + ".TypeCoreBuilder";
     public static final String BASE_PATH = "com.codingtu.cooltu.lib4a.path.BasePath";
-    public static final String LIST_VALUE_MAP = "com.codingtu.cooltu.lib4j.data.map.ListValueMap";
-    public static final String PROCESSOR_PARAMS = "com.codingtu.cooltu.processor.lib.param.Params";
-    public static final String JAVA_INFO = "com.codingtu.cooltu.lib4j.data.java.JavaInfo";
-    public static final String SUB_BUILDER = "com.codingtu.cooltu.processor.bean.SubBuilder";
     public static final String CORE_CONFIGS = "com.codingtu.cooltu.lib4a.CoreConfigs";
+    public static final String LIST_VALUE_MAP = "com.codingtu.cooltu.lib4j.data.map.ListValueMap";
+    public static final String JAVA_INFO = "com.codingtu.cooltu.lib4j.data.java.JavaInfo";
+    public static final String PROCESSOR_PARAMS = "com.codingtu.cooltu.processor.lib.param.Params";
+    public static final String SUB_BUILDER = "com.codingtu.cooltu.processor.bean.SubBuilder";
+    public static final String FORM_TYPE = "com.codingtu.cooltu.processor.annotation.form.FormType";
+    //view
     public static final String HANDLER_TEXT_WATCHER = "com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher";
     public static final String HANDLER_ON_SELECT_CHANGE = "com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange";
-    public static final String DEFAULT_RADIO_GROUP_TO_STRING = "com.codingtu.cooltu.lib4a.form.DefaultRadioGroupToString";
     public static final String HANDLER_ON_SEEK_BAR_CHANGE_LISTENER = "com.codingtu.cooltu.lib4a.view.combine.HandlerOnSeekBarChangeListener";
-    public static final String FORM_TYPE = "com.codingtu.cooltu.processor.annotation.form.FormType";
     public static final String RADIO_GROUP = "com.codingtu.cooltu.lib4a.view.combine.RadioGroup";
+    //form
+    public static final String DEFAULT_RADIO_GROUP_TO_STRING = Pkg.LIB4A_FORM + ".DefaultRadioGroupToString";
+    public static final String FORM_LINK = Pkg.LIB4A_FORM + ".FormLink";
+    public static final String DEFAULT_RADIO_GROUP_FORM_CHECK = Pkg.LIB4A_FORM + ".DefaultRadioGroupFormCheck";
     //lib4j_tools
     public static final String STRING_TOOL = Pkg.LIB4J_TOOLS + ".StringTool";
     public static final String COUNT_TOOL = Pkg.LIB4J_TOOLS + ".CountTool";

@@ -55,7 +55,29 @@ public class FormTools {
         return null;
     }
 
-    public static void addCheck(ActBaseBuilder builder, String beanName, VariableElement ve, String field) {
+//    public static void addCheck(ActBaseBuilder builder, String beanName, VariableElement ve, String field) {
+//        FormCheck formCheck = ve.getAnnotation(FormCheck.class);
+//        if (formCheck != null) {
+//            String checkClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+//                @Override
+//                public Object get() {
+//                    return formCheck.checkClass();
+//                }
+//            });
+//
+//            int checkIndex = builder.checkCount();
+//            builder.check(checkIndex);
+//
+//            if (ClassTool.isNotVoid(checkClass)) {
+//                builder.checkWithDealIf(checkIndex, checkClass, beanName, field, formCheck.prompt());
+//            } else {
+//                builder.checkStringIf(checkIndex, FullName.STRING_TOOL, beanName, field, formCheck.prompt());
+//            }
+//        }
+//    }
+
+    public static void addCheck(ActBaseBuilder builder, String beanName, VariableElement ve, String field,
+                                int formType, String viewName) {
         FormCheck formCheck = ve.getAnnotation(FormCheck.class);
         if (formCheck != null) {
             String checkClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
@@ -71,7 +93,11 @@ public class FormTools {
             if (ClassTool.isNotVoid(checkClass)) {
                 builder.checkWithDealIf(checkIndex, checkClass, beanName, field, formCheck.prompt());
             } else {
-                builder.checkStringIf(checkIndex, FullName.STRING_TOOL, beanName, field, formCheck.prompt());
+                if (formType == FormType.RADIO_GROUP) {
+                    builder.checkRgIf(checkIndex, FullName.DEFAULT_RADIO_GROUP_FORM_CHECK, beanName, viewName, formCheck.prompt());
+                } else {
+                    builder.checkStringIf(checkIndex, FullName.STRING_TOOL, beanName, field, formCheck.prompt());
+                }
             }
         }
     }

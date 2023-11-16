@@ -25,6 +25,6 @@ public class Configs extends CoreConfigs {
 
     @Override
     public String getDefaultLogTag() {
-        return "gptest";
+        return "TestApp";
     }
 }

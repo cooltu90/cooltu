@@ -5,6 +5,40 @@
     android:orientation="vertical">
 
     <EditText
+        android:id="@+id/provinceEt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:hint="请输入省份" />
+
+    <EditText
+        android:id="@+id/cityEt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:hint="请输入城市" />
+
+    <EditText
+        android:id="@+id/areaEt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:hint="请输入区域" />
+
+    <EditText
+        android:id="@+id/addressEt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:hint="请输入地址" />
+
+    <Button
+        android:id="@+id/bt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="click me" />
+
+    <EditText
         android:id="@+id/nameEt1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -104,16 +138,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:max="150" />
+
     <SeekBar
         android:id="@+id/timeSb1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:max="150" />
 
-    <Button
-        android:id="@+id/bt"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="click me" />
 
 </LinearLayout>

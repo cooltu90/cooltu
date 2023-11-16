@@ -25,6 +25,7 @@ public class Pkg {
     public static final String LIB4A_NET = LIB4A + ".net";
     public static final String LIB4A_PERMISSION = LIB4A + ".permission";
     public static final String LIB4A_TOOLS = LIB4A + ".tools";
+    public static final String LIB4A_FORM = LIB4A + ".form";
     //lib4j
     public static final String LIB4J = "com.codingtu.cooltu.lib4j";
     public static final String LIB4J_TS = LIB4J + ".ts";
