@@ -4,12 +4,12 @@ import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.lib4a.ui.adapter.CoreMoreListAdapter;
 import com.codingtu.cooltu.processor.annotation.ui.VH;
 
-import core.vh.CatVH;
+import core.vh.DogVH;
 
-@VH(layout = R.layout.item_cat, vh = CatVH.class)
-public abstract class CatAdapter extends CoreMoreListAdapter<CatVH, String> {
+@VH(layout = R.layout.item_dog, vh = DogVH.class)
+public abstract class DogAdapter extends CoreMoreListAdapter<DogVH, String> {
     @Override
-    protected void onBindVH(CatVH vh, int position, String s) {
+    protected void onBindVH(DogVH vh, int position, String s) {
 
     }
 }
