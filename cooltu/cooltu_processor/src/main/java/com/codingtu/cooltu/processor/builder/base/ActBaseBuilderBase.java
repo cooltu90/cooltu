@@ -478,6 +478,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.formInit, getIfKey("rgOnSetItemInit", i0), name, type);
         formInitIfs.put(getIfKey("rgOnSetItemInit", i0), true);
     }
+    public void rgDefaultItemIf(int i0, String viewName, String index) {
+        addForMap(this.formInit, getIfKey("rgDefaultItem", i0), viewName, index);
+        formInitIfs.put(getIfKey("rgDefaultItem", i0), true);
+    }
     public void formInitIf(String name, String type) {
         addForMap(this.formInit, getIfKey("formInit"), name, name, name, type, name);
         formInitIfs.put(getIfKey("formInit"), true);
@@ -594,6 +598,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                     addLnTag(formInitSb, "        [name] = new [type]();", formInit2.get(0), formInit2.get(1));
                 }
                 addLnTag(formInitSb, "        [viewName]Rg = [radioGroupFullName].obtain(this).setBts([viewName]).setOnSetItem([onSetItem]);", formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));
+                if (isIf(formInitIfs, getIfKey("rgDefaultItem", i0))) {
+                    List<String> formInit2 = formInit.get(getIfKey("rgDefaultItem", i0));
+                    addLnTag(formInitSb, "        [viewName]Rg.setSelected([index]);", formInit2.get(0), formInit2.get(1));
+                }
                 addLnTag(formInitSb, "        [viewName].setTag([rPkg].R.id.tag_0, [viewName]Rg);", formInit1.get(5), formInit1.get(6), formInit1.get(7));
             }
             addLnTag(formInitSb, "        //[name]", formInit0.get(0));

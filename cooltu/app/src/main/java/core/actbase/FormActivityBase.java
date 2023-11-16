@@ -64,6 +64,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         radios.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, radiosRg);
         //radios1Rg
         radios1Rg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(radios1).setOnSetItem(typeOnSetItem);
+        radios1Rg.setSelected(1);
         radios1.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, radios1Rg);
         //forms
         if (forms == null) {
@@ -96,7 +97,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(areaEt, forms.area);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(nameTv, forms.name4);
             radiosRg.setSelected(new com.codingtu.cooltu.lib4a.form.DefaultRadioGroupToString("r1", "r2", "r3").toView(forms.type));
-            radios1Rg.setSelected(new com.codingtu.cooltu.form.TypeParse().toView(forms.type1));
+            radios1Rg.setSelected(new com.codingtu.cooltu.lib4a.form.DefaultRadioGroupToString("r1", "r2", "r3").toView(forms.type1));
             timeSb1.setProgress(forms.time1);
             timeSb.setProgress(new com.codingtu.cooltu.form.TypeParse().toView(forms.time));
             addressLink.echo();
@@ -189,7 +190,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
                         forms.type = new com.codingtu.cooltu.lib4a.form.DefaultRadioGroupToString("r1", "r2", "r3").toBean(msg.obj);
                         break;
                     case 1:
-                        forms.type1 = new com.codingtu.cooltu.form.TypeParse().toBean(msg.obj);
+                        forms.type1 = new com.codingtu.cooltu.lib4a.form.DefaultRadioGroupToString("r1", "r2", "r3").toBean(msg.obj);
                         break;
                 }
             }

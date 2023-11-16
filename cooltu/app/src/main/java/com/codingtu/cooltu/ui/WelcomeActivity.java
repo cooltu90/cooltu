@@ -29,7 +29,7 @@ public class WelcomeActivity extends WelcomeActivityBase {
         Forms forms = new Forms();
         forms.name1 = "SSSSS";
         forms.address="山东-淄博-周村";
-        ActStart.formActivity(getAct(), forms);
+        ActStart.formActivity(getAct(), null);
     }
 
     @ActBack(StepOneActivity.class)

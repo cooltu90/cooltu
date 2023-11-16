@@ -504,6 +504,9 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         [name] = new [type]();
                                                                                                     [<sub>][if][rgOnSetItemInit]
         [viewName]Rg = [radioGroupFullName].obtain(this).setBts([viewName]).setOnSetItem([onSetItem]);
+                                                                                                    [<sub>][if][rgDefaultItem]
+        [viewName]Rg.setSelected([index]);
+                                                                                                    [<sub>][if][rgDefaultItem]
         [viewName].setTag([rPkg].R.id.tag_0, [viewName]Rg);
                                                                                                     [<sub>][for][rgInit]
         //[name]

@@ -17,4 +17,6 @@ public @interface BindRadioGroup {
 
     String[] strItems() default {};
 
+    int defualtItem() default -1;
+
 }

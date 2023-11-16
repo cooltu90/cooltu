@@ -41,8 +41,7 @@ public class Forms extends CoreBean {
     @FormCheck(prompt = "请选择类型")
     public String type;
 
-    @BindRadioGroup(value = R.id.radios1, onSetItem = TypeOnSetItem.class)
-    @FormParse(TypeParse.class)
+    @BindRadioGroup(value = R.id.radios1, onSetItem = TypeOnSetItem.class, strItems = {"r1", "r2", "r3"}, defualtItem = 1)
     @FormCheck(prompt = "请选择类型1")
     public String type1;
 

@@ -50,6 +50,10 @@ public class BindRadioGroupDeal {
         }
         builder.addField(Constant.SIGN_PROTECTED, FullName.RADIO_GROUP, viewName + "Rg");
         builder.rgInit(rgIndex, viewName, FullName.RADIO_GROUP, onSetItemName, Pkg.LIB4A);
+        int defualtItem = bindRadioGroup.defualtItem();
+        if (defualtItem >= 0) {
+            builder.rgDefaultItemIf(rgIndex, viewName, defualtItem + "");
+        }
 
         builder.rgBind(builder.rgBindCount(), viewName, FullName.HANDLER_ON_SELECT_CHANGE, FullName.FORM_TYPE, type, index + "");
 
