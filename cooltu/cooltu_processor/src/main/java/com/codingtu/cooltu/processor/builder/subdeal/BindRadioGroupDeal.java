@@ -23,7 +23,7 @@ import javax.lang.model.element.VariableElement;
 public class BindRadioGroupDeal {
 
     public static void deal(ActBaseBuilder builder, String beanName, Map<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
-                            Map<Integer, String> viewMap,
+                            Map<Integer, String> viewMap, Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap,
                             VariableElement ve, BindRadioGroup bindRadioGroup) {
         String type = "RADIO_GROUP";
         int typeInt = FormType.RADIO_GROUP;
@@ -55,11 +55,16 @@ public class BindRadioGroupDeal {
 
         String parseClass = FormTools.getFormParse(ve);
         String field = ElementTools.simpleName(ve);
+
+        int handleIndex = builder.handlerItemCount(typeIndex);
+        builder.handlerItem(typeIndex, handleIndex, index + "");
+        viewIndexMap.put(bindRadioGroup.value(), new BindMultiDeal.ViewIndex(typeIndex, handleIndex));
+
         if (ClassTool.isNotVoid(parseClass)) {
             if (bindRadioGroup.echo()) {
                 builder.rgEchoWithParse(builder.rgEchoWithParseCount(), viewName, parseClass, beanName, field);
             }
-            builder.handlerParseItem(typeIndex, builder.handlerParseItemCount(typeIndex), index + "", beanName, field, parseClass);
+            builder.handlerItemParseIf(typeIndex, handleIndex, beanName, field, parseClass);
         } else {
             String param = Params.getParam(bindRadioGroup.strItems(), new BaseTs.Convert<String, String>() {
                 @Override
@@ -71,8 +76,6 @@ public class BindRadioGroupDeal {
             if (bindRadioGroup.echo()) {
                 builder.rgEcho(builder.rgEchoCount(), viewName, FullName.DEFAULT_RADIO_GROUP_TO_STRING, param, beanName, field);
             }
-            int handleIndex = builder.handlerItemCount(typeIndex);
-            builder.handlerItem(typeIndex, handleIndex, index + "");
             builder.handlerItemRgIf(typeIndex, handleIndex, beanName, field, FullName.DEFAULT_RADIO_GROUP_TO_STRING, param);
         }
 

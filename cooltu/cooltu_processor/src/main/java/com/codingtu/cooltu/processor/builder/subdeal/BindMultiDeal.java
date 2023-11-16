@@ -23,9 +23,20 @@ import java.util.Map;
 import javax.lang.model.element.VariableElement;
 
 public class BindMultiDeal {
+    public static class ViewIndex {
+        public int typeIndex;
+        public int handleIndex;
+
+        public ViewIndex(int typeIndex, int handleIndex) {
+            this.typeIndex = typeIndex;
+            this.handleIndex = handleIndex;
+        }
+    }
+
+
     public static void deal(ActBaseBuilder builder, String beanName,
                             Map<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
-                            Map<Integer, String> viewMap,
+                            Map<Integer, String> viewMap, Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap,
                             VariableElement ve, BindMulti bindMulti) {
         Map<Integer, IdTools.Id> idMap = IdTools.elementToIds(ve, BindMulti.class, bindMulti.ids());
         String linkClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
@@ -48,13 +59,17 @@ public class BindMultiDeal {
         int bindMultiCount = builder.bindMultiCount();
         String linkName = fieldKv.v + Suffix.LINK;
         builder.bindMulti(bindMultiCount, FullName.FORM_LINK, fieldKv.v + Suffix.LINK, linkClass, beanName, param);
+        builder.linkEcho(builder.linkEchoCount(), linkName);
 
         Ts.ts(idMap).ls(new MapTs.MapEach<Integer, IdTools.Id>() {
             @Override
-            public boolean each(Integer integer, IdTools.Id id) {
+            public boolean each(Integer viewId, IdTools.Id id) {
                 builder.addLink(bindMultiCount, builder.addLinkCount(bindMultiCount), id.toString(), linkName);
+                ViewIndex viewIndex = viewIndexMap.get(viewId);
+                builder.handlerItemLinkIf(viewIndex.typeIndex, viewIndex.handleIndex, id.toString());
                 return false;
             }
         });
+
     }
 }

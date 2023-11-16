@@ -70,9 +70,9 @@ public class Forms extends CoreBean {
     @JSONField(serialize = false)
     public String area;
 
-    @BindMulti(ids = {R.id.provinceEt, R.id.cityEt, R.id.areaEt, R.id.addressEt}, link = AddressLink.class)
-    @BindEditText(R.id.addressEt)
-    @FormCheck(prompt = "请输入地址")
+    @BindMulti(ids = {R.id.provinceEt, R.id.cityEt, R.id.areaEt}, link = AddressLink.class)
+//    @BindEditText(R.id.addressEt)
+//    @FormCheck(prompt = "请输入地址")
     public String address;
 
 }

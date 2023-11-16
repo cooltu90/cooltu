@@ -9,4 +9,6 @@ public interface FormLink {
     FormLink setBean(Object bean);
 
     void link();
+
+    void echo();
 }

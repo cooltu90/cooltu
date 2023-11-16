@@ -2,8 +2,6 @@ package core.actbase;
 
 import android.view.View;
 
-import com.codingtu.cooltu.R;
-
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -54,6 +52,9 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         bt.setOnClickListener(this);
 
 
+
+
+
         fromAct = core.tools.Pass.fromAct(getIntent());
         forms = core.tools.Pass.forms(getIntent());
 
@@ -76,7 +77,6 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         provinceEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.EDIT_TEXT, 3));
         cityEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.EDIT_TEXT, 4));
         areaEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.EDIT_TEXT, 5));
-        addressEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.EDIT_TEXT, 6));
         nameTv.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.TEXT_VIEW, 0));
         radiosRg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.RADIO_GROUP, 0));
         radios1Rg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.RADIO_GROUP, 1));
@@ -84,23 +84,22 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         timeSb1.setOnSeekBarChangeListener(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSeekBarChangeListener(bindHandler, com.codingtu.cooltu.processor.annotation.form.FormType.SEEK_BAR, 1));
         com.codingtu.cooltu.lib4a.form.FormLink addressLink = new com.codingtu.cooltu.form.AddressLink(this)
                 .setBean(forms)
-                .setViews(provinceEt, cityEt, areaEt, addressEt);
+                .setViews(provinceEt, cityEt, areaEt);
         bindHandler.addLink(com.codingtu.cooltu.R.id.provinceEt, addressLink);
         bindHandler.addLink(com.codingtu.cooltu.R.id.cityEt, addressLink);
         bindHandler.addLink(com.codingtu.cooltu.R.id.areaEt, addressLink);
-        bindHandler.addLink(com.codingtu.cooltu.R.id.addressEt, addressLink);
         if (!initFormBean) {
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(nameEt1, new com.codingtu.cooltu.form.Name1Parse().toView(forms.name1));
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(nameEt3, forms.name3);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(provinceEt, forms.province);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(cityEt, forms.city);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(areaEt, forms.area);
-            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(addressEt, forms.address);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(nameTv, forms.name4);
             radiosRg.setSelected(new com.codingtu.cooltu.lib4a.form.DefaultRadioGroupToString("r1", "r2", "r3").toView(forms.type));
             radios1Rg.setSelected(new com.codingtu.cooltu.form.TypeParse().toView(forms.type1));
             timeSb1.setProgress(forms.time1);
             timeSb.setProgress(new com.codingtu.cooltu.form.TypeParse().toView(forms.time));
+            addressLink.echo();
         }
 
         onCreateComplete();
@@ -119,11 +118,11 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         }
     }
 
-    protected void btClick() {
-    }
+    protected void btClick() {}
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
+
 
 
     }
@@ -154,6 +153,9 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
             super.handleMessage(msg);
             if (msg.what == com.codingtu.cooltu.processor.annotation.form.FormType.EDIT_TEXT) {
                 switch (msg.arg1) {
+                    case 0:
+                        forms.name1 = new com.codingtu.cooltu.form.Name1Parse().toBean(msg.obj);
+                        break;
                     case 1:
                         forms.name2 = (java.lang.String) msg.obj;
                         break;
@@ -162,19 +164,15 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
                         break;
                     case 3:
                         forms.province = (java.lang.String) msg.obj;
-                        link(R.id.provinceEt);
+                        link(com.codingtu.cooltu.R.id.provinceEt);
                         break;
                     case 4:
                         forms.city = (java.lang.String) msg.obj;
+                        link(com.codingtu.cooltu.R.id.cityEt);
                         break;
                     case 5:
                         forms.area = (java.lang.String) msg.obj;
-                        break;
-                    case 6:
-                        forms.address = (java.lang.String) msg.obj;
-                        break;
-                    case 0:
-                        forms.name1 = new com.codingtu.cooltu.form.Name1Parse().toBean(msg.obj);
+                        link(com.codingtu.cooltu.R.id.areaEt);
                         break;
                 }
             }
@@ -197,11 +195,11 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
             }
             if (msg.what == com.codingtu.cooltu.processor.annotation.form.FormType.SEEK_BAR) {
                 switch (msg.arg1) {
-                    case 1:
-                        forms.time1 = (int) msg.obj;
-                        break;
                     case 0:
                         forms.time = new com.codingtu.cooltu.form.TypeParse().toBean(msg.obj);
+                        break;
+                    case 1:
+                        forms.time1 = (int) msg.obj;
                         break;
                 }
             }
@@ -219,7 +217,6 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
             }
             return links;
         }
-
         private void link(int id) {
             com.codingtu.cooltu.lib4j.ts.Ts.ls(getLinks().get(id), (position, formLink) -> {
                 formLink.link();
@@ -267,10 +264,6 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         }
         if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(forms.area)) {
             toast("请输入区域");
-            return false;
-        }
-        if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(forms.address)) {
-            toast("请输入地址");
             return false;
         }
         return true;

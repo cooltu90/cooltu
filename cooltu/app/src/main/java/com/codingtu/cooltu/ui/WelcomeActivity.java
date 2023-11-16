@@ -28,6 +28,7 @@ public class WelcomeActivity extends WelcomeActivityBase {
         super.onCreate(savedInstanceState);
         Forms forms = new Forms();
         forms.name1 = "SSSSS";
+        forms.address="山东-淄博-周村";
         ActStart.formActivity(getAct(), forms);
     }
 

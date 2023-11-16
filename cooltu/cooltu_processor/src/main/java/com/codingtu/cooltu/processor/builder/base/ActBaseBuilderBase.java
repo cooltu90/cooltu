@@ -364,6 +364,13 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.formInit, getForKey("seekBarEchoWithParse", i0), viewName, parse, bean, field);
         countAdd(formInitCounts, getForKey("seekBarEchoWithParse"));
     }
+    public int linkEchoCount() {
+        return count(formInitCounts, getForKey("linkEcho"));
+    }
+    public void linkEcho(int i0, String lineName) {
+        addForMap(this.formInit, getForKey("linkEcho", i0), lineName);
+        countAdd(formInitCounts, getForKey("linkEcho"));
+    }
     public int onClickCaseCount(int i0) {
         return count(onClickSwithCounts, getForKey("onClickCase", i0));
     }
@@ -448,13 +455,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.bindHandler, getForKey("handlerItem", i0, i1), index);
         countAdd(bindHandlerCounts, getForKey("handlerItem", i0));
     }
-    public int handlerParseItemCount(int i0) {
-        return count(bindHandlerCounts, getForKey("handlerParseItem", i0));
-    }
-    public void handlerParseItem(int i0, int i1, String index, String beanName, String field, String parse) {
-        addForMap(this.bindHandler, getForKey("handlerParseItem", i0, i1), index, beanName, field, parse);
-        countAdd(bindHandlerCounts, getForKey("handlerParseItem", i0));
-    }
     public int handlerCount() {
         return count(bindHandlerCounts, getForKey("handler"));
     }
@@ -516,6 +516,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     public void handlerItemIntIf(int i0, int i1, String beanName, String field) {
         addForMap(this.bindHandler, getIfKey("handlerItemInt", i0, i1), beanName, field);
         bindHandlerIfs.put(getIfKey("handlerItemInt", i0, i1), true);
+    }
+    public void handlerItemParseIf(int i0, int i1, String beanName, String field, String parse) {
+        addForMap(this.bindHandler, getIfKey("handlerItemParse", i0, i1), beanName, field, parse);
+        bindHandlerIfs.put(getIfKey("handlerItemParse", i0, i1), true);
+    }
+    public void handlerItemLinkIf(int i0, int i1, String viewId) {
+        addForMap(this.bindHandler, getIfKey("handlerItemLink", i0, i1), viewId);
+        bindHandlerIfs.put(getIfKey("handlerItemLink", i0, i1), true);
     }
     public void bindHandlerIf(String beanType, String beanName, String formLinkFullName, String listValueMapFullName, String tsFullName) {
         addForMap(this.bindHandler, getIfKey("bindHandler"), beanType, beanName, beanType, beanName, beanName, beanName, formLinkFullName, listValueMapFullName, formLinkFullName, listValueMapFullName, formLinkFullName, listValueMapFullName, tsFullName);
@@ -653,6 +661,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 List<String> formInit1 = formInit.get(getForKey("seekBarEchoWithParse", i0));
                 addLnTag(formInitSb, "            [viewName].setProgress(new [parse]().toView([bean].[field]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3));
             }
+            for (int i0 = 0; i0 < count(formInitCounts, getForKey("linkEcho")); i0++) {
+                List<String> formInit1 = formInit.get(getForKey("linkEcho", i0));
+                addLnTag(formInitSb, "            [lineName].echo();", formInit1.get(0));
+            }
             addLnTag(formInitSb, "        }");
         }
         if (isIf(onCreateCompleteInitIfs, getIfKey("onCreateCompleteInit"))) {
@@ -776,12 +788,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                         List<String> bindHandler3 = bindHandler.get(getIfKey("handlerItemInt", i0, i1));
                         addLnTag(bindHandlerSb, "                        [beanName].[field] = (int) msg.obj;", bindHandler3.get(0), bindHandler3.get(1));
                     }
-                    addLnTag(bindHandlerSb, "                        break;");
-                }
-                for (int i1 = 0; i1 < count(bindHandlerCounts, getForKey("handlerParseItem", i0)); i1++) {
-                    List<String> bindHandler2 = bindHandler.get(getForKey("handlerParseItem", i0, i1));
-                    addLnTag(bindHandlerSb, "                    case [index]:", bindHandler2.get(0));
-                    addLnTag(bindHandlerSb, "                        [beanName].[field] = new [parse]().toBean(msg.obj);", bindHandler2.get(1), bindHandler2.get(2), bindHandler2.get(3));
+                    if (isIf(bindHandlerIfs, getIfKey("handlerItemParse", i0, i1))) {
+                        List<String> bindHandler3 = bindHandler.get(getIfKey("handlerItemParse", i0, i1));
+                        addLnTag(bindHandlerSb, "                        [beanName].[field] = new [parse]().toBean(msg.obj);", bindHandler3.get(0), bindHandler3.get(1), bindHandler3.get(2));
+                    }
+                    if (isIf(bindHandlerIfs, getIfKey("handlerItemLink", i0, i1))) {
+                        List<String> bindHandler3 = bindHandler.get(getIfKey("handlerItemLink", i0, i1));
+                        addLnTag(bindHandlerSb, "                        link([viewId]);", bindHandler3.get(0));
+                    }
                     addLnTag(bindHandlerSb, "                        break;");
                 }
                 addLnTag(bindHandlerSb, "                }");

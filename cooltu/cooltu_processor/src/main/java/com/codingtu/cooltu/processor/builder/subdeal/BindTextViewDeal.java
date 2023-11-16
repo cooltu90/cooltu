@@ -21,7 +21,7 @@ import javax.lang.model.element.VariableElement;
 public class BindTextViewDeal {
 
     public static void deal(ActBaseBuilder builder, String beanName, Map<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
-                            Map<Integer, String> viewMap,
+                            Map<Integer, String> viewMap, Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap,
                             VariableElement ve, BindTextView bindTextView) {
         String type = "TEXT_VIEW";
         int typeInt = FormType.TEXT_VIEW;
@@ -35,17 +35,19 @@ public class BindTextViewDeal {
         String parseClass = FormTools.getFormParse(ve);
         String field = ElementTools.simpleName(ve);
 
+        int handleIndex = builder.handlerItemCount(typeIndex);
+        builder.handlerItem(typeIndex, handleIndex, index + "");
+        viewIndexMap.put(bindTextView.value(), new BindMultiDeal.ViewIndex(typeIndex, handleIndex));
+
         if (ClassTool.isNotVoid(parseClass)) {
             if (bindTextView.echo()) {
                 builder.tvEchoWithParse(builder.tvEchoWithParseCount(), FullName.VIEW_TOOL, viewName, parseClass, beanName, field);
             }
-            builder.handlerParseItem(typeIndex, builder.handlerParseItemCount(typeIndex), index + "", beanName, field, parseClass);
+            builder.handlerItemParseIf(typeIndex, handleIndex, beanName, field, parseClass);
         } else {
             if (bindTextView.echo()) {
                 builder.tvEcho(builder.tvEchoCount(), FullName.VIEW_TOOL, viewName, beanName, field);
             }
-            int handleIndex = builder.handlerItemCount(typeIndex);
-            builder.handlerItem(typeIndex, handleIndex, index + "");
             builder.handlerItemStringIf(typeIndex, handleIndex, beanName, field);
         }
 
