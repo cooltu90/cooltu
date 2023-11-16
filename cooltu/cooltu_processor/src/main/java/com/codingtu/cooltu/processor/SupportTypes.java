@@ -2,6 +2,7 @@ package com.codingtu.cooltu.processor;
 
 import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.annotation.create.CreateAct;
+import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
 import com.codingtu.cooltu.processor.annotation.form.FormBean;
 import com.codingtu.cooltu.processor.annotation.net.Apis;
 import com.codingtu.cooltu.processor.annotation.path.PathFilter;
@@ -10,6 +11,7 @@ import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.CreateActDeal;
+import com.codingtu.cooltu.processor.deal.CreateAdapterDeal;
 import com.codingtu.cooltu.processor.deal.FormBeanDeal;
 import com.codingtu.cooltu.processor.deal.ModuleInfoDeal;
 import com.codingtu.cooltu.processor.deal.NetDeal;
@@ -33,7 +35,8 @@ public class SupportTypes {
                 ResFor.class, ResForDeal.class,
                 Apis.class, NetDeal.class,
                 CreateAct.class, CreateActDeal.class,
-                FormBean.class, FormBeanDeal.class
+                FormBean.class, FormBeanDeal.class,
+                CreateAdapter.class, CreateAdapterDeal.class,
         };
     }
 

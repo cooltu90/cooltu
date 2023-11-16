@@ -1,0 +1,42 @@
+package com.codingtu.cooltu.processor.deal;
+
+import com.codingtu.cooltu.constant.AdapterType;
+import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.file.copy.FileCopy;
+import com.codingtu.cooltu.processor.annotation.create.CreateAct;
+import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
+import com.codingtu.cooltu.processor.builder.impl.DefaultListAdapterBuilder;
+import com.codingtu.cooltu.processor.builder.impl.VhBuilder;
+import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
+import com.codingtu.cooltu.processor.lib.log.Logs;
+import com.codingtu.cooltu.processor.lib.path.CurrentPath;
+import com.codingtu.cooltu.processor.lib.tools.IdTools;
+
+import java.io.File;
+
+import javax.lang.model.element.TypeElement;
+
+public class CreateAdapterDeal extends TypeBaseDeal {
+    @Override
+    protected void dealTypeElement(TypeElement te) {
+        CreateAdapter createAdapter = te.getAnnotation(CreateAdapter.class);
+        String name = createAdapter.name();
+        JavaInfo adapterJavaInfo = CurrentPath.adapter(createAdapter.packages(), name);
+        if (new File(adapterJavaInfo.path).exists())
+            return;
+        //创建layout
+        IdTools.Id layoutTempId = IdTools.elementToId(te, CreateAdapter.class, createAdapter.layoutTemp());
+        String layoutName = "item_" + name;
+        FileCopy
+                .src(CurrentPath.layout(layoutTempId.rName))
+                .to(new File(CurrentPath.layout(layoutName)));
+        //生成VH
+        JavaInfo vh = CurrentPath.vh(name);
+        new VhBuilder(CurrentPath.vh(name), name);
+        //生成adapter
+        AdapterType type = createAdapter.type();
+        if (type == AdapterType.DEFAULT_LIST) {
+            new DefaultListAdapterBuilder(adapterJavaInfo, vh, name);
+        }
+    }
+}

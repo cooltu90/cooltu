@@ -119,6 +119,16 @@ public class CurrentPath {
 
     /**************************************************
      *
+     * adapter
+     *
+     **************************************************/
+    public static JavaInfo adapter(String packages, String name) {
+        String resName = ConvertTool.toClassType(name) + Suffix.ADAPTER;
+        return javaInfo(packages + "." + resName);
+    }
+
+    /**************************************************
+     *
      * sendParams
      *
      **************************************************/
@@ -165,6 +175,22 @@ public class CurrentPath {
 
     /**************************************************
      *
+     * vh
+     *
+     **************************************************/
+    public static String vhFullName(String name) {
+        return Pkg.CORE_VH
+                + "."
+                + ConvertTool.toClassType(name)
+                + Suffix.VH;
+    }
+
+    public static JavaInfo vh(String name) {
+        return javaInfo(vhFullName(name));
+    }
+
+    /**************************************************
+     *
      * manifest
      *
      **************************************************/
@@ -202,6 +228,12 @@ public class CurrentPath {
      * 【ActRes的JavaInfo】{@link #actRes(String, String)}
      * 【ActBase的JavaInfo】{@link #actBase(String)}
      * 【查找ActBaseBuilder】{@link #actBaseBuilder(String)}
+     *
+     *   ┏━━━━━━━━━━━━━━┓
+     *  ┃   Adapter   ┃
+     * ┗━━━━━━━━━━━━━━━┛
+     * 【Adapter的JavaInfo】{@link #adapter(String, String)}
+     *
      *   ┏━━━━━━━━━━━━━━━━━━┓
      *  ┃   SendParams   ┃
      * ┗━━━━━━━━━━━━━━━━━━┛
@@ -217,6 +249,11 @@ public class CurrentPath {
      * ┗━━━━━━━━━━━━━━━┛
      * JavaInfo：{@link #netBack(String)}
      * FullName：{@link #netBackFullName(String)}
+     *   ┏━━━━━━━━━┓
+     *  ┃   vh   ┃
+     * ┗━━━━━━━━━┛
+     * JavaInfo：{@link #vh(String)}
+     * FullName：{@link #vhFullName(String)}
      *   ┏━━━━━━━━━━━━━━━┓
      *  ┃   manifest   ┃
      * ┗━━━━━━━━━━━━━━━━┛

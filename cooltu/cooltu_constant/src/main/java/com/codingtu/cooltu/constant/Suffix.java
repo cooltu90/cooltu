@@ -11,5 +11,7 @@ public class Suffix {
     public static final String NET_PARAMS = "Params";
     public static final String API_SERVICE = "Service";
     public static final String LINK = "Link";
+    public static final String VH = "VH";
+    public static final String ADAPTER = "Adapter";
 
 }
