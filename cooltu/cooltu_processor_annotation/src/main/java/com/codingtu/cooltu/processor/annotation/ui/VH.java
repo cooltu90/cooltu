@@ -5,5 +5,7 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.SOURCE)
 public @interface VH {
-    int value();
+    int layout();
+
+    Class vh();
 }

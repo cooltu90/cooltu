@@ -6,7 +6,7 @@ import com.codingtu.cooltu.processor.annotation.ui.VH;
 
 import core.vh.FoodVH;
 
-@VH(R.layout.item_food)
+@VH(layout = R.layout.item_food, vh = FoodVH.class)
 public abstract class FoodAdapter extends CoreMoreListAdapter<FoodVH, String> {
     @Override
     protected void onBindVH(FoodVH vh, int position, String s) {

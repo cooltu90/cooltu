@@ -10,7 +10,6 @@ public abstract class VhBuilderBase extends com.codingtu.cooltu.processor.builde
     protected java.util.Map<String, Integer> fieldCounts;
     protected StringBuilder fieldSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> field;
-    protected StringBuilder rPkg;
     protected StringBuilder layoutName;
     protected java.util.Map<String, Boolean> findViewIfs;
     protected java.util.Map<String, Integer> findViewCounts;
@@ -26,7 +25,6 @@ public abstract class VhBuilderBase extends com.codingtu.cooltu.processor.builde
         fieldCounts = new java.util.HashMap<>();
         fieldSb = map.get("field");
         field = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
-        rPkg = map.get("rPkg");
         layoutName = map.get("layoutName");
         findViewIfs = new java.util.HashMap<>();
         findViewCounts = new java.util.HashMap<>();
@@ -76,7 +74,7 @@ public abstract class VhBuilderBase extends com.codingtu.cooltu.processor.builde
         lines.add("");
         lines.add("");
         lines.add("    public [[name]](ViewGroup parent) {");
-        lines.add("        super([[rPkg]].R.layout.item_[[layoutName]], parent);");
+        lines.add("        super([[layoutName]], parent);");
         lines.add("[[findView]]");
         lines.add("    }");
         lines.add("}");

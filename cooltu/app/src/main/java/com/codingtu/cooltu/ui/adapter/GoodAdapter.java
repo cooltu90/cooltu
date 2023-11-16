@@ -8,7 +8,7 @@ import com.codingtu.cooltu.processor.annotation.ui.VH;
 
 import core.vh.GoodVH;
 
-@VH(R.layout.item_good)
+@VH(layout = R.layout.item_good, vh = GoodVH.class)
 public class GoodAdapter extends CoreListAdapter<GoodVH, String> {
     @Override
     protected void onBindVH(@NonNull GoodVH vh, int position, String s) {

@@ -5,16 +5,18 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.processor.builder.base.VhBuilderBase;
 import com.codingtu.cooltu.processor.lib.log.Logs;
+import com.codingtu.cooltu.processor.lib.tools.IdTools;
 
 import java.util.List;
 
 public class VhBuilder extends VhBuilderBase {
 
-    private final String layoutSimpleName;
+    private final IdTools.Id layoutId;
 
-    public VhBuilder(JavaInfo info, String name) {
+    public VhBuilder(JavaInfo info, IdTools.Id layoutId) {
         super(info);
-        this.layoutSimpleName = name;
+        this.layoutId = layoutId;
+        Logs.i(layoutId.toString());
     }
 
     @Override
@@ -33,8 +35,7 @@ public class VhBuilder extends VhBuilderBase {
         addTag(pkg, Pkg.CORE_VH);
         addTag(name, javaInfo.name);
         addTag(coreAdapterVHFullName, FullName.CORE_ADAPTER_VH);
-        addTag(rPkg, Pkg.R);
-        addTag(layoutName, layoutSimpleName);
+        addTag(layoutName, layoutId.toString());
     }
 }
 /* model_temp_start
@@ -49,7 +50,7 @@ public class [[name]] extends [[coreAdapterVHFullName]] {
 
 
     public [[name]](ViewGroup parent) {
-        super([[rPkg]].R.layout.item_[[layoutName]], parent);
+        super([[layoutName]], parent);
                                                                                                     [<sub>][for][findView]
         [name] = itemView.findViewById([viewId]);
                                                                                                     [<sub>][for][findView]

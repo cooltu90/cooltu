@@ -45,7 +45,7 @@ public abstract class DefaultListMoreAdapterBuilderBase extends com.codingtu.coo
         lines.add("");
         lines.add("import [[vhPkg]].[[vhName]];");
         lines.add("");
-        lines.add("@VH(R.layout.item_[[layoutName]])");
+        lines.add("@VH(layout = R.layout.item_[[layoutName]], vh = [[vhName]].class)");
         lines.add("public abstract class [[name]] extends [[coreMoreListAdapterName]]<[[vhName]], String> {");
         lines.add("    @Override");
         lines.add("    protected void onBindVH([[vhName]] vh, int position, String s) {");

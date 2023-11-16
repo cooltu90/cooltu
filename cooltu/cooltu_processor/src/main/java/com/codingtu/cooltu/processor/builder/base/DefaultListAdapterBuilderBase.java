@@ -47,7 +47,7 @@ public abstract class DefaultListAdapterBuilderBase extends com.codingtu.cooltu.
         lines.add("");
         lines.add("import [[vhPkg]].[[vhName]];");
         lines.add("");
-        lines.add("@VH(R.layout.item_[[layoutName]])");
+        lines.add("@VH(layout = R.layout.item_[[layoutName]], vh = [[vhName]].class)");
         lines.add("public class [[name]] extends [[coreListAdapterName]]<[[vhName]], String> {");
         lines.add("    @Override");
         lines.add("    protected void onBindVH(@NonNull [[vhName]] vh, int position, String s) {");

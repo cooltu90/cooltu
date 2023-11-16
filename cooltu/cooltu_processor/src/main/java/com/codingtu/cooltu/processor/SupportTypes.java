@@ -9,6 +9,7 @@ import com.codingtu.cooltu.processor.annotation.path.PathFilter;
 import com.codingtu.cooltu.processor.annotation.path.Paths;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
+import com.codingtu.cooltu.processor.annotation.ui.VH;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.CreateActDeal;
 import com.codingtu.cooltu.processor.deal.CreateAdapterDeal;
@@ -18,6 +19,7 @@ import com.codingtu.cooltu.processor.deal.NetDeal;
 import com.codingtu.cooltu.processor.deal.PathDeal;
 import com.codingtu.cooltu.processor.deal.PathFilterDeal;
 import com.codingtu.cooltu.processor.deal.ResForDeal;
+import com.codingtu.cooltu.processor.deal.VHDeal;
 
 /**************************************************
  *
@@ -36,6 +38,7 @@ public class SupportTypes {
                 Apis.class, NetDeal.class,
                 CreateAct.class, CreateActDeal.class,
                 FormBean.class, FormBeanDeal.class,
+                VH.class, VHDeal.class,
                 CreateAdapter.class, CreateAdapterDeal.class,
         };
     }

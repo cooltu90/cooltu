@@ -6,7 +6,7 @@ import com.codingtu.cooltu.processor.annotation.ui.VH;
 
 import core.vh.UserVH;
 
-@VH(R.layout.item_user)
+@VH(layout = R.layout.item_user, vh = UserVH.class)
 public abstract class NewsAdapter extends CoreMoreListAdapter<UserVH, String> {
     @Override
     protected void onBindVH(UserVH vh, int position, String s) {

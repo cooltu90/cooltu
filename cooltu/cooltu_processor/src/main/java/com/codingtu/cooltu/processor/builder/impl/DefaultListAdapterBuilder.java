@@ -53,7 +53,7 @@ import [[annotationVhFullName]];
 
 import [[vhPkg]].[[vhName]];
 
-@VH(R.layout.item_[[layoutName]])
+@VH(layout = R.layout.item_[[layoutName]], vh = [[vhName]].class)
 public class [[name]] extends [[coreListAdapterName]]<[[vhName]], String> {
     @Override
     protected void onBindVH(@NonNull [[vhName]] vh, int position, String s) {

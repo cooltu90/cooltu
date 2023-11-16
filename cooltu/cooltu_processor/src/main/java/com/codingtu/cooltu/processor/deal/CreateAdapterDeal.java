@@ -1,6 +1,7 @@
 package com.codingtu.cooltu.processor.deal;
 
 import com.codingtu.cooltu.constant.AdapterType;
+import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.file.copy.FileCopy;
 import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
@@ -30,8 +31,9 @@ public class CreateAdapterDeal extends TypeBaseDeal {
                 .src(CurrentPath.layout(layoutTempId.rName))
                 .to(new File(CurrentPath.layout(layoutName)));
         //生成VH
+        IdTools.Id layoutId = new IdTools.Id(Pkg.R, "layout", layoutName);
         JavaInfo vh = CurrentPath.vh(name);
-        new VhBuilder(CurrentPath.vh(name), name);
+        new VhBuilder(CurrentPath.vh(name), layoutId);
         //生成adapter
         AdapterType type = createAdapter.type();
         if (type == AdapterType.DEFAULT_LIST) {
