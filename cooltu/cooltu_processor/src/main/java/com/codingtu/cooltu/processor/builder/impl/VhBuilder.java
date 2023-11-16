@@ -1,11 +1,15 @@
 package com.codingtu.cooltu.processor.builder.impl;
 
+import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.builder.base.VhBuilderBase;
 import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
+import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
 import java.util.List;
 
@@ -17,6 +21,21 @@ public class VhBuilder extends VhBuilderBase {
         super(info);
         this.layoutId = layoutId;
         Logs.i(layoutId.toString());
+        List<LayoutTools.ViewInfo> viewInfos = LayoutTools.convert(layoutId.rName);
+        Ts.ls(viewInfos, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
+            @Override
+            public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
+                //addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
+                field(fieldCount(), viewInfo.tag, viewInfo.fieldName);
+
+                String parent = "";
+                if (!viewInfo.fieldName.equals(viewInfo.id)) {
+                    parent = viewInfo.parent.fieldName + ".";
+                }
+                //findView(position, viewInfo.fieldName, parent, Pkg.R, viewInfo.id);
+                return false;
+            }
+        });
     }
 
     @Override

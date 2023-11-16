@@ -3,6 +3,7 @@ package core.vh;
 import android.view.ViewGroup;
 
 public class DogVH extends com.codingtu.cooltu.lib4a.ui.adapter.viewholder.CoreAdapterVH {
+    public android.widget.TextView tv;
 
 
 

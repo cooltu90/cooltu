@@ -23,6 +23,6 @@ public class VHDeal extends TypeBaseDeal {
         });
         JavaInfo vhJavaInfo = CurrentPath.javaInfo(vhClass);
 
-        new VhBuilder(vhJavaInfo,id);
+        new VhBuilder(vhJavaInfo, id);
     }
 }
