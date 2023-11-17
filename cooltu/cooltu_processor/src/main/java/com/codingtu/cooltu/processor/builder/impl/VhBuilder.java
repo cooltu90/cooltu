@@ -25,14 +25,13 @@ public class VhBuilder extends VhBuilderBase {
         Ts.ls(viewInfos, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
             @Override
             public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
-                //addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
                 field(fieldCount(), viewInfo.tag, viewInfo.fieldName);
 
-                String parent = "";
+                String parent = "itemView.";
                 if (!viewInfo.fieldName.equals(viewInfo.id)) {
                     parent = viewInfo.parent.fieldName + ".";
                 }
-                //findView(position, viewInfo.fieldName, parent, Pkg.R, viewInfo.id);
+                findView(findViewCount(), viewInfo.fieldName, parent, Pkg.R, viewInfo.id);
                 return false;
             }
         });
@@ -71,7 +70,7 @@ public class [[name]] extends [[coreAdapterVHFullName]] {
     public [[name]](ViewGroup parent) {
         super([[layoutName]], parent);
                                                                                                     [<sub>][for][findView]
-        [name] = itemView.findViewById([viewId]);
+        [fieldName] = [parent]findViewById([rPkg].R.id.[id]);
                                                                                                     [<sub>][for][findView]
     }
 }

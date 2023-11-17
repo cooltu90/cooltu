@@ -43,8 +43,8 @@ public abstract class VhBuilderBase extends com.codingtu.cooltu.processor.builde
     public int findViewCount() {
         return count(findViewCounts, getForKey("findView"));
     }
-    public void findView(int i0, String name, String viewId) {
-        addForMap(this.findView, getForKey("findView", i0), name, viewId);
+    public void findView(int i0, String fieldName, String parent, String rPkg, String id) {
+        addForMap(this.findView, getForKey("findView", i0), fieldName, parent, rPkg, id);
         countAdd(findViewCounts, getForKey("findView"));
     }
 
@@ -57,7 +57,7 @@ public abstract class VhBuilderBase extends com.codingtu.cooltu.processor.builde
         }
         for (int i0 = 0; i0 < count(findViewCounts, getForKey("findView")); i0++) {
             List<String> findView0 = findView.get(getForKey("findView", i0));
-            addLnTag(findViewSb, "        [name] = itemView.findViewById([viewId]);", findView0.get(0), findView0.get(1));
+            addLnTag(findViewSb, "        [fieldName] = [parent]findViewById([rPkg].R.id.[id]);", findView0.get(0), findView0.get(1), findView0.get(2), findView0.get(3));
         }
 
     }
