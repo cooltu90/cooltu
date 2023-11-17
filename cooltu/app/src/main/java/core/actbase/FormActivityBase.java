@@ -58,6 +58,9 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         fromAct = core.tools.Pass.fromAct(getIntent());
         forms = core.tools.Pass.forms(getIntent());
 
+
+
+
         //radiosRg
         typeOnSetItem = new com.codingtu.cooltu.form.TypeOnSetItem();
         radiosRg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(radios).setOnSetItem(typeOnSetItem);
@@ -269,6 +272,8 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.
         }
         return true;
     }
+
+
 
 }
 

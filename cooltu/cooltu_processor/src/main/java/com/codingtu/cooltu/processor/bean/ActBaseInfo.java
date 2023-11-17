@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.VariableElement;
 
 public class ActBaseInfo {
     public IdTools.Id layout;
@@ -37,6 +38,7 @@ public class ActBaseInfo {
     public List<Permission> permissions = new ArrayList<>();
     public List<ExecutableElement> permissionMethods = new ArrayList<>();
     public Form form;
+    public List<VariableElement> adapters = new ArrayList<>();
 
 
     public boolean hasBaseClass() {

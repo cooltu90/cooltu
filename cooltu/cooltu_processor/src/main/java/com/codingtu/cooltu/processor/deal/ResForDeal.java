@@ -11,6 +11,7 @@ import com.codingtu.cooltu.processor.annotation.res.ColorRes;
 import com.codingtu.cooltu.processor.annotation.res.ColorStr;
 import com.codingtu.cooltu.processor.annotation.res.Dimen;
 import com.codingtu.cooltu.processor.annotation.res.Dp;
+import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.annotation.ui.InBase;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
 import com.codingtu.cooltu.processor.annotation.ui.NoStart;
@@ -128,6 +129,11 @@ public class ResForDeal extends TypeBaseDeal {
                     });
                 }
             }
+        }
+
+        Adapter adapter = ve.getAnnotation(Adapter.class);
+        if (adapter != null) {
+            actBaseInfo.adapters.add(ve);
         }
 
     }

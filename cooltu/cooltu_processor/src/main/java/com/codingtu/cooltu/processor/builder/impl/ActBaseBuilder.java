@@ -1,5 +1,6 @@
 package com.codingtu.cooltu.processor.builder.impl;
 
+import com.codingtu.cooltu.constant.AdapterType;
 import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
@@ -22,6 +23,7 @@ import com.codingtu.cooltu.processor.annotation.form.view.BindSeekBar;
 import com.codingtu.cooltu.processor.annotation.form.view.BindTextView;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
+import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
@@ -35,6 +37,7 @@ import com.codingtu.cooltu.processor.builder.subdeal.BindTextViewDeal;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.FormBeanDeal;
 import com.codingtu.cooltu.processor.deal.NetDeal;
+import com.codingtu.cooltu.processor.deal.VHDeal;
 import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
@@ -89,7 +92,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
     @Override
     protected void beforeBuild(List<String> lines) {
         super.beforeBuild(lines);
-        //Logs.i(lines);
+        if (javaInfo.name.equals("StepOneActivityBase")) {
+            Logs.i(lines);
+        }
     }
 
     public void addInfos(ActBaseInfo actBaseInfo) {
@@ -402,6 +407,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             checkFormsIf(formBeanSimpleName);
             dealFormBean(formBeanTe, name);
         }
+
+        //dealListAdapter
+        dealListAdapter();
     }
 
     public boolean addField(String sign, String type, String name) {
@@ -452,6 +460,37 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
             return false;
         });
     }
+
+    private void dealListAdapter() {
+        Ts.ls(info.adapters, new BaseTs.EachTs<VariableElement>() {
+            @Override
+            public boolean each(int position, VariableElement ve) {
+
+                Adapter adapter = ve.getAnnotation(Adapter.class);
+
+                KV<String, String> kv = ElementTools.getFieldKv(ve);
+                //添加字段
+                addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
+
+                String vh = VHDeal.vhMap.get(kv.k);
+                listAdapter(listAdapterCount(), kv.v, kv.k, vh, adapter.rvName());
+
+                if (adapter.type() == AdapterType.DEFAULT_MORE_LIST) {
+                    loadMore(loadMoreCount(), kv.v);
+                }
+
+                return false;
+            }
+        });
+    }
+    /**************************************************
+     *
+     *   ┏━━━━━━━━━━━━━━━━━━━━━┓
+     *  ┃   处理ListAdapter  ┃
+     * ┗━━━━━━━━━━━━━━━━━━━━━━┛
+     * {@link #dealListAdapter()}
+     *
+     **************************************************/
 }
 /* model_temp_start
 package [[pkg]];
@@ -495,6 +534,15 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][startInit]
         [name] = [passFullName].[name](getIntent());
                                                                                                     [<sub>][for][startInit]
+
+                                                                                                    [<sub>][for][listAdapter]
+        [adapterName] = new [adapterFullName]();
+        [adapterName].setVH([vhFullName].class);
+        [adapterName].setClick(this);
+        [rvName].setAdapter([adapterName]);
+        [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
+                                                                                                    [<sub>][for][listAdapter]
+
                                                                                                     [<sub>][if][formInit]
                                                                                                     [<sub>][for][rgInit]
         //[viewName]Rg
@@ -724,6 +772,10 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         return true;
     }
                                                                                                     [<sub>][if][checkForms]
+                                                                                                    [<sub>][for][loadMore]
+    protected abstract void [adapterName]LoadMore(int page);
+                                                                                                    [<sub>][for][loadMore]
+
 }
 
 model_temp_end */

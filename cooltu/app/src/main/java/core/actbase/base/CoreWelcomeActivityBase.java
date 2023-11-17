@@ -25,6 +25,9 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.lib4a.
 
 
 
+
+
+
     }
 
     @Override
@@ -56,6 +59,8 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.lib4a.
         super.back(requestCode, permissions, grantResults);
 
     }
+
+
 
 
 

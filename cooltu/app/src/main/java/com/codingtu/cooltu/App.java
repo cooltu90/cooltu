@@ -22,9 +22,9 @@ import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
         layoutTemp = R.layout.layout_temp
 )
 @CreateAdapter(
-        name = "dog",
+        name = "cat",
         packages = "com.codingtu.cooltu.ui.adapter",
-        type = AdapterType.DEFAULT_MORE_LIST,
+        type = AdapterType.DEFAULT_LIST,
         layoutTemp = R.layout.layout_temp
 )
 public class App extends CoreApp {

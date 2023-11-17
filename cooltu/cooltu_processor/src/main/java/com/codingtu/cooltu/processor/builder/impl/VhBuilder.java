@@ -45,7 +45,7 @@ public class VhBuilder extends VhBuilderBase {
     @Override
     protected void beforeBuild(List<String> lines) {
         super.beforeBuild(lines);
-        Logs.i(lines);
+        //Logs.i(lines);
     }
 
     @Override

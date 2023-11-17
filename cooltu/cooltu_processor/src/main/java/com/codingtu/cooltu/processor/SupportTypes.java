@@ -31,6 +31,7 @@ public class SupportTypes {
     public static Class[] types() {
         return new Class[]{
                 ModuleInfo.class, ModuleInfoDeal.class,
+                VH.class, VHDeal.class,
                 ActBase.class, ActBaseDeal.class,
                 PathFilter.class, PathFilterDeal.class,
                 Paths.class, PathDeal.class,
@@ -38,7 +39,6 @@ public class SupportTypes {
                 Apis.class, NetDeal.class,
                 CreateAct.class, CreateActDeal.class,
                 FormBean.class, FormBeanDeal.class,
-                VH.class, VHDeal.class,
                 CreateAdapter.class, CreateAdapterDeal.class,
         };
     }

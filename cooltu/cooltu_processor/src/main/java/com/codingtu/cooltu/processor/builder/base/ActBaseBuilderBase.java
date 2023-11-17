@@ -43,6 +43,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> startInitCounts;
     protected StringBuilder startInitSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> startInit;
+    protected java.util.Map<String, Boolean> listAdapterIfs;
+    protected java.util.Map<String, Integer> listAdapterCounts;
+    protected StringBuilder listAdapterSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> listAdapter;
     protected java.util.Map<String, Boolean> formInitIfs;
     protected java.util.Map<String, Integer> formInitCounts;
     protected StringBuilder formInitSb;
@@ -100,6 +104,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> checkFormsCounts;
     protected StringBuilder checkFormsSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> checkForms;
+    protected java.util.Map<String, Boolean> loadMoreIfs;
+    protected java.util.Map<String, Integer> loadMoreCounts;
+    protected StringBuilder loadMoreSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> loadMore;
 
     public ActBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -143,6 +151,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         startInitCounts = new java.util.HashMap<>();
         startInitSb = map.get("startInit");
         startInit = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        listAdapterIfs = new java.util.HashMap<>();
+        listAdapterCounts = new java.util.HashMap<>();
+        listAdapterSb = map.get("listAdapter");
+        listAdapter = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         formInitIfs = new java.util.HashMap<>();
         formInitCounts = new java.util.HashMap<>();
         formInitSb = map.get("formInit");
@@ -200,6 +212,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         checkFormsCounts = new java.util.HashMap<>();
         checkFormsSb = map.get("checkForms");
         checkForms = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        loadMoreIfs = new java.util.HashMap<>();
+        loadMoreCounts = new java.util.HashMap<>();
+        loadMoreSb = map.get("loadMore");
+        loadMore = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
 
@@ -258,6 +274,13 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     public void startInit(int i0, String name, String passFullName) {
         addForMap(this.startInit, getForKey("startInit", i0), name, passFullName, name);
         countAdd(startInitCounts, getForKey("startInit"));
+    }
+    public int listAdapterCount() {
+        return count(listAdapterCounts, getForKey("listAdapter"));
+    }
+    public void listAdapter(int i0, String adapterName, String adapterFullName, String vhFullName, String rvName) {
+        addForMap(this.listAdapter, getForKey("listAdapter", i0), adapterName, adapterFullName, adapterName, vhFullName, adapterName, rvName, adapterName, rvName);
+        countAdd(listAdapterCounts, getForKey("listAdapter"));
     }
     public int rgInitCount() {
         return count(formInitCounts, getForKey("rgInit"));
@@ -469,6 +492,13 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.checkForms, getForKey("check", i0));
         countAdd(checkFormsCounts, getForKey("check"));
     }
+    public int loadMoreCount() {
+        return count(loadMoreCounts, getForKey("loadMore"));
+    }
+    public void loadMore(int i0, String adapterName) {
+        addForMap(this.loadMore, getForKey("loadMore", i0), adapterName);
+        countAdd(loadMoreCounts, getForKey("loadMore"));
+    }
 
     public void layoutIf(String layout) {
         addForMap(this.layout, getIfKey("layout"), layout);
@@ -587,6 +617,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         for (int i0 = 0; i0 < count(startInitCounts, getForKey("startInit")); i0++) {
             List<String> startInit0 = startInit.get(getForKey("startInit", i0));
             addLnTag(startInitSb, "        [name] = [passFullName].[name](getIntent());", startInit0.get(0), startInit0.get(1), startInit0.get(2));
+        }
+        for (int i0 = 0; i0 < count(listAdapterCounts, getForKey("listAdapter")); i0++) {
+            List<String> listAdapter0 = listAdapter.get(getForKey("listAdapter", i0));
+            addLnTag(listAdapterSb, "        [adapterName] = new [adapterFullName]();", listAdapter0.get(0), listAdapter0.get(1));
+            addLnTag(listAdapterSb, "        [adapterName].setVH([vhFullName].class);", listAdapter0.get(2), listAdapter0.get(3));
+            addLnTag(listAdapterSb, "        [adapterName].setClick(this);", listAdapter0.get(4));
+            addLnTag(listAdapterSb, "        [rvName].setAdapter([adapterName]);", listAdapter0.get(5), listAdapter0.get(6));
+            addLnTag(listAdapterSb, "        [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));", listAdapter0.get(7));
         }
         if (isIf(formInitIfs, getIfKey("formInit"))) {
             List<String> formInit0 = formInit.get(getIfKey("formInit"));
@@ -861,6 +899,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             addLnTag(checkFormsSb, "        return true;");
             addLnTag(checkFormsSb, "    }");
         }
+        for (int i0 = 0; i0 < count(loadMoreCounts, getForKey("loadMore")); i0++) {
+            List<String> loadMore0 = loadMore.get(getForKey("loadMore", i0));
+            addLnTag(loadMoreSb, "    protected abstract void [adapterName]LoadMore(int page);", loadMore0.get(0));
+        }
 
     }
 
@@ -890,6 +932,9 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[dpInit]]");
         lines.add("[[dimenInit]]");
         lines.add("[[startInit]]");
+        lines.add("");
+        lines.add("[[listAdapter]]");
+        lines.add("");
         lines.add("[[formInit]]");
         lines.add("[[onCreateCompleteInit]]");
         lines.add("    }");
@@ -926,6 +971,8 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[permissionBackMethod]]");
         lines.add("[[bindHandler]]");
         lines.add("[[checkForms]]");
+        lines.add("[[loadMore]]");
+        lines.add("");
         lines.add("}");
         lines.add("");
 

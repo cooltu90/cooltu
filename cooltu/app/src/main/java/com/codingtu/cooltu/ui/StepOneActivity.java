@@ -10,5 +10,6 @@ import core.actres.StepOneActivityRes;
 @To(StepOneActivityRes.class)
 @ActBase(layout = R.layout.activity_step_one)
 public class StepOneActivity extends StepOneActivityBase {
+
 }
 
