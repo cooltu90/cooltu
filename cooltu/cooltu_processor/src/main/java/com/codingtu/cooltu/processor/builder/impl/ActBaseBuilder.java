@@ -116,20 +116,12 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
 
     private ActBaseInfo info;
-    private List<KV<String, String>> inBases = new ArrayList<>();
-    private HashMap<String, String> inBaseMap = new HashMap<>();
-    private HashMap<String, String> fieldMap = new HashMap<>();
+//    private List<KV<String, String>> inBases = new ArrayList<>();
+//    private HashMap<String, String> inBaseMap = new HashMap<>();
+//    private HashMap<String, String> fieldMap = new HashMap<>();
 
     public void addInfos(ActBaseInfo actBaseInfo) {
         this.info = actBaseInfo;
-    }
-
-    public void addInBase(KV<String, String> fieldKv) {
-        inBases.add(fieldKv);
-    }
-
-    public void removeInBase(KV<String, String> kv) {
-        inBaseMap.put(kv.v, kv.v);
     }
 
     public ActBaseInfo getActBaseInfo() {
@@ -139,15 +131,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     @Override
     protected void dealLines() {
         uiBaseBuilder.dealLines();
-        addTag(baseClass, info.baseClass);
-        addTag(netBackIFullName, FullName.NET_BACK_I);
-        addTag(coreSendParamsFullName, FullName.CORE_SEND_PARAMS);
 
-        if (info.layout != null) {
-            layoutIf(info.layout.toString());
-        }
-
-        Ts.ls(info.viewInfos, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
+        Ts.ls(uiBaseBuilder.viewInfos, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
             @Override
             public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
                 addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
@@ -161,7 +146,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             }
         });
 
-        Ts.ls(inBases, new BaseTs.EachTs<KV<String, String>>() {
+        Ts.ls(uiBaseBuilder.inBases, new BaseTs.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
@@ -200,11 +185,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     public boolean each(int idIndex, IdTools.Id id) {
                         onClickCase(clickViewInfoIndex, idIndex, id.toString());
                         if (info.inAct.get(clickViewInfoIndex)) {
-                            BaseTools.getActBaseInfoWithParents(getActBaseInfo(), new BaseTs.EachTs<ActBaseInfo>() {
+                            BaseTools.getActBaseInfoWithParents(uiBaseBuilder, new BaseTs.EachTs<UiBaseBuilder>() {
                                 @Override
-                                public boolean each(int position, ActBaseInfo actBaseInfo) {
+                                public boolean each(int position, UiBaseBuilder uiBaseBuilder) {
 
-                                    Ts.ts(actBaseInfo.viewInfos).convert(new BaseTs.Convert<LayoutTools.ViewInfo, LayoutTools.ViewInfo>() {
+                                    Ts.ts(uiBaseBuilder.viewInfos).convert(new BaseTs.Convert<LayoutTools.ViewInfo, LayoutTools.ViewInfo>() {
                                         @Override
                                         public LayoutTools.ViewInfo convert(int index, LayoutTools.ViewInfo viewInfo) {
                                             if (viewInfo.id.equals(id.rName)) {
@@ -227,7 +212,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
 
         //onclick继承
-        isSuperOnClick(info.hasBaseClass());
+        isSuperOnClick(uiBaseBuilder.hasBaseClass());
 
         //colorStr
         Ts.ls(info.colorStrs, new BaseTs.EachTs<KV<String, String>>() {
@@ -280,7 +265,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         });
 
         //accept
-        isSuperAccept(info.hasBaseClass());
+        isSuperAccept(uiBaseBuilder.hasBaseClass());
         Ts.ls(info.netBacks, new BaseTs.EachTs<NetBackInfo>() {
             @Override
             public boolean each(int position, NetBackInfo netBackInfo) {
@@ -403,7 +388,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             }
         });
 
-        isOnCreateCompleteInit(!info.hasChild());
+        isOnCreateCompleteInit(!uiBaseBuilder.hasChild());
 
         //form
         if (info.form != null) {
@@ -434,9 +419,14 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         dealListAdapter();
     }
 
+    @Override
+    public void layoutIf(String inflateTool, String layout) {
+        layoutIf(layout);
+    }
+
     public boolean addField(String sign, String type, String name) {
-        if (inBaseMap.get(name) == null && fieldMap.get(name) == null) {
-            fieldMap.put(name, name);
+        if (uiBaseBuilder.inBaseMap.get(name) == null && uiBaseBuilder.fieldMap.get(name) == null) {
+            uiBaseBuilder.fieldMap.put(name, name);
             field(fieldCount(), sign, type, name);
             return true;
         }

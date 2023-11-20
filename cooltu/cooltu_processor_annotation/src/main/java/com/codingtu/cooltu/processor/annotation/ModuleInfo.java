@@ -12,6 +12,8 @@ public @interface ModuleInfo {
 
     Class baseAct();
 
+    Class baseFragment();
+
     //默认的R的包名
     String rPkg();
 

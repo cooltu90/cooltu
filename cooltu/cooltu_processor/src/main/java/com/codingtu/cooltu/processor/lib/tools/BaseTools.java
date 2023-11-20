@@ -4,8 +4,10 @@ import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
+import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import java.util.List;
  *   ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
  *  ┃   获取全部父类ActBaseInfo（包括自己）   ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
- * {@link #getActBaseInfoWithParents(ActBaseInfo, BaseTs.EachTs)} }
+ * {@link #getActBaseInfoWithParents(ActBaseInfo, UiBaseBuilder, BaseTs.EachTs)}
  *
  *   ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
  *  ┃   获取全部父类ActBaseBuilder（包括自己）   ┃
@@ -38,17 +40,17 @@ public class BaseTools {
      * 获取全部父类ActBaseInfo（包括自己）
      *
      **************************************************/
-    public static void getActBaseInfoWithParents(ActBaseInfo info, BaseTs.EachTs<ActBaseInfo> eachTs) {
-        getActBaseInfoWithParents(info, new int[]{0}, eachTs);
+    public static void getActBaseInfoWithParents(UiBaseBuilder uiBaseBuilder, BaseTs.EachTs<UiBaseBuilder> eachTs) {
+        getActBaseInfoWithParents(uiBaseBuilder, new int[]{0}, eachTs);
     }
 
-    private static void getActBaseInfoWithParents(ActBaseInfo info, int[] indexs, BaseTs.EachTs<ActBaseInfo> eachTs) {
-        if (info != null) {
-            eachTs.each(indexs[0]++, info);
-            if (info.hasBaseClass()) {
-                ActBaseBuilder builder = CurrentPath.actBaseBuilder(info.baseClass);
+    private static void getActBaseInfoWithParents(UiBaseBuilder uiBaseBuilder, int[] indexs, BaseTs.EachTs<UiBaseBuilder> eachTs) {
+        if (uiBaseBuilder != null) {
+            eachTs.each(indexs[0]++, uiBaseBuilder);
+            if (uiBaseBuilder.hasBaseClass()) {
+                ActBaseBuilder builder = CurrentPath.actBaseBuilder(uiBaseBuilder.baseClass);
                 if (builder != null) {
-                    getActBaseInfoWithParents(builder.getActBaseInfo(), indexs, eachTs);
+                    getActBaseInfoWithParents(builder.getUiBaseBuilder(), indexs, eachTs);
                 }
             }
         }
@@ -67,9 +69,9 @@ public class BaseTools {
         ActBaseBuilder builder = CurrentPath.actBaseBuilder(child);
         if (builder != null) {
             eachTs.each(indexs[0]++, builder);
-            ActBaseInfo actBaseInfo = builder.getActBaseInfo();
-            if (actBaseInfo != null && actBaseInfo.hasBaseClass()) {
-                getActBaseBuilderWithParents(actBaseInfo.baseClass, indexs, eachTs);
+            UiBaseBuilder uiBaseBuilder = builder.getUiBaseBuilder();
+            if (uiBaseBuilder != null && uiBaseBuilder.hasBaseClass()) {
+                getActBaseBuilderWithParents(uiBaseBuilder.baseClass, indexs, eachTs);
             }
         }
     }

@@ -74,9 +74,9 @@ public class ResForDeal extends TypeBaseDeal {
                 @Override
                 public boolean each(int position, ActBaseBuilder actBaseBuilder) {
                     if (position == 0) {
-                        actBaseBuilder.addInBase(kv);
+                        actBaseBuilder.getUiBaseBuilder().addInBase(kv);
                     } else {
-                        actBaseBuilder.removeInBase(kv);
+                        actBaseBuilder.getUiBaseBuilder().removeInBase(kv);
                     }
                     return false;
                 }

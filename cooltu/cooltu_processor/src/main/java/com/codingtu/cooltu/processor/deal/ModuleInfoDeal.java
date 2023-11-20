@@ -23,6 +23,12 @@ public class ModuleInfoDeal extends TypeBaseDeal {
                 return moduleInfo.baseAct();
             }
         });
+        FullName.BASE_FRAGMENT = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+            @Override
+            public Object get() {
+                return moduleInfo.baseFragment();
+            }
+        });
         Pkg.R = moduleInfo.rPkg();
         ActBackIntentBuilder actBackIntentBuilder = ActBackIntentBuilder.BUILDER;
         PermissionBuilder permissionBuilder = PermissionBuilder.BUILDER;

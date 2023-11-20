@@ -9,6 +9,7 @@ import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
+import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActResBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActStartBuilder;
@@ -48,16 +49,17 @@ public class CreateActDeal extends TypeBaseDeal {
         new ActResBuilder(actResJavaInfo, actJavaInfo);
         //创建ActBase
         JavaInfo actBaseJavaInfo = CurrentPath.actBase(actJavaInfo.fullName);
+        ActBaseBuilder builder = new ActBaseBuilder(actBaseJavaInfo);
+        UiBaseBuilder uiBaseBuilder = builder.getUiBaseBuilder();
         ActBaseInfo actBaseInfo = new ActBaseInfo();
-        actBaseInfo.act = ElementTools.getType(te);
-        actBaseInfo.baseClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+        uiBaseBuilder.baseClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
             @Override
             public Object get() {
                 return createAct.baseClass();
             }
         });
-        actBaseInfo.layout = new IdTools.Id(Pkg.R, "layout", layoutName);
-        new ActBaseBuilder(actBaseJavaInfo).addInfos(actBaseInfo);
+        uiBaseBuilder.layout = new IdTools.Id(Pkg.R, "layout", layoutName);
+        builder.addInfos(actBaseInfo);
         //创建Act
         new CreateActBuilder(actJavaInfo, layoutName, actResJavaInfo, actBaseJavaInfo);
         //创建Manifest

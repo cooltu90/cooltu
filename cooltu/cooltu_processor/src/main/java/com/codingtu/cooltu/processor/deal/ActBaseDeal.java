@@ -18,11 +18,13 @@ import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
+import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActBackIntentBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.PassBuilder;
 import com.codingtu.cooltu.processor.builder.impl.PermissionBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
@@ -38,37 +40,37 @@ public class ActBaseDeal extends TypeBaseDeal {
 
     @Override
     protected void dealTypeElement(TypeElement te) {
+        ActBase baseAnno = te.getAnnotation(ActBase.class);
         String uiFullName = ElementTools.getType(te);
         JavaInfo baseJavaInfo = CurrentPath.actBase(uiFullName);
+        ActBaseBuilder baseBuilder = new ActBaseBuilder(baseJavaInfo);
+        UiBaseBuilder uiBaseBuilder = baseBuilder.getUiBaseBuilder();
+        uiBaseBuilder.uiFullName = uiFullName;
+        uiBaseBuilder.baseClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+            @Override
+            public Object get() {
+                return baseAnno.base();
+            }
+        });
 
+        if (ClassTool.isVoid(uiBaseBuilder.baseClass)) {
+            uiBaseBuilder.baseClass = FullName.BASE_ACT;
+        } else {
+            map.get(uiBaseBuilder.baseClass).add(uiBaseBuilder.uiFullName);
+        }
+
+        if (baseAnno.layout() > 0) {
+            uiBaseBuilder.layout = IdTools.elementToId(te, ActBase.class, baseAnno.layout());
+            uiBaseBuilder.viewInfos = LayoutTools.convert(uiBaseBuilder.layout.rName);
+        }
 
         /**************************************************
          *
          *
          *
          **************************************************/
-        ActBase actBase = te.getAnnotation(ActBase.class);
 
         ActBaseInfo actBaseInfo = new ActBaseInfo();
-        actBaseInfo.act = ElementTools.getType(te);
-
-        actBaseInfo.baseClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
-            @Override
-            public Object get() {
-                return actBase.base();
-            }
-        });
-
-        if (ClassTool.isVoid(actBaseInfo.baseClass)) {
-            actBaseInfo.baseClass = FullName.BASE_ACT;
-        } else {
-            map.get(actBaseInfo.baseClass).add(actBaseInfo.act);
-        }
-
-        if (actBase.layout() > 0) {
-            actBaseInfo.layout = IdTools.elementToId(te, ActBase.class, actBase.layout());
-            actBaseInfo.viewInfos = LayoutTools.convert(actBaseInfo.layout.rName);
-        }
 
         Ts.ls(te.getEnclosedElements(), (position, element) -> {
             if (element instanceof ExecutableElement) {
@@ -100,9 +102,7 @@ public class ActBaseDeal extends TypeBaseDeal {
 
         actBaseInfo.form = te.getAnnotation(Form.class);
 
-        JavaInfo actBaseJavaInfo = CurrentPath.actBase(actBaseInfo.act);
-        ActBaseBuilder actBaseBuilder = new ActBaseBuilder(actBaseJavaInfo);
-        actBaseBuilder.addInfos(actBaseInfo);
+        baseBuilder.addInfos(actBaseInfo);
 
     }
 

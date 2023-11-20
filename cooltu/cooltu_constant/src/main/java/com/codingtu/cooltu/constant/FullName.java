@@ -8,6 +8,7 @@ package com.codingtu.cooltu.constant;
 public class FullName {
 
     public static String BASE_ACT;
+    public static String BASE_FRAGMENT;
 
     public static final String PROCESS_CORE_BUILDER = Pkg.PROCESSOR_BUILDER_CORE + ".CoreBuilder";
     public static final String PROCESS_CORE_BUILDER_FIELD = Pkg.PROCESSOR_BUILDER_CORE + ".FieldCoreBuilder";
@@ -40,6 +41,7 @@ public class FullName {
     public static final String COUNT_TOOL = Pkg.LIB4J_TOOLS + ".CountTool";
     //lib4a_tools
     public static final String MOBILE_TOOL = Pkg.LIB4A_TOOLS + ".MobileTool";
+    public static final String INFLATE_TOOL = Pkg.LIB4A_TOOLS + ".InflateTool";
     public static final String SDCARD_TOOL = Pkg.LIB4A_TOOLS + ".SDCardTool";
     public static final String ACT_TOOL = Pkg.LIB4A_TOOLS + ".ActTool";
     public static final String VIEW_TOOL = Pkg.LIB4A_TOOLS + ".ViewTool";

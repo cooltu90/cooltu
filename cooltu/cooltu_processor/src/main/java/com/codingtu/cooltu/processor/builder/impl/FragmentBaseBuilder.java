@@ -1,12 +1,18 @@
 package com.codingtu.cooltu.processor.builder.impl;
 
+import com.codingtu.cooltu.constant.Constant;
+import com.codingtu.cooltu.constant.FullName;
+import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
+import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.builder.base.FragmentBaseBuilderBase;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.core.UiBaseInterface;
 import com.codingtu.cooltu.processor.lib.log.Logs;
+import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
 import java.util.List;
 
@@ -31,7 +37,7 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
 
     @Override
     protected boolean isBuild() {
-        return false;
+        return true;
     }
 
     @Override
@@ -67,13 +73,76 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
     @Override
     protected void dealLines() {
         uiBaseBuilder.dealLines();
+
+        Ts.ls(uiBaseBuilder.viewInfos, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
+            @Override
+            public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
+                addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
+                Logs.i(viewInfo);
+
+                String parent = "view.";
+                if (!viewInfo.fieldName.equals(viewInfo.id)) {
+                    parent = viewInfo.parent.fieldName + ".";
+                }
+                findView(position, viewInfo.fieldName, parent, Pkg.R, viewInfo.id);
+                return false;
+            }
+        });
+
+
+    }
+
+    public boolean addField(String sign, String type, String name) {
+        if (uiBaseBuilder.inBaseMap.get(name) == null && uiBaseBuilder.fieldMap.get(name) == null) {
+            uiBaseBuilder.fieldMap.put(name, name);
+            field(fieldCount(), sign, type, name);
+            return true;
+        }
+        return false;
     }
 
 }
 /* model_temp_start
 package [[pkg]];
 
-public class [[name]] extends [[baseClass]] {
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.adapter.rxjava2.Result;
+
+public class [[name]] extends [[baseClass]] implements View.OnClickListener, [[netBackIFullName]] {
+                                                                                                    [<sub>][for][field]
+    [sign] [type] [name];
+                                                                                                    [<sub>][for][field]
+                                                                                                    [<sub>][if][layout]
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = [inflateToolFullName].inflate(inflater, [layout], container);
+                                                                                                    [<sub>][for][findView]
+        [fieldName] = [parent]findViewById([rPkg].R.id.[id]);
+                                                                                                    [<sub>][for][findView]
+        return view;
+    }
+                                                                                                    [<sub>][if][layout]
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    public void accept(String code, Result<ResponseBody> result, [[coreSendParamsFullName]] params, List objs) {
+
+    }
 
 }
 model_temp_end */

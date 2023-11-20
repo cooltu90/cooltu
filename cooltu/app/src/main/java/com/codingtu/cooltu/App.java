@@ -15,6 +15,7 @@ import com.codingtu.cooltu.processor.annotation.create.CreateFragment;
         module = Module.APP,
         actPkg = "com.codingtu.cooltu.ui",
         baseAct = CoreActivity.class,
+        baseFragment = CoreFragment.class,
         rPkg = "com.codingtu.cooltu"
 )
 @CreateAct(

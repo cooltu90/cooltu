@@ -9,4 +9,6 @@ public interface UiBaseInterface {
     StringBuilderValueMap<String> getMap();
 
     JavaInfo getJavaInfo();
+
+    void layoutIf(String inflateTool, String layout);
 }

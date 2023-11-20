@@ -7,6 +7,7 @@ import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.annotation.form.Form;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
+import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
@@ -20,12 +21,12 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 
 public class ActBaseInfo {
-    public IdTools.Id layout;
-    public String baseClass;
-    public List<LayoutTools.ViewInfo> viewInfos;
+    //public IdTools.Id layout;
+    //public String baseClass;
+    //public List<LayoutTools.ViewInfo> viewInfos;
     public List<ClickViewInfo> clickViews = new ArrayList<>();
     public List<NetBackInfo> netBacks = new ArrayList<>();
-    public String act;
+    //public String act;
     public List<KV<String, String>> colorStrs = new ArrayList<>();
     public List<KV<String, IdTools.Id>> colorReses = new ArrayList<>();
     public List<KV<String, Float>> dps = new ArrayList<>();
@@ -41,12 +42,8 @@ public class ActBaseInfo {
     public List<VariableElement> adapters = new ArrayList<>();
 
 
-    public boolean hasBaseClass() {
-        return !FullName.BASE_ACT.equals(baseClass);
-    }
-
-    public boolean hasChild() {
-        return CountTool.count(BaseTools.getActBaseBuilderWithChilds(act)) > 1;
-    }
+    //public boolean hasBaseClass() {
+//        return !FullName.BASE_ACT.equals(baseClass);
+//    }
 
 }
