@@ -132,20 +132,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     protected void dealLines() {
         uiBaseBuilder.dealLines();
 
-        Ts.ls(uiBaseBuilder.viewInfos, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
-            @Override
-            public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
-                addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
-
-                String parent = "";
-                if (!viewInfo.fieldName.equals(viewInfo.id)) {
-                    parent = viewInfo.parent.fieldName + ".";
-                }
-                findView(position, viewInfo.fieldName, parent, Pkg.R, viewInfo.id);
-                return false;
-            }
-        });
-
         Ts.ls(uiBaseBuilder.inBases, new BaseTs.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
@@ -423,6 +409,17 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     public void layoutIf(String inflateTool, String layout) {
         layoutIf(layout);
     }
+
+    @Override
+    public String getDefulatViewParent() {
+        return "";
+    }
+
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
 
     public boolean addField(String sign, String type, String name) {
         if (uiBaseBuilder.inBaseMap.get(name) == null && uiBaseBuilder.fieldMap.get(name) == null) {

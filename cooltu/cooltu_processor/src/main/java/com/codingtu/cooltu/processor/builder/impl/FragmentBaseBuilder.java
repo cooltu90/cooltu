@@ -73,34 +73,12 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
     @Override
     protected void dealLines() {
         uiBaseBuilder.dealLines();
-
-        Ts.ls(uiBaseBuilder.viewInfos, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
-            @Override
-            public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
-                addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
-                Logs.i(viewInfo);
-
-                String parent = "view.";
-                if (!viewInfo.fieldName.equals(viewInfo.id)) {
-                    parent = viewInfo.parent.fieldName + ".";
-                }
-                findView(position, viewInfo.fieldName, parent, Pkg.R, viewInfo.id);
-                return false;
-            }
-        });
-
-
     }
 
-    public boolean addField(String sign, String type, String name) {
-        if (uiBaseBuilder.inBaseMap.get(name) == null && uiBaseBuilder.fieldMap.get(name) == null) {
-            uiBaseBuilder.fieldMap.put(name, name);
-            field(fieldCount(), sign, type, name);
-            return true;
-        }
-        return false;
+    @Override
+    public String getDefulatViewParent() {
+        return "view.";
     }
-
 }
 /* model_temp_start
 package [[pkg]];

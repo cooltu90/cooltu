@@ -69,21 +69,30 @@ public class UiBaseBuilder {
             uiBase.layoutIf(FullName.INFLATE_TOOL, layout.toString());
         }
 
-//        Ts.ls(uiBaseBuilder.viewInfos, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
-//            @Override
-//            public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
-//                addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
-//
-//                String parent = "";
-//                if (!viewInfo.fieldName.equals(viewInfo.id)) {
-//                    parent = viewInfo.parent.fieldName + ".";
-//                }
-//                findView(position, viewInfo.fieldName, parent, Pkg.R, viewInfo.id);
-//                return false;
-//            }
-//        });
+        Ts.ls(viewInfos, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
+            @Override
+            public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
+                addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
+
+                String parent = uiBase.getDefulatViewParent();
+                if (!viewInfo.fieldName.equals(viewInfo.id)) {
+                    parent = viewInfo.parent.fieldName + ".";
+                }
+                uiBase.findView(position, viewInfo.fieldName, parent, Pkg.R, viewInfo.id);
+                return false;
+            }
+        });
 
 
+    }
+
+    private boolean addField(String sign, String type, String name) {
+        if (inBaseMap.get(name) == null && fieldMap.get(name) == null) {
+            fieldMap.put(name, name);
+            uiBase.field(uiBase.fieldCount(), sign, type, name);
+            return true;
+        }
+        return false;
     }
 
 }

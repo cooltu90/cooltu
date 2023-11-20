@@ -11,4 +11,12 @@ public interface UiBaseInterface {
     JavaInfo getJavaInfo();
 
     void layoutIf(String inflateTool, String layout);
+
+    void findView(int position, String fieldName, String parent, String r, String id);
+
+    String getDefulatViewParent();
+
+    int fieldCount();
+
+    void field(int fieldCount, String sign, String type, String name);
 }
