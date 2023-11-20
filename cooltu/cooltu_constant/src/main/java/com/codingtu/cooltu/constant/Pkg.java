@@ -13,8 +13,10 @@ public class Pkg {
     //core
     public static final String CORE_PATH = "core.path";
     public static final String ACT_BASE = "core.actbase";
+    public static final String FRAGMENT_BASE = "core.fragmentbase";
     public static final String CORE_TOOLS = "core.tools";
     public static final String ACT_RES = "core.actres";
+    public static final String FRAGMENT_RES = "core.fragmentres";
     public static final String CORE_NET = "core.net";
     public static final String CORE_VH = "core.vh";
     public static final String CORE_NET_API = CORE_NET + ".api";

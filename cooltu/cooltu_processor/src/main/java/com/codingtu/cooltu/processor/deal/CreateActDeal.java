@@ -5,6 +5,7 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.file.copy.FileCopy;
 import com.codingtu.cooltu.lib4j.file.deal.FileLineDealer;
+import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
@@ -49,7 +50,12 @@ public class CreateActDeal extends TypeBaseDeal {
         JavaInfo actBaseJavaInfo = CurrentPath.actBase(actJavaInfo.fullName);
         ActBaseInfo actBaseInfo = new ActBaseInfo();
         actBaseInfo.act = ElementTools.getType(te);
-        actBaseInfo.baseClass = FullName.BASE_ACT;
+        actBaseInfo.baseClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+            @Override
+            public Object get() {
+                return createAct.baseClass();
+            }
+        });
         actBaseInfo.layout = new IdTools.Id(Pkg.R, "layout", layoutName);
         new ActBaseBuilder(actBaseJavaInfo).addInfos(actBaseInfo);
         //创建Act

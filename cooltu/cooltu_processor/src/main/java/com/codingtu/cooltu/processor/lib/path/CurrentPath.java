@@ -117,6 +117,44 @@ public class CurrentPath {
         return BuilderMap.find(BuilderType.actBase, javaInfo.fullName);
     }
 
+
+    /**************************************************
+     *
+     * Fragment
+     *
+     **************************************************/
+    public static String fragStaticName(String actFullName) {
+        JavaInfo actJavaInfo = javaInfo(actFullName);
+        return ConvertTool.toStaticType(actJavaInfo.name);
+    }
+
+    public static JavaInfo frag(String packages, String name) {
+        String resName = ConvertTool.toClassType(name) + Suffix.FRAGMENT;
+        return javaInfo(packages + "." + resName);
+    }
+
+    /**************************************************
+     *
+     * FragmentRes
+     *
+     **************************************************/
+    public static JavaInfo fragRes(String packages, String name) {
+        String pkg = Pkg.FRAGMENT_RES + packages.substring(Pkg.ACT.length());
+        String resName = ConvertTool.toClassType(name) + Suffix.FRAGMENT_RES;
+        return javaInfo(pkg + "." + resName);
+    }
+
+    /**************************************************
+     *
+     * FragmentBase
+     *
+     **************************************************/
+    public static JavaInfo fragBase(String fragFullName) {
+        JavaInfo fragJavaInfo = javaInfo(fragFullName);
+        String pkg = Pkg.FRAGMENT_BASE + fragJavaInfo.pkg.substring(Pkg.ACT.length());
+        return javaInfo(pkg, fragJavaInfo.name + Suffix.FRAGMENT_BASE);
+    }
+
     /**************************************************
      *
      * adapter
@@ -199,6 +237,7 @@ public class CurrentPath {
                 + Constant.SEPARATOR
                 + "AndroidManifest.xml";
     }
+
     /**************************************************
      *   ┏━━━━━━━━━━┓
      *  ┃   目录   ┃
@@ -228,7 +267,12 @@ public class CurrentPath {
      * 【ActRes的JavaInfo】{@link #actRes(String, String)}
      * 【ActBase的JavaInfo】{@link #actBase(String)}
      * 【查找ActBaseBuilder】{@link #actBaseBuilder(String)}
-     *
+     *   ┏━━━━━━━━━━━━━━━┓
+     *  ┃   Fragment   ┃
+     * ┗━━━━━━━━━━━━━━━━┛
+     * 【Fragment的静态名】{@link #fragStaticName(String)}
+     * 【Fragment的JavaInfo】{@link #frag(String, String)}
+     * 【FragmentRes的JavaInfo】{@link #fragRes(String, String)}
      *   ┏━━━━━━━━━━━━━━┓
      *  ┃   Adapter   ┃
      * ┗━━━━━━━━━━━━━━━┛

@@ -7,6 +7,7 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
@@ -15,7 +16,6 @@ import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.annotation.form.FormBean;
-import com.codingtu.cooltu.processor.annotation.form.FormType;
 import com.codingtu.cooltu.processor.annotation.form.view.BindEditText;
 import com.codingtu.cooltu.processor.annotation.form.view.BindMulti;
 import com.codingtu.cooltu.processor.annotation.form.view.BindRadioGroup;
@@ -29,6 +29,8 @@ import com.codingtu.cooltu.processor.bean.ActBaseInfo;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
+import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
+import com.codingtu.cooltu.processor.builder.core.UiBaseInterface;
 import com.codingtu.cooltu.processor.builder.subdeal.BindEditTextDeal;
 import com.codingtu.cooltu.processor.builder.subdeal.BindMultiDeal;
 import com.codingtu.cooltu.processor.builder.subdeal.BindRadioGroupDeal;
@@ -38,7 +40,6 @@ import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.FormBeanDeal;
 import com.codingtu.cooltu.processor.deal.NetDeal;
 import com.codingtu.cooltu.processor.deal.VHDeal;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
@@ -56,16 +57,18 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 
 @To(ActBaseDeal.class)
-public class ActBaseBuilder extends ActBaseBuilderBase {
+public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterface {
 
-
-    private ActBaseInfo info;
-    private List<KV<String, String>> inBases = new ArrayList<>();
-    private HashMap<String, String> inBaseMap = new HashMap<>();
-    private HashMap<String, String> fieldMap = new HashMap<>();
+    /**************************************************
+     *
+     * 初始化
+     *
+     **************************************************/
+    private final UiBaseBuilder uiBaseBuilder;
 
     public ActBaseBuilder(JavaInfo info) {
         super(info);
+        uiBaseBuilder = new UiBaseBuilder(this);
     }
 
     @Override
@@ -84,18 +87,38 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
     }
 
     @Override
-    protected boolean isGetLines() {
-        return true;
-    }
-
-
-    @Override
     protected void beforeBuild(List<String> lines) {
         super.beforeBuild(lines);
-        if (javaInfo.name.equals("StepOneActivityBase")) {
-            Logs.i(lines);
-        }
+//        if (javaInfo.name.equals("StepOneActivityBase")) {
+//            Logs.i(lines);
+//        }
     }
+
+    public UiBaseBuilder getUiBaseBuilder() {
+        return uiBaseBuilder;
+    }
+
+    @Override
+    public StringBuilderValueMap<String> getMap() {
+        return map;
+    }
+
+    @Override
+    public JavaInfo getJavaInfo() {
+        return javaInfo;
+    }
+
+    /**************************************************
+     *
+     * 设置数据
+     *
+     **************************************************/
+
+
+    private ActBaseInfo info;
+    private List<KV<String, String>> inBases = new ArrayList<>();
+    private HashMap<String, String> inBaseMap = new HashMap<>();
+    private HashMap<String, String> fieldMap = new HashMap<>();
 
     public void addInfos(ActBaseInfo actBaseInfo) {
         this.info = actBaseInfo;
@@ -115,8 +138,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
 
     @Override
     protected void dealLines() {
-        addTag(pkg, javaInfo.pkg);
-        addTag(name, javaInfo.name);
+        uiBaseBuilder.dealLines();
         addTag(baseClass, info.baseClass);
         addTag(netBackIFullName, FullName.NET_BACK_I);
         addTag(coreSendParamsFullName, FullName.CORE_SEND_PARAMS);
@@ -473,10 +495,17 @@ public class ActBaseBuilder extends ActBaseBuilderBase {
                 addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
 
                 String vh = VHDeal.vhMap.get(kv.k);
-                listAdapter(listAdapterCount(), kv.v, kv.k, vh, adapter.rvName());
+//                listAdapter(listAdapterCount(), kv.v, kv.k, vh, adapter.rvName());
+
+                int adapterIndex = listAdapterCount();
+
+                listAdapter(adapterIndex, kv.v, vh, adapter.rvName());
 
                 if (adapter.type() == AdapterType.DEFAULT_MORE_LIST) {
                     loadMore(loadMoreCount(), kv.v);
+                    defaultListMoreAdapterIf(adapterIndex, kv.v, kv.k);
+                } else if (adapter.type() == AdapterType.DEFAULT_LIST) {
+                    defaultListAdapterIf(adapterIndex, kv.v, kv.k);
                 }
 
                 return false;
@@ -536,7 +565,19 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][startInit]
 
                                                                                                     [<sub>][for][listAdapter]
+                                                                                                    [<sub>][if][defaultListAdapter]
+        // [adapterName]
         [adapterName] = new [adapterFullName]();
+                                                                                                    [<sub>][if][defaultListAdapter]
+                                                                                                    [<sub>][if][defaultListMoreAdapter]
+        // [adapterName]
+        [adapterName] = new [adapterFullName]() {
+            @Override
+            protected void loadMore(int page) {
+                [adapterName]LoadMore(page);
+            }
+        };
+                                                                                                    [<sub>][if][defaultListMoreAdapter]
         [adapterName].setVH([vhFullName].class);
         [adapterName].setClick(this);
         [rvName].setAdapter([adapterName]);

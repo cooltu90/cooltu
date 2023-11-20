@@ -278,8 +278,8 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     public int listAdapterCount() {
         return count(listAdapterCounts, getForKey("listAdapter"));
     }
-    public void listAdapter(int i0, String adapterName, String adapterFullName, String vhFullName, String rvName) {
-        addForMap(this.listAdapter, getForKey("listAdapter", i0), adapterName, adapterFullName, adapterName, vhFullName, adapterName, rvName, adapterName, rvName);
+    public void listAdapter(int i0, String adapterName, String vhFullName, String rvName) {
+        addForMap(this.listAdapter, getForKey("listAdapter", i0), adapterName, vhFullName, adapterName, rvName, adapterName, rvName);
         countAdd(listAdapterCounts, getForKey("listAdapter"));
     }
     public int rgInitCount() {
@@ -504,6 +504,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.layout, getIfKey("layout"), layout);
         layoutIfs.put(getIfKey("layout"), true);
     }
+    public void defaultListAdapterIf(int i0, String adapterName, String adapterFullName) {
+        addForMap(this.listAdapter, getIfKey("defaultListAdapter", i0), adapterName, adapterName, adapterFullName);
+        listAdapterIfs.put(getIfKey("defaultListAdapter", i0), true);
+    }
+    public void defaultListMoreAdapterIf(int i0, String adapterName, String adapterFullName) {
+        addForMap(this.listAdapter, getIfKey("defaultListMoreAdapter", i0), adapterName, adapterName, adapterFullName, adapterName);
+        listAdapterIfs.put(getIfKey("defaultListMoreAdapter", i0), true);
+    }
     public void rgOnSetItemInitIf(int i0, String name, String type) {
         addForMap(this.formInit, getIfKey("rgOnSetItemInit", i0), name, type);
         formInitIfs.put(getIfKey("rgOnSetItemInit", i0), true);
@@ -620,11 +628,25 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         }
         for (int i0 = 0; i0 < count(listAdapterCounts, getForKey("listAdapter")); i0++) {
             List<String> listAdapter0 = listAdapter.get(getForKey("listAdapter", i0));
-            addLnTag(listAdapterSb, "        [adapterName] = new [adapterFullName]();", listAdapter0.get(0), listAdapter0.get(1));
-            addLnTag(listAdapterSb, "        [adapterName].setVH([vhFullName].class);", listAdapter0.get(2), listAdapter0.get(3));
-            addLnTag(listAdapterSb, "        [adapterName].setClick(this);", listAdapter0.get(4));
-            addLnTag(listAdapterSb, "        [rvName].setAdapter([adapterName]);", listAdapter0.get(5), listAdapter0.get(6));
-            addLnTag(listAdapterSb, "        [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));", listAdapter0.get(7));
+            if (isIf(listAdapterIfs, getIfKey("defaultListAdapter", i0))) {
+                List<String> listAdapter1 = listAdapter.get(getIfKey("defaultListAdapter", i0));
+                addLnTag(listAdapterSb, "        // [adapterName]", listAdapter1.get(0));
+                addLnTag(listAdapterSb, "        [adapterName] = new [adapterFullName]();", listAdapter1.get(1), listAdapter1.get(2));
+            }
+            if (isIf(listAdapterIfs, getIfKey("defaultListMoreAdapter", i0))) {
+                List<String> listAdapter1 = listAdapter.get(getIfKey("defaultListMoreAdapter", i0));
+                addLnTag(listAdapterSb, "        // [adapterName]", listAdapter1.get(0));
+                addLnTag(listAdapterSb, "        [adapterName] = new [adapterFullName]() {", listAdapter1.get(1), listAdapter1.get(2));
+                addLnTag(listAdapterSb, "            @Override");
+                addLnTag(listAdapterSb, "            protected void loadMore(int page) {");
+                addLnTag(listAdapterSb, "                [adapterName]LoadMore(page);", listAdapter1.get(3));
+                addLnTag(listAdapterSb, "            }");
+                addLnTag(listAdapterSb, "        };");
+            }
+            addLnTag(listAdapterSb, "        [adapterName].setVH([vhFullName].class);", listAdapter0.get(0), listAdapter0.get(1));
+            addLnTag(listAdapterSb, "        [adapterName].setClick(this);", listAdapter0.get(2));
+            addLnTag(listAdapterSb, "        [rvName].setAdapter([adapterName]);", listAdapter0.get(3), listAdapter0.get(4));
+            addLnTag(listAdapterSb, "        [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));", listAdapter0.get(5));
         }
         if (isIf(formInitIfs, getIfKey("formInit"))) {
             List<String> formInit0 = formInit.get(getIfKey("formInit"));

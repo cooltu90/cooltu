@@ -38,6 +38,15 @@ public class ActBaseDeal extends TypeBaseDeal {
 
     @Override
     protected void dealTypeElement(TypeElement te) {
+        String uiFullName = ElementTools.getType(te);
+        JavaInfo baseJavaInfo = CurrentPath.actBase(uiFullName);
+
+
+        /**************************************************
+         *
+         *
+         *
+         **************************************************/
         ActBase actBase = te.getAnnotation(ActBase.class);
 
         ActBaseInfo actBaseInfo = new ActBaseInfo();

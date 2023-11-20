@@ -27,10 +27,22 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.lib4a.ui.a
 
 
 
+        // catAdapter
         catAdapter = new com.codingtu.cooltu.ui.adapter.CatAdapter();
         catAdapter.setVH(core.vh.CatVH.class);
         catAdapter.setClick(this);
         rv.setAdapter(catAdapter);
+        rv.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
+        // dogAdapter
+        dogAdapter = new com.codingtu.cooltu.ui.adapter.DogAdapter() {
+            @Override
+            protected void loadMore(int page) {
+                dogAdapterLoadMore(page);
+            }
+        };
+        dogAdapter.setVH(core.vh.DogVH.class);
+        dogAdapter.setClick(this);
+        rv.setAdapter(dogAdapter);
         rv.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
 
 
@@ -68,6 +80,10 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.lib4a.ui.a
         super.back(requestCode, permissions, grantResults);
 
     }
+
+
+
+    protected abstract void dogAdapterLoadMore(int page);
 
 
 }
