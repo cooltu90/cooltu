@@ -130,15 +130,15 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     protected void dealLines() {
         uiBaseBuilder.dealLines();
 
-        //colorStr
-        Ts.ls(info.colorStrs, new BaseTs.EachTs<KV<String, String>>() {
-            @Override
-            public boolean each(int position, KV<String, String> kv) {
-                addField(Constant.SIGN_PROTECTED, "int", kv.k);
-                colorStrInit(position, kv.k, kv.v);
-                return false;
-            }
-        });
+//        //colorStr
+//        Ts.ls(info.colorStrs, new BaseTs.EachTs<KV<String, String>>() {
+//            @Override
+//            public boolean each(int position, KV<String, String> kv) {
+//                addField(Constant.SIGN_PROTECTED, "int", kv.k);
+//                colorStrInit(position, kv.k, kv.v);
+//                return false;
+//            }
+//        });
 
         //colorRes
         Ts.ls(info.colorReses, new BaseTs.EachTs<KV<String, IdTools.Id>>() {

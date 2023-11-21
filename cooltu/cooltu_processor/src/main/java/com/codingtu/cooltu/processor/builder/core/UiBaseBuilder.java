@@ -28,6 +28,7 @@ public class UiBaseBuilder {
     public HashMap<String, String> fieldMap = new HashMap<>();
     public List<ClickViewInfo> clickViews = new ArrayList<>();
     public List<LayoutTools.ViewInfo> viewInfos;
+    public List<KV<String, String>> colorStrs = new ArrayList<>();
 
     public String finalBaseClass;
 
@@ -73,7 +74,45 @@ public class UiBaseBuilder {
         setLayout();
         //
         findView();
+        //
+        onClick();
+        //
+        colorStr();
+    }
 
+    private void setBaseField() {
+        Ts.ls(inBases, new BaseTs.EachTs<KV<String, String>>() {
+            @Override
+            public boolean each(int position, KV<String, String> kv) {
+                addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
+                return false;
+            }
+        });
+    }
+
+    private void setLayout() {
+        if (layout != null) {
+            uiBase.layoutIf(FullName.INFLATE_TOOL, layout.toString());
+        }
+    }
+
+    private void findView() {
+        Ts.ls(viewInfos, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
+            @Override
+            public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
+                addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
+
+                String parent = uiBase.getDefulatViewParent();
+                if (!viewInfo.fieldName.equals(viewInfo.id)) {
+                    parent = viewInfo.parent.fieldName + ".";
+                }
+                uiBase.findView(position, viewInfo.fieldName, parent, Pkg.R, viewInfo.id);
+                return false;
+            }
+        });
+    }
+
+    private void onClick() {
         Ts.ls(clickViews, new BaseTs.EachTs<ClickViewInfo>() {
             @Override
             public boolean each(int clickViewInfoIndex, ClickViewInfo info) {
@@ -130,41 +169,20 @@ public class UiBaseBuilder {
 
         //onclick继承
         uiBase.isSuperOnClick(hasBaseClass());
-
     }
 
-    private void setBaseField() {
-        Ts.ls(inBases, new BaseTs.EachTs<KV<String, String>>() {
+
+    private void colorStr() {
+        //colorStr
+        Ts.ls(colorStrs, new BaseTs.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
-                addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
+                addField(Constant.SIGN_PROTECTED, "int", kv.k);
+                uiBase.colorStrInit(position, kv.k, kv.v);
                 return false;
             }
         });
     }
-
-    private void setLayout() {
-        if (layout != null) {
-            uiBase.layoutIf(FullName.INFLATE_TOOL, layout.toString());
-        }
-    }
-
-    private void findView() {
-        Ts.ls(viewInfos, new BaseTs.EachTs<LayoutTools.ViewInfo>() {
-            @Override
-            public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
-                addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
-
-                String parent = uiBase.getDefulatViewParent();
-                if (!viewInfo.fieldName.equals(viewInfo.id)) {
-                    parent = viewInfo.parent.fieldName + ".";
-                }
-                uiBase.findView(position, viewInfo.fieldName, parent, Pkg.R, viewInfo.id);
-                return false;
-            }
-        });
-    }
-
 
     private boolean addField(String sign, String type, String name) {
         if (inBaseMap.get(name) == null && fieldMap.get(name) == null) {

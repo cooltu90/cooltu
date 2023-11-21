@@ -11,6 +11,7 @@ import com.codingtu.cooltu.lib4j.file.FileTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
+import com.codingtu.cooltu.processor.builder.impl.FragmentBaseBuilder;
 import com.codingtu.cooltu.processor.lib.BuilderMap;
 
 public class CurrentPath {
@@ -155,6 +156,13 @@ public class CurrentPath {
         return javaInfo(pkg, fragJavaInfo.name + Suffix.FRAGMENT_BASE);
     }
 
+
+    public static FragmentBaseBuilder fragBaseBuilder(String actFullName) {
+        JavaInfo javaInfo = fragBase(actFullName);
+        return BuilderMap.find(BuilderType.fragment, javaInfo.fullName);
+    }
+
+
     /**************************************************
      *
      * adapter
@@ -273,6 +281,8 @@ public class CurrentPath {
      * 【Fragment的静态名】{@link #fragStaticName(String)}
      * 【Fragment的JavaInfo】{@link #frag(String, String)}
      * 【FragmentRes的JavaInfo】{@link #fragRes(String, String)}
+     * 【FragmentBase的JavaInfo】{@link #fragBase(String)}
+     * 【FragmentRes的JavaInfo】{@link #fragBaseBuilder(String)}
      *   ┏━━━━━━━━━━━━━━┓
      *  ┃   Adapter   ┃
      * ┗━━━━━━━━━━━━━━━┛

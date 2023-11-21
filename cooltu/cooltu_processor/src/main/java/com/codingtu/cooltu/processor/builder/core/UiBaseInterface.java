@@ -40,4 +40,6 @@ public interface UiBaseInterface {
     void isSuperOnClick(boolean hasBaseClass);
 
     int setOnClickCount();
+
+    void colorStrInit(int position, String k, String v);
 }

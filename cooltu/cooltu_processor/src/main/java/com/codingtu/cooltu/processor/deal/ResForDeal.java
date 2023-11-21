@@ -17,10 +17,12 @@ import com.codingtu.cooltu.processor.annotation.res.ResFor;
 import com.codingtu.cooltu.processor.annotation.ui.NoStart;
 import com.codingtu.cooltu.processor.annotation.ui.StartGroup;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
+import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActStartBuilder;
 import com.codingtu.cooltu.processor.builder.impl.Code4RequestBuilder;
 import com.codingtu.cooltu.processor.builder.impl.PassBuilder;
+import com.codingtu.cooltu.processor.deal.base.ResForBaseDeal;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
 import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
@@ -28,67 +30,28 @@ import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 
+import java.util.List;
+
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 
-public class ResForDeal extends TypeBaseDeal {
-
-    private boolean noStart;
-    private boolean hasStartGroup;
+public class ResForDeal extends ResForBaseDeal {
 
     @Override
     protected void dealTypeElement(TypeElement te) {
-        ResFor resFor = te.getAnnotation(ResFor.class);
-        String actClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
-            @Override
-            public Object get() {
-                return resFor.value();
-            }
-        });
-
-        noStart = te.getAnnotation(NoStart.class) != null;
-        Ts.ls(te.getEnclosedElements(), (position, element) -> {
-            if (element instanceof VariableElement) {
-                VariableElement ve = (VariableElement) element;
-                dealField(actClass, ve);
-            }
-            return false;
-        });
-
-
+        super.dealTypeElement(te);
         if (!noStart && !hasStartGroup) {
-            Code4RequestBuilder.BUILDER.add(actClass);
-            ActStartBuilder.BUILDER.add(actClass);
+            Code4RequestBuilder.BUILDER.add(uiClass);
+            ActStartBuilder.BUILDER.add(uiClass);
         }
-
-
     }
 
-    private void dealField(String fullName, VariableElement ve) {
+    protected void dealField(String fullName, VariableElement ve) {
+        super.dealField(fullName, ve);
 
         KV<String, String> kv = ElementTools.getFieldKv(ve);
 
-        InBase inBase = ve.getAnnotation(InBase.class);
-        if (inBase != null) {
-            BaseTools.getActBaseBuilderWithChilds(fullName, new BaseTs.EachTs<ActBaseBuilder>() {
-                @Override
-                public boolean each(int position, ActBaseBuilder actBaseBuilder) {
-                    if (position == 0) {
-                        actBaseBuilder.getUiBaseBuilder().addInBase(kv);
-                    } else {
-                        actBaseBuilder.getUiBaseBuilder().removeInBase(kv);
-                    }
-                    return false;
-                }
-            });
-        }
-
         ActBaseInfo actBaseInfo = CurrentPath.actBaseBuilder(fullName).getActBaseInfo();
-
-        ColorStr ColorStr = ve.getAnnotation(ColorStr.class);
-        if (ColorStr != null) {
-            actBaseInfo.colorStrs.add(new KV<>(kv.v, ColorStr.value()));
-        }
 
         ColorRes colorRes = ve.getAnnotation(ColorRes.class);
         if (colorRes != null) {
@@ -136,5 +99,30 @@ public class ResForDeal extends TypeBaseDeal {
             actBaseInfo.adapters.add(ve);
         }
 
+    }
+
+    @Override
+    protected BaseTools.GetThis<UiBaseBuilder> getUiBaseBuilderGetter() {
+        return new BaseTools.GetThis<UiBaseBuilder>() {
+            @Override
+            public UiBaseBuilder getThis(String thisClass) {
+                return CurrentPath.actBaseBuilder(thisClass).getUiBaseBuilder();
+            }
+
+            @Override
+            public List<String> getChilds(String thisClass) {
+                return ActBaseDeal.map.get(thisClass);
+            }
+        };
+    }
+
+    @Override
+    protected String getUiClass(TypeElement te) {
+        return ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+            @Override
+            public Object get() {
+                return te.getAnnotation(ResFor.class).value();
+            }
+        });
     }
 }

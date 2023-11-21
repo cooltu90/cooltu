@@ -80,7 +80,6 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
     public String getDefulatViewParent() {
         return "view.";
     }
-
 }
 /* model_temp_start
 package [[pkg]];
@@ -113,6 +112,12 @@ public class [[name]] extends [[baseClass]] implements View.OnClickListener, [[n
                                                                                                     [<sub>][for][setOnClick]
         [fieldName].setOnClickListener(this);
                                                                                                     [<sub>][for][setOnClick]
+                                                                                                    [<sub>][for][colorStrInit]
+        [name] = android.graphics.Color.parseColor("[color]");
+                                                                                                    [<sub>][for][colorStrInit]
+                                                                                                    [<sub>][for][colorResInit]
+        [name] = [resourceToolFullName].getColor([id]);
+                                                                                                    [<sub>][for][colorResInit]
         return view;
     }
                                                                                                     [<sub>][if][layout]

@@ -80,6 +80,20 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         addForMap(this.layout, getForKey("setOnClick", i0), fieldName);
         countAdd(layoutCounts, getForKey("setOnClick"));
     }
+    public int colorStrInitCount() {
+        return count(layoutCounts, getForKey("colorStrInit"));
+    }
+    public void colorStrInit(int i0, String name, String color) {
+        addForMap(this.layout, getForKey("colorStrInit", i0), name, color);
+        countAdd(layoutCounts, getForKey("colorStrInit"));
+    }
+    public int colorResInitCount() {
+        return count(layoutCounts, getForKey("colorResInit"));
+    }
+    public void colorResInit(int i0, String name, String resourceToolFullName, String id) {
+        addForMap(this.layout, getForKey("colorResInit", i0), name, resourceToolFullName, id);
+        countAdd(layoutCounts, getForKey("colorResInit"));
+    }
     public int onClickCaseCount(int i0) {
         return count(onClickSwithCounts, getForKey("onClickCase", i0));
     }
@@ -140,6 +154,14 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             for (int i0 = 0; i0 < count(layoutCounts, getForKey("setOnClick")); i0++) {
                 List<String> layout1 = layout.get(getForKey("setOnClick", i0));
                 addLnTag(layoutSb, "        [fieldName].setOnClickListener(this);", layout1.get(0));
+            }
+            for (int i0 = 0; i0 < count(layoutCounts, getForKey("colorStrInit")); i0++) {
+                List<String> layout1 = layout.get(getForKey("colorStrInit", i0));
+                addLnTag(layoutSb, "        [name] = android.graphics.Color.parseColor(\"[color]\");", layout1.get(0), layout1.get(1));
+            }
+            for (int i0 = 0; i0 < count(layoutCounts, getForKey("colorResInit")); i0++) {
+                List<String> layout1 = layout.get(getForKey("colorResInit", i0));
+                addLnTag(layoutSb, "        [name] = [resourceToolFullName].getColor([id]);", layout1.get(0), layout1.get(1), layout1.get(2));
             }
             addLnTag(layoutSb, "        return view;");
             addLnTag(layoutSb, "    }");
