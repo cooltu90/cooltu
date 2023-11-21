@@ -13,6 +13,7 @@ import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
+import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 
 public class UiBaseBuilder {
@@ -48,6 +50,8 @@ public class UiBaseBuilder {
     public List<KV<String, IdTools.Id>> dimens = new ArrayList<>();
     public List<VariableElement> adapters = new ArrayList<>();
     public List<NetBackInfo> netBacks = new ArrayList<>();
+    public List<ActBack> actBacks = new ArrayList<>();
+    public List<ExecutableElement> actBackMethods = new ArrayList<>();
 
     public String finalBaseClass;
 
@@ -108,6 +112,39 @@ public class UiBaseBuilder {
 
         //accept
         nets();
+
+
+        Ts.ls(actBacks, new BaseTs.EachTs<ActBack>() {
+            @Override
+            public boolean each(int actBackIndex, ActBack actBack) {
+                ExecutableElement ee = actBackMethods.get(actBackIndex);
+                String methodName = ElementTools.simpleName(ee);
+
+                String fromClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                    @Override
+                    public Object get() {
+                        return actBack.value();
+                    }
+                });
+
+                JavaInfo fromJavaInfo = CurrentPath.javaInfo(fromClass);
+
+                uiBase.actBack(actBackIndex, actBackIndex == 0 ? "if" : "else if", FullName.CODE_4_REQUEST, ConvertTool.toStaticType(fromJavaInfo.name), methodName);
+
+                Params params = ElementTools.getMethodParamKvs(ee);
+                params.ls(new BaseTs.EachTs<KV<String, String>>() {
+                    @Override
+                    public boolean each(int paramIndex, KV<String, String> kv) {
+                        uiBase.actBackParam(actBackIndex, paramIndex, FullName.PASS, kv.v);
+                        uiBase.isActBackParamDivider(actBackIndex, paramIndex, paramIndex != (CountTool.count(ee.getParameters()) - 1));
+                        return false;
+                    }
+                });
+
+                uiBase.actBackMethod(actBackIndex, methodName, params.getMethodParams());
+                return false;
+            }
+        });
     }
 
 

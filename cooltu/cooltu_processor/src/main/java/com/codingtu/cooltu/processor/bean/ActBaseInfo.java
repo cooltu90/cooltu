@@ -21,7 +21,6 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 
 public class ActBaseInfo {
-    public List<NetBackInfo> netBacks = new ArrayList<>();
     public List<KV<String, String>> starts = new ArrayList<>();
     public List<ActBack> actBacks = new ArrayList<>();
     public List<ExecutableElement> actBackMethods = new ArrayList<>();

@@ -44,6 +44,14 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     protected java.util.Map<String, Integer> acceptMethodCounts;
     protected StringBuilder acceptMethodSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> acceptMethod;
+    protected java.util.Map<String, Boolean> actBackIfs;
+    protected java.util.Map<String, Integer> actBackCounts;
+    protected StringBuilder actBackSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> actBack;
+    protected java.util.Map<String, Boolean> actBackMethodIfs;
+    protected java.util.Map<String, Integer> actBackMethodCounts;
+    protected StringBuilder actBackMethodSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> actBackMethod;
 
     public FragmentBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -88,6 +96,14 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         acceptMethodCounts = new java.util.HashMap<>();
         acceptMethodSb = map.get("acceptMethod");
         acceptMethod = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        actBackIfs = new java.util.HashMap<>();
+        actBackCounts = new java.util.HashMap<>();
+        actBackSb = map.get("actBack");
+        actBack = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        actBackMethodIfs = new java.util.HashMap<>();
+        actBackMethodCounts = new java.util.HashMap<>();
+        actBackMethodSb = map.get("actBackMethod");
+        actBackMethod = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
 
@@ -203,6 +219,27 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         addForMap(this.acceptMethod, getForKey("acceptMethod", i0), methodName, params);
         countAdd(acceptMethodCounts, getForKey("acceptMethod"));
     }
+    public int actBackParamCount(int i0) {
+        return count(actBackCounts, getForKey("actBackParam", i0));
+    }
+    public void actBackParam(int i0, int i1, String passFullName, String name) {
+        addForMap(this.actBack, getForKey("actBackParam", i0, i1), passFullName, name);
+        countAdd(actBackCounts, getForKey("actBackParam", i0));
+    }
+    public int actBackCount() {
+        return count(actBackCounts, getForKey("actBack"));
+    }
+    public void actBack(int i0, String ifSign, String code4RequestFullName, String code, String methodName) {
+        addForMap(this.actBack, getForKey("actBack", i0), ifSign, code4RequestFullName, code, methodName);
+        countAdd(actBackCounts, getForKey("actBack"));
+    }
+    public int actBackMethodCount() {
+        return count(actBackMethodCounts, getForKey("actBackMethod"));
+    }
+    public void actBackMethod(int i0, String methodName, String params) {
+        addForMap(this.actBackMethod, getForKey("actBackMethod", i0), methodName, params);
+        countAdd(actBackMethodCounts, getForKey("actBackMethod"));
+    }
 
     public void defaultListAdapterIf(int i0, String adapterName, String adapterFullName) {
         addForMap(this.layout, getIfKey("defaultListAdapter", i0), adapterName, adapterName, adapterFullName);
@@ -225,6 +262,9 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     }
     public void isSuperAccept(boolean is) {
         superAcceptIfs.put(getIfKey("superAccept"), is);
+    }
+    public void isActBackParamDivider(int i0, int i1, boolean is) {
+        actBackIfs.put(getIfKey("actBackParamDivider", i0, i1), is);
     }
 
     @Override
@@ -343,6 +383,26 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             List<String> acceptMethod0 = acceptMethod.get(getForKey("acceptMethod", i0));
             addLnTag(acceptMethodSb, "    protected void [methodName]([params]) {}", acceptMethod0.get(0), acceptMethod0.get(1));
         }
+        for (int i0 = 0; i0 < count(actBackCounts, getForKey("actBack")); i0++) {
+            List<String> actBack0 = actBack.get(getForKey("actBack", i0));
+            addLnTag(actBackSb, "            [ifSign] (requestCode == [code4RequestFullName].[code]) {", actBack0.get(0), actBack0.get(1), actBack0.get(2));
+            StringBuilder actBackParamSb = new StringBuilder();
+            for (int i1 = 0; i1 < count(actBackCounts, getForKey("actBackParam", i0)); i1++) {
+                List<String> actBack1 = actBack.get(getForKey("actBackParam", i0, i1));
+                StringBuilder actBackParamDividerSb = new StringBuilder();
+                if (isIf(actBackIfs, getIfKey("actBackParamDivider", i0, i1))) {
+                    List<String> actBack2 = actBack.get(getIfKey("actBackParamDivider", i0, i1));
+                    addTag(actBackParamDividerSb, ", ");
+                }
+                addTag(actBackParamSb, "[passFullName].[name](data)[actBackParamDivider]", actBack1.get(0), actBack1.get(1), actBackParamDividerSb.toString());
+            }
+            addLnTag(actBackSb, "                [methodName]([actBackParam]);", actBack0.get(3), actBackParamSb.toString());
+            addLnTag(actBackSb, "            }");
+        }
+        for (int i0 = 0; i0 < count(actBackMethodCounts, getForKey("actBackMethod")); i0++) {
+            List<String> actBackMethod0 = actBackMethod.get(getForKey("actBackMethod", i0));
+            addLnTag(actBackMethodSb, "    protected void [methodName]([params]) {}", actBackMethod0.get(0), actBackMethod0.get(1));
+        }
 
     }
 
@@ -384,6 +444,14 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("[[accept]]");
         lines.add("    }");
         lines.add("[[acceptMethod]]");
+        lines.add("    @Override");
+        lines.add("    public void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {");
+        lines.add("        super.onActivityResult(requestCode, resultCode, data);");
+        lines.add("        if (resultCode == android.app.Activity.RESULT_OK) {");
+        lines.add("[[actBack]]");
+        lines.add("        }");
+        lines.add("    }");
+        lines.add("[[actBackMethod]]");
         lines.add("");
         lines.add("}");
 

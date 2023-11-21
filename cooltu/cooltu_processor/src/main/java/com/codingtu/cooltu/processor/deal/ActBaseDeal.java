@@ -87,7 +87,7 @@ public class ActBaseDeal extends TypeBaseDeal {
 
                 ActBack actBack = ee.getAnnotation(ActBack.class);
                 if (actBack != null) {
-                    dealActBack(actBaseInfo, actBack, ee);
+                    dealActBack(uiBaseBuilder, actBack, ee);
                 }
 
                 Permission permission = ee.getAnnotation(Permission.class);
@@ -135,16 +135,9 @@ public class ActBaseDeal extends TypeBaseDeal {
         uiBaseBuilder.netBacks.add(netBackInfo);
     }
 
-
-    private void dealPermissionBack(ActBaseInfo actBaseInfo, Permission permission, ExecutableElement ee) {
-        PermissionBuilder.BUILDER.add(permission, ee);
-        actBaseInfo.permissions.add(permission);
-        actBaseInfo.permissionMethods.add(ee);
-    }
-
-    private void dealActBack(ActBaseInfo actBaseInfo, ActBack actBack, ExecutableElement ee) {
-        actBaseInfo.actBacks.add(actBack);
-        actBaseInfo.actBackMethods.add(ee);
+    private void dealActBack(UiBaseBuilder uiBaseBuilder, ActBack actBack, ExecutableElement ee) {
+        uiBaseBuilder.actBacks.add(actBack);
+        uiBaseBuilder.actBackMethods.add(ee);
 
         ElementTools.getMethodParamKvs(ee).ls(new BaseTs.EachTs<KV<String, String>>() {
             @Override
@@ -156,4 +149,13 @@ public class ActBaseDeal extends TypeBaseDeal {
 
         ActBackIntentBuilder.BUILDER.add(actBack, ee);
     }
+
+
+    private void dealPermissionBack(ActBaseInfo actBaseInfo, Permission permission, ExecutableElement ee) {
+        PermissionBuilder.BUILDER.add(permission, ee);
+        actBaseInfo.permissions.add(permission);
+        actBaseInfo.permissionMethods.add(ee);
+    }
+
+
 }

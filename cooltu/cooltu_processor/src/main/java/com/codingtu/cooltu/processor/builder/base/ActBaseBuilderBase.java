@@ -978,9 +978,9 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("    }");
         lines.add("[[acceptMethod]]");
         lines.add("    @Override");
-        lines.add("    protected void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {");
+        lines.add("    public void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {");
         lines.add("        super.onActivityResult(requestCode, resultCode, data);");
-        lines.add("        if (resultCode == RESULT_OK) {");
+        lines.add("        if (resultCode == android.app.Activity.RESULT_OK) {");
         lines.add("[[actBack]]");
         lines.add("        }");
         lines.add("    }");

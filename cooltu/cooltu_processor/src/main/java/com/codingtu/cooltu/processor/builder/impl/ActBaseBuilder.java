@@ -139,102 +139,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             }
         });
 
-        //accept
-        isSuperAccept(uiBaseBuilder.hasBaseClass());
-        Ts.ls(info.netBacks, new BaseTs.EachTs<NetBackInfo>() {
-            @Override
-            public boolean each(int position, NetBackInfo netBackInfo) {
-
-                String mockClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
-                    @Override
-                    public Object get() {
-                        return netBackInfo.netBack.mock();
-                    }
-                });
-
-                String methodName = ElementTools.simpleName(netBackInfo.method);
-
-                String methodBaseName = StringTool.cutSuffix(methodName, Suffix.NET_BACK);
-
-                String netBackFullName = CurrentPath.netBackFullName(methodBaseName);
-                String sendParamsFullName = CurrentPath.sendParamsFullName(methodBaseName);
-
-                Params params = ElementTools.getMethodParamKvs(netBackInfo.method);
-                String paramStr = params.getParam(new Params.Convert() {
-                    @Override
-                    public String convert(int index, KV<String, String> kv) {
-                        if (ClassTool.isType(kv.k, netBackFullName)) {
-                            return "this";
-                        }
-
-                        if (ClassTool.isType(kv.k, sendParamsFullName)) {
-                            return "(" + sendParamsFullName + ")params";
-                        }
-
-                        String returnType = NetDeal.RETURN_TYPES.get(netBackFullName);
-                        if (ClassTool.isType(kv.k, returnType)) {
-                            String mock = ClassTool.isVoid(mockClass) ? "" : ("new " + mockClass + "().");
-                            if (ClassTool.isList(returnType)) {
-                                String beanType = StringTool.getSub(returnType, "List", "<", ">");
-                                return mock + ConvertTool.toMethodType(CurrentPath.javaInfo(beanType).name) + "s";
-                            } else {
-                                return mock + ConvertTool.toMethodType(CurrentPath.javaInfo(returnType).name);
-                            }
-                        } else if (ClassTool.isList(kv.k)) {
-                            return "objs";
-                        }
-
-                        return null;
-                    }
-                });
-
-                accept(position, methodName, netBackFullName, FullName.CORE_SEND_PARAMS, paramStr);
-
-                String methodParamStr = params.getParam(new Params.Convert() {
-                    @Override
-                    public String convert(int index, KV<String, String> kv) {
-                        return kv.k + " " + kv.v;
-                    }
-                });
-
-
-                acceptMethod(position, methodName, methodParamStr);
-                return false;
-            }
-        });
-
-        Ts.ls(info.actBacks, new BaseTs.EachTs<ActBack>() {
-            @Override
-            public boolean each(int actBackIndex, ActBack actBack) {
-                ExecutableElement ee = info.actBackMethods.get(actBackIndex);
-                String methodName = ElementTools.simpleName(ee);
-
-                String fromClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
-                    @Override
-                    public Object get() {
-                        return actBack.value();
-                    }
-                });
-
-                JavaInfo fromJavaInfo = CurrentPath.javaInfo(fromClass);
-
-                actBack(actBackIndex, actBackIndex == 0 ? "if" : "else if", FullName.CODE_4_REQUEST, ConvertTool.toStaticType(fromJavaInfo.name), methodName);
-
-                Params params = ElementTools.getMethodParamKvs(ee);
-                params.ls(new BaseTs.EachTs<KV<String, String>>() {
-                    @Override
-                    public boolean each(int paramIndex, KV<String, String> kv) {
-                        actBackParam(actBackIndex, paramIndex, FullName.PASS, kv.v);
-                        isActBackParamDivider(actBackIndex, paramIndex, paramIndex != (CountTool.count(ee.getParameters()) - 1));
-                        return false;
-                    }
-                });
-
-                actBackMethod(actBackIndex, methodName, params.getMethodParams());
-                return false;
-            }
-        });
-
         Ts.ls(info.permissions, new BaseTs.EachTs<Permission>() {
             @Override
             public boolean each(int permissionIndex, Permission permission) {
@@ -551,9 +455,9 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     protected void [methodName]([params]) {}
                                                                                                     [<sub>][for][acceptMethod]
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        if (resultCode == android.app.Activity.RESULT_OK) {
                                                                                                     [<sub>][for][actBack]
             [ifSign] (requestCode == [code4RequestFullName].[code]) {
                 [methodName]([for:actBackParam][passFullName].[name](data)[if:actBackParamDivider], [if:actBackParamDivider][for:actBackParam]);

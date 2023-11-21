@@ -200,6 +200,20 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][acceptMethod]
     protected void [methodName]([params]) {}
                                                                                                     [<sub>][for][acceptMethod]
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == android.app.Activity.RESULT_OK) {
+                                                                                                    [<sub>][for][actBack]
+            [ifSign] (requestCode == [code4RequestFullName].[code]) {
+                [methodName]([for:actBackParam][passFullName].[name](data)[if:actBackParamDivider], [if:actBackParamDivider][for:actBackParam]);
+            }
+                                                                                                    [<sub>][for][actBack]
+        }
+    }
+                                                                                                    [<sub>][for][actBackMethod]
+    protected void [methodName]([params]) {}
+                                                                                                    [<sub>][for][actBackMethod]
 
 }
 model_temp_end */

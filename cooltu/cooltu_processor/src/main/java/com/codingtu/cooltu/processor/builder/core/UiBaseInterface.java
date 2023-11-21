@@ -66,4 +66,12 @@ public interface UiBaseInterface {
     void accept(int position, String methodName, String netBackFullName, String coreSendParams, String paramStr);
 
     void acceptMethod(int position, String methodName, String methodParamStr);
+
+    void actBack(int actBackIndex, String s, String code4Request, String toStaticType, String methodName);
+
+    void actBackParam(int actBackIndex, int paramIndex, String pass, String v);
+
+    void isActBackParamDivider(int actBackIndex, int paramIndex, boolean b);
+
+    void actBackMethod(int actBackIndex, String methodName, String methodParams);
 }

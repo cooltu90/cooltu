@@ -89,5 +89,13 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.f
     }
     protected void getObjBack(com.codingtu.cooltu.bean.User user) {}
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == android.app.Activity.RESULT_OK) {
+
+        }
+    }
+
 
 }
