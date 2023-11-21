@@ -11,12 +11,14 @@ import androidx.annotation.Nullable;
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.lib4a.ui.fragment.CoreFragment;
+import com.codingtu.cooltu.processor.annotation.net.NetBack;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
 import com.codingtu.cooltu.processor.annotation.ui.FragmentBase;
 
 import core.fragmentbase.StepOneFragmentBase;
 import core.fragmentres.StepOneFragmentRes;
+import core.net.Net;
 
 @To(StepOneFragmentRes.class)
 @FragmentBase(layout = R.layout.fragment_step_one)
@@ -31,11 +33,17 @@ public class StepOneFragment extends StepOneFragmentBase {
 
     @ClickView(R.id.tv1)
     public void tv1Click(User user) {
-
+        Net.getObj("", "").main(this);
     }
 
     @Override
     protected void dogAdapterLoadMore(int page) {
 
     }
+
+    @NetBack
+    public void getObjBack(User user) {
+
+    }
+
 }

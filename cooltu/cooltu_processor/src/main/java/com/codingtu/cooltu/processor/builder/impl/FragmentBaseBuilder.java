@@ -181,8 +181,25 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][loadMore]
     @Override
     public void accept(String code, Result<ResponseBody> result, [[coreSendParamsFullName]] params, List objs) {
+                                                                                                    [<sub>][if][superAccept]
+        super.accept(code, result, params, objs);
+                                                                                                    [<sub>][if][superAccept]
 
+                                                                                                    [<sub>][for][accept]
+        if ("[methodName]".equals(code)) {
+            new [netBackFullName]() {
+                @Override
+                public void accept(String code, Result<ResponseBody> result, [coreSendParamsFullName] params, List objs) {
+                    super.accept(code, result, params, objs);
+                    [methodName]([params]);
+                }
+            }.accept(code, result, params, objs);
+        }
+                                                                                                    [<sub>][for][accept]
     }
+                                                                                                    [<sub>][for][acceptMethod]
+    protected void [methodName]([params]) {}
+                                                                                                    [<sub>][for][acceptMethod]
 
 }
 model_temp_end */

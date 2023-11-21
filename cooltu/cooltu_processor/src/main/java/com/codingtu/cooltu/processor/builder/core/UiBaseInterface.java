@@ -60,4 +60,10 @@ public interface UiBaseInterface {
     void defaultListMoreAdapterIf(int adapterIndex, String v, String k);
 
     void defaultListAdapterIf(int adapterIndex, String v, String k);
+
+    void isSuperAccept(boolean hasBaseClass);
+
+    void accept(int position, String methodName, String netBackFullName, String coreSendParams, String paramStr);
+
+    void acceptMethod(int position, String methodName, String methodParamStr);
 }

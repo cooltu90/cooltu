@@ -28,5 +28,4 @@ public class ActBaseInfo {
     public List<Permission> permissions = new ArrayList<>();
     public List<ExecutableElement> permissionMethods = new ArrayList<>();
     public Form form;
-    public List<VariableElement> adapters = new ArrayList<>();
 }

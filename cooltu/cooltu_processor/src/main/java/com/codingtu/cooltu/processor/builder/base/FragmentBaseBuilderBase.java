@@ -32,6 +32,18 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     protected StringBuilder loadMoreSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> loadMore;
     protected StringBuilder coreSendParamsFullName;
+    protected java.util.Map<String, Boolean> superAcceptIfs;
+    protected java.util.Map<String, Integer> superAcceptCounts;
+    protected StringBuilder superAcceptSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> superAccept;
+    protected java.util.Map<String, Boolean> acceptIfs;
+    protected java.util.Map<String, Integer> acceptCounts;
+    protected StringBuilder acceptSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> accept;
+    protected java.util.Map<String, Boolean> acceptMethodIfs;
+    protected java.util.Map<String, Integer> acceptMethodCounts;
+    protected StringBuilder acceptMethodSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> acceptMethod;
 
     public FragmentBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -64,6 +76,18 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         loadMoreSb = map.get("loadMore");
         loadMore = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         coreSendParamsFullName = map.get("coreSendParamsFullName");
+        superAcceptIfs = new java.util.HashMap<>();
+        superAcceptCounts = new java.util.HashMap<>();
+        superAcceptSb = map.get("superAccept");
+        superAccept = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        acceptIfs = new java.util.HashMap<>();
+        acceptCounts = new java.util.HashMap<>();
+        acceptSb = map.get("accept");
+        accept = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        acceptMethodIfs = new java.util.HashMap<>();
+        acceptMethodCounts = new java.util.HashMap<>();
+        acceptMethodSb = map.get("acceptMethod");
+        acceptMethod = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
 
@@ -165,6 +189,20 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         addForMap(this.loadMore, getForKey("loadMore", i0), adapterName);
         countAdd(loadMoreCounts, getForKey("loadMore"));
     }
+    public int acceptCount() {
+        return count(acceptCounts, getForKey("accept"));
+    }
+    public void accept(int i0, String methodName, String netBackFullName, String coreSendParamsFullName, String params) {
+        addForMap(this.accept, getForKey("accept", i0), methodName, netBackFullName, coreSendParamsFullName, methodName, params);
+        countAdd(acceptCounts, getForKey("accept"));
+    }
+    public int acceptMethodCount() {
+        return count(acceptMethodCounts, getForKey("acceptMethod"));
+    }
+    public void acceptMethod(int i0, String methodName, String params) {
+        addForMap(this.acceptMethod, getForKey("acceptMethod", i0), methodName, params);
+        countAdd(acceptMethodCounts, getForKey("acceptMethod"));
+    }
 
     public void defaultListAdapterIf(int i0, String adapterName, String adapterFullName) {
         addForMap(this.layout, getIfKey("defaultListAdapter", i0), adapterName, adapterName, adapterFullName);
@@ -184,6 +222,9 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     public void onClickSwitchParamsIf(int i0, String divider) {
         addForMap(this.onClickSwith, getIfKey("onClickSwitchParams", i0), divider);
         onClickSwithIfs.put(getIfKey("onClickSwitchParams", i0), true);
+    }
+    public void isSuperAccept(boolean is) {
+        superAcceptIfs.put(getIfKey("superAccept"), is);
     }
 
     @Override
@@ -282,6 +323,26 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             List<String> loadMore0 = loadMore.get(getForKey("loadMore", i0));
             addLnTag(loadMoreSb, "    protected abstract void [adapterName]LoadMore(int page);", loadMore0.get(0));
         }
+        if (isIf(superAcceptIfs, getIfKey("superAccept"))) {
+            List<String> superAccept0 = superAccept.get(getIfKey("superAccept"));
+            addLnTag(superAcceptSb, "        super.accept(code, result, params, objs);");
+        }
+        for (int i0 = 0; i0 < count(acceptCounts, getForKey("accept")); i0++) {
+            List<String> accept0 = accept.get(getForKey("accept", i0));
+            addLnTag(acceptSb, "        if (\"[methodName]\".equals(code)) {", accept0.get(0));
+            addLnTag(acceptSb, "            new [netBackFullName]() {", accept0.get(1));
+            addLnTag(acceptSb, "                @Override");
+            addLnTag(acceptSb, "                public void accept(String code, Result<ResponseBody> result, [coreSendParamsFullName] params, List objs) {", accept0.get(2));
+            addLnTag(acceptSb, "                    super.accept(code, result, params, objs);");
+            addLnTag(acceptSb, "                    [methodName]([params]);", accept0.get(3), accept0.get(4));
+            addLnTag(acceptSb, "                }");
+            addLnTag(acceptSb, "            }.accept(code, result, params, objs);");
+            addLnTag(acceptSb, "        }");
+        }
+        for (int i0 = 0; i0 < count(acceptMethodCounts, getForKey("acceptMethod")); i0++) {
+            List<String> acceptMethod0 = acceptMethod.get(getForKey("acceptMethod", i0));
+            addLnTag(acceptMethodSb, "    protected void [methodName]([params]) {}", acceptMethod0.get(0), acceptMethod0.get(1));
+        }
 
     }
 
@@ -318,8 +379,11 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("[[loadMore]]");
         lines.add("    @Override");
         lines.add("    public void accept(String code, Result<ResponseBody> result, [[coreSendParamsFullName]] params, List objs) {");
+        lines.add("[[superAccept]]");
         lines.add("");
+        lines.add("[[accept]]");
         lines.add("    }");
+        lines.add("[[acceptMethod]]");
         lines.add("");
         lines.add("}");
 

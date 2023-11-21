@@ -34,14 +34,13 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
         Ts.ls(te.getEnclosedElements(), (position, element) -> {
             if (element instanceof VariableElement) {
                 VariableElement ve = (VariableElement) element;
-                dealField(uiClass, ve);
+                dealField(uiClass, ve, ElementTools.getFieldKv(ve));
             }
             return false;
         });
     }
 
-    protected void dealField(String fullName, VariableElement ve) {
-        KV<String, String> kv = ElementTools.getFieldKv(ve);
+    protected void dealField(String fullName, VariableElement ve, KV<String, String> kv) {
         BaseTools.GetThis<UiBaseBuilder> uiBaseBuilderGetter = getUiBaseBuilderGetter();
         InBase inBase = ve.getAnnotation(InBase.class);
         if (inBase != null) {

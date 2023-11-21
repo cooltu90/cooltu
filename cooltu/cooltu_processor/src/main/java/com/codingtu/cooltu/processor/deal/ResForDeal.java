@@ -40,9 +40,8 @@ public class ResForDeal extends ResForBaseDeal {
         }
     }
 
-    protected void dealField(String fullName, VariableElement ve) {
-        super.dealField(fullName, ve);
-        KV<String, String> kv = ElementTools.getFieldKv(ve);
+    protected void dealField(String fullName, VariableElement ve, KV<String, String> kv) {
+        super.dealField(fullName, ve, kv);
         ActBaseInfo actBaseInfo = CurrentPath.actBaseBuilder(fullName).getActBaseInfo();
         if (!noStart) {
             StartGroup startGroup = ve.getAnnotation(StartGroup.class);

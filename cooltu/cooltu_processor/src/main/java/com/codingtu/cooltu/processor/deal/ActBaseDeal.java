@@ -82,7 +82,7 @@ public class ActBaseDeal extends TypeBaseDeal {
 
                 NetBack netBack = ee.getAnnotation(NetBack.class);
                 if (netBack != null) {
-                    dealNetBack(actBaseInfo, netBack, ee);
+                    dealNetBack(uiBaseBuilder, netBack, ee);
                 }
 
                 ActBack actBack = ee.getAnnotation(ActBack.class);
@@ -106,34 +106,6 @@ public class ActBaseDeal extends TypeBaseDeal {
 
     }
 
-    private void dealPermissionBack(ActBaseInfo actBaseInfo, Permission permission, ExecutableElement ee) {
-        PermissionBuilder.BUILDER.add(permission, ee);
-        actBaseInfo.permissions.add(permission);
-        actBaseInfo.permissionMethods.add(ee);
-    }
-
-    private void dealActBack(ActBaseInfo actBaseInfo, ActBack actBack, ExecutableElement ee) {
-        actBaseInfo.actBacks.add(actBack);
-        actBaseInfo.actBackMethods.add(ee);
-
-        ElementTools.getMethodParamKvs(ee).ls(new BaseTs.EachTs<KV<String, String>>() {
-            @Override
-            public boolean each(int position, KV<String, String> kv) {
-                PassBuilder.BUILDER.add(kv);
-                return false;
-            }
-        });
-
-        ActBackIntentBuilder.BUILDER.add(actBack, ee);
-    }
-
-    private void dealNetBack(ActBaseInfo actBaseInfo, NetBack netBack, ExecutableElement ee) {
-        NetBackInfo netBackInfo = new NetBackInfo();
-        netBackInfo.netBack = netBack;
-        netBackInfo.method = ee;
-        actBaseInfo.netBacks.add(netBackInfo);
-    }
-
     private void dealClickView(UiBaseBuilder uiBaseBuilder, ClickView clickView, ExecutableElement ee) {
         ClickViewInfo clickViewInfo = new ClickViewInfo();
         clickViewInfo.ids = Ts.ts(IdTools.elementToIds(ee, ClickView.class, clickView.value())).toList().get();
@@ -154,5 +126,34 @@ public class ActBaseDeal extends TypeBaseDeal {
         });
 
         uiBaseBuilder.clickViews.add(clickViewInfo);
+    }
+
+    private void dealNetBack(UiBaseBuilder uiBaseBuilder, NetBack netBack, ExecutableElement ee) {
+        NetBackInfo netBackInfo = new NetBackInfo();
+        netBackInfo.netBack = netBack;
+        netBackInfo.method = ee;
+        uiBaseBuilder.netBacks.add(netBackInfo);
+    }
+
+
+    private void dealPermissionBack(ActBaseInfo actBaseInfo, Permission permission, ExecutableElement ee) {
+        PermissionBuilder.BUILDER.add(permission, ee);
+        actBaseInfo.permissions.add(permission);
+        actBaseInfo.permissionMethods.add(ee);
+    }
+
+    private void dealActBack(ActBaseInfo actBaseInfo, ActBack actBack, ExecutableElement ee) {
+        actBaseInfo.actBacks.add(actBack);
+        actBaseInfo.actBackMethods.add(ee);
+
+        ElementTools.getMethodParamKvs(ee).ls(new BaseTs.EachTs<KV<String, String>>() {
+            @Override
+            public boolean each(int position, KV<String, String> kv) {
+                PassBuilder.BUILDER.add(kv);
+                return false;
+            }
+        });
+
+        ActBackIntentBuilder.BUILDER.add(actBack, ee);
     }
 }

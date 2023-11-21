@@ -190,7 +190,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
                 accept(position, methodName, netBackFullName, FullName.CORE_SEND_PARAMS, paramStr);
 
-
                 String methodParamStr = params.getParam(new Params.Convert() {
                     @Override
                     public String convert(int index, KV<String, String> kv) {
@@ -359,35 +358,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         });
     }
 
-    private void dealListAdapter() {
-        Ts.ls(info.adapters, new BaseTs.EachTs<VariableElement>() {
-            @Override
-            public boolean each(int position, VariableElement ve) {
-
-                Adapter adapter = ve.getAnnotation(Adapter.class);
-
-                KV<String, String> kv = ElementTools.getFieldKv(ve);
-                //添加字段
-                addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
-
-                String vh = VHDeal.vhMap.get(kv.k);
-//                listAdapter(listAdapterCount(), kv.v, kv.k, vh, adapter.rvName());
-
-                int adapterIndex = listAdapterCount();
-
-                listAdapter(adapterIndex, kv.v, vh, adapter.rvName());
-
-                if (adapter.type() == AdapterType.DEFAULT_MORE_LIST) {
-                    loadMore(loadMoreCount(), kv.v);
-                    defaultListMoreAdapterIf(adapterIndex, kv.v, kv.k);
-                } else if (adapter.type() == AdapterType.DEFAULT_LIST) {
-                    defaultListAdapterIf(adapterIndex, kv.v, kv.k);
-                }
-
-                return false;
-            }
-        });
-    }
     /**************************************************
      *
      *   ┏━━━━━━━━━━━━━━━━━━━━━┓

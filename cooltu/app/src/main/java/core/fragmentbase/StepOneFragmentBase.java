@@ -68,15 +68,26 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.f
 
         }
     }
-
-    protected void tv1Click(com.codingtu.cooltu.bean.User user) {
-    }
+    protected void tv1Click(com.codingtu.cooltu.bean.User user) {}
 
     protected abstract void dogAdapterLoadMore(int page);
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
 
+
+        if ("getObjBack".equals(code)) {
+            new core.net.back.GetObjBack() {
+                @Override
+                public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
+                    super.accept(code, result, params, objs);
+                    getObjBack(user);
+                }
+            }.accept(code, result, params, objs);
+        }
+
     }
+    protected void getObjBack(com.codingtu.cooltu.bean.User user) {}
+
 
 }

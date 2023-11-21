@@ -15,6 +15,7 @@ import com.codingtu.cooltu.processor.annotation.ui.ClickView;
 import com.codingtu.cooltu.processor.annotation.ui.FragmentBase;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
+import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.FragmentBaseBuilder;
@@ -65,6 +66,11 @@ public class FragmentBaseDeal extends TypeBaseDeal {
                 if (clickView != null) {
                     dealClickView(uiBaseBuilder, clickView, ee);
                 }
+
+                NetBack netBack = ee.getAnnotation(NetBack.class);
+                if (netBack != null) {
+                    dealNetBack(uiBaseBuilder, netBack, ee);
+                }
             }
 
             return false;
@@ -94,4 +100,12 @@ public class FragmentBaseDeal extends TypeBaseDeal {
 
         uiBaseBuilder.clickViews.add(clickViewInfo);
     }
+
+    private void dealNetBack(UiBaseBuilder uiBaseBuilder, NetBack netBack, ExecutableElement ee) {
+        NetBackInfo netBackInfo = new NetBackInfo();
+        netBackInfo.netBack = netBack;
+        netBackInfo.method = ee;
+        uiBaseBuilder.netBacks.add(netBackInfo);
+    }
+
 }
