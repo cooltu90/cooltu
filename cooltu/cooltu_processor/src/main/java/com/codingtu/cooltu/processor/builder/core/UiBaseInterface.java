@@ -10,13 +10,34 @@ public interface UiBaseInterface {
 
     JavaInfo getJavaInfo();
 
+    String getDefulatViewParent();
+
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
     void layoutIf(String inflateTool, String layout);
 
     void findView(int position, String fieldName, String parent, String r, String id);
 
-    String getDefulatViewParent();
-
     int fieldCount();
 
     void field(int fieldCount, String sign, String type, String name);
+
+    void onClickMethods(int clickViewInfoIndex, String method, String methodParams);
+
+    void onClickSwith(int clickViewInfoIndex, String method);
+
+    void onClickSwitchParamsIf(int clickViewInfoIndex, String divider);
+
+    void onClickSwitchParams(int clickViewInfoIndex, int paramsIndex, String k, String lib4a, String s, String divider);
+
+    void onClickCase(int clickViewInfoIndex, int idIndex, String toString);
+
+    void setOnClick(int i, String fieldName);
+
+    void isSuperOnClick(boolean hasBaseClass);
+
+    int setOnClickCount();
 }

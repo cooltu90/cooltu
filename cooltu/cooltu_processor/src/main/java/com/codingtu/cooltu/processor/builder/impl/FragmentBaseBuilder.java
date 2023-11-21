@@ -28,6 +28,7 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
     public FragmentBaseBuilder(JavaInfo info) {
         super(info);
         uiBaseBuilder = new UiBaseBuilder(this);
+        uiBaseBuilder.finalBaseClass = FullName.BASE_FRAGMENT;
     }
 
     @Override
@@ -37,7 +38,7 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
 
     @Override
     protected boolean isBuild() {
-        return true;
+        return false;
     }
 
     @Override
@@ -79,6 +80,7 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
     public String getDefulatViewParent() {
         return "view.";
     }
+
 }
 /* model_temp_start
 package [[pkg]];
@@ -108,14 +110,38 @@ public class [[name]] extends [[baseClass]] implements View.OnClickListener, [[n
                                                                                                     [<sub>][for][findView]
         [fieldName] = [parent]findViewById([rPkg].R.id.[id]);
                                                                                                     [<sub>][for][findView]
+                                                                                                    [<sub>][for][setOnClick]
+        [fieldName].setOnClickListener(this);
+                                                                                                    [<sub>][for][setOnClick]
         return view;
     }
                                                                                                     [<sub>][if][layout]
 
     @Override
     public void onClick(View v) {
-
+                                                                                                    [<sub>][if][superOnClick]
+        super.onClick(v);
+                                                                                                    [<sub>][if][superOnClick]
+        switch (v.getId()) {
+                                                                                                    [<sub>][for][onClickSwith]
+                                                                                                    [<sub>][for][onClickCase]
+            case [id]:
+                                                                                                    [<sub>][for][onClickCase]
+                [methodName](
+                                                                                                    [<sub>][if][onClickSwitchParams]
+                        v[divider]
+                                                                                                    [<sub>][if][onClickSwitchParams]
+                                                                                                    [<sub>][for][onClickSwitchParams]
+                        ([type]) v.getTag([pkg].R.id.tag_[index])[divider]
+                                                                                                    [<sub>][for][onClickSwitchParams]
+                );
+                break;
+                                                                                                    [<sub>][for][onClickSwith]
+        }
     }
+                                                                                                    [<sub>][for][onClickMethods]
+    protected void [methodName]([params]) {}
+                                                                                                    [<sub>][for][onClickMethods]
 
     @Override
     public void accept(String code, Result<ResponseBody> result, [[coreSendParamsFullName]] params, List objs) {

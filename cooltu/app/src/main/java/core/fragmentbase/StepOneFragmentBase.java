@@ -21,6 +21,7 @@ public class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.fragment.C
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = com.codingtu.cooltu.lib4a.tools.InflateTool.inflate(inflater, com.codingtu.cooltu.R.layout.fragment_step_one, container);
         tv1 = view.findViewById(com.codingtu.cooltu.R.id.tv1);
+        tv1.setOnClickListener(this);
         return view;
     }
 
@@ -28,7 +29,17 @@ public class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.fragment.C
     @Override
     public void onClick(View v) {
 
+        switch (v.getId()) {
+            case com.codingtu.cooltu.R.id.tv1:
+                tv1Click(
+                        (com.codingtu.cooltu.bean.User) v.getTag(com.codingtu.cooltu.lib4a.R.id.tag_0)
+                );
+                break;
+
+        }
     }
+    protected void tv1Click(com.codingtu.cooltu.bean.User user) {}
+
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {

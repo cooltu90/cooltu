@@ -15,6 +15,18 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     protected java.util.Map<String, Integer> layoutCounts;
     protected StringBuilder layoutSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> layout;
+    protected java.util.Map<String, Boolean> superOnClickIfs;
+    protected java.util.Map<String, Integer> superOnClickCounts;
+    protected StringBuilder superOnClickSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> superOnClick;
+    protected java.util.Map<String, Boolean> onClickSwithIfs;
+    protected java.util.Map<String, Integer> onClickSwithCounts;
+    protected StringBuilder onClickSwithSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> onClickSwith;
+    protected java.util.Map<String, Boolean> onClickMethodsIfs;
+    protected java.util.Map<String, Integer> onClickMethodsCounts;
+    protected StringBuilder onClickMethodsSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> onClickMethods;
     protected StringBuilder coreSendParamsFullName;
 
     public FragmentBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
@@ -31,6 +43,18 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         layoutCounts = new java.util.HashMap<>();
         layoutSb = map.get("layout");
         layout = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        superOnClickIfs = new java.util.HashMap<>();
+        superOnClickCounts = new java.util.HashMap<>();
+        superOnClickSb = map.get("superOnClick");
+        superOnClick = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        onClickSwithIfs = new java.util.HashMap<>();
+        onClickSwithCounts = new java.util.HashMap<>();
+        onClickSwithSb = map.get("onClickSwith");
+        onClickSwith = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        onClickMethodsIfs = new java.util.HashMap<>();
+        onClickMethodsCounts = new java.util.HashMap<>();
+        onClickMethodsSb = map.get("onClickMethods");
+        onClickMethods = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         coreSendParamsFullName = map.get("coreSendParamsFullName");
 
     }
@@ -49,10 +73,52 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         addForMap(this.layout, getForKey("findView", i0), fieldName, parent, rPkg, id);
         countAdd(layoutCounts, getForKey("findView"));
     }
+    public int setOnClickCount() {
+        return count(layoutCounts, getForKey("setOnClick"));
+    }
+    public void setOnClick(int i0, String fieldName) {
+        addForMap(this.layout, getForKey("setOnClick", i0), fieldName);
+        countAdd(layoutCounts, getForKey("setOnClick"));
+    }
+    public int onClickCaseCount(int i0) {
+        return count(onClickSwithCounts, getForKey("onClickCase", i0));
+    }
+    public void onClickCase(int i0, int i1, String id) {
+        addForMap(this.onClickSwith, getForKey("onClickCase", i0, i1), id);
+        countAdd(onClickSwithCounts, getForKey("onClickCase", i0));
+    }
+    public int onClickSwitchParamsCount(int i0) {
+        return count(onClickSwithCounts, getForKey("onClickSwitchParams", i0));
+    }
+    public void onClickSwitchParams(int i0, int i1, String type, String pkg, String index, String divider) {
+        addForMap(this.onClickSwith, getForKey("onClickSwitchParams", i0, i1), type, pkg, index, divider);
+        countAdd(onClickSwithCounts, getForKey("onClickSwitchParams", i0));
+    }
+    public int onClickSwithCount() {
+        return count(onClickSwithCounts, getForKey("onClickSwith"));
+    }
+    public void onClickSwith(int i0, String methodName) {
+        addForMap(this.onClickSwith, getForKey("onClickSwith", i0), methodName);
+        countAdd(onClickSwithCounts, getForKey("onClickSwith"));
+    }
+    public int onClickMethodsCount() {
+        return count(onClickMethodsCounts, getForKey("onClickMethods"));
+    }
+    public void onClickMethods(int i0, String methodName, String params) {
+        addForMap(this.onClickMethods, getForKey("onClickMethods", i0), methodName, params);
+        countAdd(onClickMethodsCounts, getForKey("onClickMethods"));
+    }
 
     public void layoutIf(String inflateToolFullName, String layout) {
         addForMap(this.layout, getIfKey("layout"), inflateToolFullName, layout);
         layoutIfs.put(getIfKey("layout"), true);
+    }
+    public void isSuperOnClick(boolean is) {
+        superOnClickIfs.put(getIfKey("superOnClick"), is);
+    }
+    public void onClickSwitchParamsIf(int i0, String divider) {
+        addForMap(this.onClickSwith, getIfKey("onClickSwitchParams", i0), divider);
+        onClickSwithIfs.put(getIfKey("onClickSwitchParams", i0), true);
     }
 
     @Override
@@ -71,8 +137,38 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
                 List<String> layout1 = layout.get(getForKey("findView", i0));
                 addLnTag(layoutSb, "        [fieldName] = [parent]findViewById([rPkg].R.id.[id]);", layout1.get(0), layout1.get(1), layout1.get(2), layout1.get(3));
             }
+            for (int i0 = 0; i0 < count(layoutCounts, getForKey("setOnClick")); i0++) {
+                List<String> layout1 = layout.get(getForKey("setOnClick", i0));
+                addLnTag(layoutSb, "        [fieldName].setOnClickListener(this);", layout1.get(0));
+            }
             addLnTag(layoutSb, "        return view;");
             addLnTag(layoutSb, "    }");
+        }
+        if (isIf(superOnClickIfs, getIfKey("superOnClick"))) {
+            List<String> superOnClick0 = superOnClick.get(getIfKey("superOnClick"));
+            addLnTag(superOnClickSb, "        super.onClick(v);");
+        }
+        for (int i0 = 0; i0 < count(onClickSwithCounts, getForKey("onClickSwith")); i0++) {
+            List<String> onClickSwith0 = onClickSwith.get(getForKey("onClickSwith", i0));
+            for (int i1 = 0; i1 < count(onClickSwithCounts, getForKey("onClickCase", i0)); i1++) {
+                List<String> onClickSwith1 = onClickSwith.get(getForKey("onClickCase", i0, i1));
+                addLnTag(onClickSwithSb, "            case [id]:", onClickSwith1.get(0));
+            }
+            addLnTag(onClickSwithSb, "                [methodName](", onClickSwith0.get(0));
+            if (isIf(onClickSwithIfs, getIfKey("onClickSwitchParams", i0))) {
+                List<String> onClickSwith1 = onClickSwith.get(getIfKey("onClickSwitchParams", i0));
+                addLnTag(onClickSwithSb, "                        v[divider]", onClickSwith1.get(0));
+            }
+            for (int i1 = 0; i1 < count(onClickSwithCounts, getForKey("onClickSwitchParams", i0)); i1++) {
+                List<String> onClickSwith1 = onClickSwith.get(getForKey("onClickSwitchParams", i0, i1));
+                addLnTag(onClickSwithSb, "                        ([type]) v.getTag([pkg].R.id.tag_[index])[divider]", onClickSwith1.get(0), onClickSwith1.get(1), onClickSwith1.get(2), onClickSwith1.get(3));
+            }
+            addLnTag(onClickSwithSb, "                );");
+            addLnTag(onClickSwithSb, "                break;");
+        }
+        for (int i0 = 0; i0 < count(onClickMethodsCounts, getForKey("onClickMethods")); i0++) {
+            List<String> onClickMethods0 = onClickMethods.get(getForKey("onClickMethods", i0));
+            addLnTag(onClickMethodsSb, "    protected void [methodName]([params]) {}", onClickMethods0.get(0), onClickMethods0.get(1));
         }
 
     }
@@ -101,8 +197,12 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("");
         lines.add("    @Override");
         lines.add("    public void onClick(View v) {");
-        lines.add("");
+        lines.add("[[superOnClick]]");
+        lines.add("        switch (v.getId()) {");
+        lines.add("[[onClickSwith]]");
+        lines.add("        }");
         lines.add("    }");
+        lines.add("[[onClickMethods]]");
         lines.add("");
         lines.add("    @Override");
         lines.add("    public void accept(String code, Result<ResponseBody> result, [[coreSendParamsFullName]] params, List objs) {");

@@ -77,7 +77,7 @@ public class ActBaseDeal extends TypeBaseDeal {
                 ExecutableElement ee = (ExecutableElement) element;
                 ClickView clickView = ee.getAnnotation(ClickView.class);
                 if (clickView != null) {
-                    dealClickView(actBaseInfo, clickView, ee);
+                    dealClickView(uiBaseBuilder, clickView, ee);
                 }
 
                 NetBack netBack = ee.getAnnotation(NetBack.class);
@@ -134,7 +134,7 @@ public class ActBaseDeal extends TypeBaseDeal {
         actBaseInfo.netBacks.add(netBackInfo);
     }
 
-    private void dealClickView(ActBaseInfo actBaseInfo, ClickView clickView, ExecutableElement ee) {
+    private void dealClickView(UiBaseBuilder uiBaseBuilder, ClickView clickView, ExecutableElement ee) {
         ClickViewInfo clickViewInfo = new ClickViewInfo();
         clickViewInfo.ids = Ts.ts(IdTools.elementToIds(ee, ClickView.class, clickView.value())).toList().get();
         clickViewInfo.method = ElementTools.simpleName(ee);
@@ -153,6 +153,6 @@ public class ActBaseDeal extends TypeBaseDeal {
             }
         });
 
-        actBaseInfo.clickViews.add(clickViewInfo);
+        uiBaseBuilder.clickViews.add(clickViewInfo);
     }
 }

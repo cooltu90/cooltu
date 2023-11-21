@@ -69,6 +69,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     public ActBaseBuilder(JavaInfo info) {
         super(info);
         uiBaseBuilder = new UiBaseBuilder(this);
+        uiBaseBuilder.finalBaseClass = FullName.BASE_ACT;
     }
 
     @Override
@@ -116,9 +117,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
 
     private ActBaseInfo info;
-//    private List<KV<String, String>> inBases = new ArrayList<>();
-//    private HashMap<String, String> inBaseMap = new HashMap<>();
-//    private HashMap<String, String> fieldMap = new HashMap<>();
 
     public void addInfos(ActBaseInfo actBaseInfo) {
         this.info = actBaseInfo;
@@ -131,74 +129,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     @Override
     protected void dealLines() {
         uiBaseBuilder.dealLines();
-
-        Ts.ls(uiBaseBuilder.inBases, new BaseTs.EachTs<KV<String, String>>() {
-            @Override
-            public boolean each(int position, KV<String, String> kv) {
-                addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
-                return false;
-            }
-        });
-
-        final int[] setOnClickCount = {0};
-        Ts.ls(info.clickViews, new BaseTs.EachTs<ClickViewInfo>() {
-            @Override
-            public boolean each(int clickViewInfoIndex, ClickViewInfo info) {
-                onClickMethods(clickViewInfoIndex, info.method, info.methodParams.getMethodParams());
-                onClickSwith(clickViewInfoIndex, info.method);
-
-                List<KV<String, String>> kvs = info.methodParams.getKvs();
-                int kvCount = CountTool.count(kvs);
-
-                Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {
-                    private int paramsIndex;
-
-                    @Override
-                    public boolean each(int kvIndex, KV<String, String> kv) {
-                        String divider = (kvIndex != kvCount - 1) ? "," : "";
-                        if (kvIndex == 0 && FullName.VIEW.equals(kv.k)) {
-                            onClickSwitchParamsIf(clickViewInfoIndex, divider);
-                        } else {
-                            onClickSwitchParams(clickViewInfoIndex, paramsIndex, kv.k, Pkg.LIB4A, paramsIndex + "", divider);
-                            paramsIndex++;
-                        }
-                        return false;
-                    }
-                });
-
-                Ts.ls(info.ids, new BaseTs.EachTs<IdTools.Id>() {
-                    @Override
-                    public boolean each(int idIndex, IdTools.Id id) {
-                        onClickCase(clickViewInfoIndex, idIndex, id.toString());
-                        if (info.inAct.get(clickViewInfoIndex)) {
-                            BaseTools.getActBaseInfoWithParents(uiBaseBuilder, new BaseTs.EachTs<UiBaseBuilder>() {
-                                @Override
-                                public boolean each(int position, UiBaseBuilder uiBaseBuilder) {
-
-                                    Ts.ts(uiBaseBuilder.viewInfos).convert(new BaseTs.Convert<LayoutTools.ViewInfo, LayoutTools.ViewInfo>() {
-                                        @Override
-                                        public LayoutTools.ViewInfo convert(int index, LayoutTools.ViewInfo viewInfo) {
-                                            if (viewInfo.id.equals(id.rName)) {
-                                                setOnClick(setOnClickCount[0], viewInfo.fieldName);
-                                                setOnClickCount[0]++;
-                                            }
-                                            return null;
-                                        }
-                                    });
-                                    return false;
-                                }
-                            });
-                        }
-                        return false;
-                    }
-                });
-                return false;
-            }
-        });
-
-
-        //onclick继承
-        isSuperOnClick(uiBaseBuilder.hasBaseClass());
 
         //colorStr
         Ts.ls(info.colorStrs, new BaseTs.EachTs<KV<String, String>>() {
