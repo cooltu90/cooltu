@@ -4,7 +4,6 @@ import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.processor.annotation.res.ResForFragment;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.deal.base.ResForBaseDeal;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 

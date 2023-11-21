@@ -29,6 +29,7 @@ public class UiBaseBuilder {
     public List<ClickViewInfo> clickViews = new ArrayList<>();
     public List<LayoutTools.ViewInfo> viewInfos;
     public List<KV<String, String>> colorStrs = new ArrayList<>();
+    public List<KV<String, IdTools.Id>> colorReses = new ArrayList<>();
 
     public String finalBaseClass;
 
@@ -78,6 +79,8 @@ public class UiBaseBuilder {
         onClick();
         //
         colorStr();
+        //colorRes
+        colorReses();
     }
 
     private void setBaseField() {
@@ -179,6 +182,17 @@ public class UiBaseBuilder {
             public boolean each(int position, KV<String, String> kv) {
                 addField(Constant.SIGN_PROTECTED, "int", kv.k);
                 uiBase.colorStrInit(position, kv.k, kv.v);
+                return false;
+            }
+        });
+    }
+
+    private void colorReses() {
+        Ts.ls(colorReses, new BaseTs.EachTs<KV<String, IdTools.Id>>() {
+            @Override
+            public boolean each(int position, KV<String, IdTools.Id> kv) {
+                addField(Constant.SIGN_PROTECTED, "int", kv.k);
+                uiBase.colorResInit(position, kv.k, FullName.RESOURCE_TOOL, kv.v.toString());
                 return false;
             }
         });

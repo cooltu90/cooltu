@@ -5,6 +5,7 @@ import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
+import com.codingtu.cooltu.processor.annotation.res.ColorRes;
 import com.codingtu.cooltu.processor.annotation.res.ColorStr;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
 import com.codingtu.cooltu.processor.annotation.ui.InBase;
@@ -13,6 +14,7 @@ import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
+import com.codingtu.cooltu.processor.lib.tools.IdTools;
 
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
@@ -56,6 +58,12 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
         ColorStr ColorStr = ve.getAnnotation(ColorStr.class);
         if (ColorStr != null) {
             uiBaseBuilder.colorStrs.add(new KV<>(kv.v, ColorStr.value()));
+        }
+
+        ColorRes colorRes = ve.getAnnotation(ColorRes.class);
+        if (colorRes != null) {
+            IdTools.Id id = IdTools.elementToId(ve, ColorRes.class, colorRes.value());
+            uiBaseBuilder.colorReses.add(new KV<>(kv.v, id));
         }
     }
 

@@ -42,4 +42,6 @@ public interface UiBaseInterface {
     int setOnClickCount();
 
     void colorStrInit(int position, String k, String v);
+
+    void colorResInit(int position, String k, String resourceTool, String toString);
 }

@@ -8,23 +8,17 @@ import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.annotation.res.ColorRes;
-import com.codingtu.cooltu.processor.annotation.res.ColorStr;
 import com.codingtu.cooltu.processor.annotation.res.Dimen;
 import com.codingtu.cooltu.processor.annotation.res.Dp;
-import com.codingtu.cooltu.processor.annotation.ui.Adapter;
-import com.codingtu.cooltu.processor.annotation.ui.InBase;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
-import com.codingtu.cooltu.processor.annotation.ui.NoStart;
+import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.annotation.ui.StartGroup;
 import com.codingtu.cooltu.processor.bean.ActBaseInfo;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
-import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActStartBuilder;
 import com.codingtu.cooltu.processor.builder.impl.Code4RequestBuilder;
 import com.codingtu.cooltu.processor.builder.impl.PassBuilder;
 import com.codingtu.cooltu.processor.deal.base.ResForBaseDeal;
-import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
@@ -52,12 +46,6 @@ public class ResForDeal extends ResForBaseDeal {
         KV<String, String> kv = ElementTools.getFieldKv(ve);
 
         ActBaseInfo actBaseInfo = CurrentPath.actBaseBuilder(fullName).getActBaseInfo();
-
-        ColorRes colorRes = ve.getAnnotation(ColorRes.class);
-        if (colorRes != null) {
-            IdTools.Id id = IdTools.elementToId(ve, ColorRes.class, colorRes.value());
-            actBaseInfo.colorReses.add(new KV<>(kv.v, id));
-        }
 
         Dp dp = ve.getAnnotation(Dp.class);
         if (dp != null) {
