@@ -44,4 +44,20 @@ public interface UiBaseInterface {
     void colorStrInit(int position, String k, String v);
 
     void colorResInit(int position, String k, String resourceTool, String toString);
+
+    void dpInit(int position, String k, String mobileTool, String s);
+
+    void dimenInit(int position, String k, String resourceTool, String toString);
+
+    int listAdapterCount();
+
+    void listAdapter(int adapterIndex, String v, String vh, String rvName);
+
+    int loadMoreCount();
+
+    void loadMore(int loadMoreCount, String v);
+
+    void defaultListMoreAdapterIf(int adapterIndex, String v, String k);
+
+    void defaultListAdapterIf(int adapterIndex, String v, String k);
 }

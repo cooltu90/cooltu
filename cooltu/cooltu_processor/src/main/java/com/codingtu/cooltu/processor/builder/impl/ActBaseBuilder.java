@@ -129,27 +129,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     @Override
     protected void dealLines() {
         uiBaseBuilder.dealLines();
-
-        //dp
-        Ts.ls(info.dps, new BaseTs.EachTs<KV<String, Float>>() {
-            @Override
-            public boolean each(int position, KV<String, Float> kv) {
-                addField(Constant.SIGN_PROTECTED, "int", kv.k);
-                dpInit(position, kv.k, FullName.MOBILE_TOOL, kv.v + "f");
-                return false;
-            }
-        });
-
-        //colorRes
-        Ts.ls(info.dimens, new BaseTs.EachTs<KV<String, IdTools.Id>>() {
-            @Override
-            public boolean each(int position, KV<String, IdTools.Id> kv) {
-                addField(Constant.SIGN_PROTECTED, "int", kv.k);
-                dimenInit(position, kv.k, FullName.RESOURCE_TOOL, kv.v.toString());
-                return false;
-            }
-        });
-
         //startField
         Ts.ls(info.starts, new BaseTs.EachTs<KV<String, String>>() {
             @Override
@@ -312,7 +291,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         }
 
         //dealListAdapter
-        dealListAdapter();
+//        dealListAdapter();
     }
 
     @Override

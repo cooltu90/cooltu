@@ -21,29 +21,12 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 
 public class ActBaseInfo {
-    //public IdTools.Id layout;
-    //public String baseClass;
-    //public List<LayoutTools.ViewInfo> viewInfos;
-    public List<ClickViewInfo> clickViews = new ArrayList<>();
     public List<NetBackInfo> netBacks = new ArrayList<>();
-    //public String act;
-    public List<KV<String, String>> colorStrs = new ArrayList<>();
-    public List<KV<String, IdTools.Id>> colorReses = new ArrayList<>();
-    public List<KV<String, Float>> dps = new ArrayList<>();
-    public List<KV<String, IdTools.Id>> dimens = new ArrayList<>();
     public List<KV<String, String>> starts = new ArrayList<>();
-
     public List<ActBack> actBacks = new ArrayList<>();
     public List<ExecutableElement> actBackMethods = new ArrayList<>();
-
     public List<Permission> permissions = new ArrayList<>();
     public List<ExecutableElement> permissionMethods = new ArrayList<>();
     public Form form;
     public List<VariableElement> adapters = new ArrayList<>();
-
-
-    //public boolean hasBaseClass() {
-//        return !FullName.BASE_ACT.equals(baseClass);
-//    }
-
 }

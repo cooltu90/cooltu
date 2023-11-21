@@ -38,7 +38,7 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
 
     @Override
     protected boolean isBuild() {
-        return false;
+        return true;
     }
 
     @Override
@@ -97,7 +97,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public class [[name]] extends [[baseClass]] implements View.OnClickListener, [[netBackIFullName]] {
+public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, [[netBackIFullName]] {
                                                                                                     [<sub>][for][field]
     [sign] [type] [name];
                                                                                                     [<sub>][for][field]
@@ -118,6 +118,35 @@ public class [[name]] extends [[baseClass]] implements View.OnClickListener, [[n
                                                                                                     [<sub>][for][colorResInit]
         [name] = [resourceToolFullName].getColor([id]);
                                                                                                     [<sub>][for][colorResInit]
+                                                                                                    [<sub>][for][dpInit]
+        [name] = [mobileToolFullName].dpToPx([value]);
+                                                                                                    [<sub>][for][dpInit]
+                                                                                                    [<sub>][for][dimenInit]
+        [name] = [resourceToolFullName].getDimen([id]);
+                                                                                                    [<sub>][for][dimenInit]
+                                                                                                    [<sub>][for][startInit]
+        [name] = [passFullName].[name](getIntent());
+                                                                                                    [<sub>][for][startInit]
+
+                                                                                                    [<sub>][for][listAdapter]
+                                                                                                    [<sub>][if][defaultListAdapter]
+        // [adapterName]
+        [adapterName] = new [adapterFullName]();
+                                                                                                    [<sub>][if][defaultListAdapter]
+                                                                                                    [<sub>][if][defaultListMoreAdapter]
+        // [adapterName]
+        [adapterName] = new [adapterFullName]() {
+            @Override
+            protected void loadMore(int page) {
+                [adapterName]LoadMore(page);
+            }
+        };
+                                                                                                    [<sub>][if][defaultListMoreAdapter]
+        [adapterName].setVH([vhFullName].class);
+        [adapterName].setClick(this);
+        [rvName].setAdapter([adapterName]);
+        [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getAct()));
+                                                                                                    [<sub>][for][listAdapter]
         return view;
     }
                                                                                                     [<sub>][if][layout]
@@ -147,7 +176,9 @@ public class [[name]] extends [[baseClass]] implements View.OnClickListener, [[n
                                                                                                     [<sub>][for][onClickMethods]
     protected void [methodName]([params]) {}
                                                                                                     [<sub>][for][onClickMethods]
-
+                                                                                                    [<sub>][for][loadMore]
+    protected abstract void [adapterName]LoadMore(int page);
+                                                                                                    [<sub>][for][loadMore]
     @Override
     public void accept(String code, Result<ResponseBody> result, [[coreSendParamsFullName]] params, List objs) {
 

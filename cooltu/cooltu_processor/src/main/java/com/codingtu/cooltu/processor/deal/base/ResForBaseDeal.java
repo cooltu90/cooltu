@@ -7,7 +7,10 @@ import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.annotation.res.ColorRes;
 import com.codingtu.cooltu.processor.annotation.res.ColorStr;
+import com.codingtu.cooltu.processor.annotation.res.Dimen;
+import com.codingtu.cooltu.processor.annotation.res.Dp;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
+import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.annotation.ui.InBase;
 import com.codingtu.cooltu.processor.annotation.ui.NoStart;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
@@ -64,6 +67,22 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
         if (colorRes != null) {
             IdTools.Id id = IdTools.elementToId(ve, ColorRes.class, colorRes.value());
             uiBaseBuilder.colorReses.add(new KV<>(kv.v, id));
+        }
+
+        Dp dp = ve.getAnnotation(Dp.class);
+        if (dp != null) {
+            uiBaseBuilder.dps.add(new KV<>(kv.v, dp.value()));
+        }
+
+        Dimen dimen = ve.getAnnotation(Dimen.class);
+        if (dimen != null) {
+            IdTools.Id id = IdTools.elementToId(ve, Dimen.class, dimen.value());
+            uiBaseBuilder.dimens.add(new KV<>(kv.v, id));
+        }
+
+        Adapter adapter = ve.getAnnotation(Adapter.class);
+        if (adapter != null) {
+            uiBaseBuilder.adapters.add(ve);
         }
     }
 

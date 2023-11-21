@@ -1,5 +1,6 @@
 package com.codingtu.cooltu.processor.builder.core;
 
+import com.codingtu.cooltu.constant.AdapterType;
 import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
@@ -8,15 +9,20 @@ import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
+import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.builder.impl.ActBackIntentBuilder;
+import com.codingtu.cooltu.processor.deal.VHDeal;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
+import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.lang.model.element.VariableElement;
 
 public class UiBaseBuilder {
     private final UiBaseInterface uiBase;
@@ -30,6 +36,9 @@ public class UiBaseBuilder {
     public List<LayoutTools.ViewInfo> viewInfos;
     public List<KV<String, String>> colorStrs = new ArrayList<>();
     public List<KV<String, IdTools.Id>> colorReses = new ArrayList<>();
+    public List<KV<String, Float>> dps = new ArrayList<>();
+    public List<KV<String, IdTools.Id>> dimens = new ArrayList<>();
+    public List<VariableElement> adapters = new ArrayList<>();
 
     public String finalBaseClass;
 
@@ -81,6 +90,21 @@ public class UiBaseBuilder {
         colorStr();
         //colorRes
         colorReses();
+        //dp
+        dps();
+        //dimens
+        dimens();
+        //dealListAdapter
+        dealListAdapter();
+    }
+
+    private boolean addField(String sign, String type, String name) {
+        if (inBaseMap.get(name) == null && fieldMap.get(name) == null) {
+            fieldMap.put(name, name);
+            uiBase.field(uiBase.fieldCount(), sign, type, name);
+            return true;
+        }
+        return false;
     }
 
     private void setBaseField() {
@@ -198,13 +222,51 @@ public class UiBaseBuilder {
         });
     }
 
-    private boolean addField(String sign, String type, String name) {
-        if (inBaseMap.get(name) == null && fieldMap.get(name) == null) {
-            fieldMap.put(name, name);
-            uiBase.field(uiBase.fieldCount(), sign, type, name);
-            return true;
-        }
-        return false;
+
+    private void dps() {
+        Ts.ls(dps, new BaseTs.EachTs<KV<String, Float>>() {
+            @Override
+            public boolean each(int position, KV<String, Float> kv) {
+                addField(Constant.SIGN_PROTECTED, "int", kv.k);
+                uiBase.dpInit(position, kv.k, FullName.MOBILE_TOOL, kv.v + "f");
+                return false;
+            }
+        });
+    }
+
+
+    private void dimens() {
+        Ts.ls(dimens, new BaseTs.EachTs<KV<String, IdTools.Id>>() {
+            @Override
+            public boolean each(int position, KV<String, IdTools.Id> kv) {
+                addField(Constant.SIGN_PROTECTED, "int", kv.k);
+                uiBase.dimenInit(position, kv.k, FullName.RESOURCE_TOOL, kv.v.toString());
+                return false;
+            }
+        });
+    }
+
+
+    private void dealListAdapter() {
+        Ts.ls(adapters, new BaseTs.EachTs<VariableElement>() {
+            @Override
+            public boolean each(int position, VariableElement ve) {
+                Adapter adapter = ve.getAnnotation(Adapter.class);
+                KV<String, String> kv = ElementTools.getFieldKv(ve);
+                //添加字段
+                addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
+                String vh = VHDeal.vhMap.get(kv.k);
+                int adapterIndex = uiBase.listAdapterCount();
+                uiBase.listAdapter(adapterIndex, kv.v, vh, adapter.rvName());
+                if (adapter.type() == AdapterType.DEFAULT_MORE_LIST) {
+                    uiBase.loadMore(uiBase.loadMoreCount(), kv.v);
+                    uiBase.defaultListMoreAdapterIf(adapterIndex, kv.v, kv.k);
+                } else if (adapter.type() == AdapterType.DEFAULT_LIST) {
+                    uiBase.defaultListAdapterIf(adapterIndex, kv.v, kv.k);
+                }
+                return false;
+            }
+        });
     }
 
     /**************************************************

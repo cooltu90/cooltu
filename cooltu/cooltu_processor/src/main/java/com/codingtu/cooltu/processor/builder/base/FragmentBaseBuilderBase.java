@@ -27,6 +27,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     protected java.util.Map<String, Integer> onClickMethodsCounts;
     protected StringBuilder onClickMethodsSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> onClickMethods;
+    protected java.util.Map<String, Boolean> loadMoreIfs;
+    protected java.util.Map<String, Integer> loadMoreCounts;
+    protected StringBuilder loadMoreSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> loadMore;
     protected StringBuilder coreSendParamsFullName;
 
     public FragmentBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
@@ -55,6 +59,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         onClickMethodsCounts = new java.util.HashMap<>();
         onClickMethodsSb = map.get("onClickMethods");
         onClickMethods = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        loadMoreIfs = new java.util.HashMap<>();
+        loadMoreCounts = new java.util.HashMap<>();
+        loadMoreSb = map.get("loadMore");
+        loadMore = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         coreSendParamsFullName = map.get("coreSendParamsFullName");
 
     }
@@ -94,6 +102,34 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         addForMap(this.layout, getForKey("colorResInit", i0), name, resourceToolFullName, id);
         countAdd(layoutCounts, getForKey("colorResInit"));
     }
+    public int dpInitCount() {
+        return count(layoutCounts, getForKey("dpInit"));
+    }
+    public void dpInit(int i0, String name, String mobileToolFullName, String value) {
+        addForMap(this.layout, getForKey("dpInit", i0), name, mobileToolFullName, value);
+        countAdd(layoutCounts, getForKey("dpInit"));
+    }
+    public int dimenInitCount() {
+        return count(layoutCounts, getForKey("dimenInit"));
+    }
+    public void dimenInit(int i0, String name, String resourceToolFullName, String id) {
+        addForMap(this.layout, getForKey("dimenInit", i0), name, resourceToolFullName, id);
+        countAdd(layoutCounts, getForKey("dimenInit"));
+    }
+    public int startInitCount() {
+        return count(layoutCounts, getForKey("startInit"));
+    }
+    public void startInit(int i0, String name, String passFullName) {
+        addForMap(this.layout, getForKey("startInit", i0), name, passFullName, name);
+        countAdd(layoutCounts, getForKey("startInit"));
+    }
+    public int listAdapterCount() {
+        return count(layoutCounts, getForKey("listAdapter"));
+    }
+    public void listAdapter(int i0, String adapterName, String vhFullName, String rvName) {
+        addForMap(this.layout, getForKey("listAdapter", i0), adapterName, vhFullName, adapterName, rvName, adapterName, rvName);
+        countAdd(layoutCounts, getForKey("listAdapter"));
+    }
     public int onClickCaseCount(int i0) {
         return count(onClickSwithCounts, getForKey("onClickCase", i0));
     }
@@ -122,7 +158,22 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         addForMap(this.onClickMethods, getForKey("onClickMethods", i0), methodName, params);
         countAdd(onClickMethodsCounts, getForKey("onClickMethods"));
     }
+    public int loadMoreCount() {
+        return count(loadMoreCounts, getForKey("loadMore"));
+    }
+    public void loadMore(int i0, String adapterName) {
+        addForMap(this.loadMore, getForKey("loadMore", i0), adapterName);
+        countAdd(loadMoreCounts, getForKey("loadMore"));
+    }
 
+    public void defaultListAdapterIf(int i0, String adapterName, String adapterFullName) {
+        addForMap(this.layout, getIfKey("defaultListAdapter", i0), adapterName, adapterName, adapterFullName);
+        layoutIfs.put(getIfKey("defaultListAdapter", i0), true);
+    }
+    public void defaultListMoreAdapterIf(int i0, String adapterName, String adapterFullName) {
+        addForMap(this.layout, getIfKey("defaultListMoreAdapter", i0), adapterName, adapterName, adapterFullName, adapterName);
+        layoutIfs.put(getIfKey("defaultListMoreAdapter", i0), true);
+    }
     public void layoutIf(String inflateToolFullName, String layout) {
         addForMap(this.layout, getIfKey("layout"), inflateToolFullName, layout);
         layoutIfs.put(getIfKey("layout"), true);
@@ -163,6 +214,41 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
                 List<String> layout1 = layout.get(getForKey("colorResInit", i0));
                 addLnTag(layoutSb, "        [name] = [resourceToolFullName].getColor([id]);", layout1.get(0), layout1.get(1), layout1.get(2));
             }
+            for (int i0 = 0; i0 < count(layoutCounts, getForKey("dpInit")); i0++) {
+                List<String> layout1 = layout.get(getForKey("dpInit", i0));
+                addLnTag(layoutSb, "        [name] = [mobileToolFullName].dpToPx([value]);", layout1.get(0), layout1.get(1), layout1.get(2));
+            }
+            for (int i0 = 0; i0 < count(layoutCounts, getForKey("dimenInit")); i0++) {
+                List<String> layout1 = layout.get(getForKey("dimenInit", i0));
+                addLnTag(layoutSb, "        [name] = [resourceToolFullName].getDimen([id]);", layout1.get(0), layout1.get(1), layout1.get(2));
+            }
+            for (int i0 = 0; i0 < count(layoutCounts, getForKey("startInit")); i0++) {
+                List<String> layout1 = layout.get(getForKey("startInit", i0));
+                addLnTag(layoutSb, "        [name] = [passFullName].[name](getIntent());", layout1.get(0), layout1.get(1), layout1.get(2));
+            }
+            addLnTag(layoutSb, "");
+            for (int i0 = 0; i0 < count(layoutCounts, getForKey("listAdapter")); i0++) {
+                List<String> layout1 = layout.get(getForKey("listAdapter", i0));
+                if (isIf(layoutIfs, getIfKey("defaultListAdapter", i0))) {
+                    List<String> layout2 = layout.get(getIfKey("defaultListAdapter", i0));
+                    addLnTag(layoutSb, "        // [adapterName]", layout2.get(0));
+                    addLnTag(layoutSb, "        [adapterName] = new [adapterFullName]();", layout2.get(1), layout2.get(2));
+                }
+                if (isIf(layoutIfs, getIfKey("defaultListMoreAdapter", i0))) {
+                    List<String> layout2 = layout.get(getIfKey("defaultListMoreAdapter", i0));
+                    addLnTag(layoutSb, "        // [adapterName]", layout2.get(0));
+                    addLnTag(layoutSb, "        [adapterName] = new [adapterFullName]() {", layout2.get(1), layout2.get(2));
+                    addLnTag(layoutSb, "            @Override");
+                    addLnTag(layoutSb, "            protected void loadMore(int page) {");
+                    addLnTag(layoutSb, "                [adapterName]LoadMore(page);", layout2.get(3));
+                    addLnTag(layoutSb, "            }");
+                    addLnTag(layoutSb, "        };");
+                }
+                addLnTag(layoutSb, "        [adapterName].setVH([vhFullName].class);", layout1.get(0), layout1.get(1));
+                addLnTag(layoutSb, "        [adapterName].setClick(this);", layout1.get(2));
+                addLnTag(layoutSb, "        [rvName].setAdapter([adapterName]);", layout1.get(3), layout1.get(4));
+                addLnTag(layoutSb, "        [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getAct()));", layout1.get(5));
+            }
             addLnTag(layoutSb, "        return view;");
             addLnTag(layoutSb, "    }");
         }
@@ -192,6 +278,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             List<String> onClickMethods0 = onClickMethods.get(getForKey("onClickMethods", i0));
             addLnTag(onClickMethodsSb, "    protected void [methodName]([params]) {}", onClickMethods0.get(0), onClickMethods0.get(1));
         }
+        for (int i0 = 0; i0 < count(loadMoreCounts, getForKey("loadMore")); i0++) {
+            List<String> loadMore0 = loadMore.get(getForKey("loadMore", i0));
+            addLnTag(loadMoreSb, "    protected abstract void [adapterName]LoadMore(int page);", loadMore0.get(0));
+        }
 
     }
 
@@ -213,7 +303,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("import okhttp3.ResponseBody;");
         lines.add("import retrofit2.adapter.rxjava2.Result;");
         lines.add("");
-        lines.add("public class [[name]] extends [[baseClass]] implements View.OnClickListener, [[netBackIFullName]] {");
+        lines.add("public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, [[netBackIFullName]] {");
         lines.add("[[field]]");
         lines.add("[[layout]]");
         lines.add("");
@@ -225,7 +315,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("        }");
         lines.add("    }");
         lines.add("[[onClickMethods]]");
-        lines.add("");
+        lines.add("[[loadMore]]");
         lines.add("    @Override");
         lines.add("    public void accept(String code, Result<ResponseBody> result, [[coreSendParamsFullName]] params, List objs) {");
         lines.add("");

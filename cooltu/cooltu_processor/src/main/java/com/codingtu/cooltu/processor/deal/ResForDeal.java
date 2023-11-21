@@ -42,22 +42,8 @@ public class ResForDeal extends ResForBaseDeal {
 
     protected void dealField(String fullName, VariableElement ve) {
         super.dealField(fullName, ve);
-
         KV<String, String> kv = ElementTools.getFieldKv(ve);
-
         ActBaseInfo actBaseInfo = CurrentPath.actBaseBuilder(fullName).getActBaseInfo();
-
-        Dp dp = ve.getAnnotation(Dp.class);
-        if (dp != null) {
-            actBaseInfo.dps.add(new KV<>(kv.v, dp.value()));
-        }
-
-        Dimen dimen = ve.getAnnotation(Dimen.class);
-        if (dimen != null) {
-            IdTools.Id id = IdTools.elementToId(ve, Dimen.class, dimen.value());
-            actBaseInfo.dimens.add(new KV<>(kv.v, id));
-        }
-
         if (!noStart) {
             StartGroup startGroup = ve.getAnnotation(StartGroup.class);
             if (startGroup != null) {
@@ -81,12 +67,6 @@ public class ResForDeal extends ResForBaseDeal {
                 }
             }
         }
-
-        Adapter adapter = ve.getAnnotation(Adapter.class);
-        if (adapter != null) {
-            actBaseInfo.adapters.add(ve);
-        }
-
     }
 
     @Override

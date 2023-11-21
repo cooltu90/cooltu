@@ -33,4 +33,9 @@ public class StepOneFragment extends StepOneFragmentBase {
     public void tv1Click(User user) {
 
     }
+
+    @Override
+    protected void dogAdapterLoadMore(int page) {
+
+    }
 }
