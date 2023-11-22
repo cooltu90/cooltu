@@ -1,10 +1,7 @@
 package com.codingtu.cooltu.processor.builder.impl;
 
-import com.codingtu.cooltu.constant.AdapterType;
 import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FullName;
-import com.codingtu.cooltu.constant.Pkg;
-import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
@@ -15,6 +12,7 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.BuilderType;
+import com.codingtu.cooltu.processor.annotation.form.Form;
 import com.codingtu.cooltu.processor.annotation.form.FormBean;
 import com.codingtu.cooltu.processor.annotation.form.view.BindEditText;
 import com.codingtu.cooltu.processor.annotation.form.view.BindMulti;
@@ -22,12 +20,7 @@ import com.codingtu.cooltu.processor.annotation.form.view.BindRadioGroup;
 import com.codingtu.cooltu.processor.annotation.form.view.BindSeekBar;
 import com.codingtu.cooltu.processor.annotation.form.view.BindTextView;
 import com.codingtu.cooltu.processor.annotation.tools.To;
-import com.codingtu.cooltu.processor.annotation.ui.ActBack;
-import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
-import com.codingtu.cooltu.processor.bean.ActBaseInfo;
-import com.codingtu.cooltu.processor.bean.ClickViewInfo;
-import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.core.UiBaseInterface;
@@ -38,14 +31,9 @@ import com.codingtu.cooltu.processor.builder.subdeal.BindSeekBarDeal;
 import com.codingtu.cooltu.processor.builder.subdeal.BindTextViewDeal;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.FormBeanDeal;
-import com.codingtu.cooltu.processor.deal.NetDeal;
-import com.codingtu.cooltu.processor.deal.VHDeal;
-import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
-import com.codingtu.cooltu.processor.lib.tools.IdTools;
-import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,16 +47,31 @@ import javax.lang.model.element.VariableElement;
 @To(ActBaseDeal.class)
 public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterface {
 
+
     /**************************************************
      *
      * 初始化
      *
      **************************************************/
     private final UiBaseBuilder uiBaseBuilder;
+    public List<KV<String, String>> starts = new ArrayList<>();
+    public List<Permission> permissions = new ArrayList<>();
+    public List<ExecutableElement> permissionMethods = new ArrayList<>();
+    public Form form;
 
     public ActBaseBuilder(JavaInfo info) {
         super(info);
-        uiBaseBuilder = new UiBaseBuilder(this);
+        uiBaseBuilder = new UiBaseBuilder(this) {
+            @Override
+            protected BaseTools.GetThis<UiBaseBuilder> getChildGetter() {
+                return BaseTools.getActBaseChildGetter();
+            }
+
+            @Override
+            protected BaseTools.GetParent<UiBaseBuilder> getParentGetter() {
+                return BaseTools.getActBaseParentGetter();
+            }
+        };
         uiBaseBuilder.finalBaseClass = FullName.BASE_ACT;
     }
 
@@ -116,21 +119,20 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
      **************************************************/
 
 
-    private ActBaseInfo info;
+//    private ActBaseInfo info;
 
-    public void addInfos(ActBaseInfo actBaseInfo) {
-        this.info = actBaseInfo;
-    }
+//    public void addInfos(ActBaseInfo actBaseInfo) {
+//        this.info = actBaseInfo;
+//    }
 
-    public ActBaseInfo getActBaseInfo() {
-        return this.info;
-    }
-
+//    public ActBaseInfo getActBaseInfo() {
+//        return this.info;
+//    }
     @Override
     protected void dealLines() {
         uiBaseBuilder.dealLines();
         //startField
-        Ts.ls(info.starts, new BaseTs.EachTs<KV<String, String>>() {
+        Ts.ls(starts, new BaseTs.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
@@ -139,10 +141,10 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             }
         });
 
-        Ts.ls(info.permissions, new BaseTs.EachTs<Permission>() {
+        Ts.ls(permissions, new BaseTs.EachTs<Permission>() {
             @Override
             public boolean each(int permissionIndex, Permission permission) {
-                ExecutableElement ee = info.permissionMethods.get(permissionIndex);
+                ExecutableElement ee = permissionMethods.get(permissionIndex);
 
                 String methodName = ElementTools.simpleName(ee);
                 String methodNameStatic = ConvertTool.toStaticType(methodName);
@@ -169,11 +171,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         isOnCreateCompleteInit(!uiBaseBuilder.hasChild());
 
         //form
-        if (info.form != null) {
+        if (form != null) {
             String formBeanClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
                 @Override
                 public Object get() {
-                    return info.form.value();
+                    return form.value();
                 }
             });
             TypeElement formBeanTe = FormBeanDeal.MAP.get(formBeanClass);
@@ -192,9 +194,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             checkFormsIf(formBeanSimpleName);
             dealFormBean(formBeanTe, name);
         }
-
-        //dealListAdapter
-//        dealListAdapter();
     }
 
     @Override

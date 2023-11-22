@@ -17,7 +17,6 @@ import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
-import com.codingtu.cooltu.processor.builder.impl.ActBackIntentBuilder;
 import com.codingtu.cooltu.processor.deal.NetDeal;
 import com.codingtu.cooltu.processor.deal.VHDeal;
 import com.codingtu.cooltu.processor.lib.param.Params;
@@ -34,7 +33,7 @@ import java.util.List;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 
-public class UiBaseBuilder {
+public abstract class UiBaseBuilder {
     private final UiBaseInterface uiBase;
     public String uiFullName;
     public String baseClass;
@@ -69,8 +68,12 @@ public class UiBaseBuilder {
     }
 
     public boolean hasChild() {
-        return CountTool.count(BaseTools.getActBaseBuilderWithChilds(uiFullName)) > 1;
+        return CountTool.count(BaseTools.getThisWithChilds(uiFullName, getChildGetter())) > 1;
     }
+
+    protected abstract BaseTools.GetThis<UiBaseBuilder> getChildGetter();
+
+    protected abstract BaseTools.GetParent<UiBaseBuilder> getParentGetter();
 
     public boolean hasBaseClass() {
         return !finalBaseClass.equals(baseClass);
@@ -83,7 +86,6 @@ public class UiBaseBuilder {
     public void removeInBase(KV<String, String> kv) {
         inBaseMap.put(kv.v, kv.v);
     }
-
 
     public void dealLines() {
         uiBase.addTag(getStringBuilder("pkg"), javaInfo().pkg);
@@ -220,10 +222,9 @@ public class UiBaseBuilder {
                     public boolean each(int idIndex, IdTools.Id id) {
                         uiBase.onClickCase(clickViewInfoIndex, idIndex, id.toString());
                         if (info.inAct.get(clickViewInfoIndex)) {
-                            BaseTools.getActBaseInfoWithParents(UiBaseBuilder.this, new BaseTs.EachTs<UiBaseBuilder>() {
+                            BaseTools.getThisWithParents(UiBaseBuilder.this, getParentGetter(), new BaseTs.EachTs<UiBaseBuilder>() {
                                 @Override
                                 public boolean each(int position, UiBaseBuilder uiBaseBuilder) {
-
                                     Ts.ts(uiBaseBuilder.viewInfos).convert(new BaseTs.Convert<LayoutTools.ViewInfo, LayoutTools.ViewInfo>() {
                                         @Override
                                         public LayoutTools.ViewInfo convert(int index, LayoutTools.ViewInfo viewInfo) {
@@ -247,7 +248,6 @@ public class UiBaseBuilder {
         //onclick继承
         uiBase.isSuperOnClick(hasBaseClass());
     }
-
 
     private void colorStr() {
         //colorStr

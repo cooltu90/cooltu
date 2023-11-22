@@ -2,148 +2,108 @@ package com.codingtu.cooltu.processor.lib.tools;
 
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
-import com.codingtu.cooltu.processor.bean.ActBaseInfo;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
-import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
+import com.codingtu.cooltu.processor.deal.FragmentBaseDeal;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**************************************************
- *
- *   ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
- *  ┃   获取全部父类ActBaseInfo（包括自己）   ┃
- * ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
- * {@link #getActBaseInfoWithParents(ActBaseInfo, UiBaseBuilder, BaseTs.EachTs)}
- *
- *   ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
- *  ┃   获取全部父类ActBaseBuilder（包括自己）   ┃
- * ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
- * {@link #getActBaseBuilderWithParents(String, BaseTs.EachTs)}
- *
- *   ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
- *  ┃   获取全部子类ActBaseBuilder（包括自己）   ┃
- * ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
- * {@link #getActBaseBuilderWithChilds(String, BaseTs.EachTs)}
- *
- *
- **************************************************/
 public class BaseTools {
 
 
     /**************************************************
      *
-     * 获取全部父类ActBaseInfo（包括自己）
+     * 获取全部父类（包括自己）
      *
      **************************************************/
-    public static void getActBaseInfoWithParents(UiBaseBuilder uiBaseBuilder, BaseTs.EachTs<UiBaseBuilder> eachTs) {
-        getActBaseInfoWithParents(uiBaseBuilder, new int[]{0}, eachTs);
-    }
 
-    private static void getActBaseInfoWithParents(UiBaseBuilder uiBaseBuilder, int[] indexs, BaseTs.EachTs<UiBaseBuilder> eachTs) {
-        if (uiBaseBuilder != null) {
-            eachTs.each(indexs[0]++, uiBaseBuilder);
-            if (uiBaseBuilder.hasBaseClass()) {
-                ActBaseBuilder builder = CurrentPath.actBaseBuilder(uiBaseBuilder.baseClass);
-                if (builder != null) {
-                    getActBaseInfoWithParents(builder.getUiBaseBuilder(), indexs, eachTs);
-                }
-            }
-        }
-    }
-
-    /**************************************************
-     *
-     * 获取全部父类ActBaseBuilder（包括自己）
-     *
-     **************************************************/
-    public static void getActBaseBuilderWithParents(String child, BaseTs.EachTs<ActBaseBuilder> eachTs) {
-        getActBaseBuilderWithParents(child, new int[]{0}, eachTs);
-    }
-
-    private static void getActBaseBuilderWithParents(String child, int[] indexs, BaseTs.EachTs<ActBaseBuilder> eachTs) {
-        ActBaseBuilder builder = CurrentPath.actBaseBuilder(child);
-        if (builder != null) {
-            eachTs.each(indexs[0]++, builder);
-            UiBaseBuilder uiBaseBuilder = builder.getUiBaseBuilder();
-            if (uiBaseBuilder != null && uiBaseBuilder.hasBaseClass()) {
-                getActBaseBuilderWithParents(uiBaseBuilder.baseClass, indexs, eachTs);
-            }
-        }
-    }
-
-    /**************************************************
-     *
-     * 获取全部子类ActBaseBuilder（包括自己）
-     *
-     **************************************************/
-    public static List<ActBaseBuilder> getActBaseBuilderWithChilds(String parent) {
-        return getBaseBuilderWithChilds(parent, getActBaseBuilder());
-    }
-
-
-    public static void getActBaseBuilderWithChilds(String parent, BaseTs.EachTs<ActBaseBuilder> eachTs) {
-        getBaseBuilderWithChilds(parent, new int[0], eachTs, getActBaseBuilder());
-    }
-
-    private static GetBaseBuilder<ActBaseBuilder> getActBaseBuilder() {
-        return new GetBaseBuilder<ActBaseBuilder>() {
+    public static BaseTools.GetParent<UiBaseBuilder> getActBaseParentGetter() {
+        return new BaseTools.GetParent<UiBaseBuilder>() {
             @Override
-            public ActBaseBuilder getBaseBuilder(String parent) {
-                return CurrentPath.actBaseBuilder(parent);
+            public boolean hasParent(UiBaseBuilder uiBaseBuilder) {
+                return uiBaseBuilder.hasBaseClass();
+            }
+
+            @Override
+            public UiBaseBuilder getParent(UiBaseBuilder uiBaseBuilder) {
+                return CurrentPath.actBaseBuilder(uiBaseBuilder.baseClass).getUiBaseBuilder();
             }
         };
     }
 
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
-
-    public static <B> List<B> getBaseBuilderWithChilds(String parent, GetBaseBuilder<B> getBaseBuilder) {
-        ArrayList<B> list = new ArrayList<>();
-        getBaseBuilderWithChilds(parent, new BaseTs.EachTs<B>() {
+    public static BaseTools.GetParent<UiBaseBuilder> getFragBaseParentGetter() {
+        return new BaseTools.GetParent<UiBaseBuilder>() {
             @Override
-            public boolean each(int position, B baseBuilder) {
-                list.add(baseBuilder);
-                return false;
+            public boolean hasParent(UiBaseBuilder uiBaseBuilder) {
+                return uiBaseBuilder.hasBaseClass();
             }
-        }, getBaseBuilder);
-        return list;
+
+            @Override
+            public UiBaseBuilder getParent(UiBaseBuilder uiBaseBuilder) {
+                return CurrentPath.fragBaseBuilder(uiBaseBuilder.baseClass).getUiBaseBuilder();
+            }
+        };
     }
 
 
-    public static <B> void getBaseBuilderWithChilds(String parent, BaseTs.EachTs<B> eachTs, GetBaseBuilder<B> getBaseBuilder) {
-        getBaseBuilderWithChilds(parent, new int[]{0}, eachTs, getBaseBuilder);
+    public static <T> void getThisWithParents(T t, GetParent<T> getParent, BaseTs.EachTs<T> eachTs) {
+        getThisWithParents(t, new int[]{0}, getParent, eachTs);
     }
 
-    private static <B> void getBaseBuilderWithChilds(String parent, int[] indexs, BaseTs.EachTs<B> eachTs, GetBaseBuilder<B> getBaseBuilder) {
-        B builder = getBaseBuilder.getBaseBuilder(parent);
-        if (builder != null) {
-            eachTs.each(indexs[0]++, builder);
-            List<String> childs = ActBaseDeal.map.get(parent);
-            int count = CountTool.count(childs);
-            if (count > 0) {
-                for (int i = 0; i < count; i++) {
-                    String child = childs.get(i);
-                    getBaseBuilderWithChilds(child, indexs, eachTs, getBaseBuilder);
+    private static <T> void getThisWithParents(T t, int[] indexs, GetParent<T> getParent, BaseTs.EachTs<T> eachTs) {
+        if (t != null) {
+            eachTs.each(indexs[0]++, t);
+            if (getParent.hasParent(t)) {
+                T parent = getParent.getParent(t);
+                if (parent != null) {
+                    getThisWithParents(parent, indexs, getParent, eachTs);
                 }
             }
         }
     }
 
-    public static interface GetBaseBuilder<B> {
-        public B getBaseBuilder(String parent);
+    public static interface GetParent<T> {
+        boolean hasParent(T t);
+
+        T getParent(T t);
     }
 
     /**************************************************
      *
-     *
+     * 获取全部子类（包括自己）
      *
      **************************************************/
+    public static BaseTools.GetThis<UiBaseBuilder> getActBaseChildGetter() {
+        return new BaseTools.GetThis<UiBaseBuilder>() {
+            @Override
+            public UiBaseBuilder getThis(String thisClass) {
+                return CurrentPath.actBaseBuilder(thisClass).getUiBaseBuilder();
+            }
+
+            @Override
+            public List<String> getChilds(String thisClass) {
+                return ActBaseDeal.map.get(thisClass);
+            }
+        };
+    }
+
+    public static BaseTools.GetThis<UiBaseBuilder> getFragBaseChildGetter() {
+        return new BaseTools.GetThis<UiBaseBuilder>() {
+            @Override
+            public UiBaseBuilder getThis(String thisClass) {
+                return CurrentPath.fragBaseBuilder(thisClass).getUiBaseBuilder();
+            }
+
+            @Override
+            public List<String> getChilds(String thisClass) {
+                return FragmentBaseDeal.map.get(thisClass);
+            }
+        };
+    }
+
+
     public static <T> List<T> getThisWithChilds(String thisClass, GetThis<T> getThis) {
         ArrayList<T> list = new ArrayList<>();
         getThisWithChilds(thisClass, new BaseTs.EachTs<T>() {

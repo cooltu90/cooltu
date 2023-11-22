@@ -23,6 +23,12 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.f
     protected com.codingtu.cooltu.ui.adapter.CatAdapter catAdapter;
     protected com.codingtu.cooltu.ui.adapter.DogAdapter dogAdapter;
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -426,6 +426,12 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("");
         lines.add("public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, [[netBackIFullName]] {");
         lines.add("[[field]]");
+        lines.add("");
+        lines.add("    @Override");
+        lines.add("    public void onCreate(@Nullable Bundle savedInstanceState) {");
+        lines.add("        super.onCreate(savedInstanceState);");
+        lines.add("");
+        lines.add("    }");
         lines.add("[[layout]]");
         lines.add("");
         lines.add("    @Override");

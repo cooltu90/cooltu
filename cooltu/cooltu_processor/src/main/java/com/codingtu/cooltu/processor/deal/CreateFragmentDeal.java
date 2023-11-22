@@ -1,19 +1,12 @@
 package com.codingtu.cooltu.processor.deal;
 
-import com.codingtu.cooltu.constant.FullName;
-import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.file.copy.FileCopy;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
-import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 import com.codingtu.cooltu.processor.annotation.create.CreateFragment;
-import com.codingtu.cooltu.processor.bean.ActBaseInfo;
-import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
-import com.codingtu.cooltu.processor.builder.impl.ActResBuilder;
 import com.codingtu.cooltu.processor.builder.impl.FragResBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
-import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 
 import java.io.File;
