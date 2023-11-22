@@ -1,24 +1,15 @@
-package com.codingtu.cooltu.lib4a.tools;
+package com.codingtu.cooltu.lib4j.tools;
 
 import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FileType;
-import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
-import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.tools.StringTool;
+import com.codingtu.cooltu.lib4j.log.LibLogs;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 public class Zip implements OnDestroy {
 
@@ -157,46 +148,20 @@ public class Zip implements OnDestroy {
             onStart.onStart();
         }
 
-        Observable.create(new ObservableOnSubscribe<Long>() {
-                    @Override
-                    public void subscribe(ObservableEmitter<Long> emitter) throws Exception {
-                        String zipPath = desc.getAbsolutePath();
-                        totalLen = getLength(src);
-                        lastTime = System.currentTimeMillis();
-                        zip(src, zipPath, emitter);
-                        emitter.onNext(totalLen);
-                    }
-                }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Long>() {
-                    @Override
-                    public void accept(Long currentLen) throws Exception {
-                        if (onProgress != null) {
-                            onProgress.onProgress(totalLen, currentLen);
-                        }
+        String zipPath = desc.getAbsolutePath();
+        totalLen = getLength(src);
+        lastTime = System.currentTimeMillis();
 
-                        if (currentLen == totalLen) {
-                            //完成
-                            if (onFinish != null) {
-                                onFinish.onFinish(desc);
-                            }
-                            destroy();
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        onError(throwable);
-                    }
-                });
-
+        zip(src, zipPath);
+        onProgress(totalLen);
+        onFinish(desc);
     }
 
-    private void zip(File needPressFile, String zipFilePath, ObservableEmitter<Long> emitter) throws Exception {
+    private void zip(File needPressFile, String zipFilePath) {
         ZipOutputStream out = null;
         try {
             out = new ZipOutputStream(new FileOutputStream(zipFilePath));
-            recursivePressFile(out, needPressFile, "", emitter);
+            recursivePressFile(out, needPressFile, "");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -204,29 +169,29 @@ public class Zip implements OnDestroy {
                 try {
                     out.close();
                 } catch (Exception e) {
-                    Logs.e(e);
+                    LibLogs.e(e);
                 }
             }
         }
     }
 
-    private void recursivePressFile(ZipOutputStream out, File needPressFile, String parentDirName, ObservableEmitter<Long> emitter) throws Exception {
+    private void recursivePressFile(ZipOutputStream out, File needPressFile, String parentDirName) throws Exception {
         if (needPressFile.isDirectory()) {
             File[] files = needPressFile.listFiles();
             for (File file : files) {
-                recursivePressFile(out, file, (StringTool.isBlank(parentDirName) ? ("") : (parentDirName + Constant.SEPARATOR)) + needPressFile.getName(), emitter);
+                recursivePressFile(out, file, (StringTool.isBlank(parentDirName) ? ("") : (parentDirName + Constant.SEPARATOR)) + needPressFile.getName());
             }
         } else {
             if (pass != null && pass.pass(needPressFile)) {
                 return;
             }
-            pressFile(out, needPressFile, parentDirName, emitter);
+            pressFile(out, needPressFile, parentDirName);
 
         }
 
     }
 
-    private void pressFile(ZipOutputStream out, File file, String parentDirName, ObservableEmitter<Long> emitter) throws Exception {
+    private void pressFile(ZipOutputStream out, File file, String parentDirName) throws Exception {
         FileInputStream input = null;
         try {
             input = new FileInputStream(file);
@@ -245,8 +210,9 @@ public class Zip implements OnDestroy {
 
                 long nowTime = System.currentTimeMillis();
                 if (nowTime - lastTime > 100) {
-                    if (zipedLen < totalLen)
-                        emitter.onNext(zipedLen);
+                    if (zipedLen < totalLen) {
+                        onProgress(zipedLen);
+                    }
                     lastTime = nowTime;
                 }
 
@@ -258,7 +224,7 @@ public class Zip implements OnDestroy {
                 try {
                     input.close();
                 } catch (Exception e) {
-                    Logs.e(e);
+                    LibLogs.e(e);
                 }
             }
             input = null;
@@ -283,11 +249,22 @@ public class Zip implements OnDestroy {
         return len;
     }
 
+    private void onProgress(long currentLen) {
+        if (this.onProgress != null) {
+            this.onProgress.onProgress(totalLen, currentLen);
+        }
+    }
+
+    private void onFinish(File file) {
+        if (this.onFinish != null) {
+            this.onFinish.onFinish(file);
+        }
+    }
+
     private void onError(Throwable throwable) {
         if (onError != null) {
             onError.onError(throwable);
         }
         destroy();
     }
-
 }
