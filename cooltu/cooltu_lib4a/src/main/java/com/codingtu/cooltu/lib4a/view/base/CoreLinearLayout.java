@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
+import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4a.tools.DestoryTool;
 
 public class CoreLinearLayout extends LinearLayout implements OnDestroy {

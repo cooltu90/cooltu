@@ -11,6 +11,7 @@ import com.codingtu.cooltu.lib4a.tools.ScreenAdaptationTool;
 import com.codingtu.cooltu.lib4a.tools.StatusBarTool;
 import com.codingtu.cooltu.lib4a.tools.ToastTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
+import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 

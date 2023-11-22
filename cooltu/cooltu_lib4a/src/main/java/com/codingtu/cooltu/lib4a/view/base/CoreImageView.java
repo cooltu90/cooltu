@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
-import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
+import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4a.tools.DestoryTool;
 
 public class CoreImageView extends AppCompatImageView implements OnDestroy {

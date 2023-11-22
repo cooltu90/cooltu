@@ -1,6 +1,6 @@
 package com.codingtu.cooltu.lib4a.tools;
 
-import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
+import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;

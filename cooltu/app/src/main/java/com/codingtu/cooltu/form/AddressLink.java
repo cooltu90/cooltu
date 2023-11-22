@@ -7,7 +7,7 @@ import com.codingtu.cooltu.bean.Forms;
 import com.codingtu.cooltu.lib4a.form.CoreFormLink;
 import com.codingtu.cooltu.lib4a.form.FormLink;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
-import com.codingtu.cooltu.lib4a.uicore.Destroys;
+import com.codingtu.cooltu.lib4j.destory.Destroys;
 
 public class AddressLink extends CoreFormLink {
     private Forms forms;

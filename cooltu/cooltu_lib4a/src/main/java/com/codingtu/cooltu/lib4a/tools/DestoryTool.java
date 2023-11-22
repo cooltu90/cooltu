@@ -2,8 +2,8 @@ package com.codingtu.cooltu.lib4a.tools;
 
 import android.content.Context;
 
-import com.codingtu.cooltu.lib4a.uicore.Destroys;
-import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
+import com.codingtu.cooltu.lib4j.destory.Destroys;
+import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 
 public class DestoryTool {
 

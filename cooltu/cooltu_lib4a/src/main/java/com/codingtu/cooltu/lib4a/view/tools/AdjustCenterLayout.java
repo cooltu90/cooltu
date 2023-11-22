@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import com.codingtu.cooltu.lib4a.uicore.Destroys;
-import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
+import com.codingtu.cooltu.lib4j.destory.Destroys;
+import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4a.tools.Margins;
 import com.codingtu.cooltu.lib4a.tools.MobileTool;
 

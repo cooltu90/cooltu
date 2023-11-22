@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.codingtu.cooltu.lib4a.uicore.CoreUiBase;
 import com.codingtu.cooltu.lib4a.uicore.CoreActInterface;
-import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
+import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4a.tools.ActTool;
 
 public class CoreActivity extends AppCompatActivity implements CoreActInterface {

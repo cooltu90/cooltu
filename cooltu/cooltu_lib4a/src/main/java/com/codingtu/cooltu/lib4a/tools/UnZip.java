@@ -1,7 +1,7 @@
 package com.codingtu.cooltu.lib4a.tools;
 
 import com.codingtu.cooltu.constant.Constant;
-import com.codingtu.cooltu.lib4a.uicore.OnDestroy;
+import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 
 import java.io.File;
 import java.io.FileOutputStream;
