@@ -50,15 +50,21 @@ public class FullName {
     //permission
     public static final String PERMISSIONS_SHORT_NAME = "Permissions";
     public static final String PERMISSIONS = Pkg.CORE_TOOLS + "." + PERMISSIONS_SHORT_NAME;
-    //actbase
+    //to
     public static final String TO_SHORT_NAME = "To";
     public static final String TO = Pkg.ANNOTATION_TOOLS + "." + TO_SHORT_NAME;
     //actbase
     public static final String ACT_BASE_SHORT_NAME = "ActBase";
     public static final String ACT_BASE = Pkg.ANNOTATION_UI + "." + ACT_BASE_SHORT_NAME;
+    //actbase
+    public static final String FRAGMENT_BASE_SHORT_NAME = "FragmentBase";
+    public static final String FRAGMENT_BASE = Pkg.ANNOTATION_UI + "." + FRAGMENT_BASE_SHORT_NAME;
     //res
     public static final String RES_FOR_SHORT_NAME = "ResFor";
     public static final String RES_FOR = Pkg.ANNOTATION_RES + "." + RES_FOR_SHORT_NAME;
+    //res
+    public static final String RES_FOR_FRAGMENT_SHORT_NAME = "ResForFragment";
+    public static final String RES_FOR_FRAGMENT = Pkg.ANNOTATION_RES + "." + RES_FOR_FRAGMENT_SHORT_NAME;
     //net
     public static final String NET_TOOL = Pkg.LIB4A_NET + ".NetTool";
     public static final String CORE_SEND_PARAMS = Pkg.LIB4A_NET + ".bean.CoreSendParams";
