@@ -54,6 +54,7 @@ public class CreateActDeal extends TypeBaseDeal {
             }
         });
         uiBaseBuilder.layout = new IdTools.Id(Pkg.R, "layout", layoutName);
+        uiBaseBuilder.uiFullName = actJavaInfo.fullName;
         //创建Act
         new CreateActBuilder(actJavaInfo, layoutName, actResJavaInfo, actBaseJavaInfo);
         //创建Manifest

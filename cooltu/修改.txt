@@ -1,2 +1,2 @@
-1、增加adapter创建
-2、fragment支持
+1、创建Fragment
+2、使用dialog
