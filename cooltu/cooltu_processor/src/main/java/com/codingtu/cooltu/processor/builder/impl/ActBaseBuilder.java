@@ -21,6 +21,7 @@ import com.codingtu.cooltu.processor.annotation.form.view.BindSeekBar;
 import com.codingtu.cooltu.processor.annotation.form.view.BindTextView;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
@@ -33,6 +34,7 @@ import com.codingtu.cooltu.processor.builder.subdeal.BindTextViewDeal;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.FormBeanDeal;
 import com.codingtu.cooltu.processor.lib.log.Logs;
+import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
@@ -89,7 +91,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
     @Override
     protected boolean isBuild() {
-        return true;
+        return false;
     }
 
     @Override
@@ -185,6 +187,51 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             checkFormsIf(formBeanSimpleName);
             dealFormBean(formBeanTe, name);
         }
+
+        Ts.ls(uiBaseBuilder.dialogUses, new BaseTs.EachTs<VariableElement>() {
+            @Override
+            public boolean each(int position, VariableElement ve) {
+                KV<String, String> kv = ElementTools.getFieldKv(ve);
+                DialogUse dialogUse = ve.getAnnotation(DialogUse.class);
+                dialog(position, FullName.DIALOG, kv.v);
+                String dialogClassName = ConvertTool.toClassType(kv.v);
+
+                String objClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                    @Override
+                    public Object get() {
+                        return dialogUse.objType();
+                    }
+                });
+
+                boolean isVoid = ClassTool.isVoid(objClass);
+
+                JavaInfo objJavaInfo = CurrentPath.javaInfo(objClass);
+
+                String objName = ConvertTool.toMethodType(objJavaInfo.name);
+
+
+                for (int i = 0; i < 2; i++) {
+                    StringBuilder showDialogParamSb = new StringBuilder();
+                    if (i != 0) {
+                        showDialogParamSb.append("String content, ");
+                        isShowDialogElse(position, i, true);
+                        showDialogUpdataContentIf(position, i, kv.v);
+
+                    }
+                    if (!isVoid) {
+                        showDialogParamSb.append(objClass).append(" ").append(objName);
+                    }
+
+                    showDialog(position, i, dialogClassName, showDialogParamSb.toString(), kv.v,
+                            FullName.DIALOG, dialogUse.title(), dialogUse.leftBtText(), dialogUse.rightBtText(),
+                            Constant.DEFAULT_DIALOG_LAYOUT, FullName.DIALOG_ON_BT_CLICK, isVoid ? "null" : objName);
+                }
+
+
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -651,6 +698,47 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     }
                                                                                                     [<sub>][if][setTextWatcherMethod]
                                                                                                     [<sub>][for][editDialog]
+                                                                                                    [<sub>][for][dialog]
+    private [dialogFullName] [dialogName];
+                                                                                                    [<sub>][for][showDialog]
+    protected void show[dialogClassName]([showDialogParam]) {
+        if ([dialogName] == null) {
+            [dialogName] = new [dialogFullName](getAct())
+                    .setTitle("[title]")
+                                                                                                    [<sub>][if][showDialogSetContentStr]
+                    .setContent("请选择照片的来源")
+                                                                                                    [<sub>][if][showDialogSetContentStr]
+                                                                                                    [<sub>][if][showDialogSetContent]
+                    .setContent(content)
+                                                                                                    [<sub>][if][showDialogSetContent]
+                    .setLeftBtText("[left]")
+                    .setRighBtText("[right]")
+                    .setLayout([layout])
+                    .setOnBtClick(new [onBtClickFullName]() {
+                        @Override
+                        public void onLeftClick(Object obj) {
+                            [dialogName]Left([if:showDialogLeftObj][if:showDialogLeftObjConvert]([type])[if:showDialogLeftObjConvert]obj[if:showDialogLeftObj]);
+                        }
+
+                        @Override
+                        public void onRightClick(Object obj) {
+                            [dialogName]Right([if:showDialogRightObj][if:showDialogRightObjConvert]([type])[if:showDialogRightObjConvert]obj[if:showDialogRightObj]);
+                        }
+                    })
+                    .build();
+        }[if:showDialogElse] else {[if:showDialogElse]
+                                                                                                    [<sub>][if][showDialogUpdataContent]
+            [dialogName].updateContent(content);
+        }
+                                                                                                    [<sub>][if][showDialogUpdataContent]
+        [dialogName].setObject([obj]);
+        [dialogName].show();
+    }
+                                                                                                    [<sub>][for][showDialog]
+    protected void [dialogName]Left([if:leftParam][type] [name][if:leftParam]) { }
+    protected void [dialogName]Right([if:rightParam][type] [name][if:rightParam]) { }
+                                                                                                    [<sub>][for][dialog]
+
 }
 
 model_temp_end */

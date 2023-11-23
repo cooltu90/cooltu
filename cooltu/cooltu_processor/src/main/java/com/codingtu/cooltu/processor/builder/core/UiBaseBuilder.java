@@ -53,6 +53,7 @@ public abstract class UiBaseBuilder {
     public List<ActBack> actBacks = new ArrayList<>();
     public List<ExecutableElement> actBackMethods = new ArrayList<>();
     public List<VariableElement> editDialogUses = new ArrayList<>();
+    public List<VariableElement> dialogUses = new ArrayList<>();
 
     public String finalBaseClass;
     public boolean isToastDialog;

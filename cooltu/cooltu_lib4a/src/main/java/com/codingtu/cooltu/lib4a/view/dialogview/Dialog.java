@@ -5,11 +5,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.codingtu.cooltu.lib4a.R;
-import com.codingtu.cooltu.lib4j.destory.Destroys;
-import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4a.tools.InflateTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4a.view.layerview.RelativeLayerView;
+import com.codingtu.cooltu.lib4j.destory.Destroys;
+import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 
 public final class Dialog implements View.OnClickListener, OnDestroy {
 
@@ -17,13 +17,15 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
     private String title;
     private String content;
     private RelativeLayerView rlv;
-    private View yesBt;
-    private View noBt;
+    private View rightBt;
+    private View leftBt;
     private View inflate;
     private Object obj;
-    private Yes yes;
+    private OnBtClick onBtClick;
     private int layout;
     private View contentTv;
+    private String leftBtText;
+    private String rightBtText;
 
 
     public Dialog(Activity act) {
@@ -48,8 +50,18 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
         return this;
     }
 
-    public Dialog setYes(Yes yes) {
-        this.yes = yes;
+    public Dialog setOnBtClick(OnBtClick onBtClick) {
+        this.onBtClick = onBtClick;
+        return this;
+    }
+
+    public Dialog setLeftBtText(String text) {
+        this.leftBtText = text;
+        return this;
+    }
+
+    public Dialog setRighBtText(String text) {
+        this.rightBtText = text;
         return this;
     }
 
@@ -65,10 +77,12 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
         contentTv = inflate.findViewById(R.id.dialogContentTv);
         ViewTool.setText(contentTv, content);
 
-        yesBt = inflate.findViewById(R.id.dialogYesBt);
-        noBt = inflate.findViewById(R.id.dialogNoBt);
-        yesBt.setOnClickListener(this);
-        noBt.setOnClickListener(this);
+        leftBt = inflate.findViewById(R.id.dialogLeftBt);
+        rightBt = inflate.findViewById(R.id.dialogRightBt);
+        ViewTool.setText(leftBt, leftBtText);
+        ViewTool.setText(rightBt, rightBtText);
+        leftBt.setOnClickListener(this);
+        rightBt.setOnClickListener(this);
         ViewTool.inRelativeCenter(inflate);
         return this;
     }
@@ -80,28 +94,31 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
     @Override
     public void onClick(View v) {
         int vId = v.getId();
-        if (vId == R.id.dialogYesBt) {
-            clickYesBt(v);
+        if (vId == R.id.dialogRightBt) {
+            clickRightBt(v);
             obj = null;
             return;
         }
 
-        if (vId == R.id.dialogNoBt) {
-            clickNoBt(v);
+        if (vId == R.id.dialogLeftBt) {
+            clickLeftBt(v);
             obj = null;
             return;
         }
     }
 
-    private void clickYesBt(View v) {
+    private void clickRightBt(View v) {
         rlv.hidden();
-        if (yes != null) {
-            yes.yes(obj);
+        if (onBtClick != null) {
+            onBtClick.onRightClick(obj);
         }
     }
 
-    private void clickNoBt(View v) {
+    private void clickLeftBt(View v) {
         rlv.hidden();
+        if (onBtClick != null) {
+            onBtClick.onLeftClick(obj);
+        }
     }
 
     public Dialog setObject(Object obj) {
@@ -111,17 +128,17 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
 
     @Override
     public void destroy() {
-        if (yesBt != null) {
-            yesBt.setOnClickListener(null);
+        if (rightBt != null) {
+            rightBt.setOnClickListener(null);
         }
-        if (noBt != null) {
-            noBt.setOnClickListener(null);
+        if (leftBt != null) {
+            leftBt.setOnClickListener(null);
         }
-        yesBt = null;
-        noBt = null;
+        rightBt = null;
+        leftBt = null;
         rlv = null;
         inflate = null;
-        yes = null;
+        onBtClick = null;
         obj = null;
         contentTv = null;
         act = null;
@@ -131,8 +148,9 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
         rlv.show();
     }
 
+    public static interface OnBtClick {
+        public void onLeftClick(Object obj);
 
-    public static interface Yes {
-        public void yes(Object obj);
+        public void onRightClick(Object obj);
     }
 }

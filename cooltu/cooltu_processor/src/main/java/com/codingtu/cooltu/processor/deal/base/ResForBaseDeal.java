@@ -13,6 +13,7 @@ import com.codingtu.cooltu.processor.annotation.res.ResFor;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.annotation.ui.InBase;
 import com.codingtu.cooltu.processor.annotation.ui.NoStart;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.NoticeDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.ToastDialogUse;
@@ -100,6 +101,11 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
         EditDialogUse editDialogUse = ve.getAnnotation(EditDialogUse.class);
         if (editDialogUse != null) {
             uiBaseBuilder.editDialogUses.add(ve);
+        }
+
+        DialogUse dialogUse = ve.getAnnotation(DialogUse.class);
+        if (dialogUse != null) {
+            uiBaseBuilder.dialogUses.add(ve);
         }
     }
 

@@ -120,6 +120,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> editDialogCounts;
     protected StringBuilder editDialogSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> editDialog;
+    protected java.util.Map<String, Boolean> dialogIfs;
+    protected java.util.Map<String, Integer> dialogCounts;
+    protected StringBuilder dialogSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> dialog;
 
     public ActBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -240,6 +244,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         editDialogCounts = new java.util.HashMap<>();
         editDialogSb = map.get("editDialog");
         editDialog = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        dialogIfs = new java.util.HashMap<>();
+        dialogCounts = new java.util.HashMap<>();
+        dialogSb = map.get("dialog");
+        dialog = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
 
@@ -530,6 +538,20 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.editDialog, getForKey("editDialog", i0), editDialogFullName, edName, edClassName, edName, edName, editDialogFullName, title, hint, inputType, layout, editDialogFullName, edName, edName, edName, setObject, edName, edName);
         countAdd(editDialogCounts, getForKey("editDialog"));
     }
+    public int showDialogCount(int i0) {
+        return count(dialogCounts, getForKey("showDialog", i0));
+    }
+    public void showDialog(int i0, int i1, String dialogClassName, String showDialogParam, String dialogName, String dialogFullName, String title, String left, String right, String layout, String onBtClickFullName, String obj) {
+        addForMap(this.dialog, getForKey("showDialog", i0, i1), dialogClassName, showDialogParam, dialogName, dialogName, dialogFullName, title, left, right, layout, onBtClickFullName, dialogName, dialogName, dialogName, obj, dialogName);
+        countAdd(dialogCounts, getForKey("showDialog", i0));
+    }
+    public int dialogCount() {
+        return count(dialogCounts, getForKey("dialog"));
+    }
+    public void dialog(int i0, String dialogFullName, String dialogName) {
+        addForMap(this.dialog, getForKey("dialog", i0), dialogFullName, dialogName, dialogName, dialogName);
+        countAdd(dialogCounts, getForKey("dialog"));
+    }
 
     public void layoutIf(String layout) {
         addForMap(this.layout, getIfKey("layout"), layout);
@@ -651,6 +673,41 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     public void setTextWatcherMethodIf(int i0, String edTextWatcherFullName, String edClassName) {
         addForMap(this.editDialog, getIfKey("setTextWatcherMethod", i0), edTextWatcherFullName, edClassName);
         editDialogIfs.put(getIfKey("setTextWatcherMethod", i0), true);
+    }
+    public void isShowDialogSetContentStr(int i0, int i1, boolean is) {
+        dialogIfs.put(getIfKey("showDialogSetContentStr", i0, i1), is);
+    }
+    public void isShowDialogSetContent(int i0, int i1, boolean is) {
+        dialogIfs.put(getIfKey("showDialogSetContent", i0, i1), is);
+    }
+    public void showDialogLeftObjConvertIf(int i0, int i1, String type) {
+        addForMap(this.dialog, getIfKey("showDialogLeftObjConvert", i0, i1), type);
+        dialogIfs.put(getIfKey("showDialogLeftObjConvert", i0, i1), true);
+    }
+    public void isShowDialogLeftObj(int i0, int i1, boolean is) {
+        dialogIfs.put(getIfKey("showDialogLeftObj", i0, i1), is);
+    }
+    public void showDialogRightObjConvertIf(int i0, int i1, String type) {
+        addForMap(this.dialog, getIfKey("showDialogRightObjConvert", i0, i1), type);
+        dialogIfs.put(getIfKey("showDialogRightObjConvert", i0, i1), true);
+    }
+    public void isShowDialogRightObj(int i0, int i1, boolean is) {
+        dialogIfs.put(getIfKey("showDialogRightObj", i0, i1), is);
+    }
+    public void isShowDialogElse(int i0, int i1, boolean is) {
+        dialogIfs.put(getIfKey("showDialogElse", i0, i1), is);
+    }
+    public void showDialogUpdataContentIf(int i0, int i1, String dialogName) {
+        addForMap(this.dialog, getIfKey("showDialogUpdataContent", i0, i1), dialogName);
+        dialogIfs.put(getIfKey("showDialogUpdataContent", i0, i1), true);
+    }
+    public void leftParamIf(int i0, String type, String name) {
+        addForMap(this.dialog, getIfKey("leftParam", i0), type, name);
+        dialogIfs.put(getIfKey("leftParam", i0), true);
+    }
+    public void rightParamIf(int i0, String type, String name) {
+        addForMap(this.dialog, getIfKey("rightParam", i0), type, name);
+        dialogIfs.put(getIfKey("rightParam", i0), true);
     }
 
     @Override
@@ -1111,6 +1168,86 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 addLnTag(editDialogSb, "    }");
             }
         }
+        for (int i0 = 0; i0 < count(dialogCounts, getForKey("dialog")); i0++) {
+            List<String> dialog0 = dialog.get(getForKey("dialog", i0));
+            addLnTag(dialogSb, "    private [dialogFullName] [dialogName];", dialog0.get(0), dialog0.get(1));
+            for (int i1 = 0; i1 < count(dialogCounts, getForKey("showDialog", i0)); i1++) {
+                List<String> dialog1 = dialog.get(getForKey("showDialog", i0, i1));
+                addLnTag(dialogSb, "    protected void show[dialogClassName]([showDialogParam]) {", dialog1.get(0), dialog1.get(1));
+                addLnTag(dialogSb, "        if ([dialogName] == null) {", dialog1.get(2));
+                addLnTag(dialogSb, "            [dialogName] = new [dialogFullName](getAct())", dialog1.get(3), dialog1.get(4));
+                addLnTag(dialogSb, "                    .setTitle(\"[title]\")", dialog1.get(5));
+                if (isIf(dialogIfs, getIfKey("showDialogSetContentStr", i0, i1))) {
+                    List<String> dialog2 = dialog.get(getIfKey("showDialogSetContentStr", i0, i1));
+                    addLnTag(dialogSb, "                    .setContent(\"请选择照片的来源\")");
+                }
+                if (isIf(dialogIfs, getIfKey("showDialogSetContent", i0, i1))) {
+                    List<String> dialog2 = dialog.get(getIfKey("showDialogSetContent", i0, i1));
+                    addLnTag(dialogSb, "                    .setContent(content)");
+                }
+                addLnTag(dialogSb, "                    .setLeftBtText(\"[left]\")", dialog1.get(6));
+                addLnTag(dialogSb, "                    .setRighBtText(\"[right]\")", dialog1.get(7));
+                addLnTag(dialogSb, "                    .setLayout([layout])", dialog1.get(8));
+                addLnTag(dialogSb, "                    .setOnBtClick(new [onBtClickFullName]() {", dialog1.get(9));
+                addLnTag(dialogSb, "                        @Override");
+                addLnTag(dialogSb, "                        public void onLeftClick(Object obj) {");
+                StringBuilder showDialogLeftObjSb = new StringBuilder();
+                if (isIf(dialogIfs, getIfKey("showDialogLeftObj", i0, i1))) {
+                    List<String> dialog2 = dialog.get(getIfKey("showDialogLeftObj", i0, i1));
+                    StringBuilder showDialogLeftObjConvertSb = new StringBuilder();
+                    if (isIf(dialogIfs, getIfKey("showDialogLeftObjConvert", i0, i1))) {
+                        List<String> dialog3 = dialog.get(getIfKey("showDialogLeftObjConvert", i0, i1));
+                        addTag(showDialogLeftObjConvertSb, "([type])", dialog3.get(0));
+                    }
+                    addTag(showDialogLeftObjSb, "[showDialogLeftObjConvert]obj", showDialogLeftObjConvertSb.toString());
+                }
+                addLnTag(dialogSb, "                            [dialogName]Left([showDialogLeftObj]);", dialog1.get(10), showDialogLeftObjSb.toString());
+                addLnTag(dialogSb, "                        }");
+                addLnTag(dialogSb, "");
+                addLnTag(dialogSb, "                        @Override");
+                addLnTag(dialogSb, "                        public void onRightClick(Object obj) {");
+                StringBuilder showDialogRightObjSb = new StringBuilder();
+                if (isIf(dialogIfs, getIfKey("showDialogRightObj", i0, i1))) {
+                    List<String> dialog2 = dialog.get(getIfKey("showDialogRightObj", i0, i1));
+                    StringBuilder showDialogRightObjConvertSb = new StringBuilder();
+                    if (isIf(dialogIfs, getIfKey("showDialogRightObjConvert", i0, i1))) {
+                        List<String> dialog3 = dialog.get(getIfKey("showDialogRightObjConvert", i0, i1));
+                        addTag(showDialogRightObjConvertSb, "([type])", dialog3.get(0));
+                    }
+                    addTag(showDialogRightObjSb, "[showDialogRightObjConvert]obj", showDialogRightObjConvertSb.toString());
+                }
+                addLnTag(dialogSb, "                            [dialogName]Right([showDialogRightObj]);", dialog1.get(11), showDialogRightObjSb.toString());
+                addLnTag(dialogSb, "                        }");
+                addLnTag(dialogSb, "                    })");
+                addLnTag(dialogSb, "                    .build();");
+                StringBuilder showDialogElseSb = new StringBuilder();
+                if (isIf(dialogIfs, getIfKey("showDialogElse", i0, i1))) {
+                    List<String> dialog2 = dialog.get(getIfKey("showDialogElse", i0, i1));
+                    addTag(showDialogElseSb, " else {");
+                }
+                addLnTag(dialogSb, "        }[showDialogElse]", showDialogElseSb.toString());
+                if (isIf(dialogIfs, getIfKey("showDialogUpdataContent", i0, i1))) {
+                    List<String> dialog2 = dialog.get(getIfKey("showDialogUpdataContent", i0, i1));
+                    addLnTag(dialogSb, "            [dialogName].updateContent(content);", dialog2.get(0));
+                    addLnTag(dialogSb, "        }");
+                }
+                addLnTag(dialogSb, "        [dialogName].setObject([obj]);", dialog1.get(12), dialog1.get(13));
+                addLnTag(dialogSb, "        [dialogName].show();", dialog1.get(14));
+                addLnTag(dialogSb, "    }");
+            }
+            StringBuilder leftParamSb = new StringBuilder();
+            if (isIf(dialogIfs, getIfKey("leftParam", i0))) {
+                List<String> dialog1 = dialog.get(getIfKey("leftParam", i0));
+                addTag(leftParamSb, "[type] [name]", dialog1.get(0), dialog1.get(1));
+            }
+            addLnTag(dialogSb, "    protected void [dialogName]Left([leftParam]) { }", dialog0.get(2), leftParamSb.toString());
+            StringBuilder rightParamSb = new StringBuilder();
+            if (isIf(dialogIfs, getIfKey("rightParam", i0))) {
+                List<String> dialog1 = dialog.get(getIfKey("rightParam", i0));
+                addTag(rightParamSb, "[type] [name]", dialog1.get(0), dialog1.get(1));
+            }
+            addLnTag(dialogSb, "    protected void [dialogName]Right([rightParam]) { }", dialog0.get(3), rightParamSb.toString());
+        }
 
     }
 
@@ -1183,6 +1320,8 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[toastDialog]]");
         lines.add("[[noticeDialog]]");
         lines.add("[[editDialog]]");
+        lines.add("[[dialog]]");
+        lines.add("");
         lines.add("}");
         lines.add("");
 

@@ -91,6 +91,8 @@ public class FullName {
     //dilog
     public static final String TOAST_DIALOG = Pkg.LIB4A_DIALOG_VIEW + ".ToastDialog";
     public static final String NOTICE_DIALOG = Pkg.LIB4A_DIALOG_VIEW + ".NoticeDialog";
+    public static final String DIALOG = Pkg.LIB4A_DIALOG_VIEW + ".Dialog";
+    public static final String DIALOG_ON_BT_CLICK = DIALOG + ".OnBtClick";
     public static final String EDIT_DIALOG = Pkg.LIB4A_DIALOG_VIEW + ".EditDialog";
     public static final String ED_TEXT_WATCHER = EDIT_DIALOG + ".EdTextWatcher";
     public static final String ON_HIDDEN_FINISHED = Pkg.LIB4A_LAYER_VIEW + ".listener.OnHiddenFinished";

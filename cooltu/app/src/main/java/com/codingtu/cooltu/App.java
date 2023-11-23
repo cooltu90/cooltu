@@ -10,6 +10,7 @@ import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
 import com.codingtu.cooltu.processor.annotation.create.CreateFragment;
+import com.codingtu.cooltu.processor.annotation.ui.DefaultDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultEditDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultNoticeDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultToastDialogLayout;
@@ -24,6 +25,7 @@ import com.codingtu.cooltu.processor.annotation.ui.DefaultToastDialogLayout;
 @DefaultToastDialogLayout(R.layout.dialog_toast)
 @DefaultNoticeDialogLayout(R.layout.dialog_notice)
 @DefaultEditDialogLayout(R.layout.dialog_edit)
+@DefaultDialogLayout(R.layout.dialog)
 @CreateAct(
         name = "form",
         packages = "com.codingtu.cooltu.ui",
