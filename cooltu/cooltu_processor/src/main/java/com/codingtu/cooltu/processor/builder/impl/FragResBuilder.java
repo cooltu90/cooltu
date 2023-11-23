@@ -16,7 +16,7 @@ public class FragResBuilder extends FragResBuilderBase {
 
     @Override
     protected boolean isBuild() {
-        return true;
+        return false;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class FragResBuilder extends FragResBuilderBase {
 
     @Override
     protected void dealLines() {
-
+        addTag(pkg, javaInfo.pkg);
     }
 }
 /* model_temp_start

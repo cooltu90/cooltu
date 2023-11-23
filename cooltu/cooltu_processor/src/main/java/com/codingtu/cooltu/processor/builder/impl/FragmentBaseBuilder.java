@@ -51,7 +51,7 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
     @Override
     protected void beforeBuild(List<String> lines) {
         super.beforeBuild(lines);
-        Logs.i(lines);
+        //Logs.i(lines);
     }
 
     @Override

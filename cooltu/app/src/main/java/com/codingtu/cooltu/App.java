@@ -30,12 +30,12 @@ import com.codingtu.cooltu.processor.annotation.create.CreateFragment;
         type = AdapterType.DEFAULT_LIST,
         layoutTemp = R.layout.layout_temp
 )
-//@CreateFragment(
-//        name = "step_two",
-//        packages = "com.codingtu.cooltu.ui",
-//        baseClass = CoreFragment.class,
-//        layoutTemp = R.layout.layout_temp
-//)
+@CreateFragment(
+        name = "step_two",
+        packages = "com.codingtu.cooltu.ui",
+        baseClass = CoreFragment.class,
+        layoutTemp = R.layout.layout_temp
+)
 public class App extends CoreApp {
     @Override
     public CoreConfigs createConfigs() {
