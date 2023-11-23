@@ -29,6 +29,9 @@ public class Pkg {
     public static final String LIB4A_PERMISSION = LIB4A + ".permission";
     public static final String LIB4A_TOOLS = LIB4A + ".tools";
     public static final String LIB4A_FORM = LIB4A + ".form";
+    public static final String LIB4A_VIEW = LIB4A + ".view";
+    public static final String LIB4A_DIALOG_VIEW = LIB4A_VIEW + ".dialogview";
+    public static final String LIB4A_LAYER_VIEW = LIB4A_VIEW + ".layerview";
     //lib4j
     public static final String LIB4J = "com.codingtu.cooltu.lib4j";
     public static final String LIB4J_TS = LIB4J + ".ts";

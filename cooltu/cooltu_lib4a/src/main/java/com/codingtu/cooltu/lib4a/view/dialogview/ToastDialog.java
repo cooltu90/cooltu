@@ -75,6 +75,11 @@ public final class ToastDialog implements OnDestroy {
         return ((TextView) contentTv).getText().toString();
     }
 
+    public boolean isShow() {
+        return ViewTool.isVisible(rlv);
+    }
+
+
     public void show() {
         rlv.show();
     }

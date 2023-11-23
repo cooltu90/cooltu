@@ -13,6 +13,7 @@ import com.codingtu.cooltu.processor.annotation.res.ResFor;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.annotation.ui.InBase;
 import com.codingtu.cooltu.processor.annotation.ui.NoStart;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.ToastDialogUse;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
@@ -29,19 +30,30 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
 
     @Override
     protected void dealTypeElement(TypeElement te) {
+
         uiClass = getUiClass(te);
         noStart = te.getAnnotation(NoStart.class) != null;
+
+        BaseTools.GetThis<UiBaseBuilder> uiBaseBuilderGetter = getUiBaseBuilderGetter();
+        UiBaseBuilder uiBaseBuilder = uiBaseBuilderGetter.getThis(uiClass);
+
         Ts.ls(te.getEnclosedElements(), (position, element) -> {
             if (element instanceof VariableElement) {
                 VariableElement ve = (VariableElement) element;
-                dealField(uiClass, ve, ElementTools.getFieldKv(ve));
+                dealField(uiClass, ve, ElementTools.getFieldKv(ve), uiBaseBuilderGetter, uiBaseBuilder);
             }
             return false;
         });
+
+        ToastDialogUse toastDialogUse = te.getAnnotation(ToastDialogUse.class);
+        uiBaseBuilder.isToastDialog = toastDialogUse != null;
+
     }
 
-    protected void dealField(String fullName, VariableElement ve, KV<String, String> kv) {
-        BaseTools.GetThis<UiBaseBuilder> uiBaseBuilderGetter = getUiBaseBuilderGetter();
+    protected void dealField(String fullName, VariableElement ve, KV<String, String> kv,
+                             BaseTools.GetThis<UiBaseBuilder> uiBaseBuilderGetter,
+                             UiBaseBuilder uiBaseBuilder) {
+
         InBase inBase = ve.getAnnotation(InBase.class);
         if (inBase != null) {
             BaseTools.getThisWithChilds(fullName, new BaseTs.EachTs<UiBaseBuilder>() {
@@ -56,7 +68,6 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
                 }
             }, uiBaseBuilderGetter);
         }
-        UiBaseBuilder uiBaseBuilder = uiBaseBuilderGetter.getThis(fullName);
         ColorStr ColorStr = ve.getAnnotation(ColorStr.class);
         if (ColorStr != null) {
             uiBaseBuilder.colorStrs.add(new KV<>(kv.v, ColorStr.value()));

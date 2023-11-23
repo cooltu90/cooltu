@@ -8,10 +8,12 @@ import com.codingtu.cooltu.processor.annotation.res.Dimen;
 import com.codingtu.cooltu.processor.annotation.res.Dp;
 import com.codingtu.cooltu.processor.annotation.res.ResForFragment;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.ToastDialogUse;
 import com.codingtu.cooltu.ui.StepOneFragment;
 import com.codingtu.cooltu.ui.adapter.CatAdapter;
 import com.codingtu.cooltu.ui.adapter.DogAdapter;
 
+@ToastDialogUse
 @ResForFragment(StepOneFragment.class)
 public class StepOneFragmentRes {
 

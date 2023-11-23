@@ -10,6 +10,7 @@ import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
 import com.codingtu.cooltu.processor.annotation.create.CreateFragment;
+import com.codingtu.cooltu.processor.annotation.ui.DefaultToastDialogLayout;
 
 @ModuleInfo(
         module = Module.APP,
@@ -18,6 +19,7 @@ import com.codingtu.cooltu.processor.annotation.create.CreateFragment;
         baseFragment = CoreFragment.class,
         rPkg = "com.codingtu.cooltu"
 )
+@DefaultToastDialogLayout(R.layout.dialog_toast)
 @CreateAct(
         name = "form",
         packages = "com.codingtu.cooltu.ui",
@@ -31,7 +33,7 @@ import com.codingtu.cooltu.processor.annotation.create.CreateFragment;
         layoutTemp = R.layout.layout_temp
 )
 @CreateFragment(
-        name = "step_two",
+        name = "step_one",
         packages = "com.codingtu.cooltu.ui",
         baseClass = CoreFragment.class,
         layoutTemp = R.layout.layout_temp

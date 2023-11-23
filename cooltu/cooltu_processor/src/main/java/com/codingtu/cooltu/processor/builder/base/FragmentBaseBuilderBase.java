@@ -52,6 +52,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     protected java.util.Map<String, Integer> actBackMethodCounts;
     protected StringBuilder actBackMethodSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> actBackMethod;
+    protected java.util.Map<String, Boolean> toastDialogIfs;
+    protected java.util.Map<String, Integer> toastDialogCounts;
+    protected StringBuilder toastDialogSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> toastDialog;
 
     public FragmentBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -104,6 +108,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         actBackMethodCounts = new java.util.HashMap<>();
         actBackMethodSb = map.get("actBackMethod");
         actBackMethod = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        toastDialogIfs = new java.util.HashMap<>();
+        toastDialogCounts = new java.util.HashMap<>();
+        toastDialogSb = map.get("toastDialog");
+        toastDialog = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
 
@@ -266,6 +274,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     public void isActBackParamDivider(int i0, int i1, boolean is) {
         actBackIfs.put(getIfKey("actBackParamDivider", i0, i1), is);
     }
+    public void toastDialogIf(String toastDialogFullName, String layout, String onHiddenFinishedFullName, String handlerToolFullName) {
+        addForMap(this.toastDialog, getIfKey("toastDialog"), toastDialogFullName, toastDialogFullName, toastDialogFullName, layout, toastDialogFullName, onHiddenFinishedFullName, handlerToolFullName, onHiddenFinishedFullName, handlerToolFullName);
+        toastDialogIfs.put(getIfKey("toastDialog"), true);
+    }
 
     @Override
     protected void dealLinesInParent() {
@@ -403,6 +415,52 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             List<String> actBackMethod0 = actBackMethod.get(getForKey("actBackMethod", i0));
             addLnTag(actBackMethodSb, "    protected void [methodName]([params]) {}", actBackMethod0.get(0), actBackMethod0.get(1));
         }
+        if (isIf(toastDialogIfs, getIfKey("toastDialog"))) {
+            List<String> toastDialog0 = toastDialog.get(getIfKey("toastDialog"));
+            addLnTag(toastDialogSb, "    private [toastDialogFullName] toastDialog;", toastDialog0.get(0));
+            addLnTag(toastDialogSb, "");
+            addLnTag(toastDialogSb, "    protected [toastDialogFullName] getToastDialog() {", toastDialog0.get(1));
+            addLnTag(toastDialogSb, "        if (toastDialog == null)");
+            addLnTag(toastDialogSb, "            toastDialog = new [toastDialogFullName](getAct())", toastDialog0.get(2));
+            addLnTag(toastDialogSb, "                    .setLayout([layout])", toastDialog0.get(3));
+            addLnTag(toastDialogSb, "                    .build();");
+            addLnTag(toastDialogSb, "        return toastDialog;");
+            addLnTag(toastDialogSb, "    }");
+            addLnTag(toastDialogSb, "    protected void toastShow(String msg) {");
+            addLnTag(toastDialogSb, "        [toastDialogFullName] td = getToastDialog();", toastDialog0.get(4));
+            addLnTag(toastDialogSb, "        td.setContent(msg);");
+            addLnTag(toastDialogSb, "        if (!td.isShow()) {");
+            addLnTag(toastDialogSb, "            td.show();");
+            addLnTag(toastDialogSb, "        }");
+            addLnTag(toastDialogSb, "    }");
+            addLnTag(toastDialogSb, "    protected void toastShow(long time, String msg, [onHiddenFinishedFullName] onHiddenFinished) {", toastDialog0.get(5));
+            addLnTag(toastDialogSb, "        toastShow(msg);");
+            addLnTag(toastDialogSb, "        [handlerToolFullName].getMainHandler().postDelayed(new java.lang.Runnable() {", toastDialog0.get(6));
+            addLnTag(toastDialogSb, "            @Override");
+            addLnTag(toastDialogSb, "            public void run() {");
+            addLnTag(toastDialogSb, "                getToastDialog().hidden(onHiddenFinished);");
+            addLnTag(toastDialogSb, "            }");
+            addLnTag(toastDialogSb, "        }, time);");
+            addLnTag(toastDialogSb, "    }");
+            addLnTag(toastDialogSb, "");
+            addLnTag(toastDialogSb, "    protected void toastShow(long time, String msg) {");
+            addLnTag(toastDialogSb, "        toastShow(time, msg, null);");
+            addLnTag(toastDialogSb, "    }");
+            addLnTag(toastDialogSb, "");
+            addLnTag(toastDialogSb, "    protected void toastHidden(long time, String msg, [onHiddenFinishedFullName] onHiddenFinished) {", toastDialog0.get(7));
+            addLnTag(toastDialogSb, "        getToastDialog().setContent(msg);");
+            addLnTag(toastDialogSb, "        [handlerToolFullName].getMainHandler().postDelayed(new java.lang.Runnable() {", toastDialog0.get(8));
+            addLnTag(toastDialogSb, "            @Override");
+            addLnTag(toastDialogSb, "            public void run() {");
+            addLnTag(toastDialogSb, "                getToastDialog().hidden(onHiddenFinished);");
+            addLnTag(toastDialogSb, "            }");
+            addLnTag(toastDialogSb, "        }, time);");
+            addLnTag(toastDialogSb, "    }");
+            addLnTag(toastDialogSb, "");
+            addLnTag(toastDialogSb, "    protected void toastHidden(long time, String msg) {");
+            addLnTag(toastDialogSb, "        toastHidden(time, msg, null);");
+            addLnTag(toastDialogSb, "    }");
+        }
 
     }
 
@@ -458,7 +516,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("        }");
         lines.add("    }");
         lines.add("[[actBackMethod]]");
-        lines.add("");
+        lines.add("[[toastDialog]]");
         lines.add("}");
 
         return lines;

@@ -108,6 +108,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> loadMoreCounts;
     protected StringBuilder loadMoreSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> loadMore;
+    protected java.util.Map<String, Boolean> toastDialogIfs;
+    protected java.util.Map<String, Integer> toastDialogCounts;
+    protected StringBuilder toastDialogSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> toastDialog;
 
     public ActBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -216,6 +220,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         loadMoreCounts = new java.util.HashMap<>();
         loadMoreSb = map.get("loadMore");
         loadMore = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        toastDialogIfs = new java.util.HashMap<>();
+        toastDialogCounts = new java.util.HashMap<>();
+        toastDialogSb = map.get("toastDialog");
+        toastDialog = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
 
@@ -587,6 +595,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.checkForms, getIfKey("checkForms"), bean);
         checkFormsIfs.put(getIfKey("checkForms"), true);
     }
+    public void toastDialogIf(String toastDialogFullName, String layout, String onHiddenFinishedFullName, String handlerToolFullName) {
+        addForMap(this.toastDialog, getIfKey("toastDialog"), toastDialogFullName, toastDialogFullName, toastDialogFullName, layout, toastDialogFullName, onHiddenFinishedFullName, handlerToolFullName, onHiddenFinishedFullName, handlerToolFullName);
+        toastDialogIfs.put(getIfKey("toastDialog"), true);
+    }
 
     @Override
     protected void dealLinesInParent() {
@@ -925,6 +937,52 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> loadMore0 = loadMore.get(getForKey("loadMore", i0));
             addLnTag(loadMoreSb, "    protected abstract void [adapterName]LoadMore(int page);", loadMore0.get(0));
         }
+        if (isIf(toastDialogIfs, getIfKey("toastDialog"))) {
+            List<String> toastDialog0 = toastDialog.get(getIfKey("toastDialog"));
+            addLnTag(toastDialogSb, "    private [toastDialogFullName] toastDialog;", toastDialog0.get(0));
+            addLnTag(toastDialogSb, "");
+            addLnTag(toastDialogSb, "    protected [toastDialogFullName] getToastDialog() {", toastDialog0.get(1));
+            addLnTag(toastDialogSb, "        if (toastDialog == null)");
+            addLnTag(toastDialogSb, "            toastDialog = new [toastDialogFullName](getAct())", toastDialog0.get(2));
+            addLnTag(toastDialogSb, "                    .setLayout([layout])", toastDialog0.get(3));
+            addLnTag(toastDialogSb, "                    .build();");
+            addLnTag(toastDialogSb, "        return toastDialog;");
+            addLnTag(toastDialogSb, "    }");
+            addLnTag(toastDialogSb, "    protected void toastShow(String msg) {");
+            addLnTag(toastDialogSb, "        [toastDialogFullName] td = getToastDialog();", toastDialog0.get(4));
+            addLnTag(toastDialogSb, "        td.setContent(msg);");
+            addLnTag(toastDialogSb, "        if (!td.isShow()) {");
+            addLnTag(toastDialogSb, "            td.show();");
+            addLnTag(toastDialogSb, "        }");
+            addLnTag(toastDialogSb, "    }");
+            addLnTag(toastDialogSb, "    protected void toastShow(long time, String msg, [onHiddenFinishedFullName] onHiddenFinished) {", toastDialog0.get(5));
+            addLnTag(toastDialogSb, "        toastShow(msg);");
+            addLnTag(toastDialogSb, "        [handlerToolFullName].getMainHandler().postDelayed(new java.lang.Runnable() {", toastDialog0.get(6));
+            addLnTag(toastDialogSb, "            @Override");
+            addLnTag(toastDialogSb, "            public void run() {");
+            addLnTag(toastDialogSb, "                getToastDialog().hidden(onHiddenFinished);");
+            addLnTag(toastDialogSb, "            }");
+            addLnTag(toastDialogSb, "        }, time);");
+            addLnTag(toastDialogSb, "    }");
+            addLnTag(toastDialogSb, "");
+            addLnTag(toastDialogSb, "    protected void toastShow(long time, String msg) {");
+            addLnTag(toastDialogSb, "        toastShow(time, msg, null);");
+            addLnTag(toastDialogSb, "    }");
+            addLnTag(toastDialogSb, "");
+            addLnTag(toastDialogSb, "    protected void toastHidden(long time, String msg, [onHiddenFinishedFullName] onHiddenFinished) {", toastDialog0.get(7));
+            addLnTag(toastDialogSb, "        getToastDialog().setContent(msg);");
+            addLnTag(toastDialogSb, "        [handlerToolFullName].getMainHandler().postDelayed(new java.lang.Runnable() {", toastDialog0.get(8));
+            addLnTag(toastDialogSb, "            @Override");
+            addLnTag(toastDialogSb, "            public void run() {");
+            addLnTag(toastDialogSb, "                getToastDialog().hidden(onHiddenFinished);");
+            addLnTag(toastDialogSb, "            }");
+            addLnTag(toastDialogSb, "        }, time);");
+            addLnTag(toastDialogSb, "    }");
+            addLnTag(toastDialogSb, "");
+            addLnTag(toastDialogSb, "    protected void toastHidden(long time, String msg) {");
+            addLnTag(toastDialogSb, "        toastHidden(time, msg, null);");
+            addLnTag(toastDialogSb, "    }");
+        }
 
     }
 
@@ -994,7 +1052,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[bindHandler]]");
         lines.add("[[checkForms]]");
         lines.add("[[loadMore]]");
-        lines.add("");
+        lines.add("[[toastDialog]]");
         lines.add("}");
         lines.add("");
 

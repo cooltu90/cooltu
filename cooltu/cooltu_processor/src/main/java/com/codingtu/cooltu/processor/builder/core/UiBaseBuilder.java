@@ -53,6 +53,7 @@ public abstract class UiBaseBuilder {
     public List<ExecutableElement> actBackMethods = new ArrayList<>();
 
     public String finalBaseClass;
+    public boolean isToastDialog;
 
 
     public UiBaseBuilder(UiBaseInterface uiBase) {
@@ -115,38 +116,10 @@ public abstract class UiBaseBuilder {
         //accept
         nets();
 
+        actBacks();
 
-        Ts.ls(actBacks, new BaseTs.EachTs<ActBack>() {
-            @Override
-            public boolean each(int actBackIndex, ActBack actBack) {
-                ExecutableElement ee = actBackMethods.get(actBackIndex);
-                String methodName = ElementTools.simpleName(ee);
-
-                String fromClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
-                    @Override
-                    public Object get() {
-                        return actBack.value();
-                    }
-                });
-
-                JavaInfo fromJavaInfo = CurrentPath.javaInfo(fromClass);
-
-                uiBase.actBack(actBackIndex, actBackIndex == 0 ? "if" : "else if", FullName.CODE_4_REQUEST, ConvertTool.toStaticType(fromJavaInfo.name), methodName);
-
-                Params params = ElementTools.getMethodParamKvs(ee);
-                params.ls(new BaseTs.EachTs<KV<String, String>>() {
-                    @Override
-                    public boolean each(int paramIndex, KV<String, String> kv) {
-                        uiBase.actBackParam(actBackIndex, paramIndex, FullName.PASS, kv.v);
-                        uiBase.isActBackParamDivider(actBackIndex, paramIndex, paramIndex != (CountTool.count(ee.getParameters()) - 1));
-                        return false;
-                    }
-                });
-
-                uiBase.actBackMethod(actBackIndex, methodName, params.getMethodParams());
-                return false;
-            }
-        });
+        if (isToastDialog)
+            uiBase.toastDialogIf(FullName.TOAST_DIALOG, Constant.DEFAULT_TOAST_DIALOG_LAYOUT, FullName.ON_HIDDEN_FINISHED, FullName.HANDLER_TOOL);
     }
 
 
@@ -382,6 +355,44 @@ public abstract class UiBaseBuilder {
                 return false;
             }
         });
+    }
+
+    private void actBacks() {
+        Ts.ls(actBacks, new BaseTs.EachTs<ActBack>() {
+            @Override
+            public boolean each(int actBackIndex, ActBack actBack) {
+                ExecutableElement ee = actBackMethods.get(actBackIndex);
+                String methodName = ElementTools.simpleName(ee);
+
+                String fromClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                    @Override
+                    public Object get() {
+                        return actBack.value();
+                    }
+                });
+
+                JavaInfo fromJavaInfo = CurrentPath.javaInfo(fromClass);
+
+                uiBase.actBack(actBackIndex, actBackIndex == 0 ? "if" : "else if", FullName.CODE_4_REQUEST, ConvertTool.toStaticType(fromJavaInfo.name), methodName);
+
+                Params params = ElementTools.getMethodParamKvs(ee);
+                params.ls(new BaseTs.EachTs<KV<String, String>>() {
+                    @Override
+                    public boolean each(int paramIndex, KV<String, String> kv) {
+                        uiBase.actBackParam(actBackIndex, paramIndex, FullName.PASS, kv.v);
+                        uiBase.isActBackParamDivider(actBackIndex, paramIndex, paramIndex != (CountTool.count(ee.getParameters()) - 1));
+                        return false;
+                    }
+                });
+
+                uiBase.actBackMethod(actBackIndex, methodName, params.getMethodParams());
+                return false;
+            }
+        });
+    }
+
+    private void toastDialog() {
+
     }
 
     /**************************************************

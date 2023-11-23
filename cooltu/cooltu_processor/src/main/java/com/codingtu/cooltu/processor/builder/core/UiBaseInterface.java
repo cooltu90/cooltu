@@ -74,4 +74,6 @@ public interface UiBaseInterface {
     void isActBackParamDivider(int actBackIndex, int paramIndex, boolean b);
 
     void actBackMethod(int actBackIndex, String methodName, String methodParams);
+
+    void toastDialogIf(String toastDialogFullName, String layout, String onHiddenFinishedFullName, String handlerToolFullName);
 }

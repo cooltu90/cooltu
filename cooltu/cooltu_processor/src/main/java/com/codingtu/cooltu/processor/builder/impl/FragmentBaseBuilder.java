@@ -227,6 +227,50 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][actBackMethod]
     protected void [methodName]([params]) {}
                                                                                                     [<sub>][for][actBackMethod]
+                                                                                                    [<sub>][if][toastDialog]
+    private [toastDialogFullName] toastDialog;
 
+    protected [toastDialogFullName] getToastDialog() {
+        if (toastDialog == null)
+            toastDialog = new [toastDialogFullName](getAct())
+                    .setLayout([layout])
+                    .build();
+        return toastDialog;
+    }
+    protected void toastShow(String msg) {
+        [toastDialogFullName] td = getToastDialog();
+        td.setContent(msg);
+        if (!td.isShow()) {
+            td.show();
+        }
+    }
+    protected void toastShow(long time, String msg, [onHiddenFinishedFullName] onHiddenFinished) {
+        toastShow(msg);
+        [handlerToolFullName].getMainHandler().postDelayed(new java.lang.Runnable() {
+            @Override
+            public void run() {
+                getToastDialog().hidden(onHiddenFinished);
+            }
+        }, time);
+    }
+
+    protected void toastShow(long time, String msg) {
+        toastShow(time, msg, null);
+    }
+
+    protected void toastHidden(long time, String msg, [onHiddenFinishedFullName] onHiddenFinished) {
+        getToastDialog().setContent(msg);
+        [handlerToolFullName].getMainHandler().postDelayed(new java.lang.Runnable() {
+            @Override
+            public void run() {
+                getToastDialog().hidden(onHiddenFinished);
+            }
+        }, time);
+    }
+
+    protected void toastHidden(long time, String msg) {
+        toastHidden(time, msg, null);
+    }
+                                                                                                    [<sub>][if][toastDialog]
 }
 model_temp_end */

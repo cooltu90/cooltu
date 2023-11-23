@@ -11,12 +11,14 @@ import com.codingtu.cooltu.processor.annotation.path.Paths;
 import com.codingtu.cooltu.processor.annotation.res.ResForFragment;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
+import com.codingtu.cooltu.processor.annotation.ui.DefaultToastDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.FragmentBase;
 import com.codingtu.cooltu.processor.annotation.ui.VH;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.CreateActDeal;
 import com.codingtu.cooltu.processor.deal.CreateAdapterDeal;
 import com.codingtu.cooltu.processor.deal.CreateFragmentDeal;
+import com.codingtu.cooltu.processor.deal.DefaultToastDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.FormBeanDeal;
 import com.codingtu.cooltu.processor.deal.FragmentBaseDeal;
 import com.codingtu.cooltu.processor.deal.ModuleInfoDeal;
@@ -37,6 +39,7 @@ public class SupportTypes {
     public static Class[] types() {
         return new Class[]{
                 ModuleInfo.class, ModuleInfoDeal.class,
+                DefaultToastDialogLayout.class, DefaultToastDialogLayoutDeal.class,
                 VH.class, VHDeal.class,
                 ActBase.class, ActBaseDeal.class,
                 FragmentBase.class, FragmentBaseDeal.class,

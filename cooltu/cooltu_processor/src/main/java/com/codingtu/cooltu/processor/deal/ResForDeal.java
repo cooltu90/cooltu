@@ -32,8 +32,10 @@ public class ResForDeal extends ResForBaseDeal {
         }
     }
 
-    protected void dealField(String fullName, VariableElement ve, KV<String, String> kv) {
-        super.dealField(fullName, ve, kv);
+    protected void dealField(String fullName, VariableElement ve, KV<String, String> kv,
+                             BaseTools.GetThis<UiBaseBuilder> uiBaseBuilderGetter,
+                             UiBaseBuilder uiBaseBuilder) {
+        super.dealField(fullName, ve, kv, uiBaseBuilderGetter, uiBaseBuilder);
         ActBaseBuilder builder = CurrentPath.actBaseBuilder(fullName);
         if (!noStart) {
             StartGroup startGroup = ve.getAnnotation(StartGroup.class);

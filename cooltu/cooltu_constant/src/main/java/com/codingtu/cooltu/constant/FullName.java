@@ -46,6 +46,7 @@ public class FullName {
     public static final String ACT_TOOL = Pkg.LIB4A_TOOLS + ".ActTool";
     public static final String VIEW_TOOL = Pkg.LIB4A_TOOLS + ".ViewTool";
     public static final String RESOURCE_TOOL = Pkg.LIB4A_TOOLS + ".ResourceTool";
+    public static final String HANDLER_TOOL = Pkg.LIB4A_TOOLS + ".HandlerTool";
     public static final String PERMISSION_TOOL = Pkg.LIB4A_PERMISSION + ".PermissionTool";
     //permission
     public static final String PERMISSIONS_SHORT_NAME = "Permissions";
@@ -87,6 +88,9 @@ public class FullName {
     //JSON
     public static final String JO = Pkg.LIB4J_JSON + ".base.JO";
     public static final String JSON_TOOL = Pkg.LIB4J_JSON + ".JsonTool";
+    //dilog
+    public static final String TOAST_DIALOG = Pkg.LIB4A_DIALOG_VIEW + ".ToastDialog";
+    public static final String ON_HIDDEN_FINISHED = Pkg.LIB4A_LAYER_VIEW + ".listener.OnHiddenFinished";
     //不变的
     public static final String VIEW = "android.view.View";
     public static final String STRING = "java.lang.String";

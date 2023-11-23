@@ -49,4 +49,6 @@ public class Constant {
 
     public static final String SIGN_PROTECTED = "protected";
     public static final String SIGN_PUBLIC = "public";
+
+    public static String DEFAULT_TOAST_DIALOG_LAYOUT = Pkg.LIB4A + ".R.layout.default_dialog_toast";
 }
