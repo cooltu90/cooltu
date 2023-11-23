@@ -76,4 +76,22 @@ public interface UiBaseInterface {
     void actBackMethod(int actBackIndex, String methodName, String methodParams);
 
     void toastDialogIf(String toastDialogFullName, String layout, String onHiddenFinishedFullName, String handlerToolFullName);
+
+    void noticeDialogIf(String noticeDialog, String defaultNoticeDialogLayout);
+
+    void editDialog(int position, String editDialog, String v, String edClassName, String title, String hint, String s, String defaultEditDialogLayout, String s1);
+
+    void edShowParamIf(int position, String objClass, String objName);
+
+    void edYesParamIf(int position, String objClass, String objName);
+
+    void isEdUseYes(int position, boolean b);
+
+    void edUseYesConvertIf(int position, String objClass);
+
+    void setTextWatcherIf(int position, String edClassName);
+
+    void setTextWatcherMethodIf(int position, String edTextWatcher, String edClassName);
+
+    void isStopAnimation(int position, boolean b);
 }

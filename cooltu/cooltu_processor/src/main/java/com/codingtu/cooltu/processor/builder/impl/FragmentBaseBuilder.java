@@ -1,5 +1,6 @@
 package com.codingtu.cooltu.processor.builder.impl;
 
+import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
@@ -272,5 +273,55 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         toastHidden(time, msg, null);
     }
                                                                                                     [<sub>][if][toastDialog]
+                                                                                                    [<sub>][if][noticeDialog]
+    private [noticeDialogFullName] noticeDialog;
+
+    protected void noticeShow(String msg) {
+        if (noticeDialog == null)
+            noticeDialog = new [noticeDialogFullName](getAct())
+                    .setLayout([layout])
+                    .build();
+        noticeDialog.setContent(msg);
+        noticeDialog.show();
+    }
+                                                                                                    [<sub>][if][noticeDialog]
+                                                                                                    [<sub>][for][editDialog]
+    private [editDialogFullName] [edName];
+
+    protected void show[edClassName](String text[if:edShowParam], [type] [name][if:edShowParam]) {
+        if ([edName] == null)
+            [edName] = new [editDialogFullName].Builder(getAct())
+                    .setTitle("[title]")
+                    .setHint("[hint]")
+                    .setInputType([inputType])
+                    .setLayout([layout])
+                                                                                                    [<sub>][if][setTextWatcher]
+                    .setTextWatcher(get[edClassName]TextWatcher())
+                                                                                                    [<sub>][if][setTextWatcher]
+                                                                                                    [<sub>][if][stopAnimation]
+                    .stopAnimation()
+                                                                                                    [<sub>][if][stopAnimation]
+                    .setYes(new [editDialogFullName].Yes() {
+                        @Override
+                        public boolean yes(String text, Object obj) {
+                            return [edName]Yes(text[if:edUseYes], [if:edUseYesConvert]([type])[if:edUseYesConvert]obj[if:edUseYes]);
+                        }
+                    })
+                    .build();
+        [edName].setEditText(text);
+        [edName].setObject([setObject]);
+        [edName].show();
+    }
+
+
+    protected boolean [edName]Yes(String text[if:edYesParam], [type] [name][if:edYesParam]) {
+        return false;
+    }
+                                                                                                    [<sub>][if][setTextWatcherMethod]
+    protected [edTextWatcherFullName] get[edClassName]TextWatcher() {
+        return null;
+    }
+                                                                                                    [<sub>][if][setTextWatcherMethod]
+                                                                                                    [<sub>][for][editDialog]
 }
 model_temp_end */

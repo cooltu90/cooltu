@@ -11,6 +11,8 @@ import com.codingtu.cooltu.processor.annotation.path.Paths;
 import com.codingtu.cooltu.processor.annotation.res.ResForFragment;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
+import com.codingtu.cooltu.processor.annotation.ui.DefaultEditDialogLayout;
+import com.codingtu.cooltu.processor.annotation.ui.DefaultNoticeDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultToastDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.FragmentBase;
 import com.codingtu.cooltu.processor.annotation.ui.VH;
@@ -18,6 +20,8 @@ import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.CreateActDeal;
 import com.codingtu.cooltu.processor.deal.CreateAdapterDeal;
 import com.codingtu.cooltu.processor.deal.CreateFragmentDeal;
+import com.codingtu.cooltu.processor.deal.DefaultEditDialogLayoutDeal;
+import com.codingtu.cooltu.processor.deal.DefaultNoticeDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultToastDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.FormBeanDeal;
 import com.codingtu.cooltu.processor.deal.FragmentBaseDeal;
@@ -40,6 +44,8 @@ public class SupportTypes {
         return new Class[]{
                 ModuleInfo.class, ModuleInfoDeal.class,
                 DefaultToastDialogLayout.class, DefaultToastDialogLayoutDeal.class,
+                DefaultNoticeDialogLayout.class, DefaultNoticeDialogLayoutDeal.class,
+                DefaultEditDialogLayout.class, DefaultEditDialogLayoutDeal.class,
                 VH.class, VHDeal.class,
                 ActBase.class, ActBaseDeal.class,
                 FragmentBase.class, FragmentBaseDeal.class,

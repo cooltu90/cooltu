@@ -1,13 +1,17 @@
 package core.fragmentres;
 
 import com.codingtu.cooltu.R;
+import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.constant.AdapterType;
+import com.codingtu.cooltu.lib4a.constant.InputType;
+import com.codingtu.cooltu.lib4a.view.dialogview.EditDialog;
 import com.codingtu.cooltu.processor.annotation.res.ColorRes;
 import com.codingtu.cooltu.processor.annotation.res.ColorStr;
 import com.codingtu.cooltu.processor.annotation.res.Dimen;
 import com.codingtu.cooltu.processor.annotation.res.Dp;
 import com.codingtu.cooltu.processor.annotation.res.ResForFragment;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.ToastDialogUse;
 import com.codingtu.cooltu.ui.StepOneFragment;
 import com.codingtu.cooltu.ui.adapter.CatAdapter;
@@ -33,4 +37,14 @@ public class StepOneFragmentRes {
     CatAdapter catAdapter;
     @Adapter(type = AdapterType.DEFAULT_MORE_LIST)
     DogAdapter dogAdapter;
+
+    @EditDialogUse(
+            title = "xxx",
+            hint = "xxx",
+            inputType = InputType.INT,
+            objType = User.class,
+            isUseTextWatcher = true,
+            stopAnimation = true
+    )
+    EditDialog ed;
 }

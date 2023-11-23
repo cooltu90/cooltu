@@ -147,4 +147,36 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.f
         toastHidden(time, msg, null);
     }
 
+
+    private com.codingtu.cooltu.lib4a.view.dialogview.EditDialog ed;
+
+    protected void showEd(String text, com.codingtu.cooltu.bean.User user) {
+        if (ed == null)
+            ed = new com.codingtu.cooltu.lib4a.view.dialogview.EditDialog.Builder(getAct())
+                    .setTitle("xxx")
+                    .setHint("xxx")
+                    .setInputType(2)
+                    .setLayout(com.codingtu.cooltu.R.layout.dialog_edit)
+                    .setTextWatcher(getEdTextWatcher())
+                    .stopAnimation()
+                    .setYes(new com.codingtu.cooltu.lib4a.view.dialogview.EditDialog.Yes() {
+                        @Override
+                        public boolean yes(String text, Object obj) {
+                            return edYes(text, (com.codingtu.cooltu.bean.User)obj);
+                        }
+                    })
+                    .build();
+        ed.setEditText(text);
+        ed.setObject(user);
+        ed.show();
+    }
+
+
+    protected boolean edYes(String text, com.codingtu.cooltu.bean.User user) {
+        return false;
+    }
+    protected com.codingtu.cooltu.lib4a.view.dialogview.EditDialog.EdTextWatcher getEdTextWatcher() {
+        return null;
+    }
+
 }

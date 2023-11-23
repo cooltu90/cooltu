@@ -15,6 +15,7 @@ import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.deal.NetDeal;
@@ -51,9 +52,11 @@ public abstract class UiBaseBuilder {
     public List<NetBackInfo> netBacks = new ArrayList<>();
     public List<ActBack> actBacks = new ArrayList<>();
     public List<ExecutableElement> actBackMethods = new ArrayList<>();
+    public List<VariableElement> editDialogUses = new ArrayList<>();
 
     public String finalBaseClass;
     public boolean isToastDialog;
+    public boolean isNoticeDialog;
 
 
     public UiBaseBuilder(UiBaseInterface uiBase) {
@@ -118,8 +121,13 @@ public abstract class UiBaseBuilder {
 
         actBacks();
 
-        if (isToastDialog)
-            uiBase.toastDialogIf(FullName.TOAST_DIALOG, Constant.DEFAULT_TOAST_DIALOG_LAYOUT, FullName.ON_HIDDEN_FINISHED, FullName.HANDLER_TOOL);
+        toastDialog();
+
+        noticeDialog();
+
+        editDialog();
+
+
     }
 
 
@@ -392,7 +400,65 @@ public abstract class UiBaseBuilder {
     }
 
     private void toastDialog() {
+        if (isToastDialog) {
+            uiBase.toastDialogIf(FullName.TOAST_DIALOG, Constant.DEFAULT_TOAST_DIALOG_LAYOUT, FullName.ON_HIDDEN_FINISHED, FullName.HANDLER_TOOL);
+        }
+    }
 
+    private void noticeDialog() {
+        if (isNoticeDialog) {
+            uiBase.noticeDialogIf(FullName.NOTICE_DIALOG, Constant.DEFAULT_NOTICE_DIALOG_LAYOUT);
+        }
+    }
+
+    private void editDialog() {
+        Ts.ls(editDialogUses, new BaseTs.EachTs<VariableElement>() {
+            @Override
+            public boolean each(int position, VariableElement ve) {
+                EditDialogUse editDialogUse = ve.getAnnotation(EditDialogUse.class);
+                KV<String, String> kv = ElementTools.getFieldKv(ve);
+
+                String objClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                    @Override
+                    public Object get() {
+                        return editDialogUse.objType();
+                    }
+                });
+                boolean isVoid = ClassTool.isVoid(objClass);
+
+                JavaInfo objJavaInfo = CurrentPath.javaInfo(objClass);
+
+                String objName = ConvertTool.toMethodType(objJavaInfo.name);
+
+                String edClassName = ConvertTool.toClassType(kv.v);
+
+                uiBase.editDialog(position, FullName.EDIT_DIALOG, kv.v, edClassName,
+                        editDialogUse.title(),
+                        editDialogUse.hint(), editDialogUse.inputType() + "",
+                        Constant.DEFAULT_EDIT_DIALOG_LAYOUT, isVoid ? "null" : objName);
+
+                if (!isVoid) {
+                    uiBase.edShowParamIf(position, objClass, objName);
+                    uiBase.edYesParamIf(position, objClass, objName);
+                    uiBase.isEdUseYes(position, true);
+                    boolean isObject = ClassTool.isObject(objClass);
+                    if (!isObject) {
+                        uiBase.edUseYesConvertIf(position, objClass);
+                    }
+                }
+
+                if (editDialogUse.isUseTextWatcher()) {
+                    uiBase.setTextWatcherIf(position, edClassName);
+                    uiBase.setTextWatcherMethodIf(position, FullName.ED_TEXT_WATCHER, edClassName);
+                }
+
+                if (editDialogUse.stopAnimation()) {
+                    uiBase.isStopAnimation(position, true);
+                }
+
+                return false;
+            }
+        });
     }
 
     /**************************************************

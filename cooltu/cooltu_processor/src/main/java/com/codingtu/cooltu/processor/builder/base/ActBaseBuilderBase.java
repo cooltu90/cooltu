@@ -112,6 +112,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> toastDialogCounts;
     protected StringBuilder toastDialogSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> toastDialog;
+    protected java.util.Map<String, Boolean> noticeDialogIfs;
+    protected java.util.Map<String, Integer> noticeDialogCounts;
+    protected StringBuilder noticeDialogSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> noticeDialog;
+    protected java.util.Map<String, Boolean> editDialogIfs;
+    protected java.util.Map<String, Integer> editDialogCounts;
+    protected StringBuilder editDialogSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> editDialog;
 
     public ActBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -224,6 +232,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         toastDialogCounts = new java.util.HashMap<>();
         toastDialogSb = map.get("toastDialog");
         toastDialog = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        noticeDialogIfs = new java.util.HashMap<>();
+        noticeDialogCounts = new java.util.HashMap<>();
+        noticeDialogSb = map.get("noticeDialog");
+        noticeDialog = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        editDialogIfs = new java.util.HashMap<>();
+        editDialogCounts = new java.util.HashMap<>();
+        editDialogSb = map.get("editDialog");
+        editDialog = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
 
@@ -507,6 +523,13 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.loadMore, getForKey("loadMore", i0), adapterName);
         countAdd(loadMoreCounts, getForKey("loadMore"));
     }
+    public int editDialogCount() {
+        return count(editDialogCounts, getForKey("editDialog"));
+    }
+    public void editDialog(int i0, String editDialogFullName, String edName, String edClassName, String title, String hint, String inputType, String layout, String setObject) {
+        addForMap(this.editDialog, getForKey("editDialog", i0), editDialogFullName, edName, edClassName, edName, edName, editDialogFullName, title, hint, inputType, layout, editDialogFullName, edName, edName, edName, setObject, edName, edName);
+        countAdd(editDialogCounts, getForKey("editDialog"));
+    }
 
     public void layoutIf(String layout) {
         addForMap(this.layout, getIfKey("layout"), layout);
@@ -598,6 +621,36 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     public void toastDialogIf(String toastDialogFullName, String layout, String onHiddenFinishedFullName, String handlerToolFullName) {
         addForMap(this.toastDialog, getIfKey("toastDialog"), toastDialogFullName, toastDialogFullName, toastDialogFullName, layout, toastDialogFullName, onHiddenFinishedFullName, handlerToolFullName, onHiddenFinishedFullName, handlerToolFullName);
         toastDialogIfs.put(getIfKey("toastDialog"), true);
+    }
+    public void noticeDialogIf(String noticeDialogFullName, String layout) {
+        addForMap(this.noticeDialog, getIfKey("noticeDialog"), noticeDialogFullName, noticeDialogFullName, layout);
+        noticeDialogIfs.put(getIfKey("noticeDialog"), true);
+    }
+    public void edShowParamIf(int i0, String type, String name) {
+        addForMap(this.editDialog, getIfKey("edShowParam", i0), type, name);
+        editDialogIfs.put(getIfKey("edShowParam", i0), true);
+    }
+    public void setTextWatcherIf(int i0, String edClassName) {
+        addForMap(this.editDialog, getIfKey("setTextWatcher", i0), edClassName);
+        editDialogIfs.put(getIfKey("setTextWatcher", i0), true);
+    }
+    public void isStopAnimation(int i0, boolean is) {
+        editDialogIfs.put(getIfKey("stopAnimation", i0), is);
+    }
+    public void edUseYesConvertIf(int i0, String type) {
+        addForMap(this.editDialog, getIfKey("edUseYesConvert", i0), type);
+        editDialogIfs.put(getIfKey("edUseYesConvert", i0), true);
+    }
+    public void isEdUseYes(int i0, boolean is) {
+        editDialogIfs.put(getIfKey("edUseYes", i0), is);
+    }
+    public void edYesParamIf(int i0, String type, String name) {
+        addForMap(this.editDialog, getIfKey("edYesParam", i0), type, name);
+        editDialogIfs.put(getIfKey("edYesParam", i0), true);
+    }
+    public void setTextWatcherMethodIf(int i0, String edTextWatcherFullName, String edClassName) {
+        addForMap(this.editDialog, getIfKey("setTextWatcherMethod", i0), edTextWatcherFullName, edClassName);
+        editDialogIfs.put(getIfKey("setTextWatcherMethod", i0), true);
     }
 
     @Override
@@ -983,6 +1036,81 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             addLnTag(toastDialogSb, "        toastHidden(time, msg, null);");
             addLnTag(toastDialogSb, "    }");
         }
+        if (isIf(noticeDialogIfs, getIfKey("noticeDialog"))) {
+            List<String> noticeDialog0 = noticeDialog.get(getIfKey("noticeDialog"));
+            addLnTag(noticeDialogSb, "    private [noticeDialogFullName] noticeDialog;", noticeDialog0.get(0));
+            addLnTag(noticeDialogSb, "");
+            addLnTag(noticeDialogSb, "    protected void noticeShow(String msg) {");
+            addLnTag(noticeDialogSb, "        if (noticeDialog == null)");
+            addLnTag(noticeDialogSb, "            noticeDialog = new [noticeDialogFullName](getAct())", noticeDialog0.get(1));
+            addLnTag(noticeDialogSb, "                    .setLayout([layout])", noticeDialog0.get(2));
+            addLnTag(noticeDialogSb, "                    .build();");
+            addLnTag(noticeDialogSb, "        noticeDialog.setContent(msg);");
+            addLnTag(noticeDialogSb, "        noticeDialog.show();");
+            addLnTag(noticeDialogSb, "    }");
+        }
+        for (int i0 = 0; i0 < count(editDialogCounts, getForKey("editDialog")); i0++) {
+            List<String> editDialog0 = editDialog.get(getForKey("editDialog", i0));
+            addLnTag(editDialogSb, "    private [editDialogFullName] [edName];", editDialog0.get(0), editDialog0.get(1));
+            addLnTag(editDialogSb, "");
+            StringBuilder edShowParamSb = new StringBuilder();
+            if (isIf(editDialogIfs, getIfKey("edShowParam", i0))) {
+                List<String> editDialog1 = editDialog.get(getIfKey("edShowParam", i0));
+                addTag(edShowParamSb, ", [type] [name]", editDialog1.get(0), editDialog1.get(1));
+            }
+            addLnTag(editDialogSb, "    protected void show[edClassName](String text[edShowParam]) {", editDialog0.get(2), edShowParamSb.toString());
+            addLnTag(editDialogSb, "        if ([edName] == null)", editDialog0.get(3));
+            addLnTag(editDialogSb, "            [edName] = new [editDialogFullName].Builder(getAct())", editDialog0.get(4), editDialog0.get(5));
+            addLnTag(editDialogSb, "                    .setTitle(\"[title]\")", editDialog0.get(6));
+            addLnTag(editDialogSb, "                    .setHint(\"[hint]\")", editDialog0.get(7));
+            addLnTag(editDialogSb, "                    .setInputType([inputType])", editDialog0.get(8));
+            addLnTag(editDialogSb, "                    .setLayout([layout])", editDialog0.get(9));
+            if (isIf(editDialogIfs, getIfKey("setTextWatcher", i0))) {
+                List<String> editDialog1 = editDialog.get(getIfKey("setTextWatcher", i0));
+                addLnTag(editDialogSb, "                    .setTextWatcher(get[edClassName]TextWatcher())", editDialog1.get(0));
+            }
+            if (isIf(editDialogIfs, getIfKey("stopAnimation", i0))) {
+                List<String> editDialog1 = editDialog.get(getIfKey("stopAnimation", i0));
+                addLnTag(editDialogSb, "                    .stopAnimation()");
+            }
+            addLnTag(editDialogSb, "                    .setYes(new [editDialogFullName].Yes() {", editDialog0.get(10));
+            addLnTag(editDialogSb, "                        @Override");
+            addLnTag(editDialogSb, "                        public boolean yes(String text, Object obj) {");
+            StringBuilder edUseYesSb = new StringBuilder();
+            if (isIf(editDialogIfs, getIfKey("edUseYes", i0))) {
+                List<String> editDialog1 = editDialog.get(getIfKey("edUseYes", i0));
+                StringBuilder edUseYesConvertSb = new StringBuilder();
+                if (isIf(editDialogIfs, getIfKey("edUseYesConvert", i0))) {
+                    List<String> editDialog2 = editDialog.get(getIfKey("edUseYesConvert", i0));
+                    addTag(edUseYesConvertSb, "([type])", editDialog2.get(0));
+                }
+                addTag(edUseYesSb, ", [edUseYesConvert]obj", edUseYesConvertSb.toString());
+            }
+            addLnTag(editDialogSb, "                            return [edName]Yes(text[edUseYes]);", editDialog0.get(11), edUseYesSb.toString());
+            addLnTag(editDialogSb, "                        }");
+            addLnTag(editDialogSb, "                    })");
+            addLnTag(editDialogSb, "                    .build();");
+            addLnTag(editDialogSb, "        [edName].setEditText(text);", editDialog0.get(12));
+            addLnTag(editDialogSb, "        [edName].setObject([setObject]);", editDialog0.get(13), editDialog0.get(14));
+            addLnTag(editDialogSb, "        [edName].show();", editDialog0.get(15));
+            addLnTag(editDialogSb, "    }");
+            addLnTag(editDialogSb, "");
+            addLnTag(editDialogSb, "");
+            StringBuilder edYesParamSb = new StringBuilder();
+            if (isIf(editDialogIfs, getIfKey("edYesParam", i0))) {
+                List<String> editDialog1 = editDialog.get(getIfKey("edYesParam", i0));
+                addTag(edYesParamSb, ", [type] [name]", editDialog1.get(0), editDialog1.get(1));
+            }
+            addLnTag(editDialogSb, "    protected boolean [edName]Yes(String text[edYesParam]) {", editDialog0.get(16), edYesParamSb.toString());
+            addLnTag(editDialogSb, "        return false;");
+            addLnTag(editDialogSb, "    }");
+            if (isIf(editDialogIfs, getIfKey("setTextWatcherMethod", i0))) {
+                List<String> editDialog1 = editDialog.get(getIfKey("setTextWatcherMethod", i0));
+                addLnTag(editDialogSb, "    protected [edTextWatcherFullName] get[edClassName]TextWatcher() {", editDialog1.get(0), editDialog1.get(1));
+                addLnTag(editDialogSb, "        return null;");
+                addLnTag(editDialogSb, "    }");
+            }
+        }
 
     }
 
@@ -1053,6 +1181,8 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[checkForms]]");
         lines.add("[[loadMore]]");
         lines.add("[[toastDialog]]");
+        lines.add("[[noticeDialog]]");
+        lines.add("[[editDialog]]");
         lines.add("}");
         lines.add("");
 

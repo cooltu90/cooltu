@@ -21,6 +21,7 @@ import com.codingtu.cooltu.processor.annotation.form.view.BindSeekBar;
 import com.codingtu.cooltu.processor.annotation.form.view.BindTextView;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.core.UiBaseInterface;
@@ -31,6 +32,7 @@ import com.codingtu.cooltu.processor.builder.subdeal.BindSeekBarDeal;
 import com.codingtu.cooltu.processor.builder.subdeal.BindTextViewDeal;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.FormBeanDeal;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
@@ -93,9 +95,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     @Override
     protected void beforeBuild(List<String> lines) {
         super.beforeBuild(lines);
-//        if (javaInfo.name.equals("StepOneActivityBase")) {
-//            Logs.i(lines);
-//        }
+        if (javaInfo.name.equals("StepOneActivityBase")) {
+            Logs.i(lines);
+        }
     }
 
     public UiBaseBuilder getUiBaseBuilder() {
@@ -117,17 +119,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
      * 设置数据
      *
      **************************************************/
-
-
-//    private ActBaseInfo info;
-
-//    public void addInfos(ActBaseInfo actBaseInfo) {
-//        this.info = actBaseInfo;
-//    }
-
-//    public ActBaseInfo getActBaseInfo() {
-//        return this.info;
-//    }
     @Override
     protected void dealLines() {
         uiBaseBuilder.dealLines();
@@ -194,8 +185,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             checkFormsIf(formBeanSimpleName);
             dealFormBean(formBeanTe, name);
         }
-
-
     }
 
     @Override
@@ -612,6 +601,56 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         toastHidden(time, msg, null);
     }
                                                                                                     [<sub>][if][toastDialog]
+                                                                                                    [<sub>][if][noticeDialog]
+    private [noticeDialogFullName] noticeDialog;
+
+    protected void noticeShow(String msg) {
+        if (noticeDialog == null)
+            noticeDialog = new [noticeDialogFullName](getAct())
+                    .setLayout([layout])
+                    .build();
+        noticeDialog.setContent(msg);
+        noticeDialog.show();
+    }
+                                                                                                    [<sub>][if][noticeDialog]
+                                                                                                    [<sub>][for][editDialog]
+    private [editDialogFullName] [edName];
+
+    protected void show[edClassName](String text[if:edShowParam], [type] [name][if:edShowParam]) {
+        if ([edName] == null)
+            [edName] = new [editDialogFullName].Builder(getAct())
+                    .setTitle("[title]")
+                    .setHint("[hint]")
+                    .setInputType([inputType])
+                    .setLayout([layout])
+                                                                                                    [<sub>][if][setTextWatcher]
+                    .setTextWatcher(get[edClassName]TextWatcher())
+                                                                                                    [<sub>][if][setTextWatcher]
+                                                                                                    [<sub>][if][stopAnimation]
+                    .stopAnimation()
+                                                                                                    [<sub>][if][stopAnimation]
+                    .setYes(new [editDialogFullName].Yes() {
+                        @Override
+                        public boolean yes(String text, Object obj) {
+                            return [edName]Yes(text[if:edUseYes], [if:edUseYesConvert]([type])[if:edUseYesConvert]obj[if:edUseYes]);
+                        }
+                    })
+                    .build();
+        [edName].setEditText(text);
+        [edName].setObject([setObject]);
+        [edName].show();
+    }
+
+
+    protected boolean [edName]Yes(String text[if:edYesParam], [type] [name][if:edYesParam]) {
+        return false;
+    }
+                                                                                                    [<sub>][if][setTextWatcherMethod]
+    protected [edTextWatcherFullName] get[edClassName]TextWatcher() {
+        return null;
+    }
+                                                                                                    [<sub>][if][setTextWatcherMethod]
+                                                                                                    [<sub>][for][editDialog]
 }
 
 model_temp_end */

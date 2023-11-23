@@ -90,6 +90,9 @@ public class FullName {
     public static final String JSON_TOOL = Pkg.LIB4J_JSON + ".JsonTool";
     //dilog
     public static final String TOAST_DIALOG = Pkg.LIB4A_DIALOG_VIEW + ".ToastDialog";
+    public static final String NOTICE_DIALOG = Pkg.LIB4A_DIALOG_VIEW + ".NoticeDialog";
+    public static final String EDIT_DIALOG = Pkg.LIB4A_DIALOG_VIEW + ".EditDialog";
+    public static final String ED_TEXT_WATCHER = EDIT_DIALOG + ".EdTextWatcher";
     public static final String ON_HIDDEN_FINISHED = Pkg.LIB4A_LAYER_VIEW + ".listener.OnHiddenFinished";
     //不变的
     public static final String VIEW = "android.view.View";

@@ -13,6 +13,8 @@ import com.codingtu.cooltu.processor.annotation.res.ResFor;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.annotation.ui.InBase;
 import com.codingtu.cooltu.processor.annotation.ui.NoStart;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.NoticeDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.ToastDialogUse;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.lib.log.Logs;
@@ -45,8 +47,8 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
             return false;
         });
 
-        ToastDialogUse toastDialogUse = te.getAnnotation(ToastDialogUse.class);
-        uiBaseBuilder.isToastDialog = toastDialogUse != null;
+        uiBaseBuilder.isToastDialog = te.getAnnotation(ToastDialogUse.class) != null;
+        uiBaseBuilder.isNoticeDialog = te.getAnnotation(NoticeDialogUse.class) != null;
 
     }
 
@@ -93,6 +95,11 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
         Adapter adapter = ve.getAnnotation(Adapter.class);
         if (adapter != null) {
             uiBaseBuilder.adapters.add(ve);
+        }
+
+        EditDialogUse editDialogUse = ve.getAnnotation(EditDialogUse.class);
+        if (editDialogUse != null) {
+            uiBaseBuilder.editDialogUses.add(ve);
         }
     }
 
