@@ -2,6 +2,7 @@ package com.codingtu.cooltu.lib4a.tools;
 
 import com.codingtu.cooltu.lib4a.CorePreferences;
 import com.codingtu.cooltu.lib4a.connect.ConnectDeviceBaseData;
+
 import com.codingtu.cooltu.lib4j.json.JsonTool;
 
 public class PfTool {
