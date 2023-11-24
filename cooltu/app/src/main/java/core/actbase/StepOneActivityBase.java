@@ -21,6 +21,12 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.lib4a.ui.a
         rv = findViewById(com.codingtu.cooltu.R.id.rv);
 
 
+
+
+
+
+
+
         // catAdapter
         catAdapter = new com.codingtu.cooltu.ui.adapter.CatAdapter();
         catAdapter.setVH(core.vh.CatVH.class);
@@ -40,6 +46,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.lib4a.ui.a
         rv.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
 
 
+
         onCreateComplete();
 
     }
@@ -55,6 +62,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.lib4a.ui.a
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
+
 
 
     }
@@ -74,6 +82,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.lib4a.ui.a
     }
 
 
+
     protected abstract void dogAdapterLoadMore(int page);
 
     private com.codingtu.cooltu.lib4a.view.dialogview.ToastDialog toastDialog;
@@ -85,7 +94,6 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.lib4a.ui.a
                     .build();
         return toastDialog;
     }
-
     protected void toastShow(String msg) {
         com.codingtu.cooltu.lib4a.view.dialogview.ToastDialog td = getToastDialog();
         td.setContent(msg);
@@ -93,7 +101,6 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.lib4a.ui.a
             td.show();
         }
     }
-
     protected void toastShow(long time, String msg, com.codingtu.cooltu.lib4a.view.layerview.listener.OnHiddenFinished onHiddenFinished) {
         toastShow(msg);
         com.codingtu.cooltu.lib4a.tools.HandlerTool.getMainHandler().postDelayed(new java.lang.Runnable() {
@@ -147,7 +154,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.lib4a.ui.a
                     .setYes(new com.codingtu.cooltu.lib4a.view.dialogview.EditDialog.Yes() {
                         @Override
                         public boolean yes(String text, Object obj) {
-                            return edYes(text, (com.codingtu.cooltu.bean.User) obj);
+                            return edYes(text, (com.codingtu.cooltu.bean.User)obj);
                         }
                     })
                     .build();
@@ -160,10 +167,64 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.lib4a.ui.a
     protected boolean edYes(String text, com.codingtu.cooltu.bean.User user) {
         return false;
     }
-
     protected com.codingtu.cooltu.lib4a.view.dialogview.EditDialog.EdTextWatcher getEdTextWatcher() {
         return null;
     }
+
+    private com.codingtu.cooltu.lib4a.view.dialogview.Dialog dialog;
+    protected void showDialog(com.codingtu.cooltu.bean.User user) {
+        if (dialog == null) {
+            dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
+                    .setTitle("xxx")
+                    .setContent("请选择照片的来源")
+                    .setLeftBtText("取消")
+                    .setRighBtText("确定")
+                    .setLayout(com.codingtu.cooltu.R.layout.dialog)
+                    .setOnBtClick(new com.codingtu.cooltu.lib4a.view.dialogview.Dialog.OnBtClick() {
+                        @Override
+                        public void onLeftClick(Object obj) {
+                            dialogLeft((com.codingtu.cooltu.bean.User)obj);
+                        }
+
+                        @Override
+                        public void onRightClick(Object obj) {
+                            dialogRight((com.codingtu.cooltu.bean.User)obj);
+                        }
+                    })
+                    .build();
+        }
+        dialog.setObject(user);
+        dialog.show();
+    }
+    protected void showDialog(String content, com.codingtu.cooltu.bean.User user) {
+        if (dialog == null) {
+            dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
+                    .setTitle("xxx")
+                    .setContent(content)
+                    .setLeftBtText("取消")
+                    .setRighBtText("确定")
+                    .setLayout(com.codingtu.cooltu.R.layout.dialog)
+                    .setOnBtClick(new com.codingtu.cooltu.lib4a.view.dialogview.Dialog.OnBtClick() {
+                        @Override
+                        public void onLeftClick(Object obj) {
+                            dialogLeft((com.codingtu.cooltu.bean.User)obj);
+                        }
+
+                        @Override
+                        public void onRightClick(Object obj) {
+                            dialogRight((com.codingtu.cooltu.bean.User)obj);
+                        }
+                    })
+                    .build();
+        } else {
+            dialog.updateContent(content);
+        }
+        dialog.setObject(user);
+        dialog.show();
+    }
+    protected void dialogLeft(com.codingtu.cooltu.bean.User user) { }
+    protected void dialogRight(com.codingtu.cooltu.bean.User user) { }
+
 
 }
 

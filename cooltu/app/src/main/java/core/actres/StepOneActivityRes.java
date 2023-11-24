@@ -38,7 +38,7 @@ public class StepOneActivityRes {
     @DialogUse(
             title = "xxx",
             content = "xxx",
-            objType = Object.class,
+            objType = User.class,
             leftBtText = "取消",
             rightBtText = "确定"
     )

@@ -15,6 +15,7 @@ import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
@@ -127,6 +128,62 @@ public abstract class UiBaseBuilder {
         noticeDialog();
 
         editDialog();
+
+        Ts.ls(dialogUses, new BaseTs.EachTs<VariableElement>() {
+            @Override
+            public boolean each(int position, VariableElement ve) {
+                KV<String, String> kv = ElementTools.getFieldKv(ve);
+                DialogUse dialogUse = ve.getAnnotation(DialogUse.class);
+                uiBase.dialog(position, FullName.DIALOG, kv.v);
+                String dialogClassName = ConvertTool.toClassType(kv.v);
+
+                String objClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                    @Override
+                    public Object get() {
+                        return dialogUse.objType();
+                    }
+                });
+
+                boolean isVoid = ClassTool.isVoid(objClass);
+
+                JavaInfo objJavaInfo = CurrentPath.javaInfo(objClass);
+
+                String objName = ConvertTool.toMethodType(objJavaInfo.name);
+
+
+                for (int i = 0; i < 2; i++) {
+                    StringBuilder showDialogParamSb = new StringBuilder();
+                    if (i != 0) {
+                        showDialogParamSb.append("String content, ");
+                        uiBase.isShowDialogElse(position, i, true);
+                        uiBase.showDialogUpdataContentIf(position, i, kv.v);
+                        uiBase.isShowDialogSetContent(position, 1, true);
+                    } else {
+                        uiBase.isShowDialogSetContentStr(position, 0, true);
+                    }
+                    if (!isVoid) {
+                        showDialogParamSb.append(objClass).append(" ").append(objName);
+                        uiBase.isShowDialogLeftObj(position, i, true);
+                        uiBase.isShowDialogRightObj(position, i, true);
+                        boolean isObj = ClassTool.isObject(objClass);
+                        if (!isObj) {
+                            uiBase.showDialogLeftObjConvertIf(position, i, objClass);
+                            uiBase.showDialogRightObjConvertIf(position, i, objClass);
+                        }
+                    }
+
+                    uiBase.showDialog(position, i, dialogClassName, showDialogParamSb.toString(), kv.v,
+                            FullName.DIALOG, dialogUse.title(), dialogUse.leftBtText(), dialogUse.rightBtText(),
+                            Constant.DEFAULT_DIALOG_LAYOUT, FullName.DIALOG_ON_BT_CLICK, isVoid ? "null" : objName);
+                }
+
+                uiBase.leftParamIf(position, objClass, objName);
+                uiBase.rightParamIf(position, objClass, objName);
+
+
+                return false;
+            }
+        });
 
 
     }

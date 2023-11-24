@@ -94,4 +94,29 @@ public interface UiBaseInterface {
     void setTextWatcherMethodIf(int position, String edTextWatcher, String edClassName);
 
     void isStopAnimation(int position, boolean b);
+
+    void dialog(int position, String dialog, String v);
+
+    void isShowDialogElse(int position, int i, boolean b);
+
+    void showDialogUpdataContentIf(int position, int i, String v);
+
+    void isShowDialogSetContent(int position, int i, boolean b);
+
+    void isShowDialogSetContentStr(int position, int i, boolean b);
+
+    void isShowDialogLeftObj(int position, int i, boolean b);
+
+    void isShowDialogRightObj(int position, int i, boolean b);
+
+    void showDialogLeftObjConvertIf(int position, int i, String objClass);
+
+    void showDialogRightObjConvertIf(int position, int i, String objClass);
+
+    void showDialog(int position, int i, String dialogClassName, String toString, String v, String dialog, String title, String leftBtText, String rightBtText, String defaultDialogLayout, String dialogOnBtClick, String s);
+
+    void leftParamIf(int position, String objClass, String objName);
+
+    void rightParamIf(int position, String objClass, String objName);
+
 }

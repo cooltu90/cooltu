@@ -179,4 +179,58 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.f
         return null;
     }
 
+    private com.codingtu.cooltu.lib4a.view.dialogview.Dialog dialog;
+    protected void showDialog(com.codingtu.cooltu.bean.User user) {
+        if (dialog == null) {
+            dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
+                    .setTitle("xxx")
+                    .setContent("请选择照片的来源")
+                    .setLeftBtText("取消")
+                    .setRighBtText("确定")
+                    .setLayout(com.codingtu.cooltu.R.layout.dialog)
+                    .setOnBtClick(new com.codingtu.cooltu.lib4a.view.dialogview.Dialog.OnBtClick() {
+                        @Override
+                        public void onLeftClick(Object obj) {
+                            dialogLeft((com.codingtu.cooltu.bean.User)obj);
+                        }
+
+                        @Override
+                        public void onRightClick(Object obj) {
+                            dialogRight((com.codingtu.cooltu.bean.User)obj);
+                        }
+                    })
+                    .build();
+        }
+        dialog.setObject(user);
+        dialog.show();
+    }
+    protected void showDialog(String content, com.codingtu.cooltu.bean.User user) {
+        if (dialog == null) {
+            dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
+                    .setTitle("xxx")
+                    .setContent(content)
+                    .setLeftBtText("取消")
+                    .setRighBtText("确定")
+                    .setLayout(com.codingtu.cooltu.R.layout.dialog)
+                    .setOnBtClick(new com.codingtu.cooltu.lib4a.view.dialogview.Dialog.OnBtClick() {
+                        @Override
+                        public void onLeftClick(Object obj) {
+                            dialogLeft((com.codingtu.cooltu.bean.User)obj);
+                        }
+
+                        @Override
+                        public void onRightClick(Object obj) {
+                            dialogRight((com.codingtu.cooltu.bean.User)obj);
+                        }
+                    })
+                    .build();
+        } else {
+            dialog.updateContent(content);
+        }
+        dialog.setObject(user);
+        dialog.show();
+    }
+    protected void dialogLeft(com.codingtu.cooltu.bean.User user) { }
+    protected void dialogRight(com.codingtu.cooltu.bean.User user) { }
+
 }

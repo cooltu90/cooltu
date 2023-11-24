@@ -91,7 +91,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
     @Override
     protected boolean isBuild() {
-        return false;
+        return true;
     }
 
     @Override
@@ -188,49 +188,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             dealFormBean(formBeanTe, name);
         }
 
-        Ts.ls(uiBaseBuilder.dialogUses, new BaseTs.EachTs<VariableElement>() {
-            @Override
-            public boolean each(int position, VariableElement ve) {
-                KV<String, String> kv = ElementTools.getFieldKv(ve);
-                DialogUse dialogUse = ve.getAnnotation(DialogUse.class);
-                dialog(position, FullName.DIALOG, kv.v);
-                String dialogClassName = ConvertTool.toClassType(kv.v);
-
-                String objClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
-                    @Override
-                    public Object get() {
-                        return dialogUse.objType();
-                    }
-                });
-
-                boolean isVoid = ClassTool.isVoid(objClass);
-
-                JavaInfo objJavaInfo = CurrentPath.javaInfo(objClass);
-
-                String objName = ConvertTool.toMethodType(objJavaInfo.name);
-
-
-                for (int i = 0; i < 2; i++) {
-                    StringBuilder showDialogParamSb = new StringBuilder();
-                    if (i != 0) {
-                        showDialogParamSb.append("String content, ");
-                        isShowDialogElse(position, i, true);
-                        showDialogUpdataContentIf(position, i, kv.v);
-
-                    }
-                    if (!isVoid) {
-                        showDialogParamSb.append(objClass).append(" ").append(objName);
-                    }
-
-                    showDialog(position, i, dialogClassName, showDialogParamSb.toString(), kv.v,
-                            FullName.DIALOG, dialogUse.title(), dialogUse.leftBtText(), dialogUse.rightBtText(),
-                            Constant.DEFAULT_DIALOG_LAYOUT, FullName.DIALOG_ON_BT_CLICK, isVoid ? "null" : objName);
-                }
-
-
-                return false;
-            }
-        });
 
     }
 

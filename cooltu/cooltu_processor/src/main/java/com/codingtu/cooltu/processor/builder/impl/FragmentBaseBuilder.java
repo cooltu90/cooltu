@@ -323,5 +323,45 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     }
                                                                                                     [<sub>][if][setTextWatcherMethod]
                                                                                                     [<sub>][for][editDialog]
+                                                                                                    [<sub>][for][dialog]
+    private [dialogFullName] [dialogName];
+                                                                                                    [<sub>][for][showDialog]
+    protected void show[dialogClassName]([showDialogParam]) {
+        if ([dialogName] == null) {
+            [dialogName] = new [dialogFullName](getAct())
+                    .setTitle("[title]")
+                                                                                                    [<sub>][if][showDialogSetContentStr]
+                    .setContent("请选择照片的来源")
+                                                                                                    [<sub>][if][showDialogSetContentStr]
+                                                                                                    [<sub>][if][showDialogSetContent]
+                    .setContent(content)
+                                                                                                    [<sub>][if][showDialogSetContent]
+                    .setLeftBtText("[left]")
+                    .setRighBtText("[right]")
+                    .setLayout([layout])
+                    .setOnBtClick(new [onBtClickFullName]() {
+                        @Override
+                        public void onLeftClick(Object obj) {
+                            [dialogName]Left([if:showDialogLeftObj][if:showDialogLeftObjConvert]([type])[if:showDialogLeftObjConvert]obj[if:showDialogLeftObj]);
+                        }
+
+                        @Override
+                        public void onRightClick(Object obj) {
+                            [dialogName]Right([if:showDialogRightObj][if:showDialogRightObjConvert]([type])[if:showDialogRightObjConvert]obj[if:showDialogRightObj]);
+                        }
+                    })
+                    .build();
+        }[if:showDialogElse] else {[if:showDialogElse]
+                                                                                                    [<sub>][if][showDialogUpdataContent]
+            [dialogName].updateContent(content);
+        }
+                                                                                                    [<sub>][if][showDialogUpdataContent]
+        [dialogName].setObject([obj]);
+        [dialogName].show();
+    }
+                                                                                                    [<sub>][for][showDialog]
+    protected void [dialogName]Left([if:leftParam][type] [name][if:leftParam]) { }
+    protected void [dialogName]Right([if:rightParam][type] [name][if:rightParam]) { }
+                                                                                                    [<sub>][for][dialog]
 }
 model_temp_end */
