@@ -7,6 +7,7 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.builder.impl.ActBackIntentBuilder;
+import com.codingtu.cooltu.processor.builder.impl.PassBuilder;
 import com.codingtu.cooltu.processor.builder.impl.PermissionBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
@@ -35,5 +36,6 @@ public class ModuleInfoDeal extends TypeBaseDeal {
 
         ActBackIntentBuilder actBackIntentBuilder = ActBackIntentBuilder.BUILDER;
         PermissionBuilder permissionBuilder = PermissionBuilder.BUILDER;
+        PassBuilder passBuilder = PassBuilder.BUILDER;
     }
 }
