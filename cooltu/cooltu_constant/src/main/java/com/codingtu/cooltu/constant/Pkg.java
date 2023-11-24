@@ -5,6 +5,10 @@ public class Pkg {
     public static String R;
     public static String ACT;
 
+    //default
+    public static final String DEFAULT_UI_ADAPTER = ".ui.adapter";
+    public static final String DEFAULT_UI = ".ui";
+
     //processor
     public static final String PROCESSOR = "com.codingtu.cooltu.processor";
     public static final String PROCESSOR_BUILDER_BASE = PROCESSOR + ".builder.base";
