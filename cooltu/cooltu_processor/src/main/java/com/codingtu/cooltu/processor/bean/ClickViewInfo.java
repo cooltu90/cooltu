@@ -13,4 +13,5 @@ public class ClickViewInfo {
     public List<IdTools.Id> ids;
     public Params methodParams;
     public String method;
+    public boolean isCheckLogin;
 }

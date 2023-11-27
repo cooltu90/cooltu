@@ -309,6 +309,9 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     public void isSuperOnClick(boolean is) {
         superOnClickIfs.put(getIfKey("superOnClick"), is);
     }
+    public void isOnClickCheckLogin(int i0, boolean is) {
+        onClickSwithIfs.put(getIfKey("onClickCheckLogin", i0), is);
+    }
     public void onClickSwitchParamsIf(int i0, String divider) {
         addForMap(this.onClickSwith, getIfKey("onClickSwitchParams", i0), divider);
         onClickSwithIfs.put(getIfKey("onClickSwitchParams", i0), true);
@@ -464,6 +467,12 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             for (int i1 = 0; i1 < count(onClickSwithCounts, getForKey("onClickCase", i0)); i1++) {
                 List<String> onClickSwith1 = onClickSwith.get(getForKey("onClickCase", i0, i1));
                 addLnTag(onClickSwithSb, "            case [id]:", onClickSwith1.get(0));
+            }
+            if (isIf(onClickSwithIfs, getIfKey("onClickCheckLogin", i0))) {
+                List<String> onClickSwith1 = onClickSwith.get(getIfKey("onClickCheckLogin", i0));
+                addLnTag(onClickSwithSb, "                if (!isLogin(getAct())) {");
+                addLnTag(onClickSwithSb, "                    return;");
+                addLnTag(onClickSwithSb, "                }");
             }
             addLnTag(onClickSwithSb, "                [methodName](", onClickSwith0.get(0));
             if (isIf(onClickSwithIfs, getIfKey("onClickSwitchParams", i0))) {

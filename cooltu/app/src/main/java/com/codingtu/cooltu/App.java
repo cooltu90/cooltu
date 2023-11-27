@@ -14,11 +14,12 @@ import com.codingtu.cooltu.processor.annotation.ui.DefaultDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultEditDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultNoticeDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultToastDialogLayout;
+import com.codingtu.cooltu.ui.base.BaseActivity;
 
 @ModuleInfo(
         module = Module.APP,
         actPkg = "com.codingtu.cooltu.ui",
-        baseAct = CoreActivity.class,
+        baseAct = BaseActivity.class,
         baseFragment = CoreFragment.class,
         rPkg = "com.codingtu.cooltu"
 )
@@ -29,7 +30,7 @@ import com.codingtu.cooltu.processor.annotation.ui.DefaultToastDialogLayout;
 @CreateAct(
         name = "form",
         packages = "com.codingtu.cooltu.ui",
-        baseClass = CoreActivity.class,
+        baseClass = BaseActivity.class,
         layoutTemp = R.layout.layout_temp
 )
 @CreateAdapter(

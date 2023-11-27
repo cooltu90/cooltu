@@ -7,7 +7,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class FormActivityBase extends com.codingtu.cooltu.lib4a.ui.act.CoreActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
+public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
     protected android.widget.EditText addressEt;
     protected android.widget.LinearLayout radios1;
     protected android.widget.EditText areaEt;

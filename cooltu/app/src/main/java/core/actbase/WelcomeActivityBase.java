@@ -22,6 +22,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         super.onCreate(savedInstanceState);
 
 
+        backBt.setOnClickListener(this);
 
         textColor = android.graphics.Color.parseColor("#ffffff");
 
@@ -49,10 +50,20 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         super.onClick(v);
 
         switch (v.getId()) {
+            case com.codingtu.cooltu.R.id.backBt:
+                if (!isLogin(getAct())) {
+                    return;
+                }
+                backBtClick(
+                        v,
+                        (com.codingtu.cooltu.bean.User) v.getTag(com.codingtu.cooltu.lib4a.R.id.tag_0)
+                );
+                break;
 
         }
     }
 
+    protected void backBtClick(android.view.View v, com.codingtu.cooltu.bean.User user) {}
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {

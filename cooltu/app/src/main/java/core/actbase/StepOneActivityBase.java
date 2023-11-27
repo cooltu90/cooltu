@@ -7,7 +7,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class StepOneActivityBase extends com.codingtu.cooltu.lib4a.ui.act.CoreActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
+public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
     protected androidx.recyclerview.widget.RecyclerView rv;
     protected com.codingtu.cooltu.ui.adapter.CatAdapter catAdapter;
     protected com.codingtu.cooltu.ui.adapter.DogAdapter dogAdapter;

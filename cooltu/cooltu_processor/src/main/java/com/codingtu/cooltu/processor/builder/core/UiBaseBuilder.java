@@ -21,6 +21,7 @@ import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.deal.NetDeal;
 import com.codingtu.cooltu.processor.deal.VHDeal;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
@@ -56,7 +57,6 @@ public abstract class UiBaseBuilder {
     public List<VariableElement> editDialogUses = new ArrayList<>();
     public List<VariableElement> dialogUses = new ArrayList<>();
 
-    public String finalBaseClass;
     public boolean isToastDialog;
     public boolean isNoticeDialog;
 
@@ -82,7 +82,7 @@ public abstract class UiBaseBuilder {
     protected abstract BaseTools.GetParent<UiBaseBuilder> getParentGetter();
 
     public boolean hasBaseClass() {
-        return !finalBaseClass.equals(baseClass);
+        return CountTool.count(BaseTools.getThisWithParents(this, getParentGetter())) > 1;
     }
 
     public void addInBase(KV<String, String> fieldKv) {
@@ -234,6 +234,7 @@ public abstract class UiBaseBuilder {
         Ts.ls(clickViews, new BaseTs.EachTs<ClickViewInfo>() {
             @Override
             public boolean each(int clickViewInfoIndex, ClickViewInfo info) {
+                uiBase.isOnClickCheckLogin(clickViewInfoIndex, info.isCheckLogin);
                 uiBase.onClickMethods(clickViewInfoIndex, info.method, info.methodParams.getMethodParams());
                 uiBase.onClickSwith(clickViewInfoIndex, info.method);
 

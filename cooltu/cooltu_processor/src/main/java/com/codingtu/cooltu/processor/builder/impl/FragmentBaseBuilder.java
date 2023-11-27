@@ -36,7 +36,6 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
             }
 
         };
-        uiBaseBuilder.finalBaseClass = FullName.BASE_FRAGMENT;
     }
 
     @Override
@@ -175,6 +174,11 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][onClickCase]
             case [id]:
                                                                                                     [<sub>][for][onClickCase]
+                                                                                                    [<sub>][if][onClickCheckLogin]
+                if (!isLogin(getAct())) {
+                    return;
+                }
+                                                                                                    [<sub>][if][onClickCheckLogin]
                 [methodName](
                                                                                                     [<sub>][if][onClickSwitchParams]
                         v[divider]

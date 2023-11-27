@@ -3,6 +3,8 @@ package com.codingtu.cooltu.processor.lib.tools;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
+import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
+import com.codingtu.cooltu.processor.builder.impl.FragmentBaseBuilder;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.FragmentBaseDeal;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
@@ -22,13 +24,12 @@ public class BaseTools {
     public static BaseTools.GetParent<UiBaseBuilder> getActBaseParentGetter() {
         return new BaseTools.GetParent<UiBaseBuilder>() {
             @Override
-            public boolean hasParent(UiBaseBuilder uiBaseBuilder) {
-                return uiBaseBuilder.hasBaseClass();
-            }
-
-            @Override
             public UiBaseBuilder getParent(UiBaseBuilder uiBaseBuilder) {
-                return CurrentPath.actBaseBuilder(uiBaseBuilder.baseClass).getUiBaseBuilder();
+                ActBaseBuilder builder = CurrentPath.actBaseBuilder(uiBaseBuilder.baseClass);
+                if (builder == null) {
+                    return null;
+                }
+                return builder.getUiBaseBuilder();
             }
         };
     }
@@ -36,17 +37,27 @@ public class BaseTools {
     public static BaseTools.GetParent<UiBaseBuilder> getFragBaseParentGetter() {
         return new BaseTools.GetParent<UiBaseBuilder>() {
             @Override
-            public boolean hasParent(UiBaseBuilder uiBaseBuilder) {
-                return uiBaseBuilder.hasBaseClass();
-            }
-
-            @Override
             public UiBaseBuilder getParent(UiBaseBuilder uiBaseBuilder) {
-                return CurrentPath.fragBaseBuilder(uiBaseBuilder.baseClass).getUiBaseBuilder();
+                FragmentBaseBuilder builder = CurrentPath.fragBaseBuilder(uiBaseBuilder.baseClass);
+                if (builder == null) {
+                    return null;
+                }
+                return builder.getUiBaseBuilder();
             }
         };
     }
 
+    public static <T> List<T> getThisWithParents(T t, GetParent<T> getParent) {
+        ArrayList<T> ts = new ArrayList<>();
+        getThisWithParents(t, getParent, new BaseTs.EachTs<T>() {
+            @Override
+            public boolean each(int position, T t) {
+                ts.add(t);
+                return false;
+            }
+        });
+        return ts;
+    }
 
     public static <T> void getThisWithParents(T t, GetParent<T> getParent, BaseTs.EachTs<T> eachTs) {
         getThisWithParents(t, new int[]{0}, getParent, eachTs);
@@ -55,18 +66,14 @@ public class BaseTools {
     private static <T> void getThisWithParents(T t, int[] indexs, GetParent<T> getParent, BaseTs.EachTs<T> eachTs) {
         if (t != null) {
             eachTs.each(indexs[0]++, t);
-            if (getParent.hasParent(t)) {
-                T parent = getParent.getParent(t);
-                if (parent != null) {
-                    getThisWithParents(parent, indexs, getParent, eachTs);
-                }
+            T parent = getParent.getParent(t);
+            if (parent != null) {
+                getThisWithParents(parent, indexs, getParent, eachTs);
             }
         }
     }
 
     public static interface GetParent<T> {
-        boolean hasParent(T t);
-
         T getParent(T t);
     }
 

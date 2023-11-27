@@ -104,6 +104,7 @@ public class ActBaseDeal extends TypeBaseDeal {
         clickViewInfo.ids = Ts.ts(IdTools.elementToIds(ee, ClickView.class, clickView.value())).toList().get();
         clickViewInfo.method = ElementTools.simpleName(ee);
         clickViewInfo.methodParams = ElementTools.getMethodParamKvs(ee);
+        clickViewInfo.isCheckLogin = clickView.checkLogin();
 
         int inActCount = CountTool.count(clickView.inAct());
         Ts.ls(clickViewInfo.ids, new BaseTs.EachTs<IdTools.Id>() {

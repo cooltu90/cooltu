@@ -2,6 +2,7 @@ package com.codingtu.cooltu.ui;
 
 import android.Manifest;
 import android.os.Bundle;
+import android.view.View;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.Forms;
@@ -10,6 +11,7 @@ import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
+import com.codingtu.cooltu.processor.annotation.ui.ClickView;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
 
@@ -28,12 +30,18 @@ public class WelcomeActivity extends WelcomeActivityBase {
         super.onCreate(savedInstanceState);
         Forms forms = new Forms();
         forms.name1 = "SSSSS";
-        forms.address="山东-淄博-周村";
+        forms.address = "山东-淄博-周村";
         ActStart.formActivity(getAct(), null);
     }
 
     @ActBack(StepOneActivity.class)
     public void stepOneActivityBack(User user, String xxx) {
+        User user1 = new User();
+        backBt.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, user1);
+    }
+
+    @ClickView(value = R.id.backBt, checkLogin = true)
+    public void backBtClick(View v, User user) {
 
     }
 
