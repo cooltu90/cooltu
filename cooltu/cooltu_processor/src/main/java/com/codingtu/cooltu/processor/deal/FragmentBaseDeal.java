@@ -11,19 +11,15 @@ import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.annotation.net.NetBack;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
-import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
 import com.codingtu.cooltu.processor.annotation.ui.FragmentBase;
-import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActBackIntentBuilder;
-import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.FragmentBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.PassBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
@@ -93,6 +89,8 @@ public class FragmentBaseDeal extends TypeBaseDeal {
         clickViewInfo.ids = Ts.ts(IdTools.elementToIds(ee, ClickView.class, clickView.value())).toList().get();
         clickViewInfo.method = ElementTools.simpleName(ee);
         clickViewInfo.methodParams = ElementTools.getMethodParamKvs(ee);
+        clickViewInfo.isCheckLogin = clickView.checkLogin();
+        clickViewInfo.isCheckForm = clickView.check();
 
         int inActCount = CountTool.count(clickView.inAct());
         Ts.ls(clickViewInfo.ids, new BaseTs.EachTs<IdTools.Id>() {

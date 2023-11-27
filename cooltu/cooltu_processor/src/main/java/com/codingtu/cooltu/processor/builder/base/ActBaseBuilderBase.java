@@ -586,6 +586,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     public void isOnClickCheckLogin(int i0, boolean is) {
         onClickSwithIfs.put(getIfKey("onClickCheckLogin", i0), is);
     }
+    public void onClickCheckFormIf(int i0, String formBean) {
+        addForMap(this.onClickSwith, getIfKey("onClickCheckForm", i0), formBean);
+        onClickSwithIfs.put(getIfKey("onClickCheckForm", i0), true);
+    }
     public void onClickSwitchParamsIf(int i0, String divider) {
         addForMap(this.onClickSwith, getIfKey("onClickSwitchParams", i0), divider);
         onClickSwithIfs.put(getIfKey("onClickSwitchParams", i0), true);
@@ -877,6 +881,12 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             if (isIf(onClickSwithIfs, getIfKey("onClickCheckLogin", i0))) {
                 List<String> onClickSwith1 = onClickSwith.get(getIfKey("onClickCheckLogin", i0));
                 addLnTag(onClickSwithSb, "                if (!isLogin(getAct())) {");
+                addLnTag(onClickSwithSb, "                    return;");
+                addLnTag(onClickSwithSb, "                }");
+            }
+            if (isIf(onClickSwithIfs, getIfKey("onClickCheckForm", i0))) {
+                List<String> onClickSwith1 = onClickSwith.get(getIfKey("onClickCheckForm", i0));
+                addLnTag(onClickSwithSb, "                if (!check[formBean]()) {", onClickSwith1.get(0));
                 addLnTag(onClickSwithSb, "                    return;");
                 addLnTag(onClickSwithSb, "                }");
             }

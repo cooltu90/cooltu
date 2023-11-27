@@ -30,7 +30,7 @@ public class FormActivity extends FormActivityBase {
         super.onCreate(savedInstanceState);
     }
 
-    @ClickView(R.id.bt)
+    @ClickView(value = R.id.bt, check = true)
     public void btClick() {
         ViewTool.setText(nameTv, "sdfsdf");
         HandlerTool.getMainHandler().post(new Runnable() {

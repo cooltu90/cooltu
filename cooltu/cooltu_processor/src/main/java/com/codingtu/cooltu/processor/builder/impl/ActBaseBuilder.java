@@ -255,6 +255,20 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         });
     }
 
+    @Override
+    public void isCheckForm(int index, boolean isCheckForm) {
+        if (form != null && isCheckForm) {
+            String formBeanClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                @Override
+                public Object get() {
+                    return form.value();
+                }
+            });
+            String formBeanSimpleName = CurrentPath.javaInfo(formBeanClass).name;
+            onClickCheckFormIf(index, formBeanSimpleName);
+        }
+    }
+
     /**************************************************
      *
      *   ┏━━━━━━━━━━━━━━━━━━━━━┓
@@ -415,6 +429,11 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                     return;
                 }
                                                                                                     [<sub>][if][onClickCheckLogin]
+                                                                                                    [<sub>][if][onClickCheckForm]
+                if (!check[formBean]()) {
+                    return;
+                }
+                                                                                                    [<sub>][if][onClickCheckForm]
                 [methodName](
                                                                                                     [<sub>][if][onClickSwitchParams]
                         v[divider]

@@ -87,6 +87,11 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
     public String getDefulatViewParent() {
         return "view.";
     }
+
+    @Override
+    public void isCheckForm(int index, boolean isCheckForm) {
+
+    }
 }
 /* model_temp_start
 package [[pkg]];

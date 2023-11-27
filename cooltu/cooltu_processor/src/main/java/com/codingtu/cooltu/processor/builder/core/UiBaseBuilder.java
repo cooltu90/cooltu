@@ -21,7 +21,6 @@ import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.deal.NetDeal;
 import com.codingtu.cooltu.processor.deal.VHDeal;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
@@ -235,6 +234,7 @@ public abstract class UiBaseBuilder {
             @Override
             public boolean each(int clickViewInfoIndex, ClickViewInfo info) {
                 uiBase.isOnClickCheckLogin(clickViewInfoIndex, info.isCheckLogin);
+                uiBase.isCheckForm(clickViewInfoIndex,info.isCheckForm);
                 uiBase.onClickMethods(clickViewInfoIndex, info.method, info.methodParams.getMethodParams());
                 uiBase.onClickSwith(clickViewInfoIndex, info.method);
 

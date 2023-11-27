@@ -120,4 +120,6 @@ public interface UiBaseInterface {
     void rightParamIf(int position, String objClass, String objName);
 
     void isOnClickCheckLogin(int clickViewInfoIndex, boolean b);
+
+    void isCheckForm(int clickViewInfoIndex, boolean isCheckForm);
 }
