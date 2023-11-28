@@ -17,7 +17,7 @@ public class MD5 {
         return toHexString(md5Bytes(content, times));
     }
 
-    private static byte[] md5Bytes(String content, int times) {
+    public static byte[] md5Bytes(String content, int times) {
         try {
             MessageDigest md5 = getMd5();
             byte[] data = content.getBytes("utf-8");
