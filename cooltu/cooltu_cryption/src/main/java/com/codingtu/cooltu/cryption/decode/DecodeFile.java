@@ -66,7 +66,7 @@ public class DecodeFile extends CryptionFile {
         }
         newFile.setLastModified(lastModify);
         listener.log("]");
-        this.file.delete();
+        this.file.deleteOnExit();
 
     }
 
