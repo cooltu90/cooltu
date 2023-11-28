@@ -15,8 +15,8 @@ import java.io.IOException;
 
 public class DecodeFile extends CryptionFile {
 
-    public DecodeFile(File file, byte[] pswBytes, CryptionListener listener) {
-        super(file, pswBytes, listener);
+    public DecodeFile(File file, byte[] pswBytes) {
+        super(file, pswBytes);
     }
 
     @Override
@@ -27,13 +27,13 @@ public class DecodeFile extends CryptionFile {
         ipt.read(bytes, 0, CryptionTools.signLen());
         byte[] signBytes = encode(CryptionTools.signBytes());
         if (!CryptionTools.isEncode(signBytes, bytes)) {
-            listener.log("此文件为未加密文件：" + file.getAbsolutePath());
+            System.out.println("此文件为未加密文件：" + file.getAbsolutePath());
             return;
         }
 
-        listener.log("正在解密：" + file.getAbsolutePath());
-        listener.log("[10% 20% 30% 40% 50% 60% 70% 80% 90% 100%]");
-        listener.log("[");
+        System.out.println("正在解密：" + file.getAbsolutePath());
+        System.out.println("[10% 20% 30% 40% 50% 60% 70% 80% 90% 100%]");
+        System.out.print("[");
 
         //获取类型
         type = CryptionTypes.getType(ipt.read());
@@ -64,13 +64,12 @@ public class DecodeFile extends CryptionFile {
             percent(readLen, totalLen);
         }
         newFile.setLastModified(lastModify);
-        listener.log("]");
+        System.out.println("]");
     }
 
     @Override
     protected void finish() {
         super.finish();
-        if (this.file.exists())
-            this.file.delete();
+        this.file.delete();
     }
 }

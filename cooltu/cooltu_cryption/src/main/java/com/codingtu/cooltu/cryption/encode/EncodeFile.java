@@ -16,8 +16,8 @@ public class EncodeFile extends CryptionFile {
 
     private String newFilePath;
 
-    public EncodeFile(File file, byte[] pswBytes, CryptionListener listener) {
-        super(file, pswBytes, listener);
+    public EncodeFile(File file, byte[] pswBytes) {
+        super(file, pswBytes);
     }
 
     @Override
@@ -31,14 +31,14 @@ public class EncodeFile extends CryptionFile {
         byte[] signBytes = encode(CryptionTools.signBytes());
 
         if (CryptionTools.isEncode(signBytes, bytes)) {
-            listener.log("此文件是已加密文件：" + file.getAbsolutePath());
+            System.out.println("此文件是已加密文件：" + file.getAbsolutePath());
             return;
         }
 
         //未加密
-        listener.log("正在加密：" + file.getAbsolutePath());
-        listener.log("[10% 20% 30% 40% 50% 60% 70% 80% 90% 100%]");
-        listener.log("[");
+        System.out.println("正在加密：" + file.getAbsolutePath());
+        System.out.println("[10% 20% 30% 40% 50% 60% 70% 80% 90% 100%]");
+        System.out.print("[");
 
         File newFile = getFile(this.file);
         newFilePath = newFile.getAbsolutePath();
@@ -74,7 +74,7 @@ public class EncodeFile extends CryptionFile {
         }
         while ((len = ipt.read(bytes)) > 0);
 
-        listener.log("]");
+        System.out.println("]");
 
     }
 
@@ -112,7 +112,7 @@ public class EncodeFile extends CryptionFile {
 
         } catch (Exception e) {
             e.printStackTrace();
-            listener.log("加密失败");
+            System.out.println("加密失败");
             newFile.delete();
         } finally {
             if (ipt != null) {

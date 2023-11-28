@@ -12,7 +12,6 @@ public class Cryption {
     private boolean isEncode;
     private File file;
     private byte[] pswBytes;
-    private CryptionListener listener;
 
 
     public static Cryption encode() {
@@ -50,11 +49,7 @@ public class Cryption {
     }
 
     private void start(File file) {
-        (isEncode ? new EncodeFile(file, pswBytes, listener) : new DecodeFile(file, pswBytes, listener)).start();
+        (isEncode ? new EncodeFile(file, pswBytes) : new DecodeFile(file, pswBytes)).start();
     }
 
-    public Cryption setListener(CryptionListener listener) {
-        this.listener = listener;
-        return this;
-    }
 }

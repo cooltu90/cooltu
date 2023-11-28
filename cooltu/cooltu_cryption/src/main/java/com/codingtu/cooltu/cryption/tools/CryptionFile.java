@@ -9,12 +9,6 @@ import java.io.IOException;
 
 public abstract class CryptionFile {
 
-    protected CryptionListener listener = new CryptionListener() {
-        @Override
-        public void log(String s) {
-            System.out.println(s);
-        }
-    };
     protected File file;
     protected byte[] pswBytes;
 
@@ -25,12 +19,10 @@ public abstract class CryptionFile {
 
     int lastPercent = 0;
 
-    public CryptionFile(File file, byte[] pswBytes, CryptionListener listener) {
+    public CryptionFile(File file, byte[] pswBytes) {
         this.file = file;
         this.pswBytes = pswBytes;
         type = CryptionTypes.getDefaultType();
-        if (listener != null)
-            this.listener = listener;
     }
 
     public void start() {
