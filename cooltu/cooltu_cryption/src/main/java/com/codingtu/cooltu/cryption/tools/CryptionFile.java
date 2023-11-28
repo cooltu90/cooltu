@@ -56,8 +56,8 @@ public abstract class CryptionFile {
                 }
                 opt = null;
             }
+            finish();
         }
-        finish();
     }
 
     protected void finish() {
