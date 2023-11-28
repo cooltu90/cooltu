@@ -1,7 +1,6 @@
 package com.codingtu.cooltu.cryption.decode;
 
 
-
 import com.codingtu.cooltu.cryption.tools.CryptionFile;
 import com.codingtu.cooltu.cryption.tools.CryptionListener;
 import com.codingtu.cooltu.cryption.tools.CryptionTools;
@@ -66,8 +65,12 @@ public class DecodeFile extends CryptionFile {
         }
         newFile.setLastModified(lastModify);
         listener.log("]");
-        this.file.deleteOnExit();
-
     }
 
+    @Override
+    protected void finish() {
+        super.finish();
+        if (this.file.exists())
+            this.file.deleteOnExit();
+    }
 }
