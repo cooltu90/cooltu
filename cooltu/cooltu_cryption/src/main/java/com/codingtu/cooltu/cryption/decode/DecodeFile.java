@@ -71,6 +71,6 @@ public class DecodeFile extends CryptionFile {
     protected void finish() {
         super.finish();
         if (this.file.exists())
-            this.file.deleteOnExit();
+            this.file.delete();
     }
 }

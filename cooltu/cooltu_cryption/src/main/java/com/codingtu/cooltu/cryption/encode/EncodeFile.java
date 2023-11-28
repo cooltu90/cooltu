@@ -104,7 +104,7 @@ public class EncodeFile extends CryptionFile {
                 //获取名字
                 String name = read(bytes, nameLen);
                 if (file.getName().equals(name)) {
-                    this.file.deleteOnExit();
+                    this.file.delete();
                 } else {
                     throw new RuntimeException("加密失败");
                 }
@@ -113,7 +113,7 @@ public class EncodeFile extends CryptionFile {
         } catch (Exception e) {
             e.printStackTrace();
             listener.log("加密失败");
-            newFile.deleteOnExit();
+            newFile.delete();
         } finally {
             if (ipt != null) {
                 try {
