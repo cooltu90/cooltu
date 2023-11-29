@@ -27,7 +27,7 @@ public class ResForDeal extends ResForBaseDeal {
     protected void dealTypeElement(TypeElement te) {
         super.dealTypeElement(te);
         if (!noStart && !hasStartGroup) {
-            Code4RequestBuilder.BUILDER.add(uiClass);
+            Code4RequestBuilder.BUILDER.addAct(uiClass);
             ActStartBuilder.BUILDER.add(uiClass);
         }
     }
@@ -46,7 +46,7 @@ public class ResForDeal extends ResForBaseDeal {
                 }
                 builder.starts.add(kv);
                 PassBuilder.BUILDER.add(kv);
-                Code4RequestBuilder.BUILDER.add(fullName);
+                Code4RequestBuilder.BUILDER.addAct(fullName);
                 if (CountTool.isNull(startGroup.value())) {
                     ActStartBuilder.BUILDER.add(fullName, 0, kv);
                 } else {

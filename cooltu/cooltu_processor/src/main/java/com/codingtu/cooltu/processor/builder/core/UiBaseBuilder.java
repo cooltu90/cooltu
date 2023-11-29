@@ -261,7 +261,7 @@ public abstract class UiBaseBuilder {
                     @Override
                     public boolean each(int idIndex, IdTools.Id id) {
                         uiBase.onClickCase(clickViewInfoIndex, idIndex, id.toString());
-                        if (info.inAct.get(clickViewInfoIndex)) {
+                        if (info.inAct.get(idIndex)) {
                             BaseTools.getThisWithParents(UiBaseBuilder.this, getParentGetter(), new BaseTs.EachTs<UiBaseBuilder>() {
                                 @Override
                                 public boolean each(int position, UiBaseBuilder uiBaseBuilder) {
