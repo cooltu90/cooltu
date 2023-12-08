@@ -223,7 +223,9 @@ public abstract class UiBaseBuilder {
                 if (!viewInfo.fieldName.equals(viewInfo.id)) {
                     parent = viewInfo.parent.fieldName + ".";
                 }
-                uiBase.findView(position, viewInfo.fieldName, parent, Pkg.R, viewInfo.id);
+
+                boolean isCoreR = viewInfo.id.startsWith("core_");
+                uiBase.findView(position, viewInfo.fieldName, parent, isCoreR ? Pkg.LIB4A : Pkg.R, viewInfo.id);
                 return false;
             }
         });
@@ -234,7 +236,7 @@ public abstract class UiBaseBuilder {
             @Override
             public boolean each(int clickViewInfoIndex, ClickViewInfo info) {
                 uiBase.isOnClickCheckLogin(clickViewInfoIndex, info.isCheckLogin);
-                uiBase.isCheckForm(clickViewInfoIndex,info.isCheckForm);
+                uiBase.isCheckForm(clickViewInfoIndex, info.isCheckForm);
                 uiBase.onClickMethods(clickViewInfoIndex, info.method, info.methodParams.getMethodParams());
                 uiBase.onClickSwith(clickViewInfoIndex, info.method);
 
