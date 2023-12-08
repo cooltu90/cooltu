@@ -27,15 +27,11 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 
 public abstract class ResForBaseDeal extends TypeBaseDeal {
-    protected boolean noStart;
-    protected boolean hasStartGroup;
     protected String uiClass;
 
     @Override
     protected void dealTypeElement(TypeElement te) {
-
         uiClass = getUiClass(te);
-        noStart = te.getAnnotation(NoStart.class) != null;
 
         BaseTools.GetThis<UiBaseBuilder> uiBaseBuilderGetter = getUiBaseBuilderGetter();
         UiBaseBuilder uiBaseBuilder = uiBaseBuilderGetter.getThis(uiClass);

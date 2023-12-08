@@ -3,11 +3,13 @@ package com.codingtu.cooltu.processor.deal;
 import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
+import com.codingtu.cooltu.processor.annotation.ui.NoStart;
 import com.codingtu.cooltu.processor.annotation.ui.StartGroup;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
@@ -17,14 +19,19 @@ import com.codingtu.cooltu.processor.builder.impl.PassBuilder;
 import com.codingtu.cooltu.processor.deal.base.ResForBaseDeal;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
+import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 
 public class ResForDeal extends ResForBaseDeal {
+    protected boolean hasStartGroup;
+    protected boolean noStart;
+    public static final ListValueMap<String, StartGroup> START_MAP = new ListValueMap<>();
 
     @Override
     protected void dealTypeElement(TypeElement te) {
+        noStart = te.getAnnotation(NoStart.class) != null;
         super.dealTypeElement(te);
         if (!noStart && !hasStartGroup) {
             Code4RequestBuilder.BUILDER.addAct(uiClass);
@@ -60,7 +67,20 @@ public class ResForDeal extends ResForBaseDeal {
                 }
             }
         }
+
+        dealField1(fullName, ve, kv, uiBaseBuilderGetter, uiBaseBuilder);
     }
+
+    protected void dealField1(String fullName, VariableElement ve, KV<String, String> kv,
+                              BaseTools.GetThis<UiBaseBuilder> uiBaseBuilderGetter,
+                              UiBaseBuilder uiBaseBuilder) {
+        ActBaseBuilder builder = CurrentPath.actBaseBuilder(fullName);
+        StartGroup startGroup = ve.getAnnotation(StartGroup.class);
+        if (startGroup != null) {
+            START_MAP.get(fullName).add(startGroup);
+        }
+    }
+
 
     @Override
     protected BaseTools.GetThis<UiBaseBuilder> getUiBaseBuilderGetter() {
