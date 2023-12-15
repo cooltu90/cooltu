@@ -79,8 +79,11 @@ public class CreateActDeal extends TypeBaseDeal {
                 return line;
             }
         });
+
+        ResForDeal.HAS_START_MAP.put(actJavaInfo.fullName, actJavaInfo.fullName);
+
         //创建ActStart
-        ActStartBuilder.BUILDER.add(actJavaInfo.fullName);
+        //ActStartBuilder.BUILDER.add(actJavaInfo.fullName);
         //创建Code4Request
         Code4RequestBuilder.BUILDER.addAct(actJavaInfo.fullName);
     }

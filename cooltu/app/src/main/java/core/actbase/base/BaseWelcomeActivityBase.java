@@ -9,6 +9,7 @@ import retrofit2.adapter.rxjava2.Result;
 
 public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.base.CoreWelcomeActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
     protected android.widget.TextView tv1;
+    protected android.widget.RelativeLayout tv3;
     protected android.widget.RelativeLayout tv3Rl;
     protected android.widget.RelativeLayout tv4;
     protected android.widget.TextView tv6;
@@ -17,6 +18,8 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
     protected android.widget.TextView backBt;
     protected android.widget.LinearLayout rootLl;
     protected android.widget.TextView tv4RlRlTv;
+    protected java.lang.String fromAct;
+    protected java.lang.String xx;
 
 
     @Override
@@ -44,6 +47,8 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
 
 
+        fromAct = core.tools.Pass.fromAct(getIntent());
+        xx = core.tools.Pass.xx(getIntent());
 
 
 

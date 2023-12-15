@@ -21,63 +21,56 @@ import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
+import java.util.HashMap;
+
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 
 public class ResForDeal extends ResForBaseDeal {
     protected boolean hasStartGroup;
     protected boolean noStart;
-    public static final ListValueMap<String, StartGroup> START_MAP = new ListValueMap<>();
+    public static final ListValueMap<String, VariableElement> START_MAP = new ListValueMap<>();
+    public static final HashMap<String, String> HAS_START_MAP = new HashMap<>();
 
     @Override
     protected void dealTypeElement(TypeElement te) {
         noStart = te.getAnnotation(NoStart.class) != null;
         super.dealTypeElement(te);
-        if (!noStart && !hasStartGroup) {
-            Code4RequestBuilder.BUILDER.addAct(uiClass);
-            ActStartBuilder.BUILDER.add(uiClass);
+        if (!noStart) {
+            HAS_START_MAP.put(uiClass, uiClass);
         }
     }
+
+//    protected void dealField(String fullName, VariableElement ve, KV<String, String> kv,
+//                             BaseTools.GetThis<UiBaseBuilder> uiBaseBuilderGetter,
+//                             UiBaseBuilder uiBaseBuilder) {
+//        super.dealField(fullName, ve, kv, uiBaseBuilderGetter, uiBaseBuilder);
+//        ActBaseBuilder builder = CurrentPath.actBaseBuilder(fullName);
+//        if (!noStart) {
+//            StartGroup startGroup = ve.getAnnotation(StartGroup.class);
+//            if (startGroup != null) {
+//                hasStartGroup = true;
+//                if (CountTool.isNull(builder.starts)) {
+//                    builder.starts.add(new KV<>(FullName.STRING, Constant.FROM_ACT));
+//                }
+//                builder.starts.add(kv);
+//            }
+//        }
+//        dealField1(fullName, ve, kv, uiBaseBuilderGetter, uiBaseBuilder);
+//    }
 
     protected void dealField(String fullName, VariableElement ve, KV<String, String> kv,
                              BaseTools.GetThis<UiBaseBuilder> uiBaseBuilderGetter,
                              UiBaseBuilder uiBaseBuilder) {
-        super.dealField(fullName, ve, kv, uiBaseBuilderGetter, uiBaseBuilder);
-        ActBaseBuilder builder = CurrentPath.actBaseBuilder(fullName);
-        if (!noStart) {
-            StartGroup startGroup = ve.getAnnotation(StartGroup.class);
-            if (startGroup != null) {
-                hasStartGroup = true;
-                if (CountTool.isNull(builder.starts)) {
-                    builder.starts.add(new KV<>(FullName.STRING, Constant.FROM_ACT));
-                }
-                builder.starts.add(kv);
-                PassBuilder.BUILDER.add(kv);
-                Code4RequestBuilder.BUILDER.addAct(fullName);
-                if (CountTool.isNull(startGroup.value())) {
-                    ActStartBuilder.BUILDER.add(fullName, 0, kv);
-                } else {
-                    Ts.ts(startGroup.value()).ls(new BaseTs.EachTs<Integer>() {
-                        @Override
-                        public boolean each(int position, Integer integer) {
-                            ActStartBuilder.BUILDER.add(fullName, integer, kv);
-                            return false;
-                        }
-                    });
-                }
-            }
-        }
-
-        dealField1(fullName, ve, kv, uiBaseBuilderGetter, uiBaseBuilder);
-    }
-
-    protected void dealField1(String fullName, VariableElement ve, KV<String, String> kv,
-                              BaseTools.GetThis<UiBaseBuilder> uiBaseBuilderGetter,
-                              UiBaseBuilder uiBaseBuilder) {
-        ActBaseBuilder builder = CurrentPath.actBaseBuilder(fullName);
         StartGroup startGroup = ve.getAnnotation(StartGroup.class);
+        ActBaseBuilder builder = CurrentPath.actBaseBuilder(fullName);
         if (startGroup != null) {
-            START_MAP.get(fullName).add(startGroup);
+            START_MAP.get(fullName).add(ve);
+            PassBuilder.BUILDER.add(kv);
+            if (CountTool.isNull(builder.starts)) {
+                builder.starts.add(new KV<>(FullName.STRING, Constant.FROM_ACT));
+            }
+            builder.starts.add(kv);
         }
     }
 

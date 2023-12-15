@@ -28,10 +28,11 @@ public class ActStart {
         intent.putExtra(Pass.IS_TEST, isTest);
         com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.WELCOME_ACTIVITY);
     }
-    public static final void welcomeActivity(Activity act, java.lang.String name) {
+    public static final void welcomeActivity(Activity act, java.lang.String name, java.lang.String xx) {
         Intent intent = new Intent(act, com.codingtu.cooltu.ui.WelcomeActivity.class);
         intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
         intent.putExtra(Pass.NAME, name);
+        intent.putExtra(Pass.XX, xx);
         com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.WELCOME_ACTIVITY);
     }
 

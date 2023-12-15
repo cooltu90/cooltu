@@ -40,6 +40,5 @@ public class FormActivity extends FormActivityBase {
             }
         });
     }
-
 }
 

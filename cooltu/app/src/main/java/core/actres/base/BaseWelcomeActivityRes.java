@@ -9,7 +9,7 @@ import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
 @ResFor(BaseWelcomeActivity.class)
 public class BaseWelcomeActivityRes {
 
-    @StartGroup
+    @StartGroup({2})
     private String xx;
 
 }

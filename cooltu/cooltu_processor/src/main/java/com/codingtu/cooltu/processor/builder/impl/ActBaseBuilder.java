@@ -97,7 +97,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     protected void beforeBuild(List<String> lines) {
         super.beforeBuild(lines);
         if (javaInfo.name.equals("StepOneActivityBase")) {
-            Logs.i(lines);
+            //Logs.i(lines);
         }
     }
 

@@ -12,13 +12,21 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.impl.SetTs;
+import com.codingtu.cooltu.processor.annotation.ui.StartGroup;
 import com.codingtu.cooltu.processor.builder.base.ActStartBuilderBase;
+import com.codingtu.cooltu.processor.deal.ResForDeal;
 import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
+import com.codingtu.cooltu.processor.lib.tools.BaseTools;
+import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+
+import javax.lang.model.element.VariableElement;
 
 public class ActStartBuilder extends ActStartBuilderBase {
     public static final ActStartBuilder BUILDER = new ActStartBuilder();
@@ -34,11 +42,11 @@ public class ActStartBuilder extends ActStartBuilderBase {
         super(CurrentPath.javaInfo(FullName.ACT_START));
     }
 
-    public void add(String actFullName, int index, KV<String, String> kv) {
+    private void add(String actFullName, int index, KV<String, String> kv) {
         map.get(actFullName).get(index).add(kv);
     }
 
-    public void add(String actFullName) {
+    private void add(String actFullName) {
         map.get(actFullName).get(0);
     }
 
@@ -61,10 +69,66 @@ public class ActStartBuilder extends ActStartBuilderBase {
     @Override
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_TOOLS);
+        //
+        Ts.ts(ResForDeal.HAS_START_MAP.keySet()).ls(new SetTs.SetEach<String>() {
+            @Override
+            public boolean each(String actClass) {
+                List<VariableElement> startGroups = new ArrayList<>();
+
+                BaseTools.getThisWithParents(actClass, new BaseTools.GetParent<String>() {
+                    @Override
+                    public String getParent(String actClass) {
+                        ActBaseBuilder builder = CurrentPath.actBaseBuilder(actClass);
+                        if (builder != null) {
+                            return builder.getUiBaseBuilder().baseClass;
+                        } else {
+                            return null;
+                        }
+                    }
+                }, new BaseTs.EachTs<String>() {
+                    @Override
+                    public boolean each(int position, String actClass) {
+                        startGroups.addAll(ResForDeal.START_MAP.get(actClass));
+                        return false;
+                    }
+                });
+
+                Logs.i("startGroups1:" + CountTool.count(startGroups));
+
+                if (CountTool.isNull(startGroups)) {
+                    add(actClass);
+                } else {
+                    Ts.ls(startGroups, new BaseTs.EachTs<VariableElement>() {
+                        @Override
+                        public boolean each(int position, VariableElement ve) {
+                            StartGroup startGroup = ve.getAnnotation(StartGroup.class);
+                            KV<String, String> kv = ElementTools.getFieldKv(ve);
+                            if (CountTool.isNull(startGroup.value())) {
+                                add(actClass, 0, kv);
+                            } else {
+                                Ts.ts(startGroup.value()).ls(new BaseTs.EachTs<Integer>() {
+                                    @Override
+                                    public boolean each(int position, Integer integer) {
+                                        add(actClass, integer, kv);
+                                        return false;
+                                    }
+                                });
+                            }
+                            return false;
+                        }
+                    });
+                }
+                return false;
+            }
+        });
+        //
+
+
         int[] index = {0};
         Ts.ts(map.keySet()).ls(new SetTs.SetEach<String>() {
             @Override
             public boolean each(String actFullName) {
+                Logs.i("actFullName:" + actFullName);
                 ListValueMap<Integer, KV<String, String>> actMap = map.get(actFullName);
                 if (!actMap.containsKey(0)) {
                     actMap.get(0);
