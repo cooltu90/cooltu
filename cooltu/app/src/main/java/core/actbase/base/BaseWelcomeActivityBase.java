@@ -9,7 +9,6 @@ import retrofit2.adapter.rxjava2.Result;
 
 public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.base.CoreWelcomeActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
     protected android.widget.TextView tv1;
-    protected android.widget.RelativeLayout tv3;
     protected android.widget.RelativeLayout tv3Rl;
     protected android.widget.RelativeLayout tv4;
     protected android.widget.TextView tv6;

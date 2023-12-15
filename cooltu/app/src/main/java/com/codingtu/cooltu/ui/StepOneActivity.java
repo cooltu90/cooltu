@@ -11,6 +11,7 @@ import core.actres.StepOneActivityRes;
 @ActBase(layout = R.layout.activity_step_one)
 public class StepOneActivity extends StepOneActivityBase {
 
+
     @Override
     protected void dogAdapterLoadMore(int page) {
 
