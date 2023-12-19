@@ -122,4 +122,24 @@ public interface UiBaseInterface {
     void isOnClickCheckLogin(int clickViewInfoIndex, boolean b);
 
     void isCheckForm(int clickViewInfoIndex, boolean isCheckForm);
+
+    void isOnLongClickCheckLogin(int clickViewInfoIndex, boolean isCheckLogin);
+
+    void onLongClickMethods(int clickViewInfoIndex, String method, String methodParams);
+
+    void onLongClickSwith(int clickViewInfoIndex, String method);
+
+    void onLongClickSwitchParamsIf(int clickViewInfoIndex, String divider);
+
+    void onLongClickSwitchParams(int clickViewInfoIndex, int paramsIndex, String k, String lib4a, String s, String divider);
+
+    void onLongClickCase(int clickViewInfoIndex, int idIndex, String toString);
+
+    void setOnLongClick(int setOnClickCount, String fieldName);
+
+    int setOnLongClickCount();
+
+    void isSuperOnLongClick(boolean hasBaseClass);
+
+    void isSuperOnLongClickFalse(boolean hasBaseClass);
 }

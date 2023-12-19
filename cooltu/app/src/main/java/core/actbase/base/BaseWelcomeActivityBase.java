@@ -7,7 +7,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.base.CoreWelcomeActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
+public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.base.CoreWelcomeActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
     protected android.widget.TextView tv1;
     protected android.widget.RelativeLayout tv3Rl;
     protected android.widget.RelativeLayout tv4;
@@ -46,6 +46,7 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
 
 
+
         fromAct = core.tools.Pass.fromAct(getIntent());
         xx = core.tools.Pass.xx(getIntent());
 
@@ -72,6 +73,18 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
     }
 
     protected void tv3Click() {}
+
+
+    @Override
+    public boolean onLongClick(View v) {
+        switch (v.getId()) {
+
+        }
+        return super.onLongClick(v);
+
+
+    }
+
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {

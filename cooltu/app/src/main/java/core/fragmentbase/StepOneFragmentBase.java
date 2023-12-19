@@ -13,7 +13,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.fragment.CoreFragment implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
+public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.fragment.CoreFragment implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
     protected androidx.recyclerview.widget.RecyclerView rv;
     protected android.widget.TextView tv1;
     protected int textColor;
@@ -61,7 +61,6 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.f
         return view;
     }
 
-
     @Override
     public void onClick(View v) {
 
@@ -75,6 +74,21 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.f
         }
     }
     protected void tv1Click(com.codingtu.cooltu.bean.User user) {}
+
+
+    @Override
+    public boolean onLongClick(View v) {
+        switch (v.getId()) {
+
+        }
+
+        return false;
+
+
+    }
+
+
+
 
     protected abstract void dogAdapterLoadMore(int page);
 

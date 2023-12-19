@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.Forms;
+import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.tools.HandlerTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
@@ -16,6 +17,7 @@ import com.codingtu.cooltu.processor.annotation.form.Form;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
+import com.codingtu.cooltu.processor.annotation.ui.LongClickView;
 
 import core.actbase.FormActivityBase;
 import core.actres.FormActivityRes;
@@ -40,5 +42,12 @@ public class FormActivity extends FormActivityBase {
             }
         });
     }
+
+    @LongClickView(R.id.bt)
+    public boolean btLongClick() {
+        Logs.i("bt long click");
+        return true;
+    }
+
 }
 

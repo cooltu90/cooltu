@@ -44,6 +44,7 @@ public abstract class UiBaseBuilder {
     public HashMap<String, String> inBaseMap = new HashMap<>();
     public HashMap<String, String> fieldMap = new HashMap<>();
     public List<ClickViewInfo> clickViews = new ArrayList<>();
+    public List<ClickViewInfo> longClickViews = new ArrayList<>();
     public List<LayoutTools.ViewInfo> viewInfos;
     public List<KV<String, String>> colorStrs = new ArrayList<>();
     public List<KV<String, IdTools.Id>> colorReses = new ArrayList<>();
@@ -98,6 +99,7 @@ public abstract class UiBaseBuilder {
         uiBase.addTag(getStringBuilder("baseClass"), baseClass);
         uiBase.addTag(getStringBuilder("netBackIFullName"), FullName.NET_BACK_I);
         uiBase.addTag(getStringBuilder("coreSendParamsFullName"), FullName.CORE_SEND_PARAMS);
+
         //设置在基础类中的字段
         setBaseField();
         //设置布局layout
@@ -106,6 +108,8 @@ public abstract class UiBaseBuilder {
         findView();
         //
         onClick();
+
+        onLongClick();
         //
         colorStr();
         //colorRes
@@ -230,6 +234,72 @@ public abstract class UiBaseBuilder {
             }
         });
     }
+
+
+    private void onLongClick() {
+        Ts.ls(longClickViews, new BaseTs.EachTs<ClickViewInfo>() {
+            @Override
+            public boolean each(int clickViewInfoIndex, ClickViewInfo info) {
+                uiBase.isOnLongClickCheckLogin(clickViewInfoIndex, info.isCheckLogin);
+                uiBase.isCheckForm(clickViewInfoIndex, info.isCheckForm);
+                uiBase.onLongClickMethods(clickViewInfoIndex, info.method, info.methodParams.getMethodParams());
+                uiBase.onLongClickSwith(clickViewInfoIndex, info.method);
+
+                List<KV<String, String>> kvs = info.methodParams.getKvs();
+                int kvCount = CountTool.count(kvs);
+
+                Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {
+                    private int paramsIndex;
+
+                    @Override
+                    public boolean each(int kvIndex, KV<String, String> kv) {
+                        String divider = (kvIndex != kvCount - 1) ? "," : "";
+                        if (kvIndex == 0 && FullName.VIEW.equals(kv.k)) {
+                            uiBase.onLongClickSwitchParamsIf(clickViewInfoIndex, divider);
+                        } else {
+                            uiBase.onLongClickSwitchParams(clickViewInfoIndex, paramsIndex, kv.k, Pkg.LIB4A, paramsIndex + "", divider);
+                            paramsIndex++;
+                        }
+                        return false;
+                    }
+                });
+
+                Ts.ls(info.ids, new BaseTs.EachTs<IdTools.Id>() {
+                    @Override
+                    public boolean each(int idIndex, IdTools.Id id) {
+                        uiBase.onLongClickCase(clickViewInfoIndex, idIndex, id.toString());
+                        if (info.inAct.get(idIndex)) {
+                            BaseTools.getThisWithParents(UiBaseBuilder.this, getParentGetter(), new BaseTs.EachTs<UiBaseBuilder>() {
+                                @Override
+                                public boolean each(int position, UiBaseBuilder uiBaseBuilder) {
+                                    Ts.ts(uiBaseBuilder.viewInfos).convert(new BaseTs.Convert<LayoutTools.ViewInfo, LayoutTools.ViewInfo>() {
+                                        @Override
+                                        public LayoutTools.ViewInfo convert(int index, LayoutTools.ViewInfo viewInfo) {
+                                            if (viewInfo.id.equals(id.rName)) {
+                                                uiBase.setOnLongClick(uiBase.setOnLongClickCount(), viewInfo.fieldName);
+                                            }
+                                            return null;
+                                        }
+                                    });
+                                    return false;
+                                }
+                            });
+                        }
+                        return false;
+                    }
+                });
+                return false;
+            }
+        });
+
+        //onclick继承
+        if (hasBaseClass()) {
+            uiBase.isSuperOnLongClick(true);
+        } else {
+            uiBase.isSuperOnLongClickFalse(true);
+        }
+    }
+
 
     private void onClick() {
         Ts.ls(clickViews, new BaseTs.EachTs<ClickViewInfo>() {

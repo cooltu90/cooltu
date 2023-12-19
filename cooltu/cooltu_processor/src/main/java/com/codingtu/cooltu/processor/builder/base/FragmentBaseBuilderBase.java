@@ -27,6 +27,22 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     protected java.util.Map<String, Integer> onClickMethodsCounts;
     protected StringBuilder onClickMethodsSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> onClickMethods;
+    protected java.util.Map<String, Boolean> onLongClickSwithIfs;
+    protected java.util.Map<String, Integer> onLongClickSwithCounts;
+    protected StringBuilder onLongClickSwithSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> onLongClickSwith;
+    protected java.util.Map<String, Boolean> superOnLongClickIfs;
+    protected java.util.Map<String, Integer> superOnLongClickCounts;
+    protected StringBuilder superOnLongClickSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> superOnLongClick;
+    protected java.util.Map<String, Boolean> superOnLongClickFalseIfs;
+    protected java.util.Map<String, Integer> superOnLongClickFalseCounts;
+    protected StringBuilder superOnLongClickFalseSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> superOnLongClickFalse;
+    protected java.util.Map<String, Boolean> onLongClickMethodsIfs;
+    protected java.util.Map<String, Integer> onLongClickMethodsCounts;
+    protected StringBuilder onLongClickMethodsSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> onLongClickMethods;
     protected java.util.Map<String, Boolean> loadMoreIfs;
     protected java.util.Map<String, Integer> loadMoreCounts;
     protected StringBuilder loadMoreSb;
@@ -95,6 +111,22 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         onClickMethodsCounts = new java.util.HashMap<>();
         onClickMethodsSb = map.get("onClickMethods");
         onClickMethods = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        onLongClickSwithIfs = new java.util.HashMap<>();
+        onLongClickSwithCounts = new java.util.HashMap<>();
+        onLongClickSwithSb = map.get("onLongClickSwith");
+        onLongClickSwith = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        superOnLongClickIfs = new java.util.HashMap<>();
+        superOnLongClickCounts = new java.util.HashMap<>();
+        superOnLongClickSb = map.get("superOnLongClick");
+        superOnLongClick = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        superOnLongClickFalseIfs = new java.util.HashMap<>();
+        superOnLongClickFalseCounts = new java.util.HashMap<>();
+        superOnLongClickFalseSb = map.get("superOnLongClickFalse");
+        superOnLongClickFalse = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        onLongClickMethodsIfs = new java.util.HashMap<>();
+        onLongClickMethodsCounts = new java.util.HashMap<>();
+        onLongClickMethodsSb = map.get("onLongClickMethods");
+        onLongClickMethods = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         loadMoreIfs = new java.util.HashMap<>();
         loadMoreCounts = new java.util.HashMap<>();
         loadMoreSb = map.get("loadMore");
@@ -159,6 +191,13 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     public void setOnClick(int i0, String fieldName) {
         addForMap(this.layout, getForKey("setOnClick", i0), fieldName);
         countAdd(layoutCounts, getForKey("setOnClick"));
+    }
+    public int setOnLongClickCount() {
+        return count(layoutCounts, getForKey("setOnLongClick"));
+    }
+    public void setOnLongClick(int i0, String fieldName) {
+        addForMap(this.layout, getForKey("setOnLongClick", i0), fieldName);
+        countAdd(layoutCounts, getForKey("setOnLongClick"));
     }
     public int colorStrInitCount() {
         return count(layoutCounts, getForKey("colorStrInit"));
@@ -229,6 +268,34 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     public void onClickMethods(int i0, String methodName, String params) {
         addForMap(this.onClickMethods, getForKey("onClickMethods", i0), methodName, params);
         countAdd(onClickMethodsCounts, getForKey("onClickMethods"));
+    }
+    public int onLongClickCaseCount(int i0) {
+        return count(onLongClickSwithCounts, getForKey("onLongClickCase", i0));
+    }
+    public void onLongClickCase(int i0, int i1, String id) {
+        addForMap(this.onLongClickSwith, getForKey("onLongClickCase", i0, i1), id);
+        countAdd(onLongClickSwithCounts, getForKey("onLongClickCase", i0));
+    }
+    public int onLongClickSwitchParamsCount(int i0) {
+        return count(onLongClickSwithCounts, getForKey("onLongClickSwitchParams", i0));
+    }
+    public void onLongClickSwitchParams(int i0, int i1, String type, String pkg, String index, String divider) {
+        addForMap(this.onLongClickSwith, getForKey("onLongClickSwitchParams", i0, i1), type, pkg, index, divider);
+        countAdd(onLongClickSwithCounts, getForKey("onLongClickSwitchParams", i0));
+    }
+    public int onLongClickSwithCount() {
+        return count(onLongClickSwithCounts, getForKey("onLongClickSwith"));
+    }
+    public void onLongClickSwith(int i0, String methodName) {
+        addForMap(this.onLongClickSwith, getForKey("onLongClickSwith", i0), methodName);
+        countAdd(onLongClickSwithCounts, getForKey("onLongClickSwith"));
+    }
+    public int onLongClickMethodsCount() {
+        return count(onLongClickMethodsCounts, getForKey("onLongClickMethods"));
+    }
+    public void onLongClickMethods(int i0, String methodName, String params) {
+        addForMap(this.onLongClickMethods, getForKey("onLongClickMethods", i0), methodName, params);
+        countAdd(onLongClickMethodsCounts, getForKey("onLongClickMethods"));
     }
     public int loadMoreCount() {
         return count(loadMoreCounts, getForKey("loadMore"));
@@ -315,6 +382,19 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     public void onClickSwitchParamsIf(int i0, String divider) {
         addForMap(this.onClickSwith, getIfKey("onClickSwitchParams", i0), divider);
         onClickSwithIfs.put(getIfKey("onClickSwitchParams", i0), true);
+    }
+    public void isOnLongClickCheckLogin(int i0, boolean is) {
+        onLongClickSwithIfs.put(getIfKey("onLongClickCheckLogin", i0), is);
+    }
+    public void onLongClickSwitchParamsIf(int i0, String divider) {
+        addForMap(this.onLongClickSwith, getIfKey("onLongClickSwitchParams", i0), divider);
+        onLongClickSwithIfs.put(getIfKey("onLongClickSwitchParams", i0), true);
+    }
+    public void isSuperOnLongClick(boolean is) {
+        superOnLongClickIfs.put(getIfKey("superOnLongClick"), is);
+    }
+    public void isSuperOnLongClickFalse(boolean is) {
+        superOnLongClickFalseIfs.put(getIfKey("superOnLongClickFalse"), is);
     }
     public void isSuperAccept(boolean is) {
         superAcceptIfs.put(getIfKey("superAccept"), is);
@@ -412,6 +492,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
                 List<String> layout1 = layout.get(getForKey("setOnClick", i0));
                 addLnTag(layoutSb, "        [fieldName].setOnClickListener(this);", layout1.get(0));
             }
+            for (int i0 = 0; i0 < count(layoutCounts, getForKey("setOnLongClick")); i0++) {
+                List<String> layout1 = layout.get(getForKey("setOnLongClick", i0));
+                addLnTag(layoutSb, "        [fieldName].setOnLongClickListener(this);", layout1.get(0));
+            }
             for (int i0 = 0; i0 < count(layoutCounts, getForKey("colorStrInit")); i0++) {
                 List<String> layout1 = layout.get(getForKey("colorStrInit", i0));
                 addLnTag(layoutSb, "        [name] = android.graphics.Color.parseColor(\"[color]\");", layout1.get(0), layout1.get(1));
@@ -489,6 +573,42 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         for (int i0 = 0; i0 < count(onClickMethodsCounts, getForKey("onClickMethods")); i0++) {
             List<String> onClickMethods0 = onClickMethods.get(getForKey("onClickMethods", i0));
             addLnTag(onClickMethodsSb, "    protected void [methodName]([params]) {}", onClickMethods0.get(0), onClickMethods0.get(1));
+        }
+        for (int i0 = 0; i0 < count(onLongClickSwithCounts, getForKey("onLongClickSwith")); i0++) {
+            List<String> onLongClickSwith0 = onLongClickSwith.get(getForKey("onLongClickSwith", i0));
+            for (int i1 = 0; i1 < count(onLongClickSwithCounts, getForKey("onLongClickCase", i0)); i1++) {
+                List<String> onLongClickSwith1 = onLongClickSwith.get(getForKey("onLongClickCase", i0, i1));
+                addLnTag(onLongClickSwithSb, "            case [id]:", onLongClickSwith1.get(0));
+            }
+            if (isIf(onLongClickSwithIfs, getIfKey("onLongClickCheckLogin", i0))) {
+                List<String> onLongClickSwith1 = onLongClickSwith.get(getIfKey("onLongClickCheckLogin", i0));
+                addLnTag(onLongClickSwithSb, "                if (!isLogin(getAct())) {");
+                addLnTag(onLongClickSwithSb, "                    return false;");
+                addLnTag(onLongClickSwithSb, "                }");
+            }
+            addLnTag(onLongClickSwithSb, "                return [methodName](", onLongClickSwith0.get(0));
+            if (isIf(onLongClickSwithIfs, getIfKey("onLongClickSwitchParams", i0))) {
+                List<String> onLongClickSwith1 = onLongClickSwith.get(getIfKey("onLongClickSwitchParams", i0));
+                addLnTag(onLongClickSwithSb, "                        v[divider]", onLongClickSwith1.get(0));
+            }
+            for (int i1 = 0; i1 < count(onLongClickSwithCounts, getForKey("onLongClickSwitchParams", i0)); i1++) {
+                List<String> onLongClickSwith1 = onLongClickSwith.get(getForKey("onLongClickSwitchParams", i0, i1));
+                addLnTag(onLongClickSwithSb, "                        ([type]) v.getTag([pkg].R.id.tag_[index])[divider]", onLongClickSwith1.get(0), onLongClickSwith1.get(1), onLongClickSwith1.get(2), onLongClickSwith1.get(3));
+            }
+            addLnTag(onLongClickSwithSb, "                );");
+            addLnTag(onLongClickSwithSb, "                break;");
+        }
+        if (isIf(superOnLongClickIfs, getIfKey("superOnLongClick"))) {
+            List<String> superOnLongClick0 = superOnLongClick.get(getIfKey("superOnLongClick"));
+            addLnTag(superOnLongClickSb, "        return super.onLongClick(v);");
+        }
+        if (isIf(superOnLongClickFalseIfs, getIfKey("superOnLongClickFalse"))) {
+            List<String> superOnLongClickFalse0 = superOnLongClickFalse.get(getIfKey("superOnLongClickFalse"));
+            addLnTag(superOnLongClickFalseSb, "        return false;");
+        }
+        for (int i0 = 0; i0 < count(onLongClickMethodsCounts, getForKey("onLongClickMethods")); i0++) {
+            List<String> onLongClickMethods0 = onLongClickMethods.get(getForKey("onLongClickMethods", i0));
+            addLnTag(onLongClickMethodsSb, "    protected void [methodName]([params]) {}", onLongClickMethods0.get(0), onLongClickMethods0.get(1));
         }
         for (int i0 = 0; i0 < count(loadMoreCounts, getForKey("loadMore")); i0++) {
             List<String> loadMore0 = loadMore.get(getForKey("loadMore", i0));
@@ -756,7 +876,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("import okhttp3.ResponseBody;");
         lines.add("import retrofit2.adapter.rxjava2.Result;");
         lines.add("");
-        lines.add("public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, [[netBackIFullName]] {");
+        lines.add("public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, View.OnLongClickListener, [[netBackIFullName]]{");
         lines.add("[[field]]");
         lines.add("");
         lines.add("    @Override");
@@ -765,7 +885,6 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("");
         lines.add("    }");
         lines.add("[[layout]]");
-        lines.add("");
         lines.add("    @Override");
         lines.add("    public void onClick(View v) {");
         lines.add("[[superOnClick]]");
@@ -774,6 +893,20 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("        }");
         lines.add("    }");
         lines.add("[[onClickMethods]]");
+        lines.add("");
+        lines.add("    @Override");
+        lines.add("    public boolean onLongClick(View v) {");
+        lines.add("        switch (v.getId()) {");
+        lines.add("[[onLongClickSwith]]");
+        lines.add("        }");
+        lines.add("[[superOnLongClick]]");
+        lines.add("[[superOnLongClickFalse]]");
+        lines.add("");
+        lines.add("    }");
+        lines.add("");
+        lines.add("[[onLongClickMethods]]");
+        lines.add("");
+        lines.add("");
         lines.add("[[loadMore]]");
         lines.add("    @Override");
         lines.add("    public void accept(String code, Result<ResponseBody> result, [[coreSendParamsFullName]] params, List objs) {");

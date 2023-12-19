@@ -7,7 +7,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.BaseWelcomeActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
+public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.BaseWelcomeActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
     protected int textColor;
     protected int tvColor;
     protected int dp;
@@ -23,6 +23,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
         backBt.setOnClickListener(this);
+
 
         textColor = android.graphics.Color.parseColor("#ffffff");
 
@@ -64,6 +65,18 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     }
 
     protected void backBtClick(android.view.View v, com.codingtu.cooltu.bean.User user) {}
+
+
+    @Override
+    public boolean onLongClick(View v) {
+        switch (v.getId()) {
+
+        }
+        return super.onLongClick(v);
+
+
+    }
+
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {

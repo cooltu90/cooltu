@@ -7,7 +7,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
+public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
     protected androidx.recyclerview.widget.RecyclerView rv;
     protected androidx.recyclerview.widget.RecyclerView rv1;
     protected com.codingtu.cooltu.ui.adapter.CatAdapter catAdapter;
@@ -21,6 +21,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
         rv = findViewById(com.codingtu.cooltu.R.id.rv);
         rv1 = findViewById(com.codingtu.cooltu.R.id.rv1);
+
 
 
 
@@ -59,6 +60,18 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
         switch (v.getId()) {
 
         }
+    }
+
+
+
+    @Override
+    public boolean onLongClick(View v) {
+        switch (v.getId()) {
+
+        }
+
+        return false;
+
     }
 
 

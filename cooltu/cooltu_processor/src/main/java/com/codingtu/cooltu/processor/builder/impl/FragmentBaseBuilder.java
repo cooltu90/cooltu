@@ -92,6 +92,7 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
     public void isCheckForm(int index, boolean isCheckForm) {
 
     }
+
 }
 /* model_temp_start
 package [[pkg]];
@@ -109,7 +110,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, [[netBackIFullName]] {
+public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, View.OnLongClickListener, [[netBackIFullName]]{
                                                                                                     [<sub>][for][field]
     [sign] [type] [name];
                                                                                                     [<sub>][for][field]
@@ -130,6 +131,9 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][setOnClick]
         [fieldName].setOnClickListener(this);
                                                                                                     [<sub>][for][setOnClick]
+                                                                                                    [<sub>][for][setOnLongClick]
+        [fieldName].setOnLongClickListener(this);
+                                                                                                    [<sub>][for][setOnLongClick]
                                                                                                     [<sub>][for][colorStrInit]
         [name] = android.graphics.Color.parseColor("[color]");
                                                                                                     [<sub>][for][colorStrInit]
@@ -168,7 +172,6 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         return view;
     }
                                                                                                     [<sub>][if][layout]
-
     @Override
     public void onClick(View v) {
                                                                                                     [<sub>][if][superOnClick]
@@ -199,6 +202,44 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][onClickMethods]
     protected void [methodName]([params]) {}
                                                                                                     [<sub>][for][onClickMethods]
+
+    @Override
+    public boolean onLongClick(View v) {
+        switch (v.getId()) {
+                                                                                                    [<sub>][for][onLongClickSwith]
+                                                                                                    [<sub>][for][onLongClickCase]
+            case [id]:
+                                                                                                    [<sub>][for][onLongClickCase]
+                                                                                                    [<sub>][if][onLongClickCheckLogin]
+                if (!isLogin(getAct())) {
+                    return false;
+                }
+                                                                                                    [<sub>][if][onLongClickCheckLogin]
+                return [methodName](
+                                                                                                    [<sub>][if][onLongClickSwitchParams]
+                        v[divider]
+                                                                                                    [<sub>][if][onLongClickSwitchParams]
+                                                                                                    [<sub>][for][onLongClickSwitchParams]
+                        ([type]) v.getTag([pkg].R.id.tag_[index])[divider]
+                                                                                                    [<sub>][for][onLongClickSwitchParams]
+                );
+                break;
+                                                                                                    [<sub>][for][onLongClickSwith]
+        }
+                                                                                                    [<sub>][if][superOnLongClick]
+        return super.onLongClick(v);
+                                                                                                    [<sub>][if][superOnLongClick]
+                                                                                                    [<sub>][if][superOnLongClickFalse]
+        return false;
+                                                                                                    [<sub>][if][superOnLongClickFalse]
+
+    }
+
+                                                                                                    [<sub>][for][onLongClickMethods]
+    protected void [methodName]([params]) {}
+                                                                                                    [<sub>][for][onLongClickMethods]
+
+
                                                                                                     [<sub>][for][loadMore]
     protected abstract void [adapterName]LoadMore(int page);
                                                                                                     [<sub>][for][loadMore]

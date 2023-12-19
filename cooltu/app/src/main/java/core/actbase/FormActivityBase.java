@@ -7,7 +7,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
+public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
     protected android.widget.EditText addressEt;
     protected android.widget.LinearLayout radios1;
     protected android.widget.EditText areaEt;
@@ -50,6 +50,8 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         timeSb1 = findViewById(com.codingtu.cooltu.R.id.timeSb1);
 
         bt.setOnClickListener(this);
+
+        bt.setOnLongClickListener(this);
 
 
 
@@ -126,6 +128,22 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
     }
 
     protected void btClick() {}
+
+
+    @Override
+    public boolean onLongClick(View v) {
+        switch (v.getId()) {
+            case com.codingtu.cooltu.R.id.bt:
+                return btLongClick(
+                );
+
+        }
+
+        return false;
+
+    }
+
+    protected boolean btLongClick() {return false;}
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {

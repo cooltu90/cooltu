@@ -14,6 +14,7 @@ import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
+import com.codingtu.cooltu.processor.annotation.ui.LongClickView;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
@@ -75,6 +76,10 @@ public class ActBaseDeal extends TypeBaseDeal {
                 if (clickView != null) {
                     dealClickView(uiBaseBuilder, clickView, ee);
                 }
+                LongClickView longClickView = ee.getAnnotation(LongClickView.class);
+                if (longClickView != null) {
+                    dealLongClickView(uiBaseBuilder, longClickView, ee);
+                }
 
                 NetBack netBack = ee.getAnnotation(NetBack.class);
                 if (netBack != null) {
@@ -97,6 +102,30 @@ public class ActBaseDeal extends TypeBaseDeal {
         });
 
         baseBuilder.form = te.getAnnotation(Form.class);
+    }
+
+    private void dealLongClickView(UiBaseBuilder uiBaseBuilder, LongClickView clickView, ExecutableElement ee) {
+        ClickViewInfo clickViewInfo = new ClickViewInfo();
+        clickViewInfo.ids = Ts.ts(IdTools.elementToIds(ee, LongClickView.class, clickView.value())).toList().get();
+        clickViewInfo.method = ElementTools.simpleName(ee);
+        clickViewInfo.methodParams = ElementTools.getMethodParamKvs(ee);
+        clickViewInfo.isCheckLogin = clickView.checkLogin();
+        clickViewInfo.isCheckForm = clickView.check();
+
+        int inActCount = CountTool.count(clickView.inAct());
+        Ts.ls(clickViewInfo.ids, new BaseTs.EachTs<IdTools.Id>() {
+            @Override
+            public boolean each(int position, IdTools.Id id) {
+                boolean inAct = true;
+                if (position < inActCount) {
+                    inAct = clickView.inAct()[position];
+                }
+                clickViewInfo.inAct.add(inAct);
+                return false;
+            }
+        });
+
+        uiBaseBuilder.longClickViews.add(clickViewInfo);
     }
 
     private void dealClickView(UiBaseBuilder uiBaseBuilder, ClickView clickView, ExecutableElement ee) {
