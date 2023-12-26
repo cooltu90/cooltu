@@ -2,13 +2,18 @@ package com.codingtu.cooltu.processor.builder.subdeal;
 
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
+import com.codingtu.cooltu.processor.annotation.form.EchoType;
+import com.codingtu.cooltu.processor.annotation.form.FormEcho;
 import com.codingtu.cooltu.processor.annotation.form.FormType;
 import com.codingtu.cooltu.processor.annotation.form.view.BindEditText;
 import com.codingtu.cooltu.processor.annotation.form.view.BindMulti;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.FormTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
+import com.codingtu.cooltu.processor.lib.tools.TagTools;
 
 import java.util.Map;
 
@@ -35,19 +40,49 @@ public class BindEditTextDeal {
         builder.handlerItem(typeIndex, handleIndex, index + "");
         viewIndexMap.put(bindEditText.value(), new BindMultiDeal.ViewIndex(typeIndex, handleIndex));
 
+        int echoType = FormTools.getEchoType(ve);
+
+        String checkClass = FormTools.getCheckClass(ve);
+
+        if (echoType == EchoType.CHECK) {
+            if (ClassTool.isNotVoid(checkClass)) {
+                echos(builder, "            if (new [checkClass]().check([bean], [bean].[field]))",
+                        checkClass, beanName, beanName, field);
+            } else {
+                echos(builder, "            if ([StringTool].isNotBlank([bean].[field]))",
+                        FullName.STRING_TOOL, beanName, field);
+            }
+        }
+
+
         if (ClassTool.isNotVoid(parseClass)) {
-            if (bindEditText.echo()) {
-                builder.etEchoWithParse(builder.etEchoWithParseCount(), FullName.VIEW_TOOL, viewName, parseClass, beanName, field);
+            if (echoType != EchoType.NOT_ECHO) {
+                String line = "            [viewToolFullName].setText([view], new [parse]().toView([bean].[field]));";
+                if (echoType == EchoType.CHECK) {
+                    line = "    " + line;
+                }
+                echos(builder, line, FullName.VIEW_TOOL, viewName, parseClass, beanName, field);
             }
             builder.handlerItemParseIf(typeIndex, handleIndex, beanName, field, parseClass);
         } else {
-            if (bindEditText.echo()) {
-                builder.etEcho(builder.etEchoCount(), FullName.VIEW_TOOL, viewName, beanName, field);
+            if (echoType != EchoType.NOT_ECHO) {
+                String line = "            [viewToolFullName].setText([view], [bean].[field]);";
+                if (echoType == EchoType.CHECK) {
+                    line = "    " + line;
+                }
+                echos(builder, line, FullName.VIEW_TOOL, viewName, beanName, field);
             }
             builder.handlerItemStringIf(typeIndex, handleIndex, beanName, field);
         }
 
+
         FormTools.addCheck(builder, beanName, ve, field, FormType.EDIT_TEXT, viewName);
 
     }
+
+    private static void echos(ActBaseBuilder builder, String line, Object... tags) {
+        builder.echos(builder.echosCount(), TagTools.dealLine(line, tags));
+    }
+
+
 }

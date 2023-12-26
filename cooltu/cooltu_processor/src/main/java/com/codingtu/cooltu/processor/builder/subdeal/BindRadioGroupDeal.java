@@ -7,6 +7,7 @@ import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
+import com.codingtu.cooltu.processor.annotation.form.EchoType;
 import com.codingtu.cooltu.processor.annotation.form.FormType;
 import com.codingtu.cooltu.processor.annotation.form.view.BindRadioGroup;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
@@ -14,6 +15,7 @@ import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.FormTools;
+import com.codingtu.cooltu.processor.lib.tools.TagTools;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,10 +66,28 @@ public class BindRadioGroupDeal {
         builder.handlerItem(typeIndex, handleIndex, index + "");
         viewIndexMap.put(bindRadioGroup.value(), new BindMultiDeal.ViewIndex(typeIndex, handleIndex));
 
-        if (ClassTool.isNotVoid(parseClass)) {
-            if (bindRadioGroup.echo()) {
-                builder.rgEchoWithParse(builder.rgEchoWithParseCount(), viewName, parseClass, beanName, field);
+        int echoType = FormTools.getEchoType(ve);
+        String checkClass = FormTools.getCheckClass(ve);
+        if (echoType == EchoType.CHECK) {
+            if (ClassTool.isNotVoid(checkClass)) {
+                echos(builder, "            if (new [checkClass]().check([bean], [bean].[field]))",
+                        checkClass, beanName, beanName, field);
+            } else {
+                echos(builder, "            if (new [defaultRadioGroupFormCheckFullName]().check([bean], [viewName]Rg.getSelected())) {",
+                        FullName.DEFAULT_RADIO_GROUP_FORM_CHECK, beanName, viewName);
             }
+        }
+
+
+        if (ClassTool.isNotVoid(parseClass)) {
+            if (echoType != EchoType.NOT_ECHO) {
+                String line = "            [viewName]Rg.setSelected(new [parse]().toView([bean].[field]));";
+                if (echoType == EchoType.CHECK) {
+                    line = "    " + line;
+                }
+                echos(builder, line, viewName, parseClass, beanName, field);
+            }
+
             builder.handlerItemParseIf(typeIndex, handleIndex, beanName, field, parseClass);
         } else {
             String param = Params.getParam(bindRadioGroup.strItems(), new BaseTs.Convert<String, String>() {
@@ -76,14 +96,21 @@ public class BindRadioGroupDeal {
                     return "\"" + s + "\"";
                 }
             });
-
-            if (bindRadioGroup.echo()) {
-                builder.rgEcho(builder.rgEchoCount(), viewName, FullName.DEFAULT_RADIO_GROUP_TO_STRING, param, beanName, field);
+            if (echoType != EchoType.NOT_ECHO) {
+                String line = "            [viewName]Rg.setSelected(new [defaultRadioGroupToStringFullName]([items]).toView([bean].[field]));";
+                if (echoType == EchoType.CHECK) {
+                    line = "    " + line;
+                }
+                echos(builder, line, viewName, FullName.DEFAULT_RADIO_GROUP_TO_STRING, param, beanName, field);
             }
             builder.handlerItemRgIf(typeIndex, handleIndex, beanName, field, FullName.DEFAULT_RADIO_GROUP_TO_STRING, param);
         }
 
         FormTools.addCheck(builder, beanName, ve, field, FormType.RADIO_GROUP, viewName);
 
+    }
+
+    private static void echos(ActBaseBuilder builder, String line, Object... tags) {
+        builder.echos(builder.echosCount(), TagTools.dealLine(line, tags));
     }
 }

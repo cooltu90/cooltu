@@ -410,6 +410,13 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.formInit, getForKey("bindMulti", i0), formLinkFullName, linkName, linkType, beanName, views);
         countAdd(formInitCounts, getForKey("bindMulti"));
     }
+    public int echosCount() {
+        return count(formInitCounts, getForKey("echos"));
+    }
+    public void echos(int i0, String echos) {
+        addForMap(this.formInit, getForKey("echos", i0), echos);
+        countAdd(formInitCounts, getForKey("echos"));
+    }
     public int etEchoWithParseCount() {
         return count(formInitCounts, getForKey("etEchoWithParse"));
     }
@@ -922,6 +929,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 }
             }
             addLnTag(formInitSb, "        if (!initFormBean) {");
+            for (int i0 = 0; i0 < count(formInitCounts, getForKey("echos")); i0++) {
+                List<String> formInit1 = formInit.get(getForKey("echos", i0));
+                addLnTag(formInitSb, "[echos]", formInit1.get(0));
+            }
             for (int i0 = 0; i0 < count(formInitCounts, getForKey("etEchoWithParse")); i0++) {
                 List<String> formInit1 = formInit.get(getForKey("etEchoWithParse", i0));
                 addLnTag(formInitSb, "            [viewToolFullName].setText([view], new [parse]().toView([bean].[field]));", formInit1.get(0), formInit1.get(1), formInit1.get(2), formInit1.get(3), formInit1.get(4));

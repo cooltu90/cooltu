@@ -97,14 +97,14 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         if (!initFormBean) {
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(nameEt1, new com.codingtu.cooltu.form.Name1Parse().toView(forms.name1));
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(nameEt3, forms.name3);
-            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(provinceEt, forms.province);
-            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(cityEt, forms.city);
-            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(areaEt, forms.area);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(nameTv, forms.name4);
             radiosRg.setSelected(new com.codingtu.cooltu.lib4a.form.DefaultRadioGroupToString("r1", "r2", "r3").toView(forms.type));
             radios1Rg.setSelected(new com.codingtu.cooltu.lib4a.form.DefaultRadioGroupToString("r1", "r2", "r3").toView(forms.type1));
-            timeSb1.setProgress(forms.time1);
             timeSb.setProgress(new com.codingtu.cooltu.form.TypeParse().toView(forms.time));
+            timeSb1.setProgress(forms.time1);
+            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(provinceEt, forms.province);
+            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(cityEt, forms.city);
+            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(areaEt, forms.area);
             addressLink.echo();
         }
 

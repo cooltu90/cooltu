@@ -8,7 +8,9 @@ import com.codingtu.cooltu.form.Name1Parse;
 import com.codingtu.cooltu.form.TypeOnSetItem;
 import com.codingtu.cooltu.form.TypeParse;
 import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
+import com.codingtu.cooltu.processor.annotation.form.EchoType;
 import com.codingtu.cooltu.processor.annotation.form.FormCheck;
+import com.codingtu.cooltu.processor.annotation.form.FormEcho;
 import com.codingtu.cooltu.processor.annotation.form.FormParse;
 import com.codingtu.cooltu.processor.annotation.form.view.BindEditText;
 import com.codingtu.cooltu.processor.annotation.form.FormBean;
@@ -27,6 +29,7 @@ public class Forms extends CoreBean {
 
     @BindEditText(value = R.id.nameEt2, echo = false)
     @FormCheck(prompt = "请输入name2")
+    @FormEcho(EchoType.NOT_ECHO)
     public String name2;
 
     @BindEditText(R.id.nameEt3)
@@ -71,7 +74,7 @@ public class Forms extends CoreBean {
 
     @BindMulti(ids = {R.id.provinceEt, R.id.cityEt, R.id.areaEt}, link = AddressLink.class)
 //    @BindEditText(R.id.addressEt)
-//    @FormCheck(prompt = "请输入地址")
+    @FormCheck(prompt = "请输入地址")
     public String address;
 
 }

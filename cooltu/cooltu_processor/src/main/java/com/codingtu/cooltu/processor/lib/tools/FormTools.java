@@ -3,7 +3,9 @@ package com.codingtu.cooltu.processor.lib.tools;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
+import com.codingtu.cooltu.processor.annotation.form.EchoType;
 import com.codingtu.cooltu.processor.annotation.form.FormCheck;
+import com.codingtu.cooltu.processor.annotation.form.FormEcho;
 import com.codingtu.cooltu.processor.annotation.form.FormParse;
 import com.codingtu.cooltu.processor.annotation.form.FormType;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
@@ -100,5 +102,26 @@ public class FormTools {
                 }
             }
         }
+    }
+
+    public static String getCheckClass(VariableElement ve) {
+        FormCheck formCheck = ve.getAnnotation(FormCheck.class);
+        if (formCheck != null) {
+            return ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                @Override
+                public Object get() {
+                    return formCheck.checkClass();
+                }
+            });
+        }
+        return null;
+    }
+
+    public static int getEchoType(VariableElement ve) {
+        FormEcho formEcho = ve.getAnnotation(FormEcho.class);
+        if (formEcho == null) {
+            return EchoType.NORMAL;
+        }
+        return formEcho.value();
     }
 }

@@ -232,7 +232,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                 BindTextView bindTextView = ve.getAnnotation(BindTextView.class);
                 if (bindTextView != null) {
                     BindTextViewDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewMap, viewIndexMap, ve, bindTextView);
-
                 }
 
                 BindRadioGroup bindRadioGroup = ve.getAnnotation(BindRadioGroup.class);
@@ -383,6 +382,9 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][addLink]
                                                                                                     [<sub>][for][bindMulti]
         if (!initFormBean) {
+                                                                                                    [<sub>][for][echos]
+[echos]
+                                                                                                    [<sub>][for][echos]
                                                                                                     [<sub>][for][etEchoWithParse]
             [viewToolFullName].setText([view], new [parse]().toView([bean].[field]));
                                                                                                     [<sub>][for][etEchoWithParse]
