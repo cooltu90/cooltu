@@ -51,21 +51,32 @@ public class Code4RequestBuilder extends Code4RequestBuilderBase {
     @Override
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_TOOLS);
-//        Ts.ts(fullNames.keySet()).ls(new BaseTs.EachTs<String>() {
-//            @Override
-//            public boolean each(int position, String s) {
-//                field(position, s, position + "");
-//                return false;
-//            }
-//        });
 
         Ts.ts(ResForDeal.HAS_START_MAP.keySet()).ls(new BaseTs.EachTs<String>() {
             @Override
             public boolean each(int position, String s) {
-                field(position, CurrentPath.actStaticName(s), position + "");
+                //field(position, CurrentPath.actStaticName(s), position + "");
+                fullNames.put(CurrentPath.actStaticName(s),"");
                 return false;
             }
         });
+
+
+        Ts.ts(fullNames.keySet()).ls(new BaseTs.EachTs<String>() {
+            @Override
+            public boolean each(int position, String s) {
+                field(position, s, position + "");
+                return false;
+            }
+        });
+
+//        Ts.ts(ResForDeal.HAS_START_MAP.keySet()).ls(new BaseTs.EachTs<String>() {
+//            @Override
+//            public boolean each(int position, String s) {
+//                field(position, CurrentPath.actStaticName(s), position + "");
+//                return false;
+//            }
+//        });
     }
 
 }

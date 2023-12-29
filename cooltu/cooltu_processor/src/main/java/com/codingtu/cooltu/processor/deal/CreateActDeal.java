@@ -85,6 +85,6 @@ public class CreateActDeal extends TypeBaseDeal {
         //创建ActStart
         //ActStartBuilder.BUILDER.add(actJavaInfo.fullName);
         //创建Code4Request
-        Code4RequestBuilder.BUILDER.addAct(actJavaInfo.fullName);
+        //Code4RequestBuilder.BUILDER.addAct(actJavaInfo.fullName);
     }
 }
