@@ -17,19 +17,20 @@ public abstract class CryptionFile {
     protected FileInputStream ipt;
     protected FileOutputStream opt;
 
-    int lastPercent = 0;
+    protected CryptionListener listener;
 
-    public CryptionFile(File file, byte[] pswBytes) {
+    public CryptionFile(File file, byte[] pswBytes, CryptionListener listener) {
         this.file = file;
         this.pswBytes = pswBytes;
         type = CryptionTypes.getDefaultType();
+        this.listener = listener;
     }
 
     public void start() {
         try {
             startWithException();
         } catch (IOException e) {
-            e.printStackTrace();
+            error(e);
         } finally {
             if (ipt != null) {
                 try {
@@ -48,29 +49,42 @@ public abstract class CryptionFile {
                 }
                 opt = null;
             }
+            dealFile();
             finish();
         }
     }
 
+    protected void dealFile() {
+
+    }
+
     protected void finish() {
+        if (listener != null) {
+            listener.finish(this.file);
+        }
     }
 
     protected abstract void startWithException() throws IOException;
 
 
-    protected void percent(long readLen, long totalLen) {
-        int percent = (int) (readLen * 10 / totalLen);
-        printPercent(lastPercent, percent);
-        lastPercent = percent;
-    }
-
-    protected void printPercent(int lastPercent, int percent) {
-        percent -= lastPercent;
-        for (int i = 0; i < percent; i++) {
-            System.out.print("====");
+    protected void error(String msg) {
+        if (listener != null) {
+            listener.error(file, new RuntimeException(msg));
         }
     }
 
+    protected void error(Throwable throwable) {
+        if (listener != null) {
+            listener.error(file, throwable);
+        }
+    }
+
+
+    protected void progress(long totalLen,long currentLen) {
+        if (listener != null) {
+            listener.progress(file, totalLen, currentLen);
+        }
+    }
 
     protected byte[] encode(byte[] bytes) {
         return encode(bytes, bytes.length);

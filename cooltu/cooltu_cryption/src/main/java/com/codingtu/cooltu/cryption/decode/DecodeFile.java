@@ -5,8 +5,6 @@ import com.codingtu.cooltu.cryption.tools.CryptionFile;
 import com.codingtu.cooltu.cryption.tools.CryptionListener;
 import com.codingtu.cooltu.cryption.tools.CryptionTools;
 import com.codingtu.cooltu.cryption.tools.CryptionTypes;
-import com.codingtu.cooltu.lib4j.file.FileTool;
-import com.codingtu.cooltu.lib4j.file.bean.FileInfo;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,8 +13,10 @@ import java.io.IOException;
 
 public class DecodeFile extends CryptionFile {
 
-    public DecodeFile(File file, byte[] pswBytes) {
-        super(file, pswBytes);
+    private String newName;
+
+    public DecodeFile(File file, byte[] pswBytes, CryptionListener listener) {
+        super(file, pswBytes, listener);
     }
 
     @Override
@@ -27,13 +27,12 @@ public class DecodeFile extends CryptionFile {
         ipt.read(bytes, 0, CryptionTools.signLen());
         byte[] signBytes = encode(CryptionTools.signBytes());
         if (!CryptionTools.isEncode(signBytes, bytes)) {
-            System.out.println("此文件为未加密文件：" + file.getAbsolutePath());
-            return;
+            throw new RuntimeException("此文件为未加密文件");
         }
 
-        System.out.println("正在解密：" + file.getAbsolutePath());
-        System.out.println("[10% 20% 30% 40% 50% 60% 70% 80% 90% 100%]");
-        System.out.print("[");
+        if (listener != null) {
+            listener.start(file);
+        }
 
         //获取类型
         type = CryptionTypes.getType(ipt.read());
@@ -42,17 +41,12 @@ public class DecodeFile extends CryptionFile {
         //获取名字长度
         int nameLen = ipt.read();
         //获取名字
-        String name = read(bytes, nameLen);
+        newName = read(bytes, nameLen);
 
         //获取文件实体
-        File newFile = new File(this.file.getParentFile(), name);
-        FileInfo fileInfo = FileTool.toFileInfo(newFile);
-        try {
-            opt = new FileOutputStream(newFile);
-        } catch (Exception e) {
-            newFile = new File(this.file.getParentFile(), file.getName() + "." + fileInfo.type);
-            opt = new FileOutputStream(newFile);
-        }
+        File tempFile = new File(this.file.getAbsolutePath() + ".tmp");
+
+        opt = new FileOutputStream(tempFile);
 
         long readLen = CryptionTools.getInfosLen() + nameLen;
         long totalLen = this.file.length();
@@ -61,15 +55,21 @@ public class DecodeFile extends CryptionFile {
         while ((len = ipt.read(bytes)) > 0) {
             opt.write(encode(bytes, len), 0, len);
             readLen += len;
-            percent(readLen, totalLen);
+            progress(totalLen, readLen);
         }
-        newFile.setLastModified(lastModify);
-        System.out.println("]");
+        tempFile.setLastModified(lastModify);
     }
 
     @Override
-    protected void finish() {
-        super.finish();
+    protected void dealFile() {
+        File tempFile = new File(this.file.getAbsolutePath() + ".tmp");
+
+        File newFile = new File(this.file.getParentFile(), newName);
+
         this.file.delete();
+
+        tempFile.renameTo(newFile);
+
     }
+
 }

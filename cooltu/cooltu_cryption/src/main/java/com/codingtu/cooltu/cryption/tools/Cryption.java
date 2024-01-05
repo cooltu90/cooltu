@@ -12,6 +12,8 @@ public class Cryption {
     private boolean isEncode;
     private File file;
     private byte[] pswBytes;
+    private CryptionListener listener;
+    private boolean isRename;
 
 
     public static Cryption encode() {
@@ -29,8 +31,23 @@ public class Cryption {
         return this;
     }
 
+    public Cryption file(String path) {
+        this.file = new File(path);
+        return this;
+    }
+
     public Cryption password(String password) {
         this.pswBytes = password.getBytes();
+        return this;
+    }
+
+    public Cryption listener(CryptionListener listener) {
+        this.listener = listener;
+        return this;
+    }
+
+    public Cryption rename() {
+        this.isRename = true;
         return this;
     }
 
@@ -49,7 +66,7 @@ public class Cryption {
     }
 
     private void start(File file) {
-        (isEncode ? new EncodeFile(file, pswBytes) : new DecodeFile(file, pswBytes)).start();
+        (isEncode ? new EncodeFile(isRename, file, pswBytes, listener) : new DecodeFile(file, pswBytes, listener)).start();
     }
 
 }
