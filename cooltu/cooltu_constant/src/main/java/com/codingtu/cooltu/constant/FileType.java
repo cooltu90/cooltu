@@ -23,6 +23,7 @@ public class FileType {
     public static final String TXT = "txt";
     public static final String d_TXT = "." + TXT;
 
+    //图片不可见类型（pic no see）
     public static final String PNC = "pnc";
     public static final String d_PNC = "." + PNC;
 

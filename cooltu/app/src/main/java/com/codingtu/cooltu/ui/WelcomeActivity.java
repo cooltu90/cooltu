@@ -7,12 +7,14 @@ import android.view.View;
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.Forms;
 import com.codingtu.cooltu.bean.User;
+import com.codingtu.cooltu.lib4a.tools.MeTool;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
+import com.codingtu.cooltu.tools.Me;
 import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
 
 import core.actbase.WelcomeActivityBase;
@@ -32,6 +34,9 @@ public class WelcomeActivity extends WelcomeActivityBase {
         forms.name1 = "SSSSS";
         forms.address = "山东-淄博-周村";
         ActStart.formActivity(getAct(), null);
+        User user = Me.me();
+        boolean isLogin = Me.isLogin();
+        Me.setMe(user);
     }
 
     @ActBack(StepOneActivity.class)
