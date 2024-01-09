@@ -34,4 +34,9 @@ public interface TestApi {
             @Param int age,
             @Param String parent);
 
+    @GET("/addObj")
+    public String addObj3(
+        @Param(encoded = false) String name
+    );
+
 }

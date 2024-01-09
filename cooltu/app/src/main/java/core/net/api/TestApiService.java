@@ -30,5 +30,10 @@ public interface TestApiService {
             @retrofit2.http.Query("parent") java.lang.String parent
     );
 
+    @retrofit2.http.GET("/addObj")
+    Flowable<Result<ResponseBody>> addObj3(
+            @retrofit2.http.Query("name") java.lang.String name
+    );
+
 
 }

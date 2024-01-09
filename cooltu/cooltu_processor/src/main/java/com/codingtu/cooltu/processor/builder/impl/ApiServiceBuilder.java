@@ -84,7 +84,8 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
 
                         methodParam(methodIndex, paramIndex, anno, kv.k, kv.v, paramIndex != paramCount - 1 ? "," : "");
                         isAnnoValueName(methodIndex, paramIndex, param.encoded());
-                        annoInfoIf(methodIndex, paramIndex, param.value());
+                        //annoInfoIf(methodIndex, paramIndex, param.value());
+                        annoInfoIf(methodIndex, paramIndex, StringTool.isBlank(param.value()) ? kv.v : param.value());
                         isAnnoEncode(methodIndex, paramIndex, param.encoded());
 
                         return false;

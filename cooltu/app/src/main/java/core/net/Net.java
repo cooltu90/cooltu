@@ -5,6 +5,7 @@ public class Net {
     private static final String ADD_OBJ = "addObjBack";
     private static final String ADD_OBJ1 = "addObj1Back";
     private static final String ADD_OBJ2 = "addObj2Back";
+    private static final String ADD_OBJ3 = "addObj3Back";
     private static final String TEST_API_ADD_OBJ = "https://wwww.sddfsdfsd.com";
     private static final String TEST_API_ADD_OBJ1 = "https://wwww.sddfsdfsd.com";
     private static final String TEST_API_ADD_OBJ2 = "https://wwww.sddfsdfsd.com";
@@ -64,6 +65,17 @@ public class Net {
                     paramsGet.parent
             );
         }, ADD_OBJ2, TEST_API_ADD_OBJ2, params);
+    }
+    public static com.codingtu.cooltu.lib4a.net.api.API addObj3(java.lang.String name) {
+        core.net.params.AddObj3Params params = new core.net.params.AddObj3Params();
+        params.name = name;
+        return com.codingtu.cooltu.lib4a.net.NetTool.api((retrofit, ps) -> {
+            core.net.params.AddObj3Params paramsGet = (core.net.params.AddObj3Params) ps;
+
+            return retrofit.create(core.net.api.TestApiService.class).addObj3(
+                    paramsGet.name
+            );
+        }, ADD_OBJ3, com.codingtu.cooltu.lib4a.CoreConfigs.configs().getBaseUrl(), params);
     }
 
 
