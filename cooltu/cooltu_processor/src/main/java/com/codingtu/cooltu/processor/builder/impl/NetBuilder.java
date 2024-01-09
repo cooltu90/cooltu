@@ -119,7 +119,8 @@ public class NetBuilder extends NetBuilderBase {
 
                 String serviceFullName = CurrentPath.apiServiceFullName(netInfo.apisName);
                 method(methodIndex, FullName.API, netInfo.methodName, params.getMethodParams(), FullName.NET_TOOL,
-                        serviceFullName, ConvertTool.toStaticType(netInfo.methodName), baseUrl);
+                        serviceFullName, ConvertTool.toStaticType(netInfo.methodName), baseUrl,
+                        CountTool.isNull(netInfo.params) ? "null" : "params");
 
                 return false;
             }
@@ -165,7 +166,7 @@ public class Net {
                     [name][divider]
                                                                                                     [<sub>][for][methodParams]
             );
-        }, [methodTag], [baseUrl], params);
+        }, [methodTag], [baseUrl], [params]);
     }
                                                                                                     [<sub>][for][method]
 

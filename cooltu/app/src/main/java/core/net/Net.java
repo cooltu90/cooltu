@@ -6,6 +6,7 @@ public class Net {
     private static final String ADD_OBJ1 = "addObj1Back";
     private static final String ADD_OBJ2 = "addObj2Back";
     private static final String ADD_OBJ3 = "addObj3Back";
+    private static final String ADD_OBJ4 = "addObj4Back";
     private static final String TEST_API_ADD_OBJ = "https://wwww.sddfsdfsd.com";
     private static final String TEST_API_ADD_OBJ1 = "https://wwww.sddfsdfsd.com";
     private static final String TEST_API_ADD_OBJ2 = "https://wwww.sddfsdfsd.com";
@@ -76,6 +77,19 @@ public class Net {
                     paramsGet.name
             );
         }, ADD_OBJ3, com.codingtu.cooltu.lib4a.CoreConfigs.configs().getBaseUrl(), params);
+    }
+    public static com.codingtu.cooltu.lib4a.net.api.API addObj4(java.lang.String id) {
+        core.net.params.AddObj4Params params = new core.net.params.AddObj4Params();
+        params.id = id;
+        return com.codingtu.cooltu.lib4a.net.NetTool.api((retrofit, ps) -> {
+            core.net.params.AddObj4Params paramsGet = (core.net.params.AddObj4Params) ps;
+            com.codingtu.cooltu.lib4j.json.base.JO jo = com.codingtu.cooltu.lib4j.json.JsonTool.createJO();
+            jo.put("id", paramsGet.id);
+
+            return retrofit.create(core.net.api.TestApiService.class).addObj4(
+                    com.codingtu.cooltu.lib4a.net.NetTool.toJsonBody(jo.toJson())
+            );
+        }, ADD_OBJ4, com.codingtu.cooltu.lib4a.CoreConfigs.configs().getBaseUrl(), params);
     }
 
 

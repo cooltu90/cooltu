@@ -10,7 +10,6 @@ public class NetInfo {
     public String apisBaseUrl;
     public String apisName;
     public String methodBaseUrl;
-    public boolean isGet;
     public String methodValue;
     public List<? extends VariableElement> params;
     public boolean isJsonBody;

@@ -7,6 +7,7 @@ import com.codingtu.cooltu.processor.annotation.net.Param;
 import com.codingtu.cooltu.processor.annotation.net.ParamType;
 import com.codingtu.cooltu.processor.annotation.net.method.GET;
 import com.codingtu.cooltu.processor.annotation.net.method.POST;
+import com.codingtu.cooltu.processor.annotation.net.method.PUT;
 
 import java.util.List;
 
@@ -36,7 +37,12 @@ public interface TestApi {
 
     @GET("/addObj")
     public String addObj3(
-        @Param(encoded = false) String name
+            @Param(encoded = false) String name
+    );
+
+    @PUT(value = "/addObj", isJsonBody = true)
+    public String addObj4(
+            @Param String id
     );
 
 }

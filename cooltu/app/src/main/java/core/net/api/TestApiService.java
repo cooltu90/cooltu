@@ -35,5 +35,10 @@ public interface TestApiService {
             @retrofit2.http.Query("name") java.lang.String name
     );
 
+    @retrofit2.http.PUT("/addObj")
+    Flowable<Result<ResponseBody>> addObj4(
+            @retrofit2.http.Body okhttp3.RequestBody body
+    );
+
 
 }

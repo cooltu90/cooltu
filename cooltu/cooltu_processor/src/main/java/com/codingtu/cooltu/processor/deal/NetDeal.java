@@ -6,6 +6,7 @@ import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.net.Apis;
 import com.codingtu.cooltu.processor.annotation.net.method.GET;
 import com.codingtu.cooltu.processor.annotation.net.method.POST;
+import com.codingtu.cooltu.processor.annotation.net.method.PUT;
 import com.codingtu.cooltu.processor.bean.NetInfo;
 import com.codingtu.cooltu.processor.builder.impl.ApiServiceBuilder;
 import com.codingtu.cooltu.processor.builder.impl.NetBackBuilder;
@@ -47,18 +48,22 @@ public class NetDeal extends TypeBaseDeal {
 
                 GET get = ee.getAnnotation(GET.class);
                 POST post = ee.getAnnotation(POST.class);
+                PUT put = ee.getAnnotation(PUT.class);
                 NetInfo netInfo = new NetInfo();
                 netInfo.methodName = ElementTools.simpleName(ee);
                 netInfo.apisBaseUrl = apis.baseUrl();
                 netInfo.apisName = ElementTools.simpleName(te);
-                netInfo.isGet = get != null;
-                if (netInfo.isGet) {
+                if (get != null) {
                     netInfo.methodValue = get.value();
                     netInfo.methodBaseUrl = get.baseUrl();
-                } else {
+                } else if (post != null) {
                     netInfo.methodValue = post.value();
                     netInfo.methodBaseUrl = post.baseUrl();
                     netInfo.isJsonBody = post.isJsonBody();
+                } else if (put != null) {
+                    netInfo.methodValue = put.value();
+                    netInfo.methodBaseUrl = put.baseUrl();
+                    netInfo.isJsonBody = put.isJsonBody();
                 }
                 netInfo.params = ee.getParameters();
 

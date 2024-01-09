@@ -58,8 +58,8 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
     public int methodCount() {
         return count(methodCounts, getForKey("method"));
     }
-    public void method(int i0, String apiFullName, String methodName, String methodParams, String netToolFullName, String serviceFullName, String methodTag, String baseUrl) {
-        addForMap(this.method, getForKey("method", i0), apiFullName, methodName, methodParams, netToolFullName, serviceFullName, methodName, methodTag, baseUrl);
+    public void method(int i0, String apiFullName, String methodName, String methodParams, String netToolFullName, String serviceFullName, String methodTag, String baseUrl, String params) {
+        addForMap(this.method, getForKey("method", i0), apiFullName, methodName, methodParams, netToolFullName, serviceFullName, methodName, methodTag, baseUrl, params);
         countAdd(methodCounts, getForKey("method"));
     }
 
@@ -113,7 +113,7 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
                 addLnTag(methodSb, "                    [name][divider]", method1.get(0), method1.get(1));
             }
             addLnTag(methodSb, "            );");
-            addLnTag(methodSb, "        }, [methodTag], [baseUrl], params);", method0.get(6), method0.get(7));
+            addLnTag(methodSb, "        }, [methodTag], [baseUrl], [params]);", method0.get(6), method0.get(7), method0.get(8));
             addLnTag(methodSb, "    }");
         }
 

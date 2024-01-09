@@ -12,6 +12,7 @@ import com.codingtu.cooltu.processor.annotation.net.Param;
 import com.codingtu.cooltu.processor.annotation.net.ParamType;
 import com.codingtu.cooltu.processor.annotation.net.method.GET;
 import com.codingtu.cooltu.processor.annotation.net.method.POST;
+import com.codingtu.cooltu.processor.annotation.net.method.PUT;
 import com.codingtu.cooltu.processor.builder.base.ApiServiceBuilderBase;
 import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
@@ -94,46 +95,57 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
 
                 POST postMethod = ee.getAnnotation(POST.class);
                 if (postMethod != null) {
-                    if (postMethod.isJsonBody()) {
-                        method(count[0]++, FullName.RETROFIT_POST, postMethod.value(), ElementTools.simpleName(ee));
-                        methodParam(methodIndex, 0, FullName.RETROFIT_BODY, FullName.OKHTTP_REQUEST_BODY, "body", "");
-                    } else {
-                        method(count[0]++, FullName.RETROFIT_POST, postMethod.value(), ElementTools.simpleName(ee));
-                        List<? extends VariableElement> parameters = ee.getParameters();
-                        int paramCount = CountTool.count(parameters);
-                        Ts.ls(parameters, (paramIndex, element) -> {
-                            KV<String, String> kv = ElementTools.getFieldKv(element);
-                            Param param = element.getAnnotation(Param.class);
-                            String anno = FullName.RETROFIT_QUERY;
-                            String type = kv.k;
-                            String value = kv.v;
-
-                            switch (param.type()) {
-                                case ParamType.PATH:
-                                    anno = FullName.RETROFIT_PATH;
-                                    break;
-                                case ParamType.HEADER:
-                                    anno = FullName.RETROFIT_HEADER;
-                                    break;
-                                case ParamType.JSON_BODY:
-                                    anno = FullName.RETROFIT_BODY;
-                                    type = FullName.OKHTTP_REQUEST_BODY;
-                                    value = "body";
-                                    break;
-                            }
-
-                            methodParam(methodIndex, paramIndex, anno, type, value, paramIndex != paramCount - 1 ? "," : "");
-                            isAnnoValueName(methodIndex, paramIndex, param.encoded());
-                            if (param.type() != ParamType.JSON_BODY) {
-                                annoInfoIf(methodIndex, paramIndex, StringTool.isBlank(param.value()) ? kv.v : param.value());
-                            }
-                            isAnnoEncode(methodIndex, paramIndex, param.encoded());
-
-                            return false;
-                        });
-                    }
+                    extracted(methodIndex, ee, postMethod.isJsonBody(), FullName.RETROFIT_POST, postMethod.value());
                 }
+
+                PUT putMethod = ee.getAnnotation(PUT.class);
+                if (putMethod != null) {
+                    extracted(methodIndex, ee, putMethod.isJsonBody(), FullName.RETROFIT_PUT, putMethod.value());
+                }
+
+
                 return false;
+            }
+
+            private void extracted(int methodIndex, ExecutableElement ee, boolean isJsonBody, String netType, String apiUrl) {
+                if (isJsonBody) {
+                    method(count[0]++, netType, apiUrl, ElementTools.simpleName(ee));
+                    methodParam(methodIndex, 0, FullName.RETROFIT_BODY, FullName.OKHTTP_REQUEST_BODY, "body", "");
+                } else {
+                    method(count[0]++, netType, apiUrl, ElementTools.simpleName(ee));
+                    List<? extends VariableElement> parameters = ee.getParameters();
+                    int paramCount = CountTool.count(parameters);
+                    Ts.ls(parameters, (paramIndex, element) -> {
+                        KV<String, String> kv = ElementTools.getFieldKv(element);
+                        Param param = element.getAnnotation(Param.class);
+                        String anno = FullName.RETROFIT_QUERY;
+                        String type = kv.k;
+                        String value = kv.v;
+
+                        switch (param.type()) {
+                            case ParamType.PATH:
+                                anno = FullName.RETROFIT_PATH;
+                                break;
+                            case ParamType.HEADER:
+                                anno = FullName.RETROFIT_HEADER;
+                                break;
+                            case ParamType.JSON_BODY:
+                                anno = FullName.RETROFIT_BODY;
+                                type = FullName.OKHTTP_REQUEST_BODY;
+                                value = "body";
+                                break;
+                        }
+
+                        methodParam(methodIndex, paramIndex, anno, type, value, paramIndex != paramCount - 1 ? "," : "");
+                        isAnnoValueName(methodIndex, paramIndex, param.encoded());
+                        if (param.type() != ParamType.JSON_BODY) {
+                            annoInfoIf(methodIndex, paramIndex, StringTool.isBlank(param.value()) ? kv.v : param.value());
+                        }
+                        isAnnoEncode(methodIndex, paramIndex, param.encoded());
+
+                        return false;
+                    });
+                }
             }
         });
     }
