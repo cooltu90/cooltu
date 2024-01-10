@@ -2,6 +2,7 @@ package com.codingtu.cooltu.processor.annotation.path;
 
 import com.codingtu.cooltu.constant.FileContentType;
 import com.codingtu.cooltu.constant.FileType;
+import com.codingtu.cooltu.constant.PathBeanType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -22,6 +23,8 @@ public @interface FilePath {
     String fileName() default "";
 
     Class beanClass() default Void.class;
+
+    int beanType() default PathBeanType.BEAN;
 
     Class filter() default Void.class;
 }

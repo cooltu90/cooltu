@@ -130,6 +130,7 @@ public class PathDeal extends TypeBaseDeal {
                 return file.beanClass();
             }
         });
+        info.beanType = file.beanType();
         info.isVoidBean = ClassTool.isVoid(info.beanClass);
         info.filter = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
             @Override

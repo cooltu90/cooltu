@@ -85,6 +85,7 @@ public class FullName {
     public static final String PATH_TEXT_FILE = Pkg.LIB4A_PATH + ".PathTextFile";
     public static final String PATH_IMAGE_FILE = Pkg.LIB4A_PATH + ".PathImageFile";
     public static final String PATH_BEAN_FILE = Pkg.LIB4A_PATH + ".PathBeanFile";
+    public static final String PATH_BEAN_LIST_FILE = Pkg.LIB4A_PATH + ".PathBeanListFile";
     //JSON
     public static final String JO = Pkg.LIB4J_JSON + ".base.JO";
     public static final String JSON_TOOL = Pkg.LIB4J_JSON + ".JsonTool";

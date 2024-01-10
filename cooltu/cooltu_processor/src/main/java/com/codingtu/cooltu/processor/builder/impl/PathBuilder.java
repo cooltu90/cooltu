@@ -2,6 +2,7 @@ package com.codingtu.cooltu.processor.builder.impl;
 
 import com.codingtu.cooltu.constant.FileContentType;
 import com.codingtu.cooltu.constant.FullName;
+import com.codingtu.cooltu.constant.PathBeanType;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
@@ -128,7 +129,11 @@ public class PathBuilder extends PathBuilderBase {
                     if (info.isVoidBean) {
                         filedType = FullName.PATH_TEXT_FILE;
                     } else {
-                        filedType = FullName.PATH_BEAN_FILE + "<" + info.beanClass + ">";
+                        if(info.beanType== PathBeanType.BEAN){
+                            filedType = FullName.PATH_BEAN_FILE + "<" + info.beanClass + ">";
+                        }else{
+                            filedType = FullName.PATH_BEAN_LIST_FILE + "<" + info.beanClass + ">";
+                        }
                         ifParam = true;
 
                     }

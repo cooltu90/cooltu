@@ -6,6 +6,7 @@ public class CheckPath extends com.codingtu.cooltu.lib4a.path.BasePath {
     public CheckExtraInfoPath ExtraInfo;
 
 
+    public com.codingtu.cooltu.lib4a.path.PathBeanListFile<com.codingtu.cooltu.bean.User> list_txt;
 
 
     public static CheckPath obtain(String company, String taskName) {
@@ -33,6 +34,12 @@ public class CheckPath extends com.codingtu.cooltu.lib4a.path.BasePath {
                         + addPrexSeparator("ExtraInfo")
         );
 
+        this.list_txt = new com.codingtu.cooltu.lib4a.path.PathBeanListFile<com.codingtu.cooltu.bean.User>(
+                this.root
+                        + addPrexSeparator("1.txt")
+                , "txt"
+                , com.codingtu.cooltu.bean.User.class
+        );
 
     }
 

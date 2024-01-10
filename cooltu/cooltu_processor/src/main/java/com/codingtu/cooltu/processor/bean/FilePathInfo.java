@@ -17,6 +17,7 @@ public class FilePathInfo {
     public String fileContentType;
     public boolean isVoidBean;
     public String beanClass;
+    public int beanType;
     //
     public String filter;
     public boolean isFilter;

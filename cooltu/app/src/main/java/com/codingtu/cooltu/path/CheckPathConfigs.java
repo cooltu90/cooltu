@@ -1,7 +1,9 @@
 package com.codingtu.cooltu.path;
 
 import com.codingtu.cooltu.bean.User;
+import com.codingtu.cooltu.constant.FileContentType;
 import com.codingtu.cooltu.constant.FileType;
+import com.codingtu.cooltu.constant.PathBeanType;
 import com.codingtu.cooltu.path.filter.LabelFilter;
 import com.codingtu.cooltu.processor.annotation.path.DirPath;
 import com.codingtu.cooltu.processor.annotation.path.FilePath;
@@ -76,4 +78,14 @@ public class CheckPathConfigs {
             fileType = FileType.PNC)
     String handleJpgPnc;
 
+
+    @FilePath(
+            fileName = "1.txt",
+            fieldName = "list",
+            fileType = FileType.TXT,
+            fileContentType = FileContentType.TXT,
+            beanClass = User.class,
+            beanType = PathBeanType.LIST
+    )
+    String list;
 }
