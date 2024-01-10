@@ -162,7 +162,7 @@ public abstract class UiBaseBuilder {
                         uiBase.showDialogUpdataContentIf(position, i, kv.v);
                         uiBase.isShowDialogSetContent(position, 1, true);
                     } else {
-                        uiBase.isShowDialogSetContentStr(position, 0, true);
+                        uiBase.showDialogSetContentStrIf(position,0,dialogUse.content());
                     }
                     if (!isVoid) {
                         if (i != 0) {
@@ -183,7 +183,7 @@ public abstract class UiBaseBuilder {
                             Constant.DEFAULT_DIALOG_LAYOUT, FullName.DIALOG_ON_BT_CLICK, isVoid ? "null" : objName);
                 }
 
-                if(!isVoid){
+                if (!isVoid) {
                     uiBase.leftParamIf(position, objClass, objName);
                     uiBase.rightParamIf(position, objClass, objName);
                 }

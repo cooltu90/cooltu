@@ -191,7 +191,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
         if (dialog == null) {
             dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
                     .setTitle("xxx")
-                    .setContent("请选择照片的来源")
+                    .setContent("xxx")
                     .setLeftBtText("取消")
                     .setRighBtText("确定")
                     .setLayout(com.codingtu.cooltu.R.layout.dialog)

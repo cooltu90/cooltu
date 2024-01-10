@@ -61,7 +61,7 @@ public class StepOneFragmentRes {
 
     @DialogUse(
             title = "xxx",
-            content = "xxx",
+            content = "32343234",
             leftBtText = "取消",
             rightBtText = "确定"
     )

@@ -103,8 +103,6 @@ public interface UiBaseInterface {
 
     void isShowDialogSetContent(int position, int i, boolean b);
 
-    void isShowDialogSetContentStr(int position, int i, boolean b);
-
     void isShowDialogLeftObj(int position, int i, boolean b);
 
     void isShowDialogRightObj(int position, int i, boolean b);
@@ -142,4 +140,6 @@ public interface UiBaseInterface {
     void isSuperOnLongClick(boolean hasBaseClass);
 
     void isSuperOnLongClickFalse(boolean hasBaseClass);
+
+    void showDialogSetContentStrIf(int position, int i, String content);
 }

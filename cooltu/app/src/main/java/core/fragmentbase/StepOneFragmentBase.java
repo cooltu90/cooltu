@@ -198,7 +198,7 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.f
         if (dialog == null) {
             dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
                     .setTitle("xxx")
-                    .setContent("请选择照片的来源")
+                    .setContent("xxx")
                     .setLeftBtText("取消")
                     .setRighBtText("确定")
                     .setLayout(com.codingtu.cooltu.R.layout.dialog)
@@ -251,7 +251,7 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.f
         if (dialog1 == null) {
             dialog1 = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
                     .setTitle("xxx")
-                    .setContent("请选择照片的来源")
+                    .setContent("32343234")
                     .setLeftBtText("取消")
                     .setRighBtText("确定")
                     .setLayout(com.codingtu.cooltu.R.layout.dialog)

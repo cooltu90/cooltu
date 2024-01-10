@@ -730,7 +730,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
             [dialogName] = new [dialogFullName](getAct())
                     .setTitle("[title]")
                                                                                                     [<sub>][if][showDialogSetContentStr]
-                    .setContent("请选择照片的来源")
+                    .setContent("[content]")
                                                                                                     [<sub>][if][showDialogSetContentStr]
                                                                                                     [<sub>][if][showDialogSetContent]
                     .setContent(content)

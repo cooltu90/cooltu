@@ -436,8 +436,9 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         addForMap(this.editDialog, getIfKey("setTextWatcherMethod", i0), edTextWatcherFullName, edClassName);
         editDialogIfs.put(getIfKey("setTextWatcherMethod", i0), true);
     }
-    public void isShowDialogSetContentStr(int i0, int i1, boolean is) {
-        dialogIfs.put(getIfKey("showDialogSetContentStr", i0, i1), is);
+    public void showDialogSetContentStrIf(int i0, int i1, String content) {
+        addForMap(this.dialog, getIfKey("showDialogSetContentStr", i0, i1), content);
+        dialogIfs.put(getIfKey("showDialogSetContentStr", i0, i1), true);
     }
     public void isShowDialogSetContent(int i0, int i1, boolean is) {
         dialogIfs.put(getIfKey("showDialogSetContent", i0, i1), is);
@@ -786,7 +787,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
                 addLnTag(dialogSb, "                    .setTitle(\"[title]\")", dialog1.get(5));
                 if (isIf(dialogIfs, getIfKey("showDialogSetContentStr", i0, i1))) {
                     List<String> dialog2 = dialog.get(getIfKey("showDialogSetContentStr", i0, i1));
-                    addLnTag(dialogSb, "                    .setContent(\"请选择照片的来源\")");
+                    addLnTag(dialogSb, "                    .setContent(\"[content]\")", dialog2.get(0));
                 }
                 if (isIf(dialogIfs, getIfKey("showDialogSetContent", i0, i1))) {
                     List<String> dialog2 = dialog.get(getIfKey("showDialogSetContent", i0, i1));
