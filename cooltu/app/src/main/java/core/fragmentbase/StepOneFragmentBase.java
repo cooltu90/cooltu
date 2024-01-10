@@ -246,5 +246,58 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.f
     }
     protected void dialogLeft(com.codingtu.cooltu.bean.User user) { }
     protected void dialogRight(com.codingtu.cooltu.bean.User user) { }
+    private com.codingtu.cooltu.lib4a.view.dialogview.Dialog dialog1;
+    protected void showDialog1() {
+        if (dialog1 == null) {
+            dialog1 = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
+                    .setTitle("xxx")
+                    .setContent("请选择照片的来源")
+                    .setLeftBtText("取消")
+                    .setRighBtText("确定")
+                    .setLayout(com.codingtu.cooltu.R.layout.dialog)
+                    .setOnBtClick(new com.codingtu.cooltu.lib4a.view.dialogview.Dialog.OnBtClick() {
+                        @Override
+                        public void onLeftClick(Object obj) {
+                            dialog1Left();
+                        }
+
+                        @Override
+                        public void onRightClick(Object obj) {
+                            dialog1Right();
+                        }
+                    })
+                    .build();
+        }
+        dialog1.setObject(null);
+        dialog1.show();
+    }
+    protected void showDialog1(String content) {
+        if (dialog1 == null) {
+            dialog1 = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
+                    .setTitle("xxx")
+                    .setContent(content)
+                    .setLeftBtText("取消")
+                    .setRighBtText("确定")
+                    .setLayout(com.codingtu.cooltu.R.layout.dialog)
+                    .setOnBtClick(new com.codingtu.cooltu.lib4a.view.dialogview.Dialog.OnBtClick() {
+                        @Override
+                        public void onLeftClick(Object obj) {
+                            dialog1Left();
+                        }
+
+                        @Override
+                        public void onRightClick(Object obj) {
+                            dialog1Right();
+                        }
+                    })
+                    .build();
+        } else {
+            dialog1.updateContent(content);
+        }
+        dialog1.setObject(null);
+        dialog1.show();
+    }
+    protected void dialog1Left() { }
+    protected void dialog1Right() { }
 
 }

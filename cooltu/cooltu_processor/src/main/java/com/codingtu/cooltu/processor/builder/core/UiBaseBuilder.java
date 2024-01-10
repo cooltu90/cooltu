@@ -157,7 +157,7 @@ public abstract class UiBaseBuilder {
                 for (int i = 0; i < 2; i++) {
                     StringBuilder showDialogParamSb = new StringBuilder();
                     if (i != 0) {
-                        showDialogParamSb.append("String content, ");
+                        showDialogParamSb.append("String content");
                         uiBase.isShowDialogElse(position, i, true);
                         uiBase.showDialogUpdataContentIf(position, i, kv.v);
                         uiBase.isShowDialogSetContent(position, 1, true);
@@ -165,6 +165,9 @@ public abstract class UiBaseBuilder {
                         uiBase.isShowDialogSetContentStr(position, 0, true);
                     }
                     if (!isVoid) {
+                        if (i != 0) {
+                            showDialogParamSb.append(", ");
+                        }
                         showDialogParamSb.append(objClass).append(" ").append(objName);
                         uiBase.isShowDialogLeftObj(position, i, true);
                         uiBase.isShowDialogRightObj(position, i, true);
@@ -180,9 +183,10 @@ public abstract class UiBaseBuilder {
                             Constant.DEFAULT_DIALOG_LAYOUT, FullName.DIALOG_ON_BT_CLICK, isVoid ? "null" : objName);
                 }
 
-                uiBase.leftParamIf(position, objClass, objName);
-                uiBase.rightParamIf(position, objClass, objName);
-
+                if(!isVoid){
+                    uiBase.leftParamIf(position, objClass, objName);
+                    uiBase.rightParamIf(position, objClass, objName);
+                }
 
                 return false;
             }

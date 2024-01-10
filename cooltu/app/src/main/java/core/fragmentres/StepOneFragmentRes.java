@@ -58,4 +58,12 @@ public class StepOneFragmentRes {
             rightBtText = "确定"
     )
     Dialog dialog;
+
+    @DialogUse(
+            title = "xxx",
+            content = "xxx",
+            leftBtText = "取消",
+            rightBtText = "确定"
+    )
+    Dialog dialog1;
 }
