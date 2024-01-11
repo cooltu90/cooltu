@@ -32,13 +32,23 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
     }
 
     @Override
+    public void onCreateComplete() {
+        super.onCreateComplete();
+    }
+
+    @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case com.codingtu.cooltu.R.id.tv6:
+                tv6Click(
+                );
+                break;
 
         }
     }
 
+    protected void tv6Click() {}
 
 
     @Override

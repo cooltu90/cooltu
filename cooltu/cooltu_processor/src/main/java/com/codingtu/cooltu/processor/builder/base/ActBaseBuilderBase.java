@@ -1454,6 +1454,11 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("    }");
         lines.add("");
         lines.add("    @Override");
+        lines.add("    public void onCreateComplete() {");
+        lines.add("        super.onCreateComplete();");
+        lines.add("    }");
+        lines.add("");
+        lines.add("    @Override");
         lines.add("    public void onClick(View v) {");
         lines.add("[[superOnClick]]");
         lines.add("        switch (v.getId()) {");

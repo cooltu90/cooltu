@@ -55,6 +55,11 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
     }
 
     @Override
+    public void onCreateComplete() {
+        super.onCreateComplete();
+    }
+
+    @Override
     public void onClick(View v) {
 
         switch (v.getId()) {

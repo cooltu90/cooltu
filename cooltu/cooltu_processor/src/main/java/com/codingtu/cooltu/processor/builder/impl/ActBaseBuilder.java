@@ -420,6 +420,11 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     }
 
     @Override
+    public void onCreateComplete() {
+        super.onCreateComplete();
+    }
+
+    @Override
     public void onClick(View v) {
                                                                                                     [<sub>][if][superOnClick]
         super.onClick(v);

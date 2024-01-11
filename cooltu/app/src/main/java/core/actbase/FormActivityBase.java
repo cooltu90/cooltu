@@ -113,6 +113,11 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
     }
 
     @Override
+    public void onCreateComplete() {
+        super.onCreateComplete();
+    }
+
+    @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
