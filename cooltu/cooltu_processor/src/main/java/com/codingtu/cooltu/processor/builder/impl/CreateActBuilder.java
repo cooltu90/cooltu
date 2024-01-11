@@ -4,7 +4,6 @@ import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.processor.builder.base.CreateActBuilderBase;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 
 import java.util.List;
 

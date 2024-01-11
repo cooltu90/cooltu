@@ -2,17 +2,12 @@ package com.codingtu.cooltu.processor.builder.subdeal;
 
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
-import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.processor.annotation.form.EchoType;
-import com.codingtu.cooltu.processor.annotation.form.FormEcho;
 import com.codingtu.cooltu.processor.annotation.form.FormType;
 import com.codingtu.cooltu.processor.annotation.form.view.BindEditText;
-import com.codingtu.cooltu.processor.annotation.form.view.BindMulti;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.FormTools;
-import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.TagTools;
 
 import java.util.Map;

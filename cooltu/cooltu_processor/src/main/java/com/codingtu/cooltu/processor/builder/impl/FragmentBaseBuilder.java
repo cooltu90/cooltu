@@ -1,14 +1,11 @@
 package com.codingtu.cooltu.processor.builder.impl;
 
-import com.codingtu.cooltu.constant.Constant;
-import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.builder.base.FragmentBaseBuilderBase;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.core.UiBaseInterface;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 
 import java.util.List;

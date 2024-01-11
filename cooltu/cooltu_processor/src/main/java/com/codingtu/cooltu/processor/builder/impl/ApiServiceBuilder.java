@@ -14,8 +14,6 @@ import com.codingtu.cooltu.processor.annotation.net.method.GET;
 import com.codingtu.cooltu.processor.annotation.net.method.POST;
 import com.codingtu.cooltu.processor.annotation.net.method.PUT;
 import com.codingtu.cooltu.processor.builder.base.ApiServiceBuilderBase;
-import com.codingtu.cooltu.processor.lib.log.Logs;
-import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
 import java.util.ArrayList;

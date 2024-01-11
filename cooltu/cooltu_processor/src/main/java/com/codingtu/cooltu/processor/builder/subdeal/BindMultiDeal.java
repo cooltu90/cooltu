@@ -1,23 +1,18 @@
 package com.codingtu.cooltu.processor.builder.subdeal;
 
 import com.codingtu.cooltu.constant.FullName;
-import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.impl.MapTs;
-import com.codingtu.cooltu.lib4j.ts.impl.TsInterface;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.TListTs;
 import com.codingtu.cooltu.processor.annotation.form.view.BindMulti;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.lang.model.element.VariableElement;

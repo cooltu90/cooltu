@@ -3,9 +3,6 @@ package com.codingtu.cooltu.processor.builder.impl;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.processor.builder.base.FragResBuilderBase;
-import com.codingtu.cooltu.processor.lib.log.Logs;
-
-import java.util.List;
 
 public class FragResBuilder extends FragResBuilderBase {
     private final JavaInfo fragJavaInfo;
@@ -23,12 +20,6 @@ public class FragResBuilder extends FragResBuilderBase {
     @Override
     protected boolean isForce() {
         return false;
-    }
-
-    @Override
-    protected void beforeBuild(List<String> lines) {
-        super.beforeBuild(lines);
-        Logs.i(lines);
     }
 
     @Override

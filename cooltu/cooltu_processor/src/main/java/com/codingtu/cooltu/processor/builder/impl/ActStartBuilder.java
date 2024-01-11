@@ -8,23 +8,19 @@ import com.codingtu.cooltu.lib4j.data.map.ValueMap;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.impl.SetTs;
 import com.codingtu.cooltu.processor.annotation.ui.StartGroup;
 import com.codingtu.cooltu.processor.builder.base.ActStartBuilderBase;
 import com.codingtu.cooltu.processor.deal.ResForDeal;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import javax.lang.model.element.VariableElement;
 
@@ -93,8 +89,6 @@ public class ActStartBuilder extends ActStartBuilderBase {
                     }
                 });
 
-                Logs.i("startGroups1:" + CountTool.count(startGroups));
-
                 if (CountTool.isNull(startGroups)) {
                     add(actClass);
                 } else {
@@ -128,7 +122,6 @@ public class ActStartBuilder extends ActStartBuilderBase {
         Ts.ts(map.keySet()).ls(new SetTs.SetEach<String>() {
             @Override
             public boolean each(String actFullName) {
-                Logs.i("actFullName:" + actFullName);
                 ListValueMap<Integer, KV<String, String>> actMap = map.get(actFullName);
                 if (!actMap.containsKey(0)) {
                     actMap.get(0);

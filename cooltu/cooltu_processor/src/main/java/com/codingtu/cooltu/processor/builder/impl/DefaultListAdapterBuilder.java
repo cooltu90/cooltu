@@ -4,9 +4,6 @@ import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.processor.builder.base.DefaultListAdapterBuilderBase;
-import com.codingtu.cooltu.processor.lib.log.Logs;
-
-import java.util.List;
 
 public class DefaultListAdapterBuilder extends DefaultListAdapterBuilderBase {
     private final JavaInfo vhJavaInfo;
@@ -21,12 +18,6 @@ public class DefaultListAdapterBuilder extends DefaultListAdapterBuilderBase {
     @Override
     protected boolean isBuild() {
         return true;
-    }
-
-    @Override
-    protected void beforeBuild(List<String> lines) {
-        super.beforeBuild(lines);
-        Logs.i(lines);
     }
 
     @Override
