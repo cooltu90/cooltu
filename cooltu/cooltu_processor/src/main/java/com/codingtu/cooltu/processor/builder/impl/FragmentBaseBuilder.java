@@ -128,9 +128,6 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][findView]
         [fieldName] = [parent]findViewById([rPkg].R.id.[id]);
                                                                                                     [<sub>][for][findView]
-                                                                                                    [<sub>][for][setOnClick]
-        [fieldName].setOnClickListener(this);
-                                                                                                    [<sub>][for][setOnClick]
                                                                                                     [<sub>][for][setOnLongClick]
         [fieldName].setOnLongClickListener(this);
                                                                                                     [<sub>][for][setOnLongClick]
@@ -169,9 +166,19 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         [rvName].setAdapter([adapterName]);
         [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getAct()));
                                                                                                     [<sub>][for][listAdapter]
+        onCreateComplete();
         return view;
     }
                                                                                                     [<sub>][if][layout]
+
+    @Override
+    public void onCreateComplete() {
+        super.onCreateComplete();
+                                                                                                    [<sub>][for][setOnClick]
+        [fieldName].setOnClickListener(this);
+                                                                                                    [<sub>][for][setOnClick]
+    }
+
     @Override
     public void onClick(View v) {
                                                                                                     [<sub>][if][superOnClick]

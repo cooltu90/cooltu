@@ -19,10 +19,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> findViewCounts;
     protected StringBuilder findViewSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> findView;
-    protected java.util.Map<String, Boolean> setOnClickIfs;
-    protected java.util.Map<String, Integer> setOnClickCounts;
-    protected StringBuilder setOnClickSb;
-    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> setOnClick;
     protected java.util.Map<String, Boolean> setOnLongClickIfs;
     protected java.util.Map<String, Integer> setOnLongClickCounts;
     protected StringBuilder setOnLongClickSb;
@@ -59,6 +55,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> onCreateCompleteInitCounts;
     protected StringBuilder onCreateCompleteInitSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> onCreateCompleteInit;
+    protected java.util.Map<String, Boolean> setOnClickIfs;
+    protected java.util.Map<String, Integer> setOnClickCounts;
+    protected StringBuilder setOnClickSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> setOnClick;
     protected java.util.Map<String, Boolean> superOnClickIfs;
     protected java.util.Map<String, Integer> superOnClickCounts;
     protected StringBuilder superOnClickSb;
@@ -163,10 +163,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         findViewCounts = new java.util.HashMap<>();
         findViewSb = map.get("findView");
         findView = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
-        setOnClickIfs = new java.util.HashMap<>();
-        setOnClickCounts = new java.util.HashMap<>();
-        setOnClickSb = map.get("setOnClick");
-        setOnClick = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         setOnLongClickIfs = new java.util.HashMap<>();
         setOnLongClickCounts = new java.util.HashMap<>();
         setOnLongClickSb = map.get("setOnLongClick");
@@ -203,6 +199,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         onCreateCompleteInitCounts = new java.util.HashMap<>();
         onCreateCompleteInitSb = map.get("onCreateCompleteInit");
         onCreateCompleteInit = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        setOnClickIfs = new java.util.HashMap<>();
+        setOnClickCounts = new java.util.HashMap<>();
+        setOnClickSb = map.get("setOnClick");
+        setOnClick = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         superOnClickIfs = new java.util.HashMap<>();
         superOnClickCounts = new java.util.HashMap<>();
         superOnClickSb = map.get("superOnClick");
@@ -304,13 +304,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     public void findView(int i0, String fieldName, String parent, String rPkg, String id) {
         addForMap(this.findView, getForKey("findView", i0), fieldName, parent, rPkg, id);
         countAdd(findViewCounts, getForKey("findView"));
-    }
-    public int setOnClickCount() {
-        return count(setOnClickCounts, getForKey("setOnClick"));
-    }
-    public void setOnClick(int i0, String fieldName) {
-        addForMap(this.setOnClick, getForKey("setOnClick", i0), fieldName);
-        countAdd(setOnClickCounts, getForKey("setOnClick"));
     }
     public int setOnLongClickCount() {
         return count(setOnLongClickCounts, getForKey("setOnLongClick"));
@@ -479,6 +472,13 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     public void linkEcho(int i0, String lineName) {
         addForMap(this.formInit, getForKey("linkEcho", i0), lineName);
         countAdd(formInitCounts, getForKey("linkEcho"));
+    }
+    public int setOnClickCount() {
+        return count(setOnClickCounts, getForKey("setOnClick"));
+    }
+    public void setOnClick(int i0, String fieldName) {
+        addForMap(this.setOnClick, getForKey("setOnClick", i0), fieldName);
+        countAdd(setOnClickCounts, getForKey("setOnClick"));
     }
     public int onClickCaseCount(int i0) {
         return count(onClickSwithCounts, getForKey("onClickCase", i0));
@@ -831,10 +831,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> findView0 = findView.get(getForKey("findView", i0));
             addLnTag(findViewSb, "        [fieldName] = [parent]findViewById([rPkg].R.id.[id]);", findView0.get(0), findView0.get(1), findView0.get(2), findView0.get(3));
         }
-        for (int i0 = 0; i0 < count(setOnClickCounts, getForKey("setOnClick")); i0++) {
-            List<String> setOnClick0 = setOnClick.get(getForKey("setOnClick", i0));
-            addLnTag(setOnClickSb, "        [fieldName].setOnClickListener(this);", setOnClick0.get(0));
-        }
         for (int i0 = 0; i0 < count(setOnLongClickCounts, getForKey("setOnLongClick")); i0++) {
             List<String> setOnLongClick0 = setOnLongClick.get(getForKey("setOnLongClick", i0));
             addLnTag(setOnLongClickSb, "        [fieldName].setOnLongClickListener(this);", setOnLongClick0.get(0));
@@ -975,6 +971,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         if (isIf(onCreateCompleteInitIfs, getIfKey("onCreateCompleteInit"))) {
             List<String> onCreateCompleteInit0 = onCreateCompleteInit.get(getIfKey("onCreateCompleteInit"));
             addLnTag(onCreateCompleteInitSb, "        onCreateComplete();");
+        }
+        for (int i0 = 0; i0 < count(setOnClickCounts, getForKey("setOnClick")); i0++) {
+            List<String> setOnClick0 = setOnClick.get(getForKey("setOnClick", i0));
+            addLnTag(setOnClickSb, "        [fieldName].setOnClickListener(this);", setOnClick0.get(0));
         }
         if (isIf(superOnClickIfs, getIfKey("superOnClick"))) {
             List<String> superOnClick0 = superOnClick.get(getIfKey("superOnClick"));
@@ -1439,7 +1439,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("        super.onCreate(savedInstanceState);");
         lines.add("[[layout]]");
         lines.add("[[findView]]");
-        lines.add("[[setOnClick]]");
         lines.add("[[setOnLongClick]]");
         lines.add("[[colorStrInit]]");
         lines.add("[[colorResInit]]");
@@ -1456,6 +1455,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("    @Override");
         lines.add("    public void onCreateComplete() {");
         lines.add("        super.onCreateComplete();");
+        lines.add("[[setOnClick]]");
         lines.add("    }");
         lines.add("");
         lines.add("    @Override");

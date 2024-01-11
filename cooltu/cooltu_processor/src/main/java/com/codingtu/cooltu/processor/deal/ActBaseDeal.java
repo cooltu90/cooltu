@@ -148,8 +148,8 @@ public class ActBaseDeal extends TypeBaseDeal {
                 return false;
             }
         });
-
         uiBaseBuilder.clickViews.add(clickViewInfo);
+
     }
 
     private void dealNetBack(UiBaseBuilder uiBaseBuilder, NetBack netBack, ExecutableElement ee) {

@@ -42,7 +42,7 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
         layoutTemp = R.layout.layout_temp
 )
 @CreateFragment(
-        name = "step_one",
+        name = "base_step",
         packages = "com.codingtu.cooltu.ui",
         baseClass = CoreFragment.class,
         layoutTemp = R.layout.layout_temp

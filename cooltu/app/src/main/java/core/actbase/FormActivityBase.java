@@ -49,8 +49,6 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         nameEt3 = findViewById(com.codingtu.cooltu.R.id.nameEt3);
         timeSb1 = findViewById(com.codingtu.cooltu.R.id.timeSb1);
 
-        bt.setOnClickListener(this);
-
         bt.setOnLongClickListener(this);
 
 
@@ -115,6 +113,8 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
+        bt.setOnClickListener(this);
+
     }
 
     @Override

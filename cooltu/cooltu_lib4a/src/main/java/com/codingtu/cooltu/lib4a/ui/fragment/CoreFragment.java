@@ -18,4 +18,10 @@ public class CoreFragment extends Fragment implements CoreFragmentInterface {
     public Activity getAct() {
         return getActivity();
     }
+
+    @Override
+    public void onCreateComplete() {
+
+    }
+
 }

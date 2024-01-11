@@ -13,7 +13,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.fragment.CoreFragment implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
+public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseStepFragment implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
     protected androidx.recyclerview.widget.RecyclerView rv;
     protected android.widget.TextView tv1;
     protected int textColor;
@@ -33,9 +33,9 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.f
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = com.codingtu.cooltu.lib4a.tools.InflateTool.inflate(inflater, com.codingtu.cooltu.R.layout.fragment_step_one, container);
+        tv2 = view.findViewById(com.codingtu.cooltu.R.id.tv2);
         rv = view.findViewById(com.codingtu.cooltu.R.id.rv);
         tv1 = view.findViewById(com.codingtu.cooltu.R.id.tv1);
-        tv1.setOnClickListener(this);
         textColor = android.graphics.Color.parseColor("#ffffff");
         tvColor = com.codingtu.cooltu.lib4a.tools.ResourceTool.getColor(com.codingtu.cooltu.R.color.black);
         dp = com.codingtu.cooltu.lib4a.tools.MobileTool.dpToPx(12.5f);
@@ -58,11 +58,21 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.f
         dogAdapter.setClick(this);
         rv.setAdapter(dogAdapter);
         rv.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getAct()));
+        onCreateComplete();
         return view;
+    }
+
+
+    @Override
+    public void onCreateComplete() {
+        super.onCreateComplete();
+        tv1.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
+        super.onClick(v);
 
         switch (v.getId()) {
             case com.codingtu.cooltu.R.id.tv1:
@@ -81,8 +91,8 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.f
         switch (v.getId()) {
 
         }
+        return super.onLongClick(v);
 
-        return false;
 
 
     }
@@ -94,6 +104,7 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.lib4a.ui.f
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
+        super.accept(code, result, params, objs);
 
 
         if ("getObjBack".equals(code)) {

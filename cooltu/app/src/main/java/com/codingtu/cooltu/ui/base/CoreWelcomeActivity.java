@@ -12,9 +12,9 @@ import core.actres.base.CoreWelcomeActivityRes;
 @ActBase
 public class CoreWelcomeActivity extends CoreWelcomeActivityBase {
 
-    @ClickView(R.id.tv6)
+    @ClickView(value = R.id.tv6)
     public void tv6Click() {
-        
+
     }
 
 }

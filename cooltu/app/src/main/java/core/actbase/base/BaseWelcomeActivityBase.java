@@ -11,7 +11,6 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
     protected android.widget.TextView tv1;
     protected android.widget.RelativeLayout tv3Rl;
     protected android.widget.RelativeLayout tv4;
-    protected android.widget.TextView tv6;
     protected android.widget.RelativeLayout tv4Rl;
     protected android.widget.TextView tv3RlRlTv;
     protected android.widget.TextView backBt;
@@ -37,11 +36,6 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
         rootLl = findViewById(com.codingtu.cooltu.R.id.rootLl);
         tv4RlRlTv = tv4Rl.findViewById(com.codingtu.cooltu.R.id.tv);
 
-        tv1.setOnClickListener(this);
-        tv3.setOnClickListener(this);
-        tv3RlRlTv.setOnClickListener(this);
-        tv4RlRlTv.setOnClickListener(this);
-
 
 
 
@@ -60,6 +54,10 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
+        tv1.setOnClickListener(this);
+        tv3.setOnClickListener(this);
+        tv4RlRlTv.setOnClickListener(this);
+
     }
 
     @Override

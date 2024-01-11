@@ -21,6 +21,7 @@ import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.deal.NetDeal;
 import com.codingtu.cooltu.processor.deal.VHDeal;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
@@ -31,6 +32,7 @@ import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
@@ -59,6 +61,7 @@ public abstract class UiBaseBuilder {
 
     public boolean isToastDialog;
     public boolean isNoticeDialog;
+    private List<String> inBaseInParent;
 
 
     public UiBaseBuilder(UiBaseInterface uiBase) {
@@ -94,6 +97,8 @@ public abstract class UiBaseBuilder {
     }
 
     public void dealLines() {
+        inBaseInParent = getInBaseInParent();
+
         uiBase.addTag(getStringBuilder("pkg"), javaInfo().pkg);
         uiBase.addTag(getStringBuilder("name"), javaInfo().name);
         uiBase.addTag(getStringBuilder("baseClass"), baseClass);
@@ -162,7 +167,7 @@ public abstract class UiBaseBuilder {
                         uiBase.showDialogUpdataContentIf(position, i, kv.v);
                         uiBase.isShowDialogSetContent(position, 1, true);
                     } else {
-                        uiBase.showDialogSetContentStrIf(position,0,dialogUse.content());
+                        uiBase.showDialogSetContentStrIf(position, 0, dialogUse.content());
                     }
                     if (!isVoid) {
                         if (i != 0) {
@@ -196,10 +201,21 @@ public abstract class UiBaseBuilder {
     }
 
 
+//    private boolean addField(String sign, String type, String name) {
+//        if (inBaseMap.get(name) == null && fieldMap.get(name) == null) {
+//            fieldMap.put(name, name);
+//            uiBase.field(uiBase.fieldCount(), sign, type, name);
+//            return true;
+//        }
+//        return false;
+//    }
+
     private boolean addField(String sign, String type, String name) {
-        if (inBaseMap.get(name) == null && fieldMap.get(name) == null) {
+        if (fieldMap.get(name) == null) {
             fieldMap.put(name, name);
-            uiBase.field(uiBase.fieldCount(), sign, type, name);
+            if (!inBaseInParent.contains(name)) {
+                uiBase.field(uiBase.fieldCount(), sign, type, name);
+            }
             return true;
         }
         return false;
@@ -306,6 +322,8 @@ public abstract class UiBaseBuilder {
 
 
     private void onClick() {
+        Map<String, LayoutTools.ViewInfo> viewMap = getViewMap();
+
         Ts.ls(clickViews, new BaseTs.EachTs<ClickViewInfo>() {
             @Override
             public boolean each(int clickViewInfoIndex, ClickViewInfo info) {
@@ -338,21 +356,12 @@ public abstract class UiBaseBuilder {
                     public boolean each(int idIndex, IdTools.Id id) {
                         uiBase.onClickCase(clickViewInfoIndex, idIndex, id.toString());
                         if (info.inAct.get(idIndex)) {
-                            BaseTools.getThisWithParents(UiBaseBuilder.this, getParentGetter(), new BaseTs.EachTs<UiBaseBuilder>() {
-                                @Override
-                                public boolean each(int position, UiBaseBuilder uiBaseBuilder) {
-                                    Ts.ts(uiBaseBuilder.viewInfos).convert(new BaseTs.Convert<LayoutTools.ViewInfo, LayoutTools.ViewInfo>() {
-                                        @Override
-                                        public LayoutTools.ViewInfo convert(int index, LayoutTools.ViewInfo viewInfo) {
-                                            if (viewInfo.id.equals(id.rName)) {
-                                                uiBase.setOnClick(uiBase.setOnClickCount(), viewInfo.fieldName);
-                                            }
-                                            return null;
-                                        }
-                                    });
-                                    return false;
-                                }
-                            });
+                            LayoutTools.ViewInfo viewInfo = viewMap.get(id.rName);
+                            if (viewInfo != null) {
+                                uiBase.setOnClick(uiBase.setOnClickCount(), viewInfo.fieldName);
+                                addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
+                            }
+
                         }
                         return false;
                     }
@@ -595,6 +604,79 @@ public abstract class UiBaseBuilder {
             }
         });
     }
+
+    private List<String> getInBaseInParent() {
+        return Ts.ts(getParents()).convertList(new BaseTs.Convert<UiBaseBuilder, List<String>>() {
+            @Override
+            public List<String> convert(int index, UiBaseBuilder uiBaseBuilder) {
+                if (index != 0) {
+                    return uiBaseBuilder.getInBaseInThis();
+                }
+                return null;
+            }
+        }).get();
+    }
+
+    private List<String> getInBaseInThis() {
+        List<String> inBaseList = Ts.ts(inBases).convert(new BaseTs.Convert<KV<String, String>, String>() {
+            @Override
+            public String convert(int index, KV<String, String> kv) {
+                return kv.v;
+            }
+        }).get();
+
+        Map<String, LayoutTools.ViewInfo> viewMap = getViewMap();
+        List<String> ids = Ts.ts(clickViews).convertList(new BaseTs.Convert<ClickViewInfo, List<String>>() {
+            @Override
+            public List<String> convert(int index, ClickViewInfo clickViewInfo) {
+                return Ts.ts(clickViewInfo.ids).convert(new BaseTs.Convert<IdTools.Id, String>() {
+                    @Override
+                    public String convert(int index, IdTools.Id id) {
+                        Boolean aBoolean = clickViewInfo.inAct.get(index);
+                        if (aBoolean != null && aBoolean) {
+                            return viewMap.get(id.rName).fieldName;
+                        }
+                        return null;
+                    }
+                }).get();
+            }
+        }).get();
+        inBaseList.addAll(ids);
+        return inBaseList;
+    }
+
+
+    private Map<String, LayoutTools.ViewInfo> getViewMap() {
+        HashMap<String, LayoutTools.ViewInfo> map = new HashMap<>();
+        addViewMap(map, getParents());
+        addViewMap(map, getChilds());
+        return map;
+    }
+
+    private void addViewMap(HashMap<String, LayoutTools.ViewInfo> map, List<UiBaseBuilder> uiBaseBuilders) {
+        Ts.ts(uiBaseBuilders).ls(new BaseTs.EachTs<UiBaseBuilder>() {
+            @Override
+            public boolean each(int position, UiBaseBuilder uiBaseBuilder) {
+                Ts.ts(uiBaseBuilder.viewInfos).ls(new BaseTs.EachTs<LayoutTools.ViewInfo>() {
+                    @Override
+                    public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
+                        map.put(viewInfo.id, viewInfo);
+                        return false;
+                    }
+                });
+                return false;
+            }
+        });
+    }
+
+    private List<UiBaseBuilder> getChilds() {
+        return BaseTools.getThisWithChilds(uiFullName, getChildGetter());
+    }
+
+    private List<UiBaseBuilder> getParents() {
+        return BaseTools.getThisWithParents(this, getParentGetter());
+    }
+
 
     /**************************************************
      *

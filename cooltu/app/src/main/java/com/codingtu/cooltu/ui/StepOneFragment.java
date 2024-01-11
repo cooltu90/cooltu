@@ -21,7 +21,7 @@ import core.fragmentres.StepOneFragmentRes;
 import core.net.Net;
 
 @To(StepOneFragmentRes.class)
-@FragmentBase(layout = R.layout.fragment_step_one)
+@FragmentBase(layout = R.layout.fragment_step_one, base = BaseStepFragment.class)
 public class StepOneFragment extends StepOneFragmentBase {
 
     @Nullable
@@ -33,7 +33,6 @@ public class StepOneFragment extends StepOneFragmentBase {
 
     @ClickView(R.id.tv1)
     public void tv1Click(User user) {
-        Net.getObj("", "").main(this);
     }
 
     @Override

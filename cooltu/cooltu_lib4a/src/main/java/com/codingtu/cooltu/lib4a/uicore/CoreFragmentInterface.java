@@ -8,4 +8,6 @@ public interface CoreFragmentInterface {
 
     Activity getAct();
 
+    void onCreateComplete();
+
 }

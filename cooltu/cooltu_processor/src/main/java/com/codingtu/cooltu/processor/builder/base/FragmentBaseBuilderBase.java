@@ -15,6 +15,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     protected java.util.Map<String, Integer> layoutCounts;
     protected StringBuilder layoutSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> layout;
+    protected java.util.Map<String, Boolean> setOnClickIfs;
+    protected java.util.Map<String, Integer> setOnClickCounts;
+    protected StringBuilder setOnClickSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> setOnClick;
     protected java.util.Map<String, Boolean> superOnClickIfs;
     protected java.util.Map<String, Integer> superOnClickCounts;
     protected StringBuilder superOnClickSb;
@@ -99,6 +103,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         layoutCounts = new java.util.HashMap<>();
         layoutSb = map.get("layout");
         layout = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        setOnClickIfs = new java.util.HashMap<>();
+        setOnClickCounts = new java.util.HashMap<>();
+        setOnClickSb = map.get("setOnClick");
+        setOnClick = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         superOnClickIfs = new java.util.HashMap<>();
         superOnClickCounts = new java.util.HashMap<>();
         superOnClickSb = map.get("superOnClick");
@@ -185,13 +193,6 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         addForMap(this.layout, getForKey("findView", i0), fieldName, parent, rPkg, id);
         countAdd(layoutCounts, getForKey("findView"));
     }
-    public int setOnClickCount() {
-        return count(layoutCounts, getForKey("setOnClick"));
-    }
-    public void setOnClick(int i0, String fieldName) {
-        addForMap(this.layout, getForKey("setOnClick", i0), fieldName);
-        countAdd(layoutCounts, getForKey("setOnClick"));
-    }
     public int setOnLongClickCount() {
         return count(layoutCounts, getForKey("setOnLongClick"));
     }
@@ -240,6 +241,13 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     public void listAdapter(int i0, String adapterName, String vhFullName, String rvName) {
         addForMap(this.layout, getForKey("listAdapter", i0), adapterName, vhFullName, adapterName, rvName, adapterName, rvName);
         countAdd(layoutCounts, getForKey("listAdapter"));
+    }
+    public int setOnClickCount() {
+        return count(setOnClickCounts, getForKey("setOnClick"));
+    }
+    public void setOnClick(int i0, String fieldName) {
+        addForMap(this.setOnClick, getForKey("setOnClick", i0), fieldName);
+        countAdd(setOnClickCounts, getForKey("setOnClick"));
     }
     public int onClickCaseCount(int i0) {
         return count(onClickSwithCounts, getForKey("onClickCase", i0));
@@ -489,10 +497,6 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
                 List<String> layout1 = layout.get(getForKey("findView", i0));
                 addLnTag(layoutSb, "        [fieldName] = [parent]findViewById([rPkg].R.id.[id]);", layout1.get(0), layout1.get(1), layout1.get(2), layout1.get(3));
             }
-            for (int i0 = 0; i0 < count(layoutCounts, getForKey("setOnClick")); i0++) {
-                List<String> layout1 = layout.get(getForKey("setOnClick", i0));
-                addLnTag(layoutSb, "        [fieldName].setOnClickListener(this);", layout1.get(0));
-            }
             for (int i0 = 0; i0 < count(layoutCounts, getForKey("setOnLongClick")); i0++) {
                 List<String> layout1 = layout.get(getForKey("setOnLongClick", i0));
                 addLnTag(layoutSb, "        [fieldName].setOnLongClickListener(this);", layout1.get(0));
@@ -540,8 +544,13 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
                 addLnTag(layoutSb, "        [rvName].setAdapter([adapterName]);", layout1.get(3), layout1.get(4));
                 addLnTag(layoutSb, "        [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getAct()));", layout1.get(5));
             }
+            addLnTag(layoutSb, "        onCreateComplete();");
             addLnTag(layoutSb, "        return view;");
             addLnTag(layoutSb, "    }");
+        }
+        for (int i0 = 0; i0 < count(setOnClickCounts, getForKey("setOnClick")); i0++) {
+            List<String> setOnClick0 = setOnClick.get(getForKey("setOnClick", i0));
+            addLnTag(setOnClickSb, "        [fieldName].setOnClickListener(this);", setOnClick0.get(0));
         }
         if (isIf(superOnClickIfs, getIfKey("superOnClick"))) {
             List<String> superOnClick0 = superOnClick.get(getIfKey("superOnClick"));
@@ -886,6 +895,13 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("");
         lines.add("    }");
         lines.add("[[layout]]");
+        lines.add("");
+        lines.add("    @Override");
+        lines.add("    public void onCreateComplete() {");
+        lines.add("        super.onCreateComplete();");
+        lines.add("[[setOnClick]]");
+        lines.add("    }");
+        lines.add("");
         lines.add("    @Override");
         lines.add("    public void onClick(View v) {");
         lines.add("[[superOnClick]]");

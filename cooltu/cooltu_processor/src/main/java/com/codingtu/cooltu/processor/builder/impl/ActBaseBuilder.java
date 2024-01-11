@@ -301,9 +301,6 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][findView]
         [fieldName] = [parent]findViewById([rPkg].R.id.[id]);
                                                                                                     [<sub>][for][findView]
-                                                                                                    [<sub>][for][setOnClick]
-        [fieldName].setOnClickListener(this);
-                                                                                                    [<sub>][for][setOnClick]
                                                                                                     [<sub>][for][setOnLongClick]
         [fieldName].setOnLongClickListener(this);
                                                                                                     [<sub>][for][setOnLongClick]
@@ -422,6 +419,9 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
+                                                                                                    [<sub>][for][setOnClick]
+        [fieldName].setOnClickListener(this);
+                                                                                                    [<sub>][for][setOnClick]
     }
 
     @Override
