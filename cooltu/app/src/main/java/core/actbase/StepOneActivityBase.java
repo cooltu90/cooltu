@@ -28,7 +28,6 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
 
-
         // catAdapter
         catAdapter = new com.codingtu.cooltu.ui.adapter.CatAdapter();
         catAdapter.setVH(core.vh.CatVH.class);
@@ -56,6 +55,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
+
 
     }
 

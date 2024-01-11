@@ -55,17 +55,7 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
 
         InBase inBase = ve.getAnnotation(InBase.class);
         if (inBase != null) {
-            BaseTools.getThisWithChilds(fullName, new BaseTs.EachTs<UiBaseBuilder>() {
-                @Override
-                public boolean each(int position, UiBaseBuilder uiBaseBuilder) {
-                    if (position == 0) {
-                        uiBaseBuilder.addInBase(kv);
-                    } else {
-                        uiBaseBuilder.removeInBase(kv);
-                    }
-                    return false;
-                }
-            }, uiBaseBuilderGetter);
+            uiBaseBuilder.addInBase(kv);
         }
         ColorStr ColorStr = ve.getAnnotation(ColorStr.class);
         if (ColorStr != null) {

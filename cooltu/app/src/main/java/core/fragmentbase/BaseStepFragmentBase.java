@@ -29,6 +29,8 @@ public abstract class BaseStepFragmentBase extends com.codingtu.cooltu.lib4a.ui.
         super.onCreateComplete();
         tv2.setOnClickListener(this);
 
+        tv2.setOnLongClickListener(this);
+
     }
 
     @Override
@@ -48,6 +50,9 @@ public abstract class BaseStepFragmentBase extends com.codingtu.cooltu.lib4a.ui.
     @Override
     public boolean onLongClick(View v) {
         switch (v.getId()) {
+            case com.codingtu.cooltu.R.id.tv2:
+                return tv2LongClick(
+                );
 
         }
 
@@ -55,7 +60,7 @@ public abstract class BaseStepFragmentBase extends com.codingtu.cooltu.lib4a.ui.
 
 
     }
-
+    protected boolean tv2LongClick() {return false;}
 
 
 

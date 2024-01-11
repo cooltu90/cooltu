@@ -40,7 +40,6 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
 
 
-
         fromAct = core.tools.Pass.fromAct(getIntent());
         xx = core.tools.Pass.xx(getIntent());
 
@@ -57,6 +56,7 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
         tv1.setOnClickListener(this);
         tv3.setOnClickListener(this);
         tv4RlRlTv.setOnClickListener(this);
+
 
     }
 

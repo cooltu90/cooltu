@@ -206,12 +206,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
      **************************************************/
 
     public boolean addField(String sign, String type, String name) {
-        if (uiBaseBuilder.inBaseMap.get(name) == null && uiBaseBuilder.fieldMap.get(name) == null) {
-            uiBaseBuilder.fieldMap.put(name, name);
-            field(fieldCount(), sign, type, name);
-            return true;
-        }
-        return false;
+        return uiBaseBuilder.addField(sign, type, name);
     }
 
     private void dealFormBean(TypeElement te, String beanName) {
@@ -301,9 +296,6 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][findView]
         [fieldName] = [parent]findViewById([rPkg].R.id.[id]);
                                                                                                     [<sub>][for][findView]
-                                                                                                    [<sub>][for][setOnLongClick]
-        [fieldName].setOnLongClickListener(this);
-                                                                                                    [<sub>][for][setOnLongClick]
                                                                                                     [<sub>][for][colorStrInit]
         [name] = android.graphics.Color.parseColor("[color]");
                                                                                                     [<sub>][for][colorStrInit]
@@ -422,6 +414,9 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][setOnClick]
         [fieldName].setOnClickListener(this);
                                                                                                     [<sub>][for][setOnClick]
+                                                                                                    [<sub>][for][setOnLongClick]
+        [fieldName].setOnLongClickListener(this);
+                                                                                                    [<sub>][for][setOnLongClick]
     }
 
     @Override

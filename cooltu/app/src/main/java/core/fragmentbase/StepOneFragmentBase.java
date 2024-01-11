@@ -68,6 +68,7 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
         super.onCreateComplete();
         tv1.setOnClickListener(this);
 
+
     }
 
     @Override
@@ -96,7 +97,6 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
 
 
     }
-
 
 
 

@@ -23,7 +23,6 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         super.onCreate(savedInstanceState);
 
 
-
         textColor = android.graphics.Color.parseColor("#ffffff");
 
         tvColor = com.codingtu.cooltu.lib4a.tools.ResourceTool.getColor(com.codingtu.cooltu.R.color.black);
@@ -49,6 +48,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     public void onCreateComplete() {
         super.onCreateComplete();
         backBt.setOnClickListener(this);
+
 
     }
 

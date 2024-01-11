@@ -21,7 +21,6 @@ import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.deal.NetDeal;
 import com.codingtu.cooltu.processor.deal.VHDeal;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
@@ -62,6 +61,7 @@ public abstract class UiBaseBuilder {
     public boolean isToastDialog;
     public boolean isNoticeDialog;
     private List<String> inBaseInParent;
+    private Map<String, LayoutTools.ViewInfo> thisViewMap;
 
 
     public UiBaseBuilder(UiBaseInterface uiBase) {
@@ -92,12 +92,10 @@ public abstract class UiBaseBuilder {
         inBases.add(fieldKv);
     }
 
-    public void removeInBase(KV<String, String> kv) {
-        inBaseMap.put(kv.v, kv.v);
-    }
 
     public void dealLines() {
         inBaseInParent = getInBaseInParent();
+        thisViewMap = getViewMap();
 
         uiBase.addTag(getStringBuilder("pkg"), javaInfo().pkg);
         uiBase.addTag(getStringBuilder("name"), javaInfo().name);
@@ -201,16 +199,7 @@ public abstract class UiBaseBuilder {
     }
 
 
-//    private boolean addField(String sign, String type, String name) {
-//        if (inBaseMap.get(name) == null && fieldMap.get(name) == null) {
-//            fieldMap.put(name, name);
-//            uiBase.field(uiBase.fieldCount(), sign, type, name);
-//            return true;
-//        }
-//        return false;
-//    }
-
-    private boolean addField(String sign, String type, String name) {
+    public boolean addField(String sign, String type, String name) {
         if (fieldMap.get(name) == null) {
             fieldMap.put(name, name);
             if (!inBaseInParent.contains(name)) {
@@ -289,21 +278,11 @@ public abstract class UiBaseBuilder {
                     public boolean each(int idIndex, IdTools.Id id) {
                         uiBase.onLongClickCase(clickViewInfoIndex, idIndex, id.toString());
                         if (info.inAct.get(idIndex)) {
-                            BaseTools.getThisWithParents(UiBaseBuilder.this, getParentGetter(), new BaseTs.EachTs<UiBaseBuilder>() {
-                                @Override
-                                public boolean each(int position, UiBaseBuilder uiBaseBuilder) {
-                                    Ts.ts(uiBaseBuilder.viewInfos).convert(new BaseTs.Convert<LayoutTools.ViewInfo, LayoutTools.ViewInfo>() {
-                                        @Override
-                                        public LayoutTools.ViewInfo convert(int index, LayoutTools.ViewInfo viewInfo) {
-                                            if (viewInfo.id.equals(id.rName)) {
-                                                uiBase.setOnLongClick(uiBase.setOnLongClickCount(), viewInfo.fieldName);
-                                            }
-                                            return null;
-                                        }
-                                    });
-                                    return false;
-                                }
-                            });
+                            LayoutTools.ViewInfo viewInfo = thisViewMap.get(id.rName);
+                            if (viewInfo != null) {
+                                uiBase.setOnLongClick(uiBase.setOnLongClickCount(), viewInfo.fieldName);
+                                addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
+                            }
                         }
                         return false;
                     }
@@ -322,8 +301,6 @@ public abstract class UiBaseBuilder {
 
 
     private void onClick() {
-        Map<String, LayoutTools.ViewInfo> viewMap = getViewMap();
-
         Ts.ls(clickViews, new BaseTs.EachTs<ClickViewInfo>() {
             @Override
             public boolean each(int clickViewInfoIndex, ClickViewInfo info) {
@@ -356,7 +333,7 @@ public abstract class UiBaseBuilder {
                     public boolean each(int idIndex, IdTools.Id id) {
                         uiBase.onClickCase(clickViewInfoIndex, idIndex, id.toString());
                         if (info.inAct.get(idIndex)) {
-                            LayoutTools.ViewInfo viewInfo = viewMap.get(id.rName);
+                            LayoutTools.ViewInfo viewInfo = thisViewMap.get(id.rName);
                             if (viewInfo != null) {
                                 uiBase.setOnClick(uiBase.setOnClickCount(), viewInfo.fieldName);
                                 addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
@@ -626,7 +603,13 @@ public abstract class UiBaseBuilder {
         }).get();
 
         Map<String, LayoutTools.ViewInfo> viewMap = getViewMap();
-        List<String> ids = Ts.ts(clickViews).convertList(new BaseTs.Convert<ClickViewInfo, List<String>>() {
+        inBaseList.addAll(getIds(viewMap, clickViews));
+        inBaseList.addAll(getIds(viewMap, longClickViews));
+        return inBaseList;
+    }
+
+    private List<String> getIds(Map<String, LayoutTools.ViewInfo> viewMap, List<ClickViewInfo> clickViews) {
+        return Ts.ts(clickViews).convertList(new BaseTs.Convert<ClickViewInfo, List<String>>() {
             @Override
             public List<String> convert(int index, ClickViewInfo clickViewInfo) {
                 return Ts.ts(clickViewInfo.ids).convert(new BaseTs.Convert<IdTools.Id, String>() {
@@ -641,8 +624,6 @@ public abstract class UiBaseBuilder {
                 }).get();
             }
         }).get();
-        inBaseList.addAll(ids);
-        return inBaseList;
     }
 
 

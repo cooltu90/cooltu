@@ -128,9 +128,6 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][findView]
         [fieldName] = [parent]findViewById([rPkg].R.id.[id]);
                                                                                                     [<sub>][for][findView]
-                                                                                                    [<sub>][for][setOnLongClick]
-        [fieldName].setOnLongClickListener(this);
-                                                                                                    [<sub>][for][setOnLongClick]
                                                                                                     [<sub>][for][colorStrInit]
         [name] = android.graphics.Color.parseColor("[color]");
                                                                                                     [<sub>][for][colorStrInit]
@@ -177,6 +174,9 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][setOnClick]
         [fieldName].setOnClickListener(this);
                                                                                                     [<sub>][for][setOnClick]
+                                                                                                    [<sub>][for][setOnLongClick]
+        [fieldName].setOnLongClickListener(this);
+                                                                                                    [<sub>][for][setOnLongClick]
     }
 
     @Override
@@ -230,7 +230,6 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                         ([type]) v.getTag([pkg].R.id.tag_[index])[divider]
                                                                                                     [<sub>][for][onLongClickSwitchParams]
                 );
-                break;
                                                                                                     [<sub>][for][onLongClickSwith]
         }
                                                                                                     [<sub>][if][superOnLongClick]
@@ -241,9 +240,8 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][if][superOnLongClickFalse]
 
     }
-
                                                                                                     [<sub>][for][onLongClickMethods]
-    protected void [methodName]([params]) {}
+    protected boolean [methodName]([params]) {return false;}
                                                                                                     [<sub>][for][onLongClickMethods]
 
 
