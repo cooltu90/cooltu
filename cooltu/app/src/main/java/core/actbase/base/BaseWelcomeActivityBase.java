@@ -11,6 +11,7 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
     protected android.widget.TextView tv1;
     protected android.widget.RelativeLayout tv3Rl;
     protected android.widget.RelativeLayout tv4;
+    protected android.widget.TextView tv6;
     protected android.widget.RelativeLayout tv4Rl;
     protected android.widget.TextView tv3RlRlTv;
     protected android.widget.TextView backBt;

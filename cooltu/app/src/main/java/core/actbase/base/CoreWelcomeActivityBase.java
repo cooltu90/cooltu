@@ -10,7 +10,6 @@ import retrofit2.adapter.rxjava2.Result;
 public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
     protected android.widget.RelativeLayout tv3;
     protected boolean isTest;
-    protected android.widget.TextView tv6;
 
 
     @Override
@@ -33,7 +32,6 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
-        tv6.setOnClickListener(this);
 
 
     }
@@ -42,15 +40,10 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case com.codingtu.cooltu.R.id.tv6:
-                tv6Click(
-                );
-                break;
 
         }
     }
 
-    protected void tv6Click() {}
 
 
     @Override

@@ -61,7 +61,8 @@ public abstract class UiBaseBuilder {
     public boolean isToastDialog;
     public boolean isNoticeDialog;
     private List<String> inBaseInParent;
-    private Map<String, LayoutTools.ViewInfo> thisViewMap;
+    private Map<String, LayoutTools.ViewInfo> childViewMap;
+    private Map<String, LayoutTools.ViewInfo> allViewMap;
 
 
     public UiBaseBuilder(UiBaseInterface uiBase) {
@@ -95,7 +96,8 @@ public abstract class UiBaseBuilder {
 
     public void dealLines() {
         inBaseInParent = getInBaseInParent();
-        thisViewMap = getViewMap();
+        childViewMap = getChildViewMap();
+        allViewMap = getAllViewMap();
 
         uiBase.addTag(getStringBuilder("pkg"), javaInfo().pkg);
         uiBase.addTag(getStringBuilder("name"), javaInfo().name);
@@ -278,10 +280,14 @@ public abstract class UiBaseBuilder {
                     public boolean each(int idIndex, IdTools.Id id) {
                         uiBase.onLongClickCase(clickViewInfoIndex, idIndex, id.toString());
                         if (info.inAct.get(idIndex)) {
-                            LayoutTools.ViewInfo viewInfo = thisViewMap.get(id.rName);
+                            LayoutTools.ViewInfo viewInfo = childViewMap.get(id.rName);
+                            if (viewInfo != null) {
+                                addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
+                            }
+
+                            viewInfo = allViewMap.get(id.rName);
                             if (viewInfo != null) {
                                 uiBase.setOnLongClick(uiBase.setOnLongClickCount(), viewInfo.fieldName);
-                                addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
                             }
                         }
                         return false;
@@ -333,12 +339,15 @@ public abstract class UiBaseBuilder {
                     public boolean each(int idIndex, IdTools.Id id) {
                         uiBase.onClickCase(clickViewInfoIndex, idIndex, id.toString());
                         if (info.inAct.get(idIndex)) {
-                            LayoutTools.ViewInfo viewInfo = thisViewMap.get(id.rName);
+                            LayoutTools.ViewInfo viewInfo = childViewMap.get(id.rName);
                             if (viewInfo != null) {
-                                uiBase.setOnClick(uiBase.setOnClickCount(), viewInfo.fieldName);
                                 addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
                             }
 
+                            viewInfo = allViewMap.get(id.rName);
+                            if (viewInfo != null) {
+                                uiBase.setOnClick(uiBase.setOnClickCount(), viewInfo.fieldName);
+                            }
                         }
                         return false;
                     }
@@ -602,7 +611,7 @@ public abstract class UiBaseBuilder {
             }
         }).get();
 
-        Map<String, LayoutTools.ViewInfo> viewMap = getViewMap();
+        Map<String, LayoutTools.ViewInfo> viewMap = getChildViewMap();
         inBaseList.addAll(getIds(viewMap, clickViews));
         inBaseList.addAll(getIds(viewMap, longClickViews));
         return inBaseList;
@@ -617,7 +626,10 @@ public abstract class UiBaseBuilder {
                     public String convert(int index, IdTools.Id id) {
                         Boolean aBoolean = clickViewInfo.inAct.get(index);
                         if (aBoolean != null && aBoolean) {
-                            return viewMap.get(id.rName).fieldName;
+                            LayoutTools.ViewInfo viewInfo = viewMap.get(id.rName);
+                            if (viewInfo != null) {
+                                return viewInfo.fieldName;
+                            }
                         }
                         return null;
                     }
@@ -627,7 +639,13 @@ public abstract class UiBaseBuilder {
     }
 
 
-    private Map<String, LayoutTools.ViewInfo> getViewMap() {
+    private Map<String, LayoutTools.ViewInfo> getChildViewMap() {
+        HashMap<String, LayoutTools.ViewInfo> map = new HashMap<>();
+        addViewMap(map, getChilds());
+        return map;
+    }
+
+    private Map<String, LayoutTools.ViewInfo> getAllViewMap() {
         HashMap<String, LayoutTools.ViewInfo> map = new HashMap<>();
         addViewMap(map, getParents());
         addViewMap(map, getChilds());
