@@ -9,7 +9,7 @@ public class CheckPath extends com.codingtu.cooltu.lib4a.path.BasePath {
     public com.codingtu.cooltu.lib4a.path.PathBeanListFile<com.codingtu.cooltu.bean.User> list_txt;
 
 
-    public static CheckPath obtain(String taskName) {
+    public static CheckPath obtain1(String taskName) {
         return obtain(new com.codingtu.cooltu.path.defaultvalue.CompanyDefault().path(), taskName);
     }
 
