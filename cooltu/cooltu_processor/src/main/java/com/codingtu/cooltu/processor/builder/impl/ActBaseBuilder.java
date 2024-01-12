@@ -307,27 +307,6 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][startInit]
         [name] = [passFullName].[name](getIntent());
                                                                                                     [<sub>][for][startInit]
-
-                                                                                                    [<sub>][for][listAdapter]
-                                                                                                    [<sub>][if][defaultListAdapter]
-        // [adapterName]
-        [adapterName] = new [adapterFullName]();
-                                                                                                    [<sub>][if][defaultListAdapter]
-                                                                                                    [<sub>][if][defaultListMoreAdapter]
-        // [adapterName]
-        [adapterName] = new [adapterFullName]() {
-            @Override
-            protected void loadMore(int page) {
-                [adapterName]LoadMore(page);
-            }
-        };
-                                                                                                    [<sub>][if][defaultListMoreAdapter]
-        [adapterName].setVH([vhFullName].class);
-        [adapterName].setClick(this);
-        [rvName].setAdapter([adapterName]);
-        [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
-                                                                                                    [<sub>][for][listAdapter]
-
                                                                                                     [<sub>][if][formInit]
                                                                                                     [<sub>][for][rgInit]
         //[viewName]Rg
@@ -407,6 +386,25 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
+                                                                                                    [<sub>][for][listAdapter]
+                                                                                                    [<sub>][if][defaultListAdapter]
+        // [adapterName]
+        [adapterName] = new [adapterFullName]();
+                                                                                                    [<sub>][if][defaultListAdapter]
+                                                                                                    [<sub>][if][defaultListMoreAdapter]
+        // [adapterName]
+        [adapterName] = new [adapterFullName]() {
+            @Override
+            protected void loadMore(int page) {
+                [adapterName]LoadMore(page);
+            }
+        };
+                                                                                                    [<sub>][if][defaultListMoreAdapter]
+        [adapterName].setVH([vhFullName].class);
+        [adapterName].setClick(this);
+        [rvName].setAdapter([adapterName]);
+        [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
+                                                                                                    [<sub>][for][listAdapter]
                                                                                                     [<sub>][for][setOnClick]
         [fieldName].setOnClickListener(this);
                                                                                                     [<sub>][for][setOnClick]

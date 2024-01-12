@@ -35,9 +35,7 @@ public class StepOneFragmentRes {
     @Dimen(R.dimen.xxx)
     int dp1;
 
-    @Adapter
-    CatAdapter catAdapter;
-    @Adapter(type = AdapterType.DEFAULT_MORE_LIST)
+    @Adapter(type = AdapterType.DEFAULT_MORE_LIST, rvName = "rv1")
     DogAdapter dogAdapter;
 
     @EditDialogUse(

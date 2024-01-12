@@ -416,6 +416,7 @@ public abstract class UiBaseBuilder {
                 KV<String, String> kv = ElementTools.getFieldKv(ve);
                 //添加字段
                 addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
+                addField(Constant.SIGN_PROTECTED, FullName.RECYCLER_VIEW, adapter.rvName());
                 String vh = VHDeal.vhMap.get(kv.k);
                 int adapterIndex = uiBase.listAdapterCount();
                 uiBase.listAdapter(adapterIndex, kv.v, vh, adapter.rvName());
@@ -614,6 +615,15 @@ public abstract class UiBaseBuilder {
         Map<String, LayoutTools.ViewInfo> viewMap = getChildViewMap();
         inBaseList.addAll(getIds(viewMap, clickViews));
         inBaseList.addAll(getIds(viewMap, longClickViews));
+
+        inBaseList.addAll(Ts.ts(this.adapters).convert(new BaseTs.Convert<VariableElement, String>() {
+            @Override
+            public String convert(int index, VariableElement ve) {
+                Adapter adapter = ve.getAnnotation(Adapter.class);
+                return adapter.rvName();
+            }
+        }).get());
+
         return inBaseList;
     }
 

@@ -15,6 +15,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     protected java.util.Map<String, Integer> layoutCounts;
     protected StringBuilder layoutSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> layout;
+    protected java.util.Map<String, Boolean> listAdapterIfs;
+    protected java.util.Map<String, Integer> listAdapterCounts;
+    protected StringBuilder listAdapterSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> listAdapter;
     protected java.util.Map<String, Boolean> setOnClickIfs;
     protected java.util.Map<String, Integer> setOnClickCounts;
     protected StringBuilder setOnClickSb;
@@ -107,6 +111,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         layoutCounts = new java.util.HashMap<>();
         layoutSb = map.get("layout");
         layout = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        listAdapterIfs = new java.util.HashMap<>();
+        listAdapterCounts = new java.util.HashMap<>();
+        listAdapterSb = map.get("listAdapter");
+        listAdapter = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         setOnClickIfs = new java.util.HashMap<>();
         setOnClickCounts = new java.util.HashMap<>();
         setOnClickSb = map.get("setOnClick");
@@ -237,11 +245,11 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         countAdd(layoutCounts, getForKey("startInit"));
     }
     public int listAdapterCount() {
-        return count(layoutCounts, getForKey("listAdapter"));
+        return count(listAdapterCounts, getForKey("listAdapter"));
     }
     public void listAdapter(int i0, String adapterName, String vhFullName, String rvName) {
-        addForMap(this.layout, getForKey("listAdapter", i0), adapterName, vhFullName, adapterName, rvName, adapterName, rvName);
-        countAdd(layoutCounts, getForKey("listAdapter"));
+        addForMap(this.listAdapter, getForKey("listAdapter", i0), adapterName, vhFullName, adapterName, rvName, adapterName, rvName);
+        countAdd(listAdapterCounts, getForKey("listAdapter"));
     }
     public int setOnClickCount() {
         return count(setOnClickCounts, getForKey("setOnClick"));
@@ -377,17 +385,17 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         countAdd(dialogCounts, getForKey("dialog"));
     }
 
-    public void defaultListAdapterIf(int i0, String adapterName, String adapterFullName) {
-        addForMap(this.layout, getIfKey("defaultListAdapter", i0), adapterName, adapterName, adapterFullName);
-        layoutIfs.put(getIfKey("defaultListAdapter", i0), true);
-    }
-    public void defaultListMoreAdapterIf(int i0, String adapterName, String adapterFullName) {
-        addForMap(this.layout, getIfKey("defaultListMoreAdapter", i0), adapterName, adapterName, adapterFullName, adapterName);
-        layoutIfs.put(getIfKey("defaultListMoreAdapter", i0), true);
-    }
     public void layoutIf(String inflateToolFullName, String layout) {
         addForMap(this.layout, getIfKey("layout"), inflateToolFullName, layout);
         layoutIfs.put(getIfKey("layout"), true);
+    }
+    public void defaultListAdapterIf(int i0, String adapterName, String adapterFullName) {
+        addForMap(this.listAdapter, getIfKey("defaultListAdapter", i0), adapterName, adapterName, adapterFullName);
+        listAdapterIfs.put(getIfKey("defaultListAdapter", i0), true);
+    }
+    public void defaultListMoreAdapterIf(int i0, String adapterName, String adapterFullName) {
+        addForMap(this.listAdapter, getIfKey("defaultListMoreAdapter", i0), adapterName, adapterName, adapterFullName, adapterName);
+        listAdapterIfs.put(getIfKey("defaultListMoreAdapter", i0), true);
     }
     public void isSuperOnClick(boolean is) {
         superOnClickIfs.put(getIfKey("superOnClick"), is);
@@ -526,31 +534,31 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
                 addLnTag(layoutSb, "        [name] = [passFullName].[name](getIntent());", layout1.get(0), layout1.get(1), layout1.get(2));
             }
             addLnTag(layoutSb, "");
-            for (int i0 = 0; i0 < count(layoutCounts, getForKey("listAdapter")); i0++) {
-                List<String> layout1 = layout.get(getForKey("listAdapter", i0));
-                if (isIf(layoutIfs, getIfKey("defaultListAdapter", i0))) {
-                    List<String> layout2 = layout.get(getIfKey("defaultListAdapter", i0));
-                    addLnTag(layoutSb, "        // [adapterName]", layout2.get(0));
-                    addLnTag(layoutSb, "        [adapterName] = new [adapterFullName]();", layout2.get(1), layout2.get(2));
-                }
-                if (isIf(layoutIfs, getIfKey("defaultListMoreAdapter", i0))) {
-                    List<String> layout2 = layout.get(getIfKey("defaultListMoreAdapter", i0));
-                    addLnTag(layoutSb, "        // [adapterName]", layout2.get(0));
-                    addLnTag(layoutSb, "        [adapterName] = new [adapterFullName]() {", layout2.get(1), layout2.get(2));
-                    addLnTag(layoutSb, "            @Override");
-                    addLnTag(layoutSb, "            protected void loadMore(int page) {");
-                    addLnTag(layoutSb, "                [adapterName]LoadMore(page);", layout2.get(3));
-                    addLnTag(layoutSb, "            }");
-                    addLnTag(layoutSb, "        };");
-                }
-                addLnTag(layoutSb, "        [adapterName].setVH([vhFullName].class);", layout1.get(0), layout1.get(1));
-                addLnTag(layoutSb, "        [adapterName].setClick(this);", layout1.get(2));
-                addLnTag(layoutSb, "        [rvName].setAdapter([adapterName]);", layout1.get(3), layout1.get(4));
-                addLnTag(layoutSb, "        [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getAct()));", layout1.get(5));
-            }
             addLnTag(layoutSb, "        onCreateComplete();");
             addLnTag(layoutSb, "        return view;");
             addLnTag(layoutSb, "    }");
+        }
+        for (int i0 = 0; i0 < count(listAdapterCounts, getForKey("listAdapter")); i0++) {
+            List<String> listAdapter0 = listAdapter.get(getForKey("listAdapter", i0));
+            if (isIf(listAdapterIfs, getIfKey("defaultListAdapter", i0))) {
+                List<String> listAdapter1 = listAdapter.get(getIfKey("defaultListAdapter", i0));
+                addLnTag(listAdapterSb, "        // [adapterName]", listAdapter1.get(0));
+                addLnTag(listAdapterSb, "        [adapterName] = new [adapterFullName]();", listAdapter1.get(1), listAdapter1.get(2));
+            }
+            if (isIf(listAdapterIfs, getIfKey("defaultListMoreAdapter", i0))) {
+                List<String> listAdapter1 = listAdapter.get(getIfKey("defaultListMoreAdapter", i0));
+                addLnTag(listAdapterSb, "        // [adapterName]", listAdapter1.get(0));
+                addLnTag(listAdapterSb, "        [adapterName] = new [adapterFullName]() {", listAdapter1.get(1), listAdapter1.get(2));
+                addLnTag(listAdapterSb, "            @Override");
+                addLnTag(listAdapterSb, "            protected void loadMore(int page) {");
+                addLnTag(listAdapterSb, "                [adapterName]LoadMore(page);", listAdapter1.get(3));
+                addLnTag(listAdapterSb, "            }");
+                addLnTag(listAdapterSb, "        };");
+            }
+            addLnTag(listAdapterSb, "        [adapterName].setVH([vhFullName].class);", listAdapter0.get(0), listAdapter0.get(1));
+            addLnTag(listAdapterSb, "        [adapterName].setClick(this);", listAdapter0.get(2));
+            addLnTag(listAdapterSb, "        [rvName].setAdapter([adapterName]);", listAdapter0.get(3), listAdapter0.get(4));
+            addLnTag(listAdapterSb, "        [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getAct()));", listAdapter0.get(5));
         }
         for (int i0 = 0; i0 < count(setOnClickCounts, getForKey("setOnClick")); i0++) {
             List<String> setOnClick0 = setOnClick.get(getForKey("setOnClick", i0));
@@ -906,6 +914,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("    @Override");
         lines.add("    public void onCreateComplete() {");
         lines.add("        super.onCreateComplete();");
+        lines.add("[[listAdapter]]");
         lines.add("[[setOnClick]]");
         lines.add("[[setOnLongClick]]");
         lines.add("    }");

@@ -141,6 +141,14 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         [name] = [passFullName].[name](getIntent());
                                                                                                     [<sub>][for][startInit]
 
+        onCreateComplete();
+        return view;
+    }
+                                                                                                    [<sub>][if][layout]
+
+    @Override
+    public void onCreateComplete() {
+        super.onCreateComplete();
                                                                                                     [<sub>][for][listAdapter]
                                                                                                     [<sub>][if][defaultListAdapter]
         // [adapterName]
@@ -160,14 +168,6 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         [rvName].setAdapter([adapterName]);
         [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getAct()));
                                                                                                     [<sub>][for][listAdapter]
-        onCreateComplete();
-        return view;
-    }
-                                                                                                    [<sub>][if][layout]
-
-    @Override
-    public void onCreateComplete() {
-        super.onCreateComplete();
                                                                                                     [<sub>][for][setOnClick]
         [fieldName].setOnClickListener(this);
                                                                                                     [<sub>][for][setOnClick]

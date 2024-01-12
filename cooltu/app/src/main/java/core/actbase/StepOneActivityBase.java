@@ -28,6 +28,13 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
 
+        onCreateComplete();
+
+    }
+
+    @Override
+    public void onCreateComplete() {
+        super.onCreateComplete();
         // catAdapter
         catAdapter = new com.codingtu.cooltu.ui.adapter.CatAdapter();
         catAdapter.setVH(core.vh.CatVH.class);
@@ -46,15 +53,6 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
         rv1.setAdapter(dogAdapter);
         rv1.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
 
-
-
-        onCreateComplete();
-
-    }
-
-    @Override
-    public void onCreateComplete() {
-        super.onCreateComplete();
 
 
     }

@@ -14,14 +14,13 @@ import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
 public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseStepFragment implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
-    protected androidx.recyclerview.widget.RecyclerView rv;
     protected android.widget.TextView tv1;
     protected int textColor;
     protected int tvColor;
     protected int dp;
     protected int dp1;
-    protected com.codingtu.cooltu.ui.adapter.CatAdapter catAdapter;
     protected com.codingtu.cooltu.ui.adapter.DogAdapter dogAdapter;
+    protected androidx.recyclerview.widget.RecyclerView rv1;
 
 
     @Override
@@ -41,12 +40,14 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
         dp = com.codingtu.cooltu.lib4a.tools.MobileTool.dpToPx(12.5f);
         dp1 = com.codingtu.cooltu.lib4a.tools.ResourceTool.getDimen(com.codingtu.cooltu.R.dimen.xxx);
 
-        // catAdapter
-        catAdapter = new com.codingtu.cooltu.ui.adapter.CatAdapter();
-        catAdapter.setVH(core.vh.CatVH.class);
-        catAdapter.setClick(this);
-        rv.setAdapter(catAdapter);
-        rv.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getAct()));
+        onCreateComplete();
+        return view;
+    }
+
+
+    @Override
+    public void onCreateComplete() {
+        super.onCreateComplete();
         // dogAdapter
         dogAdapter = new com.codingtu.cooltu.ui.adapter.DogAdapter() {
             @Override
@@ -56,16 +57,9 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
         };
         dogAdapter.setVH(core.vh.DogVH.class);
         dogAdapter.setClick(this);
-        rv.setAdapter(dogAdapter);
-        rv.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getAct()));
-        onCreateComplete();
-        return view;
-    }
+        rv1.setAdapter(dogAdapter);
+        rv1.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getAct()));
 
-
-    @Override
-    public void onCreateComplete() {
-        super.onCreateComplete();
         tv1.setOnClickListener(this);
 
 

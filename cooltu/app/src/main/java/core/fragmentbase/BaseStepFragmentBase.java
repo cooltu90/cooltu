@@ -15,6 +15,8 @@ import retrofit2.adapter.rxjava2.Result;
 
 public abstract class BaseStepFragmentBase extends com.codingtu.cooltu.lib4a.ui.fragment.CoreFragment implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
     protected android.widget.TextView tv2;
+    protected com.codingtu.cooltu.ui.adapter.CatAdapter catAdapter;
+    protected androidx.recyclerview.widget.RecyclerView rv;
 
 
     @Override
@@ -27,6 +29,13 @@ public abstract class BaseStepFragmentBase extends com.codingtu.cooltu.lib4a.ui.
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
+        // catAdapter
+        catAdapter = new com.codingtu.cooltu.ui.adapter.CatAdapter();
+        catAdapter.setVH(core.vh.CatVH.class);
+        catAdapter.setClick(this);
+        rv.setAdapter(catAdapter);
+        rv.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getAct()));
+
         tv2.setOnClickListener(this);
 
         tv2.setOnLongClickListener(this);

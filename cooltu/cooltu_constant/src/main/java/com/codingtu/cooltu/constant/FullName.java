@@ -100,6 +100,7 @@ public class FullName {
     //不变的
     public static final String VIEW = "android.view.View";
     public static final String STRING = "java.lang.String";
+    public static final String RECYCLER_VIEW = "androidx.recyclerview.widget.RecyclerView";
     public static final String RETROFIT_GET = "retrofit2.http.GET";
     public static final String RETROFIT_POST = "retrofit2.http.POST";
     public static final String RETROFIT_PUT = "retrofit2.http.PUT";

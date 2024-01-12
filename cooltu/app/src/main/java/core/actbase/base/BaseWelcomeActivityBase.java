@@ -46,14 +46,12 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
 
 
-
-
-
     }
 
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
+
         tv1.setOnClickListener(this);
         tv3.setOnClickListener(this);
         tv4RlRlTv.setOnClickListener(this);

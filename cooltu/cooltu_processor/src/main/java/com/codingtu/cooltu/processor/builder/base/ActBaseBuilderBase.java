@@ -39,10 +39,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> startInitCounts;
     protected StringBuilder startInitSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> startInit;
-    protected java.util.Map<String, Boolean> listAdapterIfs;
-    protected java.util.Map<String, Integer> listAdapterCounts;
-    protected StringBuilder listAdapterSb;
-    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> listAdapter;
     protected java.util.Map<String, Boolean> formInitIfs;
     protected java.util.Map<String, Integer> formInitCounts;
     protected StringBuilder formInitSb;
@@ -51,6 +47,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> onCreateCompleteInitCounts;
     protected StringBuilder onCreateCompleteInitSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> onCreateCompleteInit;
+    protected java.util.Map<String, Boolean> listAdapterIfs;
+    protected java.util.Map<String, Integer> listAdapterCounts;
+    protected StringBuilder listAdapterSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> listAdapter;
     protected java.util.Map<String, Boolean> setOnClickIfs;
     protected java.util.Map<String, Integer> setOnClickCounts;
     protected StringBuilder setOnClickSb;
@@ -183,10 +183,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         startInitCounts = new java.util.HashMap<>();
         startInitSb = map.get("startInit");
         startInit = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
-        listAdapterIfs = new java.util.HashMap<>();
-        listAdapterCounts = new java.util.HashMap<>();
-        listAdapterSb = map.get("listAdapter");
-        listAdapter = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         formInitIfs = new java.util.HashMap<>();
         formInitCounts = new java.util.HashMap<>();
         formInitSb = map.get("formInit");
@@ -195,6 +191,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         onCreateCompleteInitCounts = new java.util.HashMap<>();
         onCreateCompleteInitSb = map.get("onCreateCompleteInit");
         onCreateCompleteInit = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        listAdapterIfs = new java.util.HashMap<>();
+        listAdapterCounts = new java.util.HashMap<>();
+        listAdapterSb = map.get("listAdapter");
+        listAdapter = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         setOnClickIfs = new java.util.HashMap<>();
         setOnClickCounts = new java.util.HashMap<>();
         setOnClickSb = map.get("setOnClick");
@@ -340,13 +340,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.startInit, getForKey("startInit", i0), name, passFullName, name);
         countAdd(startInitCounts, getForKey("startInit"));
     }
-    public int listAdapterCount() {
-        return count(listAdapterCounts, getForKey("listAdapter"));
-    }
-    public void listAdapter(int i0, String adapterName, String vhFullName, String rvName) {
-        addForMap(this.listAdapter, getForKey("listAdapter", i0), adapterName, vhFullName, adapterName, rvName, adapterName, rvName);
-        countAdd(listAdapterCounts, getForKey("listAdapter"));
-    }
     public int rgInitCount() {
         return count(formInitCounts, getForKey("rgInit"));
     }
@@ -465,6 +458,13 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     public void linkEcho(int i0, String lineName) {
         addForMap(this.formInit, getForKey("linkEcho", i0), lineName);
         countAdd(formInitCounts, getForKey("linkEcho"));
+    }
+    public int listAdapterCount() {
+        return count(listAdapterCounts, getForKey("listAdapter"));
+    }
+    public void listAdapter(int i0, String adapterName, String vhFullName, String rvName) {
+        addForMap(this.listAdapter, getForKey("listAdapter", i0), adapterName, vhFullName, adapterName, rvName, adapterName, rvName);
+        countAdd(listAdapterCounts, getForKey("listAdapter"));
     }
     public int setOnClickCount() {
         return count(setOnClickCounts, getForKey("setOnClick"));
@@ -639,14 +639,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.layout, getIfKey("layout"), layout);
         layoutIfs.put(getIfKey("layout"), true);
     }
-    public void defaultListAdapterIf(int i0, String adapterName, String adapterFullName) {
-        addForMap(this.listAdapter, getIfKey("defaultListAdapter", i0), adapterName, adapterName, adapterFullName);
-        listAdapterIfs.put(getIfKey("defaultListAdapter", i0), true);
-    }
-    public void defaultListMoreAdapterIf(int i0, String adapterName, String adapterFullName) {
-        addForMap(this.listAdapter, getIfKey("defaultListMoreAdapter", i0), adapterName, adapterName, adapterFullName, adapterName);
-        listAdapterIfs.put(getIfKey("defaultListMoreAdapter", i0), true);
-    }
     public void rgOnSetItemInitIf(int i0, String name, String type) {
         addForMap(this.formInit, getIfKey("rgOnSetItemInit", i0), name, type);
         formInitIfs.put(getIfKey("rgOnSetItemInit", i0), true);
@@ -661,6 +653,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     }
     public void isOnCreateCompleteInit(boolean is) {
         onCreateCompleteInitIfs.put(getIfKey("onCreateCompleteInit"), is);
+    }
+    public void defaultListAdapterIf(int i0, String adapterName, String adapterFullName) {
+        addForMap(this.listAdapter, getIfKey("defaultListAdapter", i0), adapterName, adapterName, adapterFullName);
+        listAdapterIfs.put(getIfKey("defaultListAdapter", i0), true);
+    }
+    public void defaultListMoreAdapterIf(int i0, String adapterName, String adapterFullName) {
+        addForMap(this.listAdapter, getIfKey("defaultListMoreAdapter", i0), adapterName, adapterName, adapterFullName, adapterName);
+        listAdapterIfs.put(getIfKey("defaultListMoreAdapter", i0), true);
     }
     public void isSuperOnClick(boolean is) {
         superOnClickIfs.put(getIfKey("superOnClick"), is);
@@ -851,28 +851,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> startInit0 = startInit.get(getForKey("startInit", i0));
             addLnTag(startInitSb, "        [name] = [passFullName].[name](getIntent());", startInit0.get(0), startInit0.get(1), startInit0.get(2));
         }
-        for (int i0 = 0; i0 < count(listAdapterCounts, getForKey("listAdapter")); i0++) {
-            List<String> listAdapter0 = listAdapter.get(getForKey("listAdapter", i0));
-            if (isIf(listAdapterIfs, getIfKey("defaultListAdapter", i0))) {
-                List<String> listAdapter1 = listAdapter.get(getIfKey("defaultListAdapter", i0));
-                addLnTag(listAdapterSb, "        // [adapterName]", listAdapter1.get(0));
-                addLnTag(listAdapterSb, "        [adapterName] = new [adapterFullName]();", listAdapter1.get(1), listAdapter1.get(2));
-            }
-            if (isIf(listAdapterIfs, getIfKey("defaultListMoreAdapter", i0))) {
-                List<String> listAdapter1 = listAdapter.get(getIfKey("defaultListMoreAdapter", i0));
-                addLnTag(listAdapterSb, "        // [adapterName]", listAdapter1.get(0));
-                addLnTag(listAdapterSb, "        [adapterName] = new [adapterFullName]() {", listAdapter1.get(1), listAdapter1.get(2));
-                addLnTag(listAdapterSb, "            @Override");
-                addLnTag(listAdapterSb, "            protected void loadMore(int page) {");
-                addLnTag(listAdapterSb, "                [adapterName]LoadMore(page);", listAdapter1.get(3));
-                addLnTag(listAdapterSb, "            }");
-                addLnTag(listAdapterSb, "        };");
-            }
-            addLnTag(listAdapterSb, "        [adapterName].setVH([vhFullName].class);", listAdapter0.get(0), listAdapter0.get(1));
-            addLnTag(listAdapterSb, "        [adapterName].setClick(this);", listAdapter0.get(2));
-            addLnTag(listAdapterSb, "        [rvName].setAdapter([adapterName]);", listAdapter0.get(3), listAdapter0.get(4));
-            addLnTag(listAdapterSb, "        [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));", listAdapter0.get(5));
-        }
         if (isIf(formInitIfs, getIfKey("formInit"))) {
             List<String> formInit0 = formInit.get(getIfKey("formInit"));
             for (int i0 = 0; i0 < count(formInitCounts, getForKey("rgInit")); i0++) {
@@ -967,6 +945,28 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         if (isIf(onCreateCompleteInitIfs, getIfKey("onCreateCompleteInit"))) {
             List<String> onCreateCompleteInit0 = onCreateCompleteInit.get(getIfKey("onCreateCompleteInit"));
             addLnTag(onCreateCompleteInitSb, "        onCreateComplete();");
+        }
+        for (int i0 = 0; i0 < count(listAdapterCounts, getForKey("listAdapter")); i0++) {
+            List<String> listAdapter0 = listAdapter.get(getForKey("listAdapter", i0));
+            if (isIf(listAdapterIfs, getIfKey("defaultListAdapter", i0))) {
+                List<String> listAdapter1 = listAdapter.get(getIfKey("defaultListAdapter", i0));
+                addLnTag(listAdapterSb, "        // [adapterName]", listAdapter1.get(0));
+                addLnTag(listAdapterSb, "        [adapterName] = new [adapterFullName]();", listAdapter1.get(1), listAdapter1.get(2));
+            }
+            if (isIf(listAdapterIfs, getIfKey("defaultListMoreAdapter", i0))) {
+                List<String> listAdapter1 = listAdapter.get(getIfKey("defaultListMoreAdapter", i0));
+                addLnTag(listAdapterSb, "        // [adapterName]", listAdapter1.get(0));
+                addLnTag(listAdapterSb, "        [adapterName] = new [adapterFullName]() {", listAdapter1.get(1), listAdapter1.get(2));
+                addLnTag(listAdapterSb, "            @Override");
+                addLnTag(listAdapterSb, "            protected void loadMore(int page) {");
+                addLnTag(listAdapterSb, "                [adapterName]LoadMore(page);", listAdapter1.get(3));
+                addLnTag(listAdapterSb, "            }");
+                addLnTag(listAdapterSb, "        };");
+            }
+            addLnTag(listAdapterSb, "        [adapterName].setVH([vhFullName].class);", listAdapter0.get(0), listAdapter0.get(1));
+            addLnTag(listAdapterSb, "        [adapterName].setClick(this);", listAdapter0.get(2));
+            addLnTag(listAdapterSb, "        [rvName].setAdapter([adapterName]);", listAdapter0.get(3), listAdapter0.get(4));
+            addLnTag(listAdapterSb, "        [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));", listAdapter0.get(5));
         }
         for (int i0 = 0; i0 < count(setOnClickCounts, getForKey("setOnClick")); i0++) {
             List<String> setOnClick0 = setOnClick.get(getForKey("setOnClick", i0));
@@ -1444,9 +1444,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[dpInit]]");
         lines.add("[[dimenInit]]");
         lines.add("[[startInit]]");
-        lines.add("");
-        lines.add("[[listAdapter]]");
-        lines.add("");
         lines.add("[[formInit]]");
         lines.add("[[onCreateCompleteInit]]");
         lines.add("    }");
@@ -1454,6 +1451,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("    @Override");
         lines.add("    public void onCreateComplete() {");
         lines.add("        super.onCreateComplete();");
+        lines.add("[[listAdapter]]");
         lines.add("[[setOnClick]]");
         lines.add("[[setOnLongClick]]");
         lines.add("    }");
