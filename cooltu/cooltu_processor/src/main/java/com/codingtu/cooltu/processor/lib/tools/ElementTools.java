@@ -40,4 +40,10 @@ public class ElementTools {
             return getFieldKv(ve);
         }).get());
     }
+
+    public static List<VariableElement> getVariableElements(ExecutableElement ee) {
+        return Ts.ts(ee.getParameters()).convert((index, element) -> {
+            return (VariableElement) element;
+        }).get();
+    }
 }

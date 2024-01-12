@@ -4,13 +4,20 @@ import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.constant.FileContentType;
 import com.codingtu.cooltu.constant.FileType;
 import com.codingtu.cooltu.constant.PathBeanType;
+import com.codingtu.cooltu.path.defaultvalue.CompanyDefault;
 import com.codingtu.cooltu.path.filter.LabelFilter;
+import com.codingtu.cooltu.processor.annotation.path.DefaultPath;
 import com.codingtu.cooltu.processor.annotation.path.DirPath;
 import com.codingtu.cooltu.processor.annotation.path.FilePath;
+import com.codingtu.cooltu.processor.annotation.path.PathObtain;
 import com.codingtu.cooltu.processor.annotation.path.Paths;
 
 @Paths(name = "check", path = "EnvCheckData/tasks/{company}/{taskName}")
 public class CheckPathConfigs {
+
+    @PathObtain
+    public void obtain(@DefaultPath(CompanyDefault.class) String company, String taskName) {
+    }
 
     @DirPath
     String DeleteLabel;
@@ -88,4 +95,5 @@ public class CheckPathConfigs {
             beanType = PathBeanType.LIST
     )
     String list;
+
 }

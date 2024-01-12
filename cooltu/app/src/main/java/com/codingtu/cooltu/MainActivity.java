@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         CheckPath checkPath = CheckPath.obtain("xx", "xxx");
-        checkPath.DeleteLabel.label("L-xxxx");
 
     }
 }

@@ -6,10 +6,13 @@ import com.codingtu.cooltu.constant.PathBeanType;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
+import com.codingtu.cooltu.processor.annotation.path.DefaultPath;
+import com.codingtu.cooltu.processor.annotation.path.PathObtain;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.bean.DirPathInfo;
 import com.codingtu.cooltu.processor.bean.FilePathInfo;
@@ -18,19 +21,42 @@ import com.codingtu.cooltu.processor.builder.base.PathBuilderBase;
 import com.codingtu.cooltu.processor.deal.PathDeal;
 import com.codingtu.cooltu.processor.deal.PathFilterDeal;
 import com.codingtu.cooltu.processor.lib.param.Params;
+import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.VariableElement;
 
 @To(PathDeal.class)
 public class PathBuilder extends PathBuilderBase {
     private String path;
     private List<DirPathInfo> dirInfos;
     private List<FilePathInfo> fileInfos;
+    private List<ExecutableElement> obtains;
+    private List<String> obtainNames;
 
     public PathBuilder(String path, JavaInfo info) {
         super(info);
         this.path = path;
+    }
+
+    public void addObtain(ExecutableElement ee, PathObtain pathObtain) {
+        if (obtains == null) {
+            obtains = new ArrayList<>();
+        }
+        obtains.add(ee);
+
+        if (obtainNames == null) {
+            obtainNames = new ArrayList<>();
+        }
+
+        String name = "obtain";
+        if (StringTool.isNotBlank(pathObtain.value())) {
+            name = pathObtain.value();
+        }
+        obtainNames.add(name);
     }
 
     public void addDir(DirPathInfo dirInfo) {
@@ -82,6 +108,44 @@ public class PathBuilder extends PathBuilderBase {
             });
 
             obtainIf(javaInfo.name, params.getMethodParams(), FullName.SDCARD_TOOL);
+
+            Ts.ls(obtains, new BaseTs.EachTs<ExecutableElement>() {
+                @Override
+                public boolean each(int position, ExecutableElement ee) {
+                    String methodName = obtainNames.get(position);
+
+                    StringBuilder sb = new StringBuilder();
+                    Params params1 = new Params();
+                    Params useParams = new Params();
+                    Ts.ts(ee.getParameters()).ls((paramIndex, element) -> {
+                        VariableElement ve = element;
+                        DefaultPath defaultPath = ve.getAnnotation(DefaultPath.class);
+                        if (defaultPath != null) {
+                            String defaultClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                                @Override
+                                public Object get() {
+                                    return defaultPath.value();
+                                }
+                            });
+                            useParams.add("","new "+defaultClass+"().path()");
+                        } else {
+                            KV<String, String> kv = params.getKvs().get(paramIndex);
+                            params1.add(kv);
+                            useParams.add("", kv.v);
+                        }
+                        return false;
+                    });
+
+                    obtains(position, javaInfo.name, methodName, params1.getMethodParams(), useParams.getParams());
+
+                    //obtainsParams
+
+
+                    return false;
+                }
+            });
+
+
         }
 
         final int[] nums = {0, 0, 0, 0, 0, 0};
@@ -129,9 +193,9 @@ public class PathBuilder extends PathBuilderBase {
                     if (info.isVoidBean) {
                         filedType = FullName.PATH_TEXT_FILE;
                     } else {
-                        if(info.beanType== PathBeanType.BEAN){
+                        if (info.beanType == PathBeanType.BEAN) {
                             filedType = FullName.PATH_BEAN_FILE + "<" + info.beanClass + ">";
-                        }else{
+                        } else {
                             filedType = FullName.PATH_BEAN_LIST_FILE + "<" + info.beanClass + ">";
                         }
                         ifParam = true;
@@ -180,6 +244,7 @@ public class PathBuilder extends PathBuilderBase {
             }
         });
     }
+
 }
 /* model_temp_start
 package [[pkg]];
@@ -195,6 +260,12 @@ public class [[name]] extends [[basePath]] {
                                                                                                     [<sub>][for][fileFileds]
 
                                                                                                     [<sub>][if][obtain]
+                                                                                                    [<sub>][for][obtains]
+    public static [className] [methodName]([params]) {
+        return obtain([useParams]);
+    }
+                                                                                                    [<sub>][for][obtains]
+
     public static [name] obtain([params]) {
         return root([sDCardToolFullName].getSDCard()
                                                                                                     [<sub>][for][addObtainRoot]

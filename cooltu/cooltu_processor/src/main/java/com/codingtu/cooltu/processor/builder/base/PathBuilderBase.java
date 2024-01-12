@@ -101,6 +101,13 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
         addForMap(this.fileFileds, getForKey("fileFileds", i0), type, name);
         countAdd(fileFiledsCounts, getForKey("fileFileds"));
     }
+    public int obtainsCount() {
+        return count(obtainCounts, getForKey("obtains"));
+    }
+    public void obtains(int i0, String className, String methodName, String params, String useParams) {
+        addForMap(this.obtain, getForKey("obtains", i0), className, methodName, params, useParams);
+        countAdd(obtainCounts, getForKey("obtains"));
+    }
     public int addObtainRootCount() {
         return count(obtainCounts, getForKey("addObtainRoot"));
     }
@@ -204,6 +211,13 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
         }
         if (isIf(obtainIfs, getIfKey("obtain"))) {
             List<String> obtain0 = obtain.get(getIfKey("obtain"));
+            for (int i0 = 0; i0 < count(obtainCounts, getForKey("obtains")); i0++) {
+                List<String> obtain1 = obtain.get(getForKey("obtains", i0));
+                addLnTag(obtainSb, "    public static [className] [methodName]([params]) {", obtain1.get(0), obtain1.get(1), obtain1.get(2));
+                addLnTag(obtainSb, "        return obtain([useParams]);", obtain1.get(3));
+                addLnTag(obtainSb, "    }");
+            }
+            addLnTag(obtainSb, "");
             addLnTag(obtainSb, "    public static [name] obtain([params]) {", obtain0.get(0), obtain0.get(1));
             addLnTag(obtainSb, "        return root([sDCardToolFullName].getSDCard()", obtain0.get(2));
             for (int i0 = 0; i0 < count(obtainCounts, getForKey("addObtainRoot")); i0++) {

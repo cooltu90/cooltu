@@ -12,17 +12,20 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.path.DirPath;
 import com.codingtu.cooltu.processor.annotation.path.FilePath;
+import com.codingtu.cooltu.processor.annotation.path.PathObtain;
 import com.codingtu.cooltu.processor.annotation.path.Paths;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.bean.DirPathInfo;
 import com.codingtu.cooltu.processor.bean.FilePathInfo;
 import com.codingtu.cooltu.processor.builder.impl.PathBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
 import java.util.HashMap;
 
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 
@@ -52,10 +55,20 @@ public class PathDeal extends TypeBaseDeal {
                 if (file != null) {
                     dealFile(ve, file);
                 }
-
+            }
+            if (e instanceof ExecutableElement) {
+                ExecutableElement ee = (ExecutableElement) e;
+                PathObtain pathObtain = ee.getAnnotation(PathObtain.class);
+                if (pathObtain != null) {
+                    dealObtain(pathBuilder, ee,pathObtain);
+                }
             }
             return false;
         });
+    }
+
+    private void dealObtain(PathBuilder pathBuilder, ExecutableElement ee, PathObtain pathObtain) {
+        pathBuilder.addObtain(ee,pathObtain);
     }
 
     private void dealDir(VariableElement ve, DirPath dir) {
