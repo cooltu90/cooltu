@@ -8,7 +8,6 @@ import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.builder.base.PassBuilderBase;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 
@@ -58,7 +57,7 @@ public class PassBuilder extends PassBuilderBase {
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_TOOLS);
 
-        Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {
+        Ts.ls(kvs, new Ts.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
 

@@ -7,7 +7,6 @@ import com.codingtu.cooltu.lib4j.data.symbol.Symbol;
 import com.codingtu.cooltu.lib4j.file.write.FileWriter;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.lib.BuilderMap;
 import com.codingtu.cooltu.processor.lib.tools.TagTools;
@@ -115,7 +114,7 @@ public abstract class CoreBuilder implements Symbol {
     private String getKey(String tag, int... ii) {
         StringBuilder sb = new StringBuilder();
         sb.append(tag);
-        Ts.ts(ii).ls(new BaseTs.EachTs<Integer>() {
+        Ts.ints(ii).ls(new Ts.EachTs<Integer>() {
             @Override
             public boolean each(int position, Integer integer) {
                 sb.append("-").append(integer);
@@ -128,7 +127,7 @@ public abstract class CoreBuilder implements Symbol {
 
     protected void addForMap(ListValueMap<String, String> map, String key, String... strs) {
         List<String> list = map.get(key);
-        Ts.ls(strs, new BaseTs.EachTs<String>() {
+        Ts.ls(strs, new Ts.EachTs<String>() {
             @Override
             public boolean each(int position, String s) {
                 list.add(s);
@@ -143,7 +142,7 @@ public abstract class CoreBuilder implements Symbol {
         key = getForKey(key, keys);
         int count = count(counts, key);
         List<String> list = map.get(keyAppend(key, count));
-        Ts.ls(strs, new BaseTs.EachTs<String>() {
+        Ts.ls(strs, new Ts.EachTs<String>() {
             @Override
             public boolean each(int position, String s) {
                 list.add(s);
@@ -162,8 +161,8 @@ public abstract class CoreBuilder implements Symbol {
         return aBoolean == null ? false : aBoolean;
     }
 
-    protected String getParams(List<String> params){
-        return getParams(params,false,false);
+    protected String getParams(List<String> params) {
+        return getParams(params, false, false);
     }
 
     protected String getParams(List<String> params, boolean hasPre, boolean hasNext) {
@@ -176,7 +175,7 @@ public abstract class CoreBuilder implements Symbol {
         if (hasPre && count != 0) {
             sb.append(", ");
         }
-        Ts.ls(params, new BaseTs.EachTs<String>() {
+        Ts.ls(params, new Ts.EachTs<String>() {
             @Override
             public boolean each(int position, String param) {
                 if (position != 0) {

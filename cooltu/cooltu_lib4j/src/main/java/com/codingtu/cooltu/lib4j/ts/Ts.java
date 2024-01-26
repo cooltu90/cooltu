@@ -1,188 +1,129 @@
 package com.codingtu.cooltu.lib4j.ts;
 
 import com.codingtu.cooltu.lib4j.data.symbol.Symbol;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.impl.MapTs;
-import com.codingtu.cooltu.lib4j.ts.impl.SetTs;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.BooleanTs;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.ByteTs;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.CharTs;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.DoubleTs;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.FloatTs;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.IntTs;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.LongTs;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.ShortTs;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.StringArrayTs;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.TArrayTs;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.TListTs;
+import com.codingtu.cooltu.lib4j.tools.CountTool;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class Ts {
 
-    public static BaseTs ts(Object obj) {
-        Class aClass = obj.getClass();
-        if (aClass.isArray()) {
-            if (aClass == int[].class) {
-                return ts((int[]) obj);
-            } else if (aClass == byte[].class) {
-                return ts((byte[]) obj);
-            } else if (aClass == long[].class) {
-                return ts((long[]) obj);
-            } else if (aClass == char[].class) {
-                return ts((char[]) obj);
-            } else if (aClass == float[].class) {
-                return ts((float[]) obj);
-            } else if (aClass == double[].class) {
-                return ts((double[]) obj);
-            } else if (aClass == boolean[].class) {
-                return ts((boolean[]) obj);
-            } else if (aClass == short[].class) {
-                return ts((short[]) obj);
-            } else {
-                return ts((Object[]) obj);
-            }
+
+    /**************************************************
+     *
+     * 创建方法
+     *
+     **************************************************/
+    public static ObjTs<Boolean> bools(boolean... booleans) {
+        ObjTs<Boolean> ts = new ObjTs<>();
+        for (int i = 0; i < booleans.length; i++) {
+            ts.ts.add(booleans[i]);
         }
-        return null;
+        return ts;
     }
 
-    public static <T> TListTs<T> ts(List<T> ts) {
-        return new TListTs<>(ts);
+    public static ObjTs<Byte> bytes(byte... bytes) {
+        ObjTs<Byte> ts = new ObjTs<>();
+        for (int i = 0; i < bytes.length; i++) {
+            ts.ts.add(bytes[i]);
+        }
+        return ts;
     }
 
-    public static <T> TArrayTs<T> ts(T... ts) {
-        return new TArrayTs<>(ts);
+    public static ObjTs<Character> chars(char... bytes) {
+        ObjTs<Character> ts = new ObjTs<>();
+        for (int i = 0; i < bytes.length; i++) {
+            ts.ts.add(bytes[i]);
+        }
+        return ts;
     }
 
-    public static StringArrayTs ts(String... ts) {
-        return new StringArrayTs(ts);
+    public static ObjTs<Double> doubles(double... doubles) {
+        ObjTs<Double> ts = new ObjTs<>();
+        for (int i = 0; i < doubles.length; i++) {
+            ts.ts.add(doubles[i]);
+        }
+        return ts;
     }
 
-    public static ByteTs ts(byte... ts) {
-        return new ByteTs(ts);
+    public static ObjTs<Float> floats(float... floats) {
+        ObjTs<Float> ts = new ObjTs<>();
+        for (int i = 0; i < floats.length; i++) {
+            ts.ts.add(floats[i]);
+        }
+        return ts;
     }
 
-    public static CharTs ts(char... ts) {
-        return new CharTs(ts);
+    public static ObjTs<Integer> ints(int... ints) {
+        ObjTs<Integer> ts = new ObjTs<>();
+        for (int i = 0; i < ints.length; i++) {
+            ts.ts.add(ints[i]);
+        }
+        return ts;
     }
 
-    public static ShortTs ts(short... ts) {
-        return new ShortTs(ts);
+    public static ObjTs<Long> longs(long... longs) {
+        ObjTs<Long> ts = new ObjTs<>();
+        for (int i = 0; i < longs.length; i++) {
+            ts.ts.add(longs[i]);
+        }
+        return ts;
     }
 
-    public static IntTs ts(int... ts) {
-        return new IntTs(ts);
+    public static ObjTs<Short> shorts(short... shorts) {
+        ObjTs<Short> ts = new ObjTs<>();
+        for (int i = 0; i < shorts.length; i++) {
+            ts.ts.add(shorts[i]);
+        }
+        return ts;
     }
 
-    public static LongTs ts(long... ts) {
-        return new LongTs(ts);
+    public static StringTs strs(String... strs) {
+        StringTs ts = new StringTs();
+        ts.add(strs);
+        return ts;
     }
 
-    public static FloatTs ts(float... ts) {
-        return new FloatTs(ts);
+    public static StringTs strs(List<String> strs) {
+        StringTs ts = new StringTs();
+        ts.add(strs);
+        return ts;
     }
 
-    public static DoubleTs ts(double... ts) {
-        return new DoubleTs(ts);
+    public static <SYMBOL extends Symbol> SymbolTs<SYMBOL> symbols(SYMBOL... symbols) {
+        SymbolTs<SYMBOL> ts = new SymbolTs<>();
+        ts.add(symbols);
+        return ts;
     }
 
-    public static BooleanTs ts(boolean... ts) {
-        return new BooleanTs(ts);
+    public static <SYMBOL extends Symbol> SymbolTs<SYMBOL> symbols(List<SYMBOL> symbols) {
+        SymbolTs<SYMBOL> ts = new SymbolTs<>();
+        ts.add(symbols);
+        return ts;
     }
 
-    public static <T> SetTs<T> ts(Set<T> ts) {
-        return new SetTs<>(ts);
+    public static <T> ObjTs<T> ts(T... srcTs) {
+        ObjTs<T> ts = new ObjTs<>();
+        ts.add(srcTs);
+        return ts;
     }
 
-    public static <K, V> MapTs<K, V> ts(Map<K, V> ts) {
-        return new MapTs<>(ts);
+    public static <T> ObjTs<T> ts(List<T> list) {
+        return new ObjTs<>(list);
     }
 
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
-    public static <T> void ls(List<T> ts, BaseTs.EachTs<T> eachTs) {
-        ts(ts).ls(eachTs);
+    public static <T> ObjTs<T> ts(Class<T> clazz) {
+        return new ObjTs<>(new ArrayList<>());
     }
 
-    public static <T> void ls(T[] ts, BaseTs.EachTs<T> eachTs) {
-        ts(ts).ls(eachTs);
-    }
-
-    public static <T> void ls(BaseTs.EachTs<T> eachTs, T... ts) {
-        ts(ts).ls(eachTs);
-    }
-
-
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
-
-    public static <T extends Symbol> T get(T target, List<T> ts) {
-        return ts(ts).symbol().get(target);
-    }
-
-    public static <T extends Symbol> T get(T target, T... ts) {
-        return ts(ts).symbol().get(target);
-    }
-
-    public static <T extends Symbol> T get(String symbol, List<T> ts) {
-        return ts(ts).symbol().get(symbol);
-    }
-
-    public static <T extends Symbol> T get(String symbol, T... ts) {
-        return ts(ts).symbol().get(symbol);
-    }
-
-
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
-
-    public static <T extends Symbol> boolean has(T target, List<T> ts) {
-        return ts(ts).symbol().has(target);
-    }
-
-    public static <T extends Symbol> boolean has(T target, T... ts) {
-        return ts(ts).symbol().has(target);
-    }
-
-    public static <T extends Symbol> boolean has(String symbol, List<T> ts) {
-        return ts(ts).symbol().has(symbol);
-    }
-
-    public static <T extends Symbol> boolean has(String symbol, T... ts) {
-        return ts(ts).symbol().has(symbol);
-    }
-
-
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
-    public static <T extends Symbol> int index(T target, List<T> ts) {
-        return ts(ts).symbol().index(target);
-    }
-
-    public static <T extends Symbol> int index(T target, T... ts) {
-        return ts(ts).symbol().index(target);
-    }
-
-    public static <T extends Symbol> int index(String symbol, List<T> ts) {
-        return ts(ts).symbol().index(symbol);
-    }
-
-    public static <T extends Symbol> int index(String symbol, T... ts) {
-        return ts(ts).symbol().index(symbol);
+    public static <T> ObjTs<T> ts(Set<T> set) {
+        ObjTs<T> ts = new ObjTs<>();
+        int count = CountTool.count(set);
+        if (count >= 0) {
+            ts.ts.addAll(set);
+        }
+        return ts;
     }
 
     /**************************************************
@@ -190,58 +131,39 @@ public class Ts {
      *
      *
      **************************************************/
-    public static <T extends Symbol> void replace(T target, List<T> ts) {
-        ts(ts).symbol().replace(target);
+    public static <T> ObjTs<T> ls(List<T> list, EachTs<T> eachTs) {
+        return ts(list).ls(eachTs);
     }
 
-    public static <T extends Symbol> void replace(T target, T... ts) {
-        ts(ts).symbol().replace(target);
+    public static <T> ObjTs<T> ls(T[] ts, EachTs<T> eachTs) {
+        return ts(ts).ls(eachTs);
     }
 
-    public static <T extends Symbol> void replaceOrAdd(T target, List<T> ts) {
-        ts(ts).symbol().replaceOrAdd(target);
-    }
 
     /**************************************************
      *
      *
      *
      **************************************************/
-    public static <T> T[] toArray(List<T> ts) {
-        return ts(ts).toArray().get();
+    public interface EachTs<T> {
+        boolean each(int position, T t);
     }
 
-    public static <T> List<T> toList(T... ts) {
-        return ts(ts).toList().get();
+    public interface Convert<S, T> {
+        T convert(int index, S s);
     }
 
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
-    public static <T extends Symbol> void delete(T target, List<T> ts) {
-        ts(ts).symbol().delete(target);
+    public interface IsThisOne<T> {
+        boolean isThisOne(int position, T t);
     }
 
-    public static <T extends Symbol> void delete(String symbol, List<T> ts) {
-        ts(ts).symbol().delete(symbol);
+    public interface NowMax<T> {
+        boolean isNowMax(T last, T now);
     }
 
-    public static <T extends Symbol> void deleteAll(T target, List<T> ts) {
-        ts(ts).symbol().deleteAll(target);
+    public interface IsNow<T> {
+        boolean isNow(T last, T now);
     }
 
-    public static <T extends Symbol> void deleteAll(String symbol, List<T> ts) {
-        ts(ts).symbol().deleteAll(symbol);
-    }
 
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
-    public static <T> List<T> add(T t, List<T> ts) {
-        return ts(ts).add(t).get();
-    }
 }

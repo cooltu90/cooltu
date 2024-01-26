@@ -8,7 +8,6 @@ import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.annotation.net.Default;
 import com.codingtu.cooltu.processor.annotation.net.Param;
 import com.codingtu.cooltu.processor.annotation.net.ParamType;
@@ -58,14 +57,14 @@ public class NetBuilder extends NetBuilderBase {
     @Override
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_NET);
-        Ts.ls(infos, new BaseTs.EachTs<NetInfo>() {
+        Ts.ls(infos, new Ts.EachTs<NetInfo>() {
             @Override
             public boolean each(int position, NetInfo netInfo) {
                 addField(ConvertTool.toStaticType(netInfo.methodName), netInfo.methodName + Suffix.NET_BACK);
                 return false;
             }
         });
-        Ts.ls(infos, new BaseTs.EachTs<NetInfo>() {
+        Ts.ls(infos, new Ts.EachTs<NetInfo>() {
             @Override
             public boolean each(int methodIndex, NetInfo netInfo) {
                 String baseUrl = FullName.CORE_CONFIGS + ".configs().getBaseUrl()";

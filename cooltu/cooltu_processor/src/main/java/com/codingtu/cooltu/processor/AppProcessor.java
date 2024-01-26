@@ -9,8 +9,6 @@ import com.codingtu.cooltu.lib4j.file.list.ListFile;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.impl.SetTs;
 import com.codingtu.cooltu.processor.builder.impl.BuilderBuilder;
 import com.codingtu.cooltu.processor.deal.base.BaseDeal;
 import com.codingtu.cooltu.processor.lib.App;
@@ -68,7 +66,7 @@ public class AppProcessor extends AbstractProcessor {
     }
 
     public void dealSupportTypes() {
-        Ts.ts(types).ls(2, new BaseTs.EachTs<Class>() {
+        Ts.ts(types).ls(2, new Ts.EachTs<Class>() {
             @Override
             public boolean each(int position, Class annoClass) {
                 supportTypes.add(annoClass.getCanonicalName());
@@ -90,14 +88,14 @@ public class AppProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnv) {
-        Ts.ts(types).ls(2, new BaseTs.EachTs<Class>() {
+        Ts.ts(types).ls(2, new Ts.EachTs<Class>() {
             @Override
             public boolean each(int position, Class annoClass) {
                 Class dealClass = types[position + 1];
                 Set<Element> es = roundEnv.getElementsAnnotatedWith(annoClass);
-                Ts.ts(es).ls(new SetTs.SetEach<Element>() {
+                Ts.ts(es).ls(new Ts.EachTs<Element>() {
                     @Override
-                    public boolean each(Element element) {
+                    public boolean each(int position, Element element) {
                         try {
                             BaseDeal deal = (BaseDeal) dealClass.getConstructor().newInstance();
                             deal.dealElement(element);

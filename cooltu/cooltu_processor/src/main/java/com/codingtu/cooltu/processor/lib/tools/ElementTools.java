@@ -3,8 +3,6 @@ package com.codingtu.cooltu.processor.lib.tools;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.TListTs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 
 import java.util.List;
@@ -38,12 +36,12 @@ public class ElementTools {
     public static Params getMethodParamKvs(ExecutableElement ee) {
         return Params.obtain(Ts.ts(ee.getParameters()).convert((index, ve) -> {
             return getFieldKv(ve);
-        }).get());
+        }).toList());
     }
 
     public static List<VariableElement> getVariableElements(ExecutableElement ee) {
         return Ts.ts(ee.getParameters()).convert((index, element) -> {
             return (VariableElement) element;
-        }).get();
+        }).toList();
     }
 }

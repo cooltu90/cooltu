@@ -2,8 +2,8 @@ package com.codingtu.cooltu.lib4j.file.write;
 
 import com.codingtu.cooltu.lib4j.file.FileTool;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
+import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 
 import java.io.BufferedWriter;
 import java.io.File;

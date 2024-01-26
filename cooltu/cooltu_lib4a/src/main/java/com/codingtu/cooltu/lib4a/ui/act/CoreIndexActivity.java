@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 
 import java.util.HashMap;
 
@@ -35,7 +34,7 @@ public abstract class CoreIndexActivity extends CoreActivity {
                 clickTag(v.getId());
             }
         };
-        Ts.ts(allTags).ls(new BaseTs.EachTs<Integer>() {
+        Ts.ints(allTags).ls(new Ts.EachTs<Integer>() {
             @Override
             public boolean each(int position, Integer id) {
                 View bt = findViewById(id);

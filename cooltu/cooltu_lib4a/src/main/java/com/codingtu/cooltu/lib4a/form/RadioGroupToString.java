@@ -5,7 +5,7 @@ import com.codingtu.cooltu.lib4j.ts.Ts;
 public abstract class RadioGroupToString implements FormParse<String, Integer> {
     @Override
     public Integer toView(String s) {
-        return Ts.ts(strs()).index(s);
+        return Ts.strs(strs()).index(s);
     }
 
     @Override

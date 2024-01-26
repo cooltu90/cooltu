@@ -13,7 +13,6 @@ import com.codingtu.cooltu.lib4a.tools.ToastTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public class CoreUiBase {
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
-        Ts.ls(getPermissionBacks(), new BaseTs.EachTs<PermissionBack>() {
+        Ts.ls(getPermissionBacks(), new Ts.EachTs<PermissionBack>() {
             @Override
             public boolean each(int position, PermissionBack back) {
                 back.back(requestCode, permissions, grantResults);
@@ -75,7 +74,7 @@ public class CoreUiBase {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Ts.ls(getOnActBacks(), new BaseTs.EachTs<OnActBack>() {
+        Ts.ls(getOnActBacks(), new Ts.EachTs<OnActBack>() {
             @Override
             public boolean each(int position, OnActBack back) {
                 back.onActivityResult(requestCode, resultCode, data);
@@ -108,7 +107,7 @@ public class CoreUiBase {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         final boolean[] b = {false};
         List<WhenKeyDown> whenKeyDowns = getWhenKeyDowns();
-        Ts.ls(whenKeyDowns, new BaseTs.EachTs<WhenKeyDown>() {
+        Ts.ls(whenKeyDowns, new Ts.EachTs<WhenKeyDown>() {
             @Override
             public boolean each(int position, WhenKeyDown whenKeyDown) {
                 if (whenKeyDown.onKeyDown(keyCode, event)) {
@@ -138,7 +137,7 @@ public class CoreUiBase {
     }
 
     public void destroyAll() {
-        Ts.ls(getOnDestroys(), new BaseTs.EachTs<OnDestroy>() {
+        Ts.ls(getOnDestroys(), new Ts.EachTs<OnDestroy>() {
             @Override
             public boolean each(int position, OnDestroy onDestroy) {
                 onDestroy.destroy();

@@ -6,7 +6,7 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
+import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.form.EchoType;
 import com.codingtu.cooltu.processor.annotation.form.FormType;
 import com.codingtu.cooltu.processor.annotation.form.view.BindRadioGroup;
@@ -17,7 +17,6 @@ import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.FormTools;
 import com.codingtu.cooltu.processor.lib.tools.TagTools;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.lang.model.element.VariableElement;
@@ -90,7 +89,7 @@ public class BindRadioGroupDeal {
 
             builder.handlerItemParseIf(typeIndex, handleIndex, beanName, field, parseClass);
         } else {
-            String param = Params.getParam(bindRadioGroup.strItems(), new BaseTs.Convert<String, String>() {
+            String param = Params.getParam(bindRadioGroup.strItems(), new Ts.Convert<String, String>() {
                 @Override
                 public String convert(int index, String s) {
                     return "\"" + s + "\"";

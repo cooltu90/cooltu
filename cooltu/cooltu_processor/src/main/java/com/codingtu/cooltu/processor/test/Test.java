@@ -3,12 +3,9 @@ package com.codingtu.cooltu.processor.test;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import jdk.internal.perf.PerfCounter;
 
 public class Test {
 
@@ -33,7 +30,7 @@ public class Test {
         if (hasPre && count != 0) {
             sb.append(", ");
         }
-        Ts.ls(params, new BaseTs.EachTs<String>() {
+        Ts.ls(params, new Ts.EachTs<String>() {
             @Override
             public boolean each(int position, String param) {
                 if (position != 0) {

@@ -24,7 +24,7 @@ public class PathFilterDeal extends TypeBaseDeal {
                 return ElementTools.getFieldKv((VariableElement) e);
             }
             return null;
-        }).get();
+        }).toList();
         map.put(type, info);
     }
 }

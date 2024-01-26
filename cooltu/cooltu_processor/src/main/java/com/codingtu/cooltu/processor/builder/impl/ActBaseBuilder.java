@@ -10,7 +10,6 @@ import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.annotation.form.Form;
 import com.codingtu.cooltu.processor.annotation.form.FormBean;
@@ -120,7 +119,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     protected void dealLines() {
         uiBaseBuilder.dealLines();
         //startField
-        Ts.ls(starts, new BaseTs.EachTs<KV<String, String>>() {
+        Ts.ls(starts, new Ts.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
@@ -129,7 +128,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             }
         });
 
-        Ts.ls(permissions, new BaseTs.EachTs<Permission>() {
+        Ts.ls(permissions, new Ts.EachTs<Permission>() {
             @Override
             public boolean each(int permissionIndex, Permission permission) {
                 ExecutableElement ee = permissionMethods.get(permissionIndex);

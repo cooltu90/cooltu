@@ -10,7 +10,6 @@ import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.annotation.path.PathObtain;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.bean.DirPathInfo;
@@ -78,7 +77,7 @@ public class PathBuilder extends PathBuilderBase {
             String[] split = this.path.split("/");
 
             Params params = new Params();
-            Ts.ls(split, new BaseTs.EachTs<String>() {
+            Ts.ls(split, new Ts.EachTs<String>() {
                 @Override
                 public boolean each(int position, String s) {
                     if (isParam(s)) {
@@ -94,7 +93,7 @@ public class PathBuilder extends PathBuilderBase {
 
             obtainIf(javaInfo.name, params.getMethodParams(), FullName.SDCARD_TOOL);
 
-            Ts.ls(obtainList, new BaseTs.EachTs<PathObtain>() {
+            Ts.ls(obtainList, new Ts.EachTs<PathObtain>() {
                 @Override
                 public boolean each(int position, PathObtain pathObtain) {
                     String methodName = pathObtain.name();
@@ -114,7 +113,7 @@ public class PathBuilder extends PathBuilderBase {
                     Params params1 = new Params();
                     Params useParams = new Params();
 
-                    Ts.ls(params.getKvs(), new BaseTs.EachTs<KV<String, String>>() {
+                    Ts.ls(params.getKvs(), new Ts.EachTs<KV<String, String>>() {
                         @Override
                         public boolean each(int position, KV<String, String> kv) {
                             String className = Void.class.getCanonicalName();
@@ -140,7 +139,7 @@ public class PathBuilder extends PathBuilderBase {
         }
 
         final int[] nums = {0, 0, 0, 0, 0, 0};
-        Ts.ls(dirInfos, new BaseTs.EachTs<DirPathInfo>() {
+        Ts.ls(dirInfos, new Ts.EachTs<DirPathInfo>() {
             @Override
             public boolean each(int position, DirPathInfo info) {
                 if (!isParam(info.dirName)) {
@@ -155,10 +154,10 @@ public class PathBuilder extends PathBuilderBase {
 
 
                 if (info.isFilter) {
-                    dirList(nums[2], FullName.T_LIST_TS, info.javaName, info.fieldName, info.filter, FullName.TS);
+                    dirList(nums[2], FullName.OBJ_TS, info.javaName, info.fieldName, info.filter, FullName.TS);
                     PathFilterInfo filterInfo = PathFilterDeal.map.get(info.filter);
                     int filterParamsCount = CountTool.count(filterInfo.params);
-                    Ts.ls(filterInfo.params, new BaseTs.EachTs<KV<String, String>>() {
+                    Ts.ls(filterInfo.params, new Ts.EachTs<KV<String, String>>() {
                         @Override
                         public boolean each(int position, KV<String, String> kv) {
                             dirListParam(nums[2], position, kv.k, kv.v, position == (filterParamsCount - 1) ? "" : ",");
@@ -174,7 +173,7 @@ public class PathBuilder extends PathBuilderBase {
             }
         });
 
-        Ts.ls(fileInfos, new BaseTs.EachTs<FilePathInfo>() {
+        Ts.ls(fileInfos, new Ts.EachTs<FilePathInfo>() {
             @Override
             public boolean each(int position, FilePathInfo info) {
                 String filedType = null;
@@ -217,10 +216,10 @@ public class PathBuilder extends PathBuilderBase {
                 }
 
                 if (info.isFilter && StringTool.isNotBlank(filedType)) {
-                    fileList(nums[5], FullName.T_LIST_TS, filedType, info.fieldFullName, info.filter, FullName.TS);
+                    fileList(nums[5], FullName.OBJ_TS, filedType, info.fieldFullName, info.filter, FullName.TS);
                     PathFilterInfo filterInfo = PathFilterDeal.map.get(info.filter);
                     int filterParamsCount = CountTool.count(filterInfo.params);
-                    Ts.ls(filterInfo.params, new BaseTs.EachTs<KV<String, String>>() {
+                    Ts.ls(filterInfo.params, new Ts.EachTs<KV<String, String>>() {
                         @Override
                         public boolean each(int position, KV<String, String> kv) {
                             fileListParam(nums[5], position, kv.k, kv.v, position == (filterParamsCount - 1) ? "" : ",");

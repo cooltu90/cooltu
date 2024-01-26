@@ -44,7 +44,7 @@ public class CheckLabelPath extends com.codingtu.cooltu.lib4a.path.BasePath {
     }
 
 
-    public com.codingtu.cooltu.lib4j.ts.impl.basic.TListTs<com.codingtu.cooltu.lib4a.path.PathBeanFile<com.codingtu.cooltu.bean.User>> label_txt_list(
+    public com.codingtu.cooltu.lib4j.ts.ObjTs<com.codingtu.cooltu.lib4a.path.PathBeanFile<com.codingtu.cooltu.bean.User>> label_txt_list(
     ) {
         com.codingtu.cooltu.path.filter.LabelFilter filter = new com.codingtu.cooltu.path.filter.LabelFilter();
         return com.codingtu.cooltu.lib4j.ts.Ts.ts(new java.io.File(root()).listFiles()).convert((index, file) -> {

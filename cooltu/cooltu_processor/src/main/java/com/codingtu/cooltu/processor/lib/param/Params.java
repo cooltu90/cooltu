@@ -3,11 +3,8 @@ package com.codingtu.cooltu.processor.lib.param;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
+import com.codingtu.cooltu.lib4j.ts.ObjTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.impl.TsInterface;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.TArrayTs;
-import com.codingtu.cooltu.lib4j.ts.impl.basic.TListTs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +42,7 @@ public class Params {
 
     public String getMethodParams() {
         StringBuilder sb = new StringBuilder();
-        Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {
+        Ts.ls(kvs, new Ts.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 if (position != 0) {
@@ -57,9 +54,10 @@ public class Params {
         });
         return sb.toString();
     }
+
     public String getParams() {
         StringBuilder sb = new StringBuilder();
-        Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {
+        Ts.ls(kvs, new Ts.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 if (position != 0) {
@@ -78,7 +76,7 @@ public class Params {
         if (count > 0 && hasFirst) {
             sb.append(", ");
         }
-        Ts.ls(kvs, new BaseTs.EachTs<KV<String, String>>() {
+        Ts.ls(kvs, new Ts.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 if (position != 0) {
@@ -121,15 +119,15 @@ public class Params {
         return sb.toString();
     }
 
-    public static <S> String getParam(S[] ss, BaseTs.Convert<S, String> convert) {
-        return getParam(new TArrayTs(ss), convert);
+    public static <S> String getParam(S[] ss, Ts.Convert<S, String> convert) {
+        return getParam(Ts.ts(ss), convert);
     }
 
-    public static <S> String getParam(List<S> ss, BaseTs.Convert<S, String> convert) {
-        return getParam(new TListTs<>(ss), convert);
+    public static <S> String getParam(List<S> ss, Ts.Convert<S, String> convert) {
+        return getParam(Ts.ts(ss), convert);
     }
 
-    public static <S> String getParam(TsInterface<S> ts, BaseTs.Convert<S, String> convert) {
+    public static <S> String getParam(ObjTs<S> ts, Ts.Convert<S, String> convert) {
         StringBuilder sb = new StringBuilder();
         int index = 0;
         int count = ts.count();
@@ -146,7 +144,7 @@ public class Params {
         return sb.toString();
     }
 
-    public void ls(BaseTs.EachTs<KV<String, String>> eachTs) {
+    public void ls(Ts.EachTs<KV<String, String>> eachTs) {
         Ts.ls(kvs, eachTs);
     }
 

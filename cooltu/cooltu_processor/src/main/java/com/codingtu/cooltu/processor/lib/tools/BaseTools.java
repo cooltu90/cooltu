@@ -1,7 +1,7 @@
 package com.codingtu.cooltu.processor.lib.tools;
 
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
+import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.FragmentBaseBuilder;
@@ -49,7 +49,7 @@ public class BaseTools {
 
     public static <T> List<T> getThisWithParents(T t, GetParent<T> getParent) {
         ArrayList<T> ts = new ArrayList<>();
-        getThisWithParents(t, getParent, new BaseTs.EachTs<T>() {
+        getThisWithParents(t, getParent, new Ts.EachTs<T>() {
             @Override
             public boolean each(int position, T t) {
                 ts.add(t);
@@ -59,11 +59,11 @@ public class BaseTools {
         return ts;
     }
 
-    public static <T> void getThisWithParents(T t, GetParent<T> getParent, BaseTs.EachTs<T> eachTs) {
+    public static <T> void getThisWithParents(T t, GetParent<T> getParent, Ts.EachTs<T> eachTs) {
         getThisWithParents(t, new int[]{0}, getParent, eachTs);
     }
 
-    private static <T> void getThisWithParents(T t, int[] indexs, GetParent<T> getParent, BaseTs.EachTs<T> eachTs) {
+    private static <T> void getThisWithParents(T t, int[] indexs, GetParent<T> getParent, Ts.EachTs<T> eachTs) {
         if (t != null) {
             eachTs.each(indexs[0]++, t);
             T parent = getParent.getParent(t);
@@ -113,7 +113,7 @@ public class BaseTools {
 
     public static <T> List<T> getThisWithChilds(String thisClass, GetThis<T> getThis) {
         ArrayList<T> list = new ArrayList<>();
-        getThisWithChilds(thisClass, new BaseTs.EachTs<T>() {
+        getThisWithChilds(thisClass, new Ts.EachTs<T>() {
             @Override
             public boolean each(int position, T t) {
                 list.add(t);
@@ -124,12 +124,12 @@ public class BaseTools {
     }
 
 
-    public static <T> void getThisWithChilds(String thisClass, BaseTs.EachTs<T> eachTs, GetThis<T> getThis) {
+    public static <T> void getThisWithChilds(String thisClass, Ts.EachTs<T> eachTs, GetThis<T> getThis) {
         getThisWithChilds(thisClass, new int[]{0}, eachTs, getThis);
     }
 
 
-    private static <T> void getThisWithChilds(String thisClass, int[] indexs, BaseTs.EachTs<T> eachTs, GetThis<T> getThis) {
+    private static <T> void getThisWithChilds(String thisClass, int[] indexs, Ts.EachTs<T> eachTs, GetThis<T> getThis) {
         T builder = getThis.getThis(thisClass);
         if (builder != null) {
             eachTs.each(indexs[0]++, builder);

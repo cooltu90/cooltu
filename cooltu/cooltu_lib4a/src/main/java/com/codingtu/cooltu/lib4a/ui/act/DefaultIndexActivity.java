@@ -9,8 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.MapTs;
+import com.codingtu.cooltu.lib4j.ts.Maps;
 
 public abstract class DefaultIndexActivity extends CoreIndexActivity {
 
@@ -36,7 +35,7 @@ public abstract class DefaultIndexActivity extends CoreIndexActivity {
 
     @Override
     protected void changeBt(int currentTag) {
-        Ts.ts(btMap).ls(new MapTs.MapEach<Integer, View>() {
+        Maps.map(btMap).ls(new Maps.MapEach<Integer, View>() {
 
             @Override
             public boolean each(Integer integer, View view) {

@@ -6,8 +6,8 @@ import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
+import com.codingtu.cooltu.lib4j.ts.Maps;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.annotation.net.NetBack;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
@@ -91,14 +91,14 @@ public class FragmentBaseDeal extends TypeBaseDeal {
 
     private void dealLongClickView(UiBaseBuilder uiBaseBuilder, LongClickView clickView, ExecutableElement ee) {
         ClickViewInfo clickViewInfo = new ClickViewInfo();
-        clickViewInfo.ids = Ts.ts(IdTools.elementToIds(ee, LongClickView.class, clickView.value())).toList().get();
+        clickViewInfo.ids = Maps.map(IdTools.elementToIds(ee, LongClickView.class, clickView.value())).toValueTs().toList();
         clickViewInfo.method = ElementTools.simpleName(ee);
         clickViewInfo.methodParams = ElementTools.getMethodParamKvs(ee);
         clickViewInfo.isCheckLogin = clickView.checkLogin();
         clickViewInfo.isCheckForm = clickView.check();
 
         int inActCount = CountTool.count(clickView.inAct());
-        Ts.ls(clickViewInfo.ids, new BaseTs.EachTs<IdTools.Id>() {
+        Ts.ls(clickViewInfo.ids, new Ts.EachTs<IdTools.Id>() {
             @Override
             public boolean each(int position, IdTools.Id id) {
                 boolean inAct = true;
@@ -115,14 +115,14 @@ public class FragmentBaseDeal extends TypeBaseDeal {
 
     private void dealClickView(UiBaseBuilder uiBaseBuilder, ClickView clickView, ExecutableElement ee) {
         ClickViewInfo clickViewInfo = new ClickViewInfo();
-        clickViewInfo.ids = Ts.ts(IdTools.elementToIds(ee, ClickView.class, clickView.value())).toList().get();
+        clickViewInfo.ids = Maps.map(IdTools.elementToIds(ee, ClickView.class, clickView.value())).toValueTs().toList();
         clickViewInfo.method = ElementTools.simpleName(ee);
         clickViewInfo.methodParams = ElementTools.getMethodParamKvs(ee);
         clickViewInfo.isCheckLogin = clickView.checkLogin();
         clickViewInfo.isCheckForm = clickView.check();
 
         int inActCount = CountTool.count(clickView.inAct());
-        Ts.ls(clickViewInfo.ids, new BaseTs.EachTs<IdTools.Id>() {
+        Ts.ls(clickViewInfo.ids, new Ts.EachTs<IdTools.Id>() {
             @Override
             public boolean each(int position, IdTools.Id id) {
                 boolean inAct = true;
@@ -148,7 +148,7 @@ public class FragmentBaseDeal extends TypeBaseDeal {
         uiBaseBuilder.actBacks.add(actBack);
         uiBaseBuilder.actBackMethods.add(ee);
 
-        ElementTools.getMethodParamKvs(ee).ls(new BaseTs.EachTs<KV<String, String>>() {
+        ElementTools.getMethodParamKvs(ee).ls(new Ts.EachTs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 PassBuilder.BUILDER.add(kv);

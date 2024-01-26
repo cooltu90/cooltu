@@ -13,7 +13,6 @@ import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4a.view.combine.RadioGroup;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 
 public abstract class CoreTagActivity extends CoreActivity {
 
@@ -56,7 +55,7 @@ public abstract class CoreTagActivity extends CoreActivity {
         });
 
 
-        Ts.ls(bts, new BaseTs.EachTs<View>() {
+        Ts.ls(bts, new Ts.EachTs<View>() {
             @Override
             public boolean each(int position, View view) {
                 view.setTag(R.id.tag_0, position);

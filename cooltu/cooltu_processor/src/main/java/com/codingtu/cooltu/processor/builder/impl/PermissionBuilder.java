@@ -4,7 +4,6 @@ import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.builder.base.PermissionBuilderBase;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
@@ -45,7 +44,7 @@ public class PermissionBuilder extends PermissionBuilderBase {
     @Override
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_TOOLS);
-        Ts.ls(backs, new BaseTs.EachTs<Permission>() {
+        Ts.ls(backs, new Ts.EachTs<Permission>() {
             @Override
             public boolean each(int methodIndex, Permission permissionBack) {
                 ExecutableElement ee = ees.get(methodIndex);
@@ -59,7 +58,7 @@ public class PermissionBuilder extends PermissionBuilderBase {
 
                 method(methodIndex, methodName, actName, FullName.PERMISSION_TOOL, methodNameStatic, actStatic);
 
-                Ts.ls(permissionBack.value(), new BaseTs.EachTs<String>() {
+                Ts.ls(permissionBack.value(), new Ts.EachTs<String>() {
                     @Override
                     public boolean each(int permissionIndex, String permission) {
                         permission(methodIndex, permissionIndex, permission);

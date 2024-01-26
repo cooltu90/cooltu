@@ -80,6 +80,7 @@ public class FullName {
     public static final String ACT_BACK_INTENT = Pkg.CORE_TOOLS + ".ActBackIntent";
     //Ts
     public static final String T_LIST_TS = Pkg.LIB4J_TS + ".impl.basic.TListTs";
+    public static final String OBJ_TS = Pkg.LIB4J_TS + ".ObjTs";
     public static final String TS = Pkg.LIB4J_TS + ".Ts";
     //PATH
     public static final String PATH_TEXT_FILE = Pkg.LIB4A_PATH + ".PathTextFile";

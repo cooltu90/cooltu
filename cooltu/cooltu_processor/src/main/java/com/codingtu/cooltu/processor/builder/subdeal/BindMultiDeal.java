@@ -4,9 +4,8 @@ import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
+import com.codingtu.cooltu.lib4j.ts.Maps;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.impl.MapTs;
 import com.codingtu.cooltu.processor.annotation.form.view.BindMulti;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.lib.param.Params;
@@ -44,7 +43,7 @@ public class BindMultiDeal {
         KV<String, String> fieldKv = ElementTools.getFieldKv(ve);
 
 
-        String param = Params.getParam(Ts.ts(bindMulti.ids()), new BaseTs.Convert<Integer, String>() {
+        String param = Params.getParam(Ts.ints(bindMulti.ids()), new Ts.Convert<Integer, String>() {
             @Override
             public String convert(int index, Integer id) {
                 return viewMap.get(id);
@@ -56,7 +55,7 @@ public class BindMultiDeal {
         builder.bindMulti(bindMultiCount, FullName.FORM_LINK, fieldKv.v + Suffix.LINK, linkClass, beanName, param);
         builder.linkEcho(builder.linkEchoCount(), linkName);
 
-        Ts.ts(idMap).ls(new MapTs.MapEach<Integer, IdTools.Id>() {
+        Maps.map(idMap).ls(new Maps.MapEach<Integer, IdTools.Id>() {
             @Override
             public boolean each(Integer viewId, IdTools.Id id) {
                 builder.addLink(bindMultiCount, builder.addLinkCount(bindMultiCount), id.toString(), linkName);

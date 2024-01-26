@@ -1,11 +1,10 @@
 package com.codingtu.cooltu.lib4j.log;
 
-import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.config.LibConfigs;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
+import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.impl.BaseTs;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -179,7 +178,7 @@ public class LibLogs {
         baseLog(level, tag, "└───────────────────────────────────────────────────────────────────────────────────────");
     }
 
-    private static <T> void logArray(int level, String tag, BaseTs<T> getter) {
+    private static <T> void logArray(int level, String tag, BaseTs getter) {
         baseLog(level, tag, "");
         baseLog(level, tag, "┌──Array────────────────────────────────────────────────────────────────────────────────");
         if (getter == null || getter.count() <= 0) {
