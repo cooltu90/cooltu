@@ -154,7 +154,7 @@ public class PathBuilder extends PathBuilderBase {
 
 
                 if (info.isFilter) {
-                    dirList(nums[2], FullName.OBJ_TS, info.javaName, info.fieldName, info.filter, FullName.TS);
+                    dirList(nums[2], FullName.BASE_TS, info.javaName, info.fieldName, info.filter, FullName.TS);
                     PathFilterInfo filterInfo = PathFilterDeal.map.get(info.filter);
                     int filterParamsCount = CountTool.count(filterInfo.params);
                     Ts.ls(filterInfo.params, new Ts.EachTs<KV<String, String>>() {
@@ -216,7 +216,7 @@ public class PathBuilder extends PathBuilderBase {
                 }
 
                 if (info.isFilter && StringTool.isNotBlank(filedType)) {
-                    fileList(nums[5], FullName.OBJ_TS, filedType, info.fieldFullName, info.filter, FullName.TS);
+                    fileList(nums[5], FullName.BASE_TS, filedType, info.fieldFullName, info.filter, FullName.TS);
                     PathFilterInfo filterInfo = PathFilterDeal.map.get(info.filter);
                     int filterParamsCount = CountTool.count(filterInfo.params);
                     Ts.ls(filterInfo.params, new Ts.EachTs<KV<String, String>>() {

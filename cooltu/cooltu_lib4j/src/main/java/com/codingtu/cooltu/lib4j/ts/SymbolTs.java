@@ -4,7 +4,7 @@ import com.codingtu.cooltu.lib4j.data.symbol.Symbol;
 
 import java.util.Objects;
 
-public class SymbolTs<SYMBOL extends Symbol> extends BaseTs<SYMBOL, SymbolTs> {
+public class SymbolTs<SYMBOL extends Symbol> extends CoreTs<SYMBOL, SymbolTs> {
 
     private String obtainSymbol(SYMBOL t) {
         return ((Symbol) t).obtainSymbol();

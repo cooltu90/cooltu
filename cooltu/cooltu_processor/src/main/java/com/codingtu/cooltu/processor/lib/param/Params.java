@@ -3,7 +3,7 @@ package com.codingtu.cooltu.processor.lib.param;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.ObjTs;
+import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.util.ArrayList;
@@ -127,7 +127,7 @@ public class Params {
         return getParam(Ts.ts(ss), convert);
     }
 
-    public static <S> String getParam(ObjTs<S> ts, Ts.Convert<S, String> convert) {
+    public static <S> String getParam(BaseTs<S> ts, Ts.Convert<S, String> convert) {
         StringBuilder sb = new StringBuilder();
         int index = 0;
         int count = ts.count();

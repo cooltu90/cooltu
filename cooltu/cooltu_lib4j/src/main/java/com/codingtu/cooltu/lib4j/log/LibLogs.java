@@ -3,7 +3,7 @@ package com.codingtu.cooltu.lib4j.log;
 import com.codingtu.cooltu.lib4j.config.LibConfigs;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.BaseTs;
+import com.codingtu.cooltu.lib4j.ts.CoreTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.util.Collection;
@@ -178,7 +178,7 @@ public class LibLogs {
         baseLog(level, tag, "└───────────────────────────────────────────────────────────────────────────────────────");
     }
 
-    private static <T> void logArray(int level, String tag, BaseTs getter) {
+    private static <T> void logArray(int level, String tag, CoreTs getter) {
         baseLog(level, tag, "");
         baseLog(level, tag, "┌──Array────────────────────────────────────────────────────────────────────────────────");
         if (getter == null || getter.count() <= 0) {

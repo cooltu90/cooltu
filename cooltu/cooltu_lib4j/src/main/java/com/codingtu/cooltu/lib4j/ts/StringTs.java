@@ -1,9 +1,8 @@
 package com.codingtu.cooltu.lib4j.ts;
 
-import java.util.List;
 import java.util.Objects;
 
-public class StringTs extends BaseTs<String, StringTs> {
+public class StringTs extends CoreTs<String, StringTs> {
 
     private Ts.IsThisOne<String> getIsThisOne(String... symbols) {
         return new Ts.IsThisOne<String>() {

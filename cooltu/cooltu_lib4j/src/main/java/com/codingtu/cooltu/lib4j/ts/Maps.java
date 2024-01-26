@@ -2,6 +2,7 @@ package com.codingtu.cooltu.lib4j.ts;
 
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.symbol.Symbol;
+import com.codingtu.cooltu.lib4j.log.LibLogs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,10 +12,6 @@ import java.util.Map;
 public class Maps<K, V> {
 
     protected Map<K, V> map;
-
-    public interface MapEach<K, V> {
-        public boolean each(K k, V v);
-    }
 
     public static <K, V> Maps<K, V> map(Map<K, V> map) {
         Maps<K, V> maps = new Maps<>();
@@ -36,7 +33,7 @@ public class Maps<K, V> {
         return maps;
     }
 
-    public void ls(MapEach<K, V> mapEach) {
+    public void ls(Ts.MapEach<K, V> mapEach) {
         Ts.ts(map.keySet()).ls(new Ts.EachTs<K>() {
             @Override
             public boolean each(int position, K k) {
@@ -47,10 +44,10 @@ public class Maps<K, V> {
     }
 
     public Maps<K, V> log() {
-        ls(new MapEach<K, V>() {
+        ls(new Ts.MapEach<K, V>() {
             @Override
             public boolean each(K k, V v) {
-                System.out.println("k:" + v + " v:" + v);
+                LibLogs.i("k:" + v + " v:" + v);
                 return false;
             }
         });
@@ -82,7 +79,7 @@ public class Maps<K, V> {
 
     public List<V> getValueList() {
         ArrayList<V> list = new ArrayList<>();
-        ls(new MapEach<K, V>() {
+        ls(new Ts.MapEach<K, V>() {
             @Override
             public boolean each(K k, V v) {
                 list.add(v);
@@ -92,7 +89,7 @@ public class Maps<K, V> {
         return list;
     }
 
-    public ObjTs<V> toValueTs() {
+    public BaseTs<V> toValueTs() {
         List<V> list = getValueList();
         return Ts.ts(list);
     }

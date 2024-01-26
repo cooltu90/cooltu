@@ -55,7 +55,7 @@ public class CheckPath extends com.codingtu.cooltu.lib4a.path.BasePath {
     }
 
 
-    public com.codingtu.cooltu.lib4j.ts.ObjTs<CheckLabelPath> labelList(
+    public com.codingtu.cooltu.lib4j.ts.BaseTs<CheckLabelPath> labelList(
     ) {
         com.codingtu.cooltu.path.filter.LabelFilter filter = new com.codingtu.cooltu.path.filter.LabelFilter();
         return com.codingtu.cooltu.lib4j.ts.Ts.ts(new java.io.File(root()).listFiles()).convert((index, file) -> {

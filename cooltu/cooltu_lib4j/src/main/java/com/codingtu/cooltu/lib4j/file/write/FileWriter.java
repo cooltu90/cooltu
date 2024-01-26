@@ -2,7 +2,7 @@ package com.codingtu.cooltu.lib4j.file.write;
 
 import com.codingtu.cooltu.lib4j.file.FileTool;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
-import com.codingtu.cooltu.lib4j.ts.BaseTs;
+import com.codingtu.cooltu.lib4j.ts.CoreTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.io.BufferedWriter;
@@ -61,7 +61,7 @@ public class FileWriter {
         write(Ts.ts(lines));
     }
 
-    public void write(BaseTs getter) {
+    public void write(CoreTs getter) {
         if (!isCover) {
             if (this.file.exists()) {
                 throw new RuntimeException("文件已经存在");

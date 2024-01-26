@@ -55,7 +55,7 @@ public class BindMultiDeal {
         builder.bindMulti(bindMultiCount, FullName.FORM_LINK, fieldKv.v + Suffix.LINK, linkClass, beanName, param);
         builder.linkEcho(builder.linkEchoCount(), linkName);
 
-        Maps.map(idMap).ls(new Maps.MapEach<Integer, IdTools.Id>() {
+        Maps.map(idMap).ls(new Ts.MapEach<Integer, IdTools.Id>() {
             @Override
             public boolean each(Integer viewId, IdTools.Id id) {
                 builder.addLink(bindMultiCount, builder.addLinkCount(bindMultiCount), id.toString(), linkName);
