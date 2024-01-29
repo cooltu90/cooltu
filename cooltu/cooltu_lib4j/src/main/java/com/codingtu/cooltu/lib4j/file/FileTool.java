@@ -36,11 +36,19 @@ public class FileTool {
      *
      **************************************************/
     public static BufferedReader getBufferedReader(File file) throws Exception {
-        return new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+        return getBufferedReader(file, "UTF-8");
     }
 
     public static BufferedWriter getBufferedWriter(File file) throws Exception {
-        return new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+        return getBufferedWriter(file, "UTF-8");
+    }
+
+    public static BufferedReader getBufferedReader(File file, String charsetName) throws Exception {
+        return new BufferedReader(new InputStreamReader(new FileInputStream(file), charsetName));
+    }
+
+    public static BufferedWriter getBufferedWriter(File file, String charsetName) throws Exception {
+        return new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), charsetName));
     }
 
     /**************************************************

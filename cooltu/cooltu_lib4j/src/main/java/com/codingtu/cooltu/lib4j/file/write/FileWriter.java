@@ -2,6 +2,7 @@ package com.codingtu.cooltu.lib4j.file.write;
 
 import com.codingtu.cooltu.lib4j.file.FileTool;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.CoreTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 
@@ -15,6 +16,7 @@ public class FileWriter {
 
     private File file;
     private boolean isCover;
+    private String charsetName;
 
     /**************************************************
      *
@@ -40,6 +42,11 @@ public class FileWriter {
 
     public FileWriter cover() {
         this.isCover = true;
+        return this;
+    }
+
+    public FileWriter charsetName(String charsetName) {
+        this.charsetName = charsetName;
         return this;
     }
 
@@ -74,8 +81,11 @@ public class FileWriter {
         BufferedWriter bw = null;
         try {
             FileTool.createFileDir(file);
-
-            bw = FileTool.getBufferedWriter(this.file);
+            if (StringTool.isNotBlank(charsetName)) {
+                bw = FileTool.getBufferedWriter(this.file, charsetName);
+            } else {
+                bw = FileTool.getBufferedWriter(this.file);
+            }
             int count = getter == null ? 0 : getter.count();
             for (int i = 0; i < count; i++) {
                 bw.write(getter.get(i).toString());

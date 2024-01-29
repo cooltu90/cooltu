@@ -2,6 +2,7 @@ package com.codingtu.cooltu.lib4j.file.read;
 
 import com.codingtu.cooltu.lib4j.file.FileTool;
 import com.codingtu.cooltu.lib4j.file.read.parse.Parse;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,6 +13,7 @@ import java.util.List;
 public class FileReader<T> {
     private File file;
     private Parse<T> parse;
+    private String charsetName;
 
     private FileReader() {
 
@@ -54,6 +56,12 @@ public class FileReader<T> {
         return this;
     }
 
+    public FileReader<T> charsetName(String charsetName) {
+        this.charsetName = charsetName;
+        return this;
+    }
+
+
     /**************************************************
      *
      * readline
@@ -75,7 +83,11 @@ public class FileReader<T> {
 
         BufferedReader br = null;
         try {
-            br = FileTool.getBufferedReader(file);
+            if (StringTool.isNotBlank(charsetName)) {
+                br = FileTool.getBufferedReader(file, charsetName);
+            } else {
+                br = FileTool.getBufferedReader(file);
+            }
             String line = null;
             while ((line = br.readLine()) != null) {
                 readLine.readLine(parse.parse(line));
