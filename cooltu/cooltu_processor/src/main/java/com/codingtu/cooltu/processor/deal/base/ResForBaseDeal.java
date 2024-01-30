@@ -8,6 +8,7 @@ import com.codingtu.cooltu.processor.annotation.res.Dimen;
 import com.codingtu.cooltu.processor.annotation.res.Dp;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.annotation.ui.InBase;
+import com.codingtu.cooltu.processor.annotation.ui.Init;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.NoticeDialogUse;
@@ -50,6 +51,10 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
         InBase inBase = ve.getAnnotation(InBase.class);
         if (inBase != null) {
             uiBaseBuilder.addInBase(kv);
+            Init init = ve.getAnnotation(Init.class);
+            if (init != null) {
+                uiBaseBuilder.addInits(ve);
+            }
         }
         ColorStr ColorStr = ve.getAnnotation(ColorStr.class);
         if (ColorStr != null) {

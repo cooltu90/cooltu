@@ -415,5 +415,16 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     protected void [dialogName]Left([if:leftParam][type] [name][if:leftParam]) { }
     protected void [dialogName]Right([if:rightParam][type] [name][if:rightParam]) { }
                                                                                                     [<sub>][for][dialog]
+                                                                                                    [<sub>][for][initMethod]
+    protected [typeFullName] [methodName]() {
+        if ([field] == null) {
+            [field] = new [typeFullName]();
+            [initMethodName]([field]);
+        }
+        return [field];
+    }
+
+    protected void [initMethodName]([typeFullName] [field]) {}
+                                                                                                    [<sub>][for][initMethod]
 }
 model_temp_end */

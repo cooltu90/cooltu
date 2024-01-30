@@ -305,4 +305,5 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
     protected void dialog1Left() { }
     protected void dialog1Right() { }
 
+
 }

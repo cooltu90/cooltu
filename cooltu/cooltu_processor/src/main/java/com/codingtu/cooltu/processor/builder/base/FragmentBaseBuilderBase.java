@@ -96,6 +96,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     protected java.util.Map<String, Integer> dialogCounts;
     protected StringBuilder dialogSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> dialog;
+    protected java.util.Map<String, Boolean> initMethodIfs;
+    protected java.util.Map<String, Integer> initMethodCounts;
+    protected StringBuilder initMethodSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> initMethod;
 
     public FragmentBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -192,6 +196,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         dialogCounts = new java.util.HashMap<>();
         dialogSb = map.get("dialog");
         dialog = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        initMethodIfs = new java.util.HashMap<>();
+        initMethodCounts = new java.util.HashMap<>();
+        initMethodSb = map.get("initMethod");
+        initMethod = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
 
@@ -383,6 +391,13 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     public void dialog(int i0, String dialogFullName, String dialogName) {
         addForMap(this.dialog, getForKey("dialog", i0), dialogFullName, dialogName, dialogName, dialogName);
         countAdd(dialogCounts, getForKey("dialog"));
+    }
+    public int initMethodCount() {
+        return count(initMethodCounts, getForKey("initMethod"));
+    }
+    public void initMethod(int i0, String typeFullName, String methodName, String field, String initMethodName) {
+        addForMap(this.initMethod, getForKey("initMethod", i0), typeFullName, methodName, field, field, typeFullName, initMethodName, field, field, initMethodName, typeFullName, field);
+        countAdd(initMethodCounts, getForKey("initMethod"));
     }
 
     public void layoutIf(String inflateToolFullName, String layout) {
@@ -880,6 +895,18 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             }
             addLnTag(dialogSb, "    protected void [dialogName]Right([rightParam]) { }", dialog0.get(3), rightParamSb.toString());
         }
+        for (int i0 = 0; i0 < count(initMethodCounts, getForKey("initMethod")); i0++) {
+            List<String> initMethod0 = initMethod.get(getForKey("initMethod", i0));
+            addLnTag(initMethodSb, "    protected [typeFullName] [methodName]() {", initMethod0.get(0), initMethod0.get(1));
+            addLnTag(initMethodSb, "        if ([field] == null) {", initMethod0.get(2));
+            addLnTag(initMethodSb, "            [field] = new [typeFullName]();", initMethod0.get(3), initMethod0.get(4));
+            addLnTag(initMethodSb, "            [initMethodName]([field]);", initMethod0.get(5), initMethod0.get(6));
+            addLnTag(initMethodSb, "        }");
+            addLnTag(initMethodSb, "        return [field];", initMethod0.get(7));
+            addLnTag(initMethodSb, "    }");
+            addLnTag(initMethodSb, "");
+            addLnTag(initMethodSb, "    protected void [initMethodName]([typeFullName] [field]) {}", initMethod0.get(8), initMethod0.get(9), initMethod0.get(10));
+        }
 
     }
 
@@ -960,6 +987,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("[[noticeDialog]]");
         lines.add("[[editDialog]]");
         lines.add("[[dialog]]");
+        lines.add("[[initMethod]]");
         lines.add("}");
 
         return lines;

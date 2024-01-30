@@ -56,6 +56,7 @@ public abstract class UiBaseBuilder {
     public List<ExecutableElement> actBackMethods = new ArrayList<>();
     public List<VariableElement> editDialogUses = new ArrayList<>();
     public List<VariableElement> dialogUses = new ArrayList<>();
+    public List<VariableElement> inits = new ArrayList<>();
 
     public boolean isToastDialog;
     public boolean isNoticeDialog;
@@ -90,6 +91,10 @@ public abstract class UiBaseBuilder {
 
     public void addInBase(KV<String, String> fieldKv) {
         inBases.add(fieldKv);
+    }
+
+    public void addInits(VariableElement ve) {
+        inits.add(ve);
     }
 
 
@@ -135,6 +140,8 @@ public abstract class UiBaseBuilder {
         noticeDialog();
 
         editDialog();
+
+        inits();
 
         Ts.ls(dialogUses, new Ts.EachTs<VariableElement>() {
             @Override
@@ -197,6 +204,16 @@ public abstract class UiBaseBuilder {
         });
 
 
+    }
+
+    private void inits() {
+        Ts.ls(inits, new Ts.EachTs<VariableElement>() {
+            @Override
+            public boolean each(int position, VariableElement ve) {
+                KV<String, String> kv = ElementTools.getFieldKv(ve);
+                return false;
+            }
+        });
     }
 
 
