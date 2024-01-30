@@ -32,6 +32,7 @@ public class FullName {
     public static final String HANDLER_ON_SELECT_CHANGE = "com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange";
     public static final String HANDLER_ON_SEEK_BAR_CHANGE_LISTENER = "com.codingtu.cooltu.lib4a.view.combine.HandlerOnSeekBarChangeListener";
     public static final String RADIO_GROUP = "com.codingtu.cooltu.lib4a.view.combine.RadioGroup";
+    public static final String RECYCLER_VIEW_DEFAULT_CONFIG = "com.codingtu.cooltu.lib4a.ui.recyclerview.DefaultConfig";
     //form
     public static final String DEFAULT_RADIO_GROUP_TO_STRING = Pkg.LIB4A_FORM + ".DefaultRadioGroupToString";
     public static final String FORM_LINK = Pkg.LIB4A_FORM + ".FormLink";

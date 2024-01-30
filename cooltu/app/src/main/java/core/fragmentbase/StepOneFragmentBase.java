@@ -58,7 +58,7 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
         dogAdapter.setVH(core.vh.DogVH.class);
         dogAdapter.setClick(this);
         rv1.setAdapter(dogAdapter);
-        rv1.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getAct()));
+        new com.codingtu.cooltu.lib4a.ui.recyclerview.DefaultConfig().config(getAct(), rv1);
 
         tv1.setOnClickListener(this);
 

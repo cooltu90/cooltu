@@ -247,8 +247,8 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     public int listAdapterCount() {
         return count(listAdapterCounts, getForKey("listAdapter"));
     }
-    public void listAdapter(int i0, String adapterName, String vhFullName, String rvName) {
-        addForMap(this.listAdapter, getForKey("listAdapter", i0), adapterName, vhFullName, adapterName, rvName, adapterName, rvName);
+    public void listAdapter(int i0, String adapterName, String vhFullName, String rvName, String configName) {
+        addForMap(this.listAdapter, getForKey("listAdapter", i0), adapterName, vhFullName, adapterName, rvName, adapterName, configName, rvName);
         countAdd(listAdapterCounts, getForKey("listAdapter"));
     }
     public int setOnClickCount() {
@@ -558,7 +558,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             addLnTag(listAdapterSb, "        [adapterName].setVH([vhFullName].class);", listAdapter0.get(0), listAdapter0.get(1));
             addLnTag(listAdapterSb, "        [adapterName].setClick(this);", listAdapter0.get(2));
             addLnTag(listAdapterSb, "        [rvName].setAdapter([adapterName]);", listAdapter0.get(3), listAdapter0.get(4));
-            addLnTag(listAdapterSb, "        [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getAct()));", listAdapter0.get(5));
+            addLnTag(listAdapterSb, "        new [configName]().config(getAct(), [rvName]);", listAdapter0.get(5), listAdapter0.get(6));
         }
         for (int i0 = 0; i0 < count(setOnClickCounts, getForKey("setOnClick")); i0++) {
             List<String> setOnClick0 = setOnClick.get(getForKey("setOnClick", i0));

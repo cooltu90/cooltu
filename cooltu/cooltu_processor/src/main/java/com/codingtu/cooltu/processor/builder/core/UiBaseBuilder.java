@@ -412,13 +412,26 @@ public abstract class UiBaseBuilder {
             @Override
             public boolean each(int position, VariableElement ve) {
                 Adapter adapter = ve.getAnnotation(Adapter.class);
+
+                String configClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                    @Override
+                    public Object get() {
+                        return adapter.rvConfig();
+                    }
+                });
+
                 KV<String, String> kv = ElementTools.getFieldKv(ve);
                 //添加字段
                 addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
                 addField(Constant.SIGN_PROTECTED, FullName.RECYCLER_VIEW, adapter.rvName());
                 String vh = VHDeal.vhMap.get(kv.k);
                 int adapterIndex = uiBase.listAdapterCount();
-                uiBase.listAdapter(adapterIndex, kv.v, vh, adapter.rvName());
+
+                if (ClassTool.isVoid(configClass)) {
+                    configClass = FullName.RECYCLER_VIEW_DEFAULT_CONFIG;
+                }
+
+                uiBase.listAdapter(adapterIndex, kv.v, vh, adapter.rvName(), configClass);
                 if (adapter.type() == AdapterType.DEFAULT_MORE_LIST) {
                     uiBase.loadMore(uiBase.loadMoreCount(), kv.v);
                     uiBase.defaultListMoreAdapterIf(adapterIndex, kv.v, kv.k);

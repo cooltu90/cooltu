@@ -51,7 +51,7 @@ public interface UiBaseInterface {
 
     int listAdapterCount();
 
-    void listAdapter(int adapterIndex, String v, String vh, String rvName);
+    void listAdapter(int adapterIndex, String v, String vh, String rvName,String configName);
 
     int loadMoreCount();
 

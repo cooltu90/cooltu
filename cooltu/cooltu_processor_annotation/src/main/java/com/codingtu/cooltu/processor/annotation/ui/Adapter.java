@@ -10,4 +10,6 @@ public @interface Adapter {
     AdapterType type() default AdapterType.DEFAULT_LIST;
 
     String rvName() default "rv";
+
+    Class rvConfig() default Void.class;
 }

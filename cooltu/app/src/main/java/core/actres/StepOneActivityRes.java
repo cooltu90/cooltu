@@ -3,6 +3,7 @@ package core.actres;
 import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.constant.AdapterType;
 import com.codingtu.cooltu.lib4a.constant.InputType;
+import com.codingtu.cooltu.lib4a.ui.recyclerview.HorizontalLinearConfig;
 import com.codingtu.cooltu.lib4a.view.dialogview.Dialog;
 import com.codingtu.cooltu.lib4a.view.dialogview.EditDialog;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;

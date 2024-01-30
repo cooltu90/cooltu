@@ -402,7 +402,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         [adapterName].setVH([vhFullName].class);
         [adapterName].setClick(this);
         [rvName].setAdapter([adapterName]);
-        [rvName].setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
+        new [configName]().config(getAct(), [rvName]);
                                                                                                     [<sub>][for][listAdapter]
                                                                                                     [<sub>][for][setOnClick]
         [fieldName].setOnClickListener(this);

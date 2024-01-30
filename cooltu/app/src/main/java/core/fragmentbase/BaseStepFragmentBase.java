@@ -34,7 +34,7 @@ public abstract class BaseStepFragmentBase extends com.codingtu.cooltu.lib4a.ui.
         catAdapter.setVH(core.vh.CatVH.class);
         catAdapter.setClick(this);
         rv.setAdapter(catAdapter);
-        rv.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getAct()));
+        new com.codingtu.cooltu.lib4a.ui.recyclerview.DefaultConfig().config(getAct(), rv);
 
         tv2.setOnClickListener(this);
 
