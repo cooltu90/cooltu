@@ -51,7 +51,7 @@ public interface UiBaseInterface {
 
     int listAdapterCount();
 
-    void listAdapter(int adapterIndex, String v, String vh, String rvName,String configName);
+    void listAdapter(int adapterIndex, String v, String vh, String rvName, String configName);
 
     int loadMoreCount();
 
@@ -142,4 +142,6 @@ public interface UiBaseInterface {
     void isSuperOnLongClickFalse(boolean hasBaseClass);
 
     void showDialogSetContentStrIf(int position, int i, String content);
+
+    void initMethod(int position, String typeFullName, String methodName, String field, String initMethodName);
 }

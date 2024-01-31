@@ -1,6 +1,7 @@
 package com.codingtu.cooltu.ui;
 
 import com.codingtu.cooltu.R;
+import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 
@@ -14,6 +15,7 @@ public class StepOneActivity extends StepOneActivityBase {
 
     @Override
     protected void dogAdapterLoadMore(int page) {
+        User user = user();
 
     }
 }

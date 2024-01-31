@@ -14,6 +14,7 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
+import com.codingtu.cooltu.processor.annotation.ui.Init;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
@@ -211,6 +212,13 @@ public abstract class UiBaseBuilder {
             @Override
             public boolean each(int position, VariableElement ve) {
                 KV<String, String> kv = ElementTools.getFieldKv(ve);
+                Init init = ve.getAnnotation(Init.class);
+                String methodName = init.value();
+                if (StringTool.isBlank(methodName)) {
+                    methodName = kv.v;
+                }
+//                String initMethodName = ConvertTool.toClassType(methodName);
+                uiBase.initMethod(position, kv.k, methodName, kv.v, methodName);
                 return false;
             }
         });

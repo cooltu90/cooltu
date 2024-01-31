@@ -244,6 +244,15 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected void dialogLeft(com.codingtu.cooltu.bean.User user) { }
     protected void dialogRight(com.codingtu.cooltu.bean.User user) { }
 
+    protected com.codingtu.cooltu.bean.User user() {
+        if (user == null) {
+            user = new com.codingtu.cooltu.bean.User();
+            user(user);
+        }
+        return user;
+    }
+
+    protected void user(com.codingtu.cooltu.bean.User user) {}
 
 
 
