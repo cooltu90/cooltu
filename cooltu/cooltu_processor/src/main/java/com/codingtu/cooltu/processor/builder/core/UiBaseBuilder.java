@@ -217,8 +217,15 @@ public abstract class UiBaseBuilder {
                 if (StringTool.isBlank(methodName)) {
                     methodName = kv.v;
                 }
-//                String initMethodName = ConvertTool.toClassType(methodName);
                 uiBase.initMethod(position, kv.k, methodName, kv.v, methodName);
+
+
+                boolean destory = init.isDestory();
+                if (destory) {
+                    uiBase.initAddDestoryIf(position, FullName.DESTORY_TOOL, kv.v);
+                }
+
+
                 return false;
             }
         });

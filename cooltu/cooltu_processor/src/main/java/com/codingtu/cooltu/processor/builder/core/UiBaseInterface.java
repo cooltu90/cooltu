@@ -144,4 +144,6 @@ public interface UiBaseInterface {
     void showDialogSetContentStrIf(int position, int i, String content);
 
     void initMethod(int position, String typeFullName, String methodName, String field, String initMethodName);
+
+    void initAddDestoryIf(int position, String destoryToolFullName, String field);
 }

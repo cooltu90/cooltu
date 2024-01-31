@@ -9,6 +9,7 @@ import retrofit2.adapter.rxjava2.Result;
 
 public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
     protected com.codingtu.cooltu.bean.User user;
+    protected com.codingtu.cooltu.ui.view.TestView testView;
     protected androidx.recyclerview.widget.RecyclerView rv;
     protected androidx.recyclerview.widget.RecyclerView rv1;
     protected com.codingtu.cooltu.ui.adapter.CatAdapter catAdapter;
@@ -253,6 +254,16 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
     }
 
     protected void user(com.codingtu.cooltu.bean.User user) {}
+    protected com.codingtu.cooltu.ui.view.TestView testView() {
+        if (testView == null) {
+            testView = new com.codingtu.cooltu.ui.view.TestView();
+            com.codingtu.cooltu.lib4a.tools.DestoryTool.onDestory(getAct(), testView);
+            testView(testView);
+        }
+        return testView;
+    }
+
+    protected void testView(com.codingtu.cooltu.ui.view.TestView testView) {}
 
 
 

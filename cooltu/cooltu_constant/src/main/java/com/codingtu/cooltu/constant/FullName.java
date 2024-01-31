@@ -46,6 +46,7 @@ public class FullName {
     public static final String SDCARD_TOOL = Pkg.LIB4A_TOOLS + ".SDCardTool";
     public static final String ACT_TOOL = Pkg.LIB4A_TOOLS + ".ActTool";
     public static final String VIEW_TOOL = Pkg.LIB4A_TOOLS + ".ViewTool";
+    public static final String DESTORY_TOOL = Pkg.LIB4A_TOOLS + ".DestoryTool";
     public static final String RESOURCE_TOOL = Pkg.LIB4A_TOOLS + ".ResourceTool";
     public static final String HANDLER_TOOL = Pkg.LIB4A_TOOLS + ".HandlerTool";
     public static final String PERMISSION_TOOL = Pkg.LIB4A_PERMISSION + ".PermissionTool";

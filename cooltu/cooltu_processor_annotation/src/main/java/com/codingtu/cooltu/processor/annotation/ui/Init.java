@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 public @interface Init {
     String value() default "";
+    boolean isDestory() default false;
 }

@@ -419,6 +419,9 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     protected [typeFullName] [methodName]() {
         if ([field] == null) {
             [field] = new [typeFullName]();
+                                                                                                    [<sub>][if][initAddDestory]
+            [destoryToolFullName].onDestory(getAct(), [field]);
+                                                                                                    [<sub>][if][initAddDestory]
             [initMethodName]([field]);
         }
         return [field];

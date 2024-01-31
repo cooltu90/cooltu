@@ -511,6 +511,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         addForMap(this.dialog, getIfKey("rightParam", i0), type, name);
         dialogIfs.put(getIfKey("rightParam", i0), true);
     }
+    public void initAddDestoryIf(int i0, String destoryToolFullName, String field) {
+        addForMap(this.initMethod, getIfKey("initAddDestory", i0), destoryToolFullName, field);
+        initMethodIfs.put(getIfKey("initAddDestory", i0), true);
+    }
 
     @Override
     protected void dealLinesInParent() {
@@ -900,6 +904,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             addLnTag(initMethodSb, "    protected [typeFullName] [methodName]() {", initMethod0.get(0), initMethod0.get(1));
             addLnTag(initMethodSb, "        if ([field] == null) {", initMethod0.get(2));
             addLnTag(initMethodSb, "            [field] = new [typeFullName]();", initMethod0.get(3), initMethod0.get(4));
+            if (isIf(initMethodIfs, getIfKey("initAddDestory", i0))) {
+                List<String> initMethod1 = initMethod.get(getIfKey("initAddDestory", i0));
+                addLnTag(initMethodSb, "            [destoryToolFullName].onDestory(getAct(), [field]);", initMethod1.get(0), initMethod1.get(1));
+            }
             addLnTag(initMethodSb, "            [initMethodName]([field]);", initMethod0.get(5), initMethod0.get(6));
             addLnTag(initMethodSb, "        }");
             addLnTag(initMethodSb, "        return [field];", initMethod0.get(7));

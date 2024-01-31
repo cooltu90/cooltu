@@ -16,6 +16,7 @@ import com.codingtu.cooltu.processor.annotation.ui.dialog.ToastDialogUse;
 import com.codingtu.cooltu.ui.StepOneActivity;
 import com.codingtu.cooltu.ui.adapter.CatAdapter;
 import com.codingtu.cooltu.ui.adapter.DogAdapter;
+import com.codingtu.cooltu.ui.view.TestView;
 
 @NoticeDialogUse
 @ToastDialogUse
@@ -49,5 +50,9 @@ public class StepOneActivityRes {
     @InBase
     @Init
     User user;
+
+    @InBase
+    @Init(isDestory = true)
+    TestView testView;
 
 }
