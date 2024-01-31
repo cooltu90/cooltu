@@ -27,8 +27,10 @@ public class CheckExtraInfoDeleteLabelPath extends com.codingtu.cooltu.lib4a.pat
 
 
     public com.codingtu.cooltu.lib4j.ts.BaseTs<CheckExtraInfoDeleteLabelLabelPath> labelList(
+            java.lang.String name
     ) {
         com.codingtu.cooltu.path.filter.LabelFilter filter = new com.codingtu.cooltu.path.filter.LabelFilter();
+        filter.name = name;
         return com.codingtu.cooltu.lib4j.ts.Ts.ts(new java.io.File(root()).listFiles()).convert((index, file) -> {
             if (filter.check(file)) {
                 return label(file.getName());

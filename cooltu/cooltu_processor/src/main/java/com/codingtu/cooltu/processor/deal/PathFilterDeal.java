@@ -1,6 +1,7 @@
 package com.codingtu.cooltu.processor.deal;
 
 import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.processor.annotation.path.PathFilterField;
 import com.codingtu.cooltu.processor.bean.PathFilterInfo;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
@@ -21,7 +22,10 @@ public class PathFilterDeal extends TypeBaseDeal {
         PathFilterInfo info = new PathFilterInfo();
         info.params = Ts.ts(te.getEnclosedElements()).convert((index, e) -> {
             if (e instanceof VariableElement) {
-                return ElementTools.getFieldKv((VariableElement) e);
+                PathFilterField pathFilterField = ((VariableElement) e).getAnnotation(PathFilterField.class);
+                if (pathFilterField != null) {
+                    return ElementTools.getFieldKv((VariableElement) e);
+                }
             }
             return null;
         }).toList();
