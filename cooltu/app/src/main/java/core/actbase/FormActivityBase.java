@@ -250,7 +250,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         }
         private void link(int id) {
             com.codingtu.cooltu.lib4j.ts.Ts.ls(getLinks().get(id), (position, formLink) -> {
-                formLink.link();
+                formLink.link(id);
                 return false;
             });
         }

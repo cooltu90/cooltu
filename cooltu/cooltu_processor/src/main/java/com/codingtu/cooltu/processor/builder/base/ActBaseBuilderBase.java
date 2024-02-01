@@ -1210,7 +1210,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             addLnTag(bindHandlerSb, "        }");
             addLnTag(bindHandlerSb, "        private void link(int id) {");
             addLnTag(bindHandlerSb, "            [tsFullName].ls(getLinks().get(id), (position, formLink) -> {", bindHandler0.get(12));
-            addLnTag(bindHandlerSb, "                formLink.link();");
+            addLnTag(bindHandlerSb, "                formLink.link(id);");
             addLnTag(bindHandlerSb, "                return false;");
             addLnTag(bindHandlerSb, "            });");
             addLnTag(bindHandlerSb, "        }");

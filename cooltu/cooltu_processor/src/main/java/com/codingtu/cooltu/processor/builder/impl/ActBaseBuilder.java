@@ -590,7 +590,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         }
         private void link(int id) {
             [tsFullName].ls(getLinks().get(id), (position, formLink) -> {
-                formLink.link();
+                formLink.link(id);
                 return false;
             });
         }

@@ -9,7 +9,7 @@ import com.codingtu.cooltu.lib4a.form.FormLink;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 
-public class AddressLink extends CoreFormLink {
+public class AddressLink extends CoreFormLink<Forms> {
     private Forms forms;
     private EditText provinceEt;
     private EditText cityEt;
@@ -29,13 +29,13 @@ public class AddressLink extends CoreFormLink {
     }
 
     @Override
-    public FormLink setBean(Object bean) {
-        forms = (Forms) bean;
+    public FormLink setBean(Forms bean) {
+        forms = bean;
         return this;
     }
 
     @Override
-    public void link() {
+    public void link(int id) {
         String province = provinceEt.getText().toString();
         String city = cityEt.getText().toString();
         String area = areaEt.getText().toString();
