@@ -10,7 +10,6 @@ import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 
 public class AddressLink extends CoreFormLink<Forms> {
-    private Forms forms;
     private EditText provinceEt;
     private EditText cityEt;
     private EditText areaEt;
@@ -21,16 +20,9 @@ public class AddressLink extends CoreFormLink<Forms> {
 
     @Override
     public FormLink setViews(View... views) {
-        //R.id.provinceEt, R.id.cityEt, R.id.areaEt
         provinceEt = (EditText) views[0];
         cityEt = (EditText) views[1];
         areaEt = (EditText) views[2];
-        return this;
-    }
-
-    @Override
-    public FormLink setBean(Forms bean) {
-        forms = bean;
         return this;
     }
 
@@ -39,12 +31,12 @@ public class AddressLink extends CoreFormLink<Forms> {
         String province = provinceEt.getText().toString();
         String city = cityEt.getText().toString();
         String area = areaEt.getText().toString();
-        forms.address = province + "-" + city + "-" + area;
+        bean.address = province + "-" + city + "-" + area;
     }
 
     @Override
     public void echo() {
-        String[] split = forms.address.split("-");
+        String[] split = bean.address.split("-");
         ViewTool.setEditTextAndSelection(provinceEt, split[0]);
         ViewTool.setEditTextAndSelection(cityEt, split[1]);
         ViewTool.setEditTextAndSelection(areaEt, split[2]);
@@ -52,7 +44,7 @@ public class AddressLink extends CoreFormLink<Forms> {
 
     @Override
     public void destroy() {
-        forms = null;
+        super.destroy();
         provinceEt = null;
         cityEt = null;
         areaEt = null;
