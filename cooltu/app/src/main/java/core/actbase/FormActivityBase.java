@@ -265,7 +265,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
             toast("请输入name2");
             return false;
         }
-        if (new com.codingtu.cooltu.form.Name1FormCheck().check(forms, forms.name3)) {
+        if (!new com.codingtu.cooltu.form.Name1FormCheck().check(forms, forms.name3)) {
             toast("请输入name3");
             return false;
         }
@@ -273,11 +273,11 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
             toast("请输入name4");
             return false;
         }
-        if (new com.codingtu.cooltu.lib4a.form.DefaultRadioGroupFormCheck().check(forms, radiosRg.getSelected())) {
+        if (!new com.codingtu.cooltu.lib4a.form.DefaultRadioGroupFormCheck().check(forms, radiosRg.getSelected())) {
             toast("请选择类型");
             return false;
         }
-        if (new com.codingtu.cooltu.lib4a.form.DefaultRadioGroupFormCheck().check(forms, radios1Rg.getSelected())) {
+        if (!new com.codingtu.cooltu.lib4a.form.DefaultRadioGroupFormCheck().check(forms, radios1Rg.getSelected())) {
             toast("请选择类型1");
             return false;
         }

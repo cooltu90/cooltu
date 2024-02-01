@@ -606,13 +606,13 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         }
                                                                                                     [<sub>][if][checkString]
                                                                                                     [<sub>][if][checkWithDeal]
-        if (new [checkClass]().check([bean], [bean].[field])) {
+        if (!new [checkClass]().check([bean], [bean].[field])) {
             toast("[promp]");
             return false;
         }
                                                                                                     [<sub>][if][checkWithDeal]
                                                                                                     [<sub>][if][checkRg]
-        if (new [defaultRadioGroupFormCheckFullName]().check([bean], [viewName]Rg.getSelected())) {
+        if (!new [defaultRadioGroupFormCheckFullName]().check([bean], [viewName]Rg.getSelected())) {
             toast("[promp]");
             return false;
         }

@@ -1230,14 +1230,14 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 }
                 if (isIf(checkFormsIfs, getIfKey("checkWithDeal", i0))) {
                     List<String> checkForms2 = checkForms.get(getIfKey("checkWithDeal", i0));
-                    addLnTag(checkFormsSb, "        if (new [checkClass]().check([bean], [bean].[field])) {", checkForms2.get(0), checkForms2.get(1), checkForms2.get(2), checkForms2.get(3));
+                    addLnTag(checkFormsSb, "        if (!new [checkClass]().check([bean], [bean].[field])) {", checkForms2.get(0), checkForms2.get(1), checkForms2.get(2), checkForms2.get(3));
                     addLnTag(checkFormsSb, "            toast(\"[promp]\");", checkForms2.get(4));
                     addLnTag(checkFormsSb, "            return false;");
                     addLnTag(checkFormsSb, "        }");
                 }
                 if (isIf(checkFormsIfs, getIfKey("checkRg", i0))) {
                     List<String> checkForms2 = checkForms.get(getIfKey("checkRg", i0));
-                    addLnTag(checkFormsSb, "        if (new [defaultRadioGroupFormCheckFullName]().check([bean], [viewName]Rg.getSelected())) {", checkForms2.get(0), checkForms2.get(1), checkForms2.get(2));
+                    addLnTag(checkFormsSb, "        if (!new [defaultRadioGroupFormCheckFullName]().check([bean], [viewName]Rg.getSelected())) {", checkForms2.get(0), checkForms2.get(1), checkForms2.get(2));
                     addLnTag(checkFormsSb, "            toast(\"[promp]\");", checkForms2.get(3));
                     addLnTag(checkFormsSb, "            return false;");
                     addLnTag(checkFormsSb, "        }");
