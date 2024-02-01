@@ -21,4 +21,8 @@ public class BasePath extends CoreBean {
     public String root() {
         return this.root;
     }
+
+    public File rootFile() {
+        return new File(root());
+    }
 }

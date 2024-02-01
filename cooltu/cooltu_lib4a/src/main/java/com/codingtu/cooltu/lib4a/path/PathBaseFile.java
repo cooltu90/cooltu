@@ -1,5 +1,7 @@
 package com.codingtu.cooltu.lib4a.path;
 
+import java.io.File;
+
 public class PathBaseFile {
 
     protected String root;
@@ -14,6 +16,11 @@ public class PathBaseFile {
     public String root() {
         return this.root;
     }
+
+    public File rootFile() {
+        return new File(root());
+    }
+
 
     public String type() {
         return type;
