@@ -47,6 +47,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> onCreateCompleteInitCounts;
     protected StringBuilder onCreateCompleteInitSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> onCreateCompleteInit;
+    protected java.util.Map<String, Boolean> initFormViewIfs;
+    protected java.util.Map<String, Integer> initFormViewCounts;
+    protected StringBuilder initFormViewSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> initFormView;
     protected java.util.Map<String, Boolean> listAdapterIfs;
     protected java.util.Map<String, Integer> listAdapterCounts;
     protected StringBuilder listAdapterSb;
@@ -195,6 +199,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         onCreateCompleteInitCounts = new java.util.HashMap<>();
         onCreateCompleteInitSb = map.get("onCreateCompleteInit");
         onCreateCompleteInit = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        initFormViewIfs = new java.util.HashMap<>();
+        initFormViewCounts = new java.util.HashMap<>();
+        initFormViewSb = map.get("initFormView");
+        initFormView = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         listAdapterIfs = new java.util.HashMap<>();
         listAdapterCounts = new java.util.HashMap<>();
         listAdapterSb = map.get("listAdapter");
@@ -669,6 +677,9 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     public void isOnCreateCompleteInit(boolean is) {
         onCreateCompleteInitIfs.put(getIfKey("onCreateCompleteInit"), is);
     }
+    public void isInitFormView(boolean is) {
+        initFormViewIfs.put(getIfKey("initFormView"), is);
+    }
     public void defaultListAdapterIf(int i0, String adapterName, String adapterFullName) {
         addForMap(this.listAdapter, getIfKey("defaultListAdapter", i0), adapterName, adapterName, adapterFullName);
         listAdapterIfs.put(getIfKey("defaultListAdapter", i0), true);
@@ -886,6 +897,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 }
                 addLnTag(formInitSb, "        [viewName].setTag([rPkg].R.id.tag_0, [viewName]Rg);", formInit1.get(5), formInit1.get(6), formInit1.get(7));
             }
+            addLnTag(formInitSb, "        initFormView();");
             addLnTag(formInitSb, "        //[name]", formInit0.get(0));
             addLnTag(formInitSb, "        if ([name] == null) {", formInit0.get(1));
             addLnTag(formInitSb, "            [name] = new [type]();", formInit0.get(2), formInit0.get(3));
@@ -964,6 +976,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         if (isIf(onCreateCompleteInitIfs, getIfKey("onCreateCompleteInit"))) {
             List<String> onCreateCompleteInit0 = onCreateCompleteInit.get(getIfKey("onCreateCompleteInit"));
             addLnTag(onCreateCompleteInitSb, "        onCreateComplete();");
+        }
+        if (isIf(initFormViewIfs, getIfKey("initFormView"))) {
+            List<String> initFormView0 = initFormView.get(getIfKey("initFormView"));
+            addLnTag(initFormViewSb, "    protected void initFormView() {}");
         }
         for (int i0 = 0; i0 < count(listAdapterCounts, getForKey("listAdapter")); i0++) {
             List<String> listAdapter0 = listAdapter.get(getForKey("listAdapter", i0));
@@ -1482,6 +1498,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[formInit]]");
         lines.add("[[onCreateCompleteInit]]");
         lines.add("    }");
+        lines.add("[[initFormView]]");
         lines.add("");
         lines.add("    @Override");
         lines.add("    public void onCreateComplete() {");

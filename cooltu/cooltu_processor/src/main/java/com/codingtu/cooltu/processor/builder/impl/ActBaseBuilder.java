@@ -178,6 +178,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             addField(Constant.SIGN_PUBLIC, "BindHandler", "bindHandler");
             bindHandlerIf(formBeanClass, name, FullName.FORM_LINK, FullName.LIST_VALUE_MAP, FullName.TS);
             formInitIf(name, formBeanClass);
+            isInitFormView(true);
             checkFormsIf(formBeanSimpleName);
             dealFormBean(formBeanTe, name);
         }
@@ -317,6 +318,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][if][rgDefaultItem]
         [viewName].setTag([rPkg].R.id.tag_0, [viewName]Rg);
                                                                                                     [<sub>][for][rgInit]
+        initFormView();
         //[name]
         if ([name] == null) {
             [name] = new [type]();
@@ -380,6 +382,9 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         onCreateComplete();
                                                                                                     [<sub>][if][onCreateCompleteInit]
     }
+                                                                                                    [<sub>][if][initFormView]
+    protected void initFormView() {}
+                                                                                                    [<sub>][if][initFormView]
 
     @Override
     public void onCreateComplete() {

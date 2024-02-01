@@ -64,6 +64,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         radios1Rg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(radios1).setOnSetItem(typeOnSetItem);
         radios1Rg.setSelected(1);
         radios1.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, radios1Rg);
+        initFormView();
         //forms
         if (forms == null) {
             forms = new com.codingtu.cooltu.bean.Forms();
@@ -104,6 +105,8 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         onCreateComplete();
 
     }
+    protected void initFormView() {}
+
 
     @Override
     public void onCreateComplete() {
