@@ -30,9 +30,11 @@ import com.codingtu.cooltu.processor.builder.subdeal.BindSeekBarDeal;
 import com.codingtu.cooltu.processor.builder.subdeal.BindTextViewDeal;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.FormBeanDeal;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
+import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -207,36 +209,34 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     private void dealFormBean(TypeElement te, String beanName) {
         Map<Integer, Integer> indexMap = new HashMap<>();
         Map<Integer, Integer> typeIndexMap = new HashMap<>();
-        Map<Integer, String> viewMap = new HashMap<>();
         Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap = new HashMap<>();
-
         Ts.ts(te.getEnclosedElements()).ls((position, element) -> {
             if (element instanceof VariableElement) {
                 VariableElement ve = (VariableElement) element;
 
                 BindEditText bindEditText = ve.getAnnotation(BindEditText.class);
                 if (bindEditText != null) {
-                    BindEditTextDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewMap, viewIndexMap, ve, bindEditText);
+                    BindEditTextDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewIndexMap, ve, bindEditText);
                 }
 
                 BindTextView bindTextView = ve.getAnnotation(BindTextView.class);
                 if (bindTextView != null) {
-                    BindTextViewDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewMap, viewIndexMap, ve, bindTextView);
+                    BindTextViewDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewIndexMap, ve, bindTextView);
                 }
 
                 BindRadioGroup bindRadioGroup = ve.getAnnotation(BindRadioGroup.class);
                 if (bindRadioGroup != null) {
-                    BindRadioGroupDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewMap, viewIndexMap, ve, bindRadioGroup);
+                    BindRadioGroupDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewIndexMap, ve, bindRadioGroup);
                 }
 
                 BindSeekBar bindSeekBar = ve.getAnnotation(BindSeekBar.class);
                 if (bindSeekBar != null) {
-                    BindSeekBarDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewMap, viewIndexMap, ve, bindSeekBar);
+                    BindSeekBarDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewIndexMap, ve, bindSeekBar);
                 }
 
                 BindMulti bindMulti = ve.getAnnotation(BindMulti.class);
                 if (bindMulti != null) {
-                    BindMultiDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewMap, viewIndexMap, ve, bindMulti);
+                    BindMultiDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewIndexMap, ve, bindMulti);
                 }
             }
             return false;

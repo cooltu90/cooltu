@@ -6,8 +6,10 @@ import com.codingtu.cooltu.processor.annotation.form.EchoType;
 import com.codingtu.cooltu.processor.annotation.form.FormType;
 import com.codingtu.cooltu.processor.annotation.form.view.BindEditText;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.FormTools;
+import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.TagTools;
 
 import java.util.Map;
@@ -17,12 +19,12 @@ import javax.lang.model.element.VariableElement;
 public class BindEditTextDeal {
 
     public static void deal(ActBaseBuilder builder, String beanName, Map<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
-                            Map<Integer, String> viewMap, Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap,
+                            Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap,
                             VariableElement ve, BindEditText bindEditText) {
         String type = "EDIT_TEXT";
         int typeInt = FormType.EDIT_TEXT;
         String viewName = FormTools.getViewName(bindEditText.name(), ve, BindEditText.class, bindEditText.value());
-        viewMap.put(bindEditText.value(), viewName);
+
         int index = FormTools.getIndex(indexMap, typeInt);
         int typeIndex = FormTools.getTypeIndex(builder, typeIndexMap, type, typeInt);
 

@@ -18,12 +18,11 @@ import javax.lang.model.element.VariableElement;
 public class BindSeekBarDeal {
 
     public static void deal(ActBaseBuilder builder, String beanName, Map<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
-                            Map<Integer, String> viewMap, Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap,
+                            Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap,
                             VariableElement ve, BindSeekBar bindSeekBar) {
         String type = "SEEK_BAR";
         int typeInt = FormType.SEEK_BAR;
         String viewName = FormTools.getViewName(bindSeekBar.name(), ve, BindSeekBar.class, bindSeekBar.value());
-        viewMap.put(bindSeekBar.value(), viewName);
         int index = FormTools.getIndex(indexMap, typeInt);
         int typeIndex = FormTools.getTypeIndex(builder, typeIndexMap, type, typeInt);
 

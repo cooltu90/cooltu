@@ -23,12 +23,11 @@ import javax.lang.model.element.VariableElement;
 public class BindTextViewDeal {
 
     public static void deal(ActBaseBuilder builder, String beanName, Map<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
-                            Map<Integer, String> viewMap, Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap,
+                            Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap,
                             VariableElement ve, BindTextView bindTextView) {
         String type = "TEXT_VIEW";
         int typeInt = FormType.TEXT_VIEW;
         String viewName = FormTools.getViewName(bindTextView.name(), ve, BindTextView.class, bindTextView.value());
-        viewMap.put(bindTextView.value(), viewName);
         int index = FormTools.getIndex(indexMap, typeInt);
         int typeIndex = FormTools.getTypeIndex(builder, typeIndexMap, type, typeInt);
 

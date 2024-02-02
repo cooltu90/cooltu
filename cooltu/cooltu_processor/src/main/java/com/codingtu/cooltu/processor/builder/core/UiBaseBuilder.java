@@ -63,6 +63,7 @@ public abstract class UiBaseBuilder {
     public boolean isNoticeDialog;
     private List<String> inBaseInParent;
     private Map<String, LayoutTools.ViewInfo> childViewMap;
+    public Map<String, LayoutTools.ViewInfo> parentViewMap;
     private Map<String, LayoutTools.ViewInfo> allViewMap;
 
 
@@ -102,6 +103,7 @@ public abstract class UiBaseBuilder {
     public void dealLines() {
         inBaseInParent = getInBaseInParent();
         childViewMap = getChildViewMap();
+        parentViewMap = getParentViewMap();
         allViewMap = getAllViewMap();
 
         uiBase.addTag(getStringBuilder("pkg"), javaInfo().pkg);
@@ -696,6 +698,12 @@ public abstract class UiBaseBuilder {
     private Map<String, LayoutTools.ViewInfo> getChildViewMap() {
         HashMap<String, LayoutTools.ViewInfo> map = new HashMap<>();
         addViewMap(map, getChilds());
+        return map;
+    }
+
+    protected Map<String, LayoutTools.ViewInfo> getParentViewMap() {
+        HashMap<String, LayoutTools.ViewInfo> map = new HashMap<>();
+        addViewMap(map, getParents());
         return map;
     }
 

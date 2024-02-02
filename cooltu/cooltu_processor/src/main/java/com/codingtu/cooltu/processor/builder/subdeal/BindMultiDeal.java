@@ -8,6 +8,7 @@ import com.codingtu.cooltu.lib4j.ts.Maps;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.form.view.BindMulti;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
@@ -30,7 +31,7 @@ public class BindMultiDeal {
 
     public static void deal(ActBaseBuilder builder, String beanName,
                             Map<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
-                            Map<Integer, String> viewMap, Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap,
+                            Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap,
                             VariableElement ve, BindMulti bindMulti) {
         Map<Integer, IdTools.Id> idMap = IdTools.elementToIds(ve, BindMulti.class, bindMulti.ids());
         String linkClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
@@ -42,11 +43,13 @@ public class BindMultiDeal {
 
         KV<String, String> fieldKv = ElementTools.getFieldKv(ve);
 
-
         String param = Params.getParam(Ts.ints(bindMulti.ids()), new Ts.Convert<Integer, String>() {
             @Override
-            public String convert(int index, Integer id) {
-                return viewMap.get(id);
+            public String convert(int index, Integer rid) {
+                IdTools.Id id = idMap.get(rid);
+                String fieldName = builder.getUiBaseBuilder().parentViewMap.get(id.rName).fieldName;
+                Logs.i("fieldName:" + fieldName);
+                return fieldName;
             }
         });
 
