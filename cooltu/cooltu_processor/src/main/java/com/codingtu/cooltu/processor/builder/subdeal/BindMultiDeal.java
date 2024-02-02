@@ -60,7 +60,8 @@ public class BindMultiDeal {
             public boolean each(Integer viewId, IdTools.Id id) {
                 builder.addLink(bindMultiCount, builder.addLinkCount(bindMultiCount), id.toString(), linkName);
                 ViewIndex viewIndex = viewIndexMap.get(viewId);
-                builder.handlerItemLinkIf(viewIndex.typeIndex, viewIndex.handleIndex, id.toString());
+                if (viewIndex != null)
+                    builder.handlerItemLinkIf(viewIndex.typeIndex, viewIndex.handleIndex, id.toString());
                 return false;
             }
         });
