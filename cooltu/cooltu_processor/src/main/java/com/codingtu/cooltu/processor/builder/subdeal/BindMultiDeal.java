@@ -12,6 +12,7 @@ import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
+import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
 import java.util.Map;
 
@@ -31,7 +32,7 @@ public class BindMultiDeal {
 
     public static void deal(ActBaseBuilder builder, String beanName,
                             Map<Integer, Integer> indexMap, Map<Integer, Integer> typeIndexMap,
-                            Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap,
+                            Map<String, LayoutTools.ViewInfo> viewMap, Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap,
                             VariableElement ve, BindMulti bindMulti) {
         Map<Integer, IdTools.Id> idMap = IdTools.elementToIds(ve, BindMulti.class, bindMulti.ids());
         String linkClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
@@ -47,7 +48,11 @@ public class BindMultiDeal {
             @Override
             public String convert(int index, Integer rid) {
                 IdTools.Id id = idMap.get(rid);
-                String fieldName = builder.getUiBaseBuilder().parentViewMap.get(id.rName).fieldName;
+                LayoutTools.ViewInfo viewInfo = viewMap.get(id.rName);
+                if (viewInfo == null) {
+                    return null;
+                }
+                String fieldName = viewInfo.fieldName;
                 Logs.i("fieldName:" + fieldName);
                 return fieldName;
             }

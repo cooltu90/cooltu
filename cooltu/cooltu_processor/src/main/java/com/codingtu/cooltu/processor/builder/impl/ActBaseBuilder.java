@@ -9,6 +9,7 @@ import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
+import com.codingtu.cooltu.lib4j.ts.Maps;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.annotation.form.Form;
@@ -210,6 +211,18 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         Map<Integer, Integer> indexMap = new HashMap<>();
         Map<Integer, Integer> typeIndexMap = new HashMap<>();
         Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap = new HashMap<>();
+
+        Map<String, LayoutTools.ViewInfo> viewMap = getUiBaseBuilder().getParentViewMap();
+        Maps.map(viewMap).ls(new Ts.MapEach<String, LayoutTools.ViewInfo>() {
+            @Override
+            public boolean each(String s, LayoutTools.ViewInfo viewInfo) {
+                Logs.i("===============");
+                Logs.i("s:" + s);
+                Logs.i("fieldName:" + viewInfo.fieldName);
+                return false;
+            }
+        });
+
         Ts.ts(te.getEnclosedElements()).ls((position, element) -> {
             if (element instanceof VariableElement) {
                 VariableElement ve = (VariableElement) element;
@@ -236,7 +249,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
                 BindMulti bindMulti = ve.getAnnotation(BindMulti.class);
                 if (bindMulti != null) {
-                    BindMultiDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewIndexMap, ve, bindMulti);
+                    BindMultiDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewMap, viewIndexMap, ve, bindMulti);
                 }
             }
             return false;
