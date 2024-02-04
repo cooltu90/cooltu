@@ -3,7 +3,9 @@ package com.codingtu.cooltu.formbind.binder;
 import android.view.View;
 import android.widget.EditText;
 
-public class MonthBinder extends CoreBinder<MonthBinder> {
+import com.codingtu.cooltu.lib4a.formbind.binder.Binder;
+
+public class MonthBinder implements Binder<MonthBinder> {
 
     private EditText et;
 
@@ -20,7 +22,7 @@ public class MonthBinder extends CoreBinder<MonthBinder> {
     }
 
     @Override
-    protected void destoryOthers() {
+    public void destroy() {
         et = null;
     }
 }

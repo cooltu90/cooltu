@@ -3,7 +3,9 @@ package com.codingtu.cooltu.formbind.binder;
 import android.view.View;
 import android.widget.EditText;
 
-public class YearBinder extends CoreBinder<YearBinder> {
+import com.codingtu.cooltu.lib4a.formbind.binder.Binder;
+
+public class YearBinder implements Binder<YearBinder> {
     private EditText et;
 
 
@@ -20,7 +22,7 @@ public class YearBinder extends CoreBinder<YearBinder> {
     }
 
     @Override
-    protected void destoryOthers() {
+    public void destroy() {
         et = null;
     }
 }

@@ -3,7 +3,9 @@ package com.codingtu.cooltu.formbind.binder;
 import android.view.View;
 import android.widget.EditText;
 
-public class AddressBinder extends CoreBinder<AddressBinder> {
+import com.codingtu.cooltu.lib4a.formbind.binder.Binder;
+
+public class AddressBinder implements Binder<AddressBinder> {
 
     private EditText provinceEt;
     private EditText cityEt;
@@ -26,8 +28,9 @@ public class AddressBinder extends CoreBinder<AddressBinder> {
         return et.getText().toString();
     }
 
+
     @Override
-    protected void destoryOthers() {
+    public void destroy() {
         provinceEt = null;
         cityEt = null;
         areaEt = null;

@@ -1,7 +1,6 @@
-package com.codingtu.cooltu.formbind.binder;
+package com.codingtu.cooltu.lib4a.formbind.binder;
 
 import android.view.View;
-import android.widget.EditText;
 
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 
