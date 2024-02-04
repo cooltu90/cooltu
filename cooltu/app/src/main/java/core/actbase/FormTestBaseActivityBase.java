@@ -30,7 +30,6 @@ public abstract class FormTestBaseActivityBase extends com.codingtu.cooltu.ui.ba
 
     }
 
-
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
@@ -80,9 +79,6 @@ public abstract class FormTestBaseActivityBase extends com.codingtu.cooltu.ui.ba
         super.back(requestCode, permissions, grantResults);
 
     }
-
-
-
 
 
 

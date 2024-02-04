@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4a.formbind.advice;
+package com.codingtu.cooltu.lib4a.form.advice;
 
 import android.os.Message;
 import android.text.Editable;
@@ -6,7 +6,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
-public class EditTextAdvice extends CoreAdvice<EditTextAdvice> implements TextWatcher {
+public class DefaultEditTextAdvice extends CoreAdvice<DefaultEditTextAdvice> implements TextWatcher {
 
     private EditText et;
 
@@ -16,7 +16,7 @@ public class EditTextAdvice extends CoreAdvice<EditTextAdvice> implements TextWa
     }
 
     @Override
-    public EditTextAdvice addViews(View... views) {
+    public DefaultEditTextAdvice addViews(View... views) {
         et = (EditText) views[0];
         return this;
     }

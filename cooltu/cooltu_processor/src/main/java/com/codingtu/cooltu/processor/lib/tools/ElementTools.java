@@ -44,4 +44,10 @@ public class ElementTools {
             return (VariableElement) element;
         }).toList();
     }
+
+    public static void ls(List<? extends Element> enclosedElements, Ts.EachTs<Element> elementEachTs) {
+        Ts.ls(enclosedElements, (position, element) -> {
+            return elementEachTs.each(position, element);
+        });
+    }
 }

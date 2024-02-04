@@ -5,6 +5,7 @@ import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
+import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
@@ -12,29 +13,21 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Maps;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.BuilderType;
-import com.codingtu.cooltu.processor.annotation.form.Form;
-import com.codingtu.cooltu.processor.annotation.form.FormBean;
-import com.codingtu.cooltu.processor.annotation.form.view.BindEditText;
-import com.codingtu.cooltu.processor.annotation.form.view.BindMulti;
-import com.codingtu.cooltu.processor.annotation.form.view.BindRadioGroup;
-import com.codingtu.cooltu.processor.annotation.form.view.BindSeekBar;
-import com.codingtu.cooltu.processor.annotation.form.view.BindTextView;
+import com.codingtu.cooltu.processor.annotation.formbind.Advice;
+import com.codingtu.cooltu.processor.annotation.formbind.BindETs;
+import com.codingtu.cooltu.processor.annotation.formbind.FormBind;
+import com.codingtu.cooltu.processor.annotation.formbind.FormObject;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.core.UiBaseInterface;
-import com.codingtu.cooltu.processor.builder.subdeal.BindEditTextDeal;
-import com.codingtu.cooltu.processor.builder.subdeal.BindMultiDeal;
-import com.codingtu.cooltu.processor.builder.subdeal.BindRadioGroupDeal;
-import com.codingtu.cooltu.processor.builder.subdeal.BindSeekBarDeal;
-import com.codingtu.cooltu.processor.builder.subdeal.BindTextViewDeal;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
-import com.codingtu.cooltu.processor.deal.FormBeanDeal;
-import com.codingtu.cooltu.processor.lib.log.Logs;
+import com.codingtu.cooltu.processor.deal.FormObjectDeal;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
+import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 
 import java.util.ArrayList;
@@ -42,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
@@ -59,7 +53,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     public List<KV<String, String>> starts = new ArrayList<>();
     public List<Permission> permissions = new ArrayList<>();
     public List<ExecutableElement> permissionMethods = new ArrayList<>();
-    public Form form;
+    public FormBind formBind;
 
     public ActBaseBuilder(JavaInfo info) {
         super(info);
@@ -160,30 +154,87 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
         isOnCreateCompleteInit(!uiBaseBuilder.hasChild());
 
-        //form
-        if (form != null) {
+        if (formBind != null) {
+
             String formBeanClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
                 @Override
                 public Object get() {
-                    return form.value();
+                    return formBind.value();
                 }
             });
-            TypeElement formBeanTe = FormBeanDeal.MAP.get(formBeanClass);
-
+            TypeElement formBeanTe = FormObjectDeal.MAP.get(formBeanClass);
             String formBeanSimpleName = CurrentPath.javaInfo(formBeanClass).name;
 
-            String name = formBeanTe.getAnnotation(FormBean.class).value();
+            String name = formBeanTe.getAnnotation(FormObject.class).value();
             if (StringTool.isBlank(name)) {
                 name = ConvertTool.toMethodType(formBeanSimpleName);
             }
             addField(Constant.SIGN_PROTECTED, formBeanClass, name);
             addField(Constant.SIGN_PROTECTED, "boolean", "initFormBean");
-            addField(Constant.SIGN_PUBLIC, "BindHandler", "bindHandler");
-            bindHandlerIf(formBeanClass, name, FullName.FORM_LINK, FullName.LIST_VALUE_MAP, FullName.TS);
-            formInitIf(name, formBeanClass);
-            isInitFormView(true);
-            checkFormsIf(formBeanSimpleName);
-            dealFormBean(formBeanTe, name);
+            addField(Constant.SIGN_PROTECTED, "BindHandler", "bindHandler");
+
+            HashMap<String, String> adviceMap = new HashMap<>();
+            ElementTools.ls(formBeanTe.getEnclosedElements(), new Ts.EachTs<Element>() {
+                @Override
+                public boolean each(int position, Element element) {
+                    if (element instanceof VariableElement) {
+                        VariableElement ve = (VariableElement) element;
+                        Advice advice = ve.getAnnotation(Advice.class);
+                        if (advice != null) {
+                            String adviceClassName = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                                @Override
+                                public Object get() {
+                                    return advice.value();
+                                }
+                            });
+                        } else {
+                            BindETs bindETs = ve.getAnnotation(BindETs.class);
+                            if (bindETs != null) {
+                                Maps.map(IdTools.elementToIds(ve, BindETs.class, bindETs.value())).ls(new Ts.MapEach<Integer, IdTools.Id>() {
+                                    @Override
+                                    public boolean each(Integer integer, IdTools.Id id) {
+                                        adviceMap.put(id.rName, FullName.DEFAULT_EDIT_TEXT_ADVICE);
+                                        return false;
+                                    }
+                                });
+                            }
+                        }
+                    }
+                    return false;
+                }
+            });
+
+            Map<String, LayoutTools.ViewInfo> parentViewMap = uiBaseBuilder.getParentViewMap();
+
+            LibLogs.i(parentViewMap);
+            LibLogs.i(adviceMap);
+
+            //
+            StringBuilder formInitSb = new StringBuilder();
+            addLnTag(formInitSb, "        initFormView();");
+            addLnTag(formInitSb, "        if ([forms] == null) {", name);
+            addLnTag(formInitSb, "            [forms] = new [FormsObj]();", name, formBeanClass);
+            addLnTag(formInitSb, "            initFormBean = true;");
+            addLnTag(formInitSb, "        }");
+            addLnTag(formInitSb, "        bindHandler = new BindHandler(this, [forms]);", name);
+            addLnTag(formInitSb, "");
+
+            Maps.map(adviceMap).ls(new Ts.MapEach<String, String>() {
+                @Override
+                public boolean each(String id, String adviceClassName) {
+                    addLnTag(formInitSb, "        new [advice]().addHandler(bindHandler).addViews([view]).start();"
+                            , adviceClassName, parentViewMap.get(id).fieldName);
+                    return false;
+                }
+            });
+
+            addLnTag(formInitSb, "        if (!initFormBean) {");
+            addLnTag(formInitSb, "        }");
+            formInitIf(formInitSb.toString());
+            //
+            StringBuilder formMethodsSb = new StringBuilder();
+            addLnTag(formMethodsSb, "    protected void initFormView() {}");
+            formMethodsIf(formMethodsSb.toString());
         }
     }
 
@@ -197,72 +248,17 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         return "";
     }
 
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
-
     public boolean addField(String sign, String type, String name) {
         return uiBaseBuilder.addField(sign, type, name);
     }
 
-    private void dealFormBean(TypeElement te, String beanName) {
-        Map<Integer, Integer> indexMap = new HashMap<>();
-        Map<Integer, Integer> typeIndexMap = new HashMap<>();
-        Map<Integer, BindMultiDeal.ViewIndex> viewIndexMap = new HashMap<>();
-
-        Map<String, LayoutTools.ViewInfo> viewMap = getUiBaseBuilder().getParentViewMap();
-        Maps.map(viewMap).ls(new Ts.MapEach<String, LayoutTools.ViewInfo>() {
-            @Override
-            public boolean each(String s, LayoutTools.ViewInfo viewInfo) {
-                Logs.i("===============");
-                Logs.i("s:" + s);
-                Logs.i("fieldName:" + viewInfo.fieldName);
-                return false;
-            }
-        });
-
-        Ts.ts(te.getEnclosedElements()).ls((position, element) -> {
-            if (element instanceof VariableElement) {
-                VariableElement ve = (VariableElement) element;
-
-                BindEditText bindEditText = ve.getAnnotation(BindEditText.class);
-                if (bindEditText != null) {
-                    BindEditTextDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewIndexMap, ve, bindEditText);
-                }
-
-                BindTextView bindTextView = ve.getAnnotation(BindTextView.class);
-                if (bindTextView != null) {
-                    BindTextViewDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewIndexMap, ve, bindTextView);
-                }
-
-                BindRadioGroup bindRadioGroup = ve.getAnnotation(BindRadioGroup.class);
-                if (bindRadioGroup != null) {
-                    BindRadioGroupDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewIndexMap, ve, bindRadioGroup);
-                }
-
-                BindSeekBar bindSeekBar = ve.getAnnotation(BindSeekBar.class);
-                if (bindSeekBar != null) {
-                    BindSeekBarDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewIndexMap, ve, bindSeekBar);
-                }
-
-                BindMulti bindMulti = ve.getAnnotation(BindMulti.class);
-                if (bindMulti != null) {
-                    BindMultiDeal.deal(ActBaseBuilder.this, beanName, indexMap, typeIndexMap, viewMap, viewIndexMap, ve, bindMulti);
-                }
-            }
-            return false;
-        });
-    }
-
     @Override
     public void isCheckForm(int index, boolean isCheckForm) {
-        if (form != null && isCheckForm) {
+        if (formBind != null && isCheckForm) {
             String formBeanClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
                 @Override
                 public Object get() {
-                    return form.value();
+                    return formBind.value();
                 }
             });
             String formBeanSimpleName = CurrentPath.javaInfo(formBeanClass).name;
@@ -320,84 +316,12 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         [name] = [passFullName].[name](getIntent());
                                                                                                     [<sub>][for][startInit]
                                                                                                     [<sub>][if][formInit]
-                                                                                                    [<sub>][for][rgInit]
-        //[viewName]Rg
-                                                                                                    [<sub>][if][rgOnSetItemInit]
-        [name] = new [type]();
-                                                                                                    [<sub>][if][rgOnSetItemInit]
-        [viewName]Rg = [radioGroupFullName].obtain(this).setBts([viewName]).setOnSetItem([onSetItem]);
-                                                                                                    [<sub>][if][rgDefaultItem]
-        [viewName]Rg.setSelected([index]);
-                                                                                                    [<sub>][if][rgDefaultItem]
-        [viewName].setTag([rPkg].R.id.tag_0, [viewName]Rg);
-                                                                                                    [<sub>][for][rgInit]
-        initFormView();
-        //[name]
-        if ([name] == null) {
-            [name] = new [type]();
-            initFormBean = true;
-        }
-        bindHandler = new BindHandler([name]);
-                                                                                                    [<sub>][for][editTextInit]
-        [name].addTextChangedListener(new [handlerTextWatcherFullName](bindHandler, [formTypeFullName].[type], [index]));
-                                                                                                    [<sub>][for][editTextInit]
-                                                                                                    [<sub>][for][textViewInit]
-        [name].addTextChangedListener(new [handlerTextWatcherFullName](bindHandler, [formTypeFullName].[type], [index]));
-                                                                                                    [<sub>][for][textViewInit]
-                                                                                                    [<sub>][for][rgBind]
-        [viewName]Rg.addOnSelectChange(new [handlerOnSelectChangeFullName](bindHandler, [formTypeFullName].[type], [index]));
-                                                                                                    [<sub>][for][rgBind]
-                                                                                                    [<sub>][for][seekBarBind]
-        [name].setOnSeekBarChangeListener(new [handlerOnSeekBarChangeListenerFullName](bindHandler, [formTypeFullName].[type], [index]));
-                                                                                                    [<sub>][for][seekBarBind]
-                                                                                                    [<sub>][for][bindMulti]
-        [formLinkFullName] [linkName] = new [linkType](this)
-                .setBean([beanName])
-                .setViews([views]);
-                                                                                                    [<sub>][for][addLink]
-        bindHandler.addLink([viewId], [linkName]);
-                                                                                                    [<sub>][for][addLink]
-                                                                                                    [<sub>][for][bindMulti]
-        if (!initFormBean) {
-                                                                                                    [<sub>][for][echos]
-[echos]
-                                                                                                    [<sub>][for][echos]
-                                                                                                    [<sub>][for][etEchoWithParse]
-            [viewToolFullName].setText([view], new [parse]().toView([bean].[field]));
-                                                                                                    [<sub>][for][etEchoWithParse]
-                                                                                                    [<sub>][for][etEcho]
-            [viewToolFullName].setText([view], [bean].[field]);
-                                                                                                    [<sub>][for][etEcho]
-                                                                                                    [<sub>][for][tvEchoWithParse]
-            [viewToolFullName].setText([view], new [parse]().toView([bean].[field]));
-                                                                                                    [<sub>][for][tvEchoWithParse]
-                                                                                                    [<sub>][for][tvEcho]
-            [viewToolFullName].setText([view], [bean].[field]);
-                                                                                                    [<sub>][for][tvEcho]
-                                                                                                    [<sub>][for][rgEcho]
-            [viewName]Rg.setSelected(new [defaultRadioGroupToStringFullName]([items]).toView([bean].[field]));
-                                                                                                    [<sub>][for][rgEcho]
-                                                                                                    [<sub>][for][rgEchoWithParse]
-            [viewName]Rg.setSelected(new [parse]().toView([bean].[field]));
-                                                                                                    [<sub>][for][rgEchoWithParse]
-                                                                                                    [<sub>][for][seekBarEcho]
-            [viewName].setProgress([bean].[field]);
-                                                                                                    [<sub>][for][seekBarEcho]
-                                                                                                    [<sub>][for][seekBarEchoWithParse]
-            [viewName].setProgress(new [parse]().toView([bean].[field]));
-                                                                                                    [<sub>][for][seekBarEchoWithParse]
-                                                                                                    [<sub>][for][linkEcho]
-            [lineName].echo();
-                                                                                                    [<sub>][for][linkEcho]
-        }
+[formInit]
                                                                                                     [<sub>][if][formInit]
                                                                                                     [<sub>][if][onCreateCompleteInit]
         onCreateComplete();
                                                                                                     [<sub>][if][onCreateCompleteInit]
     }
-                                                                                                    [<sub>][if][initFormView]
-    protected void initFormView() {}
-                                                                                                    [<sub>][if][initFormView]
 
     @Override
     public void onCreateComplete() {
@@ -551,89 +475,6 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][permissionBackMethod]
     protected void [methodName]([if:allowParam]boolean isAllow[if:allowParam]) {}
                                                                                                     [<sub>][for][permissionBackMethod]
-                                                                                                    [<sub>][if][bindHandler]
-    public static class BindHandler extends android.os.Handler {
-        private [beanType] [beanName];
-
-        public BindHandler([beanType] [beanName]) {
-            this.[beanName] = [beanName];
-        }
-
-        @Override
-        public void handleMessage(android.os.Message msg) {
-            super.handleMessage(msg);
-                                                                                                    [<sub>][for][handler]
-            if (msg.what == [formTypeFullName].[type]) {
-                switch (msg.arg1) {
-                                                                                                    [<sub>][for][handlerItem]
-                    case [index]:
-                                                                                                    [<sub>][if][handlerItemString]
-                        [beanName].[field] = (java.lang.String) msg.obj;
-                                                                                                    [<sub>][if][handlerItemString]
-                                                                                                    [<sub>][if][handlerItemRg]
-                        [beanName].[field] = new [defaultRadioGroupToStringFullName]([items]).toBean(msg.obj);
-                                                                                                    [<sub>][if][handlerItemRg]
-                                                                                                    [<sub>][if][handlerItemInt]
-                        [beanName].[field] = (int) msg.obj;
-                                                                                                    [<sub>][if][handlerItemInt]
-                                                                                                    [<sub>][if][handlerItemParse]
-                        [beanName].[field] = new [parse]().toBean(msg.obj);
-                                                                                                    [<sub>][if][handlerItemParse]
-                                                                                                    [<sub>][if][handlerItemLink]
-                        link([viewId]);
-                                                                                                    [<sub>][if][handlerItemLink]
-                        break;
-                                                                                                    [<sub>][for][handlerItem]
-                }
-            }
-                                                                                                    [<sub>][for][handler]
-        }
-
-        public void addLink(int viewId, [formLinkFullName] link) {
-            getLinks().get(viewId).add(link);
-        }
-
-        private [listValueMapFullName]<Integer, [formLinkFullName]> links;
-
-        private [listValueMapFullName]<Integer, [formLinkFullName]> getLinks() {
-            if (links == null) {
-                links = new [listValueMapFullName]<>();
-            }
-            return links;
-        }
-        private void link(int id) {
-            [tsFullName].ls(getLinks().get(id), (position, formLink) -> {
-                formLink.link(id);
-                return false;
-            });
-        }
-    }
-                                                                                                    [<sub>][if][bindHandler]
-                                                                                                    [<sub>][if][checkForms]
-    protected boolean check[bean]() {
-                                                                                                    [<sub>][for][check]
-                                                                                                    [<sub>][if][checkString]
-        if ([stringToolFullName].isBlank([bean].[field])) {
-            toast("[promp]");
-            return false;
-        }
-                                                                                                    [<sub>][if][checkString]
-                                                                                                    [<sub>][if][checkWithDeal]
-        if (!new [checkClass]().check([bean], [bean].[field])) {
-            toast("[promp]");
-            return false;
-        }
-                                                                                                    [<sub>][if][checkWithDeal]
-                                                                                                    [<sub>][if][checkRg]
-        if (!new [defaultRadioGroupFormCheckFullName]().check([bean], [viewName]Rg.getSelected())) {
-            toast("[promp]");
-            return false;
-        }
-                                                                                                    [<sub>][if][checkRg]
-                                                                                                    [<sub>][for][check]
-        return true;
-    }
-                                                                                                    [<sub>][if][checkForms]
                                                                                                     [<sub>][for][loadMore]
     protected abstract void [adapterName]LoadMore(int page);
                                                                                                     [<sub>][for][loadMore]
@@ -786,8 +627,9 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
 
     protected void [initMethodName]([typeFullName] [field]) {}
                                                                                                     [<sub>][for][initMethod]
-
-
+                                                                                                    [<sub>][if][formMethods]
+[formMethods]
+                                                                                                    [<sub>][if][formMethods]
 }
 
 model_temp_end */

@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4a.formbind.advice;
+package com.codingtu.cooltu.lib4a.form.advice;
 
 import android.os.Handler;
 import android.view.View;

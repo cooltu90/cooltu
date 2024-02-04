@@ -7,8 +7,11 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTestBaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
+public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTestBaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
     protected android.widget.TextView testBt;
+    protected com.codingtu.cooltu.bean.FormsObj forms;
+    protected boolean initFormBean;
+    protected BindHandler bindHandler;
 
 
     @Override
@@ -25,15 +28,25 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
         countEt = findViewById(com.codingtu.cooltu.R.id.countEt);
 
 
+        initFormView();
+        if (forms == null) {
+            forms = new com.codingtu.cooltu.bean.FormsObj();
+            initFormBean = true;
+        }
+        bindHandler = new BindHandler(this, forms);
 
-
-
+        new com.codingtu.cooltu.lib4a.form.advice.DefaultEditTextAdvice().addHandler(bindHandler).addViews(nameEt).start();
+        new com.codingtu.cooltu.lib4a.form.advice.DefaultEditTextAdvice().addHandler(bindHandler).addViews(provinceEt).start();
+        new com.codingtu.cooltu.lib4a.form.advice.DefaultEditTextAdvice().addHandler(bindHandler).addViews(cityEt).start();
+        new com.codingtu.cooltu.lib4a.form.advice.DefaultEditTextAdvice().addHandler(bindHandler).addViews(areaEt).start();
+        new com.codingtu.cooltu.lib4a.form.advice.DefaultEditTextAdvice().addHandler(bindHandler).addViews(ymdEt).start();
+        if (!initFormBean) {
+        }
 
 
         onCreateComplete();
 
     }
-
 
     @Override
     public void onCreateComplete() {
@@ -57,7 +70,8 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
         }
     }
 
-    protected void testBtClick() {}
+    protected void testBtClick() {
+    }
 
 
     @Override
@@ -74,7 +88,6 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
         super.accept(code, result, params, objs);
-
 
 
     }
@@ -94,13 +107,8 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
     }
 
 
-
-
-
-
-
-
-
+    protected void initFormView() {
+    }
 
 
 }

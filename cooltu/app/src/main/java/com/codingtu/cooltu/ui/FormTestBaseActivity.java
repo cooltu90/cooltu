@@ -12,7 +12,7 @@ import com.codingtu.cooltu.formbind.binder.AddressBinder;
 import com.codingtu.cooltu.formbind.binder.DayBinder;
 import com.codingtu.cooltu.formbind.binder.MonthBinder;
 import com.codingtu.cooltu.formbind.binder.YearBinder;
-import com.codingtu.cooltu.lib4a.formbind.advice.EditTextAdvice;
+import com.codingtu.cooltu.lib4a.form.advice.DefaultEditTextAdvice;
 import com.codingtu.cooltu.lib4a.formbind.binder.Binder;
 import com.codingtu.cooltu.lib4a.formbind.binder.EditTextBinder;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
@@ -43,27 +43,27 @@ public class FormTestBaseActivity extends FormTestBaseActivityBase {
         }
         bindHandler = new BindHandler(this, forms);
 
-        new EditTextAdvice().addHandler(bindHandler).addViews(nameEt).start();
+        new DefaultEditTextAdvice().addHandler(bindHandler).addViews(nameEt).start();
         bindHandler.addBinder(R.id.nameEt, 0, new EditTextBinder().addViews(nameEt));
 
-        new EditTextAdvice().addHandler(bindHandler).addViews(provinceEt).start();
+        new DefaultEditTextAdvice().addHandler(bindHandler).addViews(provinceEt).start();
         bindHandler.addBinder(R.id.provinceEt, 0, new EditTextBinder().addViews(provinceEt));
 
 
-        new EditTextAdvice().addHandler(bindHandler).addViews(cityEt).start();
-        new EditTextAdvice().addHandler(bindHandler).addViews(areaEt).start();
+        new DefaultEditTextAdvice().addHandler(bindHandler).addViews(cityEt).start();
+        new DefaultEditTextAdvice().addHandler(bindHandler).addViews(areaEt).start();
 
         AddressBinder addressBinder = new AddressBinder().addViews(provinceEt, cityEt, areaEt);
         bindHandler.addBinder(R.id.provinceEt, 1, addressBinder);
         bindHandler.addBinder(R.id.cityEt, 0, addressBinder);
         bindHandler.addBinder(R.id.areaEt, 0, addressBinder);
 
-        new EditTextAdvice().addHandler(bindHandler).addViews(ymdEt).start();
+        new DefaultEditTextAdvice().addHandler(bindHandler).addViews(ymdEt).start();
         bindHandler.addBinder(R.id.ymdEt, 0, new YearBinder().addViews(ymdEt));
         bindHandler.addBinder(R.id.ymdEt, 1, new MonthBinder().addViews(ymdEt));
         bindHandler.addBinder(R.id.ymdEt, 2, new DayBinder().addViews(ymdEt));
 
-        new EditTextAdvice().addHandler(bindHandler).addViews(countEt).start();
+        new DefaultEditTextAdvice().addHandler(bindHandler).addViews(countEt).start();
         bindHandler.addBinder(R.id.countEt, 0, new EditTextBinder().addViews(countEt));
 
 
@@ -75,8 +75,7 @@ public class FormTestBaseActivity extends FormTestBaseActivityBase {
 
     }
 
-    protected void initFormView() {
-    }
+    protected void initFormView() {}
 
     /**************************************************
      *

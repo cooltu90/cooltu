@@ -40,7 +40,6 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
     }
 
-
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
@@ -107,9 +106,6 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         super.back(requestCode, permissions, grantResults);
 
     }
-
-
-
 
 
 

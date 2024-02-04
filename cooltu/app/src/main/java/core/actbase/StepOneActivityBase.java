@@ -34,7 +34,6 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
     }
 
-
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
@@ -101,8 +100,6 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
         super.back(requestCode, permissions, grantResults);
 
     }
-
-
 
     protected abstract void dogAdapterLoadMore(int page);
 
@@ -265,7 +262,6 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
     }
 
     protected void testView(com.codingtu.cooltu.ui.view.TestView testView) {}
-
 
 
 }

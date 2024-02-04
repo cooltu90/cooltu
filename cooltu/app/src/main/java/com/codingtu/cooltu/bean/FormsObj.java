@@ -4,11 +4,11 @@ import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.formbind.CountParse;
 import com.codingtu.cooltu.formbind.NameCheck;
 import com.codingtu.cooltu.formbind.NameParse;
-import com.codingtu.cooltu.formbind.advice.EditTextAdvice;
 import com.codingtu.cooltu.formbind.binder.AddressBinder;
 import com.codingtu.cooltu.formbind.binder.DayBinder;
 import com.codingtu.cooltu.formbind.binder.MonthBinder;
 import com.codingtu.cooltu.formbind.binder.YearBinder;
+import com.codingtu.cooltu.lib4a.form.advice.DefaultEditTextAdvice;
 import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
 import com.codingtu.cooltu.processor.annotation.form.EchoType;
 import com.codingtu.cooltu.processor.annotation.formbind.Advice;
@@ -47,8 +47,7 @@ public class FormsObj extends CoreBean {
     @Binder(DayBinder.class)
     public int day;
 
-    @BindETs(R.id.countEt)
-    @Advice(EditTextAdvice.class)
+    @Advice(ids = R.id.countEt, advice = DefaultEditTextAdvice.class)
     @Parse(CountParse.class)
     public int count;
 
