@@ -27,7 +27,7 @@ public class Forms extends CoreBean {
     @FormCheck(prompt = "请输入name1")
     public String name1;
 
-    @BindEditText(value = R.id.nameEt2, echo = false)
+    @BindEditText(value = R.id.nameEt2)
     @FormCheck(prompt = "请输入name2")
     @FormEcho(EchoType.NOT_ECHO)
     public String name2;
