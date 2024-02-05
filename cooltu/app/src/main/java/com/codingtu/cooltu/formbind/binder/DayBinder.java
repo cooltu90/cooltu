@@ -3,9 +3,7 @@ package com.codingtu.cooltu.formbind.binder;
 import android.view.View;
 import android.widget.EditText;
 
-import com.codingtu.cooltu.lib4a.formbind.binder.Binder;
-
-public class DayBinder implements Binder<DayBinder> {
+public class DayBinder extends CoreBinder<DayBinder> {
 
     private EditText et;
 
@@ -22,7 +20,7 @@ public class DayBinder implements Binder<DayBinder> {
     }
 
     @Override
-    public void destroy() {
+    protected void destoryOthers() {
         et = null;
     }
 }

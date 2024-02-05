@@ -1,12 +1,16 @@
-package com.codingtu.cooltu.lib4a.formbind.binder;
+package com.codingtu.cooltu.formbind.binder;
 
 import android.view.View;
 import android.widget.EditText;
 
-public class EditTextBinder implements Binder<EditTextBinder> {
+public class EditTextBinder extends CoreBinder<EditTextBinder> {
 
     private EditText et;
 
+    @Override
+    protected void destoryOthers() {
+        et = null;
+    }
 
     @Override
     public EditTextBinder addViews(View... views) {
@@ -17,10 +21,5 @@ public class EditTextBinder implements Binder<EditTextBinder> {
     @Override
     public Object value() {
         return this.et.getText().toString();
-    }
-
-    @Override
-    public void destroy() {
-        et = null;
     }
 }
