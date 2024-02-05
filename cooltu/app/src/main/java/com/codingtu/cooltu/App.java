@@ -30,7 +30,7 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
 @DefaultDialogLayout(R.layout.dialog)
 @DefaultCode("CODE_TEST")
 @CreateAct(
-        name = "form",
+        name = "form_test",
         packages = "com.codingtu.cooltu.ui",
         baseClass = BaseActivity.class,
         layoutTemp = R.layout.layout_temp

@@ -10,6 +10,16 @@ public class ActStart {
         intent.putExtra(Pass.FORMS, com.codingtu.cooltu.lib4j.json.JsonTool.toJson(forms));
         com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.FORM_ACTIVITY);
     }
+    public static final void formTestBaseActivity(Activity act) {
+        Intent intent = new Intent(act, com.codingtu.cooltu.ui.FormTestBaseActivity.class);
+        intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
+        com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.FORM_TEST_BASE_ACTIVITY);
+    }
+    public static final void formTestActivity(Activity act) {
+        Intent intent = new Intent(act, com.codingtu.cooltu.ui.FormTestActivity.class);
+        intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
+        com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.FORM_TEST_ACTIVITY);
+    }
     public static final void stepOneActivity(Activity act) {
         Intent intent = new Intent(act, com.codingtu.cooltu.ui.StepOneActivity.class);
         intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
