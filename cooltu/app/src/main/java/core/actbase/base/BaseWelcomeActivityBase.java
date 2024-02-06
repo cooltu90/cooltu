@@ -46,6 +46,7 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
 
 
+
     }
 
 
@@ -114,6 +115,7 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
     }
     protected void check(boolean isAllow) {}
+
 
 
 

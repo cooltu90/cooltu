@@ -30,13 +30,7 @@ public class WelcomeActivity extends WelcomeActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Forms forms = new Forms();
-        forms.name1 = "SSSSS";
-        forms.address = "山东-淄博-周村";
-        ActStart.formActivity(getAct(), null);
-        User user = Me.me();
-        boolean isLogin = Me.isLogin();
-        Me.setMe(user);
+        ActStart.formTestActivity(getAct());
     }
 
     @ActBack(StepOneActivity.class)

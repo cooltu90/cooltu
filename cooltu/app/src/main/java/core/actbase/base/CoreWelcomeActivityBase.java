@@ -24,6 +24,7 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
 
 
+
     }
 
 
@@ -76,6 +77,7 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
         super.back(requestCode, permissions, grantResults);
 
     }
+
 
 
 

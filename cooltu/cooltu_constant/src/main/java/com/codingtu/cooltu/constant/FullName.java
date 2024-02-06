@@ -37,6 +37,11 @@ public class FullName {
     public static final String DEFAULT_RADIO_GROUP_TO_STRING = Pkg.LIB4A_FORM + ".DefaultRadioGroupToString";
     public static final String FORM_LINK = Pkg.LIB4A_FORM + ".FormLink";
     public static final String DEFAULT_RADIO_GROUP_FORM_CHECK = Pkg.LIB4A_FORM + ".DefaultRadioGroupFormCheck";
+
+    public static final String DEFAULT_EDIT_TEXT_PUSH = Pkg.LIB4A_FORM_BIND_PUSH + ".DefaultEditTextPush";
+    public static final String DEFAULT_RADIO_GROUP_PUSH = Pkg.LIB4A_FORM_BIND_PUSH + ".DefulatRadioGroupPush";
+
+
     //lib4j_tools
     public static final String STRING_TOOL = Pkg.LIB4J_TOOLS + ".StringTool";
     public static final String COUNT_TOOL = Pkg.LIB4J_TOOLS + ".CountTool";

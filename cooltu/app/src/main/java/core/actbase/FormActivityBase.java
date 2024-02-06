@@ -102,6 +102,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
             addressLink.echo();
         }
 
+
         onCreateComplete();
 
     }
@@ -299,6 +300,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         }
         return true;
     }
+
 
 
 

@@ -43,6 +43,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> formInitCounts;
     protected StringBuilder formInitSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> formInit;
+    protected java.util.Map<String, Boolean> useFormInitIfs;
+    protected java.util.Map<String, Integer> useFormInitCounts;
+    protected StringBuilder useFormInitSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> useFormInit;
     protected java.util.Map<String, Boolean> onCreateCompleteInitIfs;
     protected java.util.Map<String, Integer> onCreateCompleteInitCounts;
     protected StringBuilder onCreateCompleteInitSb;
@@ -152,6 +156,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> initMethodCounts;
     protected StringBuilder initMethodSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> initMethod;
+    protected java.util.Map<String, Boolean> useFormMethodsIfs;
+    protected java.util.Map<String, Integer> useFormMethodsCounts;
+    protected StringBuilder useFormMethodsSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> useFormMethods;
 
     public ActBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -195,6 +203,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         formInitCounts = new java.util.HashMap<>();
         formInitSb = map.get("formInit");
         formInit = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        useFormInitIfs = new java.util.HashMap<>();
+        useFormInitCounts = new java.util.HashMap<>();
+        useFormInitSb = map.get("useFormInit");
+        useFormInit = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         onCreateCompleteInitIfs = new java.util.HashMap<>();
         onCreateCompleteInitCounts = new java.util.HashMap<>();
         onCreateCompleteInitSb = map.get("onCreateCompleteInit");
@@ -304,6 +316,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         initMethodCounts = new java.util.HashMap<>();
         initMethodSb = map.get("initMethod");
         initMethod = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        useFormMethodsIfs = new java.util.HashMap<>();
+        useFormMethodsCounts = new java.util.HashMap<>();
+        useFormMethodsSb = map.get("useFormMethods");
+        useFormMethods = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
 
@@ -674,6 +690,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.formInit, getIfKey("formInit"), name, name, name, type, name);
         formInitIfs.put(getIfKey("formInit"), true);
     }
+    public void useFormInitIf(String userFormInit) {
+        addForMap(this.useFormInit, getIfKey("useFormInit"), userFormInit);
+        useFormInitIfs.put(getIfKey("useFormInit"), true);
+    }
     public void isOnCreateCompleteInit(boolean is) {
         onCreateCompleteInitIfs.put(getIfKey("onCreateCompleteInit"), is);
     }
@@ -846,6 +866,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.initMethod, getIfKey("initAddDestory", i0), destoryToolFullName, field);
         initMethodIfs.put(getIfKey("initAddDestory", i0), true);
     }
+    public void useFormMethodsIf(String useFormMethods) {
+        addForMap(this.useFormMethods, getIfKey("useFormMethods"), useFormMethods);
+        useFormMethodsIfs.put(getIfKey("useFormMethods"), true);
+    }
 
     @Override
     protected void dealLinesInParent() {
@@ -972,6 +996,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
                 addLnTag(formInitSb, "            [lineName].echo();", formInit1.get(0));
             }
             addLnTag(formInitSb, "        }");
+        }
+        if (isIf(useFormInitIfs, getIfKey("useFormInit"))) {
+            List<String> useFormInit0 = useFormInit.get(getIfKey("useFormInit"));
+            addLnTag(useFormInitSb, "[userFormInit]", useFormInit0.get(0));
         }
         if (isIf(onCreateCompleteInitIfs, getIfKey("onCreateCompleteInit"))) {
             List<String> onCreateCompleteInit0 = onCreateCompleteInit.get(getIfKey("onCreateCompleteInit"));
@@ -1467,6 +1495,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             addLnTag(initMethodSb, "");
             addLnTag(initMethodSb, "    protected void [initMethodName]([typeFullName] [field]) {}", initMethod0.get(8), initMethod0.get(9), initMethod0.get(10));
         }
+        if (isIf(useFormMethodsIfs, getIfKey("useFormMethods"))) {
+            List<String> useFormMethods0 = useFormMethods.get(getIfKey("useFormMethods"));
+            addLnTag(useFormMethodsSb, "[useFormMethods]", useFormMethods0.get(0));
+        }
 
     }
 
@@ -1496,6 +1528,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[dimenInit]]");
         lines.add("[[startInit]]");
         lines.add("[[formInit]]");
+        lines.add("[[useFormInit]]");
         lines.add("[[onCreateCompleteInit]]");
         lines.add("    }");
         lines.add("[[initFormView]]");
@@ -1557,6 +1590,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[editDialog]]");
         lines.add("[[dialog]]");
         lines.add("[[initMethod]]");
+        lines.add("[[useFormMethods]]");
         lines.add("");
         lines.add("");
         lines.add("}");

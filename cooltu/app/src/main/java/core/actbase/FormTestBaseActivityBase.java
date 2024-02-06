@@ -22,6 +22,7 @@ public abstract class FormTestBaseActivityBase extends com.codingtu.cooltu.ui.ba
 
 
 
+
     }
 
 
@@ -74,6 +75,7 @@ public abstract class FormTestBaseActivityBase extends com.codingtu.cooltu.ui.ba
         super.back(requestCode, permissions, grantResults);
 
     }
+
 
 
 

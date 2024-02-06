@@ -30,6 +30,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
 
+
         onCreateComplete();
 
     }
@@ -265,6 +266,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
     }
 
     protected void testView(com.codingtu.cooltu.ui.view.TestView testView) {}
+
 
 
 

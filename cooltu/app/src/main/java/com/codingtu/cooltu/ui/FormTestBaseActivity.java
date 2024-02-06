@@ -10,5 +10,15 @@ import core.actres.FormTestBaseActivityRes;
 @To(FormTestBaseActivityRes.class)
 @ActBase
 public class FormTestBaseActivity extends FormTestBaseActivityBase {
+
+    @Override
+    public void onCreateComplete() {
+        super.onCreateComplete();
+
+
+
+
+
+    }
 }
 
