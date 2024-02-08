@@ -6,6 +6,7 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
+import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
@@ -583,7 +584,13 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     }
 
     private String getViewFieldName(String rName) {
-        return parentViewMap.get(rName).fieldName;
+        LibLogs.i("==================================");
+        LibLogs.i("rName:" + rName);
+        LibLogs.i("parentViewMap:"+parentViewMap);
+        LibLogs.i("parentViewMap:"+parentViewMap);
+        LayoutTools.ViewInfo viewInfo = parentViewMap.get(rName);
+        LibLogs.i("viewInfo:"+viewInfo);
+        return viewInfo.fieldName;
     }
 
     @Override
