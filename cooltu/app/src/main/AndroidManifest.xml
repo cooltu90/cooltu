@@ -32,9 +32,6 @@
             android:name="com.codingtu.cooltu.ui.StepOneActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codingtu.cooltu.ui.FormActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.codingtu.cooltu.ui.FormTestBaseActivity"
             android:screenOrientation="portrait" />
         <activity
