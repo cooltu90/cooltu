@@ -10,9 +10,10 @@ public class DefaultEditTextPush extends CorePush<DefaultEditTextPush> implement
     EditText et;
 
     @Override
-    public void addView(View view) {
+    public DefaultEditTextPush addView(View view) {
         et = (EditText) view;
         et.addTextChangedListener(this);
+        return this;
     }
 
     @Override

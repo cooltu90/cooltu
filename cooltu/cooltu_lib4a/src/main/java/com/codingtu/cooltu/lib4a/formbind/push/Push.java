@@ -15,7 +15,7 @@ public interface Push<THIS extends Push> extends OnDestroy {
         return (THIS) this;
     }
 
-    void addView(View view);
+    THIS addView(View view);
 
     THIS bindHandler(Handler handler);
 }

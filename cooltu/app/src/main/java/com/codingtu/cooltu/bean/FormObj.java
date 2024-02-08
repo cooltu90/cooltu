@@ -34,7 +34,7 @@ public class FormObj extends CoreBean {
     @BindEt(R.id.areaEt)
     public String area;
 
-    @BindRg(id = R.id.classLl, onSetItem = TypeOnSetItem.class, selected = 0)
+    @BindRg(id = R.id.classLl, onSetItem = TypeOnSetItem.class)
     public int classIndex;
 
 

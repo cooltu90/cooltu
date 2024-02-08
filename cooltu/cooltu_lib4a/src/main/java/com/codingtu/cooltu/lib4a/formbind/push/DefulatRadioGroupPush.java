@@ -4,6 +4,7 @@ import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4a.view.combine.RadioGroup;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 
@@ -38,7 +39,7 @@ public class DefulatRadioGroupPush extends CorePush<DefulatRadioGroupPush> {
     }
 
     @Override
-    public void addView(View view) {
+    public DefulatRadioGroupPush addView(View view) {
         rg = RadioGroup.obtain(destroys).setBts((ViewGroup) view).addOnSelectChange(new RadioGroup.OnSelectChange() {
             @Override
             public void onChange(int selected) {
@@ -51,5 +52,7 @@ public class DefulatRadioGroupPush extends CorePush<DefulatRadioGroupPush> {
         if (selected != null) {
             rg.setSelected(selected);
         }
+        view.setTag(R.id.tag_0, rg);
+        return this;
     }
 }
