@@ -9,10 +9,9 @@ public class ActStart {
         intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
         com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.ADD_PHOTO_ACTIVITY);
     }
-    public static final void formActivity(Activity act, com.codingtu.cooltu.bean.Forms forms) {
+    public static final void formActivity(Activity act) {
         Intent intent = new Intent(act, com.codingtu.cooltu.ui.FormActivity.class);
         intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
-        intent.putExtra(Pass.FORMS, com.codingtu.cooltu.lib4j.json.JsonTool.toJson(forms));
         com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.FORM_ACTIVITY);
     }
     public static final void formTestBaseActivity(Activity act) {

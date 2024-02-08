@@ -36,11 +36,9 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         isTest = core.tools.Pass.isTest(getIntent());
 
 
-
         onCreateComplete();
 
     }
-
 
     @Override
     public void onCreateComplete() {
@@ -108,8 +106,6 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         super.back(requestCode, permissions, grantResults);
 
     }
-
-
 
 
 

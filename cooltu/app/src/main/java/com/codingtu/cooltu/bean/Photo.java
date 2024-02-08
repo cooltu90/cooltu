@@ -16,6 +16,7 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.processor.annotation.formbind.Bind;
 import com.codingtu.cooltu.processor.annotation.formbind.BindEt;
 import com.codingtu.cooltu.processor.annotation.formbind.BindRg;
+import com.codingtu.cooltu.processor.annotation.formbind.BindSeekbar;
 import com.codingtu.cooltu.processor.annotation.formbind.Check;
 import com.codingtu.cooltu.processor.annotation.formbind.CheckMethod;
 import com.codingtu.cooltu.processor.annotation.formbind.CheckType;
@@ -57,6 +58,8 @@ public class Photo extends CoreBean {
     @Check(prompt = "请输入数字")
     public String others;
 
+    @BindSeekbar(R.id.timeSb)
+    public int time;
 
     @LinkMethod(R.id.name1Et)
     public void dealName1(@LinkView(R.id.name2Et) EditText name2Et) {

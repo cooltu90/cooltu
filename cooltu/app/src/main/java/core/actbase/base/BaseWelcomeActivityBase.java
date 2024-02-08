@@ -46,9 +46,7 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
 
 
-
     }
-
 
     @Override
     public void onCreateComplete() {
@@ -115,8 +113,6 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
     }
     protected void check(boolean isAllow) {}
-
-
 
 
 

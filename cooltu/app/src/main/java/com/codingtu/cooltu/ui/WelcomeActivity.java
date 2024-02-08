@@ -1,20 +1,15 @@
 package com.codingtu.cooltu.ui;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.view.View;
 
 import com.codingtu.cooltu.R;
-import com.codingtu.cooltu.bean.Forms;
 import com.codingtu.cooltu.bean.User;
-import com.codingtu.cooltu.lib4a.tools.MeTool;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
-import com.codingtu.cooltu.processor.annotation.ui.Permission;
-import com.codingtu.cooltu.tools.Me;
 import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
 
 import core.actbase.WelcomeActivityBase;

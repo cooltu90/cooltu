@@ -4,15 +4,13 @@ import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
 import com.codingtu.cooltu.processor.annotation.create.CreateFragment;
-import com.codingtu.cooltu.processor.annotation.form.FormBean;
 import com.codingtu.cooltu.processor.annotation.formbind.FormObject;
 import com.codingtu.cooltu.processor.annotation.net.Apis;
 import com.codingtu.cooltu.processor.annotation.path.PathFilter;
-import com.codingtu.cooltu.processor.annotation.path.PathFilterField;
 import com.codingtu.cooltu.processor.annotation.path.Paths;
+import com.codingtu.cooltu.processor.annotation.res.ResFor;
 import com.codingtu.cooltu.processor.annotation.res.ResForFragment;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
-import com.codingtu.cooltu.processor.annotation.res.ResFor;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultCode;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultEditDialogLayout;
@@ -29,7 +27,6 @@ import com.codingtu.cooltu.processor.deal.DefaultDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultEditDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultNoticeDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultToastDialogLayoutDeal;
-import com.codingtu.cooltu.processor.deal.FormBeanDeal;
 import com.codingtu.cooltu.processor.deal.FormObjectDeal;
 import com.codingtu.cooltu.processor.deal.FragmentBaseDeal;
 import com.codingtu.cooltu.processor.deal.ModuleInfoDeal;
@@ -64,7 +61,6 @@ public class SupportTypes {
                 ResForFragment.class, ResForFragmentDeal.class,
                 Apis.class, NetDeal.class,
                 CreateAct.class, CreateActDeal.class,
-                FormBean.class, FormBeanDeal.class,
                 FormObject.class, FormObjectDeal.class,
                 CreateAdapter.class, CreateAdapterDeal.class,
                 CreateFragment.class, CreateFragmentDeal.class

@@ -9,6 +9,7 @@ import retrofit2.adapter.rxjava2.Result;
 
 public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
     protected android.widget.EditText otherEt;
+    protected android.widget.SeekBar timeSb;
     protected android.widget.EditText name2Et;
     protected android.widget.TextView submitBt;
     protected android.widget.EditText classEt;
@@ -29,6 +30,7 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
         setContentView(com.codingtu.cooltu.R.layout.activity_add_photo);
 
         otherEt = findViewById(com.codingtu.cooltu.R.id.otherEt);
+        timeSb = findViewById(com.codingtu.cooltu.R.id.timeSb);
         name2Et = findViewById(com.codingtu.cooltu.R.id.name2Et);
         submitBt = findViewById(com.codingtu.cooltu.R.id.submitBt);
         classEt = findViewById(com.codingtu.cooltu.R.id.classEt);
@@ -38,7 +40,6 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
         classLl = findViewById(com.codingtu.cooltu.R.id.classLl);
         schoolEt = findViewById(com.codingtu.cooltu.R.id.schoolEt);
         otherBt = findViewById(com.codingtu.cooltu.R.id.otherBt);
-
 
 
 
@@ -64,6 +65,7 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
                 .destory(this).bindHandler(bindHandler)
                 .onSetItem(typeOnSetItem).selected(null).addView(numberLl);
         new com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(otherEt);
+        new com.codingtu.cooltu.lib4a.formbind.push.DefaultSeekBarPush().destory(this).bindHandler(bindHandler).addView(timeSb);
         bindHandler.link(com.codingtu.cooltu.R.id.otherEt, numberLl, otherBt);
         bindHandler.link(com.codingtu.cooltu.R.id.name1Et, name2Et);
         bindHandler.link(com.codingtu.cooltu.R.id.classLl, classEt);
@@ -76,13 +78,13 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
             getRadioGroup(classLl).setSelected(photo.classType);
             getRadioGroup(numberLl).setSelected(photo.numbers);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(otherEt, photo.others);
+            timeSb.setProgress(photo.time);
         }
 
 
         onCreateComplete();
 
     }
-
 
     @Override
     public void onCreateComplete() {
@@ -152,8 +154,6 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
 
 
 
-
-
     private com.codingtu.cooltu.lib4a.view.dialogview.EditDialog dialog;
 
     protected void showDialog(String text) {
@@ -185,6 +185,10 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
     protected void initFormView() {}
 
     private boolean checkPhoto() {
+        if (photo.checkLabel(photo.school)) {
+            toast("请输入学校");
+            return false;
+        }
         if (photo.checkLabel(photo.label)) {
             toast("请输入标签");
             return false;
@@ -252,6 +256,9 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
                 case com.codingtu.cooltu.R.id.otherEt:
                     photo.others = (java.lang.String) msg.obj;
                     photo.dealOthers((android.widget.LinearLayout) views.get(0), (android.widget.TextView) views.get(1));
+                    break;
+                case com.codingtu.cooltu.R.id.timeSb:
+                    photo.time = (int) msg.obj;
                     break;
             }
         }

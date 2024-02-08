@@ -42,14 +42,9 @@ public class FormObj extends CoreBean {
     public int seekBar;
 
 
-    @EchoMethod(R.id.nameEt)
-    public void nameEcho(EditText nameEt) {
+    @EchoMethod({R.id.nameEt, R.id.ageEt})
+    public void nameEcho(EditText nameEt, String name) {
         ViewTool.setText(nameEt, name);
-    }
-
-    @EchoMethod(R.id.ageEt)
-    public void ageEcho(EditText ageEt) {
-        ViewTool.setText(ageEt, age);
     }
 
 }

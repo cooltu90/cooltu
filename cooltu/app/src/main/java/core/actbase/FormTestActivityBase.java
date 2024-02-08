@@ -40,7 +40,6 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
 
 
 
-
         initFormView();
         if (forms == null) {
             forms = new com.codingtu.cooltu.bean.FormObj();
@@ -58,20 +57,19 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
                 .onSetItem(typeOnSetItem).selected(null).addView(classLl);
         new com.codingtu.cooltu.lib4a.formbind.push.DefaultSeekBarPush().destory(this).bindHandler(bindHandler).addView(timeSb);
         if (!initFormBean) {
+            forms.nameEcho(nameEt,forms.name);
+            forms.nameEcho(ageEt,forms.age);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(provinceEt, forms.province);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(cityEt, forms.city);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(areaEt, forms.area);
             getRadioGroup(classLl).setSelected(forms.classIndex);
             timeSb.setProgress(forms.seekBar);
-            forms.ageEcho(ageEt);
-            forms.nameEcho(nameEt);
         }
 
 
         onCreateComplete();
 
     }
-
 
     @Override
     public void onCreateComplete() {
@@ -130,8 +128,6 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
         super.back(requestCode, permissions, grantResults);
 
     }
-
-
 
 
 
