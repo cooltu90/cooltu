@@ -27,22 +27,17 @@ public class FullName {
     public static final String CORE_LIST_ADAPTER = "com.codingtu.cooltu.lib4a.ui.adapter." + CORE_LIST_ADAPTER_SHORT_NAME;
     public static final String CORE_MORE_LIST_ADAPTER_SHORT_NAME = "CoreMoreListAdapter";
     public static final String CORE_MORE_LIST_ADAPTER = "com.codingtu.cooltu.lib4a.ui.adapter." + CORE_MORE_LIST_ADAPTER_SHORT_NAME;
+    //config
+    public static final String RECYCLER_VIEW_DEFAULT_CONFIG = "com.codingtu.cooltu.lib4a.ui.recyclerview.DefaultConfig";
     //view
     public static final String HANDLER_TEXT_WATCHER = "com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher";
     public static final String HANDLER_ON_SELECT_CHANGE = "com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange";
     public static final String HANDLER_ON_SEEK_BAR_CHANGE_LISTENER = "com.codingtu.cooltu.lib4a.view.combine.HandlerOnSeekBarChangeListener";
     public static final String RADIO_GROUP = "com.codingtu.cooltu.lib4a.view.combine.RadioGroup";
-    public static final String RECYCLER_VIEW_DEFAULT_CONFIG = "com.codingtu.cooltu.lib4a.ui.recyclerview.DefaultConfig";
     //form
-    public static final String DEFAULT_RADIO_GROUP_TO_STRING = Pkg.LIB4A_FORM + ".DefaultRadioGroupToString";
-    public static final String FORM_LINK = Pkg.LIB4A_FORM + ".FormLink";
-    public static final String DEFAULT_RADIO_GROUP_FORM_CHECK = Pkg.LIB4A_FORM + ".DefaultRadioGroupFormCheck";
-
-    public static final String DEFAULT_EDIT_TEXT_PUSH = Pkg.LIB4A_FORM_BIND_PUSH + ".DefaultEditTextPush";
-    public static final String DEFAULT_RADIO_GROUP_PUSH = Pkg.LIB4A_FORM_BIND_PUSH + ".DefaultRadioGroupPush";
-    public static final String DEFAULT_SEEK_BAR_PUSH = Pkg.LIB4A_FORM_BIND_PUSH + ".DefaultSeekBarPush";
-
-
+    public static final String DEFAULT_EDIT_TEXT_PUSH = Pkg.LIB4A_FORM_PUSH + ".DefaultEditTextPush";
+    public static final String DEFAULT_RADIO_GROUP_PUSH = Pkg.LIB4A_FORM_PUSH + ".DefaultRadioGroupPush";
+    public static final String DEFAULT_SEEK_BAR_PUSH = Pkg.LIB4A_FORM_PUSH + ".DefaultSeekBarPush";
     //lib4j_tools
     public static final String STRING_TOOL = Pkg.LIB4J_TOOLS + ".StringTool";
     public static final String COUNT_TOOL = Pkg.LIB4J_TOOLS + ".CountTool";

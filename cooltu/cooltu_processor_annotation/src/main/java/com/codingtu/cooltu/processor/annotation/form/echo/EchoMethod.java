@@ -1,11 +1,11 @@
-package com.codingtu.cooltu.processor.annotation.formbind;
+package com.codingtu.cooltu.processor.annotation.form.echo;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.SOURCE)
-public @interface Bind {
-    int id();
+public @interface EchoMethod {
 
-    Class push();
+    int[] value();
+
 }

@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.processor.annotation.formbind;
+package com.codingtu.cooltu.processor.annotation.form.check;
 
 public class CheckType {
     public static final int NORMAL = 0;

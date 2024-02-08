@@ -52,20 +52,20 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
             initFormBean = true;
         }
         bindHandler = new BindHandler(photo);
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(schoolEt);
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(labelEt);
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(name1Et);
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(name2Et);
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(classEt);
+        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(schoolEt);
+        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(labelEt);
+        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(name1Et);
+        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(name2Et);
+        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(classEt);
         com.codingtu.cooltu.form.TypeOnSetItem typeOnSetItem = new com.codingtu.cooltu.form.TypeOnSetItem();
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultRadioGroupPush()
+        new com.codingtu.cooltu.lib4a.form.push.DefaultRadioGroupPush()
                 .destory(this).bindHandler(bindHandler)
                 .onSetItem(typeOnSetItem).selected(null).addView(classLl);
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultRadioGroupPush()
+        new com.codingtu.cooltu.lib4a.form.push.DefaultRadioGroupPush()
                 .destory(this).bindHandler(bindHandler)
                 .onSetItem(typeOnSetItem).selected(null).addView(numberLl);
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(otherEt);
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultSeekBarPush().destory(this).bindHandler(bindHandler).addView(timeSb);
+        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(otherEt);
+        new com.codingtu.cooltu.lib4a.form.push.DefaultSeekBarPush().destory(this).bindHandler(bindHandler).addView(timeSb);
         bindHandler.link(com.codingtu.cooltu.R.id.otherEt, numberLl, otherBt);
         bindHandler.link(com.codingtu.cooltu.R.id.name1Et, name2Et);
         bindHandler.link(com.codingtu.cooltu.R.id.classLl, classEt);

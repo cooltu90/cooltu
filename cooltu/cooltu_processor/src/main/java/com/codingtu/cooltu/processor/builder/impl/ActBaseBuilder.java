@@ -14,20 +14,20 @@ import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Maps;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.BuilderType;
-import com.codingtu.cooltu.processor.annotation.formbind.Bind;
-import com.codingtu.cooltu.processor.annotation.formbind.BindEt;
-import com.codingtu.cooltu.processor.annotation.formbind.BindRg;
-import com.codingtu.cooltu.processor.annotation.formbind.BindSeekbar;
-import com.codingtu.cooltu.processor.annotation.formbind.Check;
-import com.codingtu.cooltu.processor.annotation.formbind.CheckMethod;
-import com.codingtu.cooltu.processor.annotation.formbind.CheckType;
-import com.codingtu.cooltu.processor.annotation.formbind.Echo;
-import com.codingtu.cooltu.processor.annotation.formbind.EchoMethod;
-import com.codingtu.cooltu.processor.annotation.formbind.EchoType;
-import com.codingtu.cooltu.processor.annotation.formbind.FormBind;
-import com.codingtu.cooltu.processor.annotation.formbind.FormObject;
-import com.codingtu.cooltu.processor.annotation.formbind.LinkMethod;
-import com.codingtu.cooltu.processor.annotation.formbind.LinkView;
+import com.codingtu.cooltu.processor.annotation.form.bind.BindView;
+import com.codingtu.cooltu.processor.annotation.form.bind.BindEditText;
+import com.codingtu.cooltu.processor.annotation.form.bind.BindRadioGroup;
+import com.codingtu.cooltu.processor.annotation.form.bind.BindSeekBar;
+import com.codingtu.cooltu.processor.annotation.form.check.Check;
+import com.codingtu.cooltu.processor.annotation.form.check.CheckMethod;
+import com.codingtu.cooltu.processor.annotation.form.check.CheckType;
+import com.codingtu.cooltu.processor.annotation.form.echo.Echo;
+import com.codingtu.cooltu.processor.annotation.form.echo.EchoMethod;
+import com.codingtu.cooltu.processor.annotation.form.echo.EchoType;
+import com.codingtu.cooltu.processor.annotation.form.Form;
+import com.codingtu.cooltu.processor.annotation.form.FormBean;
+import com.codingtu.cooltu.processor.annotation.form.link.LinkMethod;
+import com.codingtu.cooltu.processor.annotation.form.link.LinkView;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
@@ -66,7 +66,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     public List<KV<String, String>> starts = new ArrayList<>();
     public List<Permission> permissions = new ArrayList<>();
     public List<ExecutableElement> permissionMethods = new ArrayList<>();
-    public FormBind formBind;
+    public Form form;
     private Map<String, LayoutTools.ViewInfo> parentViewMap;
 
     public ActBaseBuilder(JavaInfo info) {
@@ -168,18 +168,18 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
         isOnCreateCompleteInit(!uiBaseBuilder.hasChild());
 
-        if (formBind != null) {
+        if (form != null) {
             String formBeanClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
                 @Override
                 public Object get() {
-                    return formBind.value();
+                    return form.value();
                 }
             });
             TypeElement formBeanTe = FormObjectDeal.MAP.get(formBeanClass);
 
             String formBeanSimpleName = CurrentPath.javaInfo(formBeanClass).name;
 
-            String name = formBeanTe.getAnnotation(FormObject.class).value();
+            String name = formBeanTe.getAnnotation(FormBean.class).value();
             if (StringTool.isBlank(name)) {
                 name = ConvertTool.toMethodType(formBeanSimpleName);
             }
@@ -269,26 +269,26 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
                 @Override
                 public boolean each(int position, VariableElement ve) {
-                    Bind bind = ve.getAnnotation(Bind.class);
-                    if (bind != null) {
-                        pushMethods(ve, Bind.class, bind.id(), ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                    BindView bindView = ve.getAnnotation(BindView.class);
+                    if (bindView != null) {
+                        pushMethods(ve, BindView.class, bindView.id(), ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
                             @Override
                             public Object get() {
-                                return bind.push();
+                                return bindView.push();
                             }
                         }));
                         return false;
                     }
 
-                    BindEt bindEt = ve.getAnnotation(BindEt.class);
+                    BindEditText bindEt = ve.getAnnotation(BindEditText.class);
                     if (bindEt != null) {
-                        pushMethods(ve, BindEt.class, bindEt.value(), FullName.DEFAULT_EDIT_TEXT_PUSH);
+                        pushMethods(ve, BindEditText.class, bindEt.value(), FullName.DEFAULT_EDIT_TEXT_PUSH);
                         return false;
                     }
 
-                    BindRg bindRg = ve.getAnnotation(BindRg.class);
+                    BindRadioGroup bindRg = ve.getAnnotation(BindRadioGroup.class);
                     if (bindRg != null) {
-                        IdTools.Id id = IdTools.elementToId(ve, BindRg.class, bindRg.id());
+                        IdTools.Id id = IdTools.elementToId(ve, BindRadioGroup.class, bindRg.id());
                         String onSetItemClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
                             @Override
                             public Object get() {
@@ -312,9 +312,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         return false;
                     }
 
-                    BindSeekbar bindSeekbar = ve.getAnnotation(BindSeekbar.class);
+                    BindSeekBar bindSeekbar = ve.getAnnotation(BindSeekBar.class);
                     if (bindSeekbar != null) {
-                        pushMethods(ve, BindSeekbar.class, bindSeekbar.value(), FullName.DEFAULT_SEEK_BAR_PUSH);
+                        pushMethods(ve, BindSeekBar.class, bindSeekbar.value(), FullName.DEFAULT_SEEK_BAR_PUSH);
                         return false;
                     }
 
@@ -359,15 +359,15 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     ExecutableElement ee = null;
                     IdTools.Id id = null;
 
-                    Bind bind = ve.getAnnotation(Bind.class);
-                    if (bind != null) {
-                        ee = echoMethodMap.get(bind.id());
-                        id = IdTools.elementToId(ve, Bind.class, bind.id());
+                    BindView bindView = ve.getAnnotation(BindView.class);
+                    if (bindView != null) {
+                        ee = echoMethodMap.get(bindView.id());
+                        id = IdTools.elementToId(ve, BindView.class, bindView.id());
                     }
 
-                    BindEt bindEt = ve.getAnnotation(BindEt.class);
+                    BindEditText bindEt = ve.getAnnotation(BindEditText.class);
                     if (bindEt != null) {
-                        id = IdTools.elementToId(ve, BindEt.class, bindEt.value());
+                        id = IdTools.elementToId(ve, BindEditText.class, bindEt.value());
                         if (echoType == EchoType.NORMAL) {
                             addLnTag(initSb, "            [ViewTool].setText([ageEt], [forms].[age]);",
                                     FullName.VIEW_TOOL, getViewFieldName(id), beanName, kv.v);
@@ -378,9 +378,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
                     }
 
-                    BindRg bindRg = ve.getAnnotation(BindRg.class);
+                    BindRadioGroup bindRg = ve.getAnnotation(BindRadioGroup.class);
                     if (bindRg != null) {
-                        id = IdTools.elementToId(ve, BindRg.class, bindRg.id());
+                        id = IdTools.elementToId(ve, BindRadioGroup.class, bindRg.id());
                         if (echoType == EchoType.NORMAL) {
                             addLnTag(initSb, "            getRadioGroup([view]).setSelected([forms].[classIndex]);",
                                     getViewFieldName(id), beanName, kv.v);
@@ -391,9 +391,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
                     }
 
-                    BindSeekbar bindSeekbar = ve.getAnnotation(BindSeekbar.class);
+                    BindSeekBar bindSeekbar = ve.getAnnotation(BindSeekBar.class);
                     if (bindSeekbar != null) {
-                        id = IdTools.elementToId(ve, BindSeekbar.class, bindSeekbar.value());
+                        id = IdTools.elementToId(ve, BindSeekBar.class, bindSeekbar.value());
                         if (echoType == EchoType.NORMAL) {
                             addLnTag(initSb, "            [timeSb].setProgress([forms].[seekBar]);",
                                     getViewFieldName(id), beanName, kv.v);
@@ -431,7 +431,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
                         ExecutableElement ee = null;
 
-                        BindEt bindEt = ve.getAnnotation(BindEt.class);
+                        BindEditText bindEt = ve.getAnnotation(BindEditText.class);
                         if (bindEt != null) {
                             if (type == CheckType.NORMAL) {
                                 addLnTag(methodsSb, "        if ([StringTool].isBlank([photo].[label])) {", FullName.STRING_TOOL, beanName, kv.v);
@@ -444,7 +444,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                             }
                         }
 
-                        BindRg bindRg = ve.getAnnotation(BindRg.class);
+                        BindRadioGroup bindRg = ve.getAnnotation(BindRadioGroup.class);
                         if (bindRg != null) {
                             if (type == CheckType.NORMAL) {
                                 addLnTag(methodsSb, "        if ([photo].[classType] < 0) {", beanName, kv.v);
@@ -457,12 +457,12 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                             }
                         }
 
-                        Bind bind = ve.getAnnotation(Bind.class);
-                        if (bind != null) {
-                            ee = checkMethodMap.get(bind.id());
+                        BindView bindView = ve.getAnnotation(BindView.class);
+                        if (bindView != null) {
+                            ee = checkMethodMap.get(bindView.id());
                         }
 
-                        BindSeekbar bindSeekbar = ve.getAnnotation(BindSeekbar.class);
+                        BindSeekBar bindSeekbar = ve.getAnnotation(BindSeekBar.class);
                         if (bindSeekbar != null && type == CheckType.METHOD) {
                             ee = checkMethodMap.get(bindSeekbar.value());
                         }
@@ -509,27 +509,27 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     IdTools.Id id = null;
                     int resId = 0;
 
-                    Bind bind = ve.getAnnotation(Bind.class);
-                    if (bind != null) {
-                        resId = bind.id();
-                        id = IdTools.elementToId(ve, Bind.class, resId);
+                    BindView bindView = ve.getAnnotation(BindView.class);
+                    if (bindView != null) {
+                        resId = bindView.id();
+                        id = IdTools.elementToId(ve, BindView.class, resId);
                     }
 
-                    BindEt bindEt = ve.getAnnotation(BindEt.class);
+                    BindEditText bindEt = ve.getAnnotation(BindEditText.class);
                     if (bindEt != null) {
                         resId = bindEt.value();
-                        id = IdTools.elementToId(ve, BindEt.class, resId);
+                        id = IdTools.elementToId(ve, BindEditText.class, resId);
                     }
 
-                    BindRg bindRg = ve.getAnnotation(BindRg.class);
+                    BindRadioGroup bindRg = ve.getAnnotation(BindRadioGroup.class);
                     if (bindRg != null) {
                         resId = bindRg.id();
-                        id = IdTools.elementToId(ve, BindRg.class, resId);
+                        id = IdTools.elementToId(ve, BindRadioGroup.class, resId);
                     }
-                    BindSeekbar bindSeekbar = ve.getAnnotation(BindSeekbar.class);
+                    BindSeekBar bindSeekbar = ve.getAnnotation(BindSeekBar.class);
                     if (bindSeekbar != null) {
                         resId = bindSeekbar.value();
-                        id = IdTools.elementToId(ve, BindSeekbar.class, resId);
+                        id = IdTools.elementToId(ve, BindSeekBar.class, resId);
                     }
 
                     if (id != null) {
@@ -608,11 +608,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
     @Override
     public void isCheckForm(int index, boolean isCheckForm) {
-        if (formBind != null && isCheckForm) {
+        if (form != null && isCheckForm) {
             String formBeanClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
                 @Override
                 public Object get() {
-                    return formBind.value();
+                    return form.value();
                 }
             });
             String formBeanSimpleName = CurrentPath.javaInfo(formBeanClass).name;

@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4a.formbind.push;
+package com.codingtu.cooltu.lib4a.form.push;
 
 import android.os.Message;
 import android.text.Editable;

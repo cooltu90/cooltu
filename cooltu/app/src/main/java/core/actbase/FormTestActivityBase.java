@@ -46,16 +46,16 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
             initFormBean = true;
         }
         bindHandler = new BindHandler(forms);
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(nameEt);
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(ageEt);
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(provinceEt);
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(cityEt);
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(areaEt);
+        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(nameEt);
+        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(ageEt);
+        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(provinceEt);
+        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(cityEt);
+        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(areaEt);
         com.codingtu.cooltu.form.TypeOnSetItem typeOnSetItem = new com.codingtu.cooltu.form.TypeOnSetItem();
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultRadioGroupPush()
+        new com.codingtu.cooltu.lib4a.form.push.DefaultRadioGroupPush()
                 .destory(this).bindHandler(bindHandler)
                 .onSetItem(typeOnSetItem).selected(null).addView(classLl);
-        new com.codingtu.cooltu.lib4a.formbind.push.DefaultSeekBarPush().destory(this).bindHandler(bindHandler).addView(timeSb);
+        new com.codingtu.cooltu.lib4a.form.push.DefaultSeekBarPush().destory(this).bindHandler(bindHandler).addView(timeSb);
         if (!initFormBean) {
             forms.nameEcho(nameEt,forms.name);
             forms.nameEcho(ageEt,forms.age);

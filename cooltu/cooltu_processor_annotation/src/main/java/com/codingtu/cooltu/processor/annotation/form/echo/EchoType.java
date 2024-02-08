@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.processor.annotation.formbind;
+package com.codingtu.cooltu.processor.annotation.form.echo;
 
 public class EchoType {
     public static final int NORMAL = 0;

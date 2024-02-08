@@ -1,9 +1,7 @@
-package com.codingtu.cooltu.lib4a.formbind.push;
+package com.codingtu.cooltu.lib4a.form.push;
 
 import android.os.Handler;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;

@@ -7,58 +7,58 @@ import android.widget.TextView;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.form.TypeOnSetItem;
-import com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush;
+import com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush;
 import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4a.view.combine.RadioGroup;
 import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.processor.annotation.formbind.Bind;
-import com.codingtu.cooltu.processor.annotation.formbind.BindEt;
-import com.codingtu.cooltu.processor.annotation.formbind.BindRg;
-import com.codingtu.cooltu.processor.annotation.formbind.BindSeekbar;
-import com.codingtu.cooltu.processor.annotation.formbind.Check;
-import com.codingtu.cooltu.processor.annotation.formbind.CheckMethod;
-import com.codingtu.cooltu.processor.annotation.formbind.CheckType;
-import com.codingtu.cooltu.processor.annotation.formbind.LinkMethod;
-import com.codingtu.cooltu.processor.annotation.formbind.FormObject;
-import com.codingtu.cooltu.processor.annotation.formbind.LinkView;
+import com.codingtu.cooltu.processor.annotation.form.bind.BindView;
+import com.codingtu.cooltu.processor.annotation.form.bind.BindEditText;
+import com.codingtu.cooltu.processor.annotation.form.bind.BindRadioGroup;
+import com.codingtu.cooltu.processor.annotation.form.bind.BindSeekBar;
+import com.codingtu.cooltu.processor.annotation.form.check.Check;
+import com.codingtu.cooltu.processor.annotation.form.check.CheckMethod;
+import com.codingtu.cooltu.processor.annotation.form.check.CheckType;
+import com.codingtu.cooltu.processor.annotation.form.link.LinkMethod;
+import com.codingtu.cooltu.processor.annotation.form.FormBean;
+import com.codingtu.cooltu.processor.annotation.form.link.LinkView;
 
-@FormObject
+@FormBean
 public class Photo extends CoreBean {
 
-    @Bind(id = R.id.schoolEt, push = DefaultEditTextPush.class)
+    @BindView(id = R.id.schoolEt, push = DefaultEditTextPush.class)
     @Check(prompt = "请输入学校", type = CheckType.METHOD)
     public String school;
 
-    @BindEt(R.id.labelEt)
+    @BindEditText(R.id.labelEt)
     @Check(prompt = "请输入标签", type = CheckType.METHOD)
     public String label;
 
-    @BindEt(R.id.name1Et)
+    @BindEditText(R.id.name1Et)
     @Check(prompt = "请输入name1", type = CheckType.METHOD)
     public String name1;
 
-    @BindEt(R.id.name2Et)
+    @BindEditText(R.id.name2Et)
     @Check(prompt = "请输入name2")
     public String name2;
 
-    @BindEt(R.id.classEt)
+    @BindEditText(R.id.classEt)
     @Check(prompt = "请输入班级名")
     public String className;
 
-    @BindRg(id = R.id.classLl, onSetItem = TypeOnSetItem.class)
+    @BindRadioGroup(id = R.id.classLl, onSetItem = TypeOnSetItem.class)
     @Check(prompt = "请选择班级类型")
     public int classType;
 
-    @BindRg(id = R.id.numberLl, onSetItem = TypeOnSetItem.class)
+    @BindRadioGroup(id = R.id.numberLl, onSetItem = TypeOnSetItem.class)
     public int numbers = -1;
 
-    @BindEt(R.id.otherEt)
+    @BindEditText(R.id.otherEt)
     @Check(prompt = "请输入数字")
     public String others;
 
-    @BindSeekbar(R.id.timeSb)
+    @BindSeekBar(R.id.timeSb)
     public int time;
 
     @LinkMethod(R.id.name1Et)

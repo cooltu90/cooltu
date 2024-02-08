@@ -4,7 +4,7 @@ import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
 import com.codingtu.cooltu.processor.annotation.create.CreateFragment;
-import com.codingtu.cooltu.processor.annotation.formbind.FormObject;
+import com.codingtu.cooltu.processor.annotation.form.FormBean;
 import com.codingtu.cooltu.processor.annotation.net.Apis;
 import com.codingtu.cooltu.processor.annotation.path.PathFilter;
 import com.codingtu.cooltu.processor.annotation.path.Paths;
@@ -61,7 +61,7 @@ public class SupportTypes {
                 ResForFragment.class, ResForFragmentDeal.class,
                 Apis.class, NetDeal.class,
                 CreateAct.class, CreateActDeal.class,
-                FormObject.class, FormObjectDeal.class,
+                FormBean.class, FormObjectDeal.class,
                 CreateAdapter.class, CreateAdapterDeal.class,
                 CreateFragment.class, CreateFragmentDeal.class
         };

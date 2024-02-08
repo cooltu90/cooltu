@@ -4,41 +4,41 @@ import android.widget.EditText;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.form.TypeOnSetItem;
-import com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush;
+import com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
-import com.codingtu.cooltu.processor.annotation.formbind.Bind;
-import com.codingtu.cooltu.processor.annotation.formbind.BindEt;
-import com.codingtu.cooltu.processor.annotation.formbind.BindRg;
-import com.codingtu.cooltu.processor.annotation.formbind.BindSeekbar;
-import com.codingtu.cooltu.processor.annotation.formbind.Echo;
-import com.codingtu.cooltu.processor.annotation.formbind.EchoMethod;
-import com.codingtu.cooltu.processor.annotation.formbind.EchoType;
-import com.codingtu.cooltu.processor.annotation.formbind.FormObject;
+import com.codingtu.cooltu.processor.annotation.form.bind.BindView;
+import com.codingtu.cooltu.processor.annotation.form.bind.BindEditText;
+import com.codingtu.cooltu.processor.annotation.form.bind.BindRadioGroup;
+import com.codingtu.cooltu.processor.annotation.form.bind.BindSeekBar;
+import com.codingtu.cooltu.processor.annotation.form.echo.Echo;
+import com.codingtu.cooltu.processor.annotation.form.echo.EchoMethod;
+import com.codingtu.cooltu.processor.annotation.form.echo.EchoType;
+import com.codingtu.cooltu.processor.annotation.form.FormBean;
 
-@FormObject("forms")
+@FormBean("forms")
 public class FormObj extends CoreBean {
 
-    @Bind(id = R.id.nameEt, push = DefaultEditTextPush.class)
+    @BindView(id = R.id.nameEt, push = DefaultEditTextPush.class)
     public String name;
 
-    @BindEt(R.id.ageEt)
+    @BindEditText(R.id.ageEt)
     @Echo(EchoType.METHOD)
     public String age;
 
-    @BindEt(R.id.provinceEt)
+    @BindEditText(R.id.provinceEt)
     public String province;
 
-    @BindEt(R.id.cityEt)
+    @BindEditText(R.id.cityEt)
     public String city;
 
-    @BindEt(R.id.areaEt)
+    @BindEditText(R.id.areaEt)
     public String area;
 
-    @BindRg(id = R.id.classLl, onSetItem = TypeOnSetItem.class)
+    @BindRadioGroup(id = R.id.classLl, onSetItem = TypeOnSetItem.class)
     public int classIndex;
 
-    @BindSeekbar(R.id.timeSb)
+    @BindSeekBar(R.id.timeSb)
     public int seekBar;
 
 
