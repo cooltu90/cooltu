@@ -1,10 +1,6 @@
 package core.actbase;
 
-import android.os.Message;
 import android.view.View;
-import android.view.ViewGroup;
-
-import com.codingtu.cooltu.lib4a.view.combine.RadioGroup;
 
 import java.util.List;
 
@@ -62,6 +58,7 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(provinceEt, forms.province);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(cityEt, forms.city);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(areaEt, forms.area);
+            getRadioGroup(classLl).setSelected(forms.classIndex);
             forms.nameEcho(nameEt);
             forms.ageEcho(ageEt);
         }
@@ -166,8 +163,14 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
                 case com.codingtu.cooltu.R.id.areaEt:
                     forms.area = (java.lang.String) msg.obj;
                     break;
+                case com.codingtu.cooltu.R.id.classLl:
+                    forms.classIndex = (int) msg.obj;
+                    break;
             }
         }
+    }
+    private com.codingtu.cooltu.lib4a.view.combine.RadioGroup getRadioGroup(android.view.ViewGroup viewGroup) {
+        return ((com.codingtu.cooltu.lib4a.view.combine.RadioGroup) viewGroup.getTag(com.codingtu.cooltu.lib4a.R.id.tag_0));
     }
 
 

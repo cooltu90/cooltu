@@ -19,12 +19,13 @@ public class FormTestActivity extends FormTestActivityBase {
     @Override
     protected void initFormView() {
         super.initFormView();
-        forms=new FormObj();
-        forms.name="李四";
-        forms.age="12";
-        forms.province="黑龙江";
-        forms.city="哈尔滨";
-        forms.area="地铁站";
+        forms = new FormObj();
+        forms.name = "李四";
+        forms.age = "12";
+        forms.province = "黑龙江";
+        forms.city = "哈尔滨";
+        forms.area = "地铁站";
+        forms.classIndex = 2;
     }
 
     @ClickView(R.id.submitBt)

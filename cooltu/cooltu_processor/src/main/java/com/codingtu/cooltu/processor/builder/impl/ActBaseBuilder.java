@@ -2,6 +2,7 @@ package com.codingtu.cooltu.processor.builder.impl;
 
 import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FullName;
+import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
@@ -298,7 +299,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             addLnTag(initSb, "        if (!initFormBean) {");
 
             HashMap<Integer, Integer> methodEchoMap = new HashMap<>();
-
+            //回显
             ElementTools.ls(formBeanTe.getEnclosedElements(), new Ts.EachTs<Element>() {
 
                 @Override
@@ -327,6 +328,17 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                             if (echoType == EchoType.NORMAL) {
                                 addLnTag(initSb, "            [ViewTool].setText([ageEt], [forms].[age]);",
                                         FullName.VIEW_TOOL, getViewFieldName(id), beanName, kv.v);
+                            } else if (echoType == EchoType.METHOD) {
+                                methodEchoMap.put(bindEt.value(), bindEt.value());
+                            }
+                        }
+
+                        BindRg bindRg = ve.getAnnotation(BindRg.class);
+                        if (bindRg != null) {
+                            id = IdTools.elementToId(ve, BindRg.class, bindRg.id());
+                            if (echoType == EchoType.NORMAL) {
+                                addLnTag(initSb, "            getRadioGroup([view]).setSelected([forms].[classIndex]);",
+                                        getViewFieldName(id), beanName, kv.v);
                             } else if (echoType == EchoType.METHOD) {
                                 methodEchoMap.put(bindEt.value(), bindEt.value());
                             }
@@ -386,6 +398,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                             id = IdTools.elementToId(ve, BindEt.class, bindEt.value());
                         }
 
+                        BindRg bindRg = ve.getAnnotation(BindRg.class);
+                        if (bindRg != null) {
+                            id = IdTools.elementToId(ve, BindRg.class, bindRg.id());
+                        }
+
                         if (id != null) {
                             addLnTag(methodsSb, "                case [id]:", id.toString());
                             addLnTag(methodsSb, "                    [forms].[name] = ([String]) msg.obj;", beanName, kv.v, kv.k);
@@ -401,6 +418,10 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             addLnTag(methodsSb, "            }");
             addLnTag(methodsSb, "        }");
 
+            addLnTag(methodsSb, "    }");
+
+            addLnTag(methodsSb, "    private [RadioGroup] getRadioGroup([ViewGroup] viewGroup) {", FullName.RADIO_GROUP, FullName.VIEW_GROUP);
+            addLnTag(methodsSb, "        return (([RadioGroup]) viewGroup.getTag([rPkg].R.id.tag_0));", FullName.RADIO_GROUP, Pkg.LIB4A);
             addLnTag(methodsSb, "    }");
 
             useFormInitIf(initSb.toString());
