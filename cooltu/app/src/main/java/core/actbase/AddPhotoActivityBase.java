@@ -90,8 +90,6 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
     public void onCreateComplete() {
         super.onCreateComplete();
 
-        submitBt.setOnClickListener(this);
-        otherBt.setOnClickListener(this);
 
 
     }
@@ -100,23 +98,10 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case com.codingtu.cooltu.R.id.submitBt:
-                if (!checkPhoto()) {
-                    return;
-                }
-                submitBtClick(
-                );
-                break;
-            case com.codingtu.cooltu.R.id.otherBt:
-                otherBtClick(
-                );
-                break;
 
         }
     }
 
-    protected void submitBtClick() {}
-    protected void otherBtClick() {}
 
 
     @Override

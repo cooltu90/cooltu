@@ -20,34 +20,5 @@ import core.actres.AddPhotoActivityRes;
 @ActBase(layout = R.layout.activity_add_photo)
 public class AddPhotoActivity extends AddPhotoActivityBase {
 
-    @ClickView(value = R.id.submitBt, check = true)
-    public void submitBtClick() {
-        Logs.i(photo.toJson());
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        labelEt.addTextChangedListener(new PrefixFixedSizeTextWather(this, labelEt, 5, "L-"));
-    }
-
-    @Override
-    protected void initFormView() {
-        super.initFormView();
-        photo = new Photo();
-        photo.label = "L-00001";
-        photo.classType = 1;
-    }
-
-    @ClickView(R.id.otherBt)
-    public void otherBtClick() {
-        showDialog("");
-    }
-
-    @Override
-    protected boolean dialogYes(String text) {
-        ViewTool.setEditTextAndSelection(otherEt, text);
-        return true;
-    }
 }
 
