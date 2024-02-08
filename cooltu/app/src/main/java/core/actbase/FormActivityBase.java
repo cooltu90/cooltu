@@ -124,9 +124,6 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
 
         switch (v.getId()) {
             case com.codingtu.cooltu.R.id.bt:
-                if (!checkForms()) {
-                    return;
-                }
                 btClick(
                 );
                 break;

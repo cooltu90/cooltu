@@ -30,7 +30,8 @@ public class WelcomeActivity extends WelcomeActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActStart.formTestActivity(getAct());
+//        ActStart.formTestActivity(getAct());
+        ActStart.addPhotoActivity(getAct());
     }
 
     @ActBack(StepOneActivity.class)

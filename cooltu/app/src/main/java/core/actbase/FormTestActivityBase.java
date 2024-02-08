@@ -63,8 +63,8 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(areaEt, forms.area);
             getRadioGroup(classLl).setSelected(forms.classIndex);
             timeSb.setProgress(forms.seekBar);
-            forms.nameEcho(nameEt);
             forms.ageEcho(ageEt);
+            forms.nameEcho(nameEt);
         }
 
 
@@ -140,9 +140,14 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
 
 
     protected void initFormView() {}
+
+    private boolean checkFormObj() {
+        return true;
+    }
     public static class BindHandler extends android.os.Handler {
 
         private com.codingtu.cooltu.bean.FormObj forms;
+        private com.codingtu.cooltu.lib4j.data.map.ListValueMap<Integer, View> linkMap = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
         public BindHandler(com.codingtu.cooltu.bean.FormObj forms) {
             this.forms = forms;
@@ -151,6 +156,7 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
+            List<View> views = linkMap.get(msg.what);
             switch (msg.what) {
                 case com.codingtu.cooltu.R.id.nameEt:
                     forms.name = (java.lang.String) msg.obj;
@@ -174,6 +180,9 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
                     forms.seekBar = (int) msg.obj;
                     break;
             }
+        }
+        public void link(int handleId, View... linkViews) {
+            linkMap.get(handleId).addAll(com.codingtu.cooltu.lib4j.ts.Ts.ts(linkViews).toList());
         }
     }
     private com.codingtu.cooltu.lib4a.view.combine.RadioGroup getRadioGroup(android.view.ViewGroup viewGroup) {

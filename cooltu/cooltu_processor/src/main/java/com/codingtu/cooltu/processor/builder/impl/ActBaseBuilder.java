@@ -6,11 +6,12 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
-import com.codingtu.cooltu.lib4j.file.FileTool;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
+import com.codingtu.cooltu.lib4j.ts.BaseTs;
+import com.codingtu.cooltu.lib4j.ts.Maps;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.annotation.form.Form;
@@ -24,11 +25,16 @@ import com.codingtu.cooltu.processor.annotation.formbind.Bind;
 import com.codingtu.cooltu.processor.annotation.formbind.BindEt;
 import com.codingtu.cooltu.processor.annotation.formbind.BindRg;
 import com.codingtu.cooltu.processor.annotation.formbind.BindSeekbar;
+import com.codingtu.cooltu.processor.annotation.formbind.Check;
+import com.codingtu.cooltu.processor.annotation.formbind.CheckMethod;
+import com.codingtu.cooltu.processor.annotation.formbind.CheckType;
 import com.codingtu.cooltu.processor.annotation.formbind.Echo;
 import com.codingtu.cooltu.processor.annotation.formbind.EchoMethod;
 import com.codingtu.cooltu.processor.annotation.formbind.EchoType;
 import com.codingtu.cooltu.processor.annotation.formbind.FormBind;
 import com.codingtu.cooltu.processor.annotation.formbind.FormObject;
+import com.codingtu.cooltu.processor.annotation.formbind.LinkMethod;
+import com.codingtu.cooltu.processor.annotation.formbind.LinkView;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
@@ -42,11 +48,13 @@ import com.codingtu.cooltu.processor.builder.subdeal.BindTextViewDeal;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.FormBeanDeal;
 import com.codingtu.cooltu.processor.deal.FormObjectDeal;
+import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
+import com.codingtu.cooltu.processor.lib.tools.TagTools;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -225,6 +233,51 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
             parentViewMap = uiBaseBuilder.getParentViewMap();
 
+            BaseTs<VariableElement> ves = Ts.ts(VariableElement.class);
+
+            Maps<Integer, ExecutableElement> echoMethodMap = Maps.map(new HashMap<>());
+            Maps<Integer, ExecutableElement> linkMethodMap = Maps.map(new HashMap<>());
+            Maps<Integer, ExecutableElement> checkMethodMap = Maps.map(new HashMap<>());
+
+            ElementTools.ls(formBeanTe.getEnclosedElements(), new Ts.EachTs<Element>() {
+                @Override
+                public boolean each(int position, Element element) {
+                    if (element instanceof VariableElement) {
+                        ves.add((VariableElement) element);
+                        return false;
+                    }
+
+                    if (element instanceof ExecutableElement) {
+                        EchoMethod echoMethod = element.getAnnotation(EchoMethod.class);
+                        if (echoMethod != null) {
+                            echoMethodMap.put(echoMethod.value(), (ExecutableElement) element);
+                            return false;
+                        }
+
+                        LinkMethod linkMethod = element.getAnnotation(LinkMethod.class);
+                        if (linkMethod != null) {
+                            linkMethodMap.put(linkMethod.value(), (ExecutableElement) element);
+                            return false;
+                        }
+
+                        CheckMethod checkMethod = element.getAnnotation(CheckMethod.class);
+                        if (checkMethod != null) {
+                            Ts.ints(checkMethod.value()).ls(new Ts.EachTs<Integer>() {
+                                @Override
+                                public boolean each(int position, Integer integer) {
+                                    checkMethodMap.put(integer, (ExecutableElement) element);
+                                    return false;
+                                }
+                            });
+                            return false;
+                        }
+
+                    }
+
+                    return false;
+                }
+            });
+
 
             //bindHandler
             StringBuilder initSb = new StringBuilder();
@@ -239,142 +292,163 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
             HashMap<String, String> onSetItemMap = new HashMap<>();
             //通知方法绑定
-            ElementTools.ls(formBeanTe.getEnclosedElements(), new Ts.EachTs<Element>() {
 
-                @Override
-                public boolean each(int position, Element element) {
-                    if (element instanceof VariableElement) {
-                        VariableElement ve = (VariableElement) element;
-
-
-                        Bind bind = ve.getAnnotation(Bind.class);
-                        if (bind != null) {
-                            pushMethods(ve, Bind.class, bind.id(), ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
-                                @Override
-                                public Object get() {
-                                    return bind.push();
-                                }
-                            }));
-                        }
-
-                        BindEt bindEt = ve.getAnnotation(BindEt.class);
-                        if (bindEt != null) {
-                            pushMethods(ve, BindEt.class, bindEt.value(), FullName.DEFAULT_EDIT_TEXT_PUSH);
-                        }
-
-                        BindRg bindRg = ve.getAnnotation(BindRg.class);
-                        if (bindRg != null) {
-                            IdTools.Id id = IdTools.elementToId(ve, BindRg.class, bindRg.id());
-                            String onSetItemClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
-                                @Override
-                                public Object get() {
-                                    return bindRg.onSetItem();
-                                }
-                            });
-
-                            JavaInfo javaInfo = new JavaInfo(onSetItemClass);
-                            String onSetItemName = ConvertTool.toMethodType(javaInfo.name);
-                            if (!onSetItemMap.containsKey(onSetItemClass)) {
-                                addLnTag(initSb, "        [type] [name] = new [type]();", onSetItemClass, onSetItemName, onSetItemClass);
-                                onSetItemMap.put(onSetItemClass, onSetItemClass);
-                            }
-
-                            int selected = bindRg.selected();
-                            String selectedStr = selected == -1 ? "null" : (selected + "");
-
-                            addLnTag(initSb, "        new [DefulatRadioGroupPush]()", FullName.DEFAULT_RADIO_GROUP_PUSH);
-                            addLnTag(initSb, "                .destory(this).bindHandler(bindHandler)");
-                            addLnTag(initSb, "                .onSetItem([onSetItem]).selected([selectedStr]).addView([view]);", onSetItemName, selectedStr, getViewFieldName(id));
-                        }
-
-                        BindSeekbar bindSeekbar = ve.getAnnotation(BindSeekbar.class);
-                        if (bindSeekbar != null) {
-                            pushMethods(ve, BindSeekbar.class, bindSeekbar.value(), FullName.DEFAULT_SEEK_BAR_PUSH);
-                        }
-
-                    }
-                    return false;
-                }
+            ves.ls(new Ts.EachTs<VariableElement>() {
 
                 private void pushMethods(VariableElement ve, Class annoClass, int viewId, String pushClass) {
                     IdTools.Id id = IdTools.elementToId(ve, annoClass, viewId);
                     addLnTag(initSb, "        new [pushClass]().destory(this).bindHandler(bindHandler).addView([view]);",
                             pushClass, getViewFieldName(id));
                 }
+
+                @Override
+                public boolean each(int position, VariableElement ve) {
+                    Bind bind = ve.getAnnotation(Bind.class);
+                    if (bind != null) {
+                        pushMethods(ve, Bind.class, bind.id(), ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                            @Override
+                            public Object get() {
+                                return bind.push();
+                            }
+                        }));
+                        return false;
+                    }
+
+                    BindEt bindEt = ve.getAnnotation(BindEt.class);
+                    if (bindEt != null) {
+                        pushMethods(ve, BindEt.class, bindEt.value(), FullName.DEFAULT_EDIT_TEXT_PUSH);
+                        return false;
+                    }
+
+                    BindRg bindRg = ve.getAnnotation(BindRg.class);
+                    if (bindRg != null) {
+                        IdTools.Id id = IdTools.elementToId(ve, BindRg.class, bindRg.id());
+                        String onSetItemClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                            @Override
+                            public Object get() {
+                                return bindRg.onSetItem();
+                            }
+                        });
+
+                        JavaInfo javaInfo = new JavaInfo(onSetItemClass);
+                        String onSetItemName = ConvertTool.toMethodType(javaInfo.name);
+                        if (!onSetItemMap.containsKey(onSetItemClass)) {
+                            addLnTag(initSb, "        [type] [name] = new [type]();", onSetItemClass, onSetItemName, onSetItemClass);
+                            onSetItemMap.put(onSetItemClass, onSetItemClass);
+                        }
+
+                        int selected = bindRg.selected();
+                        String selectedStr = selected == -1 ? "null" : (selected + "");
+
+                        addLnTag(initSb, "        new [DefulatRadioGroupPush]()", FullName.DEFAULT_RADIO_GROUP_PUSH);
+                        addLnTag(initSb, "                .destory(this).bindHandler(bindHandler)");
+                        addLnTag(initSb, "                .onSetItem([onSetItem]).selected([selectedStr]).addView([view]);", onSetItemName, selectedStr, getViewFieldName(id));
+                        return false;
+                    }
+
+                    BindSeekbar bindSeekbar = ve.getAnnotation(BindSeekbar.class);
+                    if (bindSeekbar != null) {
+                        pushMethods(ve, BindSeekbar.class, bindSeekbar.value(), FullName.DEFAULT_SEEK_BAR_PUSH);
+                        return false;
+                    }
+
+                    return false;
+                }
             });
+
+            linkMethodMap.ls(new Ts.MapEach<Integer, ExecutableElement>() {
+                @Override
+                public boolean each(Integer integer, ExecutableElement ee) {
+                    LinkMethod linkMethod = ee.getAnnotation(LinkMethod.class);
+                    IdTools.Id handleId = IdTools.elementToId(ee, LinkMethod.class, linkMethod.value());
+                    String param = Params.getParam(ElementTools.getVariableElements(ee), new Ts.Convert<VariableElement, String>() {
+                        @Override
+                        public String convert(int index, VariableElement ve) {
+                            LinkView linkView = ve.getAnnotation(LinkView.class);
+                            IdTools.Id id = IdTools.elementToId(ve, LinkView.class, linkView.value());
+                            return getViewFieldName(id);
+                        }
+                    });
+
+
+                    addLnTag(initSb, "        bindHandler.link([handlId], [name2Et]);", handleId.toString(), param);
+                    return false;
+                }
+            });
+
             addLnTag(initSb, "        if (!initFormBean) {");
 
             HashMap<Integer, Integer> methodEchoMap = new HashMap<>();
             //回显
-            ElementTools.ls(formBeanTe.getEnclosedElements(), new Ts.EachTs<Element>() {
-
+            ves.ls(new Ts.EachTs<VariableElement>() {
                 @Override
-                public boolean each(int position, Element element) {
-                    if (element instanceof VariableElement) {
-                        VariableElement ve = (VariableElement) element;
+                public boolean each(int position, VariableElement ve) {
+                    KV<String, String> kv = ElementTools.getFieldKv(ve);
 
-                        KV<String, String> kv = ElementTools.getFieldKv(ve);
-
-                        Echo echo = ve.getAnnotation(Echo.class);
-                        int echoType = EchoType.NORMAL;
-                        if (echo != null) {
-                            echoType = echo.value();
-                        }
-
-                        IdTools.Id id = null;
-                        Bind bind = ve.getAnnotation(Bind.class);
-                        if (bind != null) {
-                            id = IdTools.elementToId(ve, Bind.class, bind.id());
-                            methodEchoMap.put(bind.id(), bind.id());
-                        }
-
-                        BindEt bindEt = ve.getAnnotation(BindEt.class);
-                        if (bindEt != null) {
-                            id = IdTools.elementToId(ve, BindEt.class, bindEt.value());
-                            if (echoType == EchoType.NORMAL) {
-                                addLnTag(initSb, "            [ViewTool].setText([ageEt], [forms].[age]);",
-                                        FullName.VIEW_TOOL, getViewFieldName(id), beanName, kv.v);
-                            } else if (echoType == EchoType.METHOD) {
-                                methodEchoMap.put(bindEt.value(), bindEt.value());
-                            }
-                        }
-
-                        BindRg bindRg = ve.getAnnotation(BindRg.class);
-                        if (bindRg != null) {
-                            id = IdTools.elementToId(ve, BindRg.class, bindRg.id());
-                            if (echoType == EchoType.NORMAL) {
-                                addLnTag(initSb, "            getRadioGroup([view]).setSelected([forms].[classIndex]);",
-                                        getViewFieldName(id), beanName, kv.v);
-                            } else if (echoType == EchoType.METHOD) {
-                                methodEchoMap.put(bindRg.id(), bindRg.id());
-                            }
-                        }
-
-                        BindSeekbar bindSeekbar = ve.getAnnotation(BindSeekbar.class);
-                        if (bindSeekbar != null) {
-                            id = IdTools.elementToId(ve, BindSeekbar.class, bindSeekbar.value());
-                            if (echoType == EchoType.NORMAL) {
-                                addLnTag(initSb, "            [timeSb].setProgress([forms].[seekBar]);",
-                                        getViewFieldName(id), beanName, kv.v);
-                            } else if (echoType == EchoType.METHOD) {
-                                methodEchoMap.put(bindSeekbar.value(), bindSeekbar.value());
-                            }
-                        }
-
+                    Echo echo = ve.getAnnotation(Echo.class);
+                    int echoType = EchoType.NORMAL;
+                    if (echo != null) {
+                        echoType = echo.value();
                     }
 
-                    if (element instanceof ExecutableElement) {
-                        ExecutableElement ee = (ExecutableElement) element;
-                        String methodName = ee.getSimpleName().toString();
-                        EchoMethod echoMethod = ee.getAnnotation(EchoMethod.class);
-                        if (echoMethod != null) {
-                            if (methodEchoMap.get(echoMethod.value()) != null) {
-                                IdTools.Id id = IdTools.elementToId(ee, EchoMethod.class, echoMethod.value());
-                                addLnTag(initSb, "            [forms].[nameEcho]([nameEt]);", beanName, methodName, getViewFieldName(id));
-                            }
-                        }
+                    IdTools.Id id = null;
+                    Bind bind = ve.getAnnotation(Bind.class);
+                    if (bind != null) {
+                        id = IdTools.elementToId(ve, Bind.class, bind.id());
+                        methodEchoMap.put(bind.id(), bind.id());
+                        return false;
                     }
 
+                    BindEt bindEt = ve.getAnnotation(BindEt.class);
+                    if (bindEt != null) {
+                        id = IdTools.elementToId(ve, BindEt.class, bindEt.value());
+                        if (echoType == EchoType.NORMAL) {
+                            addLnTag(initSb, "            [ViewTool].setText([ageEt], [forms].[age]);",
+                                    FullName.VIEW_TOOL, getViewFieldName(id), beanName, kv.v);
+                        } else if (echoType == EchoType.METHOD) {
+                            methodEchoMap.put(bindEt.value(), bindEt.value());
+                        }
+                        return false;
+                    }
+
+                    BindRg bindRg = ve.getAnnotation(BindRg.class);
+                    if (bindRg != null) {
+                        id = IdTools.elementToId(ve, BindRg.class, bindRg.id());
+                        if (echoType == EchoType.NORMAL) {
+                            addLnTag(initSb, "            getRadioGroup([view]).setSelected([forms].[classIndex]);",
+                                    getViewFieldName(id), beanName, kv.v);
+                        } else if (echoType == EchoType.METHOD) {
+                            methodEchoMap.put(bindRg.id(), bindRg.id());
+                        }
+                        return false;
+                    }
+
+                    BindSeekbar bindSeekbar = ve.getAnnotation(BindSeekbar.class);
+                    if (bindSeekbar != null) {
+                        id = IdTools.elementToId(ve, BindSeekbar.class, bindSeekbar.value());
+                        if (echoType == EchoType.NORMAL) {
+                            addLnTag(initSb, "            [timeSb].setProgress([forms].[seekBar]);",
+                                    getViewFieldName(id), beanName, kv.v);
+                        } else if (echoType == EchoType.METHOD) {
+                            methodEchoMap.put(bindSeekbar.value(), bindSeekbar.value());
+                        }
+                        return false;
+                    }
+                    return false;
+                }
+            });
+
+            echoMethodMap.ls(new Ts.MapEach<Integer, ExecutableElement>() {
+                @Override
+                public boolean each(Integer integer, ExecutableElement ee) {
+                    String methodName = ee.getSimpleName().toString();
+                    EchoMethod echoMethod = ee.getAnnotation(EchoMethod.class);
+                    if (echoMethod != null) {
+                        if (methodEchoMap.get(echoMethod.value()) != null) {
+                            IdTools.Id id = IdTools.elementToId(ee, EchoMethod.class, echoMethod.value());
+                            addLnTag(initSb, "            [forms].[nameEcho]([nameEt]);", beanName, methodName, getViewFieldName(id));
+                        }
+                    }
                     return false;
                 }
             });
@@ -383,9 +457,95 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
 
             addLnTag(methodsSb, "    protected void initFormView() {}");
+            addLnTag(methodsSb, "");
+            addLnTag(methodsSb, "    private boolean check[Photo]() {", CurrentPath.javaInfo(formBeanClass).name);
+
+
+            ves.ls(new Ts.EachTs<VariableElement>() {
+                @Override
+                public boolean each(int position, VariableElement ve) {
+
+                    KV<String, String> kv = ElementTools.getFieldKv(ve);
+
+                    Check check = ve.getAnnotation(Check.class);
+                    if (check != null) {
+                        String prompt = check.prompt();
+                        int type = check.type();
+
+                        if (type == CheckType.NORMAL) {
+                            BindEt bindEt = ve.getAnnotation(BindEt.class);
+                            if (bindEt != null) {
+                                addLnTag(methodsSb, "        if ([StringTool].isBlank([photo].[label])) {", FullName.STRING_TOOL, beanName, kv.v);
+                                addLnTag(methodsSb, "            toast(\"[prompt]\");", prompt);
+                                addLnTag(methodsSb, "            return false;");
+                                addLnTag(methodsSb, "        }");
+                                return false;
+                            }
+
+                            BindRg bindRg = ve.getAnnotation(BindRg.class);
+                            if (bindRg != null) {
+                                addLnTag(methodsSb, "        if ([photo].[classType] < 0) {", beanName, kv.v);
+                                addLnTag(methodsSb, "            toast(\"[prompt]\");", prompt);
+                                addLnTag(methodsSb, "            return false;");
+                                addLnTag(methodsSb, "        }");
+                                return false;
+                            }
+
+                            Bind bind = ve.getAnnotation(Bind.class);
+                            if (bind != null) {
+                                ExecutableElement ee = checkMethodMap.get(bind.id());
+                                if (ee != null) {
+                                    addLnTag(methodsSb, "        if ([photo].[checkLabel]([photo].[param])) {", beanName, ElementTools.simpleName(ee), beanName, kv.v);
+                                    addLnTag(methodsSb, "            toast(\"[prompt]\");", prompt);
+                                    addLnTag(methodsSb, "            return false;");
+                                    addLnTag(methodsSb, "        }");
+                                }
+                                return false;
+                            }
+
+                        } else if (type == CheckType.METHOD) {
+
+                            ExecutableElement ee = null;
+
+                            BindEt bindEt = ve.getAnnotation(BindEt.class);
+                            if (bindEt != null) {
+                                ee = checkMethodMap.get(bindEt.value());
+                            }
+
+                            BindRg bindRg = ve.getAnnotation(BindRg.class);
+                            if (bindRg != null) {
+                                ee = checkMethodMap.get(bindRg.id());
+                            }
+
+                            Bind bind = ve.getAnnotation(Bind.class);
+                            if (bind != null) {
+                                ee = checkMethodMap.get(bind.id());
+                            }
+
+                            if (ee != null) {
+                                addLnTag(methodsSb, "        if ([photo].[checkLabel]([photo].[param])) {", beanName, ElementTools.simpleName(ee), beanName, kv.v);
+                                addLnTag(methodsSb, "            toast(\"[prompt]\");", prompt);
+                                addLnTag(methodsSb, "            return false;");
+                                addLnTag(methodsSb, "        }");
+                            }
+                            return false;
+
+                        }
+
+
+                    }
+                    return false;
+                }
+            });
+
+
+            addLnTag(methodsSb, "        return true;");
+            addLnTag(methodsSb, "    }");
+
             addLnTag(methodsSb, "    public static class BindHandler extends android.os.Handler {");
             addLnTag(methodsSb, "");
             addLnTag(methodsSb, "        private [beanClass] [name];", formBeanClass, name);
+            addLnTag(methodsSb, "        private [ListValueMap]<Integer, View> linkMap = new [ListValueMap]<>();", FullName.LIST_VALUE_MAP, FullName.LIST_VALUE_MAP);
             addLnTag(methodsSb, "");
             addLnTag(methodsSb, "        public BindHandler([beanClass] [name]) {", formBeanClass, name);
             addLnTag(methodsSb, "            this.[name] = [name];", name, name);
@@ -394,49 +554,70 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             addLnTag(methodsSb, "        @Override");
             addLnTag(methodsSb, "        public void handleMessage(android.os.Message msg) {");
             addLnTag(methodsSb, "            super.handleMessage(msg);");
+            addLnTag(methodsSb, "            List<View> views = linkMap.get(msg.what);");
             addLnTag(methodsSb, "            switch (msg.what) {");
 
 
-            ElementTools.ls(formBeanTe.getEnclosedElements(), new Ts.EachTs<Element>() {
+            ves.ls(new Ts.EachTs<VariableElement>() {
                 @Override
-                public boolean each(int position, Element element) {
-                    if (element instanceof VariableElement) {
-                        VariableElement ve = (VariableElement) element;
-                        KV<String, String> kv = ElementTools.getFieldKv(ve);
+                public boolean each(int position, VariableElement ve) {
 
-                        IdTools.Id id = null;
-                        Bind bind = ve.getAnnotation(Bind.class);
-                        if (bind != null) {
-                            id = IdTools.elementToId(ve, Bind.class, bind.id());
-                        }
+                    KV<String, String> kv = ElementTools.getFieldKv(ve);
 
-                        BindEt bindEt = ve.getAnnotation(BindEt.class);
-                        if (bindEt != null) {
-                            id = IdTools.elementToId(ve, BindEt.class, bindEt.value());
-                        }
+                    IdTools.Id id = null;
+                    int resId = 0;
 
-                        BindRg bindRg = ve.getAnnotation(BindRg.class);
-                        if (bindRg != null) {
-                            id = IdTools.elementToId(ve, BindRg.class, bindRg.id());
-                        }
-                        BindSeekbar bindSeekbar = ve.getAnnotation(BindSeekbar.class);
-                        if (bindSeekbar != null) {
-                            id = IdTools.elementToId(ve, BindSeekbar.class, bindSeekbar.value());
-                        }
-
-                        if (id != null) {
-                            addLnTag(methodsSb, "                case [id]:", id.toString());
-                            addLnTag(methodsSb, "                    [forms].[name] = ([String]) msg.obj;", beanName, kv.v, kv.k);
-                            addLnTag(methodsSb, "                    break;");
-                        }
-
+                    Bind bind = ve.getAnnotation(Bind.class);
+                    if (bind != null) {
+                        resId = bind.id();
+                        id = IdTools.elementToId(ve, Bind.class, resId);
                     }
+
+                    BindEt bindEt = ve.getAnnotation(BindEt.class);
+                    if (bindEt != null) {
+                        resId = bindEt.value();
+                        id = IdTools.elementToId(ve, BindEt.class, resId);
+                    }
+
+                    BindRg bindRg = ve.getAnnotation(BindRg.class);
+                    if (bindRg != null) {
+                        resId = bindRg.id();
+                        id = IdTools.elementToId(ve, BindRg.class, resId);
+                    }
+                    BindSeekbar bindSeekbar = ve.getAnnotation(BindSeekbar.class);
+                    if (bindSeekbar != null) {
+                        resId = bindSeekbar.value();
+                        id = IdTools.elementToId(ve, BindSeekbar.class, resId);
+                    }
+
+                    if (id != null) {
+                        addLnTag(methodsSb, "                case [id]:", id.toString());
+                        addLnTag(methodsSb, "                    [forms].[name] = ([String]) msg.obj;", beanName, kv.v, kv.k);
+
+                        ExecutableElement ee = linkMethodMap.get(resId);
+                        if (ee != null) {
+                            LinkMethod linkMethod = ee.getAnnotation(LinkMethod.class);
+                            String methodName = ee.getSimpleName().toString();
+                            String param = ElementTools.getMethodParamKvs(ee).getParam(new Params.Convert() {
+                                @Override
+                                public String convert(int index, KV<String, String> kv) {
+                                    return TagTools.dealLine("([View]) views.get([index])", kv.k, index);
+                                }
+                            });
+                            addLnTag(methodsSb, "                    photo.[methodName]([params]);", methodName, param);
+                        }
+
+                        addLnTag(methodsSb, "                    break;");
+                    }
+
                     return false;
                 }
             });
 
-
             addLnTag(methodsSb, "            }");
+            addLnTag(methodsSb, "        }");
+            addLnTag(methodsSb, "        public void link(int handleId, View... linkViews) {");
+            addLnTag(methodsSb, "            linkMap.get(handleId).addAll([ts].ts(linkViews).toList());", FullName.TS);
             addLnTag(methodsSb, "        }");
 
             addLnTag(methodsSb, "    }");
@@ -449,6 +630,10 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             useFormMethodsIf(methodsSb.toString());
         }
 
+    }
+
+    private Maps<Integer, IdTools.Id> getIdMap(Element element, Class annoClass, int[] ids) {
+        return Maps.map(IdTools.elementToIds(element, annoClass, ids));
     }
 
     private String getViewFieldName(IdTools.Id id) {
@@ -521,11 +706,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
     @Override
     public void isCheckForm(int index, boolean isCheckForm) {
-        if (form != null && isCheckForm) {
+        if (formBind != null && isCheckForm) {
             String formBeanClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
                 @Override
                 public Object get() {
-                    return form.value();
+                    return formBind.value();
                 }
             });
             String formBeanSimpleName = CurrentPath.javaInfo(formBeanClass).name;

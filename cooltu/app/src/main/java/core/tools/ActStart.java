@@ -4,6 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 
 public class ActStart {
+    public static final void addPhotoActivity(Activity act) {
+        Intent intent = new Intent(act, com.codingtu.cooltu.ui.AddPhotoActivity.class);
+        intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
+        com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.ADD_PHOTO_ACTIVITY);
+    }
     public static final void formActivity(Activity act, com.codingtu.cooltu.bean.Forms forms) {
         Intent intent = new Intent(act, com.codingtu.cooltu.ui.FormActivity.class);
         intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
