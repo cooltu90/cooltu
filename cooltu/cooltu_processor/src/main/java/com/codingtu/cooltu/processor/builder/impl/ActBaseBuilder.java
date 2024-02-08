@@ -34,7 +34,7 @@ import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.core.UiBaseInterface;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
-import com.codingtu.cooltu.processor.deal.FormObjectDeal;
+import com.codingtu.cooltu.processor.deal.FormBeanDeal;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
@@ -175,7 +175,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     return form.value();
                 }
             });
-            TypeElement formBeanTe = FormObjectDeal.MAP.get(formBeanClass);
+            TypeElement formBeanTe = FormBeanDeal.MAP.get(formBeanClass);
 
             String formBeanSimpleName = CurrentPath.javaInfo(formBeanClass).name;
 

@@ -27,7 +27,7 @@ import com.codingtu.cooltu.processor.deal.DefaultDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultEditDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultNoticeDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultToastDialogLayoutDeal;
-import com.codingtu.cooltu.processor.deal.FormObjectDeal;
+import com.codingtu.cooltu.processor.deal.FormBeanDeal;
 import com.codingtu.cooltu.processor.deal.FragmentBaseDeal;
 import com.codingtu.cooltu.processor.deal.ModuleInfoDeal;
 import com.codingtu.cooltu.processor.deal.NetDeal;
@@ -61,7 +61,7 @@ public class SupportTypes {
                 ResForFragment.class, ResForFragmentDeal.class,
                 Apis.class, NetDeal.class,
                 CreateAct.class, CreateActDeal.class,
-                FormBean.class, FormObjectDeal.class,
+                FormBean.class, FormBeanDeal.class,
                 CreateAdapter.class, CreateAdapterDeal.class,
                 CreateFragment.class, CreateFragmentDeal.class
         };

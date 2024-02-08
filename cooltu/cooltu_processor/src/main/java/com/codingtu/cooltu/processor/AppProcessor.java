@@ -6,6 +6,7 @@ import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.file.list.FileLister;
 import com.codingtu.cooltu.lib4j.file.list.ListFile;
+import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
@@ -88,27 +89,31 @@ public class AppProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnv) {
-        Ts.ts(types).ls(2, new Ts.EachTs<Class>() {
-            @Override
-            public boolean each(int position, Class annoClass) {
-                Class dealClass = types[position + 1];
-                Set<Element> es = roundEnv.getElementsAnnotatedWith(annoClass);
-                Ts.ts(es).ls(new Ts.EachTs<Element>() {
-                    @Override
-                    public boolean each(int position, Element element) {
-                        try {
-                            BaseDeal deal = (BaseDeal) dealClass.getConstructor().newInstance();
-                            deal.dealElement(element);
-                        } catch (Exception e) {
+        try {
+            Ts.ts(types).ls(2, new Ts.EachTs<Class>() {
+                @Override
+                public boolean each(int position, Class annoClass) {
+                    Class dealClass = types[position + 1];
+                    Set<Element> es = roundEnv.getElementsAnnotatedWith(annoClass);
+                    Ts.ts(es).ls(new Ts.EachTs<Element>() {
+                        @Override
+                        public boolean each(int position, Element element) {
+                            try {
+                                BaseDeal deal = (BaseDeal) dealClass.getConstructor().newInstance();
+                                deal.dealElement(element);
+                            } catch (Exception e) {
+                                LibLogs.i(e);
+                            }
+                            return false;
                         }
-                        return false;
-                    }
-                });
-                return false;
-            }
-        });
-        BuilderMap.create();
-
+                    });
+                    return false;
+                }
+            });
+            BuilderMap.create();
+        } catch (Exception e) {
+            LibLogs.i(e);
+        }
         return true;
     }
 }

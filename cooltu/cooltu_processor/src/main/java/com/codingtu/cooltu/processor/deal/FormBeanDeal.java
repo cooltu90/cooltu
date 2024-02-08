@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import javax.lang.model.element.TypeElement;
 
-public class FormObjectDeal extends TypeBaseDeal {
+public class FormBeanDeal extends TypeBaseDeal {
 
     public static final HashMap<String, TypeElement> MAP = new HashMap<>();
 

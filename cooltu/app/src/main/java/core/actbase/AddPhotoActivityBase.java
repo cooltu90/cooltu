@@ -66,10 +66,10 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
                 .onSetItem(typeOnSetItem).selected(null).addView(numberLl);
         new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(otherEt);
         new com.codingtu.cooltu.lib4a.form.push.DefaultSeekBarPush().destory(this).bindHandler(bindHandler).addView(timeSb);
-        bindHandler.link(com.codingtu.cooltu.R.id.otherEt, numberLl, otherBt);
         bindHandler.link(com.codingtu.cooltu.R.id.name1Et, name2Et);
         bindHandler.link(com.codingtu.cooltu.R.id.classLl, classEt);
         bindHandler.link(com.codingtu.cooltu.R.id.numberLl, otherEt);
+        bindHandler.link(com.codingtu.cooltu.R.id.otherEt, numberLl, otherBt);
         if (!initFormBean) {
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(labelEt, photo.label);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(name1Et, photo.name1);
