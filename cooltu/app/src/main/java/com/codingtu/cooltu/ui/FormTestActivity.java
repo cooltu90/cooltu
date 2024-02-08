@@ -26,6 +26,7 @@ public class FormTestActivity extends FormTestActivityBase {
         forms.city = "哈尔滨";
         forms.area = "地铁站";
         forms.classIndex = 2;
+        forms.seekBar=10;
     }
 
     @ClickView(R.id.submitBt)

@@ -97,6 +97,13 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
+
+                <SeekBar
+                    android:id="@+id/timeSb"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:max="150" />
+
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

@@ -8,6 +8,7 @@ import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
 public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTestBaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
+    protected android.widget.SeekBar timeSb;
     protected android.widget.EditText nameEt;
     protected android.widget.TextView submitBt;
     protected android.widget.EditText cityEt;
@@ -25,6 +26,7 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
         super.onCreate(savedInstanceState);
         setContentView(com.codingtu.cooltu.R.layout.activity_form_test);
 
+        timeSb = findViewById(com.codingtu.cooltu.R.id.timeSb);
         nameEt = findViewById(com.codingtu.cooltu.R.id.nameEt);
         submitBt = findViewById(com.codingtu.cooltu.R.id.submitBt);
         cityEt = findViewById(com.codingtu.cooltu.R.id.cityEt);
@@ -51,14 +53,16 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
         new com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(cityEt);
         new com.codingtu.cooltu.lib4a.formbind.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(areaEt);
         com.codingtu.cooltu.form.TypeOnSetItem typeOnSetItem = new com.codingtu.cooltu.form.TypeOnSetItem();
-        new com.codingtu.cooltu.lib4a.formbind.push.DefulatRadioGroupPush()
+        new com.codingtu.cooltu.lib4a.formbind.push.DefaultRadioGroupPush()
                 .destory(this).bindHandler(bindHandler)
                 .onSetItem(typeOnSetItem).selected(null).addView(classLl);
+        new com.codingtu.cooltu.lib4a.formbind.push.DefaultSeekBarPush().destory(this).bindHandler(bindHandler).addView(timeSb);
         if (!initFormBean) {
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(provinceEt, forms.province);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(cityEt, forms.city);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(areaEt, forms.area);
             getRadioGroup(classLl).setSelected(forms.classIndex);
+            timeSb.setProgress(forms.seekBar);
             forms.nameEcho(nameEt);
             forms.ageEcho(ageEt);
         }
@@ -165,6 +169,9 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
                     break;
                 case com.codingtu.cooltu.R.id.classLl:
                     forms.classIndex = (int) msg.obj;
+                    break;
+                case com.codingtu.cooltu.R.id.timeSb:
+                    forms.seekBar = (int) msg.obj;
                     break;
             }
         }

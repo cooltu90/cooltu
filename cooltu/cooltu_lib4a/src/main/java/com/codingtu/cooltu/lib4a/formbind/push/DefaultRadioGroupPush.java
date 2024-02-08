@@ -8,7 +8,7 @@ import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4a.view.combine.RadioGroup;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 
-public class DefulatRadioGroupPush extends CorePush<DefulatRadioGroupPush> {
+public class DefaultRadioGroupPush extends CorePush<DefaultRadioGroupPush> {
 
     private Destroys destroys;
     private RadioGroup rg;
@@ -16,7 +16,7 @@ public class DefulatRadioGroupPush extends CorePush<DefulatRadioGroupPush> {
     private Integer selected;
 
     @Override
-    public DefulatRadioGroupPush destory(Destroys destroys) {
+    public DefaultRadioGroupPush destory(Destroys destroys) {
         this.destroys = destroys;
         return super.destory(destroys);
     }
@@ -28,18 +28,18 @@ public class DefulatRadioGroupPush extends CorePush<DefulatRadioGroupPush> {
         onSetItem = null;
     }
 
-    public DefulatRadioGroupPush onSetItem(RadioGroup.OnSetItem onSetItem) {
+    public DefaultRadioGroupPush onSetItem(RadioGroup.OnSetItem onSetItem) {
         this.onSetItem = onSetItem;
         return this;
     }
 
-    public DefulatRadioGroupPush selected(Integer selected) {
+    public DefaultRadioGroupPush selected(Integer selected) {
         this.selected = selected;
         return this;
     }
 
     @Override
-    public DefulatRadioGroupPush addView(View view) {
+    public DefaultRadioGroupPush addView(View view) {
         rg = RadioGroup.obtain(destroys).setBts((ViewGroup) view).addOnSelectChange(new RadioGroup.OnSelectChange() {
             @Override
             public void onChange(int selected) {

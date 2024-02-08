@@ -23,6 +23,7 @@ import com.codingtu.cooltu.processor.annotation.form.view.BindTextView;
 import com.codingtu.cooltu.processor.annotation.formbind.Bind;
 import com.codingtu.cooltu.processor.annotation.formbind.BindEt;
 import com.codingtu.cooltu.processor.annotation.formbind.BindRg;
+import com.codingtu.cooltu.processor.annotation.formbind.BindSeekbar;
 import com.codingtu.cooltu.processor.annotation.formbind.Echo;
 import com.codingtu.cooltu.processor.annotation.formbind.EchoMethod;
 import com.codingtu.cooltu.processor.annotation.formbind.EchoType;
@@ -286,6 +287,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                             addLnTag(initSb, "                .onSetItem([onSetItem]).selected([selectedStr]).addView([view]);", onSetItemName, selectedStr, getViewFieldName(id));
                         }
 
+                        BindSeekbar bindSeekbar = ve.getAnnotation(BindSeekbar.class);
+                        if (bindSeekbar != null) {
+                            pushMethods(ve, BindSeekbar.class, bindSeekbar.value(), FullName.DEFAULT_SEEK_BAR_PUSH);
+                        }
+
                     }
                     return false;
                 }
@@ -340,7 +346,18 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                                 addLnTag(initSb, "            getRadioGroup([view]).setSelected([forms].[classIndex]);",
                                         getViewFieldName(id), beanName, kv.v);
                             } else if (echoType == EchoType.METHOD) {
-                                methodEchoMap.put(bindEt.value(), bindEt.value());
+                                methodEchoMap.put(bindRg.id(), bindRg.id());
+                            }
+                        }
+
+                        BindSeekbar bindSeekbar = ve.getAnnotation(BindSeekbar.class);
+                        if (bindSeekbar != null) {
+                            id = IdTools.elementToId(ve, BindSeekbar.class, bindSeekbar.value());
+                            if (echoType == EchoType.NORMAL) {
+                                addLnTag(initSb, "            [timeSb].setProgress([forms].[seekBar]);",
+                                        getViewFieldName(id), beanName, kv.v);
+                            } else if (echoType == EchoType.METHOD) {
+                                methodEchoMap.put(bindSeekbar.value(), bindSeekbar.value());
                             }
                         }
 
@@ -401,6 +418,10 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         BindRg bindRg = ve.getAnnotation(BindRg.class);
                         if (bindRg != null) {
                             id = IdTools.elementToId(ve, BindRg.class, bindRg.id());
+                        }
+                        BindSeekbar bindSeekbar = ve.getAnnotation(BindSeekbar.class);
+                        if (bindSeekbar != null) {
+                            id = IdTools.elementToId(ve, BindSeekbar.class, bindSeekbar.value());
                         }
 
                         if (id != null) {

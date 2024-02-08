@@ -10,6 +10,7 @@ import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
 import com.codingtu.cooltu.processor.annotation.formbind.Bind;
 import com.codingtu.cooltu.processor.annotation.formbind.BindEt;
 import com.codingtu.cooltu.processor.annotation.formbind.BindRg;
+import com.codingtu.cooltu.processor.annotation.formbind.BindSeekbar;
 import com.codingtu.cooltu.processor.annotation.formbind.Echo;
 import com.codingtu.cooltu.processor.annotation.formbind.EchoMethod;
 import com.codingtu.cooltu.processor.annotation.formbind.EchoType;
@@ -36,6 +37,9 @@ public class FormObj extends CoreBean {
 
     @BindRg(id = R.id.classLl, onSetItem = TypeOnSetItem.class)
     public int classIndex;
+
+    @BindSeekbar(R.id.timeSb)
+    public int seekBar;
 
 
     @EchoMethod(R.id.nameEt)

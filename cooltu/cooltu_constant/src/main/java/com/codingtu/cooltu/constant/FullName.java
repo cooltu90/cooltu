@@ -39,7 +39,8 @@ public class FullName {
     public static final String DEFAULT_RADIO_GROUP_FORM_CHECK = Pkg.LIB4A_FORM + ".DefaultRadioGroupFormCheck";
 
     public static final String DEFAULT_EDIT_TEXT_PUSH = Pkg.LIB4A_FORM_BIND_PUSH + ".DefaultEditTextPush";
-    public static final String DEFAULT_RADIO_GROUP_PUSH = Pkg.LIB4A_FORM_BIND_PUSH + ".DefulatRadioGroupPush";
+    public static final String DEFAULT_RADIO_GROUP_PUSH = Pkg.LIB4A_FORM_BIND_PUSH + ".DefaultRadioGroupPush";
+    public static final String DEFAULT_SEEK_BAR_PUSH = Pkg.LIB4A_FORM_BIND_PUSH + ".DefaultSeekBarPush";
 
 
     //lib4j_tools
