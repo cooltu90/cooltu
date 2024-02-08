@@ -29,24 +29,24 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
 @DefaultEditDialogLayout(R.layout.dialog_edit)
 @DefaultDialogLayout(R.layout.dialog)
 @DefaultCode("CODE_TEST")
-@CreateAct(
-        name = "add_photo",
-        packages = "com.codingtu.cooltu.ui",
-        baseClass = BaseActivity.class,
-        layoutTemp = R.layout.layout_temp
-)
-@CreateAdapter(
-        name = "cat",
-        packages = "com.codingtu.cooltu.ui.adapter",
-        type = AdapterType.DEFAULT_LIST,
-        layoutTemp = R.layout.layout_temp
-)
-@CreateFragment(
-        name = "base_step",
-        packages = "com.codingtu.cooltu.ui",
-        baseClass = CoreFragment.class,
-        layoutTemp = R.layout.layout_temp
-)
+//@CreateAct(
+//        name = "add_photo",
+//        packages = "com.codingtu.cooltu.ui",
+//        baseClass = BaseActivity.class,
+//        layoutTemp = R.layout.layout_temp
+//)
+//@CreateAdapter(
+//        name = "cat",
+//        packages = "com.codingtu.cooltu.ui.adapter",
+//        type = AdapterType.DEFAULT_LIST,
+//        layoutTemp = R.layout.layout_temp
+//)
+//@CreateFragment(
+//        name = "base_step",
+//        packages = "com.codingtu.cooltu.ui",
+//        baseClass = CoreFragment.class,
+//        layoutTemp = R.layout.layout_temp
+//)
 public class App extends CoreApp {
     @Override
     public CoreConfigs createConfigs() {

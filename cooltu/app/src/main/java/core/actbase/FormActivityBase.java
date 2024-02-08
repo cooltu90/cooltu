@@ -56,9 +56,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
     public void onCreateComplete() {
         super.onCreateComplete();
 
-        bt.setOnClickListener(this);
 
-        bt.setOnLongClickListener(this);
 
     }
 
@@ -66,23 +64,15 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case com.codingtu.cooltu.R.id.bt:
-                btClick(
-                );
-                break;
 
         }
     }
 
-    protected void btClick() {}
 
 
     @Override
     public boolean onLongClick(View v) {
         switch (v.getId()) {
-            case com.codingtu.cooltu.R.id.bt:
-                return btLongClick(
-                );
 
         }
 
@@ -90,7 +80,6 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
 
     }
 
-    protected boolean btLongClick() {return false;}
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
