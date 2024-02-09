@@ -113,6 +113,7 @@ public class AppProcessor extends AbstractProcessor {
             BuilderMap.create();
         } catch (Exception e) {
             LibLogs.i(e);
+            throw new RuntimeException("报错了");
         }
         return true;
     }
