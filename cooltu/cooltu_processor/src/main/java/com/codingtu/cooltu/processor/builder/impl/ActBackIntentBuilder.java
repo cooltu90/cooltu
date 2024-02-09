@@ -119,6 +119,13 @@ public class ActBackIntentBuilder extends ActBackIntentBuilderBase {
         });
 
     }
+
+    @Override
+    protected void dealLinesInParent() {
+        int method = count(methodCounts, getForKey("method"));
+        LibLogs.i("methodCount:" + method);
+        super.dealLinesInParent();
+    }
 }
 /* model_temp_start
 package [[pkg]];
