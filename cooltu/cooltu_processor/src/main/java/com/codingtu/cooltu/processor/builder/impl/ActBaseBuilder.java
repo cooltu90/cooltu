@@ -6,7 +6,6 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
-import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
@@ -15,18 +14,18 @@ import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Maps;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.BuilderType;
-import com.codingtu.cooltu.processor.annotation.form.bind.BindView;
+import com.codingtu.cooltu.processor.annotation.form.Form;
+import com.codingtu.cooltu.processor.annotation.form.FormBean;
 import com.codingtu.cooltu.processor.annotation.form.bind.BindEditText;
 import com.codingtu.cooltu.processor.annotation.form.bind.BindRadioGroup;
 import com.codingtu.cooltu.processor.annotation.form.bind.BindSeekBar;
+import com.codingtu.cooltu.processor.annotation.form.bind.BindView;
 import com.codingtu.cooltu.processor.annotation.form.check.Check;
 import com.codingtu.cooltu.processor.annotation.form.check.CheckMethod;
 import com.codingtu.cooltu.processor.annotation.form.check.CheckType;
 import com.codingtu.cooltu.processor.annotation.form.echo.Echo;
 import com.codingtu.cooltu.processor.annotation.form.echo.EchoMethod;
 import com.codingtu.cooltu.processor.annotation.form.echo.EchoType;
-import com.codingtu.cooltu.processor.annotation.form.Form;
-import com.codingtu.cooltu.processor.annotation.form.FormBean;
 import com.codingtu.cooltu.processor.annotation.form.link.LinkMethod;
 import com.codingtu.cooltu.processor.annotation.form.link.LinkView;
 import com.codingtu.cooltu.processor.annotation.tools.To;
@@ -573,10 +572,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             useFormMethodsIf(methodsSb.toString());
         }
 
-    }
-
-    private Maps<Integer, IdTools.Id> getIdMap(Element element, Class annoClass, int[] ids) {
-        return Maps.map(IdTools.elementToIds(element, annoClass, ids));
     }
 
     private String getViewFieldName(IdTools.Id id) {

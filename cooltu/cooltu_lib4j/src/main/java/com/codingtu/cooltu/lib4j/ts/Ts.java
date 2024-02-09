@@ -5,6 +5,7 @@ import com.codingtu.cooltu.lib4j.tools.CountTool;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Ts {
@@ -124,6 +125,14 @@ public class Ts {
             ts.ts.addAll(set);
         }
         return ts;
+    }
+
+    public static <K, V> Maps<K, V> maps(Map<K, V> map) {
+        return Maps.map(map);
+    }
+
+    public static <SYMBOL extends Symbol> SymbolMaps<SYMBOL> symbolMaps(Map<String, SYMBOL> map) {
+        return Maps.symbolMaps(map);
     }
 
     /**************************************************

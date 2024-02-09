@@ -6,7 +6,6 @@ import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
-import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
@@ -95,12 +94,6 @@ public class ActBackIntentBuilder extends ActBackIntentBuilderBase {
             @Override
             public boolean each(int methodIndex, String methodName) {
                 Params params = methodParams.get(methodIndex);
-                LibLogs.i("===ActBackIntent=======================");
-                LibLogs.i("methodIndex:" + methodIndex);
-                LibLogs.i("methodName:" + methodName);
-                LibLogs.i("params:" + params.getMethodParams());
-
-
                 method(methodIndex, methodName, params.getMethodParams());
                 params.ls(new Ts.EachTs<KV<String, String>>() {
                     @Override
@@ -118,13 +111,6 @@ public class ActBackIntentBuilder extends ActBackIntentBuilderBase {
             }
         });
 
-    }
-
-    @Override
-    protected void dealLinesInParent() {
-        int method = count(methodCounts, getForKey("method"));
-        LibLogs.i("methodCount:" + method);
-        super.dealLinesInParent();
     }
 }
 /* model_temp_start
