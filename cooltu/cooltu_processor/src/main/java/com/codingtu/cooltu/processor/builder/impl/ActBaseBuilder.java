@@ -193,6 +193,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
 
             parentViewMap = uiBaseBuilder.getParentViewMap();
+            LibLogs.i("parentViewMap1:"+parentViewMap.size());
 
             BaseTs<VariableElement> ves = Ts.ts(VariableElement.class);
 
@@ -586,8 +587,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     private String getViewFieldName(String rName) {
         LibLogs.i("==================================");
         LibLogs.i("rName:" + rName);
-        LibLogs.i("parentViewMap:"+parentViewMap);
-        LibLogs.i("parentViewMap:"+parentViewMap);
+        LibLogs.i("parentViewMap:"+parentViewMap.size());
         LayoutTools.ViewInfo viewInfo = parentViewMap.get(rName);
         LibLogs.i("viewInfo:"+viewInfo);
         return viewInfo.fieldName;
