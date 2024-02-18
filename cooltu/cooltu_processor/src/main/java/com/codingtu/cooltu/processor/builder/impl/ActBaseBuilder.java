@@ -546,7 +546,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                                     return TagTools.dealLine("([View]) views.get([index])", kv.k, index);
                                 }
                             });
-                            addLnTag(methodsSb, "                    photo.[methodName]([params]);", methodName, param);
+                            addLnTag(methodsSb, "                    [photo].[methodName]([params]);", beanName, methodName, param);
                         }
 
                         addLnTag(methodsSb, "                    break;");
