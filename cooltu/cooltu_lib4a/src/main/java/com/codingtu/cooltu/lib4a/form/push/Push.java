@@ -8,10 +8,7 @@ import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 
 public interface Push<THIS extends Push> extends OnDestroy {
 
-    default THIS destory(Destroys destroys) {
-        destroys.add(this);
-        return (THIS) this;
-    }
+    THIS destory(Destroys destroys);
 
     THIS addView(View view);
 
