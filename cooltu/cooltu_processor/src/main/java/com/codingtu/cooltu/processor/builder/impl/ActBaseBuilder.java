@@ -68,6 +68,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     public List<ExecutableElement> permissionMethods = new ArrayList<>();
     public Form form;
     private Map<String, LayoutTools.ViewInfo> parentViewMap;
+    private StringBuilder otherLineSb=new StringBuilder();
 
     public ActBaseBuilder(JavaInfo info) {
         super(info);
@@ -572,6 +573,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             useFormMethodsIf(methodsSb.toString());
         }
 
+
+        otherIf(otherLineSb.toString());
     }
 
     private String getViewFieldName(IdTools.Id id) {
@@ -618,6 +621,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             String formBeanSimpleName = CurrentPath.javaInfo(formBeanClass).name;
             onClickCheckFormIf(index, formBeanSimpleName);
         }
+    }
+
+    @Override
+    public void addOthers(String others) {
+        otherLineSb.append(others);
     }
 
 
@@ -984,8 +992,9 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][if][useFormMethods]
 [useFormMethods]
                                                                                                     [<sub>][if][useFormMethods]
-
-
+                                                                                                    [<sub>][if][other]
+[other]
+                                                                                                    [<sub>][if][other]
 }
 
 model_temp_end */

@@ -54,7 +54,7 @@ public class IdTools {
     }
 
     public static class RScanner extends TreeScanner {
-        Map<Integer, Id> resourceIds = new LinkedHashMap<>();
+        public Map<Integer, Id> resourceIds = new LinkedHashMap<>();
 
         @Override
         public void visitSelect(JCTree.JCFieldAccess jcFieldAccess) {
@@ -79,7 +79,7 @@ public class IdTools {
             }
         }
 
-        void reset() {
+        public void reset() {
             resourceIds.clear();
         }
     }
@@ -100,7 +100,7 @@ public class IdTools {
             rScanner.reset();
             tree.accept(rScanner);
             if (!rScanner.resourceIds.isEmpty()) {
-                return rScanner.resourceIds.values().iterator().next();
+                return rScanner.resourceIds.get(value);
             }
         }
         return new Id(value);

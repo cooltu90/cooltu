@@ -11,28 +11,40 @@ import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
+import com.codingtu.cooltu.lib4j.ts.BaseTs;
+import com.codingtu.cooltu.lib4j.ts.StringTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.annotation.ui.Init;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.MenuDialogItem;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.MenuDialogUse;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
+import com.codingtu.cooltu.processor.builder.impl.ActBackIntentBuilder;
 import com.codingtu.cooltu.processor.deal.NetDeal;
 import com.codingtu.cooltu.processor.deal.VHDeal;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
+import com.codingtu.cooltu.processor.lib.tools.TagTools;
+import com.sun.tools.javac.tree.JCTree;
+
+import org.checkerframework.checker.units.qual.K;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.lang.model.element.AnnotationMirror;
+import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 
@@ -56,6 +68,7 @@ public abstract class UiBaseBuilder {
     public List<ActBack> actBacks = new ArrayList<>();
     public List<ExecutableElement> actBackMethods = new ArrayList<>();
     public List<VariableElement> editDialogUses = new ArrayList<>();
+    public List<VariableElement> menuDialogUses = new ArrayList<>();
     public List<VariableElement> dialogUses = new ArrayList<>();
     public List<VariableElement> inits = new ArrayList<>();
 
@@ -141,6 +154,9 @@ public abstract class UiBaseBuilder {
         noticeDialog();
 
         editDialog();
+
+        menuDialog();
+
 
         inits();
 
@@ -635,6 +651,121 @@ public abstract class UiBaseBuilder {
             }
         });
     }
+
+    private void menuDialog() {
+        StringBuilder sb = new StringBuilder();
+        Ts.ls(menuDialogUses, new Ts.EachTs<VariableElement>() {
+            @Override
+            public boolean each(int position, VariableElement ve) {
+                MenuDialogUse menuDialogUse = ve.getAnnotation(MenuDialogUse.class);
+                String objType = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                    @Override
+                    public Object get() {
+                        return menuDialogUse.objType();
+                    }
+                });
+
+                KV<String, String> kv = ElementTools.getFieldKv(ve);
+                TagTools.addLnTag(sb, "    /**************************************************\n" +
+                        "     *\n" +
+                        "     *  [menuDialog]\n" +
+                        "     *\n" +
+                        "     **************************************************/", kv.v);
+                TagTools.addLnTag(sb, "    protected [MenuDialog] [menuDialog];\n", kv.k, kv.v);
+
+                String param = "";
+                if (!ClassTool.isVoid(objType)) {
+                    param = objType + " obj";
+                }
+
+                TagTools.addLnTag(sb, "    protected void show[MenuDialog]([String obj]) {", ConvertTool.toClassType(kv.v), param);
+                TagTools.addLnTag(sb, "        if ([menuDialog] == null) {", kv.v);
+                TagTools.addLnTag(sb, "            [menuDialog] = new [MenuDialog](getAct())", kv.v, kv.k);
+                TagTools.addLnTag(sb, "                    .setLayout([layout])", Constant.DEFAULT_MENU_DIALOG_LAYOUT);
+                TagTools.addLnTag(sb, "                    .setItemLayout([item])", Constant.DEFAULT_MENU_DIALOG_ITEM_LAYOUT);
+
+                MenuDialogItem[] items = menuDialogUse.items();
+                BaseTs<IdTools.Id> idTs = Ts.ts(IdTools.Id.class);
+                StringTs strTs = Ts.strs();
+                Ts.ls(items, new Ts.EachTs<MenuDialogItem>() {
+                    @Override
+                    public boolean each(int position, MenuDialogItem menuDialogItem) {
+                        IdTools.Id itemId = IdTools.elementToId(ve, MenuDialogItem.class, menuDialogItem.id());
+                        idTs.add(itemId);
+                        String name = menuDialogItem.name();
+                        strTs.add(name);
+                        TagTools.addLnTag(sb, "                    .setItem([R.id.reportTv], \"[导出维修工单]\")", itemId.toString(), name);
+                        return false;
+                    }
+                });
+
+                TagTools.addLnTag(sb, "                    .setOnClickListener(this)");
+                TagTools.addLnTag(sb, "                    .setShowItem(new [MenuDialog].ShowItem() {", kv.k);
+                TagTools.addLnTag(sb, "                        @Override");
+                TagTools.addLnTag(sb, "                        public boolean showItem(int viewId, Object obj) {");
+                TagTools.addLnTag(sb, "                            switch (viewId) {");
+
+                idTs.ls(new Ts.EachTs<IdTools.Id>() {
+                    @Override
+                    public boolean each(int position, IdTools.Id id) {
+                        TagTools.addLnTag(sb, "                                case [R.id.reportTv]:", id.toString());
+
+                        if (ClassTool.isVoid(objType)) {
+                            TagTools.addLnTag(sb, "                                    return show[ReportTv]();", ConvertTool.toClassType(id.rName));
+                        } else if (ClassTool.isObject(objType)) {
+                            TagTools.addLnTag(sb, "                                    return show[ReportTv](obj);"
+                                    , ConvertTool.toClassType(id.rName));
+                        } else {
+                            TagTools.addLnTag(sb, "                                    return show[ReportTv](([String]) obj);"
+                                    , ConvertTool.toClassType(id.rName), objType);
+                        }
+
+                        return false;
+                    }
+                });
+
+
+                TagTools.addLnTag(sb, "                            }");
+                TagTools.addLnTag(sb, "                            return false;");
+                TagTools.addLnTag(sb, "                        }");
+                TagTools.addLnTag(sb, "                    })");
+                TagTools.addLnTag(sb, "                    .setTitle(\"[操作]\")", menuDialogUse.title());
+                TagTools.addLnTag(sb, "                    .build();");
+                TagTools.addLnTag(sb, "        }");
+                if (ClassTool.isVoid(objType)) {
+                    TagTools.addLnTag(sb, "        menuDialog.setObj();");
+                } else {
+                    TagTools.addLnTag(sb, "        menuDialog.setObj(obj);");
+                }
+                TagTools.addLnTag(sb, "        menuDialog.show();");
+                TagTools.addLnTag(sb, "    }");
+
+                idTs.ls(new Ts.EachTs<IdTools.Id>() {
+                    @Override
+                    public boolean each(int position, IdTools.Id id) {
+
+                        if (ClassTool.isVoid(objType)) {
+                            TagTools.addLnTag(sb, "    protected boolean show[ReportTv]() {", ConvertTool.toClassType(id.rName));
+                        } else if (ClassTool.isObject(objType)) {
+                            TagTools.addLnTag(sb, "    protected boolean show[ReportTv](Object obj) {"
+                                    , ConvertTool.toClassType(id.rName));
+                        } else {
+                            TagTools.addLnTag(sb, "    protected boolean show[ReportTv]([String] str) {"
+                                    , ConvertTool.toClassType(id.rName), objType);
+                        }
+
+                        TagTools.addLnTag(sb, "        return true;");
+                        TagTools.addLnTag(sb, "    }");
+                        return false;
+                    }
+                });
+
+                return false;
+            }
+        });
+        uiBase.addOthers(sb.toString());
+    }
+
 
     private List<String> getInBaseInParent() {
         return Ts.ts(getParents()).convertList(new Ts.Convert<UiBaseBuilder, List<String>>() {

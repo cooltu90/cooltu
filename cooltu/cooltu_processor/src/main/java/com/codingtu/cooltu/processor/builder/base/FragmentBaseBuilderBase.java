@@ -100,6 +100,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     protected java.util.Map<String, Integer> initMethodCounts;
     protected StringBuilder initMethodSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> initMethod;
+    protected java.util.Map<String, Boolean> otherIfs;
+    protected java.util.Map<String, Integer> otherCounts;
+    protected StringBuilder otherSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> other;
 
     public FragmentBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -200,6 +204,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         initMethodCounts = new java.util.HashMap<>();
         initMethodSb = map.get("initMethod");
         initMethod = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        otherIfs = new java.util.HashMap<>();
+        otherCounts = new java.util.HashMap<>();
+        otherSb = map.get("other");
+        other = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
 
@@ -514,6 +522,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     public void initAddDestoryIf(int i0, String destoryToolFullName, String field) {
         addForMap(this.initMethod, getIfKey("initAddDestory", i0), destoryToolFullName, field);
         initMethodIfs.put(getIfKey("initAddDestory", i0), true);
+    }
+    public void otherIf(String other) {
+        addForMap(this.other, getIfKey("other"), other);
+        otherIfs.put(getIfKey("other"), true);
     }
 
     @Override
@@ -915,6 +927,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             addLnTag(initMethodSb, "");
             addLnTag(initMethodSb, "    protected void [initMethodName]([typeFullName] [field]) {}", initMethod0.get(8), initMethod0.get(9), initMethod0.get(10));
         }
+        if (isIf(otherIfs, getIfKey("other"))) {
+            List<String> other0 = other.get(getIfKey("other"));
+            addLnTag(otherSb, "[other]", other0.get(0));
+        }
 
     }
 
@@ -996,6 +1012,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("[[editDialog]]");
         lines.add("[[dialog]]");
         lines.add("[[initMethod]]");
+        lines.add("[[other]]");
         lines.add("}");
 
         return lines;

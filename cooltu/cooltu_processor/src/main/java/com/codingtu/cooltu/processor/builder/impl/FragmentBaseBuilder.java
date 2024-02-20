@@ -18,6 +18,7 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
      *
      **************************************************/
     private final UiBaseBuilder uiBaseBuilder;
+    private StringBuilder otherLinesSb = new StringBuilder();
 
     public FragmentBaseBuilder(JavaInfo info) {
         super(info);
@@ -78,6 +79,7 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
     @Override
     protected void dealLines() {
         uiBaseBuilder.dealLines();
+        otherIf(otherLinesSb.toString());
     }
 
     @Override
@@ -88,6 +90,11 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
     @Override
     public void isCheckForm(int index, boolean isCheckForm) {
 
+    }
+
+    @Override
+    public void addOthers(String others) {
+        otherLinesSb.append(others);
     }
 
 }
@@ -429,5 +436,8 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
 
     protected void [initMethodName]([typeFullName] [field]) {}
                                                                                                     [<sub>][for][initMethod]
+                                                                                                    [<sub>][if][other]
+[other]
+                                                                                                    [<sub>][if][other]
 }
 model_temp_end */

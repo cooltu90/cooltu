@@ -11,6 +11,7 @@ import com.codingtu.cooltu.processor.annotation.ui.InBase;
 import com.codingtu.cooltu.processor.annotation.ui.Init;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.MenuDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.NoticeDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.ToastDialogUse;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
@@ -91,6 +92,11 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
         DialogUse dialogUse = ve.getAnnotation(DialogUse.class);
         if (dialogUse != null) {
             uiBaseBuilder.dialogUses.add(ve);
+        }
+
+        MenuDialogUse menuDialogUse = ve.getAnnotation(MenuDialogUse.class);
+        if (menuDialogUse != null) {
+            uiBaseBuilder.menuDialogUses.add(ve);
         }
     }
 

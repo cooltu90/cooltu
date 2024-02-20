@@ -1,18 +1,14 @@
 package com.codingtu.cooltu;
 
-import com.codingtu.cooltu.constant.AdapterType;
 import com.codingtu.cooltu.constant.Module;
 import com.codingtu.cooltu.lib4a.CoreApp;
 import com.codingtu.cooltu.lib4a.CoreConfigs;
-import com.codingtu.cooltu.lib4a.ui.act.CoreActivity;
 import com.codingtu.cooltu.lib4a.ui.fragment.CoreFragment;
 import com.codingtu.cooltu.processor.annotation.ModuleInfo;
-import com.codingtu.cooltu.processor.annotation.create.CreateAct;
-import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
-import com.codingtu.cooltu.processor.annotation.create.CreateFragment;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultCode;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultEditDialogLayout;
+import com.codingtu.cooltu.processor.annotation.ui.DefaultMenuDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultNoticeDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultToastDialogLayout;
 import com.codingtu.cooltu.ui.base.BaseActivity;
@@ -28,6 +24,7 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
 @DefaultNoticeDialogLayout(R.layout.dialog_notice)
 @DefaultEditDialogLayout(R.layout.dialog_edit)
 @DefaultDialogLayout(R.layout.dialog)
+@DefaultMenuDialogLayout(layout = R.layout.dialog_menu, item = R.layout.dialog_menu_item)
 @DefaultCode("CODE_TEST")
 //@CreateAct(
 //        name = "add_photo",
@@ -53,3 +50,5 @@ public class App extends CoreApp {
         return new Configs();
     }
 }
+
+

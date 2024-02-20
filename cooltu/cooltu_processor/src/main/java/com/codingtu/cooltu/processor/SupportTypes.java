@@ -14,6 +14,7 @@ import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultCode;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultEditDialogLayout;
+import com.codingtu.cooltu.processor.annotation.ui.DefaultMenuDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultNoticeDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultToastDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.FragmentBase;
@@ -25,6 +26,7 @@ import com.codingtu.cooltu.processor.deal.CreateFragmentDeal;
 import com.codingtu.cooltu.processor.deal.DefaultCodeDeal;
 import com.codingtu.cooltu.processor.deal.DefaultDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultEditDialogLayoutDeal;
+import com.codingtu.cooltu.processor.deal.DefaultMenuDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultNoticeDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultToastDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.FormBeanDeal;
@@ -49,6 +51,7 @@ public class SupportTypes {
                 ModuleInfo.class, ModuleInfoDeal.class,
                 DefaultCode.class, DefaultCodeDeal.class,
                 DefaultToastDialogLayout.class, DefaultToastDialogLayoutDeal.class,
+                DefaultMenuDialogLayout.class, DefaultMenuDialogLayoutDeal.class,
                 DefaultNoticeDialogLayout.class, DefaultNoticeDialogLayoutDeal.class,
                 DefaultEditDialogLayout.class, DefaultEditDialogLayoutDeal.class,
                 DefaultDialogLayout.class, DefaultDialogLayoutDeal.class,

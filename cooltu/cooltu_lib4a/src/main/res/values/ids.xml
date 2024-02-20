@@ -27,4 +27,10 @@
     <item name="floatingIv" type="id" />
     <item name="labelViewTv" type="id" />
     <item name="noticeDialogYesBt" type="id" />
+    <!-- MenuView -->
+    <item name="menuDialogTitleTv" type="id" />
+    <item name="menuDialogItemTv" type="id" />
+    <item name="menuDialogItemsSv" type="id" />
+    <item name="menuDialogItemsLl" type="id" />
+
 </resources>

@@ -36,24 +36,6 @@ public class ResForDeal extends ResForBaseDeal {
         }
     }
 
-//    protected void dealField(String fullName, VariableElement ve, KV<String, String> kv,
-//                             BaseTools.GetThis<UiBaseBuilder> uiBaseBuilderGetter,
-//                             UiBaseBuilder uiBaseBuilder) {
-//        super.dealField(fullName, ve, kv, uiBaseBuilderGetter, uiBaseBuilder);
-//        ActBaseBuilder builder = CurrentPath.actBaseBuilder(fullName);
-//        if (!noStart) {
-//            StartGroup startGroup = ve.getAnnotation(StartGroup.class);
-//            if (startGroup != null) {
-//                hasStartGroup = true;
-//                if (CountTool.isNull(builder.starts)) {
-//                    builder.starts.add(new KV<>(FullName.STRING, Constant.FROM_ACT));
-//                }
-//                builder.starts.add(kv);
-//            }
-//        }
-//        dealField1(fullName, ve, kv, uiBaseBuilderGetter, uiBaseBuilder);
-//    }
-
     protected void dealField(String fullName, VariableElement ve, KV<String, String> kv,
                              BaseTools.GetThis<UiBaseBuilder> uiBaseBuilderGetter,
                              UiBaseBuilder uiBaseBuilder) {

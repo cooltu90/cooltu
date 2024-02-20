@@ -144,6 +144,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> useFormMethodsCounts;
     protected StringBuilder useFormMethodsSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> useFormMethods;
+    protected java.util.Map<String, Boolean> otherIfs;
+    protected java.util.Map<String, Integer> otherCounts;
+    protected StringBuilder otherSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> other;
 
     public ActBaseBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -288,6 +292,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         useFormMethodsCounts = new java.util.HashMap<>();
         useFormMethodsSb = map.get("useFormMethods");
         useFormMethods = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        otherIfs = new java.util.HashMap<>();
+        otherCounts = new java.util.HashMap<>();
+        otherSb = map.get("other");
+        other = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
     }
 
@@ -642,6 +650,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     public void useFormMethodsIf(String useFormMethods) {
         addForMap(this.useFormMethods, getIfKey("useFormMethods"), useFormMethods);
         useFormMethodsIfs.put(getIfKey("useFormMethods"), true);
+    }
+    public void otherIf(String other) {
+        addForMap(this.other, getIfKey("other"), other);
+        otherIfs.put(getIfKey("other"), true);
     }
 
     @Override
@@ -1080,6 +1092,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> useFormMethods0 = useFormMethods.get(getIfKey("useFormMethods"));
             addLnTag(useFormMethodsSb, "[useFormMethods]", useFormMethods0.get(0));
         }
+        if (isIf(otherIfs, getIfKey("other"))) {
+            List<String> other0 = other.get(getIfKey("other"));
+            addLnTag(otherSb, "[other]", other0.get(0));
+        }
 
     }
 
@@ -1168,8 +1184,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[dialog]]");
         lines.add("[[initMethod]]");
         lines.add("[[useFormMethods]]");
-        lines.add("");
-        lines.add("");
+        lines.add("[[other]]");
         lines.add("}");
         lines.add("");
 
