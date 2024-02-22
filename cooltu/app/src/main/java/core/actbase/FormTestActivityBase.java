@@ -54,7 +54,7 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
         com.codingtu.cooltu.form.TypeOnSetItem typeOnSetItem = new com.codingtu.cooltu.form.TypeOnSetItem();
         new com.codingtu.cooltu.lib4a.form.push.DefaultRadioGroupPush()
                 .destory(this).bindHandler(bindHandler)
-                .onSetItem(typeOnSetItem).selected(null).addView(classLl);
+                .onSetItem(typeOnSetItem).selected(-1).addView(classLl);
         new com.codingtu.cooltu.lib4a.form.push.DefaultSeekBarPush().destory(this).bindHandler(bindHandler).addView(timeSb);
         if (!initFormBean) {
             forms.nameEcho(nameEt,forms.name);

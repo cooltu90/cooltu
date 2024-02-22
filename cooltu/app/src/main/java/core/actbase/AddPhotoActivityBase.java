@@ -60,10 +60,10 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
         com.codingtu.cooltu.form.TypeOnSetItem typeOnSetItem = new com.codingtu.cooltu.form.TypeOnSetItem();
         new com.codingtu.cooltu.lib4a.form.push.DefaultRadioGroupPush()
                 .destory(this).bindHandler(bindHandler)
-                .onSetItem(typeOnSetItem).selected(null).addView(classLl);
+                .onSetItem(typeOnSetItem).selected(-1).addView(classLl);
         new com.codingtu.cooltu.lib4a.form.push.DefaultRadioGroupPush()
                 .destory(this).bindHandler(bindHandler)
-                .onSetItem(typeOnSetItem).selected(null).addView(numberLl);
+                .onSetItem(typeOnSetItem).selected(-1).addView(numberLl);
         new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(otherEt);
         new com.codingtu.cooltu.lib4a.form.push.DefaultSeekBarPush().destory(this).bindHandler(bindHandler).addView(timeSb);
         bindHandler.link(com.codingtu.cooltu.R.id.classLl, classEt);

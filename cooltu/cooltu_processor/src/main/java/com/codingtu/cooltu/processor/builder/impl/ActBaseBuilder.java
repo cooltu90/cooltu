@@ -68,7 +68,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     public List<ExecutableElement> permissionMethods = new ArrayList<>();
     public Form form;
     private Map<String, LayoutTools.ViewInfo> parentViewMap;
-    private StringBuilder otherLineSb=new StringBuilder();
+    private StringBuilder otherLineSb = new StringBuilder();
 
     public ActBaseBuilder(JavaInfo info) {
         super(info);
@@ -305,7 +305,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         }
 
                         int selected = bindRg.selected();
-                        String selectedStr = selected == -1 ? "null" : (selected + "");
+                        String selectedStr = selected + "";
 
                         addLnTag(initSb, "        new [DefulatRadioGroupPush]()", FullName.DEFAULT_RADIO_GROUP_PUSH);
                         addLnTag(initSb, "                .destory(this).bindHandler(bindHandler)");
