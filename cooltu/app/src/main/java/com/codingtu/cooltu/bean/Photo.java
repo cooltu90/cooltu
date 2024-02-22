@@ -75,6 +75,7 @@ public class Photo extends CoreBean {
     @LinkMethod(R.id.otherEt)
     public void dealOthers(
             @LinkView(R.id.numberLl) LinearLayout numberLl,
+            @LinkView(R.id.numberLl) RadioGroup numberRg,
             @LinkView(R.id.otherBt) TextView otherBt) {
         others = standardIndex(others);
         int index = getIndex(others);

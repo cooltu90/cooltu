@@ -67,7 +67,7 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
         new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(otherEt);
         new com.codingtu.cooltu.lib4a.form.push.DefaultSeekBarPush().destory(this).bindHandler(bindHandler).addView(timeSb);
         bindHandler.link(com.codingtu.cooltu.R.id.classLl, classEt);
-        bindHandler.link(com.codingtu.cooltu.R.id.otherEt, numberLl, otherBt);
+        bindHandler.link(com.codingtu.cooltu.R.id.otherEt, numberLl, getRadioGroup(numberLl), otherBt);
         bindHandler.link(com.codingtu.cooltu.R.id.name1Et, name2Et);
         bindHandler.link(com.codingtu.cooltu.R.id.numberLl, otherEt);
         if (!initFormBean) {
@@ -220,7 +220,7 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
     public static class BindHandler extends android.os.Handler {
 
         private com.codingtu.cooltu.bean.Photo photo;
-        private com.codingtu.cooltu.lib4j.data.map.ListValueMap<Integer, View> linkMap = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        private com.codingtu.cooltu.lib4j.data.map.ListValueMap<Integer, Object> linkMap = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
         public BindHandler(com.codingtu.cooltu.bean.Photo photo) {
             this.photo = photo;
@@ -229,7 +229,7 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
-            List<View> views = linkMap.get(msg.what);
+            List views = linkMap.get(msg.what);
             switch (msg.what) {
                 case com.codingtu.cooltu.R.id.schoolEt:
                     photo.school = (java.lang.String) msg.obj;
@@ -257,14 +257,14 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
                     break;
                 case com.codingtu.cooltu.R.id.otherEt:
                     photo.others = (java.lang.String) msg.obj;
-                    photo.dealOthers((android.widget.LinearLayout) views.get(0), (android.widget.TextView) views.get(1));
+                    photo.dealOthers((android.widget.LinearLayout) views.get(0), (com.codingtu.cooltu.lib4a.view.combine.RadioGroup) views.get(1), (android.widget.TextView) views.get(2));
                     break;
                 case com.codingtu.cooltu.R.id.timeSb:
                     photo.time = (int) msg.obj;
                     break;
             }
         }
-        public void link(int handleId, View... linkViews) {
+        public void link(int handleId, Object... linkViews) {
             linkMap.get(handleId).addAll(com.codingtu.cooltu.lib4j.ts.Ts.ts(linkViews).toList());
         }
     }

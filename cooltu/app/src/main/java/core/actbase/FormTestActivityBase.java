@@ -143,7 +143,7 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
     public static class BindHandler extends android.os.Handler {
 
         private com.codingtu.cooltu.bean.FormObj forms;
-        private com.codingtu.cooltu.lib4j.data.map.ListValueMap<Integer, View> linkMap = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        private com.codingtu.cooltu.lib4j.data.map.ListValueMap<Integer, Object> linkMap = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
 
         public BindHandler(com.codingtu.cooltu.bean.FormObj forms) {
             this.forms = forms;
@@ -152,7 +152,7 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
-            List<View> views = linkMap.get(msg.what);
+            List views = linkMap.get(msg.what);
             switch (msg.what) {
                 case com.codingtu.cooltu.R.id.nameEt:
                     forms.name = (java.lang.String) msg.obj;
@@ -177,7 +177,7 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
                     break;
             }
         }
-        public void link(int handleId, View... linkViews) {
+        public void link(int handleId, Object... linkViews) {
             linkMap.get(handleId).addAll(com.codingtu.cooltu.lib4j.ts.Ts.ts(linkViews).toList());
         }
     }

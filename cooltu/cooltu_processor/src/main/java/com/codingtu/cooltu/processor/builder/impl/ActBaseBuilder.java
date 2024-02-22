@@ -333,7 +333,13 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         public String convert(int index, VariableElement ve) {
                             LinkView linkView = ve.getAnnotation(LinkView.class);
                             IdTools.Id id = IdTools.elementToId(ve, LinkView.class, linkView.value());
-                            return getViewFieldName(id);
+
+                            KV<String, String> kv = ElementTools.getFieldKv(ve);
+                            String viewFieldName = getViewFieldName(id);
+                            if (FullName.RADIO_GROUP.equals(kv.k)) {
+                                return TagTools.dealLine("getRadioGroup([floorsLl])", viewFieldName);
+                            }
+                            return viewFieldName;
                         }
                     });
 
@@ -488,7 +494,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             addLnTag(methodsSb, "    public static class BindHandler extends android.os.Handler {");
             addLnTag(methodsSb, "");
             addLnTag(methodsSb, "        private [beanClass] [name];", formBeanClass, name);
-            addLnTag(methodsSb, "        private [ListValueMap]<Integer, View> linkMap = new [ListValueMap]<>();", FullName.LIST_VALUE_MAP, FullName.LIST_VALUE_MAP);
+            addLnTag(methodsSb, "        private [ListValueMap]<Integer, Object> linkMap = new [ListValueMap]<>();", FullName.LIST_VALUE_MAP, FullName.LIST_VALUE_MAP);
             addLnTag(methodsSb, "");
             addLnTag(methodsSb, "        public BindHandler([beanClass] [name]) {", formBeanClass, name);
             addLnTag(methodsSb, "            this.[name] = [name];", name, name);
@@ -497,7 +503,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             addLnTag(methodsSb, "        @Override");
             addLnTag(methodsSb, "        public void handleMessage(android.os.Message msg) {");
             addLnTag(methodsSb, "            super.handleMessage(msg);");
-            addLnTag(methodsSb, "            List<View> views = linkMap.get(msg.what);");
+            addLnTag(methodsSb, "            List views = linkMap.get(msg.what);");
             addLnTag(methodsSb, "            switch (msg.what) {");
 
 
@@ -559,7 +565,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
             addLnTag(methodsSb, "            }");
             addLnTag(methodsSb, "        }");
-            addLnTag(methodsSb, "        public void link(int handleId, View... linkViews) {");
+            addLnTag(methodsSb, "        public void link(int handleId, Object... linkViews) {");
             addLnTag(methodsSb, "            linkMap.get(handleId).addAll([ts].ts(linkViews).toList());", FullName.TS);
             addLnTag(methodsSb, "        }");
 
