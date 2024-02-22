@@ -74,12 +74,10 @@ public class Photo extends CoreBean {
 
     @LinkMethod(R.id.otherEt)
     public void dealOthers(
-            @LinkView(R.id.numberLl) LinearLayout numberLl,
-            @LinkView(R.id.numberLl) RadioGroup numberRg,
+            @LinkView(R.id.numberLl) RadioGroup rg,
             @LinkView(R.id.otherBt) TextView otherBt) {
         others = standardIndex(others);
         int index = getIndex(others);
-        RadioGroup rg = (RadioGroup) numberLl.getTag(com.codingtu.cooltu.lib4a.R.id.tag_0);
         rg.setSelected(index);
         if (index == -1 && StringTool.isNotBlank(others)) {
             otherBt.setTextColor(Color.RED);
@@ -144,10 +142,7 @@ public class Photo extends CoreBean {
 
     @CheckMethod({R.id.labelEt, R.id.name1Et, R.id.schoolEt})
     public boolean checkLabel(String label) {
-        if (StringTool.isBlank(label)) {
-            return false;
-        }
-        return true;
+        return StringTool.isNotBlank(label);
     }
 
 

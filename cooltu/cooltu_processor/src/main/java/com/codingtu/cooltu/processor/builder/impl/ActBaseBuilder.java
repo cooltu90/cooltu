@@ -476,7 +476,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
 
                         if (ee != null) {
-                            addLnTag(methodsSb, "        if ([photo].[checkLabel]([photo].[param])) {", beanName, ElementTools.simpleName(ee), beanName, kv.v);
+                            addLnTag(methodsSb, "        if (![photo].[checkLabel]([photo].[param])) {", beanName, ElementTools.simpleName(ee), beanName, kv.v);
                             addLnTag(methodsSb, "            toast(\"[prompt]\");", prompt);
                             addLnTag(methodsSb, "            return false;");
                             addLnTag(methodsSb, "        }");

@@ -67,7 +67,7 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
         new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(otherEt);
         new com.codingtu.cooltu.lib4a.form.push.DefaultSeekBarPush().destory(this).bindHandler(bindHandler).addView(timeSb);
         bindHandler.link(com.codingtu.cooltu.R.id.classLl, classEt);
-        bindHandler.link(com.codingtu.cooltu.R.id.otherEt, numberLl, getRadioGroup(numberLl), otherBt);
+        bindHandler.link(com.codingtu.cooltu.R.id.otherEt, getRadioGroup(numberLl), otherBt);
         bindHandler.link(com.codingtu.cooltu.R.id.name1Et, name2Et);
         bindHandler.link(com.codingtu.cooltu.R.id.numberLl, otherEt);
         if (!initFormBean) {
@@ -187,15 +187,15 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
     protected void initFormView() {}
 
     private boolean checkPhoto() {
-        if (photo.checkLabel(photo.school)) {
+        if (!photo.checkLabel(photo.school)) {
             toast("请输入学校");
             return false;
         }
-        if (photo.checkLabel(photo.label)) {
+        if (!photo.checkLabel(photo.label)) {
             toast("请输入标签");
             return false;
         }
-        if (photo.checkLabel(photo.name1)) {
+        if (!photo.checkLabel(photo.name1)) {
             toast("请输入name1");
             return false;
         }
@@ -257,7 +257,7 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
                     break;
                 case com.codingtu.cooltu.R.id.otherEt:
                     photo.others = (java.lang.String) msg.obj;
-                    photo.dealOthers((android.widget.LinearLayout) views.get(0), (com.codingtu.cooltu.lib4a.view.combine.RadioGroup) views.get(1), (android.widget.TextView) views.get(2));
+                    photo.dealOthers((com.codingtu.cooltu.lib4a.view.combine.RadioGroup) views.get(0), (android.widget.TextView) views.get(1));
                     break;
                 case com.codingtu.cooltu.R.id.timeSb:
                     photo.time = (int) msg.obj;
