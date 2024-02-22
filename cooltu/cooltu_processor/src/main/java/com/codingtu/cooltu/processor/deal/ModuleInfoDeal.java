@@ -21,7 +21,7 @@ public class ModuleInfoDeal extends TypeBaseDeal {
     protected void dealTypeElement(TypeElement te) {
         ModuleInfo moduleInfo = te.getAnnotation(ModuleInfo.class);
         Module.CURRENT = moduleInfo.module();
-        Pkg.ACT = moduleInfo.actPkg();
+        //Pkg.ACT = moduleInfo.actPkg();
         FullName.BASE_ACT = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
             @Override
             public Object get() {

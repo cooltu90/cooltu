@@ -3,7 +3,7 @@ package com.codingtu.cooltu.constant;
 public class Pkg {
 
     public static String R;
-    public static String ACT;
+    //public static String ACT;
 
     //default
     public static final String DEFAULT_UI_ADAPTER = ".ui.adapter";

@@ -9,8 +9,8 @@ import com.codingtu.cooltu.processor.annotation.ui.ClickView;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
 
-import core.actbase.base.BaseWelcomeActivityBase;
-import core.actres.base.BaseWelcomeActivityRes;
+import core.actbase.BaseWelcomeActivityBase;
+import core.actres.BaseWelcomeActivityRes;
 import core.tools.Permissions;
 
 @To(BaseWelcomeActivityRes.class)

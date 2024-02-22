@@ -1,4 +1,4 @@
-package core.actbase.base;
+package core.actbase;
 
 import android.view.View;
 

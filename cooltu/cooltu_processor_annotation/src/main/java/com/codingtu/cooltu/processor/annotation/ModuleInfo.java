@@ -8,8 +8,6 @@ public @interface ModuleInfo {
     //模块名
     String module();
 
-    String actPkg();
-
     Class baseAct();
 
     Class baseFragment();

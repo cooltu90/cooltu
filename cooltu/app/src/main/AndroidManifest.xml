@@ -40,6 +40,15 @@
         <activity
             android:name="com.codingtu.cooltu.ui.AddPhotoActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.codingtu.cooltu.ui.StepTwoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.codingtu.cooltu.ui.step.StepOneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.codingtu.cooltu.ui.step.StepsOneActivity"
+            android:screenOrientation="portrait" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

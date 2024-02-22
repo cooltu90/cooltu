@@ -1,4 +1,4 @@
-package core.actres.base;
+package core.actres;
 
 import android.widget.RelativeLayout;
 

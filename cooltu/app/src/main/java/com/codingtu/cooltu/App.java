@@ -5,6 +5,7 @@ import com.codingtu.cooltu.lib4a.CoreApp;
 import com.codingtu.cooltu.lib4a.CoreConfigs;
 import com.codingtu.cooltu.lib4a.ui.fragment.CoreFragment;
 import com.codingtu.cooltu.processor.annotation.ModuleInfo;
+import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultCode;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultEditDialogLayout;
@@ -15,7 +16,6 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
 
 @ModuleInfo(
         module = Module.APP,
-        actPkg = "com.codingtu.cooltu.ui",
         baseAct = BaseActivity.class,
         baseFragment = CoreFragment.class,
         rPkg = "com.codingtu.cooltu"
@@ -26,12 +26,12 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
 @DefaultDialogLayout(R.layout.dialog)
 @DefaultMenuDialogLayout(layout = R.layout.dialog_menu, item = R.layout.dialog_menu_item)
 @DefaultCode("CODE_TEST")
-//@CreateAct(
-//        name = "add_photo",
-//        packages = "com.codingtu.cooltu.ui",
-//        baseClass = BaseActivity.class,
-//        layoutTemp = R.layout.layout_temp
-//)
+@CreateAct(
+        name = "steps_one",
+        packages = "com.codingtu.cooltu.ui.step",
+        baseClass = BaseActivity.class,
+        layoutTemp = R.layout.layout_temp
+)
 //@CreateAdapter(
 //        name = "cat",
 //        packages = "com.codingtu.cooltu.ui.adapter",

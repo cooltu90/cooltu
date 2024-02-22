@@ -96,7 +96,8 @@ public class CurrentPath {
      *
      **************************************************/
     public static JavaInfo actRes(String packages, String name) {
-        String pkg = Pkg.ACT_RES + packages.substring(Pkg.ACT.length());
+        String pkg = Pkg.ACT_RES;
+//        String pkg = Pkg.ACT_RES + packages.substring(Pkg.ACT.length());
         String resName = ConvertTool.toClassType(name) + Suffix.ACTIVITY_RES;
         return javaInfo(pkg + "." + resName);
     }
@@ -109,7 +110,8 @@ public class CurrentPath {
      **************************************************/
     public static JavaInfo actBase(String actFullName) {
         JavaInfo actJavaInfo = javaInfo(actFullName);
-        String pkg = Pkg.ACT_BASE + actJavaInfo.pkg.substring(Pkg.ACT.length());
+        String pkg = Pkg.ACT_BASE;
+//        String pkg = Pkg.ACT_BASE + actJavaInfo.pkg.substring(Pkg.ACT.length());
         return javaInfo(pkg, actJavaInfo.name + Suffix.ACT_BASE);
     }
 
@@ -140,7 +142,8 @@ public class CurrentPath {
      *
      **************************************************/
     public static JavaInfo fragRes(String packages, String name) {
-        String pkg = Pkg.FRAGMENT_RES + packages.substring(Pkg.ACT.length());
+        String pkg = Pkg.FRAGMENT_RES;
+//        String pkg = Pkg.FRAGMENT_RES + packages.substring(Pkg.ACT.length());
         String resName = ConvertTool.toClassType(name) + Suffix.FRAGMENT_RES;
         return javaInfo(pkg + "." + resName);
     }
@@ -152,7 +155,8 @@ public class CurrentPath {
      **************************************************/
     public static JavaInfo fragBase(String fragFullName) {
         JavaInfo fragJavaInfo = javaInfo(fragFullName);
-        String pkg = Pkg.FRAGMENT_BASE + fragJavaInfo.pkg.substring(Pkg.ACT.length());
+//        String pkg = Pkg.FRAGMENT_BASE + fragJavaInfo.pkg.substring(Pkg.ACT.length());
+        String pkg = Pkg.FRAGMENT_BASE;
         return javaInfo(pkg, fragJavaInfo.name + Suffix.FRAGMENT_BASE);
     }
 

@@ -1,12 +1,10 @@
 package com.codingtu.cooltu.ui.base;
 
-import com.codingtu.cooltu.R;
-import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.tools.To;
-import com.codingtu.cooltu.processor.annotation.ui.ClickView;
+import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 
-import core.actbase.base.CoreWelcomeActivityBase;
-import core.actres.base.CoreWelcomeActivityRes;
+import core.actbase.CoreWelcomeActivityBase;
+import core.actres.CoreWelcomeActivityRes;
 
 @To(CoreWelcomeActivityRes.class)
 @ActBase
