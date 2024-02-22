@@ -6,8 +6,8 @@ public class Pkg {
     //public static String ACT;
 
     //default
-    public static final String DEFAULT_UI_ADAPTER = ".ui.adapter";
-    public static final String DEFAULT_UI = ".ui";
+    public static final String DEFAULT_ADAPTER = ".app.view.adapter";
+    public static final String DEFAULT_UI = ".app.view.ui";
 
     //processor
     public static final String PROCESSOR = "com.codingtu.cooltu.processor";
