@@ -169,6 +169,11 @@ public class PathBuilder extends PathBuilderBase {
                     nums[2]++;
                 }
 
+                if(info.isList){
+                    //有过滤方法
+                    //没有过滤方法
+                }
+
                 return false;
             }
         });
@@ -233,6 +238,8 @@ public class PathBuilder extends PathBuilderBase {
                 return false;
             }
         });
+
+        listMethodIf("");
     }
 
 }
@@ -330,6 +337,9 @@ public class [[name]] extends [[basePath]] {
     }
                                                                                                     [<sub>][for][filesMethod]
 
+                                                                                                    [<sub>][if][listMethod]
+[listMethod]
+                                                                                                    [<sub>][if][listMethod]
                                                                                                     [<sub>][for][fileList]
     public [tListTsFullName]<[fieldType]> [fieldName]_list(
                                                                                                     [<sub>][for][fileListParam]

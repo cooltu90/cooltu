@@ -7,4 +7,5 @@ public class DirPathInfo {
     public String configName;
     public String filter;
     public boolean isFilter;
+    public boolean isList;
 }

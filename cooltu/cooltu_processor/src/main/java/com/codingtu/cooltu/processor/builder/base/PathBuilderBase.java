@@ -38,6 +38,10 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
     protected java.util.Map<String, Integer> filesMethodCounts;
     protected StringBuilder filesMethodSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> filesMethod;
+    protected java.util.Map<String, Boolean> listMethodIfs;
+    protected java.util.Map<String, Integer> listMethodCounts;
+    protected StringBuilder listMethodSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> listMethod;
     protected java.util.Map<String, Boolean> fileListIfs;
     protected java.util.Map<String, Integer> fileListCounts;
     protected StringBuilder fileListSb;
@@ -80,6 +84,10 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
         filesMethodCounts = new java.util.HashMap<>();
         filesMethodSb = map.get("filesMethod");
         filesMethod = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        listMethodIfs = new java.util.HashMap<>();
+        listMethodCounts = new java.util.HashMap<>();
+        listMethodSb = map.get("listMethod");
+        listMethod = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         fileListIfs = new java.util.HashMap<>();
         fileListCounts = new java.util.HashMap<>();
         fileListSb = map.get("fileList");
@@ -198,6 +206,10 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
         addForMap(this.filesMethod, getIfKey("filesMethodParam", i0), others);
         filesMethodIfs.put(getIfKey("filesMethodParam", i0), true);
     }
+    public void listMethodIf(String listMethod) {
+        addForMap(this.listMethod, getIfKey("listMethod"), listMethod);
+        listMethodIfs.put(getIfKey("listMethod"), true);
+    }
 
     @Override
     protected void dealLinesInParent() {
@@ -290,6 +302,10 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
             addLnTag(filesMethodSb, "        );");
             addLnTag(filesMethodSb, "    }");
         }
+        if (isIf(listMethodIfs, getIfKey("listMethod"))) {
+            List<String> listMethod0 = listMethod.get(getIfKey("listMethod"));
+            addLnTag(listMethodSb, "[listMethod]", listMethod0.get(0));
+        }
         for (int i0 = 0; i0 < count(fileListCounts, getForKey("fileList")); i0++) {
             List<String> fileList0 = fileList.get(getForKey("fileList", i0));
             addLnTag(fileListSb, "    public [tListTsFullName]<[fieldType]> [fieldName]_list(", fileList0.get(0), fileList0.get(1), fileList0.get(2));
@@ -343,6 +359,7 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
         lines.add("");
         lines.add("[[filesMethod]]");
         lines.add("");
+        lines.add("[[listMethod]]");
         lines.add("[[fileList]]");
         lines.add("}");
 

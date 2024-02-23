@@ -14,7 +14,8 @@ import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
 
 import core.actbase.WelcomeActivityBase;
 import core.actres.WelcomeActivityRes;
-import core.tools.ActStart;
+import core.path.DocumentPath;
+import core.path.DocumentStudentsStudentPath;
 
 @To(WelcomeActivityRes.class)
 @ToRes(R.layout.activity_welcome)
@@ -25,8 +26,13 @@ public class WelcomeActivity extends WelcomeActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        ActStart.formTestActivity(getAct());
-        ActStart.addPhotoActivity(getAct());
+        //ActStart.addPhotoActivity(getAct());
+        DocumentPath docPath = DocumentPath.obtain("一年级", "二班");
+
+        DocumentStudentsStudentPath xiaoming =
+                DocumentPath.obtain("一年级", "二班")
+                        .students
+                        .student("小明");
     }
 
     @ActBack(StepOneActivity.class)

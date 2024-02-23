@@ -2,16 +2,19 @@ package com.codingtu.cooltu.processor.deal;
 
 import com.codingtu.cooltu.constant.FileContentType;
 import com.codingtu.cooltu.constant.FileType;
+import com.codingtu.cooltu.constant.Path;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.data.map.MapValueMap;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.path.DirPath;
 import com.codingtu.cooltu.processor.annotation.path.FilePath;
+import com.codingtu.cooltu.processor.annotation.path.PathList;
 import com.codingtu.cooltu.processor.annotation.path.PathObtain;
 import com.codingtu.cooltu.processor.annotation.path.Paths;
 import com.codingtu.cooltu.processor.annotation.tools.To;
@@ -19,11 +22,14 @@ import com.codingtu.cooltu.processor.bean.DirPathInfo;
 import com.codingtu.cooltu.processor.bean.FilePathInfo;
 import com.codingtu.cooltu.processor.builder.impl.PathBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
 import java.util.HashMap;
+import java.util.Map;
 
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 
@@ -31,6 +37,7 @@ import javax.lang.model.element.VariableElement;
 public class PathDeal extends TypeBaseDeal {
     private HashMap<String, String> dirMap = new HashMap<>();
     private HashMap<String, PathBuilder> pathMap = new HashMap<>();
+    private MapValueMap<String, String, ExecutableElement> pathListMap = new MapValueMap<>();
 
     @Override
     protected void dealTypeElement(TypeElement te) {
@@ -44,6 +51,7 @@ public class PathDeal extends TypeBaseDeal {
         Ts.ls(te.getEnclosedElements(), (position, e) -> {
             if (e instanceof VariableElement) {
                 VariableElement ve = (VariableElement) e;
+
                 DirPath dir = ve.getAnnotation(DirPath.class);
                 if (dir != null) {
                     dealDir(ve, dir);
@@ -59,8 +67,23 @@ public class PathDeal extends TypeBaseDeal {
                     pathBuilder.addObtain(pathObtain);
 
             }
+
+            if (e instanceof ExecutableElement) {
+                ExecutableElement ee = (ExecutableElement) e;
+                PathList pathList = ee.getAnnotation(PathList.class);
+                if (pathList != null) {
+                    dealPathList(te, ee, pathList);
+                }
+            }
+
             return false;
         });
+    }
+
+    private void dealPathList(TypeElement te, ExecutableElement ee, PathList pathList) {
+        String configName = ElementTools.simpleName(te);
+        Map<String, ExecutableElement> map = pathListMap.get(configName);
+        map.put(pathList.value(), ee);
     }
 
 
@@ -93,6 +116,7 @@ public class PathDeal extends TypeBaseDeal {
             }
         });
         dirInfo.isFilter = !ClassTool.isVoid(dirInfo.filter);
+        dirInfo.isList = dir.list();
 
         parentModel.addDir(dirInfo);
 
