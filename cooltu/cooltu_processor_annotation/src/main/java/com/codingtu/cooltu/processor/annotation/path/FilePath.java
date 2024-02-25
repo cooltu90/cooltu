@@ -14,17 +14,19 @@ import java.lang.annotation.Target;
 public @interface FilePath {
     String parent() default "root";
 
-    String fieldName() default "";
+    String fileName() default "";
 
     String fileType() default FileType.NONE;
 
     String fileContentType() default FileContentType.NONE;
 
-    String fileName() default "";
+    String fieldName() default "";
 
     Class beanClass() default Void.class;
 
     int beanType() default PathBeanType.BEAN;
 
     Class filter() default Void.class;
+
+    boolean list() default false;
 }

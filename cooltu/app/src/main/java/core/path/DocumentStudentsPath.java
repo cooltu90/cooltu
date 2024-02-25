@@ -30,6 +30,17 @@ public class DocumentStudentsPath extends com.codingtu.cooltu.lib4a.path.BasePat
 
 
 
+    public com.codingtu.cooltu.lib4j.ts.BaseTs<DocumentStudentsStudentPath> studentList(
+            java.lang.String prex
+    ) {
+        com.codingtu.cooltu.path.DocumentPathConfigs configs = new com.codingtu.cooltu.path.DocumentPathConfigs();
+        return com.codingtu.cooltu.lib4j.ts.Ts.ts(rootFile().listFiles()).convert((index, file) -> {
+            if (configs.studentFilter(file, prex)) {
+                return student(file.getName());
+            }
+            return null;
+        });
+    }
 
 
 

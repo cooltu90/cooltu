@@ -14,7 +14,5 @@ public @interface DirPath {
 
     String fieldName() default "";
 
-    Class filter() default Void.class;
-
     boolean list() default false;
 }

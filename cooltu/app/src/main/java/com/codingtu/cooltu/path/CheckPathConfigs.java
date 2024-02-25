@@ -8,8 +8,11 @@ import com.codingtu.cooltu.path.defaultvalue.CompanyDefault;
 import com.codingtu.cooltu.path.filter.LabelFilter;
 import com.codingtu.cooltu.processor.annotation.path.DirPath;
 import com.codingtu.cooltu.processor.annotation.path.FilePath;
+import com.codingtu.cooltu.processor.annotation.path.PathList;
 import com.codingtu.cooltu.processor.annotation.path.PathObtain;
 import com.codingtu.cooltu.processor.annotation.path.Paths;
+
+import java.io.File;
 
 @Paths(name = "check", path = "EnvCheckData/tasks/{company}/{taskName}")
 public class CheckPathConfigs {
@@ -18,7 +21,7 @@ public class CheckPathConfigs {
 //    public void obtain(@DefaultPath(CompanyDefault.class) String company, String taskName) {
 //    }
 
-    @PathObtain(value = {CompanyDefault.class},name = "obtain1")
+    @PathObtain(value = {CompanyDefault.class}, name = "obtain1")
     String obtain;
 
     @DirPath
@@ -57,12 +60,17 @@ public class CheckPathConfigs {
     @DirPath(parent = "ExtraInfo", dirName = "DeleteLabel", fieldName = "DeleteLabel")
     String ExtraInfoDeleteLabel;
 
-    @DirPath(parent = "ExtraInfoDeleteLabel", dirName = "{labelName}", fieldName = "label", filter = LabelFilter.class)
+    @DirPath(parent = "ExtraInfoDeleteLabel", dirName = "{labelName}", fieldName = "label", list = true)
     String ExtraInfoDeleteLabelLabel;
 
 
-    @DirPath(dirName = "{labelName}", filter = LabelFilter.class)
+    @DirPath(dirName = "{labelName}", list = true)
     String label;
+
+    @PathList({"label", "ExtraInfoDeleteLabelLabel"})
+    public boolean labelFilter(File file) {
+        return file.getName().startsWith("L-");
+    }
 
     @FilePath(
             parent = "label",

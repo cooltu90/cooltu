@@ -5,6 +5,8 @@ import android.view.View;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.User;
+import com.codingtu.cooltu.lib4a.path.PathBeanFile;
+import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
@@ -29,10 +31,18 @@ public class WelcomeActivity extends WelcomeActivityBase {
         //ActStart.addPhotoActivity(getAct());
         DocumentPath docPath = DocumentPath.obtain("一年级", "二班");
 
-        DocumentStudentsStudentPath xiaoming =
+
+        BaseTs<DocumentStudentsStudentPath> studentTs =
                 DocumentPath.obtain("一年级", "二班")
                         .students
-                        .student("小明");
+                        .studentList("小");
+
+PathBeanFile<User> json_txt = DocumentPath.obtain("一年级", "二班")
+        .students
+        .studentList("小")
+        .get(0)
+        .json_txt;
+
     }
 
     @ActBack(StepOneActivity.class)

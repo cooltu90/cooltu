@@ -29,6 +29,7 @@ import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
@@ -37,7 +38,7 @@ import javax.lang.model.element.VariableElement;
 public class PathDeal extends TypeBaseDeal {
     private HashMap<String, String> dirMap = new HashMap<>();
     private HashMap<String, PathBuilder> pathMap = new HashMap<>();
-    private MapValueMap<String, String, ExecutableElement> pathListMap = new MapValueMap<>();
+    private HashMap<String, ExecutableElement> methodMap = new HashMap<>();
 
     @Override
     protected void dealTypeElement(TypeElement te) {
@@ -48,13 +49,34 @@ public class PathDeal extends TypeBaseDeal {
         PathBuilder pathBuilder = new PathBuilder(paths.path(), getJavaInfo(baseName));
         pathMap.put("root", pathBuilder);
 
+        ElementTools.ls(te.getEnclosedElements(), new Ts.EachTs<Element>() {
+            @Override
+            public boolean each(int position, Element e) {
+                if (e instanceof ExecutableElement) {
+                    ExecutableElement ee = (ExecutableElement) e;
+                    PathList pathList = ee.getAnnotation(PathList.class);
+                    if (pathList != null) {
+                        Ts.strs(pathList.value()).ls(new Ts.EachTs<String>() {
+                            @Override
+                            public boolean each(int position, String s) {
+                                methodMap.put(s, ee);
+                                return false;
+                            }
+                        });
+                    }
+                }
+                return false;
+            }
+        });
+
+
         Ts.ls(te.getEnclosedElements(), (position, e) -> {
             if (e instanceof VariableElement) {
                 VariableElement ve = (VariableElement) e;
 
                 DirPath dir = ve.getAnnotation(DirPath.class);
                 if (dir != null) {
-                    dealDir(ve, dir);
+                    dealDir(te, ve, dir);
                 }
 
                 FilePath file = ve.getAnnotation(FilePath.class);
@@ -67,27 +89,11 @@ public class PathDeal extends TypeBaseDeal {
                     pathBuilder.addObtain(pathObtain);
 
             }
-
-            if (e instanceof ExecutableElement) {
-                ExecutableElement ee = (ExecutableElement) e;
-                PathList pathList = ee.getAnnotation(PathList.class);
-                if (pathList != null) {
-                    dealPathList(te, ee, pathList);
-                }
-            }
-
             return false;
         });
     }
 
-    private void dealPathList(TypeElement te, ExecutableElement ee, PathList pathList) {
-        String configName = ElementTools.simpleName(te);
-        Map<String, ExecutableElement> map = pathListMap.get(configName);
-        map.put(pathList.value(), ee);
-    }
-
-
-    private void dealDir(VariableElement ve, DirPath dir) {
+    private void dealDir(TypeElement te, VariableElement ve, DirPath dir) {
         KV<String, String> kv = ElementTools.getFieldKv(ve);
         String baseName = dirMap.get(dir.parent());
         String fieldName = dir.fieldName();
@@ -107,17 +113,16 @@ public class PathDeal extends TypeBaseDeal {
 
         DirPathInfo dirInfo = new DirPathInfo();
         dirInfo.javaName = basePathJavaInfo.name;
+        dirInfo.configName = ElementTools.getType(te).toString();
         dirInfo.fieldName = fieldName;
         dirInfo.dirName = StringTool.isBlank(dir.dirName()) ? kv.v : dir.dirName();
-        dirInfo.filter = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
-            @Override
-            public Object get() {
-                return dir.filter();
-            }
-        });
-        dirInfo.isFilter = !ClassTool.isVoid(dirInfo.filter);
         dirInfo.isList = dir.list();
-
+        if (dirInfo.isList) {
+            ExecutableElement ee = methodMap.get(kv.v);
+            if (ee != null) {
+                dirInfo.listMethod = ee;
+            }
+        }
         parentModel.addDir(dirInfo);
 
     }

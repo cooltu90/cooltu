@@ -18,10 +18,14 @@ import com.codingtu.cooltu.processor.bean.PathFilterInfo;
 import com.codingtu.cooltu.processor.builder.base.PathBuilderBase;
 import com.codingtu.cooltu.processor.deal.PathDeal;
 import com.codingtu.cooltu.processor.deal.PathFilterDeal;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
+import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.lang.model.element.ExecutableElement;
 
 @To(PathDeal.class)
 public class PathBuilder extends PathBuilderBase {
@@ -70,6 +74,8 @@ public class PathBuilder extends PathBuilderBase {
         addTag(pkg, Pkg.CORE_PATH);
         addTag(name, javaInfo.name);
         addTag(basePath, FullName.BASE_PATH);
+
+        StringBuilder listMethodSb = new StringBuilder();
 
         boolean isRoot = StringTool.isNotBlank(this.path);
 
@@ -152,26 +158,39 @@ public class PathBuilder extends PathBuilderBase {
                     nums[1]++;
                 }
 
-
-                if (info.isFilter) {
-                    dirList(nums[2], FullName.BASE_TS, info.javaName, info.fieldName, info.filter, FullName.TS);
-                    PathFilterInfo filterInfo = PathFilterDeal.map.get(info.filter);
-                    int filterParamsCount = CountTool.count(filterInfo.params);
-                    Ts.ls(filterInfo.params, new Ts.EachTs<KV<String, String>>() {
-                        @Override
-                        public boolean each(int position, KV<String, String> kv) {
-                            dirListParam(nums[2], position, kv.k, kv.v, position == (filterParamsCount - 1) ? "" : ",");
-                            dirListFilter(nums[2], position, kv.v);
-                            return false;
-                        }
-                    });
-
-                    nums[2]++;
-                }
-
-                if(info.isList){
-                    //有过滤方法
-                    //没有过滤方法
+                if (info.isList) {
+                    ExecutableElement ee = info.listMethod;
+                    if (ee != null) {
+                        //有过滤方法
+                        Params methodParamKvs = ElementTools.getMethodParamKvs(ee);
+                        String param = methodParamKvs.getParam(new Params.Convert() {
+                            @Override
+                            public String convert(int index, KV<String, String> kv) {
+                                if (index != 0) {
+                                    return kv.k + " " + kv.v;
+                                }
+                                return null;
+                            }
+                        });
+                        addLnTag(listMethodSb, "    public [BaseTs]<[DocumentStudentsStudentPath]> [student]List(", FullName.BASE_TS, info.javaName, info.fieldName);
+                        addLnTag(listMethodSb, "            [param]", param);
+                        addLnTag(listMethodSb, "    ) {");
+                        addLnTag(listMethodSb, "        [Configs] configs = new [Configs]();", info.configName, info.configName);
+                        addLnTag(listMethodSb, "        return [Ts].ts(rootFile().listFiles()).convert((index, file) -> {", FullName.TS);
+                        addLnTag(listMethodSb, "            if (configs.[studentFilter]([param])) {", ElementTools.simpleName(ee), methodParamKvs.getParam((index, kv) -> kv.v));
+                        addLnTag(listMethodSb, "                return [student](file.getName());", info.fieldName);
+                        addLnTag(listMethodSb, "            }");
+                        addLnTag(listMethodSb, "            return null;");
+                        addLnTag(listMethodSb, "        });");
+                        addLnTag(listMethodSb, "    }");
+                    } else {
+                        //没有过滤方法
+                        addLnTag(listMethodSb, "    public [BaseTs]<[DocumentStudentsStudentPath]> [student]List(){", FullName.BASE_TS, info.javaName, info.fieldName);
+                        addLnTag(listMethodSb, "        return [Ts].ts(rootFile().listFiles()).convert((index, file) -> {", FullName.TS);
+                        addLnTag(listMethodSb, "            return [student](file.getName());", info.fieldName);
+                        addLnTag(listMethodSb, "        });");
+                        addLnTag(listMethodSb, "    }");
+                    }
                 }
 
                 return false;
@@ -239,7 +258,8 @@ public class PathBuilder extends PathBuilderBase {
             }
         });
 
-        listMethodIf("");
+        Logs.i(listMethodSb.toString());
+        listMethodIf(listMethodSb.toString());
     }
 
 }
