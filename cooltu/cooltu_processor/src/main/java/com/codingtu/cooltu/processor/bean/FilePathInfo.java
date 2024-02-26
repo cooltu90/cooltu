@@ -2,6 +2,8 @@ package com.codingtu.cooltu.processor.bean;
 
 import com.codingtu.cooltu.processor.annotation.path.FilePath;
 
+import javax.lang.model.element.ExecutableElement;
+
 public class FilePathInfo {
 
     public FilePath file;
@@ -19,7 +21,7 @@ public class FilePathInfo {
     public String beanClass;
     public int beanType;
     //
-    public String filter;
-    public boolean isFilter;
-
+    public boolean isList;
+    public ExecutableElement listMethod;
+    public String configName;
 }

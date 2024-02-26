@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.codingtu.cooltu.R;
+import com.codingtu.cooltu.bean.Score;
 import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.lib4a.path.PathBeanFile;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
@@ -37,11 +38,19 @@ public class WelcomeActivity extends WelcomeActivityBase {
                         .students
                         .studentList("小");
 
-PathBeanFile<User> json_txt = DocumentPath.obtain("一年级", "二班")
+        PathBeanFile<User> json_txt = DocumentPath.obtain("一年级", "二班")
+                .students
+                .studentList("小")
+                .get(0)
+                .json_txt;
+
+Score sorce = DocumentPath
+        .obtain("一年级", "二班")
         .students
-        .studentList("小")
-        .get(0)
-        .json_txt;
+        .student("小")
+        .scores
+        .score_txt("成绩")
+        .bean();
 
     }
 

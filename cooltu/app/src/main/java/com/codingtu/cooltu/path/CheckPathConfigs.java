@@ -78,7 +78,8 @@ public class CheckPathConfigs {
             fieldName = "label",
             fileType = FileType.TXT,
             beanClass = User.class,
-            filter = LabelFilter.class)
+            list = true
+    )
     String labelTxt;
 
     @FilePath(

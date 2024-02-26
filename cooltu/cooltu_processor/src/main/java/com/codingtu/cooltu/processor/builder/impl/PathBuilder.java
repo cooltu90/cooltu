@@ -239,26 +239,46 @@ public class PathBuilder extends PathBuilderBase {
 
                 }
 
-                if (info.isFilter && StringTool.isNotBlank(filedType)) {
-                    fileList(nums[5], FullName.BASE_TS, filedType, info.fieldFullName, info.filter, FullName.TS);
-                    PathFilterInfo filterInfo = PathFilterDeal.map.get(info.filter);
-                    int filterParamsCount = CountTool.count(filterInfo.params);
-                    Ts.ls(filterInfo.params, new Ts.EachTs<KV<String, String>>() {
-                        @Override
-                        public boolean each(int position, KV<String, String> kv) {
-                            fileListParam(nums[5], position, kv.k, kv.v, position == (filterParamsCount - 1) ? "" : ",");
-                            filterParam(nums[5], position, kv.v);
-                            return false;
-                        }
-                    });
+                if (info.isList) {
+                    ExecutableElement ee = info.listMethod;
+                    if (ee != null) {
+                        //有过滤方法
+                        Params methodParamKvs = ElementTools.getMethodParamKvs(ee);
+                        String param = methodParamKvs.getParam(new Params.Convert() {
+                            @Override
+                            public String convert(int index, KV<String, String> kv) {
+                                if (index != 0) {
+                                    return kv.k + " " + kv.v;
+                                }
+                                return null;
+                            }
+                        });
 
-                    nums[5]++;
+                        addLnTag(listMethodSb, "    public [BaseTs]<[fieldType]> [score_txt]_list(",
+                                FullName.BASE_TS, filedType, info.fieldFullName);
+                        addLnTag(listMethodSb, "            [param]", param);
+                        addLnTag(listMethodSb, "    ) {");
+                        addLnTag(listMethodSb, "        [Configs] configs = new [Configs]();", info.configName, info.configName);
+                        addLnTag(listMethodSb, "        return [Ts].ts(rootFile().listFiles()).convert((index, file) -> {", FullName.TS);
+                        addLnTag(listMethodSb, "            if (configs.[studentFilter]([param])) {", ElementTools.simpleName(ee), methodParamKvs.getParam((index, kv) -> kv.v));
+                        addLnTag(listMethodSb, "                return [student](file.getName());", info.fieldFullName);
+                        addLnTag(listMethodSb, "            }");
+                        addLnTag(listMethodSb, "            return null;");
+                        addLnTag(listMethodSb, "        });");
+                        addLnTag(listMethodSb, "    }");
+
+                    } else {
+                        //没有过滤方法
+                        addLnTag(listMethodSb, "    public [BaseTs]<[fieldType]> [score_txt]_list() {",
+                                FullName.BASE_TS, filedType, info.fieldFullName);
+                        addLnTag(listMethodSb, "        return [Ts].ts(rootFile().listFiles()).convert((index, file) -> [score_txt](file.getName()));",
+                                FullName.TS, info.fieldFullName);
+                        addLnTag(listMethodSb, "    }");
+                    }
                 }
                 return false;
             }
         });
-
-        Logs.i(listMethodSb.toString());
         listMethodIf(listMethodSb.toString());
     }
 

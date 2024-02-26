@@ -2,6 +2,7 @@ package core.path;
 
 public class DocumentStudentsStudentPath extends com.codingtu.cooltu.lib4a.path.BasePath {
 
+    public DocumentStudentsStudentScoresPath scores;
 
 
     public com.codingtu.cooltu.lib4a.path.PathBeanFile<com.codingtu.cooltu.bean.User> json_txt;
@@ -15,6 +16,10 @@ public class DocumentStudentsStudentPath extends com.codingtu.cooltu.lib4a.path.
 
     public DocumentStudentsStudentPath(String root) {
         super(root);
+        this.scores = DocumentStudentsStudentScoresPath.root(
+                this.root
+                        + addPrexSeparator("scores")
+        );
 
         this.json_txt = new com.codingtu.cooltu.lib4a.path.PathBeanFile<com.codingtu.cooltu.bean.User>(
                 this.root

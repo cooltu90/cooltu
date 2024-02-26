@@ -81,7 +81,7 @@ public class PathDeal extends TypeBaseDeal {
 
                 FilePath file = ve.getAnnotation(FilePath.class);
                 if (file != null) {
-                    dealFile(ve, file);
+                    dealFile(te, ve, file);
                 }
 
                 PathObtain pathObtain = ve.getAnnotation(PathObtain.class);
@@ -113,7 +113,7 @@ public class PathDeal extends TypeBaseDeal {
 
         DirPathInfo dirInfo = new DirPathInfo();
         dirInfo.javaName = basePathJavaInfo.name;
-        dirInfo.configName = ElementTools.getType(te).toString();
+        dirInfo.configName = ElementTools.getType(te);
         dirInfo.fieldName = fieldName;
         dirInfo.dirName = StringTool.isBlank(dir.dirName()) ? kv.v : dir.dirName();
         dirInfo.isList = dir.list();
@@ -127,7 +127,7 @@ public class PathDeal extends TypeBaseDeal {
 
     }
 
-    private void dealFile(VariableElement ve, FilePath file) {
+    private void dealFile(TypeElement te, VariableElement ve, FilePath file) {
         KV<String, String> kv = ElementTools.getFieldKv(ve);
 
         PathBuilder parentModel = pathMap.get(file.parent());
@@ -167,14 +167,14 @@ public class PathDeal extends TypeBaseDeal {
         });
         info.beanType = file.beanType();
         info.isVoidBean = ClassTool.isVoid(info.beanClass);
-        info.filter = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
-            @Override
-            public Object get() {
-                return file.filter();
+        info.isList = file.list();
+        if (info.isList) {
+            ExecutableElement ee = methodMap.get(kv.v);
+            if (ee != null) {
+                info.listMethod = ee;
+                info.configName = ElementTools.getType(te);
             }
-        });
-        info.isFilter = !ClassTool.isVoid(info.filter);
-
+        }
 
         parentModel.addFile(info);
     }

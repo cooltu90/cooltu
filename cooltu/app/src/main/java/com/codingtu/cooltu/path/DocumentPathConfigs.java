@@ -1,5 +1,6 @@
 package com.codingtu.cooltu.path;
 
+import com.codingtu.cooltu.bean.Score;
 import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.constant.FileContentType;
 import com.codingtu.cooltu.constant.FileType;
@@ -49,5 +50,26 @@ public class DocumentPathConfigs {
             beanClass = User.class
     )
     String studentData;
+
+    @DirPath(
+            parent = "student"
+    )
+    String scores;
+
+    @FilePath(
+            parent = "scores",
+            fileName = "{score}",
+            fieldName = "score",
+            fileType = FileType.TXT,
+            fileContentType = FileContentType.TXT,
+            beanClass = Score.class,
+            list = true
+    )
+    String score;
+
+    @PathList("score")
+    public boolean scoreFilter(File file, String prex) {
+        return file.getName().startsWith(prex);
+    }
 
 }

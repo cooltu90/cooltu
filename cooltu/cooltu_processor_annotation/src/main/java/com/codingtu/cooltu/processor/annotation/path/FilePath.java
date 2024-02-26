@@ -26,7 +26,5 @@ public @interface FilePath {
 
     int beanType() default PathBeanType.BEAN;
 
-    Class filter() default Void.class;
-
     boolean list() default false;
 }
