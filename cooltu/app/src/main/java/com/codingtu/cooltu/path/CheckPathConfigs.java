@@ -4,8 +4,6 @@ import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.constant.FileContentType;
 import com.codingtu.cooltu.constant.FileType;
 import com.codingtu.cooltu.constant.PathBeanType;
-import com.codingtu.cooltu.path.defaultvalue.CompanyDefault;
-import com.codingtu.cooltu.path.filter.LabelFilter;
 import com.codingtu.cooltu.processor.annotation.path.DirPath;
 import com.codingtu.cooltu.processor.annotation.path.FilePath;
 import com.codingtu.cooltu.processor.annotation.path.PathList;
@@ -17,11 +15,7 @@ import java.io.File;
 @Paths(name = "check", path = "EnvCheckData/tasks/{company}/{taskName}")
 public class CheckPathConfigs {
 
-//    @PathObtain
-//    public void obtain(@DefaultPath(CompanyDefault.class) String company, String taskName) {
-//    }
-
-    @PathObtain(value = {CompanyDefault.class}, name = "obtain1")
+    @PathObtain(name = "obtain1", methodNames = {"", ""})
     String obtain;
 
     @DirPath

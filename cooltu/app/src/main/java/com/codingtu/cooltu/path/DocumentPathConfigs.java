@@ -4,9 +4,6 @@ import com.codingtu.cooltu.bean.Score;
 import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.constant.FileContentType;
 import com.codingtu.cooltu.constant.FileType;
-import com.codingtu.cooltu.constant.PathBeanType;
-import com.codingtu.cooltu.path.defaultvalue.GradeDefault;
-import com.codingtu.cooltu.path.filter.AllFilter;
 import com.codingtu.cooltu.processor.annotation.path.DirPath;
 import com.codingtu.cooltu.processor.annotation.path.FilePath;
 import com.codingtu.cooltu.processor.annotation.path.PathList;
@@ -18,8 +15,12 @@ import java.io.File;
 @Paths(name = "document", path = "AppData/document/{grade}/{className}")
 public class DocumentPathConfigs {
 
-    @PathObtain(value = {GradeDefault.class}, name = "obtain")
+    @PathObtain(methodNames = {"gradePath", ""}, name = "obtain")
     String obtain;
+
+    public String gradePath() {
+        return "null";
+    }
 
     @DirPath
     String infos;
@@ -71,5 +72,6 @@ public class DocumentPathConfigs {
     public boolean scoreFilter(File file, String prex) {
         return file.getName().startsWith(prex);
     }
+
 
 }

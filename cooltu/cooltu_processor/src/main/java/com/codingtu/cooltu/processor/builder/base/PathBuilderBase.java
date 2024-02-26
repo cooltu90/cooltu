@@ -112,8 +112,8 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
     public int obtainsCount() {
         return count(obtainCounts, getForKey("obtains"));
     }
-    public void obtains(int i0, String className, String methodName, String params, String useParams) {
-        addForMap(this.obtain, getForKey("obtains", i0), className, methodName, params, useParams);
+    public void obtains(int i0, String className, String methodName, String params, String configs, String useParams) {
+        addForMap(this.obtain, getForKey("obtains", i0), className, methodName, params, configs, configs, useParams);
         countAdd(obtainCounts, getForKey("obtains"));
     }
     public int addObtainRootCount() {
@@ -226,7 +226,8 @@ public abstract class PathBuilderBase extends com.codingtu.cooltu.processor.buil
             for (int i0 = 0; i0 < count(obtainCounts, getForKey("obtains")); i0++) {
                 List<String> obtain1 = obtain.get(getForKey("obtains", i0));
                 addLnTag(obtainSb, "    public static [className] [methodName]([params]) {", obtain1.get(0), obtain1.get(1), obtain1.get(2));
-                addLnTag(obtainSb, "        return obtain([useParams]);", obtain1.get(3));
+                addLnTag(obtainSb, "        [configs] configs = new [configs]();", obtain1.get(3), obtain1.get(4));
+                addLnTag(obtainSb, "        return obtain([useParams]);", obtain1.get(5));
                 addLnTag(obtainSb, "    }");
             }
             addLnTag(obtainSb, "");

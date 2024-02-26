@@ -2,14 +2,13 @@ package com.codingtu.cooltu.processor.deal;
 
 import com.codingtu.cooltu.constant.FileContentType;
 import com.codingtu.cooltu.constant.FileType;
-import com.codingtu.cooltu.constant.Path;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
-import com.codingtu.cooltu.lib4j.data.map.MapValueMap;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
+import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.path.DirPath;
@@ -20,14 +19,13 @@ import com.codingtu.cooltu.processor.annotation.path.Paths;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.bean.DirPathInfo;
 import com.codingtu.cooltu.processor.bean.FilePathInfo;
+import com.codingtu.cooltu.processor.bean.ObtainInfo;
 import com.codingtu.cooltu.processor.builder.impl.PathBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
@@ -39,6 +37,7 @@ public class PathDeal extends TypeBaseDeal {
     private HashMap<String, String> dirMap = new HashMap<>();
     private HashMap<String, PathBuilder> pathMap = new HashMap<>();
     private HashMap<String, ExecutableElement> methodMap = new HashMap<>();
+    private HashMap<String, ExecutableElement> allMethodMap = new HashMap<>();
 
     @Override
     protected void dealTypeElement(TypeElement te) {
@@ -64,6 +63,8 @@ public class PathDeal extends TypeBaseDeal {
                             }
                         });
                     }
+
+                    allMethodMap.put(ElementTools.simpleName(ee), ee);
                 }
                 return false;
             }
@@ -85,8 +86,26 @@ public class PathDeal extends TypeBaseDeal {
                 }
 
                 PathObtain pathObtain = ve.getAnnotation(PathObtain.class);
-                if (pathObtain != null)
-                    pathBuilder.addObtain(pathObtain);
+                if (pathObtain != null) {
+                    ObtainInfo info = new ObtainInfo();
+                    info.configName = ElementTools.getType(te);
+                    info.obtain = pathObtain;
+                    String[] methodNames = pathObtain.methodNames();
+                    int count = CountTool.count(methodNames);
+                    boolean has = true;
+                    if (count > 0) {
+                        for (int i = 0; i < count; i++) {
+                            String methodName = methodNames[i];
+                            if (StringTool.isNotBlank(methodName) && !allMethodMap.containsKey(methodName)) {
+                                has = false;
+                            }
+                        }
+                    }
+                    if (has) {
+                        pathBuilder.addObtain(info);
+                    }
+
+                }
 
             }
             return false;

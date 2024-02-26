@@ -6,19 +6,15 @@ import com.codingtu.cooltu.constant.PathBeanType;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
-import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.processor.annotation.path.PathObtain;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.bean.DirPathInfo;
 import com.codingtu.cooltu.processor.bean.FilePathInfo;
-import com.codingtu.cooltu.processor.bean.PathFilterInfo;
+import com.codingtu.cooltu.processor.bean.ObtainInfo;
 import com.codingtu.cooltu.processor.builder.base.PathBuilderBase;
 import com.codingtu.cooltu.processor.deal.PathDeal;
-import com.codingtu.cooltu.processor.deal.PathFilterDeal;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
@@ -32,19 +28,18 @@ public class PathBuilder extends PathBuilderBase {
     private String path;
     private List<DirPathInfo> dirInfos;
     private List<FilePathInfo> fileInfos;
-    private List<PathObtain> obtainList;
+    private List<ObtainInfo> obtainList;
 
     public PathBuilder(String path, JavaInfo info) {
         super(info);
         this.path = path;
     }
 
-
-    public void addObtain(PathObtain pathObtain) {
+    public void addObtain(ObtainInfo obtainInfo) {
         if (obtainList == null) {
             obtainList = new ArrayList<>();
         }
-        obtainList.add(pathObtain);
+        obtainList.add(obtainInfo);
     }
 
     public void addDir(DirPathInfo dirInfo) {
@@ -99,46 +94,81 @@ public class PathBuilder extends PathBuilderBase {
 
             obtainIf(javaInfo.name, params.getMethodParams(), FullName.SDCARD_TOOL);
 
-            Ts.ls(obtainList, new Ts.EachTs<PathObtain>() {
+//            Ts.ls(obtainList, new Ts.EachTs<PathObtain>() {
+//                @Override
+//                public boolean each(int position, PathObtain pathObtain) {
+//                    String methodName = pathObtain.name();
+//                    if (StringTool.isBlank(methodName)) {
+//                        methodName = "obtain";
+//                    }
+//
+//                    List<String> classes = ClassTool.getAnnotationClasses(new ClassTool.AnnotationClassGetter() {
+//                        @Override
+//                        public Object get() {
+//                            return pathObtain.value();
+//                        }
+//                    });
+//
+//                    int count = CountTool.count(classes);
+//
+//                    Params params1 = new Params();
+//                    Params useParams = new Params();
+//
+//                    Ts.ls(params.getKvs(), new Ts.EachTs<KV<String, String>>() {
+//                        @Override
+//                        public boolean each(int position, KV<String, String> kv) {
+//                            String className = Void.class.getCanonicalName();
+//                            if (position < count) {
+//                                className = classes.get(position);
+//                            }
+//                            if (ClassTool.isVoid(className)) {
+//                                params1.add(kv);
+//                                useParams.add("", kv.v);
+//                            } else {
+//                                useParams.add("", "new " + className + "().path()");
+//                            }
+//
+//                            return false;
+//                        }
+//                    });
+//
+//                    //obtains(position, javaInfo.name, methodName, params1.getMethodParams(), useParams.getParams());
+//
+//                    return false;
+//                }
+//            });
+
+            Ts.ls(obtainList, new Ts.EachTs<ObtainInfo>() {
                 @Override
-                public boolean each(int position, PathObtain pathObtain) {
-                    String methodName = pathObtain.name();
+                public boolean each(int position, ObtainInfo obtainInfo) {
+                    String methodName = obtainInfo.obtain.name();
                     if (StringTool.isBlank(methodName)) {
                         methodName = "obtain";
                     }
 
-                    List<String> classes = ClassTool.getAnnotationClasses(new ClassTool.AnnotationClassGetter() {
-                        @Override
-                        public Object get() {
-                            return pathObtain.value();
-                        }
-                    });
-
-                    int count = CountTool.count(classes);
+                    String[] methodNames = obtainInfo.obtain.methodNames();
+                    int count = CountTool.count(methodNames);
 
                     Params params1 = new Params();
                     Params useParams = new Params();
-
                     Ts.ls(params.getKvs(), new Ts.EachTs<KV<String, String>>() {
                         @Override
                         public boolean each(int position, KV<String, String> kv) {
-                            String className = Void.class.getCanonicalName();
+                            String methodName = "";
                             if (position < count) {
-                                className = classes.get(position);
+                                methodName = methodNames[position];
                             }
-                            if (ClassTool.isVoid(className)) {
+
+                            if (StringTool.isBlank(methodName)) {
                                 params1.add(kv);
                                 useParams.add("", kv.v);
                             } else {
-                                useParams.add("", "new " + className + "().path()");
+                                useParams.add("", "configs." + methodName + "()");
                             }
-
                             return false;
                         }
                     });
-
-                    obtains(position, javaInfo.name, methodName, params1.getMethodParams(), useParams.getParams());
-
+                    obtains(position, javaInfo.name, methodName, params1.getMethodParams(), obtainInfo.configName, useParams.getParams());
                     return false;
                 }
             });
@@ -299,6 +329,7 @@ public class [[name]] extends [[basePath]] {
                                                                                                     [<sub>][if][obtain]
                                                                                                     [<sub>][for][obtains]
     public static [className] [methodName]([params]) {
+        [configs] configs = new [configs]();
         return obtain([useParams]);
     }
                                                                                                     [<sub>][for][obtains]

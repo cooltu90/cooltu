@@ -10,7 +10,8 @@ public class DocumentPath extends com.codingtu.cooltu.lib4a.path.BasePath {
 
 
     public static DocumentPath obtain(String className) {
-        return obtain(new com.codingtu.cooltu.path.defaultvalue.GradeDefault().path(), className);
+        com.codingtu.cooltu.path.DocumentPathConfigs configs = new com.codingtu.cooltu.path.DocumentPathConfigs();
+        return obtain(configs.gradePath(), className);
     }
 
     public static DocumentPath obtain(String grade, String className) {

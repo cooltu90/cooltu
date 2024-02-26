@@ -44,13 +44,18 @@ public class WelcomeActivity extends WelcomeActivityBase {
                 .get(0)
                 .json_txt;
 
-Score sorce = DocumentPath
-        .obtain("一年级", "二班")
-        .students
-        .student("小")
-        .scores
-        .score_txt("成绩")
-        .bean();
+        Score sorce = DocumentPath
+                .obtain("一年级", "二班")
+                .students
+                .student("小")
+                .scores
+                .score_txt("成绩")
+                .bean();
+
+        BaseTs<DocumentStudentsStudentPath> ts =
+                DocumentPath.obtain("xxx")
+                        .students
+                        .studentList("小");
 
     }
 
