@@ -1,6 +1,14 @@
 package com.codingtu.cooltu.lib4j.tools;
 
+import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.processor.annotation.bean.ConvertItem;
+import com.codingtu.cooltu.processor.annotation.bean.ConvertTo;
+
 import java.io.File;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.HashMap;
 
 public class ConvertTool {
     /**************************************************
@@ -147,6 +155,82 @@ public class ConvertTool {
             sb.append(c);
         }
         return sb.toString();
+    }
+
+    /**************************************************
+     *
+     * bean的转换
+     *
+     **************************************************/
+    public static <T> T convert(Object srcObj) {
+        try {
+
+            HashMap<String, Field> fieldHashMap = new HashMap<>();
+            HashMap<String, Method> methodHashMap = new HashMap<>();
+
+            Class srcClass = srcObj.getClass();
+            Ts.ts(srcClass.getFields()).ls(new Ts.EachTs<Field>() {
+                @Override
+                public boolean each(int position, Field field) {
+                    ConvertItem convertItem = field.getAnnotation(ConvertItem.class);
+                    String name = field.getName();
+                    if (convertItem != null) {
+                        name = convertItem.value();
+                    }
+                    fieldHashMap.put(name, field);
+                    return false;
+                }
+            });
+
+            Ts.ts(srcClass.getMethods()).ls(new Ts.EachTs<Method>() {
+                @Override
+                public boolean each(int position, Method method) {
+                    ConvertItem convertItem = method.getAnnotation(ConvertItem.class);
+                    String name = method.getName();
+                    if (convertItem != null) {
+                        name = convertItem.value();
+                    }
+                    methodHashMap.put(name, method);
+                    return false;
+                }
+            });
+
+            Annotation annotation = srcClass.getAnnotation(ConvertTo.class);
+            if (annotation instanceof ConvertTo) {
+                ConvertTo convertTo = (ConvertTo) annotation;
+                Class targetClass = convertTo.value();
+                Object targetObj = targetClass.newInstance();
+                Field[] fields = targetClass.getFields();
+                Ts.ts(fields).ls(new Ts.EachTs<Field>() {
+                    @Override
+                    public boolean each(int position, Field field) {
+                        String name = field.getName();
+                        Method method = methodHashMap.get(name);
+                        if (method != null) {
+                            try {
+                                field.set(targetObj, method.invoke(srcObj));
+                            } catch (Exception e) {
+
+                            }
+                        } else {
+                            Field srcField = fieldHashMap.get(name);
+                            if (srcField != null) {
+                                try {
+                                    field.set(targetObj, srcField.get(srcObj));
+                                } catch (IllegalAccessException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        return false;
+                    }
+                });
+                return (T) targetObj;
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
     }
 
 }
