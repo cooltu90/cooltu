@@ -102,6 +102,7 @@ public class ActBaseDeal extends TypeBaseDeal {
         });
 
         baseBuilder.form = te.getAnnotation(Form.class);
+        baseBuilder.formConfigs = te.getAnnotation(com.codingtu.cooltu.processor.annotation.form1.Form.class);
     }
 
     private void dealLongClickView(UiBaseBuilder uiBaseBuilder, LongClickView clickView, ExecutableElement ee) {

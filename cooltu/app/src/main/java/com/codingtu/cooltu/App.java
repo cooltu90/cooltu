@@ -27,8 +27,8 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
 @DefaultMenuDialogLayout(layout = R.layout.dialog_menu, item = R.layout.dialog_menu_item)
 @DefaultCode("CODE_TEST")
 @CreateAct(
-        name = "steps_one",
-        packages = "com.codingtu.cooltu.ui.step",
+        name = "form_new",
+        packages = "com.codingtu.cooltu.ui",
         baseClass = BaseActivity.class,
         layoutTemp = R.layout.layout_temp
 )

@@ -2,7 +2,6 @@ package com.codingtu.cooltu.bean;
 
 import android.graphics.Color;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.codingtu.cooltu.R;
@@ -20,9 +19,14 @@ import com.codingtu.cooltu.processor.annotation.form.bind.BindSeekBar;
 import com.codingtu.cooltu.processor.annotation.form.check.Check;
 import com.codingtu.cooltu.processor.annotation.form.check.CheckMethod;
 import com.codingtu.cooltu.processor.annotation.form.check.CheckType;
+import com.codingtu.cooltu.processor.annotation.form.echo.EchoType;
 import com.codingtu.cooltu.processor.annotation.form.link.LinkMethod;
 import com.codingtu.cooltu.processor.annotation.form.FormBean;
 import com.codingtu.cooltu.processor.annotation.form.link.LinkView;
+import com.codingtu.cooltu.processor.annotation.form.parse.Parse;
+import com.codingtu.cooltu.processor.annotation.form.parse.ParseType;
+import com.codingtu.cooltu.processor.annotation.form.parse.ToBeanMethod;
+import com.codingtu.cooltu.processor.annotation.form.parse.ToViewMethod;
 
 @FormBean
 public class Photo extends CoreBean {
@@ -45,7 +49,18 @@ public class Photo extends CoreBean {
 
     @BindEditText(R.id.classEt)
     @Check(prompt = "请输入班级名")
+    @Parse(ParseType.METHOD)
     public String className;
+
+    @ToViewMethod(R.id.classEt)
+    public String classNameToView() {
+        return "班级：" + className;
+    }
+
+    @ToBeanMethod(R.id.classEt)
+    public void viewToClassName(String viewStr) {
+        className = viewStr.substring(3);
+    }
 
     @BindRadioGroup(id = R.id.classLl, onSetItem = TypeOnSetItem.class)
     @Check(prompt = "请选择班级类型")

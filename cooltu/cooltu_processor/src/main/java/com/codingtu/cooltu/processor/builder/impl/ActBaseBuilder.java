@@ -6,6 +6,7 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
+import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
@@ -28,6 +29,7 @@ import com.codingtu.cooltu.processor.annotation.form.echo.EchoMethod;
 import com.codingtu.cooltu.processor.annotation.form.echo.EchoType;
 import com.codingtu.cooltu.processor.annotation.form.link.LinkMethod;
 import com.codingtu.cooltu.processor.annotation.form.link.LinkView;
+import com.codingtu.cooltu.processor.annotation.form1.FormConfig;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
@@ -35,6 +37,7 @@ import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.core.UiBaseInterface;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.FormBeanDeal;
+import com.codingtu.cooltu.processor.deal.FormConfigDeal;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
@@ -67,6 +70,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     public List<Permission> permissions = new ArrayList<>();
     public List<ExecutableElement> permissionMethods = new ArrayList<>();
     public Form form;
+    public com.codingtu.cooltu.processor.annotation.form1.Form formConfigs;
     private Map<String, LayoutTools.ViewInfo> parentViewMap;
     private StringBuilder otherLineSb = new StringBuilder();
 
@@ -168,6 +172,72 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         });
 
         isOnCreateCompleteInit(!uiBaseBuilder.hasChild());
+
+        if (formConfigs != null) {
+            String formConfigClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                @Override
+                public Object get() {
+                    return formConfigs.value();
+                }
+            });
+            TypeElement formConfigTe = FormConfigDeal.MAP.get(formConfigClass);
+
+            FormConfig formConfig = formConfigTe.getAnnotation(FormConfig.class);
+            String formBeanClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                @Override
+                public Object get() {
+                    return formConfig.bean();
+                }
+            });
+
+            String formBeanSimpleName = CurrentPath.javaInfo(formBeanClass).name;
+            String name = formConfig.name();
+            if (StringTool.isBlank(name)) {
+                name = ConvertTool.toMethodType(formBeanSimpleName);
+            }
+            String beanName = name;
+
+            ElementTools.ls(formConfigTe.getEnclosedElements(), new Ts.EachTs<Element>() {
+                @Override
+                public boolean each(int position, Element element) {
+                    return false;
+                }
+            });
+
+            addField(Constant.SIGN_PROTECTED, formBeanClass, beanName);
+            addField(Constant.SIGN_PROTECTED, "boolean", "initFormBean");
+            addField(Constant.SIGN_PUBLIC, "BindHandler", "bindHandler");
+            useFormInitIf("        initFormView();");
+            addLnTag(otherLineSb, "    private void initFormView() {");
+            addLnTag(otherLineSb, "        beforInitFormView();");
+            addLnTag(otherLineSb, "        if ([form] == null) {", beanName);
+            addLnTag(otherLineSb, "            [form] = new [beanClass]();", beanName, formBeanClass);
+            addLnTag(otherLineSb, "            initFormBean = true;");
+            addLnTag(otherLineSb, "        }");
+            addLnTag(otherLineSb, "        bindHandler = new BindHandler([forms]);", beanName);
+
+
+            addLnTag(otherLineSb, "        if (!initFormBean) {");
+            addLnTag(otherLineSb, "        }");
+            addLnTag(otherLineSb, "    }");
+            addLnTag(otherLineSb, "    protected void beforInitFormView() {}");
+            addLnTag(otherLineSb, "");
+            addLnTag(otherLineSb, "    public static class BindHandler extends android.os.Handler {");
+            addLnTag(otherLineSb, "        private [FormObj2] [form];", formBeanClass, beanName);
+            addLnTag(otherLineSb, "        public BindHandler([FormObj2] [form]) {", formBeanClass, beanName);
+            addLnTag(otherLineSb, "            this.[form] = [form];", beanName, beanName);
+            addLnTag(otherLineSb, "        }");
+            addLnTag(otherLineSb, "        @Override");
+            addLnTag(otherLineSb, "        public void handleMessage(android.os.Message msg) {");
+            addLnTag(otherLineSb, "            super.handleMessage(msg);");
+            addLnTag(otherLineSb, "            switch (msg.what){");
+            addLnTag(otherLineSb, "            }");
+            addLnTag(otherLineSb, "        }");
+            addLnTag(otherLineSb, "    }");
+
+
+        }
+
 
         if (form != null) {
             String formBeanClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {

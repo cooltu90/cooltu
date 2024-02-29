@@ -5,16 +5,18 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-public class HandlerTextWatcher implements TextWatcher {
+import com.codingtu.cooltu.lib4j.destory.Destroys;
+import com.codingtu.cooltu.lib4j.destory.OnDestroy;
+
+public class HandlerTextWatcher implements TextWatcher, OnDestroy {
 
     private Handler handler;
-    private int type;
-    private int index;
+    private int id;
 
-    public HandlerTextWatcher(Handler handler, int type, int index) {
+    public HandlerTextWatcher(Destroys destroys, Handler handler, int id) {
+        destroys.add(this);
         this.handler = handler;
-        this.type = type;
-        this.index = index;
+        this.id = id;
     }
 
     @Override
@@ -24,15 +26,19 @@ public class HandlerTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        Message message = Message.obtain();
-        message.obj = s.toString();
-        message.what = type;
-        message.arg1 = index;
-        handler.sendMessage(message);
+        Message msg = Message.obtain();
+        msg.what = id;
+        msg.obj = s.toString();
+        handler.sendMessage(msg);
     }
 
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    @Override
+    public void destroy() {
+        handler = null;
     }
 }
