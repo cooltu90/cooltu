@@ -33,10 +33,20 @@ public class CoreTs<T, THIS> {
         return CountTool.count(ts);
     }
 
+    public boolean isNull() {
+        return count() <= 0;
+    }
 
     public THIS set(int index, T t) {
         this.ts.set(index, t);
         return (THIS) this;
+    }
+
+    public T getLast() {
+        if (count() <= 0) {
+            return null;
+        }
+        return get(count() - 1);
     }
 
     /**************************************************
