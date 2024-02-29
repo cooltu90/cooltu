@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import javax.lang.model.element.TypeElement;
 
-public class FormConfigDeal extends TypeBaseDeal {
+public class BindConfigDeal extends TypeBaseDeal {
     public static final HashMap<String, TypeElement> MAP = new HashMap<>();
 
     @Override

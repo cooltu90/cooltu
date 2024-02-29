@@ -15,6 +15,8 @@ import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Maps;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.BuilderType;
+import com.codingtu.cooltu.processor.annotation.bind.BindBean;
+import com.codingtu.cooltu.processor.annotation.bind.BindConfig;
 import com.codingtu.cooltu.processor.annotation.form.Form;
 import com.codingtu.cooltu.processor.annotation.form.FormBean;
 import com.codingtu.cooltu.processor.annotation.form.bind.BindEditText;
@@ -29,15 +31,15 @@ import com.codingtu.cooltu.processor.annotation.form.echo.EchoMethod;
 import com.codingtu.cooltu.processor.annotation.form.echo.EchoType;
 import com.codingtu.cooltu.processor.annotation.form.link.LinkMethod;
 import com.codingtu.cooltu.processor.annotation.form.link.LinkView;
-import com.codingtu.cooltu.processor.annotation.form1.FormConfig;
+import com.codingtu.cooltu.processor.annotation.bind.Bind;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.core.UiBaseInterface;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
+import com.codingtu.cooltu.processor.deal.BindConfigDeal;
 import com.codingtu.cooltu.processor.deal.FormBeanDeal;
-import com.codingtu.cooltu.processor.deal.FormConfigDeal;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
@@ -70,9 +72,10 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     public List<Permission> permissions = new ArrayList<>();
     public List<ExecutableElement> permissionMethods = new ArrayList<>();
     public Form form;
-    public com.codingtu.cooltu.processor.annotation.form1.Form formConfigs;
+    public Bind bind;
     private Map<String, LayoutTools.ViewInfo> parentViewMap;
     private StringBuilder otherLineSb = new StringBuilder();
+    private StringBuilder initBindViewSb = new StringBuilder();
 
     public ActBaseBuilder(JavaInfo info) {
         super(info);
@@ -173,69 +176,30 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
         isOnCreateCompleteInit(!uiBaseBuilder.hasChild());
 
-        if (formConfigs != null) {
-            String formConfigClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+        if (bind != null) {
+            useFormInitIf("        initBindView();");
+
+
+            List<String> bindConfigClassNames = ClassTool.getAnnotationClasses(new ClassTool.AnnotationClassGetter() {
                 @Override
                 public Object get() {
-                    return formConfigs.value();
+                    return bind.value();
                 }
             });
-            TypeElement formConfigTe = FormConfigDeal.MAP.get(formConfigClass);
-
-            FormConfig formConfig = formConfigTe.getAnnotation(FormConfig.class);
-            String formBeanClass = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+            Ts.ts(bindConfigClassNames).ls(new Ts.EachTs<String>() {
                 @Override
-                public Object get() {
-                    return formConfig.bean();
-                }
-            });
-
-            String formBeanSimpleName = CurrentPath.javaInfo(formBeanClass).name;
-            String name = formConfig.name();
-            if (StringTool.isBlank(name)) {
-                name = ConvertTool.toMethodType(formBeanSimpleName);
-            }
-            String beanName = name;
-
-            ElementTools.ls(formConfigTe.getEnclosedElements(), new Ts.EachTs<Element>() {
-                @Override
-                public boolean each(int position, Element element) {
+                public boolean each(int position, String bindConfigClassName) {
+                    dealBind(bindConfigClassName);
                     return false;
                 }
             });
 
-            addField(Constant.SIGN_PROTECTED, formBeanClass, beanName);
-            addField(Constant.SIGN_PROTECTED, "boolean", "initFormBean");
-            addField(Constant.SIGN_PUBLIC, "BindHandler", "bindHandler");
-            useFormInitIf("        initFormView();");
-            addLnTag(otherLineSb, "    private void initFormView() {");
-            addLnTag(otherLineSb, "        beforInitFormView();");
-            addLnTag(otherLineSb, "        if ([form] == null) {", beanName);
-            addLnTag(otherLineSb, "            [form] = new [beanClass]();", beanName, formBeanClass);
-            addLnTag(otherLineSb, "            initFormBean = true;");
-            addLnTag(otherLineSb, "        }");
-            addLnTag(otherLineSb, "        bindHandler = new BindHandler([forms]);", beanName);
-
-
-            addLnTag(otherLineSb, "        if (!initFormBean) {");
-            addLnTag(otherLineSb, "        }");
+            addLnTag(otherLineSb, "    protected void initBindView() {");
+            addLnTag(otherLineSb, "        beforeInitBindView();");
+            addLnTag(otherLineSb, initBindViewSb.toString());
             addLnTag(otherLineSb, "    }");
-            addLnTag(otherLineSb, "    protected void beforInitFormView() {}");
             addLnTag(otherLineSb, "");
-            addLnTag(otherLineSb, "    public static class BindHandler extends android.os.Handler {");
-            addLnTag(otherLineSb, "        private [FormObj2] [form];", formBeanClass, beanName);
-            addLnTag(otherLineSb, "        public BindHandler([FormObj2] [form]) {", formBeanClass, beanName);
-            addLnTag(otherLineSb, "            this.[form] = [form];", beanName, beanName);
-            addLnTag(otherLineSb, "        }");
-            addLnTag(otherLineSb, "        @Override");
-            addLnTag(otherLineSb, "        public void handleMessage(android.os.Message msg) {");
-            addLnTag(otherLineSb, "            super.handleMessage(msg);");
-            addLnTag(otherLineSb, "            switch (msg.what){");
-            addLnTag(otherLineSb, "            }");
-            addLnTag(otherLineSb, "        }");
-            addLnTag(otherLineSb, "    }");
-
-
+            addLnTag(otherLineSb, "    protected void beforeInitBindView() {}");
         }
 
 
@@ -651,6 +615,45 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
 
         otherIf(otherLineSb.toString());
+    }
+
+    private void dealBind(String bindConfigClassName) {
+
+        TypeElement bindConfigTe = BindConfigDeal.MAP.get(bindConfigClassName);
+        BindConfig bindConfig = bindConfigTe.getAnnotation(BindConfig.class);
+        String bindConfigSimpleName = CurrentPath.javaInfo(bindConfigClassName).name;
+
+        String name = bindConfig.value();
+        if (StringTool.isBlank(name)) {
+            name = StringTool.cutSuffix(ConvertTool.toMethodType(bindConfigSimpleName), "BindConfig");
+        }
+        //    protected InfoBindConfig info;
+        String bindName = name;
+        String initName = "init" + ConvertTool.toClassType(bindName);
+        addField(Constant.SIGN_PROTECTED, bindConfigClassName, bindName);
+        addField(Constant.SIGN_PROTECTED, "boolean", initName);
+
+        addLnTag(initBindViewSb, "        if ([name] == null) {", bindName);
+        addLnTag(initBindViewSb, "            [name] = new [bindConfigClassName]();", bindName, bindConfigClassName);
+        addLnTag(initBindViewSb, "            [initInfo] = true;",initName);
+        addLnTag(initBindViewSb, "        }");
+
+
+        ElementTools.ls(bindConfigTe.getEnclosedElements(), new Ts.EachTs<Element>() {
+            @Override
+            public boolean each(int position, Element element) {
+                if (element instanceof VariableElement) {
+                    VariableElement ve = (VariableElement) element;
+                    BindBean bindBean = ve.getAnnotation(BindBean.class);
+                    if (bindBean != null) {
+
+                    }
+                }
+                return false;
+            }
+        });
+
+
     }
 
     private String getViewFieldName(IdTools.Id id) {

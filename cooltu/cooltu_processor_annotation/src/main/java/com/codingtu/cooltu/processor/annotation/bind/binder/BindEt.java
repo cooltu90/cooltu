@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.processor.annotation.form1.bind;
+package com.codingtu.cooltu.processor.annotation.bind.binder;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -1,8 +1,10 @@
 package com.codingtu.cooltu.bean;
 
-public class FormObj2 {
+public class Info {
 
 
     public String name;
+
+    public String address;
 
 }

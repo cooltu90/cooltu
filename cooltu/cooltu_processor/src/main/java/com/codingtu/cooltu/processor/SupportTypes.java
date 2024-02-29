@@ -5,7 +5,7 @@ import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
 import com.codingtu.cooltu.processor.annotation.create.CreateFragment;
 import com.codingtu.cooltu.processor.annotation.form.FormBean;
-import com.codingtu.cooltu.processor.annotation.form1.FormConfig;
+import com.codingtu.cooltu.processor.annotation.bind.BindConfig;
 import com.codingtu.cooltu.processor.annotation.net.Apis;
 import com.codingtu.cooltu.processor.annotation.path.PathFilter;
 import com.codingtu.cooltu.processor.annotation.path.Paths;
@@ -31,7 +31,7 @@ import com.codingtu.cooltu.processor.deal.DefaultMenuDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultNoticeDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultToastDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.FormBeanDeal;
-import com.codingtu.cooltu.processor.deal.FormConfigDeal;
+import com.codingtu.cooltu.processor.deal.BindConfigDeal;
 import com.codingtu.cooltu.processor.deal.FragmentBaseDeal;
 import com.codingtu.cooltu.processor.deal.ModuleInfoDeal;
 import com.codingtu.cooltu.processor.deal.NetDeal;
@@ -67,7 +67,7 @@ public class SupportTypes {
                 Apis.class, NetDeal.class,
                 CreateAct.class, CreateActDeal.class,
                 FormBean.class, FormBeanDeal.class,
-                FormConfig.class, FormConfigDeal.class,
+                BindConfig.class, BindConfigDeal.class,
                 CreateAdapter.class, CreateAdapterDeal.class,
                 CreateFragment.class, CreateFragmentDeal.class
         };
