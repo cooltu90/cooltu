@@ -614,4 +614,8 @@ public class CoreTs<T, THIS> {
     }
 
 
+    public THIS clear() {
+        this.ts.clear();
+        return (THIS) this;
+    }
 }

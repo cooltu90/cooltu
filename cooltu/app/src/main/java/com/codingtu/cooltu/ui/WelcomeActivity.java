@@ -19,6 +19,7 @@ import core.actbase.WelcomeActivityBase;
 import core.actres.WelcomeActivityRes;
 import core.path.DocumentPath;
 import core.path.DocumentStudentsStudentPath;
+import core.tools.ActStart;
 
 @To(WelcomeActivityRes.class)
 @ToRes(R.layout.activity_welcome)
@@ -29,34 +30,7 @@ public class WelcomeActivity extends WelcomeActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //ActStart.addPhotoActivity(getAct());
-        DocumentPath docPath = DocumentPath.obtain("一年级", "二班");
-
-
-        BaseTs<DocumentStudentsStudentPath> studentTs =
-                DocumentPath.obtain("一年级", "二班")
-                        .students
-                        .studentList("小");
-
-        PathBeanFile<User> json_txt = DocumentPath.obtain("一年级", "二班")
-                .students
-                .studentList("小")
-                .get(0)
-                .json_txt;
-
-        Score sorce = DocumentPath
-                .obtain("一年级", "二班")
-                .students
-                .student("小")
-                .scores
-                .score_txt("成绩")
-                .bean();
-
-        BaseTs<DocumentStudentsStudentPath> ts =
-                DocumentPath.obtain("xxx")
-                        .students
-                        .studentList("小");
-
+        ActStart.addPhotoActivity(getAct());
     }
 
     @ActBack(StepOneActivity.class)

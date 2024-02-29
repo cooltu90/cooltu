@@ -158,6 +158,10 @@ public class Ts {
         boolean each(int position, T t);
     }
 
+    public interface EachGetter<T> {
+        T get(int index);
+    }
+
     public interface Convert<S, T> {
         T convert(int index, S s);
     }
@@ -178,5 +182,27 @@ public class Ts {
         public boolean each(K k, V v);
     }
 
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+
+    public static int index(Object target, Object... objs) {
+        return ts(objs).index(new Ts.IsThisOne<Object>() {
+            @Override
+            public boolean isThisOne(int position, Object o) {
+                return o.equals(target);
+            }
+        });
+    }
+
+    public static <T> BaseTs<T> get(int count, EachGetter<T> getter) {
+        BaseTs<T> ts = new BaseTs<>();
+        for (int i = 0; i < count; i++) {
+            ts.add(getter.get(i));
+        }
+        return ts;
+    }
 
 }
