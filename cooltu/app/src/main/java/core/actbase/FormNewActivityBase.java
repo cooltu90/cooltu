@@ -17,10 +17,10 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected android.widget.EditText cityEt;
     protected android.widget.EditText areaEt;
     protected android.widget.EditText provinceEt;
-    protected com.codingtu.cooltu.bind.InfoBindConfig info;
-    protected Info obj;
+    protected com.codingtu.cooltu.bind.InfoBindConfig infoBindConfig;
+    protected Info info;
     protected boolean initInfo;
-    protected com.codingtu.cooltu.bind.FormBindConfig form;
+    protected com.codingtu.cooltu.bind.FormBindConfig formBindConfig;
     protected boolean initForm;
 
 
@@ -94,14 +94,6 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
     protected void initBindView() {
         beforeInitBindView();
-        if (info == null) {
-            info = new com.codingtu.cooltu.bind.InfoBindConfig();
-            initInfo = true;
-        }
-        if (form == null) {
-            form = new com.codingtu.cooltu.bind.FormBindConfig();
-            initForm = true;
-        }
 
     }
 

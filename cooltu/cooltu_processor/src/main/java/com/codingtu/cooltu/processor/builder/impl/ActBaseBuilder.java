@@ -619,39 +619,39 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
     private void dealBind(String bindConfigClassName) {
 
-        TypeElement bindConfigTe = BindConfigDeal.MAP.get(bindConfigClassName);
-        BindConfig bindConfig = bindConfigTe.getAnnotation(BindConfig.class);
-        String bindConfigSimpleName = CurrentPath.javaInfo(bindConfigClassName).name;
-
-        String name = bindConfig.value();
-        if (StringTool.isBlank(name)) {
-            name = StringTool.cutSuffix(ConvertTool.toMethodType(bindConfigSimpleName), "BindConfig");
-        }
-        //    protected InfoBindConfig info;
-        String bindName = name;
-        String initName = "init" + ConvertTool.toClassType(bindName);
-        addField(Constant.SIGN_PROTECTED, bindConfigClassName, bindName);
-        addField(Constant.SIGN_PROTECTED, "boolean", initName);
-
-        addLnTag(initBindViewSb, "        if ([name] == null) {", bindName);
-        addLnTag(initBindViewSb, "            [name] = new [bindConfigClassName]();", bindName, bindConfigClassName);
-        addLnTag(initBindViewSb, "            [initInfo] = true;",initName);
-        addLnTag(initBindViewSb, "        }");
-
-
-        ElementTools.ls(bindConfigTe.getEnclosedElements(), new Ts.EachTs<Element>() {
-            @Override
-            public boolean each(int position, Element element) {
-                if (element instanceof VariableElement) {
-                    VariableElement ve = (VariableElement) element;
-                    BindBean bindBean = ve.getAnnotation(BindBean.class);
-                    if (bindBean != null) {
-
-                    }
-                }
-                return false;
-            }
-        });
+//        TypeElement bindConfigTe = BindConfigDeal.MAP.get(bindConfigClassName);
+//        BindConfig bindConfig = bindConfigTe.getAnnotation(BindConfig.class);
+//        String bindConfigSimpleName = CurrentPath.javaInfo(bindConfigClassName).name;
+//
+//        String name = bindConfig.value();
+//        if (StringTool.isBlank(name)) {
+//            name = StringTool.cutSuffix(ConvertTool.toMethodType(bindConfigSimpleName), "BindConfig");
+//        }
+//        //    protected InfoBindConfig info;
+//        String bindName = name;
+//        String initName = "init" + ConvertTool.toClassType(bindName);
+//        addField(Constant.SIGN_PROTECTED, bindConfigClassName, bindName);
+//        addField(Constant.SIGN_PROTECTED, "boolean", initName);
+//
+//        addLnTag(initBindViewSb, "        if ([name] == null) {", bindName);
+//        addLnTag(initBindViewSb, "            [name] = new [bindConfigClassName]();", bindName, bindConfigClassName);
+//        addLnTag(initBindViewSb, "            [initInfo] = true;",initName);
+//        addLnTag(initBindViewSb, "        }");
+//
+//
+//        ElementTools.ls(bindConfigTe.getEnclosedElements(), new Ts.EachTs<Element>() {
+//            @Override
+//            public boolean each(int position, Element element) {
+//                if (element instanceof VariableElement) {
+//                    VariableElement ve = (VariableElement) element;
+//                    BindBean bindBean = ve.getAnnotation(BindBean.class);
+//                    if (bindBean != null) {
+//
+//                    }
+//                }
+//                return false;
+//            }
+//        });
 
 
     }

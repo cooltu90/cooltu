@@ -5,5 +5,9 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.SOURCE)
 public @interface BindConfig {
-    String value() default "";
+    String configName() default "";
+
+    Class value() default Void.class;
+
+    String bindBeanName() default "";
 }
