@@ -18,6 +18,12 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/idEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="请输入Id" />
+
+                <EditText
                     android:id="@+id/nameEt"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -28,6 +34,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:hint="请输入别名" />
+
+                <EditText
+                    android:id="@+id/ageEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="请输入年龄" />
 
                 <EditText
                     android:id="@+id/provinceEt"

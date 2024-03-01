@@ -2,7 +2,7 @@ package core.actbase;
 
 import android.view.View;
 
-import com.codingtu.cooltu.bean.Info;
+import com.codingtu.cooltu.lib4a.tools.ViewTool;
 
 import java.util.List;
 
@@ -16,12 +16,17 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected android.widget.EditText nameEt;
     protected android.widget.EditText cityEt;
     protected android.widget.EditText areaEt;
+    protected android.widget.EditText ageEt;
     protected android.widget.EditText provinceEt;
+    protected android.widget.EditText idEt;
+    protected com.codingtu.cooltu.bean.Info info;
     protected com.codingtu.cooltu.bind.InfoBindConfig infoBindConfig;
-    protected Info info;
     protected boolean initInfo;
+    protected InfoBindHandler infoBindHandler;
+    protected com.codingtu.cooltu.bean.Form form;
     protected com.codingtu.cooltu.bind.FormBindConfig formBindConfig;
     protected boolean initForm;
+    protected FormBindHandler formBindHandler;
 
 
     @Override
@@ -35,7 +40,9 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         nameEt = findViewById(com.codingtu.cooltu.R.id.nameEt);
         cityEt = findViewById(com.codingtu.cooltu.R.id.cityEt);
         areaEt = findViewById(com.codingtu.cooltu.R.id.areaEt);
+        ageEt = findViewById(com.codingtu.cooltu.R.id.ageEt);
         provinceEt = findViewById(com.codingtu.cooltu.R.id.provinceEt);
+        idEt = findViewById(com.codingtu.cooltu.R.id.idEt);
 
 
         initBindView();
@@ -94,10 +101,80 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
     protected void initBindView() {
         beforeInitBindView();
+        if (info == null) {
+            info = new com.codingtu.cooltu.bean.Info();
+            infoBindConfig = new com.codingtu.cooltu.bind.InfoBindConfig();
+            initInfo = true;
+        }
+        infoBindHandler = new InfoBindHandler(info, infoBindConfig);
+        com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, idEt, infoBindHandler);
+        com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, nameEt, infoBindHandler);
+        com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, nicknameEt, infoBindHandler);
+        com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, provinceEt, infoBindHandler);
+        com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, cityEt, infoBindHandler);
+        com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, areaEt, infoBindHandler);
+        infoBindConfig.bindAgeEt(this, ageEt, infoBindHandler);
+        if (!initInfo) {
+            infoBindConfig.idEcho(info.id, idEt);
+            ViewTool.setEditTextAndSelection(nameEt, info.name);
+            ViewTool.setEditTextAndSelection(nicknameEt, info.nickname);
+            infoBindConfig.ageEcho(info.age, ageEt);
+            infoBindConfig.addressEcho(info.address, provinceEt, cityEt, areaEt);
+        }
+        if (form == null) {
+            form = new com.codingtu.cooltu.bean.Form();
+            formBindConfig = new com.codingtu.cooltu.bind.FormBindConfig();
+            initForm = true;
+        }
+        formBindHandler = new FormBindHandler(form, formBindConfig);
+        if (!initForm) {
+        }
 
     }
 
     protected void beforeInitBindView() {
+    }
+
+    public static class InfoBindHandler extends android.os.Handler {
+        private com.codingtu.cooltu.bean.Info info;
+        private com.codingtu.cooltu.bind.InfoBindConfig infoBindConfig;
+        private com.codingtu.cooltu.lib4j.data.map.ListValueMap<Integer, Object> linkMap = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+
+        public InfoBindHandler(com.codingtu.cooltu.bean.Info info, com.codingtu.cooltu.bind.InfoBindConfig infoBindConfig) {
+            this.info = info;
+            this.infoBindConfig = infoBindConfig;
+        }
+
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+
+            }
+        }
+    }
+
+    public static class FormBindHandler extends android.os.Handler {
+        private com.codingtu.cooltu.bean.Form form;
+        private com.codingtu.cooltu.bind.FormBindConfig formBindConfig;
+        private com.codingtu.cooltu.lib4j.data.map.ListValueMap<Integer, Object> linkMap = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+
+        public FormBindHandler(com.codingtu.cooltu.bean.Form form, com.codingtu.cooltu.bind.FormBindConfig formBindConfig) {
+            this.form = form;
+            this.formBindConfig = formBindConfig;
+        }
+
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+
+            }
+        }
+    }
+
+    public void link(com.codingtu.cooltu.lib4j.data.map.ListValueMap<Integer, Object> linkMap, int handleId, Object... linkViews) {
+        linkMap.get(handleId).addAll(com.codingtu.cooltu.lib4j.ts.Ts.ts(linkViews).toList());
     }
 
 
