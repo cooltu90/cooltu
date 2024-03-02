@@ -2,14 +2,12 @@ package core.actbase;
 
 import android.view.View;
 
-import com.codingtu.cooltu.lib4a.tools.ViewTool;
-
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
+public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
     protected android.widget.TextView saveBt1;
     protected android.widget.EditText nicknameEt;
     protected android.widget.TextView saveBt2;
@@ -45,6 +43,10 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         idEt = findViewById(com.codingtu.cooltu.R.id.idEt);
 
 
+
+
+
+
         initBindView();
 
         onCreateComplete();
@@ -56,6 +58,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         super.onCreateComplete();
 
 
+
     }
 
     @Override
@@ -65,6 +68,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
         }
     }
+
 
 
     @Override
@@ -80,6 +84,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
+
 
 
     }
@@ -99,6 +104,12 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
     }
 
 
+
+
+
+
+
+
     protected void initBindView() {
         beforeInitBindView();
         if (info == null) {
@@ -110,16 +121,13 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, idEt, infoBindHandler);
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, nameEt, infoBindHandler);
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, nicknameEt, infoBindHandler);
+        infoBindConfig.bindAgeEt(this, ageEt, infoBindHandler);
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, provinceEt, infoBindHandler);
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, cityEt, infoBindHandler);
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, areaEt, infoBindHandler);
-        infoBindConfig.bindAgeEt(this, ageEt, infoBindHandler);
+
         if (!initInfo) {
-            infoBindConfig.idEcho(info.id, idEt);
-            ViewTool.setEditTextAndSelection(nameEt, info.name);
-            ViewTool.setEditTextAndSelection(nicknameEt, info.nickname);
-            infoBindConfig.ageEcho(info.age, ageEt);
-            infoBindConfig.addressEcho(info.address, provinceEt, cityEt, areaEt);
+
         }
         if (form == null) {
             form = new com.codingtu.cooltu.bean.Form();
@@ -127,14 +135,14 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             initForm = true;
         }
         formBindHandler = new FormBindHandler(form, formBindConfig);
+
         if (!initForm) {
+
         }
 
     }
 
-    protected void beforeInitBindView() {
-    }
-
+    protected void beforeInitBindView() {}
     public static class InfoBindHandler extends android.os.Handler {
         private com.codingtu.cooltu.bean.Info info;
         private com.codingtu.cooltu.bind.InfoBindConfig infoBindConfig;
@@ -144,7 +152,6 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             this.info = info;
             this.infoBindConfig = infoBindConfig;
         }
-
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
@@ -153,7 +160,6 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             }
         }
     }
-
     public static class FormBindHandler extends android.os.Handler {
         private com.codingtu.cooltu.bean.Form form;
         private com.codingtu.cooltu.bind.FormBindConfig formBindConfig;
@@ -163,7 +169,6 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             this.form = form;
             this.formBindConfig = formBindConfig;
         }
-
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
@@ -172,10 +177,10 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             }
         }
     }
-
     public void link(com.codingtu.cooltu.lib4j.data.map.ListValueMap<Integer, Object> linkMap, int handleId, Object... linkViews) {
         linkMap.get(handleId).addAll(com.codingtu.cooltu.lib4j.ts.Ts.ts(linkViews).toList());
     }
+
 
 
 }

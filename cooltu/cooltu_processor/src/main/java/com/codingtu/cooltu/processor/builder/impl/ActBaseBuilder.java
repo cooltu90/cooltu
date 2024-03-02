@@ -13,13 +13,17 @@ import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Maps;
+import com.codingtu.cooltu.lib4j.ts.StringTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.annotation.bind.BindConfig;
 import com.codingtu.cooltu.processor.annotation.bind.BindField;
 import com.codingtu.cooltu.processor.annotation.bind.BindMethod;
+import com.codingtu.cooltu.processor.annotation.bind.ViewId;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindEt;
 import com.codingtu.cooltu.processor.annotation.bind.binder.ViewBinder;
+import com.codingtu.cooltu.processor.annotation.bind.echo.EchoFunc;
+import com.codingtu.cooltu.processor.annotation.bind.echo.NoEcho;
 import com.codingtu.cooltu.processor.annotation.form.Form;
 import com.codingtu.cooltu.processor.annotation.form.FormBean;
 import com.codingtu.cooltu.processor.annotation.form.bind.BindEditText;
@@ -37,6 +41,7 @@ import com.codingtu.cooltu.processor.annotation.form.link.LinkView;
 import com.codingtu.cooltu.processor.annotation.bind.Bind;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
+import com.codingtu.cooltu.processor.bean.EchoFuncInfo;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.core.UiBaseInterface;
@@ -46,6 +51,7 @@ import com.codingtu.cooltu.processor.deal.FormBeanDeal;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
+import com.codingtu.cooltu.processor.lib.tools.BeanTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
@@ -642,38 +648,70 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             return;
         }
 
-        BaseTs<VariableElement> bindEts = Ts.ts(VariableElement.class);
-        BaseTs<VariableElement> bindFields = Ts.ts(VariableElement.class);
-        BaseTs<VariableElement> viewBinders = Ts.ts(VariableElement.class);
-        HashMap<Integer, ExecutableElement> bindMethods = new HashMap<>();
+        KV<String, String> bindBeanKv = BeanTools.getBeanKv(bindBeanClassName, bindConfig.bindBeanName());
+        KV<String, String> bindConfigKv = BeanTools.getBeanKv(bindConfigClassName, bindConfig.configName());
+        KV<String, String> initKv = new KV<>("boolean", "init" + ConvertTool.toClassType(bindBeanKv.v));
+        //BindHandler
+        String bindHandlerName = bindBeanKv.v + "BindHandler";
+        KV<String, String> handlerKv = new KV<>(ConvertTool.toClassType(bindHandlerName), bindHandlerName);
+        addField(Constant.SIGN_PROTECTED, bindBeanKv.k, bindBeanKv.v);
+        addField(Constant.SIGN_PROTECTED, bindConfigKv.k, bindConfigKv.v);
+        addField(Constant.SIGN_PROTECTED, initKv.k, initKv.v);
+        addField(Constant.SIGN_PROTECTED, handlerKv.k, handlerKv.v);
+
+        Map<String, ExecutableElement> echoMethodMap = new HashMap<>();
+        Map<Integer, ExecutableElement> bindMethodMap = new HashMap<>();
+        ElementTools.ls(bindConfigTe.getEnclosedElements(), new Ts.EachTs<Element>() {
+            @Override
+            public boolean each(int position, Element element) {
+                if (element instanceof ExecutableElement) {
+                    ExecutableElement ee = (ExecutableElement) element;
+                    BindMethod bindMethod = ee.getAnnotation(BindMethod.class);
+                    if (bindMethod != null) {
+                        bindMethodMap.put(bindMethod.value(), ee);
+                        return false;
+                    }
+
+                    EchoFunc echoFunc = ee.getAnnotation(EchoFunc.class);
+                    if (echoFunc != null) {
+                        echoMethodMap.put(echoFunc.value(), ee);
+                        return false;
+                    }
+                }
+                return false;
+            }
+        });
+
+        StringBuilder bindSb = new StringBuilder();
+        StringBuilder echoSb = new StringBuilder();
         ElementTools.ls(bindConfigTe.getEnclosedElements(), new Ts.EachTs<Element>() {
             @Override
             public boolean each(int position, Element element) {
                 if (element instanceof VariableElement) {
                     VariableElement ve = (VariableElement) element;
-
                     BindField bindField = ve.getAnnotation(BindField.class);
-                    if (bindField != null) {
-                        bindFields.add(ve);
+                    NoEcho noEcho = ve.getAnnotation(NoEcho.class);
+                    KV<String, String> fieldOriKv = null;
+                    KV<String, String> fieldKv = null;
+                    if (bindField != null && noEcho == null) {
+                        fieldOriKv = ElementTools.getFieldKv(ve);
+                        fieldKv = BeanTools.getBeanKv(ve, bindField.value());
                     }
 
                     BindEt bindEt = ve.getAnnotation(BindEt.class);
                     if (bindEt != null) {
-                        bindEts.add(ve);
+                        IdTools.Id id = IdTools.elementToId(ve, BindEt.class, bindEt.value());
+                        String viewFieldName = getViewFieldName(id);
+                        addLnTag(bindSb, "        [BindTool].bindEt(this, [nameEt], [infoBindHandler]);", FullName.BIND_TOOL, viewFieldName, handlerKv.v);
                         return false;
                     }
                     ViewBinder viewBinder = ve.getAnnotation(ViewBinder.class);
                     if (viewBinder != null) {
-                        viewBinders.add(ve);
-                        return false;
-                    }
-                }
-
-                if (element instanceof ExecutableElement) {
-                    ExecutableElement ee = (ExecutableElement) element;
-                    BindMethod bindMethod = ee.getAnnotation(BindMethod.class);
-                    if (bindMethod != null) {
-                        bindMethods.put(bindMethod.value(), ee);
+                        ExecutableElement ee = bindMethodMap.get(viewBinder.value());
+                        String bindMethodName = ElementTools.simpleName(ee);
+                        IdTools.Id id = IdTools.elementToId(ve, ViewBinder.class, viewBinder.value());
+                        String viewFieldName = getViewFieldName(id);
+                        addLnTag(bindSb, "        [infoBindConfig].[bindAgeEt](this, [ageEt], [infoBindHandler]);", bindConfigKv.v, bindMethodName, viewFieldName, handlerKv.v);
                         return false;
                     }
                 }
@@ -682,48 +720,31 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         });
 
 
-        String bindBeanName = bindConfig.bindBeanName();
-        String bindBeanSimpleName = CurrentPath.javaInfo(bindBeanClassName).name;
-        if (StringTool.isBlank(bindBeanName)) {
-            bindBeanName = ConvertTool.toMethodType(bindBeanSimpleName);
-        }
-        addField(Constant.SIGN_PROTECTED, bindBeanClassName, bindBeanName);
-
-        String bindConfigSimpleName = CurrentPath.javaInfo(bindConfigClassName).name;
-        String bindConfigName = StringTool.isBlank(bindConfig.configName()) ?
-                ConvertTool.toMethodType(bindConfigSimpleName) : bindConfig.configName();
-
-        addField(Constant.SIGN_PROTECTED, bindConfigClassName, bindConfigName);
-        String initName = "init" + ConvertTool.toClassType(bindBeanName);
-        addField(Constant.SIGN_PROTECTED, "boolean", initName);
-
-        addLnTag(initBindViewSb, "        if ([info] == null) {", bindBeanName);
-        addLnTag(initBindViewSb, "            [info] = new [Info]();", bindBeanName, bindBeanClassName);
-        addLnTag(initBindViewSb, "            [infoBindConfig] = new [InfoBindConfig]();", bindConfigName, bindConfigClassName);
-        addLnTag(initBindViewSb, "            [initName] = true;", initName);
+        addLnTag(initBindViewSb, "        if ([info] == null) {", bindBeanKv.v);
+        addLnTag(initBindViewSb, "            [info] = new [Info]();", bindBeanKv.v, bindBeanKv.k);
+        addLnTag(initBindViewSb, "            [infoBindConfig] = new [InfoBindConfig]();", bindConfigKv.v, bindConfigKv.k);
+        addLnTag(initBindViewSb, "            [initName] = true;", initKv.v);
         addLnTag(initBindViewSb, "        }");
-
-        //BindHandler
-        String bindHandlerName = bindBeanName + "BindHandler";
-        LibLogs.i("bindHandlerName:" + bindHandlerName);
-        String bindHandlerClassName = ConvertTool.toClassType(bindHandlerName);
-        LibLogs.i("bindHandlerClassName:" + bindHandlerClassName);
-
-        addField(Constant.SIGN_PROTECTED, bindHandlerClassName, bindHandlerName);
-
+        addLnTag(initBindViewSb, "        [infoBindHandler] = new [InfoBindHandler]([info], [infoBindConfig]);",
+                handlerKv.v, handlerKv.k, bindBeanKv.v, bindConfigKv.v);
+        //绑定事件
+        addLnTag(initBindViewSb, bindSb.toString());
+        addLnTag(initBindViewSb, "        if (![initInfo]) {", initKv.v);
+        //回显事件
+        addLnTag(initBindViewSb, echoSb.toString());
+        addLnTag(initBindViewSb, "        }");
         //bindHandlerSb
-        addLnTag(bindHandlerSb, "    public static class [InfoBindHandler] extends android.os.Handler {", bindHandlerClassName);
-        addLnTag(bindHandlerSb, "        private [Info] [info];", bindBeanClassName, bindBeanName);
-        addLnTag(bindHandlerSb, "        private [InfoBindConfig] [infoBindConfig];", bindConfigClassName, bindConfigName);
+        addLnTag(bindHandlerSb, "    public static class [InfoBindHandler] extends android.os.Handler {", handlerKv.k);
+        addLnTag(bindHandlerSb, "        private [Info] [info];", bindBeanKv.k, bindBeanKv.v);
+        addLnTag(bindHandlerSb, "        private [InfoBindConfig] [infoBindConfig];", bindConfigKv.k, bindConfigKv.v);
         addLnTag(bindHandlerSb, "        private [ListValueMap]<Integer, Object> linkMap = new [ListValueMap]<>();",
                 FullName.LIST_VALUE_MAP, FullName.LIST_VALUE_MAP);
         addLnTag(bindHandlerSb, "");
         addLnTag(bindHandlerSb, "        public [InfoBindHandler]([Info] [info], [InfoBindConfig] [infoBindConfig]) {",
-                bindHandlerClassName, bindBeanClassName, bindBeanName, bindConfigClassName, bindConfigName);
-        addLnTag(bindHandlerSb, "            this.[info] = [info];", bindBeanName, bindBeanName);
-        addLnTag(bindHandlerSb, "            this.[infoBindConfig] = [infoBindConfig];", bindConfigName, bindConfigName);
+                handlerKv.k, bindBeanKv.k, bindBeanKv.v, bindConfigKv.k, bindConfigKv.v);
+        addLnTag(bindHandlerSb, "            this.[info] = [info];", bindBeanKv.v, bindBeanKv.v);
+        addLnTag(bindHandlerSb, "            this.[infoBindConfig] = [infoBindConfig];", bindConfigKv.v, bindConfigKv.v);
         addLnTag(bindHandlerSb, "        }");
-
         addLnTag(bindHandlerSb, "        @Override");
         addLnTag(bindHandlerSb, "        public void handleMessage(android.os.Message msg) {");
         addLnTag(bindHandlerSb, "            super.handleMessage(msg);");
@@ -731,50 +752,15 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addLnTag(bindHandlerSb, "");
         addLnTag(bindHandlerSb, "            }");
         addLnTag(bindHandlerSb, "        }");
-
         addLnTag(bindHandlerSb, "    }");
 
-        addLnTag(initBindViewSb, "        [infoBindHandler] = new [InfoBindHandler]([info], [infoBindConfig]);",
-                bindHandlerName, bindHandlerClassName, bindBeanName, bindConfigName);
 
-        bindEts.ls(new Ts.EachTs<VariableElement>() {
-            @Override
-            public boolean each(int position, VariableElement ve) {
-                BindEt bindEt = ve.getAnnotation(BindEt.class);
-                IdTools.Id id = IdTools.elementToId(ve, BindEt.class, bindEt.value());
-                addLnTag(initBindViewSb, "        [BindTool].bindEt(this, [idEt], [infoBindHandler]);",
-                        FullName.BIND_TOOL, getViewFieldName(id), bindHandlerName);
-                return false;
-            }
-        });
+    }
 
-        viewBinders.ls(new Ts.EachTs<VariableElement>() {
-            @Override
-            public boolean each(int position, VariableElement ve) {
-                ViewBinder viewBinder = ve.getAnnotation(ViewBinder.class);
-                IdTools.Id id = IdTools.elementToId(ve, ViewBinder.class, viewBinder.value());
-
-                ExecutableElement ee = bindMethods.get(viewBinder.value());
-
-                addLnTag(initBindViewSb, "        [infoBindConfig].[bindAgeEt](this, [ageEt], [infoBindHandler]);",
-                        bindConfigName, ElementTools.simpleName(ee), getViewFieldName(id), bindHandlerName);
-
-                return false;
-            }
-        });
-
-
-        addLnTag(initBindViewSb, "        if (![initInfo]) {", initName);
-        bindFields.ls(new Ts.EachTs<VariableElement>() {
-            @Override
-            public boolean each(int position, VariableElement ve) {
-
-                return false;
-            }
-        });
-        addLnTag(initBindViewSb, "        }");
-
-
+    private String getViewFieldName(VariableElement ve) {
+        ViewId viewId = ve.getAnnotation(ViewId.class);
+        IdTools.Id id = IdTools.elementToId(ve, ViewId.class, viewId.value());
+        return getViewFieldName(id);
     }
 
     private String getViewFieldName(IdTools.Id id) {
