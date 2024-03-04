@@ -24,6 +24,8 @@ import com.codingtu.cooltu.processor.annotation.bind.binder.BindEt;
 import com.codingtu.cooltu.processor.annotation.bind.binder.ViewBinder;
 import com.codingtu.cooltu.processor.annotation.bind.echo.EchoFunc;
 import com.codingtu.cooltu.processor.annotation.bind.echo.NoEcho;
+import com.codingtu.cooltu.processor.annotation.bind.parse.HandleView;
+import com.codingtu.cooltu.processor.annotation.bind.parse.ToBean;
 import com.codingtu.cooltu.processor.annotation.form.Form;
 import com.codingtu.cooltu.processor.annotation.form.FormBean;
 import com.codingtu.cooltu.processor.annotation.form.bind.BindEditText;
@@ -661,6 +663,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
         Map<String, ExecutableElement> echoMethodMap = new HashMap<>();
         Map<Integer, ExecutableElement> bindMethodMap = new HashMap<>();
+        Map<String, ExecutableElement> toBeanMethodMap = new HashMap<>();
+        Map<Integer, ExecutableElement> handleViewMethodMap = new HashMap<>();
         ElementTools.ls(bindConfigTe.getEnclosedElements(), new Ts.EachTs<Element>() {
             @Override
             public boolean each(int position, Element element) {
@@ -677,6 +681,18 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         echoMethodMap.put(echoFunc.value(), ee);
                         return false;
                     }
+
+                    ToBean toBean = ee.getAnnotation(ToBean.class);
+                    if (toBean != null) {
+                        toBeanMethodMap.put(toBean.value(), ee);
+                        return false;
+                    }
+
+                    HandleView handleView = ee.getAnnotation(HandleView.class);
+                    if (handleView != null) {
+                        handleViewMethodMap.put(handleView.value(), ee);
+                        return false;
+                    }
                 }
                 return false;
             }
@@ -684,6 +700,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
         StringBuilder bindSb = new StringBuilder();
         StringBuilder echoSb = new StringBuilder();
+        StringBuilder handleSb = new StringBuilder();
         ElementTools.ls(bindConfigTe.getEnclosedElements(), new Ts.EachTs<Element>() {
             @Override
             public boolean each(int position, Element element) {
@@ -693,16 +710,104 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     NoEcho noEcho = ve.getAnnotation(NoEcho.class);
                     KV<String, String> fieldOriKv = null;
                     KV<String, String> fieldKv = null;
-                    if (bindField != null && noEcho == null) {
+                    ExecutableElement echoMethodEe = null;
+                    if (bindField != null) {
                         fieldOriKv = ElementTools.getFieldKv(ve);
                         fieldKv = BeanTools.getBeanKv(ve, bindField.value());
+                        echoMethodEe = echoMethodMap.get(fieldOriKv.v);
                     }
+
+                    if (fieldOriKv != null && noEcho == null && echoMethodEe != null) {
+                        List<VariableElement> ves = ElementTools.getVariableElements(echoMethodEe);
+                        String param = Params.getParam(ves, new Ts.Convert<VariableElement, String>() {
+                            @Override
+                            public String convert(int index, VariableElement ve) {
+                                if (index == 0) {
+                                    return null;
+                                }
+                                return getViewFieldName(ve);
+                            }
+                        });
+
+                        addLnTag(echoSb, "            [infoBindConfig].[idEcho]([info].[id], [idEt]);",
+                                bindConfigKv.v, ElementTools.simpleName(echoMethodEe), bindBeanKv.v, fieldKv.v, param);
+                    }
+
 
                     BindEt bindEt = ve.getAnnotation(BindEt.class);
                     if (bindEt != null) {
                         IdTools.Id id = IdTools.elementToId(ve, BindEt.class, bindEt.value());
                         String viewFieldName = getViewFieldName(id);
                         addLnTag(bindSb, "        [BindTool].bindEt(this, [nameEt], [infoBindHandler]);", FullName.BIND_TOOL, viewFieldName, handlerKv.v);
+                        if (fieldOriKv != null && noEcho == null && echoMethodEe == null) {
+                            addLnTag(echoSb, "            [ViewTool].setEditTextAndSelection([nameEt], [info].[name]);",
+                                    FullName.VIEW_TOOL, viewFieldName, bindBeanKv.v, fieldKv.v);
+                        }
+
+                        addLnTag(handleSb, "                case [rPkg].R.id.[nameEt]:", Pkg.R, viewFieldName);
+
+                        if (fieldOriKv == null) {
+                            fieldOriKv = ElementTools.getFieldKv(ve);
+                        }
+                        ExecutableElement toBeanEe = toBeanMethodMap.get(fieldOriKv.v);
+                        if (toBeanEe != null) {
+                            addLnTag(handleSb, "                    [infoBindConfig].[id] = [infoBindConfig].[parseLong](msg.obj);",
+                                    bindConfigKv.v, fieldOriKv.v, bindConfigKv.v, ElementTools.simpleName(toBeanEe));
+                        } else {
+                            if (ClassTool.isString(fieldOriKv.k)) {
+                                addLnTag(handleSb, "                    [infoBindConfig].[name] = (String) msg.obj;",
+                                        bindConfigKv.v, fieldOriKv.v);
+                            } else if (ClassTool.isInteger(fieldOriKv.k) || ClassTool.isInt(fieldOriKv.k)) {
+                                addLnTag(handleSb, "                    [infoBindConfig].[age] = Integer.parseInt((String) msg.obj);",
+                                        bindConfigKv.v, fieldOriKv.v);
+                            } else if (ClassTool.isLONG(fieldOriKv.k) || ClassTool.isLong(fieldOriKv.k)) {
+                                addLnTag(handleSb, "                    [infoBindConfig].[age] = Long.parseLong((String) msg.obj);",
+                                        bindConfigKv.v, fieldOriKv.v);
+                            }
+                        }
+                        if (fieldKv != null) {
+                            addLnTag(handleSb, "                    [info].[id] = [infoBindConfig].[id];",
+                                    bindBeanKv.v, fieldKv.v, bindConfigKv.v, fieldOriKv.v);
+                        }
+
+                        ExecutableElement handleViewEe = handleViewMethodMap.get(bindEt.value());
+                        if (handleViewEe != null) {
+                            List<VariableElement> ves = ElementTools.getVariableElements(handleViewEe);
+                            String param = Params.getParam(ves, new Ts.Convert<VariableElement, String>() {
+                                @Override
+                                public String convert(int index, VariableElement ve) {
+                                    if (index == 0) {
+                                        return null;
+                                    }
+                                    KV<String, String> kv = ElementTools.getFieldKv(ve);
+                                    return "(" + kv.k + ") linkObjs.get(" + (index - 1) + ")";
+                                }
+                            });
+                            if (StringTool.isNotBlank(param)) {
+                                param = ", " + param;
+                            } else {
+                                param = "";
+                            }
+                            addLnTag(handleSb, "                    [infoBindConfig].[handleProvince]([info][params]);",
+                                    bindConfigKv.v, ElementTools.simpleName(handleViewEe), bindBeanKv.v, param);
+                            if (CountTool.count(ves) > 1) {
+                                String param1 = Params.getParam(ves, new Ts.Convert<VariableElement, String>() {
+                                    @Override
+                                    public String convert(int index, VariableElement ve) {
+                                        if (index == 0)
+                                            return null;
+                                        return ElementTools.getFieldKv(ve).v;
+                                    }
+                                });
+                                addLnTag(bindSb, "        link([infoBindHandler].linkMap, [rPkg].R.id.[nameEt], [nicknameEt]);",
+                                        handlerKv.v, Pkg.R, id.rName, param1);
+                            }
+
+                        }
+
+
+                        addLnTag(handleSb, "                    break;");
+
                         return false;
                     }
                     ViewBinder viewBinder = ve.getAnnotation(ViewBinder.class);
@@ -712,6 +817,63 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         IdTools.Id id = IdTools.elementToId(ve, ViewBinder.class, viewBinder.value());
                         String viewFieldName = getViewFieldName(id);
                         addLnTag(bindSb, "        [infoBindConfig].[bindAgeEt](this, [ageEt], [infoBindHandler]);", bindConfigKv.v, bindMethodName, viewFieldName, handlerKv.v);
+
+                        addLnTag(handleSb, "                case [rPkg].R.id.[nameEt]:", Pkg.R, viewFieldName);
+
+                        if (fieldOriKv == null) {
+                            fieldOriKv = ElementTools.getFieldKv(ve);
+                        }
+                        ExecutableElement toBeanEe = toBeanMethodMap.get(fieldOriKv.v);
+                        if (toBeanEe != null) {
+                            addLnTag(handleSb, "                    [infoBindConfig].[id] = [infoBindConfig].[parseLong](msg.obj);",
+                                    bindConfigKv.v, fieldOriKv.v, bindConfigKv.v, ElementTools.simpleName(toBeanEe));
+                        } else {
+                            addLnTag(handleSb, "                    [infoBindConfig].[age] = ([int]) msg.obj;",
+                                    bindConfigKv.v, fieldOriKv.v, fieldOriKv.k);
+                        }
+
+                        if (fieldKv != null) {
+                            addLnTag(handleSb, "                    [info].[id] = [infoBindConfig].[id];",
+                                    bindBeanKv.v, fieldKv.v, bindConfigKv.v, fieldOriKv.v);
+                        }
+
+                        ExecutableElement handleViewEe = handleViewMethodMap.get(viewBinder.value());
+                        if (handleViewEe != null) {
+                            List<VariableElement> ves = ElementTools.getVariableElements(handleViewEe);
+                            String param = Params.getParam(ves, new Ts.Convert<VariableElement, String>() {
+                                @Override
+                                public String convert(int index, VariableElement ve) {
+                                    if (index == 0) {
+                                        return null;
+                                    }
+                                    KV<String, String> kv = ElementTools.getFieldKv(ve);
+                                    return "(" + kv.k + ") linkObjs.get(" + (index - 1) + ")";
+                                }
+                            });
+                            if (StringTool.isNotBlank(param)) {
+                                param = ", " + param;
+                            } else {
+                                param = "";
+                            }
+                            addLnTag(handleSb, "                    [infoBindConfig].[handleProvince]([info][params]);",
+                                    bindConfigKv.v, ElementTools.simpleName(handleViewEe), bindBeanKv.v, param);
+                            if (CountTool.count(ves) > 1) {
+                                String param1 = Params.getParam(ves, new Ts.Convert<VariableElement, String>() {
+                                    @Override
+                                    public String convert(int index, VariableElement ve) {
+                                        if (index == 0)
+                                            return null;
+                                        return ElementTools.getFieldKv(ve).v;
+                                    }
+                                });
+                                addLnTag(bindSb, "        link([infoBindHandler].linkMap, [rPkg].R.id.[nameEt], [nicknameEt]);",
+                                        handlerKv.v, Pkg.R, id.rName, param1);
+                            }
+                        }
+
+
+                        addLnTag(handleSb, "                    break;");
+
                         return false;
                     }
                 }
@@ -748,8 +910,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addLnTag(bindHandlerSb, "        @Override");
         addLnTag(bindHandlerSb, "        public void handleMessage(android.os.Message msg) {");
         addLnTag(bindHandlerSb, "            super.handleMessage(msg);");
+        addLnTag(bindHandlerSb, "            List<Object> linkObjs = linkMap.get(msg.what);");
         addLnTag(bindHandlerSb, "            switch (msg.what) {");
-        addLnTag(bindHandlerSb, "");
+        addLnTag(bindHandlerSb, handleSb.toString());
         addLnTag(bindHandlerSb, "            }");
         addLnTag(bindHandlerSb, "        }");
         addLnTag(bindHandlerSb, "    }");

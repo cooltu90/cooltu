@@ -120,6 +120,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         infoBindHandler = new InfoBindHandler(info, infoBindConfig);
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, idEt, infoBindHandler);
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, nameEt, infoBindHandler);
+        link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.nameEt, nicknameEt);
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, nicknameEt, infoBindHandler);
         infoBindConfig.bindAgeEt(this, ageEt, infoBindHandler);
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, provinceEt, infoBindHandler);
@@ -127,6 +128,11 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, areaEt, infoBindHandler);
 
         if (!initInfo) {
+            infoBindConfig.idEcho(info.id, idEt);
+            com.codingtu.cooltu.lib4a.tools.ViewTool.setEditTextAndSelection(nameEt, info.name);
+            com.codingtu.cooltu.lib4a.tools.ViewTool.setEditTextAndSelection(nicknameEt, info.nickname);
+            infoBindConfig.ageEcho(info.age, ageEt);
+            infoBindConfig.addressEcho(info.address, provinceEt, cityEt, areaEt);
 
         }
         if (form == null) {
@@ -155,7 +161,35 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
+            List<Object> linkObjs = linkMap.get(msg.what);
             switch (msg.what) {
+                case com.codingtu.cooltu.R.id.idEt:
+                    infoBindConfig.id = infoBindConfig.parseLong(msg.obj);
+                    info.id = infoBindConfig.id;
+                    break;
+                case com.codingtu.cooltu.R.id.nameEt:
+                    infoBindConfig.name = (String) msg.obj;
+                    info.name = infoBindConfig.name;
+                    infoBindConfig.handleView(info, (android.widget.EditText) linkObjs.get(0));
+                    break;
+                case com.codingtu.cooltu.R.id.nicknameEt:
+                    infoBindConfig.nickname = (String) msg.obj;
+                    info.nickname = infoBindConfig.nickname;
+                    break;
+                case com.codingtu.cooltu.R.id.ageEt:
+                    infoBindConfig.age = infoBindConfig.toAge(msg.obj);
+                    info.age = infoBindConfig.age;
+                    break;
+                case com.codingtu.cooltu.R.id.provinceEt:
+                    infoBindConfig.province = (String) msg.obj;
+                    infoBindConfig.handleProvince(info);
+                    break;
+                case com.codingtu.cooltu.R.id.cityEt:
+                    infoBindConfig.city = (String) msg.obj;
+                    break;
+                case com.codingtu.cooltu.R.id.areaEt:
+                    infoBindConfig.area = (String) msg.obj;
+                    break;
 
             }
         }
@@ -172,6 +206,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
+            List<Object> linkObjs = linkMap.get(msg.what);
             switch (msg.what) {
 
             }

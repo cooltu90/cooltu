@@ -6,6 +6,7 @@ import android.widget.EditText;
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.Info;
 import com.codingtu.cooltu.lib4a.bind.BindTool;
+import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.processor.annotation.bind.BindConfig;
 import com.codingtu.cooltu.processor.annotation.bind.BindField;
@@ -14,6 +15,8 @@ import com.codingtu.cooltu.processor.annotation.bind.ViewId;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindEt;
 import com.codingtu.cooltu.processor.annotation.bind.binder.ViewBinder;
 import com.codingtu.cooltu.processor.annotation.bind.echo.EchoFunc;
+import com.codingtu.cooltu.processor.annotation.bind.parse.HandleView;
+import com.codingtu.cooltu.processor.annotation.bind.parse.ToBean;
 
 @BindConfig(Info.class)
 public class InfoBindConfig {
@@ -32,6 +35,11 @@ public class InfoBindConfig {
 
     }
 
+    @ToBean("id")
+    public long parseLong(Object obj) {
+        return Long.parseLong((String) obj);
+    }
+
     /**************************************************
      *
      * name
@@ -41,6 +49,11 @@ public class InfoBindConfig {
     @BindEt(R.id.nameEt)
     public String name;
 
+    @HandleView(R.id.nameEt)
+    public void handleView(Info info, @ViewId(R.id.nicknameEt) EditText nicknameEt) {
+        ViewTool.setEditTextAndSelection(nicknameEt, name);
+    }
+
     /**************************************************
      *
      * nickname
@@ -49,6 +62,7 @@ public class InfoBindConfig {
     @BindField
     @BindEt(R.id.nicknameEt)
     public String nickname;
+
 
     /**************************************************
      *
@@ -67,6 +81,11 @@ public class InfoBindConfig {
     @EchoFunc("age")
     public void ageEcho(int age, @ViewId(R.id.ageEt) EditText ageEt) {
 
+    }
+
+    @ToBean("age")
+    public int toAge(Object obj) {
+        return (int) obj;
     }
 
     /**************************************************
@@ -92,6 +111,11 @@ public class InfoBindConfig {
             , @ViewId(R.id.cityEt) EditText cityEt
             , @ViewId(R.id.areaEt) EditText areaEt
     ) {
+
+    }
+
+    @HandleView(R.id.provinceEt)
+    public void handleProvince(Info info) {
 
     }
 
