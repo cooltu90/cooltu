@@ -3,24 +3,28 @@ package com.codingtu.cooltu.lib4a.view.combine;
 import android.os.Handler;
 import android.os.Message;
 
-public class HandlerOnSelectChange implements RadioGroup.OnSelectChange {
+import com.codingtu.cooltu.lib4j.destory.OnDestroy;
+
+public class HandlerOnSelectChange implements RadioGroup.OnSelectChange, OnDestroy {
 
     private Handler handler;
-    private int type;
-    private int index;
+    private int viewId;
 
-    public HandlerOnSelectChange(Handler handler, int type, int index) {
+    public HandlerOnSelectChange(Handler handler, int viewId) {
         this.handler = handler;
-        this.type = type;
-        this.index = index;
+        this.viewId = viewId;
     }
 
     @Override
     public void onChange(int selected) {
         Message message = Message.obtain();
+        message.what = viewId;
         message.obj = selected;
-        message.what = type;
-        message.arg1 = index;
         handler.sendMessage(message);
+    }
+
+    @Override
+    public void destroy() {
+        handler = null;
     }
 }

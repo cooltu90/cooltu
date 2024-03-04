@@ -12,4 +12,8 @@ public class Info {
 
     public int age;
 
+    public String num;
+
+    public int num1;
+
 }

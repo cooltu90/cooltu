@@ -8,8 +8,10 @@ import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
 public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
+    protected android.widget.LinearLayout numLl;
     protected android.widget.TextView saveBt1;
     protected android.widget.EditText nicknameEt;
+    protected android.widget.LinearLayout num1Ll;
     protected android.widget.TextView saveBt2;
     protected android.widget.EditText nameEt;
     protected android.widget.EditText cityEt;
@@ -21,6 +23,8 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected com.codingtu.cooltu.bind.InfoBindConfig infoBindConfig;
     protected boolean initInfo;
     protected InfoBindHandler infoBindHandler;
+    protected com.codingtu.cooltu.lib4a.view.combine.RadioGroup numRg;
+    protected com.codingtu.cooltu.lib4a.view.combine.RadioGroup num1Rg;
     protected com.codingtu.cooltu.bean.Form form;
     protected com.codingtu.cooltu.bind.FormBindConfig formBindConfig;
     protected boolean initForm;
@@ -32,8 +36,10 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         super.onCreate(savedInstanceState);
         setContentView(com.codingtu.cooltu.R.layout.activity_form_new);
 
+        numLl = findViewById(com.codingtu.cooltu.R.id.numLl);
         saveBt1 = findViewById(com.codingtu.cooltu.R.id.saveBt1);
         nicknameEt = findViewById(com.codingtu.cooltu.R.id.nicknameEt);
+        num1Ll = findViewById(com.codingtu.cooltu.R.id.num1Ll);
         saveBt2 = findViewById(com.codingtu.cooltu.R.id.saveBt2);
         nameEt = findViewById(com.codingtu.cooltu.R.id.nameEt);
         cityEt = findViewById(com.codingtu.cooltu.R.id.cityEt);
@@ -111,6 +117,12 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
     protected void initBindView() {
+        com.codingtu.cooltu.form.TypeOnSetItem typeOnSetItem = new com.codingtu.cooltu.form.TypeOnSetItem();
+        numRg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(numLl).setOnSetItem(typeOnSetItem).setItems("1", "2", "3");
+        numLl.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, numRg);
+        num1Rg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(num1Ll).setOnSetItem(typeOnSetItem);
+        num1Ll.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, num1Rg);
+
         beforeInitBindView();
         if (info == null) {
             info = new com.codingtu.cooltu.bean.Info();
@@ -126,6 +138,8 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, provinceEt, infoBindHandler);
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, cityEt, infoBindHandler);
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, areaEt, infoBindHandler);
+        numRg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(infoBindHandler, com.codingtu.cooltu.R.id.numLl));
+        num1Rg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(infoBindHandler, com.codingtu.cooltu.R.id.num1Ll));
 
         if (!initInfo) {
             infoBindConfig.idEcho(info.id, idEt);
@@ -133,6 +147,8 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             com.codingtu.cooltu.lib4a.tools.ViewTool.setEditTextAndSelection(nicknameEt, info.nickname);
             infoBindConfig.ageEcho(info.age, ageEt);
             infoBindConfig.addressEcho(info.address, provinceEt, cityEt, areaEt);
+            numRg.setSelected(numRg.getIndex(info.num));
+            num1Rg.setSelected(info.num1);
 
         }
         if (form == null) {
@@ -189,6 +205,12 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
                     break;
                 case com.codingtu.cooltu.R.id.areaEt:
                     infoBindConfig.area = (String) msg.obj;
+                    break;
+                case com.codingtu.cooltu.R.id.numLl:
+                    info.num = infoBindConfig.num;
+                    break;
+                case com.codingtu.cooltu.R.id.num1Ll:
+                    info.num1 = infoBindConfig.num1;
                     break;
 
             }

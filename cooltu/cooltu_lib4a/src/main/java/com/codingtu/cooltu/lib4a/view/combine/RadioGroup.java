@@ -8,12 +8,13 @@ import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
+import com.codingtu.cooltu.lib4j.ts.StringTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RadioGroup<T> implements OnDestroy, View.OnClickListener {
+public class RadioGroup implements OnDestroy, View.OnClickListener {
     private boolean hasNull;
     private int selected = -1;
     //private View[] bts;
@@ -21,7 +22,7 @@ public class RadioGroup<T> implements OnDestroy, View.OnClickListener {
     //private int[] bgs;
     private List<OnSelectChange> onSelectChanges;
     private OnSetItem onSetItem;
-    private BaseTs<T> items;
+    private StringTs items;
 
     public RadioGroup() {
 
@@ -39,14 +40,14 @@ public class RadioGroup<T> implements OnDestroy, View.OnClickListener {
 
     }
 
-    public static <T> RadioGroup<T> obtain(Destroys destroys) {
-        RadioGroup<T> radioGroup = new RadioGroup<T>();
+    public static RadioGroup obtain(Destroys destroys) {
+        RadioGroup radioGroup = new RadioGroup();
         destroys.add(radioGroup);
         return radioGroup;
     }
 
 
-    public RadioGroup<T> setHasNull(boolean hasNull) {
+    public RadioGroup setHasNull(boolean hasNull) {
         this.hasNull = hasNull;
         return this;
     }
@@ -57,7 +58,7 @@ public class RadioGroup<T> implements OnDestroy, View.OnClickListener {
 //        return this;
 //    }
 
-    public RadioGroup<T> setBts(View... bts) {
+    public RadioGroup setBts(View... bts) {
         this.bts = Ts.ts(bts);
         this.bts.ls(new Ts.EachTs<View>() {
             @Override
@@ -70,7 +71,7 @@ public class RadioGroup<T> implements OnDestroy, View.OnClickListener {
         return this;
     }
 
-    public RadioGroup<T> setBts(ViewGroup vp) {
+    public RadioGroup setBts(ViewGroup vp) {
         if (vp.getChildCount() > 0) {
             this.bts = Ts.get(vp.getChildCount(), new Ts.EachGetter<View>() {
                 @Override
@@ -97,7 +98,7 @@ public class RadioGroup<T> implements OnDestroy, View.OnClickListener {
 //        }
 //    }
 
-    public RadioGroup<T> addOnSelectChange(OnSelectChange onSelectChange) {
+    public RadioGroup addOnSelectChange(OnSelectChange onSelectChange) {
         if (onSelectChanges == null) {
             onSelectChanges = new ArrayList<>();
         }
@@ -106,7 +107,7 @@ public class RadioGroup<T> implements OnDestroy, View.OnClickListener {
     }
 
 
-    public RadioGroup<T> setOnSetItem(OnSetItem onSetItem) {
+    public RadioGroup setOnSetItem(OnSetItem onSetItem) {
         this.onSetItem = onSetItem;
         return this;
     }
@@ -159,7 +160,7 @@ public class RadioGroup<T> implements OnDestroy, View.OnClickListener {
     }
 
 
-    public RadioGroup<T> setSelected(int index) {
+    public RadioGroup setSelected(int index) {
         if (index == selected) {
             if (hasNull) {
                 setSelectedReal(-1);
@@ -227,21 +228,25 @@ public class RadioGroup<T> implements OnDestroy, View.OnClickListener {
      *
      **************************************************/
 
-    public RadioGroup<T> setItems(T... items) {
-        this.items = Ts.ts(items);
+    public RadioGroup setItems(String... items) {
+        this.items = Ts.strs(items);
         return this;
     }
 
-    public RadioGroup<T> addItems(T item) {
+    public RadioGroup addItems(String item) {
         if (this.items == null) {
-            this.items = Ts.ts(item);
+            this.items = Ts.strs(item);
         } else {
             this.items.add(item);
         }
         return this;
     }
 
-    public T getCurrentItem() {
+    public String getCurrentItem() {
         return this.items.get(getSelected());
+    }
+
+    public int getIndex(String item){
+        return this.items.index(item);
     }
 }

@@ -1,8 +1,12 @@
 package com.codingtu.cooltu.lib4a.bind;
 
 import android.os.Handler;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
+import com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange;
+import com.codingtu.cooltu.lib4a.view.combine.RadioGroup;
 import com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 
