@@ -110,7 +110,7 @@ public class ActBaseDeal extends TypeBaseDeal {
         clickViewInfo.method = ElementTools.simpleName(ee);
         clickViewInfo.methodParams = ElementTools.getMethodParamKvs(ee);
         clickViewInfo.isCheckLogin = clickView.checkLogin();
-        clickViewInfo.isCheckForm = clickView.check();
+        //clickViewInfo.isCheckForm = clickView.check();
 
         int inActCount = CountTool.count(clickView.inAct());
         Ts.ls(clickViewInfo.ids, new Ts.EachTs<IdTools.Id>() {
@@ -134,7 +134,7 @@ public class ActBaseDeal extends TypeBaseDeal {
         clickViewInfo.method = ElementTools.simpleName(ee);
         clickViewInfo.methodParams = ElementTools.getMethodParamKvs(ee);
         clickViewInfo.isCheckLogin = clickView.checkLogin();
-        clickViewInfo.isCheckForm = clickView.check();
+        //clickViewInfo.isCheckForm = clickView.check();
 
         int inActCount = CountTool.count(clickView.inAct());
         Ts.ls(clickViewInfo.ids, new Ts.EachTs<IdTools.Id>() {

@@ -242,7 +242,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             }
         }
     }
-    private boolean checkInfo() {
+    protected boolean checkInfo() {
         if (!infoBindConfig.checkId(info.id)) {
             toast("请输入正确的id");
             return false;
@@ -272,7 +272,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             }
         }
     }
-    private boolean checkForm() {
+    protected boolean checkForm() {
 
         return true;
     }

@@ -462,12 +462,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         dealBind(info, veInfo, new DealBind() {
                             @Override
                             public void dealBind() {
-//                                addLnTag(info.bindSb, "        [BindTool].bindEt(this, [nameEt], [infoBindHandler]);",
-//                                        FullName.BIND_TOOL, veInfo.viewFieldName, info.handlerKv.v);
-
                                 addLnTag(info.bindSb, "        [idEt].addTextChangedListener(new [HandlerTextWatcher](this, [infoBindHandler], [rPkg].R.id.[idEt]));",
                                         veInfo.viewFieldName, FullName.HANDLER_TEXT_WATCHER, info.handlerKv.v, Pkg.R, veInfo.id.rName);
-
                             }
 
                             @Override
@@ -558,7 +554,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addLnTag(bindHandlerSb, "        }");
         addLnTag(bindHandlerSb, "    }");
 
-        addLnTag(bindHandlerSb, "    private boolean check[Info]() {", ConvertTool.toClassType(info.bindBeanKv.v));
+        addLnTag(bindHandlerSb, "    protected boolean check[Info]() {", ConvertTool.toClassType(info.bindBeanKv.v));
         addLnTag(bindHandlerSb, info.checkSb.toString());
         addLnTag(bindHandlerSb, "        return true;");
         addLnTag(bindHandlerSb, "    }");

@@ -299,7 +299,7 @@ public abstract class UiBaseBuilder {
             @Override
             public boolean each(int clickViewInfoIndex, ClickViewInfo info) {
                 uiBase.isOnLongClickCheckLogin(clickViewInfoIndex, info.isCheckLogin);
-                uiBase.isCheckForm(clickViewInfoIndex, info.isCheckForm);
+                uiBase.isCheckForm(clickViewInfoIndex, false);
                 uiBase.onLongClickMethods(clickViewInfoIndex, info.method, info.methodParams.getMethodParams());
                 uiBase.onLongClickSwith(clickViewInfoIndex, info.method);
 
@@ -358,7 +358,7 @@ public abstract class UiBaseBuilder {
             @Override
             public boolean each(int clickViewInfoIndex, ClickViewInfo info) {
                 uiBase.isOnClickCheckLogin(clickViewInfoIndex, info.isCheckLogin);
-                uiBase.isCheckForm(clickViewInfoIndex, info.isCheckForm);
+                uiBase.isCheckForm(clickViewInfoIndex, false);
                 uiBase.onClickMethods(clickViewInfoIndex, info.method, info.methodParams.getMethodParams());
                 uiBase.onClickSwith(clickViewInfoIndex, info.method);
 

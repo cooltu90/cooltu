@@ -12,7 +12,7 @@ public @interface ClickView {
 
     boolean[] inAct() default {true};
 
-    boolean check() default false;
+    //boolean check() default false;
 
     boolean checkLogin() default false;
 

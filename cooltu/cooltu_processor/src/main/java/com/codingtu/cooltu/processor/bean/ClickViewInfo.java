@@ -12,5 +12,4 @@ public class ClickViewInfo {
     public Params methodParams;
     public String method;
     public boolean isCheckLogin;
-    public boolean isCheckForm;
 }

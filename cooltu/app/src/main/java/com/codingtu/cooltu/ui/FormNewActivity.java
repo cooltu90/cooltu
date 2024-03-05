@@ -23,7 +23,7 @@ public class FormNewActivity extends FormNewActivityBase {
         super.onCreate(savedInstanceState);
     }
 
-    @ClickView(value = R.id.saveBt1, check = true)
+    @ClickView(value = R.id.saveBt1)
     public void saveBt1Click() {
 
     }
