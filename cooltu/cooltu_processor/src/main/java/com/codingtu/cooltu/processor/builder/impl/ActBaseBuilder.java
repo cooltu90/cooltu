@@ -16,14 +16,15 @@ import com.codingtu.cooltu.processor.annotation.bind.Bind;
 import com.codingtu.cooltu.processor.annotation.bind.BindConfig;
 import com.codingtu.cooltu.processor.annotation.bind.BindField;
 import com.codingtu.cooltu.processor.annotation.bind.BindMethod;
-import com.codingtu.cooltu.processor.annotation.bind.ViewId;
-import com.codingtu.cooltu.processor.annotation.bind.binder.BindEt;
-import com.codingtu.cooltu.processor.annotation.bind.binder.BindRg;
-import com.codingtu.cooltu.processor.annotation.bind.binder.BindSeekbar;
-import com.codingtu.cooltu.processor.annotation.bind.binder.ViewBinder;
+import com.codingtu.cooltu.processor.annotation.bind.binder.BindTextView;
+import com.codingtu.cooltu.processor.annotation.ui.ViewId;
+import com.codingtu.cooltu.processor.annotation.bind.binder.BindEditText;
+import com.codingtu.cooltu.processor.annotation.bind.binder.BindRadioGroup;
+import com.codingtu.cooltu.processor.annotation.bind.binder.BindSeekBar;
+import com.codingtu.cooltu.processor.annotation.bind.binder.BindView;
 import com.codingtu.cooltu.processor.annotation.bind.check.Check;
-import com.codingtu.cooltu.processor.annotation.bind.check.CheckedMethod;
-import com.codingtu.cooltu.processor.annotation.bind.echo.EchoFunc;
+import com.codingtu.cooltu.processor.annotation.bind.check.CheckMethod;
+import com.codingtu.cooltu.processor.annotation.bind.echo.EchoMethod;
 import com.codingtu.cooltu.processor.annotation.bind.echo.NoEcho;
 import com.codingtu.cooltu.processor.annotation.bind.parse.HandleView;
 import com.codingtu.cooltu.processor.annotation.bind.parse.ToBean;
@@ -253,9 +254,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         return false;
                     }
 
-                    EchoFunc echoFunc = ee.getAnnotation(EchoFunc.class);
-                    if (echoFunc != null) {
-                        info.echoMethodMap.put(echoFunc.value(), ee);
+                    EchoMethod echoMethod = ee.getAnnotation(EchoMethod.class);
+                    if (echoMethod != null) {
+                        info.echoMethodMap.put(echoMethod.value(), ee);
                         return false;
                     }
 
@@ -277,9 +278,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         return false;
                     }
 
-                    CheckedMethod checkedMethod = ee.getAnnotation(CheckedMethod.class);
-                    if (checkedMethod != null) {
-                        Ts.strs(checkedMethod.value()).ls(new Ts.EachTs<String>() {
+                    CheckMethod checkMethod = ee.getAnnotation(CheckMethod.class);
+                    if (checkMethod != null) {
+                        Ts.strs(checkMethod.value()).ls(new Ts.EachTs<String>() {
                             @Override
                             public boolean each(int position, String s) {
                                 info.checkMethodMap.put(s, ee);
@@ -351,9 +352,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                                 info.bindConfigKv.v, ElementTools.simpleName(veInfo.echoMethodEe), info.bindBeanKv.v, veInfo.fieldKv.v, param);
                     }
 
-                    BindSeekbar bindSeekbar = veInfo.ve.getAnnotation(BindSeekbar.class);
+                    BindSeekBar bindSeekbar = veInfo.ve.getAnnotation(BindSeekBar.class);
                     if (bindSeekbar != null) {
-                        veInfo.annoClass = BindSeekbar.class;
+                        veInfo.annoClass = BindSeekBar.class;
                         veInfo.annoValue = bindSeekbar.value();
 
                         dealBind(info, veInfo, new DealBind() {
@@ -381,9 +382,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         });
                     }
 
-                    BindRg bindRg = veInfo.ve.getAnnotation(BindRg.class);
+                    BindRadioGroup bindRg = veInfo.ve.getAnnotation(BindRadioGroup.class);
                     if (bindRg != null) {
-                        veInfo.annoClass = BindRg.class;
+                        veInfo.annoClass = BindRadioGroup.class;
                         veInfo.annoValue = bindRg.id();
 
                         dealBind(info, veInfo, new DealBind() {
@@ -455,9 +456,43 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         return false;
                     }
 
-                    BindEt bindEt = veInfo.ve.getAnnotation(BindEt.class);
+                    BindTextView bindTv = veInfo.ve.getAnnotation(BindTextView.class);
+                    if (bindTv != null) {
+                        veInfo.annoClass = BindTextView.class;
+                        veInfo.annoValue = bindTv.value();
+                        dealBind(info, veInfo, new DealBind() {
+                            @Override
+                            public void dealBind() {
+                                addLnTag(info.bindSb, "        [idEt].addTextChangedListener(new [HandlerTextWatcher](this, [infoBindHandler], [rPkg].R.id.[idEt]));",
+                                        veInfo.viewFieldName, FullName.HANDLER_TEXT_WATCHER, info.handlerKv.v, Pkg.R, veInfo.id.rName);
+                            }
+
+                            @Override
+                            public void dealEcho() {
+                                addLnTag(info.echoSb, "            [ViewTool].setText([passwordTv], [info].[password]);",
+                                        FullName.VIEW_TOOL, veInfo.viewFieldName, info.bindBeanKv.v, veInfo.fieldKv.v);
+                            }
+
+                            @Override
+                            public void dealToBean() {
+                                if (isString(veInfo)) {
+                                    addLnTag(info.handleSb, "                    [infoBindConfig].[name] = (String) msg.obj;",
+                                            info.bindConfigKv.v, veInfo.fieldOriKv.v);
+                                } else if (isInt(veInfo)) {
+                                    addLnTag(info.handleSb, "                    [infoBindConfig].[age] = Integer.parseInt((String) msg.obj);",
+                                            info.bindConfigKv.v, veInfo.fieldOriKv.v);
+                                } else if (isLong(veInfo)) {
+                                    addLnTag(info.handleSb, "                    [infoBindConfig].[age] = Long.parseLong((String) msg.obj);",
+                                            info.bindConfigKv.v, veInfo.fieldOriKv.v);
+                                }
+                            }
+                        });
+
+                    }
+
+                    BindEditText bindEt = veInfo.ve.getAnnotation(BindEditText.class);
                     if (bindEt != null) {
-                        veInfo.annoClass = BindEt.class;
+                        veInfo.annoClass = BindEditText.class;
                         veInfo.annoValue = bindEt.value();
                         dealBind(info, veInfo, new DealBind() {
                             @Override
@@ -488,15 +523,15 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         });
                         return false;
                     }
-                    ViewBinder viewBinder = veInfo.ve.getAnnotation(ViewBinder.class);
-                    if (viewBinder != null) {
-                        veInfo.annoClass = ViewBinder.class;
-                        veInfo.annoValue = viewBinder.value();
+                    BindView bindView = veInfo.ve.getAnnotation(BindView.class);
+                    if (bindView != null) {
+                        veInfo.annoClass = BindView.class;
+                        veInfo.annoValue = bindView.value();
                         dealBind(info, veInfo, new DealBind() {
                             @Override
                             public void dealBind() {
                                 addLnTag(info.bindSb, "        [infoBindConfig].[bindAgeEt](this, [ageEt], [infoBindHandler]);",
-                                        info.bindConfigKv.v, ElementTools.simpleName(info.bindMethodMap.get(viewBinder.value())),
+                                        info.bindConfigKv.v, ElementTools.simpleName(info.bindMethodMap.get(bindView.value())),
                                         veInfo.viewFieldName, info.handlerKv.v);
                             }
 

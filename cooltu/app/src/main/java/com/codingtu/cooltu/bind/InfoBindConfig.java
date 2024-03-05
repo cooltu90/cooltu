@@ -7,20 +7,20 @@ import android.widget.SeekBar;
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.Info;
 import com.codingtu.cooltu.form.TypeOnSetItem;
-import com.codingtu.cooltu.lib4a.bind.BindTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.processor.annotation.bind.BindConfig;
 import com.codingtu.cooltu.processor.annotation.bind.BindField;
 import com.codingtu.cooltu.processor.annotation.bind.BindMethod;
-import com.codingtu.cooltu.processor.annotation.bind.ViewId;
-import com.codingtu.cooltu.processor.annotation.bind.binder.BindEt;
-import com.codingtu.cooltu.processor.annotation.bind.binder.BindRg;
-import com.codingtu.cooltu.processor.annotation.bind.binder.BindSeekbar;
-import com.codingtu.cooltu.processor.annotation.bind.binder.ViewBinder;
+import com.codingtu.cooltu.processor.annotation.bind.binder.BindTextView;
+import com.codingtu.cooltu.processor.annotation.ui.ViewId;
+import com.codingtu.cooltu.processor.annotation.bind.binder.BindEditText;
+import com.codingtu.cooltu.processor.annotation.bind.binder.BindRadioGroup;
+import com.codingtu.cooltu.processor.annotation.bind.binder.BindSeekBar;
+import com.codingtu.cooltu.processor.annotation.bind.binder.BindView;
 import com.codingtu.cooltu.processor.annotation.bind.check.Check;
-import com.codingtu.cooltu.processor.annotation.bind.check.CheckedMethod;
-import com.codingtu.cooltu.processor.annotation.bind.echo.EchoFunc;
+import com.codingtu.cooltu.processor.annotation.bind.check.CheckMethod;
+import com.codingtu.cooltu.processor.annotation.bind.echo.EchoMethod;
 import com.codingtu.cooltu.processor.annotation.bind.parse.HandleView;
 import com.codingtu.cooltu.processor.annotation.bind.parse.ToBean;
 
@@ -33,16 +33,16 @@ public class InfoBindConfig {
      *
      **************************************************/
     @BindField
-    @BindEt(R.id.idEt)
+    @BindEditText(R.id.idEt)
     @Check(prompt = "请输入正确的id")
     public long id;
 
-    @CheckedMethod("id")
+    @CheckMethod("id")
     public boolean checkId(long id) {
         return false;
     }
 
-    @EchoFunc("id")
+    @EchoMethod("id")
     public void idEcho(long id, @ViewId(R.id.idEt) EditText idEt) {
 
     }
@@ -59,7 +59,7 @@ public class InfoBindConfig {
      *
      **************************************************/
     @BindField
-    @BindEt(R.id.nameEt)
+    @BindEditText(R.id.nameEt)
     @Check(prompt = "请输入姓名")
     public String name;
 
@@ -74,7 +74,7 @@ public class InfoBindConfig {
      *
      **************************************************/
     @BindField
-    @BindEt(R.id.nicknameEt)
+    @BindEditText(R.id.nicknameEt)
     public String nickname;
 
 
@@ -84,7 +84,7 @@ public class InfoBindConfig {
      *
      **************************************************/
     @BindField
-    @ViewBinder(R.id.ageEt)
+    @BindView(R.id.ageEt)
     public int age;
 
     @BindMethod(R.id.ageEt)
@@ -92,7 +92,7 @@ public class InfoBindConfig {
 //        BindTool.bindEt(destroys, ageEt, handler);
     }
 
-    @EchoFunc("age")
+    @EchoMethod("age")
     public void ageEcho(int age, @ViewId(R.id.ageEt) EditText ageEt) {
 
     }
@@ -110,16 +110,16 @@ public class InfoBindConfig {
     @BindField
     public String address;
 
-    @BindEt(R.id.provinceEt)
+    @BindEditText(R.id.provinceEt)
     public String province;
 
-    @BindEt(R.id.cityEt)
+    @BindEditText(R.id.cityEt)
     public String city;
 
-    @BindEt(R.id.areaEt)
+    @BindEditText(R.id.areaEt)
     public String area;
 
-    @EchoFunc("address")
+    @EchoMethod("address")
     public void addressEcho(String address
             , @ViewId(R.id.provinceEt) EditText provinceEt
             , @ViewId(R.id.cityEt) EditText cityEt
@@ -139,11 +139,11 @@ public class InfoBindConfig {
      *
      **************************************************/
     @BindField
-    @BindRg(id = R.id.numLl, onSetItem = TypeOnSetItem.class, items = {"1", "2", "3"})
+    @BindRadioGroup(id = R.id.numLl, onSetItem = TypeOnSetItem.class, items = {"1", "2", "3"})
     public String num;
 
     @BindField
-    @BindRg(id = R.id.num1Ll, onSetItem = TypeOnSetItem.class)
+    @BindRadioGroup(id = R.id.num1Ll, onSetItem = TypeOnSetItem.class)
     public int num1;
 
     /**************************************************
@@ -152,7 +152,7 @@ public class InfoBindConfig {
      *
      **************************************************/
     @BindField
-    @BindSeekbar(R.id.timeSb)
+    @BindSeekBar(R.id.timeSb)
     public float time;
 
     @ToBean("time")
@@ -160,12 +160,21 @@ public class InfoBindConfig {
         return (int) obj / 60f;
     }
 
-    @EchoFunc("time")
+    @EchoMethod("time")
     public void timeEcho(float time, @ViewId(R.id.timeSb) SeekBar timeSeekBar) {
 
     }
 
     @BindField
-    @BindSeekbar(R.id.heightSb)
+    @BindSeekBar(R.id.heightSb)
     public int height;
+
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+    @BindField
+    @BindTextView(R.id.passwordTv)
+    public String password;
 }

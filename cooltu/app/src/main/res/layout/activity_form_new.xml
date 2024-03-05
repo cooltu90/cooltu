@@ -149,6 +149,17 @@
                     android:max="50" />
 
                 <TextView
+                    android:id="@+id/passwordTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#ccc"
+                    android:gravity="center"
+                    android:text="密码"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <TextView
                     android:id="@+id/saveBt1"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"

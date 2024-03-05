@@ -1,10 +1,9 @@
-package com.codingtu.cooltu.processor.annotation.bind.echo;
+package com.codingtu.cooltu.processor.annotation.bind.binder;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-
 @Retention(RetentionPolicy.SOURCE)
-public @interface EchoFunc {
-    String value();
+public @interface BindEditText {
+    int value();
 }

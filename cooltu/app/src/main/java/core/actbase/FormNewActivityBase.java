@@ -19,6 +19,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected android.widget.EditText nicknameEt;
     protected android.widget.LinearLayout num1Ll;
     protected android.widget.EditText cityEt;
+    protected android.widget.TextView passwordTv;
     protected android.widget.EditText provinceEt;
     protected android.widget.EditText idEt;
     protected com.codingtu.cooltu.bean.Info info;
@@ -49,6 +50,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         nicknameEt = findViewById(com.codingtu.cooltu.R.id.nicknameEt);
         num1Ll = findViewById(com.codingtu.cooltu.R.id.num1Ll);
         cityEt = findViewById(com.codingtu.cooltu.R.id.cityEt);
+        passwordTv = findViewById(com.codingtu.cooltu.R.id.passwordTv);
         provinceEt = findViewById(com.codingtu.cooltu.R.id.provinceEt);
         idEt = findViewById(com.codingtu.cooltu.R.id.idEt);
 
@@ -154,6 +156,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.num1Ll, num1Ll);
         timeSb.setOnSeekBarChangeListener(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSeekBarChangeListener(this, infoBindHandler, com.codingtu.cooltu.R.id.timeSb));
         heightSb.setOnSeekBarChangeListener(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSeekBarChangeListener(this, infoBindHandler, com.codingtu.cooltu.R.id.heightSb));
+        passwordTv.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.passwordTv));
 
         if (!initInfo) {
             infoBindConfig.idEcho(info.id, idEt);
@@ -165,6 +168,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             num1Rg.setSelected(info.num1);
             infoBindConfig.timeEcho(info.time, timeSb);
             heightSb.setProgress(info.height);
+            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(passwordTv, info.password);
 
         }
         if (form == null) {
@@ -237,6 +241,10 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
                 case com.codingtu.cooltu.R.id.heightSb:
                     infoBindConfig.height = (int) msg.obj;
                     info.height = infoBindConfig.height;
+                    break;
+                case com.codingtu.cooltu.R.id.passwordTv:
+                    infoBindConfig.password = (String) msg.obj;
+                    info.password = infoBindConfig.password;
                     break;
 
             }

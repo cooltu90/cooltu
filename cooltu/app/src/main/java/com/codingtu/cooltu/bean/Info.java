@@ -20,4 +20,6 @@ public class Info {
 
     public int height;
 
+    public String password;
+
 }
