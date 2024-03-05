@@ -136,6 +136,18 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
+                <SeekBar
+                    android:id="@+id/timeSb"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:max="150" />
+
+                <SeekBar
+                    android:id="@+id/heightSb"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:max="50" />
+
                 <TextView
                     android:id="@+id/saveBt1"
                     android:layout_width="match_parent"

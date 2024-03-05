@@ -3,6 +3,7 @@ package com.codingtu.cooltu.bind;
 import android.os.Handler;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.Info;
@@ -16,6 +17,7 @@ import com.codingtu.cooltu.processor.annotation.bind.BindMethod;
 import com.codingtu.cooltu.processor.annotation.bind.ViewId;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindEt;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindRg;
+import com.codingtu.cooltu.processor.annotation.bind.binder.BindSeekbar;
 import com.codingtu.cooltu.processor.annotation.bind.binder.ViewBinder;
 import com.codingtu.cooltu.processor.annotation.bind.echo.EchoFunc;
 import com.codingtu.cooltu.processor.annotation.bind.parse.HandleView;
@@ -131,8 +133,30 @@ public class InfoBindConfig {
     @BindRg(id = R.id.numLl, onSetItem = TypeOnSetItem.class, items = {"1", "2", "3"})
     public String num;
 
-
     @BindField
     @BindRg(id = R.id.num1Ll, onSetItem = TypeOnSetItem.class)
     public int num1;
+
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+    @BindField
+    @BindSeekbar(R.id.timeSb)
+    public float time;
+
+    @ToBean("time")
+    public float toTime(Object obj) {
+        return (int) obj / 60f;
+    }
+
+    @EchoFunc("time")
+    public void timeEcho(float time, @ViewId(R.id.timeSb) SeekBar timeSeekBar) {
+
+    }
+
+    @BindField
+    @BindSeekbar(R.id.heightSb)
+    public int height;
 }

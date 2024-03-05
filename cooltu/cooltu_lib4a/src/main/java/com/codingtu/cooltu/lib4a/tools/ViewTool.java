@@ -13,11 +13,14 @@ import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.codingtu.cooltu.lib4a.CoreApp;
+import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4a.bean.WH;
+import com.codingtu.cooltu.lib4a.view.combine.RadioGroup;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 
 public class ViewTool {
@@ -420,6 +423,20 @@ public class ViewTool {
                 }
             }
         });
+    }
+
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+
+    public static RadioGroup getRadioGroup(LinearLayout ll) {
+        return (RadioGroup) ll.getTag(R.id.tag_0);
+    }
+
+    public static String getRadioGroupItem(LinearLayout ll, int selected) {
+        return getRadioGroup(ll).getItem(selected);
     }
 
 }

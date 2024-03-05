@@ -249,4 +249,9 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
     public int getIndex(String item){
         return this.items.index(item);
     }
+
+
+    public String getItem(int selected) {
+        return this.items.get(selected);
+    }
 }

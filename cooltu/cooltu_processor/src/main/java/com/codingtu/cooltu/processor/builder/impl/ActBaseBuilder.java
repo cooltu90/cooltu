@@ -21,6 +21,7 @@ import com.codingtu.cooltu.processor.annotation.bind.BindMethod;
 import com.codingtu.cooltu.processor.annotation.bind.ViewId;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindEt;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindRg;
+import com.codingtu.cooltu.processor.annotation.bind.binder.BindSeekbar;
 import com.codingtu.cooltu.processor.annotation.bind.binder.ViewBinder;
 import com.codingtu.cooltu.processor.annotation.bind.echo.EchoFunc;
 import com.codingtu.cooltu.processor.annotation.bind.echo.NoEcho;
@@ -740,6 +741,36 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                                 info.bindConfigKv.v, ElementTools.simpleName(veInfo.echoMethodEe), info.bindBeanKv.v, veInfo.fieldKv.v, param);
                     }
 
+                    BindSeekbar bindSeekbar = veInfo.ve.getAnnotation(BindSeekbar.class);
+                    if (bindSeekbar != null) {
+                        veInfo.annoClass = BindSeekbar.class;
+                        veInfo.annoValue = bindSeekbar.value();
+
+                        dealBind(info, veInfo, new DealBind() {
+                            @Override
+                            public void dealBind() {
+                                addLnTag(info.bindSb, "        [timeSb].setOnSeekBarChangeListener(new [HandlerOnSeekBarChangeListener](this, [infoBindHandler], [rPkg].R.id.[timeSb]));",
+                                        veInfo.viewFieldName, FullName.HANDLER_ON_SEEK_BAR_CHANGE_LISTENER, info.handlerKv.v, Pkg.R, veInfo.id.rName);
+                            }
+
+                            @Override
+                            public void dealEcho() {
+                                if (ClassTool.isInt(veInfo.fieldOriKv.k) || ClassTool.isInteger(veInfo.fieldOriKv.k)) {
+                                    addLnTag(info.echoSb, "            [timeSb].setProgress([info].[time]);",
+                                            veInfo.viewFieldName, info.bindBeanKv.v, veInfo.fieldKv.v);
+                                }
+                            }
+
+                            @Override
+                            public void dealToBean() {
+                                if (ClassTool.isInt(veInfo.fieldOriKv.k) || ClassTool.isInteger(veInfo.fieldOriKv.k)) {
+                                    addLnTag(info.handleSb, "                    [infoBindConfig].[height] = (int) msg.obj;",
+                                            info.bindConfigKv.v, veInfo.fieldOriKv.v);
+                                }
+                            }
+                        });
+                    }
+
                     BindRg bindRg = veInfo.ve.getAnnotation(BindRg.class);
                     if (bindRg != null) {
                         veInfo.annoClass = BindRg.class;
@@ -748,28 +779,33 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         dealBind(info, veInfo, new DealBind() {
                             @Override
                             public void dealBind() {
-                                addLnTag(info.bindSb, "        [num1]Rg.addOnSelectChange(new [HandlerOnSelectChange]([infoBindHandler], [rPkg].R.id.[numLl]));",
+                                addLnTag(info.bindSb, "        [num1]Rg.addOnSelectChange(new [HandlerOnSelectChange](this, [infoBindHandler], [rPkg].R.id.[numLl]));",
                                         veInfo.fieldOriKv.v, FullName.HANDLER_ON_SELECT_CHANGE, info.handlerKv.v, Pkg.R, veInfo.id.rName);
+                                addLnTag(info.bindSb, "        link([infoBindHandler].linkMap, [rPkg].R.id.[numLl], [numLl]);",
+                                        info.handlerKv.v, Pkg.R, veInfo.id.rName, veInfo.viewFieldName);
                             }
 
                             @Override
                             public void dealEcho() {
-                                if (CountTool.isNull(bindRg.items())) {
-                                    if (ClassTool.isInt(veInfo.fieldOriKv.k) || ClassTool.isInteger(veInfo.fieldOriKv.k)) {
-                                        addLnTag(info.echoSb, "            [num1]Rg.setSelected([info].[num1]);",
-                                                veInfo.fieldOriKv.v, info.bindBeanKv.v, veInfo.fieldKv.v);
-                                    }
-                                } else {
-                                    if (ClassTool.isString(veInfo.fieldOriKv.k)) {
-                                        addLnTag(info.echoSb, "            [num]Rg.setSelected([num]Rg.getIndex([info].[num]));",
-                                                veInfo.fieldOriKv.v, veInfo.fieldOriKv.v, info.bindBeanKv.v, veInfo.fieldKv.v);
-                                    }
+                                if (ClassTool.isString(veInfo.fieldOriKv.k)) {
+                                    addLnTag(info.echoSb, "            [num]Rg.setSelected([num]Rg.getIndex([info].[num]));",
+                                            veInfo.fieldOriKv.v, veInfo.fieldOriKv.v, info.bindBeanKv.v, veInfo.fieldKv.v);
+                                } else if (ClassTool.isInt(veInfo.fieldOriKv.k) || ClassTool.isInteger(veInfo.fieldOriKv.k)) {
+                                    addLnTag(info.echoSb, "            [num1]Rg.setSelected([info].[num1]);",
+                                            veInfo.fieldOriKv.v, info.bindBeanKv.v, veInfo.fieldKv.v);
                                 }
                             }
 
                             @Override
                             public void dealToBean() {
-
+                                if (ClassTool.isString(veInfo.fieldOriKv.k)) {
+                                    addLnTag(info.handleSb,
+                                            "                    [infoBindConfig].[num] = [ViewTool].getRadioGroupItem((android.widget.LinearLayout) linkObjs.get(0), (int) msg.obj);",
+                                            info.bindConfigKv.v, veInfo.fieldOriKv.v, FullName.VIEW_TOOL);
+                                } else if (ClassTool.isInteger(veInfo.fieldOriKv.k) || ClassTool.isInt(veInfo.fieldOriKv.k)) {
+                                    addLnTag(info.handleSb, "                    [infoBindConfig].[num1] = (int) msg.obj;",
+                                            info.bindConfigKv.v, veInfo.fieldOriKv.v);
+                                }
                             }
                         });
 

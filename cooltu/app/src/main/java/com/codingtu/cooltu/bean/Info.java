@@ -16,4 +16,8 @@ public class Info {
 
     public int num1;
 
+    public float time;
+
+    public int height;
+
 }

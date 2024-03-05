@@ -4,23 +4,24 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.SeekBar;
 
-public class HandlerOnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
-    private final Handler handler;
-    private final int type;
-    private final int index;
+import com.codingtu.cooltu.lib4j.destory.Destroys;
+import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 
-    public HandlerOnSeekBarChangeListener(Handler handler, int type, int index) {
+public class HandlerOnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener, OnDestroy {
+    private Handler handler;
+    private final int viewId;
+
+    public HandlerOnSeekBarChangeListener(Destroys destroys, Handler handler, int viewId) {
+        destroys.add(this);
         this.handler = handler;
-        this.type = type;
-        this.index = index;
+        this.viewId = viewId;
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         Message message = Message.obtain();
+        message.what = viewId;
         message.obj = progress;
-        message.what = type;
-        message.arg1 = index;
         handler.sendMessage(message);
     }
 
@@ -32,5 +33,10 @@ public class HandlerOnSeekBarChangeListener implements SeekBar.OnSeekBarChangeLi
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
 
+    }
+
+    @Override
+    public void destroy() {
+        handler = null;
     }
 }

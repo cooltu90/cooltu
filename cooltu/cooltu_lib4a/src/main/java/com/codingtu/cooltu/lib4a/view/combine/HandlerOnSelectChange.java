@@ -3,6 +3,7 @@ package com.codingtu.cooltu.lib4a.view.combine;
 import android.os.Handler;
 import android.os.Message;
 
+import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 
 public class HandlerOnSelectChange implements RadioGroup.OnSelectChange, OnDestroy {
@@ -10,7 +11,8 @@ public class HandlerOnSelectChange implements RadioGroup.OnSelectChange, OnDestr
     private Handler handler;
     private int viewId;
 
-    public HandlerOnSelectChange(Handler handler, int viewId) {
+    public HandlerOnSelectChange(Destroys destroys,Handler handler, int viewId) {
+        destroys.add(this);
         this.handler = handler;
         this.viewId = viewId;
     }

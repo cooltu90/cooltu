@@ -10,13 +10,15 @@ import retrofit2.adapter.rxjava2.Result;
 public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
     protected android.widget.LinearLayout numLl;
     protected android.widget.TextView saveBt1;
-    protected android.widget.EditText nicknameEt;
-    protected android.widget.LinearLayout num1Ll;
     protected android.widget.TextView saveBt2;
     protected android.widget.EditText nameEt;
-    protected android.widget.EditText cityEt;
     protected android.widget.EditText areaEt;
     protected android.widget.EditText ageEt;
+    protected android.widget.SeekBar heightSb;
+    protected android.widget.SeekBar timeSb;
+    protected android.widget.EditText nicknameEt;
+    protected android.widget.LinearLayout num1Ll;
+    protected android.widget.EditText cityEt;
     protected android.widget.EditText provinceEt;
     protected android.widget.EditText idEt;
     protected com.codingtu.cooltu.bean.Info info;
@@ -38,13 +40,15 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
         numLl = findViewById(com.codingtu.cooltu.R.id.numLl);
         saveBt1 = findViewById(com.codingtu.cooltu.R.id.saveBt1);
-        nicknameEt = findViewById(com.codingtu.cooltu.R.id.nicknameEt);
-        num1Ll = findViewById(com.codingtu.cooltu.R.id.num1Ll);
         saveBt2 = findViewById(com.codingtu.cooltu.R.id.saveBt2);
         nameEt = findViewById(com.codingtu.cooltu.R.id.nameEt);
-        cityEt = findViewById(com.codingtu.cooltu.R.id.cityEt);
         areaEt = findViewById(com.codingtu.cooltu.R.id.areaEt);
         ageEt = findViewById(com.codingtu.cooltu.R.id.ageEt);
+        heightSb = findViewById(com.codingtu.cooltu.R.id.heightSb);
+        timeSb = findViewById(com.codingtu.cooltu.R.id.timeSb);
+        nicknameEt = findViewById(com.codingtu.cooltu.R.id.nicknameEt);
+        num1Ll = findViewById(com.codingtu.cooltu.R.id.num1Ll);
+        cityEt = findViewById(com.codingtu.cooltu.R.id.cityEt);
         provinceEt = findViewById(com.codingtu.cooltu.R.id.provinceEt);
         idEt = findViewById(com.codingtu.cooltu.R.id.idEt);
 
@@ -138,8 +142,12 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, provinceEt, infoBindHandler);
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, cityEt, infoBindHandler);
         com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, areaEt, infoBindHandler);
-        numRg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(infoBindHandler, com.codingtu.cooltu.R.id.numLl));
-        num1Rg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(infoBindHandler, com.codingtu.cooltu.R.id.num1Ll));
+        numRg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(this, infoBindHandler, com.codingtu.cooltu.R.id.numLl));
+        link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.numLl, numLl);
+        num1Rg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(this, infoBindHandler, com.codingtu.cooltu.R.id.num1Ll));
+        link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.num1Ll, num1Ll);
+        timeSb.setOnSeekBarChangeListener(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSeekBarChangeListener(this, infoBindHandler, com.codingtu.cooltu.R.id.timeSb));
+        heightSb.setOnSeekBarChangeListener(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSeekBarChangeListener(this, infoBindHandler, com.codingtu.cooltu.R.id.heightSb));
 
         if (!initInfo) {
             infoBindConfig.idEcho(info.id, idEt);
@@ -149,6 +157,8 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             infoBindConfig.addressEcho(info.address, provinceEt, cityEt, areaEt);
             numRg.setSelected(numRg.getIndex(info.num));
             num1Rg.setSelected(info.num1);
+            infoBindConfig.timeEcho(info.time, timeSb);
+            heightSb.setProgress(info.height);
 
         }
         if (form == null) {
@@ -207,10 +217,20 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
                     infoBindConfig.area = (String) msg.obj;
                     break;
                 case com.codingtu.cooltu.R.id.numLl:
+                    infoBindConfig.num = com.codingtu.cooltu.lib4a.tools.ViewTool.getRadioGroupItem((android.widget.LinearLayout) linkObjs.get(0), (int) msg.obj);
                     info.num = infoBindConfig.num;
                     break;
                 case com.codingtu.cooltu.R.id.num1Ll:
+                    infoBindConfig.num1 = (int) msg.obj;
                     info.num1 = infoBindConfig.num1;
+                    break;
+                case com.codingtu.cooltu.R.id.timeSb:
+                    infoBindConfig.time = infoBindConfig.toTime(msg.obj);
+                    info.time = infoBindConfig.time;
+                    break;
+                case com.codingtu.cooltu.R.id.heightSb:
+                    infoBindConfig.height = (int) msg.obj;
+                    info.height = infoBindConfig.height;
                     break;
 
             }
