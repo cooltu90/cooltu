@@ -2,7 +2,6 @@ package com.codingtu.cooltu.bind;
 
 import android.os.Handler;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
 import com.codingtu.cooltu.R;
@@ -19,6 +18,8 @@ import com.codingtu.cooltu.processor.annotation.bind.binder.BindEt;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindRg;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindSeekbar;
 import com.codingtu.cooltu.processor.annotation.bind.binder.ViewBinder;
+import com.codingtu.cooltu.processor.annotation.bind.check.Check;
+import com.codingtu.cooltu.processor.annotation.bind.check.CheckedMethod;
 import com.codingtu.cooltu.processor.annotation.bind.echo.EchoFunc;
 import com.codingtu.cooltu.processor.annotation.bind.parse.HandleView;
 import com.codingtu.cooltu.processor.annotation.bind.parse.ToBean;
@@ -33,7 +34,13 @@ public class InfoBindConfig {
      **************************************************/
     @BindField
     @BindEt(R.id.idEt)
+    @Check(prompt = "请输入正确的id")
     public long id;
+
+    @CheckedMethod("id")
+    public boolean checkId(long id) {
+        return false;
+    }
 
     @EchoFunc("id")
     public void idEcho(long id, @ViewId(R.id.idEt) EditText idEt) {
@@ -45,6 +52,7 @@ public class InfoBindConfig {
         return Long.parseLong((String) obj);
     }
 
+
     /**************************************************
      *
      * name
@@ -52,6 +60,7 @@ public class InfoBindConfig {
      **************************************************/
     @BindField
     @BindEt(R.id.nameEt)
+    @Check(prompt = "请输入姓名")
     public String name;
 
     @HandleView(R.id.nameEt)
@@ -80,7 +89,7 @@ public class InfoBindConfig {
 
     @BindMethod(R.id.ageEt)
     public void bindAgeEt(Destroys destroys, EditText ageEt, Handler handler) {
-        BindTool.bindEt(destroys, ageEt, handler);
+//        BindTool.bindEt(destroys, ageEt, handler);
     }
 
     @EchoFunc("age")

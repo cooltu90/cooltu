@@ -16,9 +16,6 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
     protected android.widget.EditText ageEt;
     protected android.widget.EditText provinceEt;
     protected android.widget.LinearLayout classLl;
-    protected com.codingtu.cooltu.bean.FormObj forms;
-    protected boolean initFormBean;
-    public BindHandler bindHandler;
 
 
     @Override
@@ -40,32 +37,6 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
 
 
 
-        initFormView();
-        if (forms == null) {
-            forms = new com.codingtu.cooltu.bean.FormObj();
-            initFormBean = true;
-        }
-        bindHandler = new BindHandler(forms);
-        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(nameEt);
-        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(ageEt);
-        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(provinceEt);
-        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(cityEt);
-        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(areaEt);
-        com.codingtu.cooltu.form.TypeOnSetItem typeOnSetItem = new com.codingtu.cooltu.form.TypeOnSetItem();
-        new com.codingtu.cooltu.lib4a.form.push.DefaultRadioGroupPush()
-                .destory(this).bindHandler(bindHandler)
-                .onSetItem(typeOnSetItem).selected(-1).addView(classLl);
-        new com.codingtu.cooltu.lib4a.form.push.DefaultSeekBarPush().destory(this).bindHandler(bindHandler).addView(timeSb);
-        if (!initFormBean) {
-            forms.nameEcho(nameEt,forms.name);
-            forms.nameEcho(ageEt,forms.age);
-            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(provinceEt, forms.province);
-            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(cityEt, forms.city);
-            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(areaEt, forms.area);
-            getRadioGroup(classLl).setSelected(forms.classIndex);
-            timeSb.setProgress(forms.seekBar);
-        }
-
 
         onCreateComplete();
 
@@ -75,7 +46,6 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
     public void onCreateComplete() {
         super.onCreateComplete();
 
-        submitBt.setOnClickListener(this);
 
 
     }
@@ -85,15 +55,10 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
         super.onClick(v);
 
         switch (v.getId()) {
-            case com.codingtu.cooltu.R.id.submitBt:
-                submitBtClick(
-                );
-                break;
 
         }
     }
 
-    protected void submitBtClick() {}
 
 
     @Override
@@ -134,56 +99,6 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
 
 
 
-
-    protected void initFormView() {}
-
-    private boolean checkFormObj() {
-        return true;
-    }
-    public static class BindHandler extends android.os.Handler {
-
-        private com.codingtu.cooltu.bean.FormObj forms;
-        private com.codingtu.cooltu.lib4j.data.map.ListValueMap<Integer, Object> linkMap = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
-
-        public BindHandler(com.codingtu.cooltu.bean.FormObj forms) {
-            this.forms = forms;
-        }
-
-        @Override
-        public void handleMessage(android.os.Message msg) {
-            super.handleMessage(msg);
-            List views = linkMap.get(msg.what);
-            switch (msg.what) {
-                case com.codingtu.cooltu.R.id.nameEt:
-                    forms.name = (java.lang.String) msg.obj;
-                    break;
-                case com.codingtu.cooltu.R.id.ageEt:
-                    forms.age = (java.lang.String) msg.obj;
-                    break;
-                case com.codingtu.cooltu.R.id.provinceEt:
-                    forms.province = (java.lang.String) msg.obj;
-                    break;
-                case com.codingtu.cooltu.R.id.cityEt:
-                    forms.city = (java.lang.String) msg.obj;
-                    break;
-                case com.codingtu.cooltu.R.id.areaEt:
-                    forms.area = (java.lang.String) msg.obj;
-                    break;
-                case com.codingtu.cooltu.R.id.classLl:
-                    forms.classIndex = (int) msg.obj;
-                    break;
-                case com.codingtu.cooltu.R.id.timeSb:
-                    forms.seekBar = (int) msg.obj;
-                    break;
-            }
-        }
-        public void link(int handleId, Object... linkViews) {
-            linkMap.get(handleId).addAll(com.codingtu.cooltu.lib4j.ts.Ts.ts(linkViews).toList());
-        }
-    }
-    private com.codingtu.cooltu.lib4a.view.combine.RadioGroup getRadioGroup(android.view.ViewGroup viewGroup) {
-        return ((com.codingtu.cooltu.lib4a.view.combine.RadioGroup) viewGroup.getTag(com.codingtu.cooltu.lib4a.R.id.tag_0));
-    }
 
 
 

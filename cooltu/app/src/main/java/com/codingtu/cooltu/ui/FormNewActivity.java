@@ -8,6 +8,7 @@ import com.codingtu.cooltu.bind.InfoBindConfig;
 import com.codingtu.cooltu.processor.annotation.bind.Bind;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
+import com.codingtu.cooltu.processor.annotation.ui.ClickView;
 
 import core.actbase.FormNewActivityBase;
 import core.actres.FormNewActivityRes;
@@ -20,6 +21,11 @@ public class FormNewActivity extends FormNewActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @ClickView(value = R.id.saveBt1, check = true)
+    public void saveBt1Click() {
+
     }
 }
 

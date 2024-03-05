@@ -67,6 +67,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
     public void onCreateComplete() {
         super.onCreateComplete();
 
+        saveBt1.setOnClickListener(this);
 
 
     }
@@ -75,10 +76,15 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case com.codingtu.cooltu.R.id.saveBt1:
+                saveBt1Click(
+                );
+                break;
 
         }
     }
 
+    protected void saveBt1Click() {}
 
 
     @Override
@@ -134,14 +140,14 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             initInfo = true;
         }
         infoBindHandler = new InfoBindHandler(info, infoBindConfig);
-        com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, idEt, infoBindHandler);
-        com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, nameEt, infoBindHandler);
+        idEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.idEt));
+        nameEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.nameEt));
         link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.nameEt, nicknameEt);
-        com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, nicknameEt, infoBindHandler);
+        nicknameEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.nicknameEt));
         infoBindConfig.bindAgeEt(this, ageEt, infoBindHandler);
-        com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, provinceEt, infoBindHandler);
-        com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, cityEt, infoBindHandler);
-        com.codingtu.cooltu.lib4a.bind.BindTool.bindEt(this, areaEt, infoBindHandler);
+        provinceEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.provinceEt));
+        cityEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.cityEt));
+        areaEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.areaEt));
         numRg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(this, infoBindHandler, com.codingtu.cooltu.R.id.numLl));
         link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.numLl, numLl);
         num1Rg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(this, infoBindHandler, com.codingtu.cooltu.R.id.num1Ll));
@@ -236,6 +242,18 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             }
         }
     }
+    private boolean checkInfo() {
+        if (!infoBindConfig.checkId(info.id)) {
+            toast("请输入正确的id");
+            return false;
+        }
+        if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(info.name)) {
+            toast("请输入姓名");
+            return false;
+        }
+
+        return true;
+    }
     public static class FormBindHandler extends android.os.Handler {
         private com.codingtu.cooltu.bean.Form form;
         private com.codingtu.cooltu.bind.FormBindConfig formBindConfig;
@@ -254,9 +272,14 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             }
         }
     }
+    private boolean checkForm() {
+
+        return true;
+    }
     public void link(com.codingtu.cooltu.lib4j.data.map.ListValueMap<Integer, Object> linkMap, int handleId, Object... linkViews) {
         linkMap.get(handleId).addAll(com.codingtu.cooltu.lib4j.ts.Ts.ts(linkViews).toList());
     }
+
 
 
 

@@ -19,9 +19,6 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
     protected android.widget.LinearLayout classLl;
     protected android.widget.EditText schoolEt;
     protected android.widget.TextView otherBt;
-    protected com.codingtu.cooltu.bean.Photo photo;
-    protected boolean initFormBean;
-    public BindHandler bindHandler;
 
 
     @Override
@@ -45,41 +42,6 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
 
 
 
-
-        initFormView();
-        if (photo == null) {
-            photo = new com.codingtu.cooltu.bean.Photo();
-            initFormBean = true;
-        }
-        bindHandler = new BindHandler(photo);
-        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(schoolEt);
-        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(labelEt);
-        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(name1Et);
-        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(name2Et);
-        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(classEt);
-        com.codingtu.cooltu.form.TypeOnSetItem typeOnSetItem = new com.codingtu.cooltu.form.TypeOnSetItem();
-        new com.codingtu.cooltu.lib4a.form.push.DefaultRadioGroupPush()
-                .destory(this).bindHandler(bindHandler)
-                .onSetItem(typeOnSetItem).selected(-1).addView(classLl);
-        new com.codingtu.cooltu.lib4a.form.push.DefaultRadioGroupPush()
-                .destory(this).bindHandler(bindHandler)
-                .onSetItem(typeOnSetItem).selected(-1).addView(numberLl);
-        new com.codingtu.cooltu.lib4a.form.push.DefaultEditTextPush().destory(this).bindHandler(bindHandler).addView(otherEt);
-        new com.codingtu.cooltu.lib4a.form.push.DefaultSeekBarPush().destory(this).bindHandler(bindHandler).addView(timeSb);
-        bindHandler.link(com.codingtu.cooltu.R.id.classLl, classEt);
-        bindHandler.link(com.codingtu.cooltu.R.id.numberLl, otherEt);
-        bindHandler.link(com.codingtu.cooltu.R.id.otherEt, getRadioGroup(numberLl), otherBt);
-        bindHandler.link(com.codingtu.cooltu.R.id.name1Et, name2Et);
-        if (!initFormBean) {
-            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(labelEt, photo.label);
-            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(name1Et, photo.name1);
-            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(name2Et, photo.name2);
-            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(classEt, photo.className);
-            getRadioGroup(classLl).setSelected(photo.classType);
-            getRadioGroup(numberLl).setSelected(photo.numbers);
-            com.codingtu.cooltu.lib4a.tools.ViewTool.setText(otherEt, photo.others);
-            timeSb.setProgress(photo.time);
-        }
 
 
         onCreateComplete();
@@ -183,94 +145,6 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
     }
 
 
-
-    protected void initFormView() {}
-
-    private boolean checkPhoto() {
-        if (!photo.checkLabel(photo.school)) {
-            toast("请输入学校");
-            return false;
-        }
-        if (!photo.checkLabel(photo.label)) {
-            toast("请输入标签");
-            return false;
-        }
-        if (!photo.checkLabel(photo.name1)) {
-            toast("请输入name1");
-            return false;
-        }
-        if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(photo.name2)) {
-            toast("请输入name2");
-            return false;
-        }
-        if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(photo.className)) {
-            toast("请输入班级名");
-            return false;
-        }
-        if (photo.classType < 0) {
-            toast("请选择班级类型");
-            return false;
-        }
-        if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(photo.others)) {
-            toast("请输入数字");
-            return false;
-        }
-        return true;
-    }
-    public static class BindHandler extends android.os.Handler {
-
-        private com.codingtu.cooltu.bean.Photo photo;
-        private com.codingtu.cooltu.lib4j.data.map.ListValueMap<Integer, Object> linkMap = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
-
-        public BindHandler(com.codingtu.cooltu.bean.Photo photo) {
-            this.photo = photo;
-        }
-
-        @Override
-        public void handleMessage(android.os.Message msg) {
-            super.handleMessage(msg);
-            List views = linkMap.get(msg.what);
-            switch (msg.what) {
-                case com.codingtu.cooltu.R.id.schoolEt:
-                    photo.school = (java.lang.String) msg.obj;
-                    break;
-                case com.codingtu.cooltu.R.id.labelEt:
-                    photo.label = (java.lang.String) msg.obj;
-                    break;
-                case com.codingtu.cooltu.R.id.name1Et:
-                    photo.name1 = (java.lang.String) msg.obj;
-                    photo.dealName1((android.widget.EditText) views.get(0));
-                    break;
-                case com.codingtu.cooltu.R.id.name2Et:
-                    photo.name2 = (java.lang.String) msg.obj;
-                    break;
-                case com.codingtu.cooltu.R.id.classEt:
-                    photo.className = (java.lang.String) msg.obj;
-                    break;
-                case com.codingtu.cooltu.R.id.classLl:
-                    photo.classType = (int) msg.obj;
-                    photo.dealClass((android.widget.EditText) views.get(0));
-                    break;
-                case com.codingtu.cooltu.R.id.numberLl:
-                    photo.numbers = (int) msg.obj;
-                    photo.dealNumbers((android.widget.EditText) views.get(0));
-                    break;
-                case com.codingtu.cooltu.R.id.otherEt:
-                    photo.others = (java.lang.String) msg.obj;
-                    photo.dealOthers((com.codingtu.cooltu.lib4a.view.combine.RadioGroup) views.get(0), (android.widget.TextView) views.get(1));
-                    break;
-                case com.codingtu.cooltu.R.id.timeSb:
-                    photo.time = (int) msg.obj;
-                    break;
-            }
-        }
-        public void link(int handleId, Object... linkViews) {
-            linkMap.get(handleId).addAll(com.codingtu.cooltu.lib4j.ts.Ts.ts(linkViews).toList());
-        }
-    }
-    private com.codingtu.cooltu.lib4a.view.combine.RadioGroup getRadioGroup(android.view.ViewGroup viewGroup) {
-        return ((com.codingtu.cooltu.lib4a.view.combine.RadioGroup) viewGroup.getTag(com.codingtu.cooltu.lib4a.R.id.tag_0));
-    }
 
 
     /**************************************************

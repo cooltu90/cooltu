@@ -21,5 +21,7 @@ public class DealBindInfo {
     public StringBuilder bindSb;
     public StringBuilder echoSb;
     public StringBuilder handleSb;
+    public StringBuilder checkSb;
     public Map<String, KV<String, String>> onSetItemMap;
+    public Map<String, ExecutableElement> checkMethodMap;
 }
