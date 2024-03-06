@@ -555,9 +555,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
         addLnTag(initBindViewSb, "        if ([info] == null) {", info.bindBeanKv.v);
         addLnTag(initBindViewSb, "            [info] = new [Info]();", info.bindBeanKv.v, info.bindBeanKv.k);
-        addLnTag(initBindViewSb, "            [infoBindConfig] = new [InfoBindConfig]();", info.bindConfigKv.v, info.bindConfigKv.k);
         addLnTag(initBindViewSb, "            [initName] = true;", info.initKv.v);
         addLnTag(initBindViewSb, "        }");
+        addLnTag(initBindViewSb, "        [infoBindConfig] = new [InfoBindConfig]();", info.bindConfigKv.v, info.bindConfigKv.k);
         addLnTag(initBindViewSb, "        [infoBindHandler] = new [InfoBindHandler]([info], [infoBindConfig]);",
                 info.handlerKv.v, info.handlerKv.k, info.bindBeanKv.v, info.bindConfigKv.v);
         //绑定事件

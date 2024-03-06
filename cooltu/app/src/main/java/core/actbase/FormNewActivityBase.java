@@ -138,9 +138,9 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         beforeInitBindView();
         if (info == null) {
             info = new com.codingtu.cooltu.bean.Info();
-            infoBindConfig = new com.codingtu.cooltu.bind.InfoBindConfig();
             initInfo = true;
         }
+        infoBindConfig = new com.codingtu.cooltu.bind.InfoBindConfig();
         infoBindHandler = new InfoBindHandler(info, infoBindConfig);
         idEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.idEt));
         nameEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.nameEt));
@@ -172,9 +172,9 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         }
         if (form == null) {
             form = new com.codingtu.cooltu.bean.Form();
-            formBindConfig = new com.codingtu.cooltu.bind.FormBindConfig();
             initForm = true;
         }
+        formBindConfig = new com.codingtu.cooltu.bind.FormBindConfig();
         formBindHandler = new FormBindHandler(form, formBindConfig);
 
         if (!initForm) {
