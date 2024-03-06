@@ -227,7 +227,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
                     infoBindConfig.area = (String) msg.obj;
                     break;
                 case com.codingtu.cooltu.R.id.numLl:
-                    infoBindConfig.num = com.codingtu.cooltu.lib4a.tools.ViewTool.getRadioGroupItem((android.widget.LinearLayout) linkObjs.get(0), (int) msg.obj);
+                    infoBindConfig.num = com.codingtu.cooltu.lib4a.tools.ViewTool.getRadioGroupItem((android.view.ViewGroup) linkObjs.get(0), (int) msg.obj);
                     info.num = infoBindConfig.num;
                     break;
                 case com.codingtu.cooltu.R.id.num1Ll:

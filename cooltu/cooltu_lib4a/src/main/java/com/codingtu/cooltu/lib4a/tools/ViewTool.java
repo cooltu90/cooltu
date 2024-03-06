@@ -431,12 +431,12 @@ public class ViewTool {
      *
      **************************************************/
 
-    public static RadioGroup getRadioGroup(LinearLayout ll) {
-        return (RadioGroup) ll.getTag(R.id.tag_0);
+    public static RadioGroup getRadioGroup(ViewGroup viewGroup) {
+        return (RadioGroup) viewGroup.getTag(R.id.tag_0);
     }
 
-    public static String getRadioGroupItem(LinearLayout ll, int selected) {
-        return getRadioGroup(ll).getItem(selected);
+    public static String getRadioGroupItem(ViewGroup viewGroup, int selected) {
+        return getRadioGroup(viewGroup).getItem(selected);
     }
 
 }
