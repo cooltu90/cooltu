@@ -387,7 +387,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         veInfo.annoClass = BindRadioGroup.class;
                         veInfo.annoValue = bindRg.id();
 
-                        dealBind(info, veInfo, new DealBind() {
+                        dealBind(info, veInfo, 1, new DealBind() {
                             @Override
                             public void dealBind() {
                                 addLnTag(info.bindSb, "        [num1]Rg.addOnSelectChange(new [HandlerOnSelectChange](this, [infoBindHandler], [rPkg].R.id.[numLl]));",
@@ -618,6 +618,10 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     }
 
     private void dealBind(DealBindInfo info, DealBindVeInfo veInfo, DealBind dealBind) {
+        dealBind(info, veInfo, 0, dealBind);
+    }
+
+    private void dealBind(DealBindInfo info, DealBindVeInfo veInfo, int handleViewSkip, DealBind dealBind) {
         veInfo.id = IdTools.elementToId(veInfo.ve, veInfo.annoClass, veInfo.annoValue);
         veInfo.viewFieldName = getViewFieldName(veInfo.id);
         dealBind.dealBind();
@@ -651,7 +655,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         return null;
                     }
                     KV<String, String> kv = ElementTools.getFieldKv(ve);
-                    return "(" + kv.k + ") linkObjs.get(" + (index - 1) + ")";
+                    return "(" + kv.k + ") linkObjs.get(" + (index - 1 + handleViewSkip) + ")";
                 }
             });
             if (StringTool.isNotBlank(param)) {
@@ -667,7 +671,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     public String convert(int index, VariableElement ve) {
                         if (index == 0)
                             return null;
-                        return ElementTools.getFieldKv(ve).v;
+                        return getViewFieldName(ve);
                     }
                 });
                 addLnTag(info.bindSb, "        link([infoBindHandler].linkMap, [rPkg].R.id.[nameEt], [nicknameEt]);",

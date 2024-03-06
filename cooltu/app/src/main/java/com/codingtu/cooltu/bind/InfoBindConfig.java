@@ -2,6 +2,7 @@ package com.codingtu.cooltu.bind;
 
 import android.os.Handler;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
 import com.codingtu.cooltu.R;
@@ -64,8 +65,8 @@ public class InfoBindConfig {
     public String name;
 
     @HandleView(R.id.nameEt)
-    public void handleView(Info info, @ViewId(R.id.nicknameEt) EditText nicknameEt) {
-        ViewTool.setEditTextAndSelection(nicknameEt, name);
+    public void handleView(Info info, @ViewId(R.id.nicknameEt) EditText nnEt) {
+        ViewTool.setEditTextAndSelection(nnEt, name);
     }
 
     /**************************************************
@@ -145,6 +146,11 @@ public class InfoBindConfig {
     @BindField
     @BindRadioGroup(id = R.id.num1Ll, onSetItem = TypeOnSetItem.class)
     public int num1;
+
+    @HandleView(R.id.num1Ll)
+    public void handNum1(Info info,@ViewId(R.id.numLl) LinearLayout numLl){
+
+    }
 
     /**************************************************
      *
