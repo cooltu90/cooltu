@@ -143,14 +143,9 @@ public class InfoBindConfig {
     @BindRadioGroup(id = R.id.numLl, onSetItem = TypeOnSetItem.class, items = {"1", "2", "3"})
     public String num;
 
-    @BindField
     @BindRadioGroup(id = R.id.num1Ll, onSetItem = TypeOnSetItem.class)
     public int num1;
 
-    @HandleView(R.id.num1Ll)
-    public void handNum1(Info info,@ViewId(R.id.numLl) LinearLayout numLl){
-
-    }
 
     /**************************************************
      *

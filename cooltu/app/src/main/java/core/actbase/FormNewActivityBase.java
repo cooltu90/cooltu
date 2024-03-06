@@ -154,7 +154,6 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.numLl, numLl);
         num1Rg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(this, infoBindHandler, com.codingtu.cooltu.R.id.num1Ll));
         link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.num1Ll, num1Ll);
-        link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.num1Ll, numLl);
         timeSb.setOnSeekBarChangeListener(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSeekBarChangeListener(this, infoBindHandler, com.codingtu.cooltu.R.id.timeSb));
         heightSb.setOnSeekBarChangeListener(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSeekBarChangeListener(this, infoBindHandler, com.codingtu.cooltu.R.id.heightSb));
         passwordTv.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.passwordTv));
@@ -166,7 +165,6 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             infoBindConfig.ageEcho(info.age, ageEt);
             infoBindConfig.addressEcho(info.address, provinceEt, cityEt, areaEt);
             numRg.setSelected(numRg.getIndex(info.num));
-            num1Rg.setSelected(info.num1);
             infoBindConfig.timeEcho(info.time, timeSb);
             heightSb.setProgress(info.height);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(passwordTv, info.password);
@@ -233,8 +231,6 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
                     break;
                 case com.codingtu.cooltu.R.id.num1Ll:
                     infoBindConfig.num1 = (int) msg.obj;
-                    info.num1 = infoBindConfig.num1;
-                    infoBindConfig.handNum1(info, (android.widget.LinearLayout) linkObjs.get(1));
                     break;
                 case com.codingtu.cooltu.R.id.timeSb:
                     infoBindConfig.time = infoBindConfig.toTime(msg.obj);

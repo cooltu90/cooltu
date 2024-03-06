@@ -307,11 +307,10 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     veInfo.ve = (VariableElement) element;
                     BindField bindField = veInfo.ve.getAnnotation(BindField.class);
                     veInfo.noEcho = veInfo.ve.getAnnotation(NoEcho.class);
-                    veInfo.fieldOriKv = null;
+                    veInfo.fieldOriKv = ElementTools.getFieldKv(veInfo.ve);
                     veInfo.fieldKv = null;
                     veInfo.echoMethodEe = null;
                     if (bindField != null) {
-                        veInfo.fieldOriKv = ElementTools.getFieldKv(veInfo.ve);
                         veInfo.fieldKv = BeanTools.getBeanKv(veInfo.ve, bindField.value());
                         veInfo.echoMethodEe = info.echoMethodMap.get(veInfo.fieldOriKv.v);
                         Check check = veInfo.ve.getAnnotation(Check.class);
@@ -336,7 +335,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         }
                     }
 
-                    if (veInfo.fieldOriKv != null && veInfo.noEcho == null && veInfo.echoMethodEe != null) {
+                    if (veInfo.fieldKv != null && veInfo.noEcho == null && veInfo.echoMethodEe != null) {
                         List<VariableElement> ves = ElementTools.getVariableElements(veInfo.echoMethodEe);
                         String param = Params.getParam(ves, new Ts.Convert<VariableElement, String>() {
                             @Override
@@ -625,13 +624,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         veInfo.id = IdTools.elementToId(veInfo.ve, veInfo.annoClass, veInfo.annoValue);
         veInfo.viewFieldName = getViewFieldName(veInfo.id);
         dealBind.dealBind();
-        if (veInfo.fieldOriKv != null && veInfo.noEcho == null && veInfo.echoMethodEe == null) {
+        if (veInfo.fieldKv != null && veInfo.noEcho == null && veInfo.echoMethodEe == null) {
             dealBind.dealEcho();
         }
         addLnTag(info.handleSb, "                case [rPkg].R.id.[nameEt]:", Pkg.R, veInfo.viewFieldName);
-        if (veInfo.fieldOriKv == null) {
-            veInfo.fieldOriKv = ElementTools.getFieldKv(veInfo.ve);
-        }
+
         ExecutableElement toBeanEe = info.toBeanMethodMap.get(veInfo.fieldOriKv.v);
         if (toBeanEe != null) {
             addLnTag(info.handleSb, "                    [infoBindConfig].[id] = [infoBindConfig].[parseLong](msg.obj);",
