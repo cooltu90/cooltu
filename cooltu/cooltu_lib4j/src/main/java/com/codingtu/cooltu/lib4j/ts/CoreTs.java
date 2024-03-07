@@ -115,7 +115,7 @@ public class CoreTs<T, THIS> {
      **************************************************/
     //通过索引值获取
     public T get(int index) {
-        if (index < count()) {
+        if (index < count() && index >= 0) {
             return ts.get(index);
         }
         return null;
