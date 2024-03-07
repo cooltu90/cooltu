@@ -238,11 +238,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addField(Constant.SIGN_PROTECTED, info.initKv.k, info.initKv.v);
         addField(Constant.SIGN_PROTECTED, info.handlerKv.k, info.handlerKv.v);
 
-        info.echoMethodMap = new HashMap<>();
-        info.bindMethodMap = new HashMap<>();
-        info.toBeanMethodMap = new HashMap<>();
-        info.handleViewMethodMap = new HashMap<>();
-        info.checkMethodMap = new HashMap<>();
         ElementTools.ls(info.bindConfigTe.getEnclosedElements(), new Ts.EachTs<Element>() {
             @Override
             public boolean each(int position, Element element) {
@@ -280,10 +275,12 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
                     CheckMethod checkMethod = ee.getAnnotation(CheckMethod.class);
                     if (checkMethod != null) {
-                        Ts.strs(checkMethod.value()).ls(new Ts.EachTs<String>() {
+                        Ts.strs(checkMethod.fields()).ls(new Ts.EachTs<String>() {
                             @Override
                             public boolean each(int position, String s) {
                                 info.checkMethodMap.put(s, ee);
+                                info.checkMethodMap1.get(s).add(ee);
+                                info.checkMethodMap2.get(s).add(checkMethod.prompts()[position]);
                                 return false;
                             }
                         });
@@ -315,24 +312,29 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         veInfo.echoMethodEe = info.echoMethodMap.get(veInfo.fieldOriKv.v);
                         Check check = veInfo.ve.getAnnotation(Check.class);
                         if (check != null) {
-                            //有check
-                            ExecutableElement checkMethodEe = info.checkMethodMap.get(veInfo.fieldOriKv.v);
-                            if (checkMethodEe != null) {
-                                //有checkMethod
+                            if (isLong(veInfo) || isInt(veInfo)) {
+                                addLnTag(info.checkSb, "        if ([info].[id] < 0) {", info.bindBeanKv.v, veInfo.fieldKv.v);
+                                addCheck(info, check.prompt());
+                            } else if (isString(veInfo)) {
+                                addLnTag(info.checkSb, "        if ([StringTool].isBlank([info].[name])) {",
+                                        FullName.STRING_TOOL, info.bindBeanKv.v, veInfo.fieldKv.v);
+                                addCheck(info, check.prompt());
+                            }
+                        }
+
+                        List<ExecutableElement> ees = info.checkMethodMap1.get(veInfo.fieldOriKv.v);
+                        List<String> promps = info.checkMethodMap2.get(veInfo.fieldOriKv.v);
+                        Ts.ts(ees).ls(new Ts.EachTs<ExecutableElement>() {
+                            @Override
+                            public boolean each(int position, ExecutableElement checkMethodEe) {
                                 addLnTag(info.checkSb, "        if (![infoBindConfig].[checkEcho]([info].[id])) {",
                                         info.bindConfigKv.v, ElementTools.simpleName(checkMethodEe), info.bindBeanKv.v, veInfo.fieldKv.v);
-                            } else {
-                                if (isLong(veInfo) || isInt(veInfo)) {
-                                    addLnTag(info.checkSb, "        if ([info].[id] < 0) {", info.bindBeanKv.v, veInfo.fieldKv.v);
-                                } else if (isString(veInfo)) {
-                                    addLnTag(info.checkSb, "        if ([StringTool].isBlank([info].[name])) {",
-                                            FullName.STRING_TOOL, info.bindBeanKv.v, veInfo.fieldKv.v);
-                                }
+                                addCheck(info, promps.get(position));
+                                return false;
                             }
-                            addLnTag(info.checkSb, "            toast(\"[prompt]\");", check.prompt());
-                            addLnTag(info.checkSb, "            return false;");
-                            addLnTag(info.checkSb, "        }");
-                        }
+                        });
+
+
                     }
 
                     if (veInfo.fieldKv != null && veInfo.noEcho == null && veInfo.echoMethodEe != null) {
@@ -557,7 +559,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addLnTag(initBindViewSb, "            [info] = new [Info]();", info.bindBeanKv.v, info.bindBeanKv.k);
         addLnTag(initBindViewSb, "            [initName] = true;", info.initKv.v);
         addLnTag(initBindViewSb, "        }");
-        addLnTag(initBindViewSb, "        [infoBindConfig] = new [InfoBindConfig]();", info.bindConfigKv.v, info.bindConfigKv.k);
+        addLnTag(beforeBindViewSb, "        [infoBindConfig] = new [InfoBindConfig]();", info.bindConfigKv.v, info.bindConfigKv.k);
         addLnTag(initBindViewSb, "        [infoBindHandler] = new [InfoBindHandler]([info], [infoBindConfig]);",
                 info.handlerKv.v, info.handlerKv.k, info.bindBeanKv.v, info.bindConfigKv.v);
         //绑定事件
@@ -594,6 +596,12 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addLnTag(bindHandlerSb, "    }");
 
 
+    }
+
+    private void addCheck(DealBindInfo info, String prompt) {
+        addLnTag(info.checkSb, "            toast(\"[prompt]\");", prompt);
+        addLnTag(info.checkSb, "            return false;");
+        addLnTag(info.checkSb, "        }");
     }
 
     private boolean isInt(DealBindVeInfo veInfo) {

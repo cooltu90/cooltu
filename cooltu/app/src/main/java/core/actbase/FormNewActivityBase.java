@@ -134,13 +134,14 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         numLl.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, numRg);
         num1Rg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(num1Ll).setOnSetItem(typeOnSetItem);
         num1Ll.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, num1Rg);
+        infoBindConfig = new com.codingtu.cooltu.bind.InfoBindConfig();
+        formBindConfig = new com.codingtu.cooltu.bind.FormBindConfig();
 
         beforeInitBindView();
         if (info == null) {
             info = new com.codingtu.cooltu.bean.Info();
             initInfo = true;
         }
-        infoBindConfig = new com.codingtu.cooltu.bind.InfoBindConfig();
         infoBindHandler = new InfoBindHandler(info, infoBindConfig);
         idEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.idEt));
         nameEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.nameEt));
@@ -174,7 +175,6 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             form = new com.codingtu.cooltu.bean.Form();
             initForm = true;
         }
-        formBindConfig = new com.codingtu.cooltu.bind.FormBindConfig();
         formBindHandler = new FormBindHandler(form, formBindConfig);
 
         if (!initForm) {
@@ -249,8 +249,12 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         }
     }
     protected boolean checkInfo() {
-        if (!infoBindConfig.checkId(info.id)) {
+        if (info.id < 0) {
             toast("请输入正确的id");
+            return false;
+        }
+        if (!infoBindConfig.checkId(info.id)) {
+            toast("嘻嘻嘻");
             return false;
         }
         if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(info.name)) {

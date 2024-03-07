@@ -2,7 +2,6 @@ package com.codingtu.cooltu.bind;
 
 import android.os.Handler;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
 import com.codingtu.cooltu.R;
@@ -38,7 +37,7 @@ public class InfoBindConfig {
     @Check(prompt = "请输入正确的id")
     public long id;
 
-    @CheckMethod("id")
+    @CheckMethod(fields = {"id"}, prompts = {"嘻嘻嘻"})
     public boolean checkId(long id) {
         return false;
     }

@@ -5,5 +5,7 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.SOURCE)
 public @interface CheckMethod {
-    String[] value();
+    String[] fields();
+
+    String[] prompts() default {};
 }
