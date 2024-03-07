@@ -39,10 +39,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> startInitCounts;
     protected StringBuilder startInitSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> startInit;
-    protected java.util.Map<String, Boolean> useFormInitIfs;
-    protected java.util.Map<String, Integer> useFormInitCounts;
-    protected StringBuilder useFormInitSb;
-    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> useFormInit;
     protected java.util.Map<String, Boolean> onCreateCompleteInitIfs;
     protected java.util.Map<String, Integer> onCreateCompleteInitCounts;
     protected StringBuilder onCreateCompleteInitSb;
@@ -59,6 +55,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> setOnLongClickCounts;
     protected StringBuilder setOnLongClickSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> setOnLongClick;
+    protected java.util.Map<String, Boolean> useFormInitIfs;
+    protected java.util.Map<String, Integer> useFormInitCounts;
+    protected StringBuilder useFormInitSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> useFormInit;
     protected java.util.Map<String, Boolean> superOnClickIfs;
     protected java.util.Map<String, Integer> superOnClickCounts;
     protected StringBuilder superOnClickSb;
@@ -187,10 +187,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         startInitCounts = new java.util.HashMap<>();
         startInitSb = map.get("startInit");
         startInit = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
-        useFormInitIfs = new java.util.HashMap<>();
-        useFormInitCounts = new java.util.HashMap<>();
-        useFormInitSb = map.get("useFormInit");
-        useFormInit = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         onCreateCompleteInitIfs = new java.util.HashMap<>();
         onCreateCompleteInitCounts = new java.util.HashMap<>();
         onCreateCompleteInitSb = map.get("onCreateCompleteInit");
@@ -207,6 +203,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         setOnLongClickCounts = new java.util.HashMap<>();
         setOnLongClickSb = map.get("setOnLongClick");
         setOnLongClick = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        useFormInitIfs = new java.util.HashMap<>();
+        useFormInitCounts = new java.util.HashMap<>();
+        useFormInitSb = map.get("useFormInit");
+        useFormInit = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         superOnClickIfs = new java.util.HashMap<>();
         superOnClickCounts = new java.util.HashMap<>();
         superOnClickSb = map.get("superOnClick");
@@ -514,10 +514,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.layout, getIfKey("layout"), layout);
         layoutIfs.put(getIfKey("layout"), true);
     }
-    public void useFormInitIf(String userFormInit) {
-        addForMap(this.useFormInit, getIfKey("useFormInit"), userFormInit);
-        useFormInitIfs.put(getIfKey("useFormInit"), true);
-    }
     public void isOnCreateCompleteInit(boolean is) {
         onCreateCompleteInitIfs.put(getIfKey("onCreateCompleteInit"), is);
     }
@@ -528,6 +524,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     public void defaultListMoreAdapterIf(int i0, String adapterName, String adapterFullName) {
         addForMap(this.listAdapter, getIfKey("defaultListMoreAdapter", i0), adapterName, adapterName, adapterFullName, adapterName);
         listAdapterIfs.put(getIfKey("defaultListMoreAdapter", i0), true);
+    }
+    public void useFormInitIf(String userFormInit) {
+        addForMap(this.useFormInit, getIfKey("useFormInit"), userFormInit);
+        useFormInitIfs.put(getIfKey("useFormInit"), true);
     }
     public void isSuperOnClick(boolean is) {
         superOnClickIfs.put(getIfKey("superOnClick"), is);
@@ -690,10 +690,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> startInit0 = startInit.get(getForKey("startInit", i0));
             addLnTag(startInitSb, "        [name] = [passFullName].[name](getIntent());", startInit0.get(0), startInit0.get(1), startInit0.get(2));
         }
-        if (isIf(useFormInitIfs, getIfKey("useFormInit"))) {
-            List<String> useFormInit0 = useFormInit.get(getIfKey("useFormInit"));
-            addLnTag(useFormInitSb, "[userFormInit]", useFormInit0.get(0));
-        }
         if (isIf(onCreateCompleteInitIfs, getIfKey("onCreateCompleteInit"))) {
             List<String> onCreateCompleteInit0 = onCreateCompleteInit.get(getIfKey("onCreateCompleteInit"));
             addLnTag(onCreateCompleteInitSb, "        onCreateComplete();");
@@ -727,6 +723,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         for (int i0 = 0; i0 < count(setOnLongClickCounts, getForKey("setOnLongClick")); i0++) {
             List<String> setOnLongClick0 = setOnLongClick.get(getForKey("setOnLongClick", i0));
             addLnTag(setOnLongClickSb, "        [fieldName].setOnLongClickListener(this);", setOnLongClick0.get(0));
+        }
+        if (isIf(useFormInitIfs, getIfKey("useFormInit"))) {
+            List<String> useFormInit0 = useFormInit.get(getIfKey("useFormInit"));
+            addLnTag(useFormInitSb, "[userFormInit]", useFormInit0.get(0));
         }
         if (isIf(superOnClickIfs, getIfKey("superOnClick"))) {
             List<String> superOnClick0 = superOnClick.get(getIfKey("superOnClick"));
@@ -1124,7 +1124,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[dpInit]]");
         lines.add("[[dimenInit]]");
         lines.add("[[startInit]]");
-        lines.add("[[useFormInit]]");
         lines.add("[[onCreateCompleteInit]]");
         lines.add("    }");
         lines.add("");
@@ -1134,6 +1133,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[listAdapter]]");
         lines.add("[[setOnClick]]");
         lines.add("[[setOnLongClick]]");
+        lines.add("[[useFormInit]]");
         lines.add("    }");
         lines.add("");
         lines.add("    @Override");

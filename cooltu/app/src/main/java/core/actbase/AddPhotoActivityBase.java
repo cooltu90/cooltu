@@ -43,7 +43,6 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
 
 
 
-
         onCreateComplete();
 
     }
@@ -51,6 +50,7 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
+
 
 
 

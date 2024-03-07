@@ -37,7 +37,6 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
 
 
 
-
         onCreateComplete();
 
     }
@@ -45,6 +44,7 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
+
 
 
 

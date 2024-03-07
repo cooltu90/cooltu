@@ -21,7 +21,6 @@ public abstract class StepTwoActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
 
-
         onCreateComplete();
 
     }
@@ -29,6 +28,7 @@ public abstract class StepTwoActivityBase extends com.codingtu.cooltu.ui.base.Ba
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
+
 
 
 

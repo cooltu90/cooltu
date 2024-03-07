@@ -59,8 +59,6 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
 
-        initBindView();
-
         onCreateComplete();
 
     }
@@ -71,6 +69,8 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
         saveBt1.setOnClickListener(this);
 
+
+        initBindView();
 
     }
 

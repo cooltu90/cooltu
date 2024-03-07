@@ -29,7 +29,6 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
 
-
         onCreateComplete();
 
     }
@@ -54,6 +53,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
         dogAdapter.setClick(this);
         rv1.setAdapter(dogAdapter);
         new com.codingtu.cooltu.lib4a.ui.recyclerview.DefaultConfig().config(getAct(), rv1);
+
 
 
 

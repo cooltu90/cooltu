@@ -35,7 +35,6 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         age = core.tools.Pass.age(getIntent());
         isTest = core.tools.Pass.isTest(getIntent());
 
-
         onCreateComplete();
 
     }
@@ -45,6 +44,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         super.onCreateComplete();
 
         backBt.setOnClickListener(this);
+
 
 
     }

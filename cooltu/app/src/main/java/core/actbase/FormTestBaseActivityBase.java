@@ -21,12 +21,12 @@ public abstract class FormTestBaseActivityBase extends com.codingtu.cooltu.ui.ba
 
 
 
-
     }
 
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
+
 
 
 

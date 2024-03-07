@@ -796,9 +796,6 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][startInit]
         [name] = [passFullName].[name](getIntent());
                                                                                                     [<sub>][for][startInit]
-                                                                                                    [<sub>][if][useFormInit]
-[userFormInit]
-                                                                                                    [<sub>][if][useFormInit]
                                                                                                     [<sub>][if][onCreateCompleteInit]
         onCreateComplete();
                                                                                                     [<sub>][if][onCreateCompleteInit]
@@ -832,6 +829,9 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][setOnLongClick]
         [fieldName].setOnLongClickListener(this);
                                                                                                     [<sub>][for][setOnLongClick]
+                                                                                                    [<sub>][if][useFormInit]
+[userFormInit]
+                                                                                                    [<sub>][if][useFormInit]
     }
 
     @Override

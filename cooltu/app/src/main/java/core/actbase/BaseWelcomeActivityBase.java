@@ -45,7 +45,6 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
         xx = core.tools.Pass.xx(getIntent());
 
 
-
     }
 
     @Override
@@ -55,6 +54,7 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
         tv1.setOnClickListener(this);
         tv3.setOnClickListener(this);
         tv4RlRlTv.setOnClickListener(this);
+
 
 
     }
