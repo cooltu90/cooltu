@@ -1,7 +1,9 @@
 package com.codingtu.cooltu.bind;
 
 import android.os.Handler;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
 import com.codingtu.cooltu.R;
@@ -12,6 +14,7 @@ import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.processor.annotation.bind.BindConfig;
 import com.codingtu.cooltu.processor.annotation.bind.BindField;
 import com.codingtu.cooltu.processor.annotation.bind.BindMethod;
+import com.codingtu.cooltu.processor.annotation.bind.RadioGroupViews;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindTextView;
 import com.codingtu.cooltu.processor.annotation.ui.ViewId;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindEditText;
@@ -141,6 +144,12 @@ public class InfoBindConfig {
     @BindField
     @BindRadioGroup(id = R.id.numLl, onSetItem = TypeOnSetItem.class, items = {"1", "2", "3"})
     public String num;
+
+    @RadioGroupViews(R.id.numLl)
+    public View[] getNumViews(@ViewId(R.id.numLl) LinearLayout numLl) {
+        return null;
+    }
+
 
     @BindRadioGroup(id = R.id.num1Ll, onSetItem = TypeOnSetItem.class)
     public int num1;

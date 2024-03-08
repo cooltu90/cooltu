@@ -16,6 +16,7 @@ import com.codingtu.cooltu.processor.annotation.bind.Bind;
 import com.codingtu.cooltu.processor.annotation.bind.BindConfig;
 import com.codingtu.cooltu.processor.annotation.bind.BindField;
 import com.codingtu.cooltu.processor.annotation.bind.BindMethod;
+import com.codingtu.cooltu.processor.annotation.bind.RadioGroupViews;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindTextView;
 import com.codingtu.cooltu.processor.annotation.ui.ViewId;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindEditText;
@@ -278,12 +279,16 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         Ts.strs(checkMethod.fields()).ls(new Ts.EachTs<String>() {
                             @Override
                             public boolean each(int position, String s) {
-                                info.checkMethodMap.put(s, ee);
                                 info.checkMethodMap1.get(s).add(ee);
                                 info.checkMethodMap2.get(s).add(checkMethod.prompts()[position]);
                                 return false;
                             }
                         });
+                        return false;
+                    }
+                    RadioGroupViews viewsMethod = ee.getAnnotation(RadioGroupViews.class);
+                    if (viewsMethod != null) {
+                        info.radioGroupViewsMethodMap.put(viewsMethod.value(), ee);
                         return false;
                     }
                 }
@@ -449,8 +454,20 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         }
 
 
+                        String bts = veInfo.viewFieldName;
+                        ExecutableElement getViewsEe = info.radioGroupViewsMethodMap.get(veInfo.annoValue);
+                        if (getViewsEe != null) {
+                            String param1 = Params.getParam(ElementTools.getVariableElements(getViewsEe), new Ts.Convert<VariableElement, String>() {
+                                @Override
+                                public String convert(int index, VariableElement ve) {
+                                    return getViewFieldName(ve);
+                                }
+                            });
+                            bts = info.bindConfigKv.v + "." + ElementTools.simpleName(getViewsEe) + "(" + param1 + ")";
+                        }
+
                         addLnTag(beforeBindViewSb, "        [num]Rg = [RadioGroup].obtain(this).setBts([numLl]).setOnSetItem([typeOnSetItem])[setItems];",
-                                veInfo.fieldOriKv.v, FullName.RADIO_GROUP, veInfo.viewFieldName, onSetItemKv.v, setItems);
+                                veInfo.fieldOriKv.v, FullName.RADIO_GROUP, bts, onSetItemKv.v, setItems);
                         addLnTag(beforeBindViewSb, "        [numLl].setTag([lib4aPkg].R.id.tag_0, [num]Rg);",
                                 veInfo.viewFieldName, Pkg.LIB4A, veInfo.fieldOriKv.v);
 
