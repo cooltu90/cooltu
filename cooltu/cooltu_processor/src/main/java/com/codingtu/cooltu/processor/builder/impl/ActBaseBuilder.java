@@ -296,6 +296,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             }
         });
 
+        addLnTag(beforeBindViewSb, "        [infoBindConfig] = new [InfoBindConfig]();", info.bindConfigKv.v, info.bindConfigKv.k);
+
         info.bindSb = new StringBuilder();
         info.echoSb = new StringBuilder();
         info.handleSb = new StringBuilder();
@@ -576,7 +578,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addLnTag(initBindViewSb, "            [info] = new [Info]();", info.bindBeanKv.v, info.bindBeanKv.k);
         addLnTag(initBindViewSb, "            [initName] = true;", info.initKv.v);
         addLnTag(initBindViewSb, "        }");
-        addLnTag(beforeBindViewSb, "        [infoBindConfig] = new [InfoBindConfig]();", info.bindConfigKv.v, info.bindConfigKv.k);
         addLnTag(initBindViewSb, "        [infoBindHandler] = new [InfoBindHandler]([info], [infoBindConfig]);",
                 info.handlerKv.v, info.handlerKv.k, info.bindBeanKv.v, info.bindConfigKv.v);
         //绑定事件

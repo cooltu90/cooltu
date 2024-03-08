@@ -129,12 +129,12 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
     protected void initBindView() {
+        infoBindConfig = new com.codingtu.cooltu.bind.InfoBindConfig();
         com.codingtu.cooltu.form.TypeOnSetItem typeOnSetItem = new com.codingtu.cooltu.form.TypeOnSetItem();
         numRg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(infoBindConfig.getNumViews(numLl)).setOnSetItem(typeOnSetItem).setItems("1", "2", "3");
         numLl.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, numRg);
         num1Rg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(num1Ll).setOnSetItem(typeOnSetItem);
         num1Ll.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, num1Rg);
-        infoBindConfig = new com.codingtu.cooltu.bind.InfoBindConfig();
         formBindConfig = new com.codingtu.cooltu.bind.FormBindConfig();
 
         beforeInitBindView();
