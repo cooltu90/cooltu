@@ -27,4 +27,5 @@ public class DealBindInfo {
     public Map<String, KV<String, String>> onSetItemMap = new HashMap<>();
     public ListValueMap<String, ExecutableElement> checkMethodMap1 = new ListValueMap<>();
     public ListValueMap<String, String> checkMethodMap2 = new ListValueMap<>();
+    public StringBuilder setSelectedSb;
 }

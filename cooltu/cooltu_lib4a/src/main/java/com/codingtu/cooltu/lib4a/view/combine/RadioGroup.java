@@ -222,11 +222,16 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
         onSetItem = null;
     }
 
+    public BaseTs<View> getBts() {
+        return bts;
+    }
+
     /**************************************************
      *
      *
      *
      **************************************************/
+
 
     public RadioGroup setItems(String... items) {
         this.items = Ts.strs(items);
@@ -246,7 +251,7 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
         return this.items.get(getSelected());
     }
 
-    public int getIndex(String item){
+    public int getIndex(String item) {
         return this.items.index(item);
     }
 

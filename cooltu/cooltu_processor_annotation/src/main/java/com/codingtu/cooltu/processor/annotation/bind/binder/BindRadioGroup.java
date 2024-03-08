@@ -12,4 +12,6 @@ public @interface BindRadioGroup {
     String onSetItemName() default "";
 
     String[] items() default {};
+
+    int selected() default -1;
 }

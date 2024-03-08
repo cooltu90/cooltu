@@ -142,7 +142,11 @@ public class InfoBindConfig {
      *
      **************************************************/
     @BindField
-    @BindRadioGroup(id = R.id.numLl, onSetItem = TypeOnSetItem.class, items = {"1", "2", "3"})
+    @BindRadioGroup(
+            id = R.id.numLl,
+            onSetItem = TypeOnSetItem.class,
+            items = {"1", "2", "3"},
+            selected = 1)
     public String num;
 
     @RadioGroupViews(R.id.numLl)

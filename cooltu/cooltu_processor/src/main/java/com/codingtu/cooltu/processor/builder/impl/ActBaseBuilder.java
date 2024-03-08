@@ -299,6 +299,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addLnTag(beforeBindViewSb, "        [infoBindConfig] = new [InfoBindConfig]();", info.bindConfigKv.v, info.bindConfigKv.k);
 
         info.bindSb = new StringBuilder();
+        info.setSelectedSb = new StringBuilder();
         info.echoSb = new StringBuilder();
         info.handleSb = new StringBuilder();
         info.checkSb = new StringBuilder();
@@ -468,6 +469,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                             bts = info.bindConfigKv.v + "." + ElementTools.simpleName(getViewsEe) + "(" + param1 + ")";
                         }
 
+                        int selected = bindRg.selected();
+                        if (selected >= 0) {
+                            addLnTag(info.setSelectedSb, "        [num]Rg.setSelected([1]);", veInfo.fieldOriKv.v, selected);
+                        }
+
                         addLnTag(beforeBindViewSb, "        [num]Rg = [RadioGroup].obtain(this).setBts([numLl]).setOnSetItem([typeOnSetItem])[setItems];",
                                 veInfo.fieldOriKv.v, FullName.RADIO_GROUP, bts, onSetItemKv.v, setItems);
                         addLnTag(beforeBindViewSb, "        [numLl].setTag([lib4aPkg].R.id.tag_0, [num]Rg);",
@@ -586,6 +592,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         //回显事件
         addLnTag(initBindViewSb, info.echoSb.toString());
         addLnTag(initBindViewSb, "        }");
+        addLnTag(initBindViewSb, info.setSelectedSb.toString());
         //bindHandlerSb
         addLnTag(bindHandlerSb, "    public static class [InfoBindHandler] extends android.os.Handler {", info.handlerKv.k);
         addLnTag(bindHandlerSb, "        private [Info] [info];", info.bindBeanKv.k, info.bindBeanKv.v);

@@ -171,6 +171,8 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(passwordTv, info.password);
 
         }
+        numRg.setSelected(1);
+
         if (form == null) {
             form = new com.codingtu.cooltu.bean.Form();
             initForm = true;
@@ -180,6 +182,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         if (!initForm) {
 
         }
+
 
     }
 
