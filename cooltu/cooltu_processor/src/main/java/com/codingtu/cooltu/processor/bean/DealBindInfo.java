@@ -2,6 +2,7 @@ package com.codingtu.cooltu.processor.bean;
 
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
+import com.codingtu.cooltu.lib4j.json.base.JO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,7 @@ public class DealBindInfo {
     public Map<String, ExecutableElement> toBeanMethodMap = new HashMap<>();
     public Map<Integer, ExecutableElement> handleViewMethodMap = new HashMap<>();
     public Map<Integer, ExecutableElement> radioGroupViewsMethodMap = new HashMap<>();
+    public Map<Integer, ExecutableElement> radioGroupItemsMethodMap = new HashMap<>();
     public StringBuilder bindSb;
     public StringBuilder echoSb;
     public StringBuilder handleSb;

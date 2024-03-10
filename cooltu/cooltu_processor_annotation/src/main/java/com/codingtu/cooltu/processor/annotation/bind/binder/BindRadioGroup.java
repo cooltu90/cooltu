@@ -13,5 +13,11 @@ public @interface BindRadioGroup {
 
     String[] items() default {};
 
+    boolean defulatItems() default false;
+
     int selected() default -1;
+
+    int itemId() default -1;
+
+
 }

@@ -2,6 +2,7 @@ package com.codingtu.cooltu.lib4a.view.combine;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
@@ -17,9 +18,7 @@ import java.util.List;
 public class RadioGroup implements OnDestroy, View.OnClickListener {
     private boolean hasNull;
     private int selected = -1;
-    //private View[] bts;
     private BaseTs<View> bts;
-    //private int[] bgs;
     private List<OnSelectChange> onSelectChanges;
     private OnSetItem onSetItem;
     private StringTs items;
@@ -52,12 +51,6 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
         return this;
     }
 
-//    public RadioGroup<T> setBgs(int... bgs) {
-//        this.bgs = bgs;
-//        initBgs();
-//        return this;
-//    }
-
     public RadioGroup setBts(View... bts) {
         this.bts = Ts.ts(bts);
         this.bts.ls(new Ts.EachTs<View>() {
@@ -83,20 +76,22 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
                 }
             });
         }
-        //initBgs();
         return this;
     }
 
-//    private void initBgs() {
-//        if (bgs != null && bts != null && bgs.length == 2) {
-//            int[] ints = new int[bts.length << 1];
-//            for (int i = 0; i < ints.length; i += 2) {
-//                ints[i] = bgs[0];
-//                ints[i + 1] = bgs[1];
-//            }
-//            this.bgs = ints;
-//        }
-//    }
+    public RadioGroup initItems() {
+        items = new StringTs();
+        this.bts.ls(new Ts.EachTs<View>() {
+            @Override
+            public boolean each(int position, View view) {
+                if (view instanceof TextView) {
+                    items.add(((TextView) view).getText().toString());
+                }
+                return false;
+            }
+        });
+        return this;
+    }
 
     public RadioGroup addOnSelectChange(OnSelectChange onSelectChange) {
         if (onSelectChanges == null) {
@@ -111,47 +106,6 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
         this.onSetItem = onSetItem;
         return this;
     }
-
-
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
-
-//    public RadioGroup(Destroys destroys, boolean hasNull, int selected, int[] bgs, View... bts) {
-//        this(destroys, hasNull, selected, bgs, null, bts);
-//    }
-
-//    public RadioGroup(Destroys destroys, boolean hasNull, int selected, int[] bgs, OnSetItem onSelectChangeItem, View... bts) {
-//        destroys.add(this);
-//        this.selected = selected;
-//        this.hasNull = hasNull;
-//        this.onSetItem = onSelectChangeItem;
-//        this.bgs = bgs;
-//        this.bts = bts;
-//        if (bgs.length == 2) {
-//            int[] ints = new int[bts.length << 1];
-//            for (int i = 0; i < ints.length; i += 2) {
-//                ints[i] = bgs[0];
-//                ints[i + 1] = bgs[1];
-//            }
-//            this.bgs = ints;
-//        }
-//
-//        for (int i = 0; i < bts.length; i++) {
-//            bts[i].setTag(R.id.tag_0, i);
-//            bts[i].setOnClickListener(this);
-//        }
-//
-//        change();
-//    }
-
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
 
     @Override
     public void onClick(View v) {

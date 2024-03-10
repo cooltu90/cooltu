@@ -16,7 +16,8 @@ import com.codingtu.cooltu.processor.annotation.bind.Bind;
 import com.codingtu.cooltu.processor.annotation.bind.BindConfig;
 import com.codingtu.cooltu.processor.annotation.bind.BindField;
 import com.codingtu.cooltu.processor.annotation.bind.BindMethod;
-import com.codingtu.cooltu.processor.annotation.bind.RadioGroupViews;
+import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupItemsMethod;
+import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupViewsMethod;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindTextView;
 import com.codingtu.cooltu.processor.annotation.ui.ViewId;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindEditText;
@@ -45,6 +46,7 @@ import com.codingtu.cooltu.processor.lib.tools.BeanTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
+import com.codingtu.cooltu.processor.lib.tools.TagTools;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -286,11 +288,17 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         });
                         return false;
                     }
-                    RadioGroupViews viewsMethod = ee.getAnnotation(RadioGroupViews.class);
+                    GetRadioGroupViewsMethod viewsMethod = ee.getAnnotation(GetRadioGroupViewsMethod.class);
                     if (viewsMethod != null) {
                         info.radioGroupViewsMethodMap.put(viewsMethod.value(), ee);
                         return false;
                     }
+
+                    GetRadioGroupItemsMethod itemsMethod = ee.getAnnotation(GetRadioGroupItemsMethod.class);
+                    if (itemsMethod != null) {
+                        info.radioGroupItemsMethodMap.put(itemsMethod.value(), ee);
+                    }
+
                 }
                 return false;
             }
@@ -452,13 +460,27 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                                 return "\"" + s + "\"";
                             }
                         });
-                        if (StringTool.isNotBlank(param)) {
+
+                        ExecutableElement getItemsEe = info.radioGroupItemsMethodMap.get(veInfo.annoValue);
+                        if (getItemsEe != null) {
+                            String param1 = Params.getParam(ElementTools.getVariableElements(getItemsEe), new Ts.Convert<VariableElement, String>() {
+                                @Override
+                                public String convert(int index, VariableElement ve) {
+                                    return getViewFieldName(ve);
+                                }
+                            });
+                            setItems = TagTools.dealLine(".setItems([infoBindConfig].[getItems]([numLl]))",
+                                    info.bindConfigKv.v, ElementTools.simpleName(getItemsEe), param1);
+                        } else if (StringTool.isNotBlank(param)) {
                             setItems = ".setItems(" + param + ")";
+                        } else if (bindRg.defulatItems()) {
+                            setItems = ".initItems()";
                         }
 
 
                         String bts = veInfo.viewFieldName;
                         ExecutableElement getViewsEe = info.radioGroupViewsMethodMap.get(veInfo.annoValue);
+                        IdTools.Id itemId = IdTools.elementToId(veInfo.ve, BindRadioGroup.class, bindRg.itemId());
                         if (getViewsEe != null) {
                             String param1 = Params.getParam(ElementTools.getVariableElements(getViewsEe), new Ts.Convert<VariableElement, String>() {
                                 @Override
@@ -467,6 +489,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                                 }
                             });
                             bts = info.bindConfigKv.v + "." + ElementTools.simpleName(getViewsEe) + "(" + param1 + ")";
+                        } else if (itemId != null) {
+                            bts = TagTools.dealLine("[ViewTool].getRadioGroupViews([viewId], [numLl])",
+                                    FullName.VIEW_TOOL, itemId.toString(), veInfo.viewFieldName);
                         }
 
                         int selected = bindRg.selected();
