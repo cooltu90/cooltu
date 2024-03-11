@@ -1,6 +1,7 @@
 package com.codingtu.cooltu.bind;
 
 import android.os.Handler;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -16,6 +17,7 @@ import com.codingtu.cooltu.processor.annotation.bind.BindMethod;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindRadioGroups;
 import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupItemsMethod;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindTextView;
+import com.codingtu.cooltu.processor.annotation.bind.radiogroup.RadioGroupOnClickMethod;
 import com.codingtu.cooltu.processor.annotation.ui.ViewId;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindEditText;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindRadioGroup;
@@ -170,6 +172,15 @@ public class InfoBindConfig {
             }
     )
     public String num;
+
+    @RadioGroupOnClickMethod(R.id.numLl)
+    public boolean onNumLlOnClick(Info info, View view, @ViewId(R.id.numLl) LinearLayout numLl) {
+//        if (view.getId() == R.id.numLl) {
+//            return false;
+//        }
+        return true;
+    }
+
 //
 //    @GetRadioGroupItemsMethod(R.id.numLl)
 //    public String[] getItems(@ViewId(R.id.numLl) LinearLayout numLl) {

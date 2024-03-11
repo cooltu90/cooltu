@@ -22,9 +22,14 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
     private List<OnSelectChange> onSelectChanges;
     private OnSetItem onSetItem;
     private StringTs items;
+    private OnClick onClick;
 
     public RadioGroup() {
 
+    }
+
+    public static interface OnClick {
+        public boolean onClick(View view);
     }
 
     public static interface OnSelectChange {
@@ -107,8 +112,20 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
         return this;
     }
 
+    public RadioGroup setOnClick(OnClick onClick) {
+        this.onClick = onClick;
+        return this;
+    }
+
+
     @Override
     public void onClick(View v) {
+        if (onClick != null) {
+            if (!onClick.onClick(v)) {
+                return;
+            }
+        }
+
         int index = (int) v.getTag(R.id.tag_0);
         setSelected(index);
     }

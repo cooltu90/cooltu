@@ -22,6 +22,7 @@ public class DealBindInfo {
     public Map<Integer, ExecutableElement> handleViewMethodMap = new HashMap<>();
     public Map<Integer, ExecutableElement> radioGroupViewsMethodMap = new HashMap<>();
     public Map<Integer, ExecutableElement> radioGroupItemsMethodMap = new HashMap<>();
+    public Map<Integer, ExecutableElement> radioGroupOnClickMethodMap = new HashMap<>();
     public StringBuilder bindSb;
     public StringBuilder echoSb;
     public StringBuilder handleSb;

@@ -21,6 +21,7 @@ import com.codingtu.cooltu.processor.annotation.bind.binder.BindRadioGroups;
 import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupItemsMethod;
 import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupViewsMethod;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindTextView;
+import com.codingtu.cooltu.processor.annotation.bind.radiogroup.RadioGroupOnClickMethod;
 import com.codingtu.cooltu.processor.annotation.ui.ViewId;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindEditText;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindRadioGroup;
@@ -317,7 +318,20 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     GetRadioGroupItemsMethod itemsMethod = ee.getAnnotation(GetRadioGroupItemsMethod.class);
                     if (itemsMethod != null) {
                         info.radioGroupItemsMethodMap.put(itemsMethod.value(), ee);
+                        return false;
                     }
+
+                    RadioGroupOnClickMethod onClickMethod = ee.getAnnotation(RadioGroupOnClickMethod.class);
+                    if (onClickMethod != null) {
+                        Ts.ints(onClickMethod.value()).ls(new Ts.EachTs<Integer>() {
+                            @Override
+                            public boolean each(int position, Integer value) {
+                                info.radioGroupOnClickMethodMap.put(value, ee);
+                                return false;
+                            }
+                        });
+                    }
+
 
                 }
                 return false;
@@ -739,6 +753,25 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             setItems = ".initItems()";
         }
 
+        String setOnClickStr = "";
+        ExecutableElement onClickEe = info.radioGroupOnClickMethodMap.get(veInfo.annoValue);
+        if (onClickEe != null) {
+            String param1 = Params.getParam(ElementTools.getVariableElements(onClickEe), new Ts.Convert<VariableElement, String>() {
+                @Override
+                public String convert(int index, VariableElement ve) {
+                    if (index == 0) {
+                        return info.bindBeanKv.v;
+                    } else if (index == 1) {
+                        return "view";
+                    } else {
+                        return getViewFieldName(ve);
+                    }
+                }
+            });
+            setOnClickStr = TagTools.dealLine(".setOnClick(view -> [infoBindConfig].[onNumLlOnClick]([info]))",
+                    info.bindConfigKv.v, ElementTools.simpleName(onClickEe), param1);
+        }
+
 
         String bts = veInfo.viewFieldName;
         ExecutableElement getViewsEe = info.radioGroupViewsMethodMap.get(veInfo.annoValue);
@@ -761,8 +794,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             addLnTag(info.setSelectedSb, "        [numRg].setSelected([1]);", bindRgInfo.rgKv.v, selected);
         }
 
-        addLnTag(beforeBindViewSb, "        [numRg] = [RadioGroup].obtain(this).setBts([numLl]).setOnSetItem([typeOnSetItem])[setItems];",
-                bindRgInfo.rgKv.v, FullName.RADIO_GROUP, bts, onSetItemKv.v, setItems);
+        addLnTag(beforeBindViewSb, "        [numRg] = [RadioGroup].obtain(this).setBts([numLl]).setOnSetItem([typeOnSetItem])[setItems][setOnClick];",
+                bindRgInfo.rgKv.v, FullName.RADIO_GROUP, bts, onSetItemKv.v, setItems, setOnClickStr);
         addLnTag(beforeBindViewSb, "        [numLl].setTag([lib4aPkg].R.id.tag_0, [numRg]);",
                 veInfo.viewFieldName, Pkg.LIB4A, bindRgInfo.rgKv.v);
     }
