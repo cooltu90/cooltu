@@ -453,22 +453,22 @@ public class ViewTool {
 //    }
 
 
-    private static void getRadioGroupViews(int viewId, BaseTs<View> viewTs, ViewGroup viewGroup) {
-        for (int i = 0; i < viewGroup.getChildCount(); i++) {
-            View childView = viewGroup.getChildAt(i);
-            if (childView.getId() == viewId) {
-                viewTs.add(childView);
-            } else if (childView instanceof ViewGroup) {
-                getRadioGroupViews(viewId, viewTs, (ViewGroup) childView);
-            }
-        }
-    }
+//    private static void getRadioGroupViews(int viewId, BaseTs<View> viewTs, ViewGroup viewGroup) {
+//        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+//            View childView = viewGroup.getChildAt(i);
+//            if (childView.getId() == viewId) {
+//                viewTs.add(childView);
+//            } else if (childView instanceof ViewGroup) {
+//                getRadioGroupViews(viewId, viewTs, (ViewGroup) childView);
+//            }
+//        }
+//    }
 
-    public static String[] getRadioGroupItems(ViewGroup viewGroup) {
-        StringTs itemTs = new StringTs();
-        getRadioGroupItems(itemTs, viewGroup);
-        return itemTs.toArray();
-    }
+//    public static String[] getRadioGroupItems(ViewGroup viewGroup) {
+//        StringTs itemTs = new StringTs();
+//        getRadioGroupItems(itemTs, viewGroup);
+//        return itemTs.toArray();
+//    }
 
     private static void getRadioGroupItems(StringTs itemTs, ViewGroup viewGroup) {
         for (int i = 0; i < viewGroup.getChildCount(); i++) {
