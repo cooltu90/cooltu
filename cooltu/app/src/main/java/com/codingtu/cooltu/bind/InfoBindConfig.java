@@ -165,7 +165,6 @@ public class InfoBindConfig {
                             itemId = R.id.rgItem,
                             onSetItem = TypeOnSetItem.class,
                             items = {"1", "2", "3"},
-//                            defulatItems = true,
                             selected = 1
                     )
             }

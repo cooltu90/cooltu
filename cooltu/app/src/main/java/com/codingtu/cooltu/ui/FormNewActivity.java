@@ -14,7 +14,7 @@ import core.actbase.FormNewActivityBase;
 import core.actres.FormNewActivityRes;
 
 @To(FormNewActivityRes.class)
-@Bind({InfoBindConfig.class, FormBindConfig.class})
+//@Bind({InfoBindConfig.class, FormBindConfig.class})
 @ActBase(layout = R.layout.activity_form_new)
 public class FormNewActivity extends FormNewActivityBase {
 
