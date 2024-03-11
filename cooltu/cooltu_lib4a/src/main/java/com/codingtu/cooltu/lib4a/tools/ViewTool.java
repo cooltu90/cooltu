@@ -441,9 +441,9 @@ public class ViewTool {
         return getRadioGroup(viewGroup).getItem(selected);
     }
 
-//    public static View[] getRadioGroupViews(ViewGroup viewGroup) {
-//        return getRadioGroupViews(R.id.radioGroupItem, viewGroup);
-//    }
+    public static View[] getRadioGroupViews(ViewGroup viewGroup) {
+        return getRadioGroupViews(R.id.radioGroupItem, viewGroup);
+    }
 
     public static View[] getRadioGroupViews(int viewId, ViewGroup viewGroup) {
         BaseTs<View> viewTs = Ts.ts(View.class);
