@@ -32,5 +32,7 @@
     <item name="menuDialogItemTv" type="id" />
     <item name="menuDialogItemsSv" type="id" />
     <item name="menuDialogItemsLl" type="id" />
+    <!-- MenuView -->
+    <item name="radioGroupItem" type="id" />
 
 </resources>
