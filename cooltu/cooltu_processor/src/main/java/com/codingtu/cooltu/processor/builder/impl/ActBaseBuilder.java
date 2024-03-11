@@ -710,10 +710,10 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                 if (ClassTool.isString(veInfo.fieldOriKv.k)) {
                     addLnTag(info.handleSb,
                             "                    [infoBindConfig].[num] = [ViewTool].getRadioGroupItem(([ViewGroup]) linkObjs.get(0), (int) msg.obj);",
-                            info.bindConfigKv.v, veInfo.fieldOriKv.v, FullName.VIEW_TOOL, FullName.VIEW_GROUP);
+                            info.bindBeanKv.v, veInfo.fieldOriKv.v, FullName.VIEW_TOOL, FullName.VIEW_GROUP);
                 } else if (ClassTool.isInteger(veInfo.fieldOriKv.k) || ClassTool.isInt(veInfo.fieldOriKv.k)) {
                     addLnTag(info.handleSb, "                    [infoBindConfig].[num1] = (int) msg.obj;",
-                            info.bindConfigKv.v, veInfo.fieldOriKv.v);
+                            info.bindBeanKv.v, veInfo.fieldOriKv.v);
                 }
             }
         });

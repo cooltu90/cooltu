@@ -230,4 +230,12 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
     public String getItem(int selected) {
         return this.items.get(selected);
     }
+
+    public int count() {
+        return this.bts.count();
+    }
+
+    public boolean isLastSelected() {
+        return getSelected() == count() - 1;
+    }
 }
