@@ -195,7 +195,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             Ts.ts(bindConfigClassNames).ls(new Ts.EachTs<String>() {
                 @Override
                 public boolean each(int position, String bindConfigClassName) {
-                    dealBind(bindConfigClassName);
+                    try {
+                        dealBind(bindConfigClassName);
+                    } catch (Exception e) {
+                        LibLogs.i(e);
+                    }
                     return false;
                 }
             });
