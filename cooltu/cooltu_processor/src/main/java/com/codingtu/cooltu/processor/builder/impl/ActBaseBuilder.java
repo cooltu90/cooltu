@@ -6,6 +6,7 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
+import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
@@ -16,6 +17,7 @@ import com.codingtu.cooltu.processor.annotation.bind.Bind;
 import com.codingtu.cooltu.processor.annotation.bind.BindConfig;
 import com.codingtu.cooltu.processor.annotation.bind.BindField;
 import com.codingtu.cooltu.processor.annotation.bind.BindMethod;
+import com.codingtu.cooltu.processor.annotation.bind.binder.BindRadioGroups;
 import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupItemsMethod;
 import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupViewsMethod;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindTextView;
@@ -32,6 +34,7 @@ import com.codingtu.cooltu.processor.annotation.bind.parse.HandleView;
 import com.codingtu.cooltu.processor.annotation.bind.parse.ToBean;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
+import com.codingtu.cooltu.processor.bean.BindRadioGroupInfo;
 import com.codingtu.cooltu.processor.bean.DealBindInfo;
 import com.codingtu.cooltu.processor.bean.DealBindVeInfo;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
@@ -248,7 +251,13 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     ExecutableElement ee = (ExecutableElement) element;
                     BindMethod bindMethod = ee.getAnnotation(BindMethod.class);
                     if (bindMethod != null) {
-                        info.bindMethodMap.put(bindMethod.value(), ee);
+                        Ts.ints(bindMethod.value()).ls(new Ts.EachTs<Integer>() {
+                            @Override
+                            public boolean each(int position, Integer value) {
+                                info.bindMethodMap.put(value, ee);
+                                return false;
+                            }
+                        });
                         return false;
                     }
 
@@ -272,7 +281,14 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
                     HandleView handleView = ee.getAnnotation(HandleView.class);
                     if (handleView != null) {
-                        info.handleViewMethodMap.put(handleView.value(), ee);
+
+                        Ts.ints(handleView.value()).ls(new Ts.EachTs<Integer>() {
+                            @Override
+                            public boolean each(int position, Integer value) {
+                                info.handleViewMethodMap.put(value, ee);
+                                return false;
+                            }
+                        });
                         return false;
                     }
 
@@ -343,8 +359,22 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         Ts.ts(ees).ls(new Ts.EachTs<ExecutableElement>() {
                             @Override
                             public boolean each(int position, ExecutableElement checkMethodEe) {
-                                addLnTag(info.checkSb, "        if (![infoBindConfig].[checkEcho]([info].[id])) {",
-                                        info.bindConfigKv.v, ElementTools.simpleName(checkMethodEe), info.bindBeanKv.v, veInfo.fieldKv.v);
+
+                                String param1 = Params.getParam(ElementTools.getVariableElements(checkMethodEe), new Ts.Convert<VariableElement, String>() {
+                                    @Override
+                                    public String convert(int index, VariableElement ve) {
+                                        if (index == 0)
+                                            return null;
+                                        return getViewFieldName(ve);
+                                    }
+                                });
+                                if (StringTool.isNotBlank(param1)) {
+                                    param1 = ", " + param1;
+                                }
+
+
+                                addLnTag(info.checkSb, "        if (![infoBindConfig].[checkEcho]([info][params])) {",
+                                        info.bindConfigKv.v, ElementTools.simpleName(checkMethodEe), info.bindBeanKv.v, param1);
                                 addCheck(info, promps.get(position));
                                 return false;
                             }
@@ -365,239 +395,222 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                             }
                         });
 
-                        addLnTag(info.echoSb, "            [infoBindConfig].[idEcho]([info].[id], [idEt]);",
-                                info.bindConfigKv.v, ElementTools.simpleName(veInfo.echoMethodEe), info.bindBeanKv.v, veInfo.fieldKv.v, param);
+                        addLnTag(info.echoSb, "            [infoBindConfig].[idEcho]([info], [idEt]);",
+                                info.bindConfigKv.v, ElementTools.simpleName(veInfo.echoMethodEe), info.bindBeanKv.v, param);
                     }
 
                     BindSeekBar bindSeekbar = veInfo.ve.getAnnotation(BindSeekBar.class);
                     if (bindSeekbar != null) {
-                        veInfo.annoClass = BindSeekBar.class;
-                        veInfo.annoValue = bindSeekbar.value();
-
-                        dealBind(info, veInfo, new DealBind() {
+                        Ts.ints(bindSeekbar.value()).ls(new Ts.EachTs<Integer>() {
                             @Override
-                            public void dealBind() {
-                                addLnTag(info.bindSb, "        [timeSb].setOnSeekBarChangeListener(new [HandlerOnSeekBarChangeListener](this, [infoBindHandler], [rPkg].R.id.[timeSb]));",
-                                        veInfo.viewFieldName, FullName.HANDLER_ON_SEEK_BAR_CHANGE_LISTENER, info.handlerKv.v, Pkg.R, veInfo.id.rName);
-                            }
+                            public boolean each(int position, Integer value) {
+                                veInfo.annoClass = BindSeekBar.class;
+                                veInfo.annoValue = value;
 
-                            @Override
-                            public void dealEcho() {
-                                if (ClassTool.isInt(veInfo.fieldOriKv.k) || ClassTool.isInteger(veInfo.fieldOriKv.k)) {
-                                    addLnTag(info.echoSb, "            [timeSb].setProgress([info].[time]);",
-                                            veInfo.viewFieldName, info.bindBeanKv.v, veInfo.fieldKv.v);
-                                }
-                            }
+                                dealBind(info, veInfo, new DealBind() {
+                                    @Override
+                                    public void dealBind() {
+                                        addLnTag(info.bindSb, "        [timeSb].setOnSeekBarChangeListener(new [HandlerOnSeekBarChangeListener](this, [infoBindHandler], [rPkg].R.id.[timeSb]));",
+                                                veInfo.viewFieldName, FullName.HANDLER_ON_SEEK_BAR_CHANGE_LISTENER, info.handlerKv.v, Pkg.R, veInfo.id.rName);
+                                    }
 
-                            @Override
-                            public void dealToBean() {
-                                if (ClassTool.isInt(veInfo.fieldOriKv.k) || ClassTool.isInteger(veInfo.fieldOriKv.k)) {
-                                    addLnTag(info.handleSb, "                    [infoBindConfig].[height] = (int) msg.obj;",
-                                            info.bindConfigKv.v, veInfo.fieldOriKv.v);
-                                }
+                                    @Override
+                                    public void dealEcho() {
+                                        if (ClassTool.isInt(veInfo.fieldOriKv.k) || ClassTool.isInteger(veInfo.fieldOriKv.k)) {
+                                            addLnTag(info.echoSb, "            [timeSb].setProgress([info].[time]);",
+                                                    veInfo.viewFieldName, info.bindBeanKv.v, veInfo.fieldKv.v);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void dealToBean() {
+                                        if (ClassTool.isInt(veInfo.fieldOriKv.k) || ClassTool.isInteger(veInfo.fieldOriKv.k)) {
+                                            addLnTag(info.handleSb, "                    [infoBindConfig].[height] = (int) msg.obj;",
+                                                    info.bindConfigKv.v, veInfo.fieldOriKv.v);
+                                        }
+                                    }
+                                });
+                                return false;
                             }
                         });
                     }
 
-                    BindRadioGroup bindRg = veInfo.ve.getAnnotation(BindRadioGroup.class);
-                    if (bindRg != null) {
+                    BindRadioGroups bindRadioGroups = veInfo.ve.getAnnotation(BindRadioGroups.class);
+                    if (bindRadioGroups != null) {
+                        BindRadioGroup[] groups = bindRadioGroups.bindRadioGroup();
+                        if (CountTool.isNull(groups)) {
+                            BindRadioGroupInfo bindRgInfo = new BindRadioGroupInfo();
+                            veInfo.annoClass = BindRadioGroups.class;
+                            veInfo.annoValue = bindRadioGroups.id();
+                            bindRgInfo.id = bindRadioGroups.id();
+                            bindRgInfo.onSetItem = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                                @Override
+                                public Object get() {
+                                    return bindRadioGroups.onSetItem();
+                                }
+                            });
+                            bindRgInfo.onSetItemName = bindRadioGroups.onSetItemName();
+                            bindRgInfo.items = bindRadioGroups.items();
+                            bindRgInfo.defulatItems = bindRadioGroups.defulatItems();
+                            bindRgInfo.selected = bindRadioGroups.selected();
+                            bindRgInfo.itemId = bindRadioGroups.itemId();
+                            dealRadioGroup(info, veInfo, bindRgInfo);
+                        } else {
+                            Ts.ts(bindRadioGroups.bindRadioGroup()).ls(new Ts.EachTs<BindRadioGroup>() {
+                                @Override
+                                public boolean each(int position, BindRadioGroup bindRadioGroup) {
+                                    BindRadioGroupInfo bindRgInfo = new BindRadioGroupInfo();
+                                    veInfo.annoClass = BindRadioGroup.class;
+                                    veInfo.annoValue = bindRadioGroup.id();
+                                    bindRgInfo.id = bindRadioGroup.id();
+                                    bindRgInfo.onSetItem = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                                        @Override
+                                        public Object get() {
+                                            return bindRadioGroup.onSetItem();
+                                        }
+                                    });
+                                    bindRgInfo.onSetItemName = bindRadioGroup.onSetItemName();
+                                    bindRgInfo.items = bindRadioGroup.items();
+                                    bindRgInfo.defulatItems = bindRadioGroup.defulatItems();
+                                    bindRgInfo.selected = bindRadioGroup.selected();
+                                    bindRgInfo.itemId = bindRadioGroup.itemId();
+                                    dealRadioGroup(info, veInfo, bindRgInfo);
+                                    return false;
+                                }
+                            });
+                        }
+                    }
+
+                    BindRadioGroup bindRadioGroup = veInfo.ve.getAnnotation(BindRadioGroup.class);
+                    if (bindRadioGroup != null) {
+                        BindRadioGroupInfo bindRgInfo = new BindRadioGroupInfo();
                         veInfo.annoClass = BindRadioGroup.class;
-                        veInfo.annoValue = bindRg.id();
-
-                        dealBind(info, veInfo, 1, new DealBind() {
-                            @Override
-                            public void dealBind() {
-                                addLnTag(info.bindSb, "        [num1]Rg.addOnSelectChange(new [HandlerOnSelectChange](this, [infoBindHandler], [rPkg].R.id.[numLl]));",
-                                        veInfo.fieldOriKv.v, FullName.HANDLER_ON_SELECT_CHANGE, info.handlerKv.v, Pkg.R, veInfo.id.rName);
-                                addLnTag(info.bindSb, "        link([infoBindHandler].linkMap, [rPkg].R.id.[numLl], [numLl]);",
-                                        info.handlerKv.v, Pkg.R, veInfo.id.rName, veInfo.viewFieldName);
-                            }
-
-                            @Override
-                            public void dealEcho() {
-                                if (ClassTool.isString(veInfo.fieldOriKv.k)) {
-                                    addLnTag(info.echoSb, "            [num]Rg.setSelected([num]Rg.getIndex([info].[num]));",
-                                            veInfo.fieldOriKv.v, veInfo.fieldOriKv.v, info.bindBeanKv.v, veInfo.fieldKv.v);
-                                } else if (ClassTool.isInt(veInfo.fieldOriKv.k) || ClassTool.isInteger(veInfo.fieldOriKv.k)) {
-                                    addLnTag(info.echoSb, "            [num1]Rg.setSelected([info].[num1]);",
-                                            veInfo.fieldOriKv.v, info.bindBeanKv.v, veInfo.fieldKv.v);
-                                }
-                            }
-
-                            @Override
-                            public void dealToBean() {
-                                if (ClassTool.isString(veInfo.fieldOriKv.k)) {
-                                    addLnTag(info.handleSb,
-                                            "                    [infoBindConfig].[num] = [ViewTool].getRadioGroupItem(([ViewGroup]) linkObjs.get(0), (int) msg.obj);",
-                                            info.bindConfigKv.v, veInfo.fieldOriKv.v, FullName.VIEW_TOOL, FullName.VIEW_GROUP);
-                                } else if (ClassTool.isInteger(veInfo.fieldOriKv.k) || ClassTool.isInt(veInfo.fieldOriKv.k)) {
-                                    addLnTag(info.handleSb, "                    [infoBindConfig].[num1] = (int) msg.obj;",
-                                            info.bindConfigKv.v, veInfo.fieldOriKv.v);
-                                }
-                            }
-                        });
-
-                        KV<String, String> onSetItemKv = BeanTools.getBeanKv(ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                        veInfo.annoValue = bindRadioGroup.id();
+                        bindRgInfo.id = bindRadioGroup.id();
+                        bindRgInfo.onSetItem = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
                             @Override
                             public Object get() {
-                                return bindRg.onSetItem();
-                            }
-                        }), bindRg.onSetItemName());
-
-                        KV<String, String> kv = info.onSetItemMap.get(onSetItemKv.v);
-                        if (kv == null) {
-                            addLnTag(beforeBindViewSb, "        [TypeOnSetItem] [typeOnSetItem] = new [TypeOnSetItem]();",
-                                    onSetItemKv.k, onSetItemKv.v, onSetItemKv.k);
-                            info.onSetItemMap.put(onSetItemKv.v, onSetItemKv);
-                        }
-
-                        addField(Constant.SIGN_PROTECTED, FullName.RADIO_GROUP, veInfo.fieldOriKv.v + "Rg");
-
-                        String setItems = "";
-                        String param = Params.getParam(bindRg.items(), new Ts.Convert<String, String>() {
-                            @Override
-                            public String convert(int index, String s) {
-                                return "\"" + s + "\"";
+                                return bindRadioGroup.onSetItem();
                             }
                         });
-
-                        ExecutableElement getItemsEe = info.radioGroupItemsMethodMap.get(veInfo.annoValue);
-                        if (getItemsEe != null) {
-                            String param1 = Params.getParam(ElementTools.getVariableElements(getItemsEe), new Ts.Convert<VariableElement, String>() {
-                                @Override
-                                public String convert(int index, VariableElement ve) {
-                                    return getViewFieldName(ve);
-                                }
-                            });
-                            setItems = TagTools.dealLine(".setItems([infoBindConfig].[getItems]([numLl]))",
-                                    info.bindConfigKv.v, ElementTools.simpleName(getItemsEe), param1);
-                        } else if (StringTool.isNotBlank(param)) {
-                            setItems = ".setItems(" + param + ")";
-                        } else if (bindRg.defulatItems()) {
-                            setItems = ".initItems()";
-                        }
-
-
-                        String bts = veInfo.viewFieldName;
-                        ExecutableElement getViewsEe = info.radioGroupViewsMethodMap.get(veInfo.annoValue);
-                        IdTools.Id itemId = IdTools.elementToId(veInfo.ve, BindRadioGroup.class, bindRg.itemId());
-                        if (getViewsEe != null) {
-                            String param1 = Params.getParam(ElementTools.getVariableElements(getViewsEe), new Ts.Convert<VariableElement, String>() {
-                                @Override
-                                public String convert(int index, VariableElement ve) {
-                                    return getViewFieldName(ve);
-                                }
-                            });
-                            bts = info.bindConfigKv.v + "." + ElementTools.simpleName(getViewsEe) + "(" + param1 + ")";
-                        } else if (itemId != null) {
-                            bts = TagTools.dealLine("[ViewTool].getRadioGroupViews([viewId], [numLl])",
-                                    FullName.VIEW_TOOL, itemId.toString(), veInfo.viewFieldName);
-                        }
-
-                        int selected = bindRg.selected();
-                        if (selected >= 0) {
-                            addLnTag(info.setSelectedSb, "        [num]Rg.setSelected([1]);", veInfo.fieldOriKv.v, selected);
-                        }
-
-                        addLnTag(beforeBindViewSb, "        [num]Rg = [RadioGroup].obtain(this).setBts([numLl]).setOnSetItem([typeOnSetItem])[setItems];",
-                                veInfo.fieldOriKv.v, FullName.RADIO_GROUP, bts, onSetItemKv.v, setItems);
-                        addLnTag(beforeBindViewSb, "        [numLl].setTag([lib4aPkg].R.id.tag_0, [num]Rg);",
-                                veInfo.viewFieldName, Pkg.LIB4A, veInfo.fieldOriKv.v);
-
-                        return false;
+                        bindRgInfo.onSetItemName = bindRadioGroup.onSetItemName();
+                        bindRgInfo.items = bindRadioGroup.items();
+                        bindRgInfo.defulatItems = bindRadioGroup.defulatItems();
+                        bindRgInfo.selected = bindRadioGroup.selected();
+                        bindRgInfo.itemId = bindRadioGroup.itemId();
+                        dealRadioGroup(info, veInfo, bindRgInfo);
                     }
 
                     BindTextView bindTv = veInfo.ve.getAnnotation(BindTextView.class);
                     if (bindTv != null) {
-                        veInfo.annoClass = BindTextView.class;
-                        veInfo.annoValue = bindTv.value();
-                        dealBind(info, veInfo, new DealBind() {
+                        Ts.ints(bindTv.value()).ls(new Ts.EachTs<Integer>() {
                             @Override
-                            public void dealBind() {
-                                addLnTag(info.bindSb, "        [idEt].addTextChangedListener(new [HandlerTextWatcher](this, [infoBindHandler], [rPkg].R.id.[idEt]));",
-                                        veInfo.viewFieldName, FullName.HANDLER_TEXT_WATCHER, info.handlerKv.v, Pkg.R, veInfo.id.rName);
-                            }
+                            public boolean each(int position, Integer value) {
+                                veInfo.annoClass = BindTextView.class;
+                                veInfo.annoValue = value;
+                                dealBind(info, veInfo, new DealBind() {
+                                    @Override
+                                    public void dealBind() {
+                                        addLnTag(info.bindSb, "        [idEt].addTextChangedListener(new [HandlerTextWatcher](this, [infoBindHandler], [rPkg].R.id.[idEt]));",
+                                                veInfo.viewFieldName, FullName.HANDLER_TEXT_WATCHER, info.handlerKv.v, Pkg.R, veInfo.id.rName);
+                                    }
 
-                            @Override
-                            public void dealEcho() {
-                                addLnTag(info.echoSb, "            [ViewTool].setText([passwordTv], [info].[password]);",
-                                        FullName.VIEW_TOOL, veInfo.viewFieldName, info.bindBeanKv.v, veInfo.fieldKv.v);
-                            }
+                                    @Override
+                                    public void dealEcho() {
+                                        addLnTag(info.echoSb, "            [ViewTool].setText([passwordTv], [info].[password]);",
+                                                FullName.VIEW_TOOL, veInfo.viewFieldName, info.bindBeanKv.v, veInfo.fieldKv.v);
+                                    }
 
-                            @Override
-                            public void dealToBean() {
-                                if (isString(veInfo)) {
-                                    addLnTag(info.handleSb, "                    [infoBindConfig].[name] = (String) msg.obj;",
-                                            info.bindConfigKv.v, veInfo.fieldOriKv.v);
-                                } else if (isInt(veInfo)) {
-                                    addLnTag(info.handleSb, "                    [infoBindConfig].[age] = Integer.parseInt((String) msg.obj);",
-                                            info.bindConfigKv.v, veInfo.fieldOriKv.v);
-                                } else if (isLong(veInfo)) {
-                                    addLnTag(info.handleSb, "                    [infoBindConfig].[age] = Long.parseLong((String) msg.obj);",
-                                            info.bindConfigKv.v, veInfo.fieldOriKv.v);
-                                }
+                                    @Override
+                                    public void dealToBean() {
+                                        if (isString(veInfo)) {
+                                            addLnTag(info.handleSb, "                    [infoBindConfig].[name] = (String) msg.obj;",
+                                                    info.bindBeanKv.v, veInfo.fieldOriKv.v);
+                                        } else if (isInt(veInfo)) {
+                                            addLnTag(info.handleSb, "                    [infoBindConfig].[age] = Integer.parseInt((String) msg.obj);",
+                                                    info.bindBeanKv.v, veInfo.fieldOriKv.v);
+                                        } else if (isLong(veInfo)) {
+                                            addLnTag(info.handleSb, "                    [infoBindConfig].[age] = Long.parseLong((String) msg.obj);",
+                                                    info.bindBeanKv.v, veInfo.fieldOriKv.v);
+                                        }
+                                    }
+                                });
+
+
+                                return false;
                             }
                         });
-
                     }
 
                     BindEditText bindEt = veInfo.ve.getAnnotation(BindEditText.class);
                     if (bindEt != null) {
-                        veInfo.annoClass = BindEditText.class;
-                        veInfo.annoValue = bindEt.value();
-                        dealBind(info, veInfo, new DealBind() {
+                        Ts.ints(bindEt.value()).ls(new Ts.EachTs<Integer>() {
                             @Override
-                            public void dealBind() {
-                                addLnTag(info.bindSb, "        [idEt].addTextChangedListener(new [HandlerTextWatcher](this, [infoBindHandler], [rPkg].R.id.[idEt]));",
-                                        veInfo.viewFieldName, FullName.HANDLER_TEXT_WATCHER, info.handlerKv.v, Pkg.R, veInfo.id.rName);
-                            }
+                            public boolean each(int position, Integer value) {
+                                veInfo.annoClass = BindEditText.class;
+                                veInfo.annoValue = value;
+                                dealBind(info, veInfo, new DealBind() {
+                                    @Override
+                                    public void dealBind() {
+                                        addLnTag(info.bindSb, "        [idEt].addTextChangedListener(new [HandlerTextWatcher](this, [infoBindHandler], [rPkg].R.id.[idEt]));",
+                                                veInfo.viewFieldName, FullName.HANDLER_TEXT_WATCHER, info.handlerKv.v, Pkg.R, veInfo.id.rName);
+                                    }
 
-                            @Override
-                            public void dealEcho() {
-                                addLnTag(info.echoSb, "            [ViewTool].setEditTextAndSelection([nameEt], [info].[name]);",
-                                        FullName.VIEW_TOOL, veInfo.viewFieldName, info.bindBeanKv.v, veInfo.fieldKv.v);
-                            }
+                                    @Override
+                                    public void dealEcho() {
+                                        addLnTag(info.echoSb, "            [ViewTool].setEditTextAndSelection([nameEt], [info].[name]);",
+                                                FullName.VIEW_TOOL, veInfo.viewFieldName, info.bindBeanKv.v, veInfo.fieldKv.v);
+                                    }
 
-                            @Override
-                            public void dealToBean() {
-                                if (isString(veInfo)) {
-                                    addLnTag(info.handleSb, "                    [infoBindConfig].[name] = (String) msg.obj;",
-                                            info.bindConfigKv.v, veInfo.fieldOriKv.v);
-                                } else if (isInt(veInfo)) {
-                                    addLnTag(info.handleSb, "                    [infoBindConfig].[age] = Integer.parseInt((String) msg.obj);",
-                                            info.bindConfigKv.v, veInfo.fieldOriKv.v);
-                                } else if (isLong(veInfo)) {
-                                    addLnTag(info.handleSb, "                    [infoBindConfig].[age] = Long.parseLong((String) msg.obj);",
-                                            info.bindConfigKv.v, veInfo.fieldOriKv.v);
-                                }
+                                    @Override
+                                    public void dealToBean() {
+                                        if (isString(veInfo)) {
+                                            addLnTag(info.handleSb, "                    [infoBindConfig].[name] = (String) msg.obj;",
+                                                    info.bindBeanKv.v, veInfo.fieldOriKv.v);
+                                        } else if (isInt(veInfo)) {
+                                            addLnTag(info.handleSb, "                    [infoBindConfig].[age] = Integer.parseInt((String) msg.obj);",
+                                                    info.bindBeanKv.v, veInfo.fieldOriKv.v);
+                                        } else if (isLong(veInfo)) {
+                                            addLnTag(info.handleSb, "                    [infoBindConfig].[age] = Long.parseLong((String) msg.obj);",
+                                                    info.bindBeanKv.v, veInfo.fieldOriKv.v);
+                                        }
+                                    }
+                                });
+
+
+                                return false;
                             }
                         });
-                        return false;
                     }
                     BindView bindView = veInfo.ve.getAnnotation(BindView.class);
                     if (bindView != null) {
-                        veInfo.annoClass = BindView.class;
-                        veInfo.annoValue = bindView.value();
-                        dealBind(info, veInfo, new DealBind() {
+                        Ts.ints(bindView.value()).ls(new Ts.EachTs<Integer>() {
                             @Override
-                            public void dealBind() {
-                                addLnTag(info.bindSb, "        [infoBindConfig].[bindAgeEt](this, [ageEt], [infoBindHandler]);",
-                                        info.bindConfigKv.v, ElementTools.simpleName(info.bindMethodMap.get(bindView.value())),
-                                        veInfo.viewFieldName, info.handlerKv.v);
-                            }
+                            public boolean each(int position, Integer value) {
+                                veInfo.annoClass = BindView.class;
+                                veInfo.annoValue = value;
+                                dealBind(info, veInfo, new DealBind() {
+                                    @Override
+                                    public void dealBind() {
+                                        addLnTag(info.bindSb, "        [infoBindConfig].[bindAgeEt](this, [ageEt], [infoBindHandler]);",
+                                                info.bindConfigKv.v, ElementTools.simpleName(info.bindMethodMap.get(value)),
+                                                veInfo.viewFieldName, info.handlerKv.v);
+                                    }
 
-                            @Override
-                            public void dealEcho() {
+                                    @Override
+                                    public void dealEcho() {
 
-                            }
+                                    }
 
-                            @Override
-                            public void dealToBean() {
-                                addLnTag(info.handleSb, "                    [infoBindConfig].[age] = ([int]) msg.obj;",
-                                        info.bindConfigKv.v, veInfo.fieldOriKv.v, veInfo.fieldOriKv.k);
+                                    @Override
+                                    public void dealToBean() {
+                                        addLnTag(info.handleSb, "                    [infoBindConfig].[age] = ([int]) msg.obj;",
+                                                info.bindBeanKv.v, veInfo.fieldOriKv.v, veInfo.fieldOriKv.k);
+                                    }
+                                });
+                                return false;
                             }
                         });
-                        return false;
                     }
                 }
                 return false;
@@ -648,6 +661,108 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
     }
 
+    private void dealRadioGroup(DealBindInfo info, DealBindVeInfo veInfo, BindRadioGroupInfo bindRgInfo) {
+        veInfo.id = IdTools.elementToId(veInfo.ve, veInfo.annoClass, veInfo.annoValue);
+        veInfo.viewFieldName = getViewFieldName(veInfo.id);
+
+        bindRgInfo.rgKv = new KV<String, String>(FullName.RADIO_GROUP, veInfo.viewFieldName + "Rg");
+
+        dealBind(info, veInfo, 1, new DealBind() {
+            @Override
+            public void dealBind() {
+                addLnTag(info.bindSb, "        [num1Rg].addOnSelectChange(new [HandlerOnSelectChange](this, [infoBindHandler], [rPkg].R.id.[numLl]));",
+                        bindRgInfo.rgKv.v, FullName.HANDLER_ON_SELECT_CHANGE, info.handlerKv.v, Pkg.R, veInfo.id.rName);
+                addLnTag(info.bindSb, "        link([infoBindHandler].linkMap, [rPkg].R.id.[numLl], [numLl]);",
+                        info.handlerKv.v, Pkg.R, veInfo.id.rName, veInfo.viewFieldName);
+            }
+
+            @Override
+            public void dealEcho() {
+                if (ClassTool.isString(veInfo.fieldOriKv.k)) {
+                    addLnTag(info.echoSb, "            [numRg].setSelected([numRg].getIndex([info].[num]));",
+                            bindRgInfo.rgKv.v, bindRgInfo.rgKv.v, info.bindBeanKv.v, veInfo.fieldKv.v);
+                } else if (ClassTool.isInt(veInfo.fieldOriKv.k) || ClassTool.isInteger(veInfo.fieldOriKv.k)) {
+                    addLnTag(info.echoSb, "            [num1Rg].setSelected([info].[num1]);",
+                            bindRgInfo.rgKv.v, info.bindBeanKv.v, veInfo.fieldKv.v);
+                }
+            }
+
+            @Override
+            public void dealToBean() {
+                if (ClassTool.isString(veInfo.fieldOriKv.k)) {
+                    addLnTag(info.handleSb,
+                            "                    [infoBindConfig].[num] = [ViewTool].getRadioGroupItem(([ViewGroup]) linkObjs.get(0), (int) msg.obj);",
+                            info.bindConfigKv.v, veInfo.fieldOriKv.v, FullName.VIEW_TOOL, FullName.VIEW_GROUP);
+                } else if (ClassTool.isInteger(veInfo.fieldOriKv.k) || ClassTool.isInt(veInfo.fieldOriKv.k)) {
+                    addLnTag(info.handleSb, "                    [infoBindConfig].[num1] = (int) msg.obj;",
+                            info.bindConfigKv.v, veInfo.fieldOriKv.v);
+                }
+            }
+        });
+
+        KV<String, String> onSetItemKv = BeanTools.getBeanKv(bindRgInfo.onSetItem, bindRgInfo.onSetItemName);
+
+        KV<String, String> kv = info.onSetItemMap.get(onSetItemKv.v);
+        if (kv == null) {
+            addLnTag(beforeBindViewSb, "        [TypeOnSetItem] [typeOnSetItem] = new [TypeOnSetItem]();",
+                    onSetItemKv.k, onSetItemKv.v, onSetItemKv.k);
+            info.onSetItemMap.put(onSetItemKv.v, onSetItemKv);
+        }
+
+        addField(Constant.SIGN_PROTECTED, FullName.RADIO_GROUP, bindRgInfo.rgKv.v);
+
+        String setItems = "";
+        String param = Params.getParam(bindRgInfo.items, new Ts.Convert<String, String>() {
+            @Override
+            public String convert(int index, String s) {
+                return "\"" + s + "\"";
+            }
+        });
+
+        ExecutableElement getItemsEe = info.radioGroupItemsMethodMap.get(veInfo.annoValue);
+        if (getItemsEe != null) {
+            String param1 = Params.getParam(ElementTools.getVariableElements(getItemsEe), new Ts.Convert<VariableElement, String>() {
+                @Override
+                public String convert(int index, VariableElement ve) {
+                    return getViewFieldName(ve);
+                }
+            });
+            setItems = TagTools.dealLine(".setItems([infoBindConfig].[getItems]([numLl]))",
+                    info.bindConfigKv.v, ElementTools.simpleName(getItemsEe), param1);
+        } else if (StringTool.isNotBlank(param)) {
+            setItems = ".setItems(" + param + ")";
+        } else if (bindRgInfo.defulatItems) {
+            setItems = ".initItems()";
+        }
+
+
+        String bts = veInfo.viewFieldName;
+        ExecutableElement getViewsEe = info.radioGroupViewsMethodMap.get(veInfo.annoValue);
+        IdTools.Id itemId = IdTools.elementToId(veInfo.ve, BindRadioGroup.class, bindRgInfo.itemId);
+        if (getViewsEe != null) {
+            String param1 = Params.getParam(ElementTools.getVariableElements(getViewsEe), new Ts.Convert<VariableElement, String>() {
+                @Override
+                public String convert(int index, VariableElement ve) {
+                    return getViewFieldName(ve);
+                }
+            });
+            bts = info.bindConfigKv.v + "." + ElementTools.simpleName(getViewsEe) + "(" + param1 + ")";
+        } else if (itemId != null) {
+            bts = TagTools.dealLine("[ViewTool].getRadioGroupViews([viewId], [numLl])",
+                    FullName.VIEW_TOOL, itemId.toString(), veInfo.viewFieldName);
+        }
+
+        int selected = bindRgInfo.selected;
+        if (selected >= 0) {
+            addLnTag(info.setSelectedSb, "        [numRg].setSelected([1]);", bindRgInfo.rgKv.v, selected);
+        }
+
+        addLnTag(beforeBindViewSb, "        [numRg] = [RadioGroup].obtain(this).setBts([numLl]).setOnSetItem([typeOnSetItem])[setItems];",
+                bindRgInfo.rgKv.v, FullName.RADIO_GROUP, bts, onSetItemKv.v, setItems);
+        addLnTag(beforeBindViewSb, "        [numLl].setTag([lib4aPkg].R.id.tag_0, [numRg]);",
+                veInfo.viewFieldName, Pkg.LIB4A, bindRgInfo.rgKv.v);
+    }
+
     private void addCheck(DealBindInfo info, String prompt) {
         addLnTag(info.checkSb, "            toast(\"[prompt]\");", prompt);
         addLnTag(info.checkSb, "            return false;");
@@ -687,19 +802,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         }
         addLnTag(info.handleSb, "                case [rPkg].R.id.[nameEt]:", Pkg.R, veInfo.viewFieldName);
 
-        ExecutableElement toBeanEe = info.toBeanMethodMap.get(veInfo.fieldOriKv.v);
-        if (toBeanEe != null) {
-            addLnTag(info.handleSb, "                    [infoBindConfig].[id] = [infoBindConfig].[parseLong](msg.obj);",
-                    info.bindConfigKv.v, veInfo.fieldOriKv.v, info.bindConfigKv.v, ElementTools.simpleName(toBeanEe));
-        } else {
-            dealBind.dealToBean();
-        }
-
-        if (veInfo.fieldKv != null) {
-            addLnTag(info.handleSb, "                    [info].[id] = [infoBindConfig].[id];",
-                    info.bindBeanKv.v, veInfo.fieldKv.v, info.bindConfigKv.v, veInfo.fieldOriKv.v);
-        }
-
         ExecutableElement handleViewEe = info.handleViewMethodMap.get(veInfo.annoValue);
         if (handleViewEe != null) {
             List<VariableElement> ves = ElementTools.getVariableElements(handleViewEe);
@@ -732,6 +834,20 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                 addLnTag(info.bindSb, "        link([infoBindHandler].linkMap, [rPkg].R.id.[nameEt], [nicknameEt]);",
                         info.handlerKv.v, Pkg.R, veInfo.id.rName, param1);
             }
+
+        } else {
+
+            ExecutableElement toBeanEe = info.toBeanMethodMap.get(veInfo.fieldOriKv.v);
+            if (toBeanEe != null) {
+                addLnTag(info.handleSb, "                    [infoBindConfig].[id] = [infoBindConfig].[parseLong](msg.obj);",
+                        info.bindBeanKv.v, veInfo.fieldKv.v, info.bindConfigKv.v, ElementTools.simpleName(toBeanEe));
+            } else {
+                dealBind.dealToBean();
+            }
+//            if (veInfo.fieldKv != null) {
+//                addLnTag(info.handleSb, "                    [info].[id] = [infoBindConfig].[id];",
+//                        info.bindBeanKv.v, veInfo.fieldKv.v, info.bindConfigKv.v, veInfo.fieldOriKv.v);
+//            }
 
         }
 

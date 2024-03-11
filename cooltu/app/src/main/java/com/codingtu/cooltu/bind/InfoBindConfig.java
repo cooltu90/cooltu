@@ -13,6 +13,7 @@ import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.processor.annotation.bind.BindConfig;
 import com.codingtu.cooltu.processor.annotation.bind.BindField;
 import com.codingtu.cooltu.processor.annotation.bind.BindMethod;
+import com.codingtu.cooltu.processor.annotation.bind.binder.BindRadioGroups;
 import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupItemsMethod;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindTextView;
 import com.codingtu.cooltu.processor.annotation.ui.ViewId;
@@ -35,17 +36,25 @@ public class InfoBindConfig {
      *
      **************************************************/
     @BindField
-    @BindEditText(R.id.idEt)
+    @BindEditText({R.id.idEt, R.id.id1Et})
+    @BindTextView(R.id.idTv)
     @Check(prompt = "请输入正确的id")
     public long id;
 
+
+    @HandleView({R.id.idTv, R.id.idEt, R.id.id1Et})
+    public void handleId(Info info,
+                         @ViewId(R.id.idEt) EditText idEt,
+                         @ViewId(R.id.id1Et) EditText id1Et) {
+    }
+
     @CheckMethod(fields = {"id"}, prompts = {"嘻嘻嘻"})
-    public boolean checkId(long id) {
+    public boolean checkId(Info info, @ViewId(R.id.idEt) EditText idEt) {
         return false;
     }
 
     @EchoMethod("id")
-    public void idEcho(long id, @ViewId(R.id.idEt) EditText idEt) {
+    public void idEcho(Info info, @ViewId(R.id.idEt) EditText idEt, @ViewId(R.id.nameEt) EditText nameEt) {
 
     }
 
@@ -86,16 +95,16 @@ public class InfoBindConfig {
      *
      **************************************************/
     @BindField
-    @BindView(R.id.ageEt)
+    @BindView({R.id.ageEt, R.id.age1Et})
     public int age;
 
-    @BindMethod(R.id.ageEt)
+    @BindMethod({R.id.ageEt, R.id.age1Et})
     public void bindAgeEt(Destroys destroys, EditText ageEt, Handler handler) {
 //        BindTool.bindEt(destroys, ageEt, handler);
     }
 
     @EchoMethod("age")
-    public void ageEcho(int age, @ViewId(R.id.ageEt) EditText ageEt) {
+    public void ageEcho(Info info, @ViewId(R.id.ageEt) EditText ageEt) {
 
     }
 
@@ -122,7 +131,7 @@ public class InfoBindConfig {
     public String area;
 
     @EchoMethod("address")
-    public void addressEcho(String address
+    public void addressEcho(Info info
             , @ViewId(R.id.provinceEt) EditText provinceEt
             , @ViewId(R.id.cityEt) EditText cityEt
             , @ViewId(R.id.areaEt) EditText areaEt
@@ -130,7 +139,7 @@ public class InfoBindConfig {
 
     }
 
-    @HandleView(R.id.provinceEt)
+    @HandleView({R.id.provinceEt, R.id.cityEt, R.id.areaEt})
     public void handleProvince(Info info) {
 
     }
@@ -141,13 +150,25 @@ public class InfoBindConfig {
      *
      **************************************************/
     @BindField
-    @BindRadioGroup(
-            id = R.id.numLl,
-            itemId = R.id.rgItem,
-            onSetItem = TypeOnSetItem.class,
-            //items = {"1", "2", "3"},
-            defulatItems = true,
-            selected = 1
+    @BindRadioGroups(
+            bindRadioGroup = {
+                    @BindRadioGroup(
+                            id = R.id.numLl,
+                            itemId = R.id.rgItem,
+                            onSetItem = TypeOnSetItem.class,
+                            //items = {"1", "2", "3"},
+                            defulatItems = true,
+                            selected = 1
+                    ),
+                    @BindRadioGroup(
+                            id = R.id.num2Ll,
+                            itemId = R.id.rgItem,
+                            onSetItem = TypeOnSetItem.class,
+                            items = {"1", "2", "3"},
+//                            defulatItems = true,
+                            selected = 1
+                    )
+            }
     )
     public String num;
 //
@@ -157,7 +178,7 @@ public class InfoBindConfig {
 //    }
 
 
-    @BindRadioGroup(id = R.id.num1Ll, onSetItem = TypeOnSetItem.class)
+    @BindRadioGroups(id = R.id.num1Ll, onSetItem = TypeOnSetItem.class)
     public int num1;
 
 
@@ -176,7 +197,7 @@ public class InfoBindConfig {
     }
 
     @EchoMethod("time")
-    public void timeEcho(float time, @ViewId(R.id.timeSb) SeekBar timeSeekBar) {
+    public void timeEcho(Info info, @ViewId(R.id.timeSb) SeekBar timeSeekBar) {
 
     }
 

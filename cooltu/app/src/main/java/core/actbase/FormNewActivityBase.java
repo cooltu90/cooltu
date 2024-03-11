@@ -8,16 +8,20 @@ import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
 public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
+    protected android.widget.EditText age1Et;
     protected android.widget.LinearLayout numLl;
     protected android.widget.TextView saveBt1;
     protected android.widget.TextView saveBt2;
     protected android.widget.EditText nameEt;
     protected android.widget.EditText areaEt;
     protected android.widget.EditText ageEt;
+    protected android.widget.TextView idTv;
     protected android.widget.SeekBar heightSb;
+    protected android.widget.EditText id1Et;
     protected android.widget.SeekBar timeSb;
     protected android.widget.EditText nicknameEt;
     protected android.widget.LinearLayout num1Ll;
+    protected android.widget.LinearLayout num2Ll;
     protected android.widget.EditText cityEt;
     protected android.widget.TextView passwordTv;
     protected android.widget.EditText provinceEt;
@@ -26,8 +30,9 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected com.codingtu.cooltu.bind.InfoBindConfig infoBindConfig;
     protected boolean initInfo;
     protected InfoBindHandler infoBindHandler;
-    protected com.codingtu.cooltu.lib4a.view.combine.RadioGroup numRg;
-    protected com.codingtu.cooltu.lib4a.view.combine.RadioGroup num1Rg;
+    protected com.codingtu.cooltu.lib4a.view.combine.RadioGroup numLlRg;
+    protected com.codingtu.cooltu.lib4a.view.combine.RadioGroup num2LlRg;
+    protected com.codingtu.cooltu.lib4a.view.combine.RadioGroup num1LlRg;
     protected com.codingtu.cooltu.bean.Form form;
     protected com.codingtu.cooltu.bind.FormBindConfig formBindConfig;
     protected boolean initForm;
@@ -39,16 +44,20 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         super.onCreate(savedInstanceState);
         setContentView(com.codingtu.cooltu.R.layout.activity_form_new);
 
+        age1Et = findViewById(com.codingtu.cooltu.R.id.age1Et);
         numLl = findViewById(com.codingtu.cooltu.R.id.numLl);
         saveBt1 = findViewById(com.codingtu.cooltu.R.id.saveBt1);
         saveBt2 = findViewById(com.codingtu.cooltu.R.id.saveBt2);
         nameEt = findViewById(com.codingtu.cooltu.R.id.nameEt);
         areaEt = findViewById(com.codingtu.cooltu.R.id.areaEt);
         ageEt = findViewById(com.codingtu.cooltu.R.id.ageEt);
+        idTv = findViewById(com.codingtu.cooltu.R.id.idTv);
         heightSb = findViewById(com.codingtu.cooltu.R.id.heightSb);
+        id1Et = findViewById(com.codingtu.cooltu.R.id.id1Et);
         timeSb = findViewById(com.codingtu.cooltu.R.id.timeSb);
         nicknameEt = findViewById(com.codingtu.cooltu.R.id.nicknameEt);
         num1Ll = findViewById(com.codingtu.cooltu.R.id.num1Ll);
+        num2Ll = findViewById(com.codingtu.cooltu.R.id.num2Ll);
         cityEt = findViewById(com.codingtu.cooltu.R.id.cityEt);
         passwordTv = findViewById(com.codingtu.cooltu.R.id.passwordTv);
         provinceEt = findViewById(com.codingtu.cooltu.R.id.provinceEt);
@@ -131,10 +140,12 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected void initBindView() {
         infoBindConfig = new com.codingtu.cooltu.bind.InfoBindConfig();
         com.codingtu.cooltu.form.TypeOnSetItem typeOnSetItem = new com.codingtu.cooltu.form.TypeOnSetItem();
-        numRg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(com.codingtu.cooltu.lib4a.tools.ViewTool.getRadioGroupViews(com.codingtu.cooltu.R.id.rgItem, numLl)).setOnSetItem(typeOnSetItem).initItems();
-        numLl.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, numRg);
-        num1Rg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(num1Ll).setOnSetItem(typeOnSetItem);
-        num1Ll.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, num1Rg);
+        numLlRg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(com.codingtu.cooltu.lib4a.tools.ViewTool.getRadioGroupViews(com.codingtu.cooltu.R.id.rgItem, numLl)).setOnSetItem(typeOnSetItem).initItems();
+        numLl.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, numLlRg);
+        num2LlRg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(com.codingtu.cooltu.lib4a.tools.ViewTool.getRadioGroupViews(com.codingtu.cooltu.R.id.rgItem, num2Ll)).setOnSetItem(typeOnSetItem).setItems("1", "2", "3");
+        num2Ll.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, num2LlRg);
+        num1LlRg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(num1Ll).setOnSetItem(typeOnSetItem);
+        num1Ll.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, num1LlRg);
         formBindConfig = new com.codingtu.cooltu.bind.FormBindConfig();
 
         beforeInitBindView();
@@ -143,35 +154,45 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             initInfo = true;
         }
         infoBindHandler = new InfoBindHandler(info, infoBindConfig);
+        idTv.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.idTv));
+        link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.idTv, idEt, id1Et);
         idEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.idEt));
+        link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.idEt, idEt, id1Et);
+        id1Et.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.id1Et));
+        link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.id1Et, idEt, id1Et);
         nameEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.nameEt));
         link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.nameEt, nicknameEt);
         nicknameEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.nicknameEt));
         infoBindConfig.bindAgeEt(this, ageEt, infoBindHandler);
+        infoBindConfig.bindAgeEt(this, age1Et, infoBindHandler);
         provinceEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.provinceEt));
         cityEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.cityEt));
         areaEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.areaEt));
-        numRg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(this, infoBindHandler, com.codingtu.cooltu.R.id.numLl));
+        numLlRg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(this, infoBindHandler, com.codingtu.cooltu.R.id.numLl));
         link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.numLl, numLl);
-        num1Rg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(this, infoBindHandler, com.codingtu.cooltu.R.id.num1Ll));
+        num2LlRg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(this, infoBindHandler, com.codingtu.cooltu.R.id.num2Ll));
+        link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.num2Ll, num2Ll);
+        num1LlRg.addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(this, infoBindHandler, com.codingtu.cooltu.R.id.num1Ll));
         link(infoBindHandler.linkMap, com.codingtu.cooltu.R.id.num1Ll, num1Ll);
         timeSb.setOnSeekBarChangeListener(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSeekBarChangeListener(this, infoBindHandler, com.codingtu.cooltu.R.id.timeSb));
         heightSb.setOnSeekBarChangeListener(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSeekBarChangeListener(this, infoBindHandler, com.codingtu.cooltu.R.id.heightSb));
         passwordTv.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, infoBindHandler, com.codingtu.cooltu.R.id.passwordTv));
 
         if (!initInfo) {
-            infoBindConfig.idEcho(info.id, idEt);
+            infoBindConfig.idEcho(info, idEt, nameEt);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setEditTextAndSelection(nameEt, info.name);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setEditTextAndSelection(nicknameEt, info.nickname);
-            infoBindConfig.ageEcho(info.age, ageEt);
-            infoBindConfig.addressEcho(info.address, provinceEt, cityEt, areaEt);
-            numRg.setSelected(numRg.getIndex(info.num));
-            infoBindConfig.timeEcho(info.time, timeSb);
+            infoBindConfig.ageEcho(info, ageEt);
+            infoBindConfig.addressEcho(info, provinceEt, cityEt, areaEt);
+            numLlRg.setSelected(numLlRg.getIndex(info.num));
+            num2LlRg.setSelected(num2LlRg.getIndex(info.num));
+            infoBindConfig.timeEcho(info, timeSb);
             heightSb.setProgress(info.height);
             com.codingtu.cooltu.lib4a.tools.ViewTool.setText(passwordTv, info.password);
 
         }
-        numRg.setSelected(1);
+        numLlRg.setSelected(1);
+        num2LlRg.setSelected(1);
 
         if (form == null) {
             form = new com.codingtu.cooltu.bean.Form();
@@ -201,51 +222,53 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             super.handleMessage(msg);
             List<Object> linkObjs = linkMap.get(msg.what);
             switch (msg.what) {
+                case com.codingtu.cooltu.R.id.idTv:
+                    infoBindConfig.handleId(info, (android.widget.EditText) linkObjs.get(0), (android.widget.EditText) linkObjs.get(1));
+                    break;
                 case com.codingtu.cooltu.R.id.idEt:
-                    infoBindConfig.id = infoBindConfig.parseLong(msg.obj);
-                    info.id = infoBindConfig.id;
+                    infoBindConfig.handleId(info, (android.widget.EditText) linkObjs.get(0), (android.widget.EditText) linkObjs.get(1));
+                    break;
+                case com.codingtu.cooltu.R.id.id1Et:
+                    infoBindConfig.handleId(info, (android.widget.EditText) linkObjs.get(0), (android.widget.EditText) linkObjs.get(1));
                     break;
                 case com.codingtu.cooltu.R.id.nameEt:
-                    infoBindConfig.name = (String) msg.obj;
-                    info.name = infoBindConfig.name;
                     infoBindConfig.handleView(info, (android.widget.EditText) linkObjs.get(0));
                     break;
                 case com.codingtu.cooltu.R.id.nicknameEt:
-                    infoBindConfig.nickname = (String) msg.obj;
-                    info.nickname = infoBindConfig.nickname;
+                    info.nickname = (String) msg.obj;
                     break;
                 case com.codingtu.cooltu.R.id.ageEt:
-                    infoBindConfig.age = infoBindConfig.toAge(msg.obj);
-                    info.age = infoBindConfig.age;
+                    info.age = infoBindConfig.toAge(msg.obj);
+                    break;
+                case com.codingtu.cooltu.R.id.age1Et:
+                    info.age = infoBindConfig.toAge(msg.obj);
                     break;
                 case com.codingtu.cooltu.R.id.provinceEt:
-                    infoBindConfig.province = (String) msg.obj;
                     infoBindConfig.handleProvince(info);
                     break;
                 case com.codingtu.cooltu.R.id.cityEt:
-                    infoBindConfig.city = (String) msg.obj;
+                    infoBindConfig.handleProvince(info);
                     break;
                 case com.codingtu.cooltu.R.id.areaEt:
-                    infoBindConfig.area = (String) msg.obj;
+                    infoBindConfig.handleProvince(info);
                     break;
                 case com.codingtu.cooltu.R.id.numLl:
                     infoBindConfig.num = com.codingtu.cooltu.lib4a.tools.ViewTool.getRadioGroupItem((android.view.ViewGroup) linkObjs.get(0), (int) msg.obj);
-                    info.num = infoBindConfig.num;
+                    break;
+                case com.codingtu.cooltu.R.id.num2Ll:
+                    infoBindConfig.num = com.codingtu.cooltu.lib4a.tools.ViewTool.getRadioGroupItem((android.view.ViewGroup) linkObjs.get(0), (int) msg.obj);
                     break;
                 case com.codingtu.cooltu.R.id.num1Ll:
                     infoBindConfig.num1 = (int) msg.obj;
                     break;
                 case com.codingtu.cooltu.R.id.timeSb:
-                    infoBindConfig.time = infoBindConfig.toTime(msg.obj);
-                    info.time = infoBindConfig.time;
+                    info.time = infoBindConfig.toTime(msg.obj);
                     break;
                 case com.codingtu.cooltu.R.id.heightSb:
                     infoBindConfig.height = (int) msg.obj;
-                    info.height = infoBindConfig.height;
                     break;
                 case com.codingtu.cooltu.R.id.passwordTv:
-                    infoBindConfig.password = (String) msg.obj;
-                    info.password = infoBindConfig.password;
+                    info.password = (String) msg.obj;
                     break;
 
             }
@@ -256,7 +279,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
             toast("请输入正确的id");
             return false;
         }
-        if (!infoBindConfig.checkId(info.id)) {
+        if (!infoBindConfig.checkId(info, idEt)) {
             toast("嘻嘻嘻");
             return false;
         }

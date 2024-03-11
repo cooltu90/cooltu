@@ -4,10 +4,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.SOURCE)
-public @interface BindRadioGroup {
-    int id();
+public @interface BindRadioGroups {
+    int id() default -1;
 
-    Class onSetItem();
+    Class onSetItem() default Void.class;
 
     String onSetItemName() default "";
 
@@ -18,5 +18,7 @@ public @interface BindRadioGroup {
     int selected() default -1;
 
     int itemId() default -1;
+
+    BindRadioGroup[] bindRadioGroup() default {};
 
 }
