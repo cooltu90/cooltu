@@ -33,6 +33,6 @@
     <item name="menuDialogItemsSv" type="id" />
     <item name="menuDialogItemsLl" type="id" />
     <!-- RadioGroup -->
-    <item name="radioGroupItem" type="id" />
+<!--    <item name="radioGroupItem" type="id" />-->
 
 </resources>
