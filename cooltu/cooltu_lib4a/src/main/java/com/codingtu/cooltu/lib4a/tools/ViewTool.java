@@ -470,16 +470,16 @@ public class ViewTool {
 //        return itemTs.toArray();
 //    }
 
-    private static void getRadioGroupItems(StringTs itemTs, ViewGroup viewGroup) {
-        for (int i = 0; i < viewGroup.getChildCount(); i++) {
-            View childView = viewGroup.getChildAt(i);
-            if (childView instanceof TextView) {
-                itemTs.add(((TextView) childView).getText().toString());
-            } else if (childView instanceof ViewGroup) {
-                getRadioGroupItems(itemTs, (ViewGroup) childView);
-            }
-        }
-    }
+//    private static void getRadioGroupItems(StringTs itemTs, ViewGroup viewGroup) {
+//        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+//            View childView = viewGroup.getChildAt(i);
+//            if (childView instanceof TextView) {
+//                itemTs.add(((TextView) childView).getText().toString());
+//            } else if (childView instanceof ViewGroup) {
+//                getRadioGroupItems(itemTs, (ViewGroup) childView);
+//            }
+//        }
+//    }
 
 //    public static String[] getRadioGroupItems(int viewId, ViewGroup viewGroup) {
 //        return Ts.ts(getRadioGroupViews(viewId, viewGroup)).convert(new Ts.Convert<View, String>() {
