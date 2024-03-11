@@ -156,7 +156,6 @@ public class InfoBindConfig {
             bindRadioGroup = {
                     @BindRadioGroup(
                             id = R.id.numLl,
-                            itemId = R.id.rgItem,
                             onSetItem = TypeOnSetItem.class,
                             //items = {"1", "2", "3"},
                             defulatItems = true,
@@ -164,7 +163,6 @@ public class InfoBindConfig {
                     ),
                     @BindRadioGroup(
                             id = R.id.num2Ll,
-                            itemId = R.id.rgItem,
                             onSetItem = TypeOnSetItem.class,
                             items = {"1", "2", "3"},
                             selected = 1
