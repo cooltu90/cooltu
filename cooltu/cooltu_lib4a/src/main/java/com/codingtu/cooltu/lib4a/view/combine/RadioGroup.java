@@ -29,7 +29,7 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
     }
 
     public static interface OnClick {
-        public boolean onClick(View view);
+        public boolean onClick(int index, View view);
     }
 
     public static interface OnSelectChange {
@@ -120,13 +120,12 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        int index = (int) v.getTag(R.id.tag_0);
         if (onClick != null) {
-            if (!onClick.onClick(v)) {
+            if (!onClick.onClick(index, v)) {
                 return;
             }
         }
-
-        int index = (int) v.getTag(R.id.tag_0);
         setSelected(index);
     }
 
