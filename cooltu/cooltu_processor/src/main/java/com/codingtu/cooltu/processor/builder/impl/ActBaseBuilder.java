@@ -413,7 +413,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                             }
                         });
 
-                        addLnTag(info.echoSb, "            [infoBindConfig].[idEcho]([info], [idEt]);",
+                        addLnTag(info.echoSb, "        [infoBindConfig].[idEcho]([info], [idEt]);",
                                 info.bindConfigKv.v, ElementTools.simpleName(veInfo.echoMethodEe), info.bindBeanKv.v, param);
                     }
 
@@ -435,7 +435,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                                     @Override
                                     public void dealEcho() {
                                         if (ClassTool.isInt(veInfo.fieldOriKv.k) || ClassTool.isInteger(veInfo.fieldOriKv.k)) {
-                                            addLnTag(info.echoSb, "            [timeSb].setProgress([info].[time]);",
+                                            addLnTag(info.echoSb, "        [timeSb].setProgress([info].[time]);",
                                                     veInfo.viewFieldName, info.bindBeanKv.v, veInfo.fieldKv.v);
                                         }
                                     }
@@ -535,7 +535,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
                                     @Override
                                     public void dealEcho() {
-                                        addLnTag(info.echoSb, "            [ViewTool].setText([passwordTv], [info].[password]);",
+                                        addLnTag(info.echoSb, "        [ViewTool].setText([passwordTv], [info].[password]);",
                                                 FullName.VIEW_TOOL, veInfo.viewFieldName, info.bindBeanKv.v, veInfo.fieldKv.v);
                                     }
 
@@ -576,7 +576,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
                                     @Override
                                     public void dealEcho() {
-                                        addLnTag(info.echoSb, "            [ViewTool].setEditTextAndSelection([nameEt], [info].[name]);",
+                                        addLnTag(info.echoSb, "        [ViewTool].setEditTextAndSelection([nameEt], [info].[name]);",
                                                 FullName.VIEW_TOOL, veInfo.viewFieldName, info.bindBeanKv.v, veInfo.fieldKv.v);
                                     }
 
@@ -645,10 +645,16 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         //绑定事件
         addLnTag(initBindViewSb, info.bindSb.toString());
         addLnTag(initBindViewSb, "        if (![initInfo]) {", info.initKv.v);
+        addLnTag(initBindViewSb, "            echo[Info]();", ConvertTool.toClassType(info.bindBeanKv.v));
         //回显事件
-        addLnTag(initBindViewSb, info.echoSb.toString());
         addLnTag(initBindViewSb, "        }");
         addLnTag(initBindViewSb, info.setSelectedSb.toString());
+
+        //echomethod
+        addLnTag(bindHandlerSb, "    protected void echo[bean]() {", ConvertTool.toClassType(info.bindBeanKv.v));
+        addLnTag(bindHandlerSb, info.echoSb.toString());
+        addLnTag(bindHandlerSb, "    }");
+
         //bindHandlerSb
         addLnTag(bindHandlerSb, "    public static class [InfoBindHandler] extends android.os.Handler {", info.handlerKv.k);
         addLnTag(bindHandlerSb, "        private [Info] [info];", info.bindBeanKv.k, info.bindBeanKv.v);
@@ -697,10 +703,10 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             @Override
             public void dealEcho() {
                 if (ClassTool.isString(veInfo.fieldOriKv.k)) {
-                    addLnTag(info.echoSb, "            [numRg].setSelected([numRg].getIndex([info].[num]));",
+                    addLnTag(info.echoSb, "        [numRg].setSelected([numRg].getIndex([info].[num]));",
                             bindRgInfo.rgKv.v, bindRgInfo.rgKv.v, info.bindBeanKv.v, veInfo.fieldKv.v);
                 } else if (ClassTool.isInt(veInfo.fieldOriKv.k) || ClassTool.isInteger(veInfo.fieldOriKv.k)) {
-                    addLnTag(info.echoSb, "            [num1Rg].setSelected([info].[num1]);",
+                    addLnTag(info.echoSb, "        [num1Rg].setSelected([info].[num1]);",
                             bindRgInfo.rgKv.v, info.bindBeanKv.v, veInfo.fieldKv.v);
                 }
             }
