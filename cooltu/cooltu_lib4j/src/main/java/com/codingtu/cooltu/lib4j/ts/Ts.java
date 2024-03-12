@@ -92,6 +92,10 @@ public class Ts {
         return ts;
     }
 
+    public static <SYMBOL extends Symbol> SymbolTs<SYMBOL> symbols() {
+        return new SymbolTs<>();
+    }
+
     public static <SYMBOL extends Symbol> SymbolTs<SYMBOL> symbols(SYMBOL... symbols) {
         SymbolTs<SYMBOL> ts = new SymbolTs<>();
         ts.add(symbols);
