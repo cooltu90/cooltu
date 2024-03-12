@@ -768,13 +768,15 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     if (index == 0) {
                         return info.bindBeanKv.v;
                     } else if (index == 1) {
+                        return "index";
+                    } else if (index == 2) {
                         return "view";
                     } else {
                         return getViewFieldName(ve);
                     }
                 }
             });
-            setOnClickStr = TagTools.dealLine(".setOnClick(view -> [infoBindConfig].[onNumLlOnClick]([info]))",
+            setOnClickStr = TagTools.dealLine(".setOnClick((index, view) -> [infoBindConfig].[onNumLlOnClick]([info]))",
                     info.bindConfigKv.v, ElementTools.simpleName(onClickEe), param1);
         }
 

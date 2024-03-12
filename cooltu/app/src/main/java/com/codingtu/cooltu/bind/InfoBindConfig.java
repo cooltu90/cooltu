@@ -172,7 +172,7 @@ public class InfoBindConfig {
     public String num;
 
     @RadioGroupOnClickMethod(R.id.numLl)
-    public boolean onNumLlOnClick(Info info, View view, @ViewId(R.id.numLl) LinearLayout numLl) {
+    public boolean onNumLlOnClick(Info info, int index, View view, @ViewId(R.id.numLl) LinearLayout numLl) {
 //        if (view.getId() == R.id.numLl) {
 //            return false;
 //        }
