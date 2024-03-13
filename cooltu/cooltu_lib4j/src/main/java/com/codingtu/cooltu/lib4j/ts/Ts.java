@@ -84,6 +84,10 @@ public class Ts {
         return ts;
     }
 
+    public static BaseTs<Short> shorts() {
+        return new BaseTs<>();
+    }
+
     public static StringTs strs(String... strs) {
         StringTs ts = new StringTs();
         ts.add(strs);
