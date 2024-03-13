@@ -455,7 +455,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
                     BindRadioGroups bindRadioGroups = veInfo.ve.getAnnotation(BindRadioGroups.class);
                     if (bindRadioGroups != null) {
-                        BindRadioGroup[] groups = bindRadioGroups.bindRadioGroup();
+                        BindRadioGroup[] groups = bindRadioGroups.bindRadioGroups();
                         if (CountTool.isNull(groups)) {
                             BindRadioGroupInfo bindRgInfo = new BindRadioGroupInfo();
                             veInfo.annoClass = BindRadioGroups.class;
@@ -474,7 +474,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                             bindRgInfo.itemId = bindRadioGroups.itemId();
                             dealRadioGroup(info, veInfo, bindRgInfo);
                         } else {
-                            Ts.ts(bindRadioGroups.bindRadioGroup()).ls(new Ts.EachTs<BindRadioGroup>() {
+                            Ts.ts(bindRadioGroups.bindRadioGroups()).ls(new Ts.EachTs<BindRadioGroup>() {
                                 @Override
                                 public boolean each(int position, BindRadioGroup bindRadioGroup) {
                                     BindRadioGroupInfo bindRgInfo = new BindRadioGroupInfo();

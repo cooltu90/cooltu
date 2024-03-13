@@ -19,6 +19,6 @@ public @interface BindRadioGroups {
 
     int itemId() default -1;
 
-    BindRadioGroup[] bindRadioGroup() default {};
+    BindRadioGroup[] bindRadioGroups() default {};
 
 }

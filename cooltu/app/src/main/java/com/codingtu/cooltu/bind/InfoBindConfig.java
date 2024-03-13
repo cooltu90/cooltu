@@ -15,7 +15,6 @@ import com.codingtu.cooltu.processor.annotation.bind.BindConfig;
 import com.codingtu.cooltu.processor.annotation.bind.BindField;
 import com.codingtu.cooltu.processor.annotation.bind.BindMethod;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindRadioGroups;
-import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupItemsMethod;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindTextView;
 import com.codingtu.cooltu.processor.annotation.bind.radiogroup.RadioGroupOnClickMethod;
 import com.codingtu.cooltu.processor.annotation.ui.ViewId;
@@ -153,7 +152,7 @@ public class InfoBindConfig {
      **************************************************/
     @BindField
     @BindRadioGroups(
-            bindRadioGroup = {
+            bindRadioGroups = {
                     @BindRadioGroup(
                             id = R.id.numLl,
                             onSetItem = TypeOnSetItem.class,

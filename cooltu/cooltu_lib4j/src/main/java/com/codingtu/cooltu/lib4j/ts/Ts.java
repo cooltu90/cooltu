@@ -64,6 +64,10 @@ public class Ts {
         return ts;
     }
 
+    public static BaseTs<Integer> ints() {
+        return new BaseTs<>();
+    }
+
     public static BaseTs<Long> longs(long... longs) {
         BaseTs<Long> ts = new BaseTs<>();
         for (int i = 0; i < longs.length; i++) {
@@ -91,6 +95,11 @@ public class Ts {
         ts.add(strs);
         return ts;
     }
+
+    public static StringTs strs() {
+        return new StringTs();
+    }
+
 
     public static <SYMBOL extends Symbol> SymbolTs<SYMBOL> symbols() {
         return new SymbolTs<>();
