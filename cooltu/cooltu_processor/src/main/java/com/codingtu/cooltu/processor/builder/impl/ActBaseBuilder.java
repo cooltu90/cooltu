@@ -889,11 +889,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             } else {
                 dealBind.dealToBean();
             }
-//            if (veInfo.fieldKv != null) {
-//                addLnTag(info.handleSb, "                    [info].[id] = [infoBindConfig].[id];",
-//                        info.bindBeanKv.v, veInfo.fieldKv.v, info.bindConfigKv.v, veInfo.fieldOriKv.v);
-//            }
-
         }
 
 
