@@ -149,7 +149,7 @@ public class PathDeal extends TypeBaseDeal {
     }
 
     private void dealFile(TypeElement te, VariableElement ve, FilePath file) {
-        KV<String, String> kv = ElementTools.getFieldKv(ve);
+        KV<String, String> kv = BeanTools.getBeanKv(ve, file.id());
 
         PathBuilder parentModel = pathMap.get(file.parent());
         FilePathInfo info = new FilePathInfo();

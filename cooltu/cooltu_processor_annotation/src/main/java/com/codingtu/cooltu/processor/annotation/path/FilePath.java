@@ -12,6 +12,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.FIELD)
 public @interface FilePath {
+    String id() default "";
+
     String parent() default "root";
 
     String fileName() default "";
