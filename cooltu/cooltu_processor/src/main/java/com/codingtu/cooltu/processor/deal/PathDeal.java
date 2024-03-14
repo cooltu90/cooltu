@@ -23,6 +23,7 @@ import com.codingtu.cooltu.processor.bean.ObtainInfo;
 import com.codingtu.cooltu.processor.builder.impl.PathBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
+import com.codingtu.cooltu.processor.lib.tools.BeanTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
 import java.util.HashMap;
@@ -113,7 +114,8 @@ public class PathDeal extends TypeBaseDeal {
     }
 
     private void dealDir(TypeElement te, VariableElement ve, DirPath dir) {
-        KV<String, String> kv = ElementTools.getFieldKv(ve);
+        KV<String, String> kv = BeanTools.getBeanKv(ve, dir.id());
+
         String baseName = dirMap.get(dir.parent());
         String fieldName = dir.fieldName();
         if (StringTool.isBlank(fieldName)) {

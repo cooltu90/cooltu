@@ -8,6 +8,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.FIELD)
 public @interface DirPath {
+
+    String id() default "";
+
     String parent() default "root";
 
     String dirName() default "";
