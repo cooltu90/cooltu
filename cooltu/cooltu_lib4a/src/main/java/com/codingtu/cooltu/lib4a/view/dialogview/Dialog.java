@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4a.tools.InflateTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
-import com.codingtu.cooltu.lib4a.view.layerview.RelativeLayerView;
+import com.codingtu.cooltu.lib4a.view.layer.Layer;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 
@@ -16,7 +16,7 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
     private Activity act;
     private String title;
     private String content;
-    private RelativeLayerView rlv;
+    private Layer layer;
     private View rightBt;
     private View leftBt;
     private View inflate;
@@ -66,11 +66,11 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
     }
 
     public Dialog build() {
-        rlv = new RelativeLayerView(act);
-        ViewTool.addToAct(act, rlv);
+        layer = new Layer(act);
+        ViewTool.addToAct(act, layer);
         inflate = InflateTool.inflate(act, layout);
-        rlv.addView(inflate, ViewTool.WRAP_CONTENT, ViewTool.WRAP_CONTENT);
-        ViewTool.gone(rlv);
+        layer.addView(inflate, ViewTool.WRAP_CONTENT, ViewTool.WRAP_CONTENT);
+        ViewTool.gone(layer);
 
         TextView titleTv = inflate.findViewById(R.id.dialogTitleTv);
         ViewTool.setText(titleTv, title);
@@ -108,14 +108,14 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
     }
 
     private void clickRightBt(View v) {
-        rlv.hidden();
+        layer.hidden();
         if (onBtClick != null) {
             onBtClick.onRightClick(obj);
         }
     }
 
     private void clickLeftBt(View v) {
-        rlv.hidden();
+        layer.hidden();
         if (onBtClick != null) {
             onBtClick.onLeftClick(obj);
         }
@@ -136,7 +136,7 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
         }
         rightBt = null;
         leftBt = null;
-        rlv = null;
+        layer = null;
         inflate = null;
         onBtClick = null;
         obj = null;
@@ -145,7 +145,7 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
     }
 
     public void show() {
-        rlv.show();
+        layer.show();
     }
 
     public static interface OnBtClick {

@@ -155,6 +155,59 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     }
 
 
+    private com.codingtu.cooltu.lib4a.view.dialogview.Dialog dialog;
+    protected void showDialog() {
+        if (dialog == null) {
+            dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
+                    .setTitle("提示")
+                    .setContent("胜多负少的")
+                    .setLeftBtText("取消")
+                    .setRighBtText("确定")
+                    .setLayout(com.codingtu.cooltu.R.layout.dialog)
+                    .setOnBtClick(new com.codingtu.cooltu.lib4a.view.dialogview.Dialog.OnBtClick() {
+                        @Override
+                        public void onLeftClick(Object obj) {
+                            dialogLeft();
+                        }
+
+                        @Override
+                        public void onRightClick(Object obj) {
+                            dialogRight();
+                        }
+                    })
+                    .build();
+        }
+        dialog.setObject(null);
+        dialog.show();
+    }
+    protected void showDialog(String content) {
+        if (dialog == null) {
+            dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
+                    .setTitle("提示")
+                    .setContent(content)
+                    .setLeftBtText("取消")
+                    .setRighBtText("确定")
+                    .setLayout(com.codingtu.cooltu.R.layout.dialog)
+                    .setOnBtClick(new com.codingtu.cooltu.lib4a.view.dialogview.Dialog.OnBtClick() {
+                        @Override
+                        public void onLeftClick(Object obj) {
+                            dialogLeft();
+                        }
+
+                        @Override
+                        public void onRightClick(Object obj) {
+                            dialogRight();
+                        }
+                    })
+                    .build();
+        } else {
+            dialog.updateContent(content);
+        }
+        dialog.setObject(null);
+        dialog.show();
+    }
+    protected void dialogLeft() { }
+    protected void dialogRight() { }
 
 
 

@@ -41,7 +41,7 @@ public class WelcomeActivity extends WelcomeActivityBase {
 
     @ClickView(R.id.showBt)
     public void showBtClick() {
-        noticeShow("xxx");
+        showDialog();
     }
 
 }
