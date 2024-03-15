@@ -5,11 +5,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.codingtu.cooltu.R;
-import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.tools.InflateTool;
 import com.codingtu.cooltu.lib4a.tools.MobileTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
-import com.codingtu.cooltu.lib4a.view.layerview.RelativeLayerView;
+import com.codingtu.cooltu.lib4a.view.layer.Layer;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
@@ -17,7 +16,7 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
 public class DownloadDialog implements OnDestroy {
     private View inflate;
     private Activity act;
-    private RelativeLayerView rlv;
+    private Layer rlv;
     private TextView progressTv;
     private View progressView;
     private TextView sizeTv;
@@ -35,7 +34,7 @@ public class DownloadDialog implements OnDestroy {
         }
 
         this.totalWidth = MobileTool.dpToPx(228.68f);
-        this.rlv = new RelativeLayerView(this.act);
+        this.rlv = new Layer(this.act);
         this.rlv.setHiddenWhenBackClick(false);
         this.rlv.setHiddenWhenShadowClick(false);
         ViewTool.addToAct(this.act, this.rlv);
