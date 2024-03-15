@@ -15,7 +15,7 @@ import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 public final class NoticeDialog implements OnDestroy, View.OnClickListener {
 
     private Activity act;
-    private Layer rlv;
+    private Layer layer;
     private int layout;
     private View inflate;
     private View contentTv;
@@ -31,7 +31,7 @@ public final class NoticeDialog implements OnDestroy, View.OnClickListener {
     public void destroy() {
         contentTv = null;
         inflate = null;
-        rlv = null;
+        layer = null;
         act = null;
     }
 
@@ -41,13 +41,13 @@ public final class NoticeDialog implements OnDestroy, View.OnClickListener {
     }
 
     public NoticeDialog build() {
-        rlv = new Layer(act);
-        rlv.setHiddenWhenBackClick(false);
-        rlv.setHiddenWhenShadowClick(false);
-        ViewTool.addToAct(act, rlv);
-        ViewTool.gone(rlv);
+        layer = new Layer(act);
+        layer.setHiddenWhenBackClick(false);
+        layer.setHiddenWhenShadowClick(false);
+        ViewTool.addToAct(act, layer);
+        ViewTool.gone(layer);
         inflate = InflateTool.inflate(act, layout);
-        rlv.addView(inflate, ViewTool.WRAP_CONTENT, ViewTool.WRAP_CONTENT);
+        layer.addView(inflate, ViewTool.WRAP_CONTENT, ViewTool.WRAP_CONTENT);
         contentTv = inflate.findViewById(R.id.dialogContentTv);
         inflate.findViewById(R.id.noticeDialogYesBt).setOnClickListener(this);
 
@@ -65,11 +65,11 @@ public final class NoticeDialog implements OnDestroy, View.OnClickListener {
     }
 
     public void show() {
-        rlv.show();
+        layer.show();
     }
 
     public void hidden(OnHiddenFinishedCallBack callBack) {
-        rlv.hidden(callBack);
+        layer.hidden(callBack);
     }
 
     public void hidden() {
