@@ -138,7 +138,7 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
             td.show();
         }
     }
-    protected void toastShow(long time, String msg, com.codingtu.cooltu.lib4a.view.layerview.listener.OnHiddenFinished onHiddenFinished) {
+    protected void toastShow(long time, String msg, com.codingtu.cooltu.lib4a.view.layer.event.OnHiddenFinishedCallBack onHiddenFinished) {
         toastShow(msg);
         com.codingtu.cooltu.lib4a.tools.HandlerTool.getMainHandler().postDelayed(new java.lang.Runnable() {
             @Override
@@ -152,7 +152,7 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
         toastShow(time, msg, null);
     }
 
-    protected void toastHidden(long time, String msg, com.codingtu.cooltu.lib4a.view.layerview.listener.OnHiddenFinished onHiddenFinished) {
+    protected void toastHidden(long time, String msg, com.codingtu.cooltu.lib4a.view.layer.event.OnHiddenFinishedCallBack onHiddenFinished) {
         getToastDialog().setContent(msg);
         com.codingtu.cooltu.lib4a.tools.HandlerTool.getMainHandler().postDelayed(new java.lang.Runnable() {
             @Override

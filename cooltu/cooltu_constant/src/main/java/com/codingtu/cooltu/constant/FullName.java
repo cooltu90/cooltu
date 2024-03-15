@@ -101,6 +101,7 @@ public class FullName {
     public static final String EDIT_DIALOG = Pkg.LIB4A_DIALOG_VIEW + ".EditDialog";
     public static final String ED_TEXT_WATCHER = EDIT_DIALOG + ".EdTextWatcher";
     public static final String ON_HIDDEN_FINISHED = Pkg.LIB4A_LAYER_VIEW + ".listener.OnHiddenFinished";
+    public static final String ON_HIDDEN_FINISHED_CALLBACK = Pkg.LIB4A_LAYER + ".event.OnHiddenFinishedCallBack";
     //不变的
     public static final String VIEW = "android.view.View";
     public static final String VIEW_GROUP = "android.view.ViewGroup";

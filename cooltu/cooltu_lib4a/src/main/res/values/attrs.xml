@@ -13,6 +13,9 @@
     <attr name="roundBgColor" format="color|reference" />
     <attr name="strokeWidth" format="dimension" />
     <attr name="strokeColor" format="color|reference" />
+    <attr name="is_hidden_when_shadow_click" format="boolean" />
+    <attr name="is_hidden_when_back_click" format="boolean" />
+    <attr name="stop_animation" format="boolean" />
 
     <declare-styleable name="CoreView">
         <attr name="android:radius" />
@@ -96,8 +99,15 @@
     </declare-styleable>
 
     <declare-styleable name="LayerView">
-        <attr name="is_hidden_when_shadow_click" format="boolean" />
-        <attr name="is_hidden_when_back_click" format="boolean" />
+        <attr name="is_hidden_when_shadow_click" />
+        <attr name="is_hidden_when_back_click" />
+        <attr name="stop_animation" />
+    </declare-styleable>
+
+    <declare-styleable name="Layer">
+        <attr name="is_hidden_when_shadow_click" />
+        <attr name="is_hidden_when_back_click" />
+        <attr name="stop_animation" />
     </declare-styleable>
 
     <declare-styleable name="CoreEditDialogView">

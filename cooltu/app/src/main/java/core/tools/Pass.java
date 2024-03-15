@@ -4,8 +4,6 @@ import android.content.Intent;
 
 public class Pass {
     public static final String FROM_ACT = "fromAct";
-    public static final String USER = "user";
-    public static final String XXX = "xxx";
     public static final String XX = "xx";
     public static final String NAME = "name";
     public static final String AGE = "age";
@@ -13,12 +11,6 @@ public class Pass {
 
     public static final String fromAct(Intent data) {
         return data.getStringExtra(FROM_ACT);
-    }
-    public static final com.codingtu.cooltu.bean.User user(Intent data) {
-        return com.codingtu.cooltu.lib4j.json.JsonTool.toBean(com.codingtu.cooltu.bean.User.class, data.getStringExtra(USER));
-    }
-    public static final String xxx(Intent data) {
-        return data.getStringExtra(XXX);
     }
     public static final String xx(Intent data) {
         return data.getStringExtra(XX);

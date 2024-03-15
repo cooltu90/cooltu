@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.tools.DestoryTool;
+import com.codingtu.cooltu.lib4a.tools.HandlerTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4a.uicore.CoreUiInterface;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
@@ -88,7 +89,7 @@ public abstract class LayerView extends RelativeLayout implements OnDestroy {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
+                sendEvent(LayerEventType.START_FINISHED);
             }
 
             @Override
@@ -162,11 +163,15 @@ public abstract class LayerView extends RelativeLayout implements OnDestroy {
         return ViewTool.isVisible(this);
     }
 
-    public void show() {
+    public final void show() {
         show(null);
     }
 
-    public void show(LayerListener layerListener) {
+    public final void show(LayerListener layerListener) {
+        realShow(layerListener);
+    }
+
+    protected void realShow(LayerListener layerListener) {
         if (layerListener != null) {
             this.layerListener = layerListener;
         }
@@ -176,7 +181,6 @@ public abstract class LayerView extends RelativeLayout implements OnDestroy {
         if (!stopAnimation) {
             shadowView.startAnimation(showShadowAnim);
         }
-
     }
 
     private void sendEvent(int type) {
@@ -196,6 +200,10 @@ public abstract class LayerView extends RelativeLayout implements OnDestroy {
     }
 
     public final void hidden(LayerListener layerListener) {
+        realHidden(layerListener);
+    }
+
+    protected void realHidden(LayerListener layerListener) {
         if (hiddenStatus == LayerEventType.HIDDEN_FINISHED && ViewTool.isVisible(this)) {
             hiddenStatus = LayerEventType.HIDDEN_START;
             if (layerListener != null) {

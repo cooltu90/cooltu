@@ -47,7 +47,7 @@
             android:name="com.codingtu.cooltu.ui.step.StepOneActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codingtu.cooltu.ui.step.StepsOneActivity"
+            android:name="com.codingtu.cooltu.ui.view.step.StepsOneActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.codingtu.cooltu.ui.FormNewActivity"

@@ -7,8 +7,12 @@ import com.codingtu.cooltu.processor.annotation.res.Dimen;
 import com.codingtu.cooltu.processor.annotation.res.Dp;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
 import com.codingtu.cooltu.processor.annotation.ui.StartGroup;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.NoticeDialogUse;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.ToastDialogUse;
 import com.codingtu.cooltu.ui.WelcomeActivity;
 
+@ToastDialogUse
+@NoticeDialogUse
 @ResFor(WelcomeActivity.class)
 public class WelcomeActivityRes {
 

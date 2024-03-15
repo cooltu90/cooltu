@@ -5,17 +5,17 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.codingtu.cooltu.lib4a.R;
+import com.codingtu.cooltu.lib4a.view.layer.Layer;
+import com.codingtu.cooltu.lib4a.view.layer.event.OnHiddenFinishedCallBack;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4a.tools.InflateTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
-import com.codingtu.cooltu.lib4a.view.layerview.RelativeLayerView;
-import com.codingtu.cooltu.lib4a.view.layerview.listener.OnHiddenFinished;
 
 public final class ToastDialog implements OnDestroy {
 
     private Activity act;
-    private RelativeLayerView rlv;
+    private Layer layer;
     private int layout;
     private View inflate;
     private View contentTv;
@@ -31,7 +31,7 @@ public final class ToastDialog implements OnDestroy {
     public void destroy() {
         contentTv = null;
         inflate = null;
-        rlv = null;
+        layer = null;
         act = null;
     }
 
@@ -45,24 +45,24 @@ public final class ToastDialog implements OnDestroy {
     }
 
     public ToastDialog build(boolean isHiddenWhenBackClick, boolean isHiddenWhenShadowClick) {
-        rlv = new RelativeLayerView(act);
-        rlv.setHiddenWhenBackClick(isHiddenWhenBackClick);
-        rlv.setHiddenWhenShadowClick(isHiddenWhenShadowClick);
-        ViewTool.addToAct(act, rlv);
-        ViewTool.gone(rlv);
+        layer = new Layer(act);
+        layer.setHiddenWhenBackClick(isHiddenWhenBackClick);
+        layer.setHiddenWhenShadowClick(isHiddenWhenShadowClick);
+        ViewTool.addToAct(act, layer);
+        ViewTool.gone(layer);
         inflate = InflateTool.inflate(act, layout);
-        rlv.addView(inflate, ViewTool.WRAP_CONTENT, ViewTool.WRAP_CONTENT);
+        layer.addView(inflate, ViewTool.WRAP_CONTENT, ViewTool.WRAP_CONTENT);
         contentTv = inflate.findViewById(R.id.dialogContentTv);
         ViewTool.inRelativeCenter(inflate);
         return this;
     }
 
     public void setHiddenWhenBackClick(boolean isHiddenWhenBackClick) {
-        rlv.setHiddenWhenBackClick(isHiddenWhenBackClick);
+        layer.setHiddenWhenBackClick(isHiddenWhenBackClick);
     }
 
     public void setHiddenWhenShadowClick(boolean isHiddenWhenShadowClick) {
-        rlv.setHiddenWhenShadowClick(isHiddenWhenShadowClick);
+        layer.setHiddenWhenShadowClick(isHiddenWhenShadowClick);
     }
 
 
@@ -76,16 +76,16 @@ public final class ToastDialog implements OnDestroy {
     }
 
     public boolean isShow() {
-        return ViewTool.isVisible(rlv);
+        return ViewTool.isVisible(layer);
     }
 
 
     public void show() {
-        rlv.show();
+        layer.show();
     }
 
-    public void hidden(OnHiddenFinished onHiddenFinished) {
-        rlv.hidden(onHiddenFinished);
+    public void hidden(OnHiddenFinishedCallBack callBack) {
+        layer.hidden(callBack);
     }
 
     public void hidden() {

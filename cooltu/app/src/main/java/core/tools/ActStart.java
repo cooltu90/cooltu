@@ -9,6 +9,11 @@ public class ActStart {
         intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
         com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.FORM_NEW_ACTIVITY);
     }
+    public static final void stepsOneActivity(Activity act) {
+        Intent intent = new Intent(act, com.codingtu.cooltu.ui.view.step.StepsOneActivity.class);
+        intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
+        com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.STEPS_ONE_ACTIVITY);
+    }
     public static final void addPhotoActivity(Activity act) {
         Intent intent = new Intent(act, com.codingtu.cooltu.ui.AddPhotoActivity.class);
         intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
@@ -23,11 +28,6 @@ public class ActStart {
         Intent intent = new Intent(act, com.codingtu.cooltu.ui.FormTestBaseActivity.class);
         intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
         com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.FORM_TEST_BASE_ACTIVITY);
-    }
-    public static final void stepsOneActivity(Activity act) {
-        Intent intent = new Intent(act, com.codingtu.cooltu.ui.step.StepsOneActivity.class);
-        intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
-        com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.STEPS_ONE_ACTIVITY);
     }
     public static final void stepTwoActivity(Activity act) {
         Intent intent = new Intent(act, com.codingtu.cooltu.ui.StepTwoActivity.class);

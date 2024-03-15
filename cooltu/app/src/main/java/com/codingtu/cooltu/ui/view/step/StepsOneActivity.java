@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.ui.step;
+package com.codingtu.cooltu.ui.view.step;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.processor.annotation.tools.To;

@@ -43,7 +43,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     public void onCreateComplete() {
         super.onCreateComplete();
 
-        backBt.setOnClickListener(this);
+        showBt.setOnClickListener(this);
 
 
 
@@ -54,20 +54,15 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         super.onClick(v);
 
         switch (v.getId()) {
-            case com.codingtu.cooltu.R.id.backBt:
-                if (!isLogin(getAct())) {
-                    return;
-                }
-                backBtClick(
-                        v,
-                        (com.codingtu.cooltu.bean.User) v.getTag(com.codingtu.cooltu.lib4a.R.id.tag_0)
+            case com.codingtu.cooltu.R.id.showBt:
+                showBtClick(
                 );
                 break;
 
         }
     }
 
-    protected void backBtClick(android.view.View v, com.codingtu.cooltu.bean.User user) {}
+    protected void showBtClick() {}
 
 
     @Override
@@ -93,13 +88,9 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     public void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == android.app.Activity.RESULT_OK) {
-            if (requestCode == core.tools.Code4Request.STEP_ONE_ACTIVITY) {
-                stepOneActivityBack(core.tools.Pass.user(data), core.tools.Pass.xxx(data));
-            }
 
         }
     }
-    protected void stepOneActivityBack(com.codingtu.cooltu.bean.User user, java.lang.String xxx) {}
 
     @Override
     public void back(int requestCode, String[] permissions, int[] grantResults) {
@@ -108,7 +99,60 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     }
 
 
+    private com.codingtu.cooltu.lib4a.view.dialogview.ToastDialog toastDialog;
 
+    protected com.codingtu.cooltu.lib4a.view.dialogview.ToastDialog getToastDialog() {
+        if (toastDialog == null)
+            toastDialog = new com.codingtu.cooltu.lib4a.view.dialogview.ToastDialog(getAct())
+                    .setLayout(com.codingtu.cooltu.R.layout.dialog_toast)
+                    .build();
+        return toastDialog;
+    }
+    protected void toastShow(String msg) {
+        com.codingtu.cooltu.lib4a.view.dialogview.ToastDialog td = getToastDialog();
+        td.setContent(msg);
+        if (!td.isShow()) {
+            td.show();
+        }
+    }
+    protected void toastShow(long time, String msg, com.codingtu.cooltu.lib4a.view.layer.event.OnHiddenFinishedCallBack onHiddenFinished) {
+        toastShow(msg);
+        com.codingtu.cooltu.lib4a.tools.HandlerTool.getMainHandler().postDelayed(new java.lang.Runnable() {
+            @Override
+            public void run() {
+                getToastDialog().hidden(onHiddenFinished);
+            }
+        }, time);
+    }
+
+    protected void toastShow(long time, String msg) {
+        toastShow(time, msg, null);
+    }
+
+    protected void toastHidden(long time, String msg, com.codingtu.cooltu.lib4a.view.layer.event.OnHiddenFinishedCallBack onHiddenFinished) {
+        getToastDialog().setContent(msg);
+        com.codingtu.cooltu.lib4a.tools.HandlerTool.getMainHandler().postDelayed(new java.lang.Runnable() {
+            @Override
+            public void run() {
+                getToastDialog().hidden(onHiddenFinished);
+            }
+        }, time);
+    }
+
+    protected void toastHidden(long time, String msg) {
+        toastHidden(time, msg, null);
+    }
+
+    private com.codingtu.cooltu.lib4a.view.dialogview.NoticeDialog noticeDialog;
+
+    protected void noticeShow(String msg) {
+        if (noticeDialog == null)
+            noticeDialog = new com.codingtu.cooltu.lib4a.view.dialogview.NoticeDialog(getAct())
+                    .setLayout(com.codingtu.cooltu.R.layout.dialog_notice)
+                    .build();
+        noticeDialog.setContent(msg);
+        noticeDialog.show();
+    }
 
 
 

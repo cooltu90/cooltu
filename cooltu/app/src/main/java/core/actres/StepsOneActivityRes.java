@@ -1,7 +1,7 @@
 package core.actres;
 
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
-import com.codingtu.cooltu.ui.step.StepsOneActivity;
+import com.codingtu.cooltu.ui.view.step.StepsOneActivity;
 
 @ResFor(StepsOneActivity.class)
 public class StepsOneActivityRes {

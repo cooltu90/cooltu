@@ -37,6 +37,7 @@ public class Pkg {
     public static final String LIB4A_VIEW = LIB4A + ".view";
     public static final String LIB4A_DIALOG_VIEW = LIB4A_VIEW + ".dialogview";
     public static final String LIB4A_LAYER_VIEW = LIB4A_VIEW + ".layerview";
+    public static final String LIB4A_LAYER = LIB4A_VIEW + ".layer";
     //lib4j
     public static final String LIB4J = "com.codingtu.cooltu.lib4j";
     public static final String LIB4J_TS = LIB4J + ".ts";

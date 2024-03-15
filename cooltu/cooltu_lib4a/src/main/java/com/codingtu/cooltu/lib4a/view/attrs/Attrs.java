@@ -9,6 +9,9 @@ import android.util.SparseArray;
 
 import androidx.annotation.StyleableRes;
 
+import com.codingtu.cooltu.lib4a.R;
+import com.codingtu.cooltu.lib4a.log.Logs;
+
 public class Attrs {
 
     private final TypedArray ta;
@@ -94,6 +97,10 @@ public class Attrs {
     }
 
     public boolean getBoolean(int index, boolean defaultValue) {
+        if (index == R.styleable.Layer_stop_animation) {
+            Integer integer = map.get(index);
+        }
+
         if (map.get(index) != null) {
             return ta.getBoolean(index, defaultValue);
         } else {

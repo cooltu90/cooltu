@@ -10,6 +10,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
+import com.codingtu.cooltu.lib4a.view.layerview.listener.LayerListener;
 
 public class RightListLayerView extends LayerView {
     private View dialogView;
@@ -99,8 +100,8 @@ public class RightListLayerView extends LayerView {
     }
 
     @Override
-    public void show() {
-        super.show();
+    protected void realShow(LayerListener layerListener) {
+        super.realShow(layerListener);
         if (isComplete) {
             showReal();
         } else {

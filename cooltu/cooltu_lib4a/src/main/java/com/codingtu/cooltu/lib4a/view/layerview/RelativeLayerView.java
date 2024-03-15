@@ -1,17 +1,28 @@
 package com.codingtu.cooltu.lib4a.view.layerview;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 
+import androidx.annotation.NonNull;
+
+import com.codingtu.cooltu.lib4a.log.Logs;
+import com.codingtu.cooltu.lib4a.tools.HandlerTool;
+import com.codingtu.cooltu.lib4a.view.layerview.listener.LayerEvent;
+import com.codingtu.cooltu.lib4a.view.layerview.listener.LayerListener;
+
 public class RelativeLayerView extends LayerView {
     private View dialogView;
     private ScaleAnimation showScaleAnim;
     private ScaleAnimation hiddenScaleAnim;
     private boolean isShowOnLayoutComplete;
+    private boolean isHiddenOnLayoutCompletel;
 
     public RelativeLayerView(Context context) {
         super(context);
@@ -77,24 +88,24 @@ public class RelativeLayerView extends LayerView {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
-        if (dialogView == null)
+        if (dialogView == null) {
             dialogView = getChildAt(1);
-        int w = getMeasuredWidth();
-        int dialogW = dialogView.getMeasuredWidth();
-        int left = (w - dialogW) / 2;
-        dialogView.layout(left, dialogView.getTop(), left + dialogW, dialogView.getBottom());
+            int w = getMeasuredWidth();
+            int dialogW = dialogView.getMeasuredWidth();
+            int left = (w - dialogW) / 2;
+            dialogView.layout(left, dialogView.getTop(), left + dialogW, dialogView.getBottom());
+        }
         if (isShowOnLayoutComplete) {
             isShowOnLayoutComplete = false;
             if (!stopAnimation) {
                 dialogView.startAnimation(showScaleAnim);
             }
         }
-
     }
 
     @Override
-    public void show() {
-        super.show();
+    protected void realShow(LayerListener layerListener) {
+        super.realShow(layerListener);
         if (dialogView != null) {
             if (!stopAnimation) {
                 dialogView.startAnimation(showScaleAnim);
@@ -107,7 +118,9 @@ public class RelativeLayerView extends LayerView {
     @Override
     protected void hiddenAnimation() {
         super.hiddenAnimation();
-        dialogView.startAnimation(hiddenScaleAnim);
+        if (dialogView != null) {
+            dialogView.startAnimation(hiddenScaleAnim);
+        }
     }
 
     public View getDialogView() {

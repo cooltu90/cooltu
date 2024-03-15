@@ -8,6 +8,7 @@ import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
 public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.base.CoreWelcomeActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
+    protected android.widget.TextView showBt;
     protected android.widget.TextView tv1;
     protected android.widget.RelativeLayout tv3Rl;
     protected android.widget.RelativeLayout tv4;
@@ -26,6 +27,7 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
         super.onCreate(savedInstanceState);
         setContentView(com.codingtu.cooltu.R.layout.activity_welcome);
 
+        showBt = findViewById(com.codingtu.cooltu.R.id.showBt);
         tv1 = findViewById(com.codingtu.cooltu.R.id.tv1);
         tv3 = findViewById(com.codingtu.cooltu.R.id.tv3);
         tv3Rl = tv3.findViewById(com.codingtu.cooltu.R.id.rl);

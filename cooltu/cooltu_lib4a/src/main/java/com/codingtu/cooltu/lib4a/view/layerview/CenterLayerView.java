@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 
+import com.codingtu.cooltu.lib4a.view.layerview.listener.LayerListener;
+
 public class CenterLayerView extends LayerView {
     private View dialogView;
     private ScaleAnimation showScaleAnim;
@@ -94,9 +96,9 @@ public class CenterLayerView extends LayerView {
 
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+//    @Override
+//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 //        if (dialogView == null)
 //            dialogView = getChildAt(1);
 //        int dp296 = dpToPx(296);
@@ -105,16 +107,15 @@ public class CenterLayerView extends LayerView {
 //        ViewGroup.LayoutParams lp = dialogView.getLayoutParams();
 //        lp.width =  w > dp296 ? dp296 : w;
 //        dialogView.setLayoutParams(lp);
-    }
-
-    public int dpToPx(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                getContext().getResources().getDisplayMetrics());
-    }
+//    }
+//    public int dpToPx(int dp) {
+//        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+//                getContext().getResources().getDisplayMetrics());
+//    }
 
     @Override
-    public void show() {
-        super.show();
+    protected void realShow(LayerListener layerListener) {
+        super.realShow(layerListener);
         if (dialogView != null) {
             dialogView.startAnimation(showScaleAnim);
         } else {
