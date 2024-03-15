@@ -58,11 +58,16 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
                 showBtClick(
                 );
                 break;
+            case com.codingtu.cooltu.R.id.reportTv:
+                reportTvClick(
+                );
+                break;
 
         }
     }
 
     protected void showBtClick() {}
+    protected void reportTvClick() {}
 
 
     @Override
@@ -236,6 +241,51 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
 
+    /**************************************************
+     *
+     *  menuDialog
+     *
+     **************************************************/
+    protected com.codingtu.cooltu.lib4a.view.dialogview.MenuDialog menuDialog;
+
+    protected void showMenuDialog(java.lang.String obj) {
+        if (menuDialog == null) {
+            menuDialog = new com.codingtu.cooltu.lib4a.view.dialogview.MenuDialog(getAct())
+                    .setLayout(com.codingtu.cooltu.R.layout.dialog_menu)
+                    .setItemLayout(com.codingtu.cooltu.R.layout.dialog_menu_item)
+                    .setItem(com.codingtu.cooltu.R.id.reportTv, "导出工单")
+                    .setItem(com.codingtu.cooltu.R.id.deleteItemBt, "删除")
+                    .setItem(com.codingtu.cooltu.R.id.deleteItemBt1, "删除1")
+                    .setOnClickListener(this)
+                    .setShowItem(new com.codingtu.cooltu.lib4a.view.dialogview.MenuDialog.ShowItem() {
+                        @Override
+                        public boolean showItem(int viewId, Object obj) {
+                            switch (viewId) {
+                                case com.codingtu.cooltu.R.id.reportTv:
+                                    return showReportTv((java.lang.String) obj);
+                                case com.codingtu.cooltu.R.id.deleteItemBt:
+                                    return showDeleteItemBt((java.lang.String) obj);
+                                case com.codingtu.cooltu.R.id.deleteItemBt1:
+                                    return showDeleteItemBt1((java.lang.String) obj);
+                            }
+                            return false;
+                        }
+                    })
+                    .setTitle("操作1")
+                    .build();
+        }
+        menuDialog.setObj(obj);
+        menuDialog.show();
+    }
+    protected boolean showReportTv(java.lang.String str) {
+        return true;
+    }
+    protected boolean showDeleteItemBt(java.lang.String str) {
+        return true;
+    }
+    protected boolean showDeleteItemBt1(java.lang.String str) {
+        return true;
+    }
 
 
 }

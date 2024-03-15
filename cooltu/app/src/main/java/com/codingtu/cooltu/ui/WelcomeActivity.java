@@ -41,11 +41,12 @@ public class WelcomeActivity extends WelcomeActivityBase {
 
     @ClickView(R.id.showBt)
     public void showBtClick() {
-        showEditDialog("");
+        showMenuDialog(null);
     }
 
-    @Override
-    protected boolean editDialogYes(String text) {
-        return true;
+    @ClickView(value = R.id.reportTv, inAct = false)
+    public void reportTvClick() {
+        toast("clickReport");
     }
+
 }

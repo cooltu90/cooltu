@@ -3,13 +3,11 @@ package com.codingtu.cooltu.lib4a.view.dialogview;
 import android.app.Activity;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.codingtu.cooltu.lib4a.R;
-import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.tools.InflateTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
-import com.codingtu.cooltu.lib4a.view.layerview.RelativeLayerView;
+import com.codingtu.cooltu.lib4a.view.layer.Layer;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 
@@ -19,7 +17,7 @@ import java.util.List;
 public class MenuDialog implements OnDestroy, View.OnClickListener {
 
     private Activity act;
-    private RelativeLayerView rlv;
+    private Layer layer;
     private View inflate;
     private int layout;
     private int itemLayout;
@@ -37,13 +35,13 @@ public class MenuDialog implements OnDestroy, View.OnClickListener {
         if (obj != null)
             v.setTag(R.id.tag_0, obj);
         onClickListener.onClick(v);
-        rlv.hidden();
+        layer.hidden();
     }
 
     @Override
     public void destroy() {
         act = null;
-        rlv = null;
+        layer = null;
         inflate = null;
         title = null;
         obj = null;
@@ -117,11 +115,11 @@ public class MenuDialog implements OnDestroy, View.OnClickListener {
     }
 
     public MenuDialog build() {
-        rlv = new RelativeLayerView(act);
-        ViewTool.addToAct(act, rlv);
+        layer = new Layer(act);
+        ViewTool.addToAct(act, layer);
         inflate = InflateTool.inflate(act, layout);
-        rlv.addView(inflate, ViewTool.WRAP_CONTENT, ViewTool.WRAP_CONTENT);
-        ViewTool.gone(rlv);
+        layer.addView(inflate, ViewTool.WRAP_CONTENT, ViewTool.WRAP_CONTENT);
+        ViewTool.gone(layer);
         //设置标题
         ViewTool.setText(inflate.findViewById(R.id.menuDialogTitleTv), title);
         itemLl = inflate.findViewById(R.id.menuDialogItemsLl);
@@ -152,7 +150,7 @@ public class MenuDialog implements OnDestroy, View.OnClickListener {
                 return false;
             }
         });
-        rlv.show();
+        layer.show();
     }
 
 

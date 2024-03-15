@@ -3,6 +3,7 @@ package core.actres;
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.lib4a.view.dialogview.Dialog;
 import com.codingtu.cooltu.lib4a.view.dialogview.EditDialog;
+import com.codingtu.cooltu.lib4a.view.dialogview.MenuDialog;
 import com.codingtu.cooltu.processor.annotation.res.ColorRes;
 import com.codingtu.cooltu.processor.annotation.res.ColorStr;
 import com.codingtu.cooltu.processor.annotation.res.Dimen;
@@ -11,6 +12,8 @@ import com.codingtu.cooltu.processor.annotation.res.ResFor;
 import com.codingtu.cooltu.processor.annotation.ui.StartGroup;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.MenuDialogItem;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.MenuDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.NoticeDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.ToastDialogUse;
 import com.codingtu.cooltu.ui.WelcomeActivity;
@@ -51,5 +54,17 @@ public class WelcomeActivityRes {
             hint = "请输入文字"
     )
     EditDialog editDialog;
+
+    @MenuDialogUse(
+            title = "操作1",
+            items = {
+                    @MenuDialogItem(id = R.id.reportTv, name = "导出工单"),
+                    @MenuDialogItem(id = R.id.deleteItemBt, name = "删除"),
+                    @MenuDialogItem(id = R.id.deleteItemBt1, name = "删除1"),
+            },
+            objType = String.class
+
+    )
+    MenuDialog menuDialog;
 
 }
