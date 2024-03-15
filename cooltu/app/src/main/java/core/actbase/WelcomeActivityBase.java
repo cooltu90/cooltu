@@ -154,6 +154,31 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         noticeDialog.show();
     }
 
+    private com.codingtu.cooltu.lib4a.view.dialogview.EditDialog editDialog;
+
+    protected void showEditDialog(String text) {
+        if (editDialog == null)
+            editDialog = new com.codingtu.cooltu.lib4a.view.dialogview.EditDialog.Builder(getAct())
+                    .setTitle("提示")
+                    .setHint("请输入文字")
+                    .setInputType(1)
+                    .setLayout(com.codingtu.cooltu.R.layout.dialog_edit)
+                    .setYes(new com.codingtu.cooltu.lib4a.view.dialogview.EditDialog.Yes() {
+                        @Override
+                        public boolean yes(String text, Object obj) {
+                            return editDialogYes(text);
+                        }
+                    })
+                    .build();
+        editDialog.setEditText(text);
+        editDialog.setObject(null);
+        editDialog.show();
+    }
+
+
+    protected boolean editDialogYes(String text) {
+        return false;
+    }
 
     private com.codingtu.cooltu.lib4a.view.dialogview.Dialog dialog;
     protected void showDialog() {

@@ -10,22 +10,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.codingtu.cooltu.lib4a.R;
+import com.codingtu.cooltu.lib4a.view.layer.Layer;
+import com.codingtu.cooltu.lib4a.view.layer.event.OnHiddenFinishedCallBack;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4a.tools.InflateTool;
 import com.codingtu.cooltu.lib4a.tools.Margins;
 import com.codingtu.cooltu.lib4a.tools.MobileTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
-import com.codingtu.cooltu.lib4a.view.layerview.RelativeLayerView;
-import com.codingtu.cooltu.lib4a.view.layerview.listener.LayerEvent;
-import com.codingtu.cooltu.lib4a.view.layerview.listener.LayerEventType;
-import com.codingtu.cooltu.lib4a.view.layerview.listener.LayerListener;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 
 public final class EditDialog implements OnDestroy, View.OnClickListener {
 
     private Activity act;
-    private RelativeLayerView rlv;
+    private Layer layer;
     private View inflate;
     private EditText et;
     private View noBt;
@@ -86,15 +84,15 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
 
         public EditDialog build() {
             EditDialog editDialog = new EditDialog(act);
-            editDialog.rlv = new RelativeLayerView(act);
-            editDialog.rlv.setHiddenWhenBackClick(false);
-            editDialog.rlv.setHiddenWhenShadowClick(false);
-            ViewTool.addToAct(act, editDialog.rlv);
-            ViewTool.gone(editDialog.rlv);
+            editDialog.layer = new Layer(act);
+            editDialog.layer.setHiddenWhenBackClick(false);
+            editDialog.layer.setHiddenWhenShadowClick(false);
+            ViewTool.addToAct(act, editDialog.layer);
+            ViewTool.gone(editDialog.layer);
             editDialog.inflate = InflateTool.inflate(act, layout);
-            editDialog.rlv.addView(editDialog.inflate, ViewTool.WRAP_CONTENT, ViewTool.WRAP_CONTENT);
+            editDialog.layer.addView(editDialog.inflate, ViewTool.WRAP_CONTENT, ViewTool.WRAP_CONTENT);
             if (isStopAnimation)
-                editDialog.rlv.stopAnimation();
+                editDialog.layer.stopAnimation();
 
             View titleTv = editDialog.inflate.findViewById(R.id.editDialogTitleTv);
             ViewTool.setText(titleTv, title);
@@ -116,7 +114,7 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
                         }
                         String text = editDialog.et.getText().toString();
                         if (editDialog.yes.yes(text, editDialog.obj)) {
-                            editDialog.rlv.hidden();
+                            editDialog.layer.hidden();
                         }
                         return true;
                     }
@@ -133,16 +131,16 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
             editDialog.yesBt.setOnClickListener(editDialog);
             editDialog.noBt.setOnClickListener(editDialog);
 
-            editDialog.rlv.setLayerListener(new LayerListener() {
-                @Override
-                public void event(LayerEvent event) {
-                    if (event.type == LayerEventType.HIDDEN_START) {
-                        ViewTool.inputHidden(editDialog.et);
-                    } else if (event.type == LayerEventType.HIDDEN_FINISHED) {
-                        editDialog.obj = null;
-                    }
-                }
-            });
+//            editDialog.rlv.setLayerListener(new LayerListener() {
+//                @Override
+//                public void event(LayerEvent event) {
+//                    if (event.type == LayerEventType.HIDDEN_START) {
+//                        ViewTool.inputHidden(editDialog.et);
+//                    } else if (event.type == LayerEventType.HIDDEN_FINISHED) {
+//                        editDialog.obj = null;
+//                    }
+//                }
+//            });
             editDialog.yes = yes;
             return editDialog;
         }
@@ -177,7 +175,7 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
         noBt = null;
         yesBt = null;
         et = null;
-        rlv = null;
+        layer = null;
         act = null;
         yes = null;
         obj = null;
@@ -187,7 +185,7 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
 
     public EditDialog show() {
         if (restHeight == null) {
-            rlv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            layer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
                     int windowVisibleDisplayH = MobileTool.getWindowVisibleDisplayH(act);
@@ -195,18 +193,18 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
                         //获取到了剩余高度
                         restHeight = windowVisibleDisplayH;
                         int dialogH = inflate.getHeight();
-                        ViewTool.visible(rlv);
+                        ViewTool.visible(layer);
                         if (dialogH != 0) {
-                            rlv.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                            layer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                             int top = (restHeight - dialogH) / 2;
                             Margins.t(inflate, top);
-                            rlv.show();
+                            layer.show();
                         }
                     }
                 }
             });
         } else {
-            rlv.show();
+            layer.show();
         }
         ViewTool.inputShow(et);
         et.requestFocus();
@@ -228,7 +226,7 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
     }
 
     private void clickNoBt(View v) {
-        rlv.hidden();
+        layer.hidden(getOnHiddenFinishedCallBack());
     }
 
     private void clickYesBt(View v) {
@@ -237,8 +235,18 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
         }
         String text = et.getText().toString();
         if (yes.yes(text, obj)) {
-            rlv.hidden();
+            layer.hidden(getOnHiddenFinishedCallBack());
         }
+    }
+
+    private OnHiddenFinishedCallBack getOnHiddenFinishedCallBack() {
+        return new OnHiddenFinishedCallBack() {
+            @Override
+            public void onHiddenFinished() {
+                ViewTool.inputHidden(EditDialog.this.et);
+                EditDialog.this.obj = null;
+            }
+        };
     }
 
     public static interface Yes {

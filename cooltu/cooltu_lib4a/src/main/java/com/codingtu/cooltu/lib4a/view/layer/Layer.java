@@ -341,5 +341,8 @@ public class Layer extends RelativeLayout implements OnDestroy {
     }
 
 
+    public void stopAnimation() {
+        this.stopAnimation = true;
+    }
 }
 
