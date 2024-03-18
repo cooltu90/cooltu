@@ -6,6 +6,7 @@ import android.view.View;
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.Score;
 import com.codingtu.cooltu.bean.User;
+import com.codingtu.cooltu.form.TestCallBack;
 import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.path.PathBeanFile;
 import com.codingtu.cooltu.lib4a.thread.OnceThread;
@@ -18,6 +19,7 @@ import com.codingtu.cooltu.processor.annotation.tools.ToRes;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
+import com.codingtu.cooltu.processor.annotation.ui.Init;
 import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
 import com.codingtu.cooltu.ui.view.DownloadDialog;
 
@@ -49,6 +51,13 @@ public class WelcomeActivity extends WelcomeActivityBase {
         toast("clickReport");
     }
 
+    @Override
+    protected TestCallBack testCallBackInit() {
+        return new TestCallBack() {
+            @Override
+            public void callback() {
 
-
+            }
+        };
+    }
 }

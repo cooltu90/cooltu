@@ -2,6 +2,7 @@ package core.actres;
 
 import com.codingtu.cooltu.Constants;
 import com.codingtu.cooltu.R;
+import com.codingtu.cooltu.form.TestCallBack;
 import com.codingtu.cooltu.lib4a.view.dialogview.Dialog;
 import com.codingtu.cooltu.lib4a.view.dialogview.EditDialog;
 import com.codingtu.cooltu.lib4a.view.dialogview.MenuDialog;
@@ -10,6 +11,9 @@ import com.codingtu.cooltu.processor.annotation.res.ColorStr;
 import com.codingtu.cooltu.processor.annotation.res.Dimen;
 import com.codingtu.cooltu.processor.annotation.res.Dp;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
+import com.codingtu.cooltu.processor.annotation.ui.InBase;
+import com.codingtu.cooltu.processor.annotation.ui.Init;
+import com.codingtu.cooltu.processor.annotation.ui.InitAbstract;
 import com.codingtu.cooltu.processor.annotation.ui.fix.FixInt;
 import com.codingtu.cooltu.processor.annotation.ui.StartGroup;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
@@ -79,5 +83,13 @@ public class WelcomeActivityRes {
 
     @FixValue("com.codingtu.cooltu.Constants.PKG_MODULE_APP")
     String getXXX;
+
+    @InBase
+    @InitAbstract
+    TestCallBack testCallBack;
+
+    @InBase
+    @Init
+    String testName;
 
 }

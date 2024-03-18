@@ -8,6 +8,8 @@ import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
 public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.BaseWelcomeActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
+    protected com.codingtu.cooltu.form.TestCallBack testCallBack;
+    protected java.lang.String testName;
     protected int textColor;
     protected int tvColor;
     protected int dp;
@@ -239,6 +241,15 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected void dialogLeft() { }
     protected void dialogRight() { }
 
+    protected java.lang.String testName() {
+        if (testName == null) {
+            testName = new java.lang.String();
+            testName(testName);
+        }
+        return testName;
+    }
+
+    protected void testName(java.lang.String testName) {}
 
 
     /**************************************************
@@ -294,6 +305,16 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     }
     public java.lang.String getXXX() {
         return com.codingtu.cooltu.Constants.PKG_MODULE_APP;
+    }
+    protected com.codingtu.cooltu.form.TestCallBack testCallBack() {
+        if (testCallBack == null) {
+            testCallBack = testCallBackInit();
+        }
+        return testCallBack;
+    }
+
+    protected com.codingtu.cooltu.form.TestCallBack testCallBackInit() {
+        return null;
     }
 
 

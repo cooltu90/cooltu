@@ -17,6 +17,7 @@ import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.annotation.ui.Init;
+import com.codingtu.cooltu.processor.annotation.ui.InitAbstract;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.MenuDialogItem;
@@ -33,6 +34,7 @@ import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
+import com.codingtu.cooltu.processor.lib.tools.BeanTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
@@ -77,6 +79,7 @@ public abstract class UiBaseBuilder {
     public List<VariableElement> fixValues = new ArrayList<>();
     public List<VariableElement> dialogUses = new ArrayList<>();
     public List<VariableElement> inits = new ArrayList<>();
+    public List<VariableElement> initAbstracts = new ArrayList<>();
 
     public boolean isToastDialog;
     public boolean isNoticeDialog;
@@ -115,6 +118,10 @@ public abstract class UiBaseBuilder {
 
     public void addInits(VariableElement ve) {
         inits.add(ve);
+    }
+
+    public void addInitAbstracts(VariableElement ve) {
+        initAbstracts.add(ve);
     }
 
 
@@ -168,6 +175,8 @@ public abstract class UiBaseBuilder {
         fixValues();
 
         inits();
+        initAbstracts();
+
 
         Ts.ls(dialogUses, new Ts.EachTs<VariableElement>() {
             @Override
@@ -305,6 +314,36 @@ public abstract class UiBaseBuilder {
                     uiBase.initAddDestoryIf(position, FullName.DESTORY_TOOL, kv.v);
                 }
 
+
+                return false;
+            }
+        });
+    }
+
+    private void initAbstracts() {
+        Ts.ls(initAbstracts, new Ts.EachTs<VariableElement>() {
+            @Override
+            public boolean each(int position, VariableElement ve) {
+
+                KV<String, String> fieldKv = ElementTools.getFieldKv(ve);
+
+                InitAbstract initAbstract = ve.getAnnotation(InitAbstract.class);
+                KV<String, String> kv = BeanTools.getBeanKv(ve, initAbstract.value());
+
+                StringBuilder sb = new StringBuilder();
+
+                TagTools.addLnTag(sb, "    protected [TestCallBack] [testCallBack]() {", kv.k, kv.v);
+                TagTools.addLnTag(sb, "        if ([testCallBack] == null) {", fieldKv.v);
+                TagTools.addLnTag(sb, "            [testCallBack] = [testCallBack]Init();", fieldKv.v, kv.v);
+                TagTools.addLnTag(sb, "        }");
+                TagTools.addLnTag(sb, "        return [testCallBack];", fieldKv.v);
+                TagTools.addLnTag(sb, "    }");
+                TagTools.addLnTag(sb, "");
+                TagTools.addLnTag(sb, "    protected [TestCallBack] [testCallBack]Init() {", kv.k, kv.v);
+                TagTools.addLnTag(sb, "        return null;");
+                TagTools.addLnTag(sb, "    }");
+
+                uiBase.addOthers(sb.toString());
 
                 return false;
             }

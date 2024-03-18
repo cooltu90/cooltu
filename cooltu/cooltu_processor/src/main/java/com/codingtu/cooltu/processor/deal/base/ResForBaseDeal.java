@@ -9,6 +9,7 @@ import com.codingtu.cooltu.processor.annotation.res.Dp;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.annotation.ui.InBase;
 import com.codingtu.cooltu.processor.annotation.ui.Init;
+import com.codingtu.cooltu.processor.annotation.ui.InitAbstract;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.MenuDialogUse;
@@ -59,6 +60,10 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
             Init init = ve.getAnnotation(Init.class);
             if (init != null) {
                 uiBaseBuilder.addInits(ve);
+            }
+            InitAbstract initAbstract = ve.getAnnotation(InitAbstract.class);
+            if (initAbstract != null) {
+                uiBaseBuilder.addInitAbstracts(ve);
             }
         }
         ColorStr ColorStr = ve.getAnnotation(ColorStr.class);
