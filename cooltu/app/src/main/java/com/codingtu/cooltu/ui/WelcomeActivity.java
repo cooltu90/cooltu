@@ -49,4 +49,6 @@ public class WelcomeActivity extends WelcomeActivityBase {
         toast("clickReport");
     }
 
+
+
 }

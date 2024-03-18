@@ -1,5 +1,6 @@
 package core.actres;
 
+import com.codingtu.cooltu.Constants;
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.lib4a.view.dialogview.Dialog;
 import com.codingtu.cooltu.lib4a.view.dialogview.EditDialog;
@@ -9,6 +10,7 @@ import com.codingtu.cooltu.processor.annotation.res.ColorStr;
 import com.codingtu.cooltu.processor.annotation.res.Dimen;
 import com.codingtu.cooltu.processor.annotation.res.Dp;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
+import com.codingtu.cooltu.processor.annotation.ui.fix.FixInt;
 import com.codingtu.cooltu.processor.annotation.ui.StartGroup;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
@@ -16,6 +18,8 @@ import com.codingtu.cooltu.processor.annotation.ui.dialog.MenuDialogItem;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.MenuDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.NoticeDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.ToastDialogUse;
+import com.codingtu.cooltu.processor.annotation.ui.fix.FixString;
+import com.codingtu.cooltu.processor.annotation.ui.fix.FixValue;
 import com.codingtu.cooltu.ui.WelcomeActivity;
 
 @ToastDialogUse
@@ -66,5 +70,14 @@ public class WelcomeActivityRes {
 
     )
     MenuDialog menuDialog;
+
+    @FixInt(Constants.TYPE_ONE)
+    String getDocType;
+
+    @FixString("PP\"")
+    String getModule;
+
+    @FixValue("com.codingtu.cooltu.Constants.PKG_MODULE_APP")
+    String getXXX;
 
 }

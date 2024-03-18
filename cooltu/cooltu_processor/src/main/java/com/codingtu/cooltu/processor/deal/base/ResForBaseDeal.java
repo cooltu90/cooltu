@@ -14,11 +14,15 @@ import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.MenuDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.NoticeDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.ToastDialogUse;
+import com.codingtu.cooltu.processor.annotation.ui.fix.FixInt;
+import com.codingtu.cooltu.processor.annotation.ui.fix.FixString;
+import com.codingtu.cooltu.processor.annotation.ui.fix.FixValue;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 
@@ -98,6 +102,23 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
         if (menuDialogUse != null) {
             uiBaseBuilder.menuDialogUses.add(ve);
         }
+
+        FixInt fixInt = ve.getAnnotation(FixInt.class);
+        if (fixInt != null) {
+            uiBaseBuilder.fixInts.add(ve);
+        }
+
+        FixString fixString = ve.getAnnotation(FixString.class);
+        if (fixString != null) {
+            uiBaseBuilder.fixStrings.add(ve);
+        }
+
+        FixValue fixValue = ve.getAnnotation(FixValue.class);
+        if (fixValue != null) {
+            uiBaseBuilder.fixValues.add(ve);
+        }
+
+
     }
 
     protected abstract BaseTools.GetThis<UiBaseBuilder> getUiBaseBuilderGetter();

@@ -21,6 +21,9 @@ import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.MenuDialogItem;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.MenuDialogUse;
+import com.codingtu.cooltu.processor.annotation.ui.fix.FixInt;
+import com.codingtu.cooltu.processor.annotation.ui.fix.FixString;
+import com.codingtu.cooltu.processor.annotation.ui.fix.FixValue;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
 import com.codingtu.cooltu.processor.builder.impl.ActBackIntentBuilder;
@@ -69,6 +72,9 @@ public abstract class UiBaseBuilder {
     public List<ExecutableElement> actBackMethods = new ArrayList<>();
     public List<VariableElement> editDialogUses = new ArrayList<>();
     public List<VariableElement> menuDialogUses = new ArrayList<>();
+    public List<VariableElement> fixInts = new ArrayList<>();
+    public List<VariableElement> fixStrings = new ArrayList<>();
+    public List<VariableElement> fixValues = new ArrayList<>();
     public List<VariableElement> dialogUses = new ArrayList<>();
     public List<VariableElement> inits = new ArrayList<>();
 
@@ -157,6 +163,9 @@ public abstract class UiBaseBuilder {
 
         menuDialog();
 
+        fixInts();
+        fixStrings();
+        fixValues();
 
         inits();
 
@@ -221,6 +230,61 @@ public abstract class UiBaseBuilder {
         });
 
 
+    }
+
+    private void fixInts() {
+        Ts.ls(fixInts, new Ts.EachTs<VariableElement>() {
+            @Override
+            public boolean each(int position, VariableElement ve) {
+                KV<String, String> kv = ElementTools.getFieldKv(ve);
+                FixInt fixInt = ve.getAnnotation(FixInt.class);
+
+                StringBuilder sb = new StringBuilder();
+                TagTools.addLnTag(sb, "    public int [getType]() {", kv.v);
+                TagTools.addLnTag(sb, "        return [0];", fixInt.value());
+                TagTools.addLnTag(sb, "    }");
+
+                uiBase.addOthers(sb.toString());
+                return false;
+            }
+        });
+    }
+
+    private void fixStrings() {
+        Ts.ls(fixStrings, new Ts.EachTs<VariableElement>() {
+            @Override
+            public boolean each(int position, VariableElement ve) {
+                KV<String, String> kv = ElementTools.getFieldKv(ve);
+                FixString fixString = ve.getAnnotation(FixString.class);
+
+                StringBuilder sb = new StringBuilder();
+                TagTools.addLnTag(sb, "    public [int] [getType]() {", FullName.STRING, kv.v);
+                TagTools.addLnTag(sb, "        return \"[value]\";", fixString.value().replace("\"", "\\\""));
+                TagTools.addLnTag(sb, "    }");
+
+                uiBase.addOthers(sb.toString());
+                return false;
+            }
+        });
+    }
+
+    private void fixValues() {
+        Ts.ls(fixValues, new Ts.EachTs<VariableElement>() {
+            @Override
+            public boolean each(int position, VariableElement ve) {
+                KV<String, String> kv = ElementTools.getFieldKv(ve);
+                FixValue fixValue = ve.getAnnotation(FixValue.class);
+
+                StringBuilder sb = new StringBuilder();
+                TagTools.addLnTag(sb, "    public [String] [getXXX]() {", kv.k, kv.v);
+                TagTools.addLnTag(sb, "        return [xxx];", fixValue.value());
+                TagTools.addLnTag(sb, "    }");
+
+                uiBase.addOthers(sb.toString());
+
+                return false;
+            }
+        });
     }
 
     private void inits() {

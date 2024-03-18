@@ -286,6 +286,15 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected boolean showDeleteItemBt1(java.lang.String str) {
         return true;
     }
+    public int getDocType() {
+        return 1;
+    }
+    public java.lang.String getModule() {
+        return "PP\"";
+    }
+    public java.lang.String getXXX() {
+        return com.codingtu.cooltu.Constants.PKG_MODULE_APP;
+    }
 
 
 }
