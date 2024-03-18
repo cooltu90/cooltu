@@ -156,7 +156,7 @@ public class Layer extends RelativeLayout implements OnDestroy {
             ((CoreUiInterface) context).getBase().addWhenKeyDown(new WhenKeyDown() {
                 @Override
                 public boolean onKeyDown(int keyCode, KeyEvent event) {
-                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK && ViewTool.isVisible(Layer.this)) {
                         if (isHiddenWhenBackClick)
                             hidden();
                         return true;
