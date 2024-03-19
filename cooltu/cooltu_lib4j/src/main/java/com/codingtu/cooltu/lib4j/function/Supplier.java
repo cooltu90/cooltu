@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4a.function;
+package com.codingtu.cooltu.lib4j.function;
 
 @FunctionalInterface
 public interface Supplier<T> {
