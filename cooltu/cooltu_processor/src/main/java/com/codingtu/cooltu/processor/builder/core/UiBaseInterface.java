@@ -148,4 +148,6 @@ public interface UiBaseInterface {
     void initAddDestoryIf(int position, String destoryToolFullName, String field);
 
     void addOthers(String others);
+
+    int findViewCount();
 }

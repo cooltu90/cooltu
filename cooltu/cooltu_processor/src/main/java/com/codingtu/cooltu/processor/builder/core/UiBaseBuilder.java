@@ -382,15 +382,17 @@ public abstract class UiBaseBuilder {
         Ts.ls(viewInfos, new Ts.EachTs<LayoutTools.ViewInfo>() {
             @Override
             public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
-                addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
+                if (!"android.widget.fragment".equals(viewInfo.tag)) {
+                    addField(Constant.SIGN_PROTECTED, viewInfo.tag, viewInfo.fieldName);
 
-                String parent = uiBase.getDefulatViewParent();
-                if (!viewInfo.fieldName.equals(viewInfo.id)) {
-                    parent = viewInfo.parent.fieldName + ".";
+                    String parent = uiBase.getDefulatViewParent();
+                    if (!viewInfo.fieldName.equals(viewInfo.id)) {
+                        parent = viewInfo.parent.fieldName + ".";
+                    }
+
+                    boolean isCoreR = viewInfo.id.startsWith("core_");
+                    uiBase.findView(uiBase.findViewCount(), viewInfo.fieldName, parent, isCoreR ? Pkg.LIB4A : Pkg.R, viewInfo.id);
                 }
-
-                boolean isCoreR = viewInfo.id.startsWith("core_");
-                uiBase.findView(position, viewInfo.fieldName, parent, isCoreR ? Pkg.LIB4A : Pkg.R, viewInfo.id);
                 return false;
             }
         });

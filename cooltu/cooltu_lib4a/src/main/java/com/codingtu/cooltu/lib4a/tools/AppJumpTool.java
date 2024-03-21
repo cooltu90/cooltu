@@ -76,4 +76,10 @@ public class AppJumpTool {
             context.startActivity(intent);
         }
     }
+
+    public static void manageWindow(Activity activity) {
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+        intent.setData(Uri.parse("package:" + activity.getPackageName()));
+        activity.startActivityForResult(intent, CoreRequestCode.ACTION_MANAGE_OVERLAY_PERMISSION);
+    }
 }

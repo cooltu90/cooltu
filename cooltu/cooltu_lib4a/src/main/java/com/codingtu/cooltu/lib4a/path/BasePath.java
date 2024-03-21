@@ -8,7 +8,7 @@ public class BasePath extends CoreBean {
 
     public static final String SEPARATOR = File.separator;
 
-    protected static String addPrexSeparator(String dir) {
+    public static String addPrexSeparator(String dir) {
         return SEPARATOR + dir;
     }
 
