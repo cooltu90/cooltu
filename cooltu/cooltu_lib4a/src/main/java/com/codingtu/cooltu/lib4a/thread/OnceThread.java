@@ -46,12 +46,14 @@ public class OnceThread {
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean progresss) throws Exception {
-                        mainRunnable.run(null);
+                        if (mainRunnable != null)
+                            mainRunnable.run(null);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        mainRunnable.run(throwable);
+                        if (mainRunnable != null)
+                            mainRunnable.run(throwable);
                     }
                 });
 
