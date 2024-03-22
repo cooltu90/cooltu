@@ -259,7 +259,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
      **************************************************/
     protected com.codingtu.cooltu.lib4a.view.dialogview.MenuDialog menuDialog;
 
-    protected void showMenuDialog(java.lang.String obj) {
+    protected void showMenuDialog() {
         if (menuDialog == null) {
             menuDialog = new com.codingtu.cooltu.lib4a.view.dialogview.MenuDialog(getAct())
                     .setLayout(com.codingtu.cooltu.R.layout.dialog_menu)
@@ -273,11 +273,11 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
                         public boolean showItem(int viewId, Object obj) {
                             switch (viewId) {
                                 case com.codingtu.cooltu.R.id.reportTv:
-                                    return showReportTv((java.lang.String) obj);
+                                    return showReportTv();
                                 case com.codingtu.cooltu.R.id.deleteItemBt:
-                                    return showDeleteItemBt((java.lang.String) obj);
+                                    return showDeleteItemBt();
                                 case com.codingtu.cooltu.R.id.deleteItemBt1:
-                                    return showDeleteItemBt1((java.lang.String) obj);
+                                    return showDeleteItemBt1();
                             }
                             return false;
                         }
@@ -285,16 +285,16 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
                     .setTitle("操作1")
                     .build();
         }
-        menuDialog.setObj(obj);
+        menuDialog.setObj(null);
         menuDialog.show();
     }
-    protected boolean showReportTv(java.lang.String str) {
+    protected boolean showReportTv() {
         return true;
     }
-    protected boolean showDeleteItemBt(java.lang.String str) {
+    protected boolean showDeleteItemBt() {
         return true;
     }
-    protected boolean showDeleteItemBt1(java.lang.String str) {
+    protected boolean showDeleteItemBt1() {
         return true;
     }
     public int getDocType() {

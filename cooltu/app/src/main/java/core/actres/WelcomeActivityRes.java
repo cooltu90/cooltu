@@ -69,8 +69,8 @@ public class WelcomeActivityRes {
                     @MenuDialogItem(id = R.id.reportTv, name = "导出工单"),
                     @MenuDialogItem(id = R.id.deleteItemBt, name = "删除"),
                     @MenuDialogItem(id = R.id.deleteItemBt1, name = "删除1"),
-            },
-            objType = String.class
+            }
+            //, objType = String.class
 
     )
     MenuDialog menuDialog;

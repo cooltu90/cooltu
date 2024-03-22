@@ -52,7 +52,7 @@ public class WelcomeActivity extends WelcomeActivityBase {
 
     @ClickView(R.id.showBt)
     public void showBtClick() {
-        showMenuDialog(null);
+        showMenuDialog();
     }
 
     @ClickView(value = R.id.reportTv, inAct = false)

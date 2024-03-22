@@ -838,7 +838,7 @@ public abstract class UiBaseBuilder {
                 TagTools.addLnTag(sb, "                    .build();");
                 TagTools.addLnTag(sb, "        }");
                 if (ClassTool.isVoid(objType)) {
-                    TagTools.addLnTag(sb, "        menuDialog.setObj();");
+                    TagTools.addLnTag(sb, "        menuDialog.setObj(null);");
                 } else {
                     TagTools.addLnTag(sb, "        menuDialog.setObj(obj);");
                 }
