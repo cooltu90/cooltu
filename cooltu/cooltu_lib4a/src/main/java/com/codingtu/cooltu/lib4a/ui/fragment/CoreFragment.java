@@ -24,4 +24,24 @@ public class CoreFragment extends Fragment implements CoreFragmentInterface {
 
     }
 
+    //每次回到页面
+    @Override
+    public void onResume() {
+        super.onResume();
+        onFragmentShow();
+    }
+
+    //每次回到页面
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            onFragmentShow();
+        }
+    }
+
+    public void onFragmentShow() {
+        
+    }
+
 }

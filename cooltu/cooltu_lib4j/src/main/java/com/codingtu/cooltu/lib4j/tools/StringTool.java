@@ -400,4 +400,16 @@ public class StringTool {
         return data;
     }
 
+    public static boolean isInteger(String str) {
+        if (isBlank(str)) {
+            return false;
+        }
+        for (int i = 0; i < str.length(); i++) {
+            if (!CharTool.isNumber(str.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
