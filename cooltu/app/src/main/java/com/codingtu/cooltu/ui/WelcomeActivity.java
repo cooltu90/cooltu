@@ -16,6 +16,8 @@ import com.codingtu.cooltu.lib4a.uicore.WhenBackKeyDown;
 import com.codingtu.cooltu.lib4a.view.dialogview.ToastDialog;
 import com.codingtu.cooltu.lib4a.view.layer.event.OnShowFinishedCallBack;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
+import com.codingtu.cooltu.lib4j.ts.SymbolTs;
+import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
@@ -40,13 +42,13 @@ public class WelcomeActivity extends WelcomeActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getBase().addWhenKeyDown(new WhenBackKeyDown() {
             @Override
             public boolean onBack(KeyEvent event) {
                 return false;
             }
         });
+
     }
 
 
