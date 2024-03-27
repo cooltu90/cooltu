@@ -13,9 +13,5 @@ public class BaseTs<T> extends CoreTs<T, BaseTs<T>> {
         super(list);
     }
 
-    public SymbolTs toSymbol() {
-        SymbolTs symbols = Ts.symbols();
-        symbols.add(this.ts);
-        return symbols;
-    }
+
 }
