@@ -9,8 +9,10 @@ import com.codingtu.cooltu.form.TestCallBack;
 import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.uicore.WhenBackKeyDown;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.CoreTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.ts.pack.BoolValue;
+import com.codingtu.cooltu.lib4j.ts.pack.IntValue;
+import com.codingtu.cooltu.lib4j.ts.pack.TValue;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
@@ -35,6 +37,23 @@ public class WelcomeActivity extends WelcomeActivityBase {
                 return false;
             }
         });
+
+        BaseTs<User> ts = Ts.ts(User.class);
+        ts.add(new User("lisi"));
+        ts.add(new User("lisi"));
+        ts.add(new User("lisi"));
+        ts.add(new User("lisi"));
+        ts.add(new User("lisi"));
+
+        ts.ls(new Ts.EachTs<User>() {
+            @Override
+            public boolean each(int position, User user) {
+                if ("lisi".equals(user.name)) {
+                }
+                return false;
+            }
+        });
+
     }
 
 

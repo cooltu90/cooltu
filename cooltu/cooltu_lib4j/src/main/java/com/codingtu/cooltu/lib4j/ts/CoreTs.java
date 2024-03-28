@@ -644,54 +644,7 @@ public class CoreTs<T, THIS> {
         return symbols;
     }
 
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
-    private Map<String, Object> map = new HashMap<>();
 
-    public int getCounter(String key) {
-        Object o = map.get(key);
-        if (o == null || !(o instanceof Integer)) {
-            map.put(key, 0);
-            return 0;
-        }
-        return (int) o;
-    }
-
-    public void setCounter(String key, int count) {
-        map.put(key, count);
-    }
-
-    public void addCounter(String key, int add) {
-        setCounter(key, getCounter(key) + add);
-    }
-
-    public boolean getIs(String key) {
-        return getIs(key, false);
-    }
-
-    public boolean getIs(String key, boolean defaultValue) {
-        Object o = map.get(key);
-        if (o == null || !(o instanceof Boolean)) {
-            map.put(key, defaultValue);
-            return defaultValue;
-        }
-        return (boolean) o;
-    }
-
-    public void setIs(String key, boolean is) {
-        map.put(key, is);
-    }
-
-    public Object cache(String key) {
-        return map.get(key);
-    }
-
-    public void cache(String key, Object obj) {
-        map.put(key, obj);
-    }
 
 
 }
