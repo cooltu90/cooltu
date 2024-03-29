@@ -35,7 +35,7 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
         layoutTemp = R.layout.layout_temp
 )
 @CreateAdapter(
-        name = "duck",
+        name = "horse",
         packages = "com.codingtu.cooltu.ui.adapter",
         type = AdapterType.DEFAULT_MORE_LIST,
         layoutTemp = R.layout.layout_temp

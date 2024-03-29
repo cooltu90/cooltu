@@ -31,7 +31,7 @@ public class DefaultListMoreAdapterBuilder extends DefaultListMoreAdapterBuilder
         addTag(layoutName, layoutSimpleName);
         addTag(name, javaInfo.name);
         addTag(coreMoreListAdapterName, FullName.CORE_MORE_LIST_ADAPTER_SHORT_NAME);
-        addTag(BaseTsFullName, FullName.BASE_TS);
+        //addTag(BaseTsFullName, FullName.BASE_TS);
     }
 }
 /* model_temp_start
@@ -43,10 +43,8 @@ import [[annotationVhFullName]];
 
 import [[vhPkg]].[[vhName]];
 
-import [[BaseTsFullName]];
-
 @VH(layout = R.layout.item_[[layoutName]], vh = [[vhName]].class)
-public abstract class [[name]] extends [[coreMoreListAdapterName]]<[[vhName]], String, BaseTs> {
+public abstract class [[name]] extends [[coreMoreListAdapterName]]<[[vhName]], String> {
     @Override
     protected void onBindVH([[vhName]] vh, int position, String s) {
 

@@ -6,13 +6,15 @@ import com.codingtu.cooltu.lib4a.ui.adapter.viewholder.CoreAdapterVH;
 import com.codingtu.cooltu.lib4a.ui.adapter.viewholder.MoreVH;
 import com.codingtu.cooltu.lib4a.ui.adapter.viewholder.NullVH;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
+import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.CoreTs;
+import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T, THIS extends CoreTs> extends CoreAdapter<CoreAdapterVH> {
+public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T> extends CoreAdapter<CoreAdapterVH> {
 
     //条目类型-更多
     protected int TYPE_MORE = -100;
@@ -23,7 +25,7 @@ public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T, THIS exte
     //当前页
     protected int page = startPage();
     //列表数据
-    protected CoreTs<T, CoreTs> ts;
+    protected BaseTs<T> ts;
 
     protected OnUpdate onUpdate;
 
@@ -86,11 +88,27 @@ public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T, THIS exte
     }
 
     //更新数据
-    public void updateItems(THIS ts) {
+    public void updateItems(List<T> ts) {
+        updateItems(Ts.ts(ts));
+    }
+
+    public void updateItems(T... ts) {
+        updateItems(Ts.ts(ts));
+    }
+
+    public void updateItems(BaseTs<T> ts) {
         updateItems(ts, CountTool.count(ts) > 0);
     }
 
-    public void updateItems(THIS ts, boolean hasMore) {
+    public void updateItems(List<T> ts, boolean hasMore) {
+        updateItems(Ts.ts(ts), hasMore);
+    }
+
+    public void updateItems(boolean hasMore, T... ts) {
+        updateItems(Ts.ts(ts), hasMore);
+    }
+
+    public void updateItems(BaseTs<T> ts, boolean hasMore) {
 
         if (onUpdate != null)
             onUpdate.onUpdate();
@@ -98,7 +116,7 @@ public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T, THIS exte
         this.hasMore = CountTool.count(ts) > 0 && hasMore;
 
         if (this.ts == null)
-            this.ts = new CoreTs<>();
+            this.ts = new BaseTs<>();
         if (page == startPage()) {
             this.ts.clear();
         }
@@ -120,8 +138,8 @@ public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T, THIS exte
         }
     }
 
-    public THIS getItems() {
-        return (THIS) ts;
+    public BaseTs<T> getItems() {
+        return this.ts;
     }
 
     //获取hasMore

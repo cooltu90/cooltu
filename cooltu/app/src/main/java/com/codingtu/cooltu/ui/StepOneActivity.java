@@ -2,6 +2,7 @@ package com.codingtu.cooltu.ui;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.User;
+import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.CoreTs;
 import com.codingtu.cooltu.lib4j.ts.StringTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
@@ -19,8 +20,7 @@ public class StepOneActivity extends StepOneActivityBase {
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
-        StringTs strs = Ts.strs("1", "2", "3","sdfsd");
-        catAdapter.updateItems(strs);
+        catAdapter.updateItems(Ts.ts("1", "2", "3", "sdfsd"));
     }
 
     @Override
