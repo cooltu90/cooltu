@@ -2,6 +2,7 @@ package com.codingtu.cooltu.lib4j.ts;
 
 import com.codingtu.cooltu.lib4j.data.symbol.Symbol;
 
+import java.util.List;
 import java.util.Objects;
 
 public class SymbolTs<SYMBOL extends Symbol> extends CoreTs<SYMBOL, SymbolTs<SYMBOL>> {
@@ -66,8 +67,35 @@ public class SymbolTs<SYMBOL extends Symbol> extends CoreTs<SYMBOL, SymbolTs<SYM
         return index(getSymbolIsThisOne(symbol));
     }
 
+    /**************************************************
+     *
+     * replace
+     *
+     **************************************************/
+
     public SymbolTs<SYMBOL> replace(SYMBOL symbol) {
         replace(symbol, getSymbolIsThisOne(symbol));
+        return this;
+    }
+
+    public SymbolTs<SYMBOL> replaceTs(List<SYMBOL> srcs) {
+        return replaceTs(Ts.symbols(srcs));
+    }
+
+    public SymbolTs<SYMBOL> replaceTs(SYMBOL... srcs) {
+        return replaceTs(Ts.symbols(srcs));
+    }
+
+    public SymbolTs<SYMBOL> replaceTs(SymbolTs<SYMBOL> srcTs) {
+        if (srcTs != null && !srcTs.isNull()) {
+            srcTs.ls(new Ts.EachTs<SYMBOL>() {
+                @Override
+                public boolean each(int position, SYMBOL src) {
+                    replace(src);
+                    return false;
+                }
+            });
+        }
         return this;
     }
 
@@ -87,6 +115,27 @@ public class SymbolTs<SYMBOL extends Symbol> extends CoreTs<SYMBOL, SymbolTs<SYM
         return this;
     }
 
+    public SymbolTs<SYMBOL> replaceOrAddTs(List<SYMBOL> srcs) {
+        return replaceOrAddTs(Ts.symbols(srcs));
+    }
+
+    public SymbolTs<SYMBOL> replaceOrAddTs(SYMBOL... srcs) {
+        return replaceOrAddTs(Ts.symbols(srcs));
+    }
+
+    public SymbolTs<SYMBOL> replaceOrAddTs(SymbolTs<SYMBOL> srcTs) {
+        if (srcTs != null && !srcTs.isNull()) {
+            srcTs.ls(new Ts.EachTs<SYMBOL>() {
+                @Override
+                public boolean each(int position, SYMBOL src) {
+                    replaceOrAdd(src);
+                    return false;
+                }
+            });
+        }
+        return this;
+    }
+
     public SymbolTs<SYMBOL> replaceOrAdd(String symbol, SYMBOL target) {
         replaceOrAdd(target, getSymbolIsThisOne(symbol));
         return this;
@@ -99,6 +148,27 @@ public class SymbolTs<SYMBOL extends Symbol> extends CoreTs<SYMBOL, SymbolTs<SYM
 
     public SymbolTs<SYMBOL> replaceAll(SYMBOL symbol) {
         replaceAll(symbol, getSymbolIsThisOne(symbol));
+        return this;
+    }
+
+    public SymbolTs<SYMBOL> replaceAllTs(SYMBOL... srcs) {
+        return replaceAllTs(Ts.symbols(srcs));
+    }
+
+    public SymbolTs<SYMBOL> replaceAllTs(List<SYMBOL> srcs) {
+        return replaceAllTs(Ts.symbols(srcs));
+    }
+
+    public SymbolTs<SYMBOL> replaceAllTs(SymbolTs<SYMBOL> srcTs) {
+        if (srcTs != null && !srcTs.isNull()) {
+            srcTs.ls(new Ts.EachTs<SYMBOL>() {
+                @Override
+                public boolean each(int position, SYMBOL src) {
+                    replaceAll(src);
+                    return false;
+                }
+            });
+        }
         return this;
     }
 
@@ -117,6 +187,28 @@ public class SymbolTs<SYMBOL extends Symbol> extends CoreTs<SYMBOL, SymbolTs<SYM
         return this;
     }
 
+
+    public SymbolTs<SYMBOL> replaceAllOrAddTs(SYMBOL... srcs) {
+        return replaceAllOrAddTs(Ts.symbols(srcs));
+    }
+
+    public SymbolTs<SYMBOL> replaceAllOrAddTs(List<SYMBOL> srcs) {
+        return replaceAllOrAddTs(Ts.symbols(srcs));
+    }
+
+    public SymbolTs<SYMBOL> replaceAllOrAddTs(SymbolTs<SYMBOL> srcTs) {
+        if (srcTs != null && !srcTs.isNull()) {
+            srcTs.ls(new Ts.EachTs<SYMBOL>() {
+                @Override
+                public boolean each(int position, SYMBOL src) {
+                    replaceAllOrAdd(src);
+                    return false;
+                }
+            });
+        }
+        return this;
+    }
+
     public SymbolTs<SYMBOL> replaceAllOrAdd(String symbol, SYMBOL target) {
         replaceAllOrAdd(target, getSymbolIsThisOne(symbol));
         return this;
@@ -127,6 +219,11 @@ public class SymbolTs<SYMBOL extends Symbol> extends CoreTs<SYMBOL, SymbolTs<SYM
         return this;
     }
 
+    /**************************************************
+     *
+     * delete
+     *
+     **************************************************/
     public SymbolTs<SYMBOL> deleteOnce(String symbol) {
         deleteOnce(getSymbolIsThisOne(symbol));
         return this;

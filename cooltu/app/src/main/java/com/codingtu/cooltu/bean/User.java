@@ -1,18 +1,26 @@
 package com.codingtu.cooltu.bean;
 
+import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
 import com.codingtu.cooltu.lib4j.data.symbol.Symbol;
 
 import java.util.Objects;
 
-public class User implements Symbol {
+public class User extends CoreBean implements Symbol {
 
     public String name;
+
+    public int age;
 
     public User() {
     }
 
     public User(String name) {
         this.name = name;
+    }
+
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
     }
 
     @Override

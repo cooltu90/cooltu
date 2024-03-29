@@ -9,6 +9,8 @@ import com.codingtu.cooltu.form.TestCallBack;
 import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.uicore.WhenBackKeyDown;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
+import com.codingtu.cooltu.lib4j.ts.StringTs;
+import com.codingtu.cooltu.lib4j.ts.SymbolTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.pack.BoolValue;
 import com.codingtu.cooltu.lib4j.ts.pack.IntValue;
@@ -18,6 +20,9 @@ import com.codingtu.cooltu.processor.annotation.tools.ToRes;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
 import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import core.actbase.WelcomeActivityBase;
 import core.actres.WelcomeActivityRes;
@@ -38,21 +43,23 @@ public class WelcomeActivity extends WelcomeActivityBase {
             }
         });
 
-        BaseTs<User> ts = Ts.ts(User.class);
-        ts.add(new User("lisi"));
-        ts.add(new User("lisi"));
-        ts.add(new User("lisi"));
-        ts.add(new User("lisi"));
-        ts.add(new User("lisi"));
+        SymbolTs<User> ts = Ts.symbols();
+        ts.add(new User("lisi1", 12));
+        ts.add(new User("lisi2", 23));
+        ts.add(new User("lisi3", 22));
+        ts.add(new User("lisi4", 45));
+        ts.add(new User("lisi1", 12));
+        ts.add(new User("lisi5", 56));
 
-        ts.ls(new Ts.EachTs<User>() {
-            @Override
-            public boolean each(int position, User user) {
-                if ("lisi".equals(user.name)) {
-                }
-                return false;
-            }
-        });
+        List<User> users = new ArrayList<>();
+        users.add(new User("lisi1", 33));
+        users.add(new User("lisi3", 452));
+        users.add(new User("lisi6", 452));
+
+        ts.replaceAll(new User("lisi1", 222), new User("lisi6", 2323));
+
+        ts.log();
+
 
     }
 

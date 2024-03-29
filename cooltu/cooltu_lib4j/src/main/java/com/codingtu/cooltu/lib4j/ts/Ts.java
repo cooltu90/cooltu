@@ -187,6 +187,10 @@ public class Ts {
         boolean isThisOne(int position, T t);
     }
 
+    public interface IsThisOnePro<T> {
+        boolean isThisOne(int position, T src, T t);
+    }
+
     public interface NowMax<T> {
         boolean isNowMax(T last, T now);
     }
