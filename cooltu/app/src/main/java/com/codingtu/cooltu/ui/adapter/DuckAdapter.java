@@ -5,12 +5,12 @@ import com.codingtu.cooltu.lib4a.ui.adapter.CoreMoreListAdapter;
 import com.codingtu.cooltu.lib4j.ts.StringTs;
 import com.codingtu.cooltu.processor.annotation.ui.VH;
 
-import core.vh.DogVH;
+import core.vh.DuckVH;
 
-@VH(layout = R.layout.item_dog, vh = DogVH.class)
-public abstract class DogAdapter extends CoreMoreListAdapter<DogVH, String, StringTs> {
+@VH(layout = R.layout.item_duck, vh = DuckVH.class)
+public abstract class DuckAdapter extends CoreMoreListAdapter<DuckVH, String, StringTs> {
     @Override
-    protected void onBindVH(DogVH vh, int position, String s) {
+    protected void onBindVH(DuckVH vh, int position, String s) {
 
     }
 }

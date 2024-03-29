@@ -272,6 +272,13 @@ public class CoreTs<T, THIS> {
         return (THIS) this;
     }
 
+    public THIS add(CoreTs ts) {
+        if (!CountTool.isNull(ts)) {
+            this.ts.addAll(ts.toList());
+        }
+        return (THIS) this;
+    }
+
     /**************************************************
      *
      * 删除
@@ -643,8 +650,6 @@ public class CoreTs<T, THIS> {
         symbols.add(this.ts);
         return symbols;
     }
-
-
 
 
 }

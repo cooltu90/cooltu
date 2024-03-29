@@ -6,24 +6,25 @@ import androidx.annotation.NonNull;
 
 import com.codingtu.cooltu.lib4a.ui.adapter.viewholder.CoreAdapterVH;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
+import com.codingtu.cooltu.lib4j.ts.CoreTs;
+import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-public abstract class CoreListAdapter<VH extends CoreAdapterVH, T> extends CoreAdapter<VH> {
-    protected List<T> items;
+public abstract class CoreListAdapter<VH extends CoreAdapterVH, T, THIS extends CoreTs> extends CoreAdapter<VH> {
+    protected CoreTs<T, CoreTs> ts;
     private Class<VH> vhClass;
 
     @Override
     public int getItemCount() {
-        return CountTool.count(items);
+        return CountTool.count(ts);
     }
 
-    public void updateItems(List<T> items) {
-        this.items = items;
+    public void updateItems(THIS ts) {
+        this.ts = ts;
         notifyDataSetChanged();
     }
-
 
     @NonNull
     @Override
@@ -43,17 +44,17 @@ public abstract class CoreListAdapter<VH extends CoreAdapterVH, T> extends CoreA
 
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
-        onBindVH(holder, position, items.get(position));
+        onBindVH(holder, position, this.ts.get(position));
     }
 
     protected abstract void onBindVH(@NonNull VH holder, int position, T t);
 
-    public List<T> getItems() {
-        return items;
+    public THIS getItems() {
+        return (THIS) this.ts;
     }
 
     public void addItem(T t) {
-        this.items.add(t);
+        this.ts.add(t);
         notifyDataSetChanged();
     }
 }

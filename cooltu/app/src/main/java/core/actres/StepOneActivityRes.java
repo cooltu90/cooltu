@@ -25,6 +25,7 @@ public class StepOneActivityRes {
 
     @Adapter
     CatAdapter catAdapter;
+
     @Adapter(type = AdapterType.DEFAULT_MORE_LIST, rvName = "rv1")
     DogAdapter dogAdapter;
 

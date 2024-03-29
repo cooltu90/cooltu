@@ -2,6 +2,9 @@ package com.codingtu.cooltu.ui;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.User;
+import com.codingtu.cooltu.lib4j.ts.CoreTs;
+import com.codingtu.cooltu.lib4j.ts.StringTs;
+import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 
@@ -14,8 +17,15 @@ public class StepOneActivity extends StepOneActivityBase {
 
 
     @Override
+    public void onCreateComplete() {
+        super.onCreateComplete();
+        StringTs strs = Ts.strs("1", "2", "3","sdfsd");
+        catAdapter.updateItems(strs);
+    }
+
+    @Override
     protected void dogAdapterLoadMore(int page) {
-        User user = user();
+
 
     }
 }

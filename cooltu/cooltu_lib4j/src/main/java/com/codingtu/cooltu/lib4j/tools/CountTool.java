@@ -1,5 +1,7 @@
 package com.codingtu.cooltu.lib4j.tools;
 
+import com.codingtu.cooltu.lib4j.ts.CoreTs;
+
 import java.util.Collection;
 import java.util.Map;
 
@@ -9,6 +11,11 @@ public class CountTool {
      * count 获取数组，集合，map的元素个数
      *
      **************************************************/
+
+    public static int count(CoreTs ts) {
+        return ts == null ? 0 : ts.count();
+    }
+
     public static int count(Collection cs) {
         return cs == null ? 0 : cs.size();
     }
@@ -66,6 +73,11 @@ public class CountTool {
      * isNull 判断是否为空
      *
      **************************************************/
+
+
+    public static boolean isNull(CoreTs ts) {
+        return count(ts) <= 0;
+    }
     public static boolean isNull(Collection cs) {
         return count(cs) <= 0;
     }

@@ -9,6 +9,7 @@ public abstract class DefaultListAdapterBuilderBase extends com.codingtu.cooltu.
     protected StringBuilder annotationVhFullName;
     protected StringBuilder vhPkg;
     protected StringBuilder vhName;
+    protected StringBuilder BaseTsFullName;
     protected StringBuilder layoutName;
     protected StringBuilder name;
     protected StringBuilder coreListAdapterName;
@@ -21,6 +22,7 @@ public abstract class DefaultListAdapterBuilderBase extends com.codingtu.cooltu.
         annotationVhFullName = map.get("annotationVhFullName");
         vhPkg = map.get("vhPkg");
         vhName = map.get("vhName");
+        BaseTsFullName = map.get("BaseTsFullName");
         layoutName = map.get("layoutName");
         name = map.get("name");
         coreListAdapterName = map.get("coreListAdapterName");
@@ -47,8 +49,10 @@ public abstract class DefaultListAdapterBuilderBase extends com.codingtu.cooltu.
         lines.add("");
         lines.add("import [[vhPkg]].[[vhName]];");
         lines.add("");
+        lines.add("import [[BaseTsFullName]];");
+        lines.add("");
         lines.add("@VH(layout = R.layout.item_[[layoutName]], vh = [[vhName]].class)");
-        lines.add("public class [[name]] extends [[coreListAdapterName]]<[[vhName]], String> {");
+        lines.add("public class [[name]] extends [[coreListAdapterName]]<[[vhName]], String, BaseTs> {");
         lines.add("    @Override");
         lines.add("    protected void onBindVH(@NonNull [[vhName]] vh, int position, String s) {");
         lines.add("");

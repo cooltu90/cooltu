@@ -1,11 +1,13 @@
 package com.codingtu.cooltu;
 
+import com.codingtu.cooltu.constant.AdapterType;
 import com.codingtu.cooltu.constant.Module;
 import com.codingtu.cooltu.lib4a.CoreApp;
 import com.codingtu.cooltu.lib4a.CoreConfigs;
 import com.codingtu.cooltu.lib4a.ui.fragment.CoreFragment;
 import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.annotation.create.CreateAct;
+import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultCode;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultEditDialogLayout;
@@ -32,12 +34,12 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
         baseClass = BaseActivity.class,
         layoutTemp = R.layout.layout_temp
 )
-//@CreateAdapter(
-//        name = "cat",
-//        packages = "com.codingtu.cooltu.ui.adapter",
-//        type = AdapterType.DEFAULT_LIST,
-//        layoutTemp = R.layout.layout_temp
-//)
+@CreateAdapter(
+        name = "duck",
+        packages = "com.codingtu.cooltu.ui.adapter",
+        type = AdapterType.DEFAULT_MORE_LIST,
+        layoutTemp = R.layout.layout_temp
+)
 //@CreateFragment(
 //        name = "base_step",
 //        packages = "com.codingtu.cooltu.ui",

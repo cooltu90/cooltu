@@ -31,6 +31,7 @@ public class DefaultListAdapterBuilder extends DefaultListAdapterBuilderBase {
         addTag(rPkg, Pkg.R);
         addTag(annotationVhFullName, FullName.ANNOTATION_VH);
         addTag(layoutName, layoutSimpleName);
+        addTag(BaseTsFullName, FullName.BASE_TS);
     }
 }
 /* model_temp_start
@@ -44,8 +45,10 @@ import [[annotationVhFullName]];
 
 import [[vhPkg]].[[vhName]];
 
+import [[BaseTsFullName]];
+
 @VH(layout = R.layout.item_[[layoutName]], vh = [[vhName]].class)
-public class [[name]] extends [[coreListAdapterName]]<[[vhName]], String> {
+public class [[name]] extends [[coreListAdapterName]]<[[vhName]], String, BaseTs> {
     @Override
     protected void onBindVH(@NonNull [[vhName]] vh, int position, String s) {
 

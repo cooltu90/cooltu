@@ -26,6 +26,7 @@ import java.util.List;
 
 import core.actbase.WelcomeActivityBase;
 import core.actres.WelcomeActivityRes;
+import core.tools.ActStart;
 
 @To(WelcomeActivityRes.class)
 @ToRes(R.layout.activity_welcome)
@@ -59,6 +60,8 @@ public class WelcomeActivity extends WelcomeActivityBase {
         ts.replaceAll(new User("lisi1", 222), new User("lisi6", 2323));
 
         ts.log();
+
+        ActStart.stepOneActivity(getAct());
 
 
     }
