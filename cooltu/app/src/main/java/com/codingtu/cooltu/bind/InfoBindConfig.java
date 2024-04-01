@@ -14,6 +14,7 @@ import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.processor.annotation.bind.BindConfig;
 import com.codingtu.cooltu.processor.annotation.bind.BindField;
 import com.codingtu.cooltu.processor.annotation.bind.BindMethod;
+import com.codingtu.cooltu.processor.annotation.bind.ConfigId;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindRadioGroups;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindTextView;
 import com.codingtu.cooltu.processor.annotation.bind.radiogroup.RadioGroupOnClickMethod;
@@ -37,6 +38,7 @@ public class InfoBindConfig {
      *
      **************************************************/
     @BindField
+    @ConfigId("idid")
     @BindEditText({R.id.idEt, R.id.id1Et})
     @BindTextView(R.id.idTv)
     @Check(prompt = "请输入正确的id")
@@ -49,17 +51,17 @@ public class InfoBindConfig {
                          @ViewId(R.id.id1Et) EditText id1Et) {
     }
 
-    @CheckMethod(fields = {"id"}, prompts = {"嘻嘻嘻"})
+    @CheckMethod(fields = {"idid"}, prompts = {"嘻嘻嘻"})
     public boolean checkId(Info info, @ViewId(R.id.idEt) EditText idEt) {
         return false;
     }
 
-    @EchoMethod("id")
+    @EchoMethod("idid")
     public void idEcho(Info info, @ViewId(R.id.idEt) EditText idEt, @ViewId(R.id.nameEt) EditText nameEt) {
 
     }
 
-    @ToBean("id")
+    @ToBean("idid")
     public long parseLong(Object obj) {
         return Long.parseLong((String) obj);
     }

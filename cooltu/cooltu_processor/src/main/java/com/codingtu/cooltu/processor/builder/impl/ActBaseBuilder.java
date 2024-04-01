@@ -17,6 +17,7 @@ import com.codingtu.cooltu.processor.annotation.bind.Bind;
 import com.codingtu.cooltu.processor.annotation.bind.BindConfig;
 import com.codingtu.cooltu.processor.annotation.bind.BindField;
 import com.codingtu.cooltu.processor.annotation.bind.BindMethod;
+import com.codingtu.cooltu.processor.annotation.bind.ConfigId;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindRadioGroups;
 import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupItemsMethod;
 import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupViewsMethod;
@@ -353,8 +354,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     DealBindVeInfo veInfo = new DealBindVeInfo();
                     veInfo.ve = (VariableElement) element;
                     BindField bindField = veInfo.ve.getAnnotation(BindField.class);
+                    ConfigId configId = veInfo.ve.getAnnotation(ConfigId.class);
                     veInfo.noEcho = veInfo.ve.getAnnotation(NoEcho.class);
-                    veInfo.fieldOriKv = ElementTools.getFieldKv(veInfo.ve);
+                    veInfo.fieldOriKv = BeanTools.getBeanKv(veInfo.ve, configId != null ? configId.value() : null);
                     veInfo.fieldKv = null;
                     veInfo.echoMethodEe = null;
                     if (bindField != null) {
