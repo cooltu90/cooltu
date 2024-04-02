@@ -251,6 +251,22 @@ public class CurrentPath {
     }
 
     /**************************************************
+     *
+     *
+     *
+     **************************************************/
+
+    public static JavaInfo formConfig(String packages, String name) {
+        String bindConfigName = ConvertTool.toClassType(name) + Suffix.FORM_CONFIG;
+        return javaInfo(packages + "." + bindConfigName);
+    }
+
+    public static JavaInfo formConfigBase(String name) {
+        String bindConfigName = ConvertTool.toClassType(name) + Suffix.FORM_CONFIG + Suffix.FORM_CONFIG_BASE;
+        return javaInfo(Pkg.CORE_FORM + "." + bindConfigName);
+    }
+
+    /**************************************************
      *   ┏━━━━━━━━━━┓
      *  ┃   目录   ┃
      * ┗━━━━━━━━━━┛

@@ -70,6 +70,9 @@ public class FullName {
     //res
     public static final String RES_FOR_FRAGMENT_SHORT_NAME = "ResForFragment";
     public static final String RES_FOR_FRAGMENT = Pkg.ANNOTATION_RES + "." + RES_FOR_FRAGMENT_SHORT_NAME;
+    //bind_config
+    public static final String FORM_CONFIG_SHORT_NAME = "FormConfig";
+    public static final String FORM_CONFIG = Pkg.ANNOTATION_FORM + "." + FORM_CONFIG_SHORT_NAME;
     //net
     public static final String NET_TOOL = Pkg.LIB4A_NET + ".NetTool";
     public static final String CORE_SEND_PARAMS = Pkg.LIB4A_NET + ".bean.CoreSendParams";

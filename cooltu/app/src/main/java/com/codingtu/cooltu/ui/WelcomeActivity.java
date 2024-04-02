@@ -37,33 +37,7 @@ public class WelcomeActivity extends WelcomeActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getBase().addWhenKeyDown(new WhenBackKeyDown() {
-            @Override
-            public boolean onBack(KeyEvent event) {
-                return false;
-            }
-        });
-
-        SymbolTs<User> ts = Ts.symbols();
-        ts.add(new User("lisi1", 12));
-        ts.add(new User("lisi2", 23));
-        ts.add(new User("lisi3", 22));
-        ts.add(new User("lisi4", 45));
-        ts.add(new User("lisi1", 12));
-        ts.add(new User("lisi5", 56));
-
-        List<User> users = new ArrayList<>();
-        users.add(new User("lisi1", 33));
-        users.add(new User("lisi3", 452));
-        users.add(new User("lisi6", 452));
-
-        ts.replaceAll(new User("lisi1", 222), new User("lisi6", 2323));
-
-        ts.log();
-
-        ActStart.stepOneActivity(getAct());
-
-
+        ActStart.bindTestActivity(getAct());
     }
 
 

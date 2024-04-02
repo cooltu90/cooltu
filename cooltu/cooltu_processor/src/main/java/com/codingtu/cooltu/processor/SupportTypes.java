@@ -4,7 +4,9 @@ import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.annotation.bind.BindConfig;
 import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
+import com.codingtu.cooltu.processor.annotation.create.CreateFormConfig;
 import com.codingtu.cooltu.processor.annotation.create.CreateFragment;
+import com.codingtu.cooltu.processor.annotation.form.FormConfig;
 import com.codingtu.cooltu.processor.annotation.net.Apis;
 import com.codingtu.cooltu.processor.annotation.path.PathFilter;
 import com.codingtu.cooltu.processor.annotation.path.Paths;
@@ -23,6 +25,7 @@ import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.BindConfigDeal;
 import com.codingtu.cooltu.processor.deal.CreateActDeal;
 import com.codingtu.cooltu.processor.deal.CreateAdapterDeal;
+import com.codingtu.cooltu.processor.deal.CreateFormConfigDeal;
 import com.codingtu.cooltu.processor.deal.CreateFragmentDeal;
 import com.codingtu.cooltu.processor.deal.DefaultCodeDeal;
 import com.codingtu.cooltu.processor.deal.DefaultDialogLayoutDeal;
@@ -30,6 +33,7 @@ import com.codingtu.cooltu.processor.deal.DefaultEditDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultMenuDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultNoticeDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultToastDialogLayoutDeal;
+import com.codingtu.cooltu.processor.deal.FormConfigDeal;
 import com.codingtu.cooltu.processor.deal.FragmentBaseDeal;
 import com.codingtu.cooltu.processor.deal.ModuleInfoDeal;
 import com.codingtu.cooltu.processor.deal.NetDeal;
@@ -65,8 +69,10 @@ public class SupportTypes {
                 Apis.class, NetDeal.class,
                 CreateAct.class, CreateActDeal.class,
                 BindConfig.class, BindConfigDeal.class,
+                FormConfig.class, FormConfigDeal.class,
                 CreateAdapter.class, CreateAdapterDeal.class,
-                CreateFragment.class, CreateFragmentDeal.class
+                CreateFragment.class, CreateFragmentDeal.class,
+                CreateFormConfig.class, CreateFormConfigDeal.class,
         };
     }
 

@@ -24,6 +24,11 @@ public class ActStart {
         intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
         com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.BIND_ACTIVITY);
     }
+    public static final void bindTestActivity(Activity act) {
+        Intent intent = new Intent(act, com.codingtu.cooltu.ui.BindTestActivity.class);
+        intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
+        com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.BIND_TEST_ACTIVITY);
+    }
     public static final void formTestBaseActivity(Activity act) {
         Intent intent = new Intent(act, com.codingtu.cooltu.ui.FormTestBaseActivity.class);
         intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());

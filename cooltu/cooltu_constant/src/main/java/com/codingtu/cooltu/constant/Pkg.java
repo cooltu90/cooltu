@@ -22,6 +22,7 @@ public class Pkg {
     public static final String ACT_RES = "core.actres";
     public static final String FRAGMENT_RES = "core.fragmentres";
     public static final String CORE_NET = "core.net";
+    public static final String CORE_FORM = "core.form";
     public static final String CORE_VH = "core.vh";
     public static final String CORE_NET_API = CORE_NET + ".api";
     public static final String CORE_NET_PARAMS = CORE_NET + ".params";
@@ -48,5 +49,6 @@ public class Pkg {
     public static final String ANNOTATION_RES = ANNOTATION + ".res";
     public static final String ANNOTATION_UI = ANNOTATION + ".ui";
     public static final String ANNOTATION_TOOLS = ANNOTATION + ".tools";
+    public static final String ANNOTATION_FORM = ANNOTATION + ".form";
 
 }

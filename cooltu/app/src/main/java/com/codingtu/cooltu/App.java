@@ -1,5 +1,6 @@
 package com.codingtu.cooltu;
 
+import com.codingtu.cooltu.bean.Doc;
 import com.codingtu.cooltu.constant.AdapterType;
 import com.codingtu.cooltu.constant.Module;
 import com.codingtu.cooltu.lib4a.CoreApp;
@@ -8,6 +9,7 @@ import com.codingtu.cooltu.lib4a.ui.fragment.CoreFragment;
 import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
+import com.codingtu.cooltu.processor.annotation.create.CreateFormConfig;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultCode;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultEditDialogLayout;
@@ -29,7 +31,7 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
 @DefaultMenuDialogLayout(layout = R.layout.dialog_menu, item = R.layout.dialog_menu_item)
 @DefaultCode("CODE_TEST")
 @CreateAct(
-        name = "bind",
+        name = "bind_test",
         packages = "com.codingtu.cooltu.ui",
         baseClass = BaseActivity.class,
         layoutTemp = R.layout.layout_temp
@@ -39,6 +41,11 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
         packages = "com.codingtu.cooltu.ui.adapter",
         type = AdapterType.DEFAULT_MORE_LIST,
         layoutTemp = R.layout.layout_temp
+)
+@CreateFormConfig(
+        name = "doc",
+        packages = "com.codingtu.cooltu.form.config",
+        bean = Doc.class
 )
 //@CreateFragment(
 //        name = "base_step",
