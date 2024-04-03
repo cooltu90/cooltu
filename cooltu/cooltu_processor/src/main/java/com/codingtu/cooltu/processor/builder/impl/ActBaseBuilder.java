@@ -240,7 +240,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
 
         addLnTag(otherLineSb, "    public static class FormHandler extends android.os.Handler implements [OnDestroy] {", FullName.ON_DESTROY);
-        addLnTag(otherLineSb, "        public [ListValueMap]<Integer, Object> linkMap = new [ListValueMap]<>();", FullName.LIST_VALUE_MAP, FullName.LIST_VALUE_MAP);
+        addLnTag(otherLineSb, "        public java.util.Map<Integer, java.util.Map<String, Object[]>> linkMap = new java.util.HashMap<>();");
         addLnTag(otherLineSb, "        private [FormActivity] actBase;", javaInfo.name);
         addLnTag(otherLineSb, "        public FormHandler([Destorys] destroys, [FormActivity] actBase) {", FullName.DESTROYS, javaInfo.name);
         addLnTag(otherLineSb, "            destroys.add(this);");
@@ -249,14 +249,22 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addLnTag(otherLineSb, "        @Override");
         addLnTag(otherLineSb, "        public void handleMessage(android.os.Message msg) {");
         addLnTag(otherLineSb, "            super.handleMessage(msg);");
-        addLnTag(otherLineSb, "            java.util.List<Object> linkObjs = linkMap.get(msg.what);");
-        addLnTag(otherLineSb, "            actBase.handleMessage(msg, linkObjs);");
+        addLnTag(otherLineSb, "            java.util.Map<String, Object[]> links = linkMap.get(msg.what);");
+        addLnTag(otherLineSb, "            actBase.handleMessage(msg, links);");
         addLnTag(otherLineSb, "        }");
         addLnTag(otherLineSb, "        @Override");
         addLnTag(otherLineSb, "        public void destroy() {");
         addLnTag(otherLineSb, "            if (linkMap != null) {");
         addLnTag(otherLineSb, "                for (Integer index : linkMap.keySet()) {");
-        addLnTag(otherLineSb, "                    linkMap.get(index).clear();");
+        addLnTag(otherLineSb, "                    java.util.Map<String, Object[]> map = linkMap.get(index);");
+        addLnTag(otherLineSb, "                    for (String methodName :");
+        addLnTag(otherLineSb, "                            map.keySet()) {");
+        addLnTag(otherLineSb, "                        Object[] objects = map.get(methodName);");
+        addLnTag(otherLineSb, "                        for (int i = 0; i < objects.length; i++) {");
+        addLnTag(otherLineSb, "                            objects[i] = null;");
+        addLnTag(otherLineSb, "                        }");
+        addLnTag(otherLineSb, "                    }");
+        addLnTag(otherLineSb, "                    map.clear();");
         addLnTag(otherLineSb, "                }");
         addLnTag(otherLineSb, "                linkMap.clear();");
         addLnTag(otherLineSb, "                linkMap = null;");
@@ -264,56 +272,24 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addLnTag(otherLineSb, "            actBase = null;");
         addLnTag(otherLineSb, "        }");
         addLnTag(otherLineSb, "    }");
-        addLnTag(otherLineSb, "    public void link([ListValueMap]<Integer, Object> linkMap, int handleId, Object... linkViews) {", FullName.LIST_VALUE_MAP);
-        addLnTag(otherLineSb, "        linkMap.get(handleId).addAll([Ts].ts(linkViews).toList());", FullName.TS);
+        addLnTag(otherLineSb, "    public void link(java.util.Map<Integer, java.util.Map<String, Object[]>> linkMap, int handleId, String methodName, Object... linkViews) {");
+        addLnTag(otherLineSb, "        java.util.Map<String, Object[]> map = linkMap.get(handleId);");
+        addLnTag(otherLineSb, "        if (map == null) {");
+        addLnTag(otherLineSb, "            map = new java.util.HashMap<>();");
+        addLnTag(otherLineSb, "            linkMap.put(handleId, map);");
+        addLnTag(otherLineSb, "        }");
+        addLnTag(otherLineSb, "        map.put(methodName, linkViews);");
         addLnTag(otherLineSb, "    }");
-        addLnTag(otherLineSb, "    protected void handleMessage(android.os.Message msg, java.util.List<Object> linkObjs) {");
+        addLnTag(otherLineSb, "    protected void handleMessage(android.os.Message msg, java.util.Map<String, Object[]> links) {");
         addLnTag(otherLineSb, "        switch (msg.what) {");
+        addLnTag(otherLineSb, "        }");
+        addLnTag(otherLineSb, "    }");
 
         StringBuilder handleMethodSb = new StringBuilder();
 
-        Ts.ls(handleMethods, new Ts.EachTs<ExecutableElement>() {
-            @Override
-            public boolean each(int position, ExecutableElement element) {
-                HandleMethod handleMethod = element.getAnnotation(HandleMethod.class);
-                Map<Integer, IdTools.Id> idMap = IdTools.elementToIds(element, HandleMethod.class, handleMethod.value());
-
-                Ts.maps(idMap).ls(new Ts.MapEach<Integer, IdTools.Id>() {
-                    @Override
-                    public boolean each(Integer integer, IdTools.Id id) {
-                        addLnTag(otherLineSb, "            case [R.id.nameEt]:", id.toString());
-                        return false;
-                    }
-                });
-
-                Params params = ElementTools.getMethodParamKvs(element);
-                String param = params.getParam(new Params.Convert() {
-                    @Override
-                    public String convert(int index, KV<String, String> kv) {
-                        if (index == 0)
-                            return null;
-                        return "(" + kv.k + ") linkObjs.get(" + (index - 1) + ")";
-                    }
-                });
-
-                String methodName = ElementTools.simpleName(element);
-
-                addLnTag(otherLineSb, "                [handleName](msg,[params]);", methodName, param);
-                addLnTag(otherLineSb, "                break;");
-
-
-                addLnTag(handleMethodSb, "    protected void [handleName]([params]) { }"
-                        , methodName, params.getMethodParams());
-
-                return false;
-            }
-        });
-        addLnTag(otherLineSb, "        }");
-
-        addLnTag(otherLineSb, "    }");
-        addLnTag(otherLineSb, "    protected void linkEditText(int id, [EditText] et, Object... views) {", FullName.EDIT_TEXT);
-        addLnTag(otherLineSb, "        et.addTextChangedListener(new [HandlerTextWatcher](this, formHandler, id));", FullName.HANDLER_TEXT_WATCHER);
-        addLnTag(otherLineSb, "        link(formHandler.linkMap, id, views);");
+        addLnTag(otherLineSb, "    protected void linkEditText(String methodName, [EditText] et, Object... views) {", FullName.EDIT_TEXT);
+        addLnTag(otherLineSb, "        et.addTextChangedListener(new [HandlerTextWatcher](this, formHandler, et.getId()));", FullName.HANDLER_TEXT_WATCHER);
+        addLnTag(otherLineSb, "        link(formHandler.linkMap, et.getId(), methodName, views);");
         addLnTag(otherLineSb, "    }");
         addLnTag(otherLineSb, "    protected [RadioGroup] getRadioGroup([ViewGroup] viewGroup) {", FullName.RADIO_GROUP, FullName.VIEW_GROUP);
         addLnTag(otherLineSb, "        [RadioGroup] rg = [RadioGroup].obtain(this).setBts(viewGroup);", FullName.RADIO_GROUP, FullName.RADIO_GROUP);

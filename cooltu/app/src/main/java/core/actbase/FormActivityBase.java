@@ -102,7 +102,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
 
 
     public static class FormHandler extends android.os.Handler implements com.codingtu.cooltu.lib4j.destory.OnDestroy {
-        public com.codingtu.cooltu.lib4j.data.map.ListValueMap<Integer, Object> linkMap = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        public java.util.Map<Integer, java.util.Map<String, Object[]>> linkMap = new java.util.HashMap<>();
         private FormActivityBase actBase;
         public FormHandler(com.codingtu.cooltu.lib4j.destory.Destroys destroys, FormActivityBase actBase) {
             destroys.add(this);
@@ -111,14 +111,22 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
-            java.util.List<Object> linkObjs = linkMap.get(msg.what);
-            actBase.handleMessage(msg, linkObjs);
+            java.util.Map<String, Object[]> links = linkMap.get(msg.what);
+            actBase.handleMessage(msg, links);
         }
         @Override
         public void destroy() {
             if (linkMap != null) {
                 for (Integer index : linkMap.keySet()) {
-                    linkMap.get(index).clear();
+                    java.util.Map<String, Object[]> map = linkMap.get(index);
+                    for (String methodName :
+                            map.keySet()) {
+                        Object[] objects = map.get(methodName);
+                        for (int i = 0; i < objects.length; i++) {
+                            objects[i] = null;
+                        }
+                    }
+                    map.clear();
                 }
                 linkMap.clear();
                 linkMap = null;
@@ -126,27 +134,27 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
             actBase = null;
         }
     }
-    public void link(com.codingtu.cooltu.lib4j.data.map.ListValueMap<Integer, Object> linkMap, int handleId, Object... linkViews) {
-        linkMap.get(handleId).addAll(com.codingtu.cooltu.lib4j.ts.Ts.ts(linkViews).toList());
+    public void link(java.util.Map<Integer, java.util.Map<String, Object[]>> linkMap, int handleId, String methodName, Object... linkViews) {
+        java.util.Map<String, Object[]> map = linkMap.get(handleId);
+        if (map == null) {
+            map = new java.util.HashMap<>();
+            linkMap.put(handleId, map);
+        }
+        map.put(methodName, linkViews);
     }
-    protected void handleMessage(android.os.Message msg, java.util.List<Object> linkObjs) {
+    protected void handleMessage(android.os.Message msg, java.util.Map<String, Object[]> links) {
         switch (msg.what) {
-            case com.codingtu.cooltu.R.id.nameEt:
-            case com.codingtu.cooltu.R.id.nicknameEt:
-                handleName(msg,(android.widget.EditText) linkObjs.get(0), (android.widget.EditText) linkObjs.get(1));
-                break;
         }
     }
-    protected void linkEditText(int id, android.widget.EditText et, Object... views) {
-        et.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, formHandler, id));
-        link(formHandler.linkMap, id, views);
+    protected void linkEditText(String methodName, android.widget.EditText et, Object... views) {
+        et.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, formHandler, et.getId()));
+        link(formHandler.linkMap, et.getId(), methodName, views);
     }
     protected com.codingtu.cooltu.lib4a.view.combine.RadioGroup getRadioGroup(android.view.ViewGroup viewGroup) {
         com.codingtu.cooltu.lib4a.view.combine.RadioGroup rg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(viewGroup);
         viewGroup.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, rg);
         return rg;
     }
-    protected void handleName(android.os.Message msg, android.widget.EditText nameEt, android.widget.EditText nicknameEt) { }
 
 
 
