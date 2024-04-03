@@ -59,6 +59,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> useFormInitCounts;
     protected StringBuilder useFormInitSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> useFormInit;
+    protected java.util.Map<String, Boolean> onCreateCompleteOtherIfs;
+    protected java.util.Map<String, Integer> onCreateCompleteOtherCounts;
+    protected StringBuilder onCreateCompleteOtherSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> onCreateCompleteOther;
     protected java.util.Map<String, Boolean> superOnClickIfs;
     protected java.util.Map<String, Integer> superOnClickCounts;
     protected StringBuilder superOnClickSb;
@@ -207,6 +211,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         useFormInitCounts = new java.util.HashMap<>();
         useFormInitSb = map.get("useFormInit");
         useFormInit = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        onCreateCompleteOtherIfs = new java.util.HashMap<>();
+        onCreateCompleteOtherCounts = new java.util.HashMap<>();
+        onCreateCompleteOtherSb = map.get("onCreateCompleteOther");
+        onCreateCompleteOther = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         superOnClickIfs = new java.util.HashMap<>();
         superOnClickCounts = new java.util.HashMap<>();
         superOnClickSb = map.get("superOnClick");
@@ -529,6 +537,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.useFormInit, getIfKey("useFormInit"), userFormInit);
         useFormInitIfs.put(getIfKey("useFormInit"), true);
     }
+    public void onCreateCompleteOtherIf(String onCreateCompleteOther) {
+        addForMap(this.onCreateCompleteOther, getIfKey("onCreateCompleteOther"), onCreateCompleteOther);
+        onCreateCompleteOtherIfs.put(getIfKey("onCreateCompleteOther"), true);
+    }
     public void isSuperOnClick(boolean is) {
         superOnClickIfs.put(getIfKey("superOnClick"), is);
     }
@@ -727,6 +739,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         if (isIf(useFormInitIfs, getIfKey("useFormInit"))) {
             List<String> useFormInit0 = useFormInit.get(getIfKey("useFormInit"));
             addLnTag(useFormInitSb, "[userFormInit]", useFormInit0.get(0));
+        }
+        if (isIf(onCreateCompleteOtherIfs, getIfKey("onCreateCompleteOther"))) {
+            List<String> onCreateCompleteOther0 = onCreateCompleteOther.get(getIfKey("onCreateCompleteOther"));
+            addLnTag(onCreateCompleteOtherSb, "[onCreateCompleteOther]", onCreateCompleteOther0.get(0));
         }
         if (isIf(superOnClickIfs, getIfKey("superOnClick"))) {
             List<String> superOnClick0 = superOnClick.get(getIfKey("superOnClick"));
@@ -1134,6 +1150,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[setOnClick]]");
         lines.add("[[setOnLongClick]]");
         lines.add("[[useFormInit]]");
+        lines.add("[[onCreateCompleteOther]]");
         lines.add("    }");
         lines.add("");
         lines.add("    @Override");

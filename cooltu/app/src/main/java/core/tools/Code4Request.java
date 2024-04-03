@@ -9,8 +9,9 @@ public class Code4Request {
     public static final int FORM_TEST_ACTIVITY = 5;
     public static final int WELCOME_ACTIVITY = 6;
     public static final int FORM_NEW_ACTIVITY = 7;
-    public static final int FORM_TEST_BASE_ACTIVITY = 8;
-    public static final int STEP_ONE_ACTIVITY = 9;
+    public static final int FORM_ACTIVITY = 8;
+    public static final int FORM_TEST_BASE_ACTIVITY = 9;
+    public static final int STEP_ONE_ACTIVITY = 10;
 
 
 }

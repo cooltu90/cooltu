@@ -83,6 +83,7 @@ public abstract class UiBaseBuilder {
 
     public boolean isToastDialog;
     public boolean isNoticeDialog;
+    public boolean useForm;
     private List<String> inBaseInParent;
     private Map<String, LayoutTools.ViewInfo> childViewMap;
     private Map<String, LayoutTools.ViewInfo> allViewMap;
@@ -176,7 +177,6 @@ public abstract class UiBaseBuilder {
 
         inits();
         initAbstracts();
-
 
         Ts.ls(dialogUses, new Ts.EachTs<VariableElement>() {
             @Override

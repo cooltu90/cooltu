@@ -43,6 +43,7 @@ public class Pkg {
     public static final String LIB4J_TS = LIB4J + ".ts";
     public static final String LIB4J_JSON = LIB4J + ".json";
     public static final String LIB4J_TOOLS = LIB4J + ".tools";
+    public static final String LIB4J_DESTORY = LIB4J + ".destory";
     //processor_annotation
     public static final String ANNOTATION = "com.codingtu.cooltu.processor.annotation";
     public static final String ANNOTATION_RES = ANNOTATION + ".res";

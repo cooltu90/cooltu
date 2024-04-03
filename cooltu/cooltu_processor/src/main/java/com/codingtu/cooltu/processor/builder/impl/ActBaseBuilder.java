@@ -182,6 +182,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
         isOnCreateCompleteInit(!uiBaseBuilder.hasChild());
 
+        if (uiBaseBuilder.useForm) {
+            useForm();
+        }
+
+
         if (bind != null) {
 
             parentViewMap = uiBaseBuilder.getParentViewMap();
@@ -222,6 +227,55 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         }
 
         otherIf(otherLineSb.toString());
+    }
+
+    private void useForm() {
+        StringBuilder onCreateCompleteOtherSb = new StringBuilder();
+        addLnTag(onCreateCompleteOtherSb, "        formHandler = new FormHandler(this, this);");
+        onCreateCompleteOtherIf(onCreateCompleteOtherSb.toString());
+
+        addField(Constant.SIGN_PROTECTED, "FormHandler", "formHandler");
+
+
+        addLnTag(otherLineSb, "    public static class FormHandler extends android.os.Handler implements [OnDestroy] {", FullName.ON_DESTROY);
+        addLnTag(otherLineSb, "        public [ListValueMap]<Integer, Object> linkMap = new [ListValueMap]<>();", FullName.LIST_VALUE_MAP, FullName.LIST_VALUE_MAP);
+        addLnTag(otherLineSb, "        private [FormActivity] actBase;", javaInfo.name);
+        addLnTag(otherLineSb, "        public FormHandler([Destorys] destroys, [FormActivity] actBase) {", FullName.DESTROYS, javaInfo.name);
+        addLnTag(otherLineSb, "            destroys.add(this);");
+        addLnTag(otherLineSb, "            this.actBase = actBase;");
+        addLnTag(otherLineSb, "        }");
+        addLnTag(otherLineSb, "        @Override");
+        addLnTag(otherLineSb, "        public void handleMessage(android.os.Message msg) {");
+        addLnTag(otherLineSb, "            super.handleMessage(msg);");
+        addLnTag(otherLineSb, "            java.util.List<Object> linkObjs = linkMap.get(msg.what);");
+        addLnTag(otherLineSb, "            actBase.handleMessage(msg, linkObjs);");
+        addLnTag(otherLineSb, "        }");
+        addLnTag(otherLineSb, "        @Override");
+        addLnTag(otherLineSb, "        public void destroy() {");
+        addLnTag(otherLineSb, "            if (linkMap != null) {");
+        addLnTag(otherLineSb, "                for (Integer index : linkMap.keySet()) {");
+        addLnTag(otherLineSb, "                    linkMap.get(index).clear();");
+        addLnTag(otherLineSb, "                }");
+        addLnTag(otherLineSb, "                linkMap.clear();");
+        addLnTag(otherLineSb, "                linkMap = null;");
+        addLnTag(otherLineSb, "            }");
+        addLnTag(otherLineSb, "            actBase = null;");
+        addLnTag(otherLineSb, "        }");
+        addLnTag(otherLineSb, "    }");
+        addLnTag(otherLineSb, "    public void link([ListValueMap]<Integer, Object> linkMap, int handleId, Object... linkViews) {", FullName.LIST_VALUE_MAP);
+        addLnTag(otherLineSb, "        linkMap.get(handleId).addAll([Ts].ts(linkViews).toList());", FullName.TS);
+        addLnTag(otherLineSb, "    }");
+        addLnTag(otherLineSb, "    protected void handleMessage(android.os.Message msg, java.util.List<Object> linkObjs) {");
+        addLnTag(otherLineSb, "    }");
+        addLnTag(otherLineSb, "    protected void linkEditText(int id, [EditText] et, Object... views) {", FullName.EDIT_TEXT);
+        addLnTag(otherLineSb, "        et.addTextChangedListener(new [HandlerTextWatcher](this, formHandler, id));", FullName.HANDLER_TEXT_WATCHER);
+        addLnTag(otherLineSb, "        link(formHandler.linkMap, id, views);");
+        addLnTag(otherLineSb, "    }");
+        addLnTag(otherLineSb, "    protected [RadioGroup] getRadioGroup([ViewGroup] viewGroup) {", FullName.RADIO_GROUP, FullName.VIEW_GROUP);
+        addLnTag(otherLineSb, "        [RadioGroup] rg = [RadioGroup].obtain(this).setBts(viewGroup);", FullName.RADIO_GROUP, FullName.RADIO_GROUP);
+        addLnTag(otherLineSb, "        viewGroup.setTag([lib4aPkg].R.id.tag_0, rg);", Pkg.LIB4A);
+        addLnTag(otherLineSb, "        return rg;", Pkg.LIB4A);
+        addLnTag(otherLineSb, "    }");
     }
 
     private void dealBind(String bindConfigClassName) {
@@ -1040,6 +1094,9 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][if][useFormInit]
 [userFormInit]
                                                                                                     [<sub>][if][useFormInit]
+                                                                                                    [<sub>][if][onCreateCompleteOther]
+[onCreateCompleteOther]
+                                                                                                    [<sub>][if][onCreateCompleteOther]
     }
 
     @Override

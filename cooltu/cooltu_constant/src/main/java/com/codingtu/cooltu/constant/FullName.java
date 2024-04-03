@@ -42,6 +42,10 @@ public class FullName {
     //lib4j_tools
     public static final String STRING_TOOL = Pkg.LIB4J_TOOLS + ".StringTool";
     public static final String COUNT_TOOL = Pkg.LIB4J_TOOLS + ".CountTool";
+
+    public static final String ON_DESTROY = Pkg.LIB4J_DESTORY + ".OnDestroy";
+    public static final String DESTROYS = Pkg.LIB4J_DESTORY + ".Destroys";
+
     //lib4a_tools
     public static final String MOBILE_TOOL = Pkg.LIB4A_TOOLS + ".MobileTool";
     public static final String INFLATE_TOOL = Pkg.LIB4A_TOOLS + ".InflateTool";
@@ -104,6 +108,7 @@ public class FullName {
     public static final String ON_HIDDEN_FINISHED_CALLBACK = Pkg.LIB4A_LAYER + ".event.OnHiddenFinishedCallBack";
     //不变的
     public static final String VIEW = "android.view.View";
+    public static final String EDIT_TEXT = "android.widget.EditText";
     public static final String VIEW_GROUP = "android.view.ViewGroup";
     public static final String STRING = "java.lang.String";
     public static final String RECYCLER_VIEW = "androidx.recyclerview.widget.RecyclerView";
