@@ -15,6 +15,7 @@ import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4a.view.combine.RadioGroup;
 import com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher;
 import com.codingtu.cooltu.processor.annotation.form.Form;
+import com.codingtu.cooltu.processor.annotation.form.HandleMethod;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
@@ -36,17 +37,8 @@ public class FormActivity extends FormActivityBase {
         getRadioGroup(numLl).setOnSetItem(new TypeOnSetItem());
     }
 
-    protected void handleMessage(Message msg, List<Object> linkObjs) {
-        switch (msg.what) {
-            case R.id.nameEt:
-                handleName(linkObjs);
-                break;
-        }
-    }
-
-    private void handleName(List<Object> linkObjs) {
-        EditText nameEt = (EditText) linkObjs.get(0);
-        EditText nicknameEt = (EditText) linkObjs.get(1);
+    @HandleMethod({R.id.nameEt, R.id.nicknameEt})
+    protected void handleName(Message msg, EditText nameEt, EditText nicknameEt) {
         ViewTool.setText(nicknameEt, nameEt.getText().toString());
     }
 

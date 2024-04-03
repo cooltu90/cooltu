@@ -9,6 +9,7 @@ import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Maps;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.bind.Bind;
+import com.codingtu.cooltu.processor.annotation.form.HandleMethod;
 import com.codingtu.cooltu.processor.annotation.net.NetBack;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
@@ -96,12 +97,21 @@ public class ActBaseDeal extends TypeBaseDeal {
                     dealPermissionBack(baseBuilder, permission, ee);
                 }
 
+                HandleMethod handleMethod = ee.getAnnotation(HandleMethod.class);
+                if (handleMethod != null) {
+                    dealHandleMethod(baseBuilder, handleMethod, ee);
+                }
+
             }
 
             return false;
         });
 
         baseBuilder.bind = te.getAnnotation(Bind.class);
+    }
+
+    private void dealHandleMethod(ActBaseBuilder baseBuilder, HandleMethod handleMethod, ExecutableElement ee) {
+        baseBuilder.handleMethods.add(ee);
     }
 
     private void dealLongClickView(UiBaseBuilder uiBaseBuilder, LongClickView clickView, ExecutableElement ee) {

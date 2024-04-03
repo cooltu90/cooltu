@@ -130,6 +130,12 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         linkMap.get(handleId).addAll(com.codingtu.cooltu.lib4j.ts.Ts.ts(linkViews).toList());
     }
     protected void handleMessage(android.os.Message msg, java.util.List<Object> linkObjs) {
+        switch (msg.what) {
+            case com.codingtu.cooltu.R.id.nameEt:
+            case com.codingtu.cooltu.R.id.nicknameEt:
+                handleName(msg,(android.widget.EditText) linkObjs.get(0), (android.widget.EditText) linkObjs.get(1));
+                break;
+        }
     }
     protected void linkEditText(int id, android.widget.EditText et, Object... views) {
         et.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, formHandler, id));
@@ -140,6 +146,8 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         viewGroup.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, rg);
         return rg;
     }
+    protected void handleName(android.os.Message msg, android.widget.EditText nameEt, android.widget.EditText nicknameEt) { }
+
 
 
 }

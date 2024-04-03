@@ -23,6 +23,7 @@ import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupIte
 import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupViewsMethod;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindTextView;
 import com.codingtu.cooltu.processor.annotation.bind.radiogroup.RadioGroupOnClickMethod;
+import com.codingtu.cooltu.processor.annotation.form.HandleMethod;
 import com.codingtu.cooltu.processor.annotation.ui.ViewId;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindEditText;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindRadioGroup;
@@ -75,6 +76,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     public List<KV<String, String>> starts = new ArrayList<>();
     public List<Permission> permissions = new ArrayList<>();
     public List<ExecutableElement> permissionMethods = new ArrayList<>();
+    public List<ExecutableElement> handleMethods = new ArrayList<>();
     public Bind bind;
     private Map<String, LayoutTools.ViewInfo> parentViewMap;
     private StringBuilder otherLineSb = new StringBuilder();
@@ -266,6 +268,48 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addLnTag(otherLineSb, "        linkMap.get(handleId).addAll([Ts].ts(linkViews).toList());", FullName.TS);
         addLnTag(otherLineSb, "    }");
         addLnTag(otherLineSb, "    protected void handleMessage(android.os.Message msg, java.util.List<Object> linkObjs) {");
+        addLnTag(otherLineSb, "        switch (msg.what) {");
+
+        StringBuilder handleMethodSb = new StringBuilder();
+
+        Ts.ls(handleMethods, new Ts.EachTs<ExecutableElement>() {
+            @Override
+            public boolean each(int position, ExecutableElement element) {
+                HandleMethod handleMethod = element.getAnnotation(HandleMethod.class);
+                Map<Integer, IdTools.Id> idMap = IdTools.elementToIds(element, HandleMethod.class, handleMethod.value());
+
+                Ts.maps(idMap).ls(new Ts.MapEach<Integer, IdTools.Id>() {
+                    @Override
+                    public boolean each(Integer integer, IdTools.Id id) {
+                        addLnTag(otherLineSb, "            case [R.id.nameEt]:", id.toString());
+                        return false;
+                    }
+                });
+
+                Params params = ElementTools.getMethodParamKvs(element);
+                String param = params.getParam(new Params.Convert() {
+                    @Override
+                    public String convert(int index, KV<String, String> kv) {
+                        if (index == 0)
+                            return null;
+                        return "(" + kv.k + ") linkObjs.get(" + (index - 1) + ")";
+                    }
+                });
+
+                String methodName = ElementTools.simpleName(element);
+
+                addLnTag(otherLineSb, "                [handleName](msg,[params]);", methodName, param);
+                addLnTag(otherLineSb, "                break;");
+
+
+                addLnTag(handleMethodSb, "    protected void [handleName]([params]) { }"
+                        , methodName, params.getMethodParams());
+
+                return false;
+            }
+        });
+        addLnTag(otherLineSb, "        }");
+
         addLnTag(otherLineSb, "    }");
         addLnTag(otherLineSb, "    protected void linkEditText(int id, [EditText] et, Object... views) {", FullName.EDIT_TEXT);
         addLnTag(otherLineSb, "        et.addTextChangedListener(new [HandlerTextWatcher](this, formHandler, id));", FullName.HANDLER_TEXT_WATCHER);
@@ -276,6 +320,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addLnTag(otherLineSb, "        viewGroup.setTag([lib4aPkg].R.id.tag_0, rg);", Pkg.LIB4A);
         addLnTag(otherLineSb, "        return rg;", Pkg.LIB4A);
         addLnTag(otherLineSb, "    }");
+        addLnTag(otherLineSb, handleMethodSb.toString());
     }
 
     private void dealBind(String bindConfigClassName) {
