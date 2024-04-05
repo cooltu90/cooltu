@@ -5,6 +5,7 @@ import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
@@ -24,6 +25,7 @@ import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupVie
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindTextView;
 import com.codingtu.cooltu.processor.annotation.bind.radiogroup.RadioGroupOnClickMethod;
 import com.codingtu.cooltu.processor.annotation.form.HandleMethod;
+import com.codingtu.cooltu.processor.annotation.tools.Name;
 import com.codingtu.cooltu.processor.annotation.ui.ViewId;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindEditText;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindRadioGroup;
@@ -45,6 +47,7 @@ import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.core.UiBaseInterface;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.BindConfigDeal;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
@@ -77,6 +80,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     public List<Permission> permissions = new ArrayList<>();
     public List<ExecutableElement> permissionMethods = new ArrayList<>();
     public List<ExecutableElement> handleMethods = new ArrayList<>();
+    public ListValueMap<Integer, ExecutableElement> handleMethodMap = new ListValueMap<>();
+    public Map<Integer, IdTools.Id> handleMethodIds = new HashMap<>();
     public Bind bind;
     private Map<String, LayoutTools.ViewInfo> parentViewMap;
     private StringBuilder otherLineSb = new StringBuilder();
@@ -232,71 +237,90 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     }
 
     private void useForm() {
+
+        addTag(formHandlerCallBack, ",[formHandlerCallBack]", FullName.FORM_HANDLE_CALL_BACK);
+
         StringBuilder onCreateCompleteOtherSb = new StringBuilder();
         addLnTag(onCreateCompleteOtherSb, "        formHandler = new FormHandler(this, this);");
         onCreateCompleteOtherIf(onCreateCompleteOtherSb.toString());
 
-        addField(Constant.SIGN_PROTECTED, "FormHandler", "formHandler");
+        addField(Constant.SIGN_PROTECTED, FullName.FORM_HANDLER, "formHandler");
 
 
-        addLnTag(otherLineSb, "    public static class FormHandler extends android.os.Handler implements [OnDestroy] {", FullName.ON_DESTROY);
-        addLnTag(otherLineSb, "        public java.util.Map<Integer, java.util.Map<String, Object[]>> linkMap = new java.util.HashMap<>();");
-        addLnTag(otherLineSb, "        private [FormActivity] actBase;", javaInfo.name);
-        addLnTag(otherLineSb, "        public FormHandler([Destorys] destroys, [FormActivity] actBase) {", FullName.DESTROYS, javaInfo.name);
-        addLnTag(otherLineSb, "            destroys.add(this);");
-        addLnTag(otherLineSb, "            this.actBase = actBase;");
-        addLnTag(otherLineSb, "        }");
-        addLnTag(otherLineSb, "        @Override");
-        addLnTag(otherLineSb, "        public void handleMessage(android.os.Message msg) {");
-        addLnTag(otherLineSb, "            super.handleMessage(msg);");
-        addLnTag(otherLineSb, "            java.util.Map<String, Object[]> links = linkMap.get(msg.what);");
-        addLnTag(otherLineSb, "            actBase.handleMessage(msg, links);");
-        addLnTag(otherLineSb, "        }");
-        addLnTag(otherLineSb, "        @Override");
-        addLnTag(otherLineSb, "        public void destroy() {");
-        addLnTag(otherLineSb, "            if (linkMap != null) {");
-        addLnTag(otherLineSb, "                for (Integer index : linkMap.keySet()) {");
-        addLnTag(otherLineSb, "                    java.util.Map<String, Object[]> map = linkMap.get(index);");
-        addLnTag(otherLineSb, "                    for (String methodName :");
-        addLnTag(otherLineSb, "                            map.keySet()) {");
-        addLnTag(otherLineSb, "                        Object[] objects = map.get(methodName);");
-        addLnTag(otherLineSb, "                        for (int i = 0; i < objects.length; i++) {");
-        addLnTag(otherLineSb, "                            objects[i] = null;");
-        addLnTag(otherLineSb, "                        }");
-        addLnTag(otherLineSb, "                    }");
-        addLnTag(otherLineSb, "                    map.clear();");
-        addLnTag(otherLineSb, "                }");
-        addLnTag(otherLineSb, "                linkMap.clear();");
-        addLnTag(otherLineSb, "                linkMap = null;");
-        addLnTag(otherLineSb, "            }");
-        addLnTag(otherLineSb, "            actBase = null;");
-        addLnTag(otherLineSb, "        }");
-        addLnTag(otherLineSb, "    }");
-        addLnTag(otherLineSb, "    public void link(java.util.Map<Integer, java.util.Map<String, Object[]>> linkMap, int handleId, String methodName, Object... linkViews) {");
-        addLnTag(otherLineSb, "        java.util.Map<String, Object[]> map = linkMap.get(handleId);");
-        addLnTag(otherLineSb, "        if (map == null) {");
-        addLnTag(otherLineSb, "            map = new java.util.HashMap<>();");
-        addLnTag(otherLineSb, "            linkMap.put(handleId, map);");
-        addLnTag(otherLineSb, "        }");
-        addLnTag(otherLineSb, "        map.put(methodName, linkViews);");
-        addLnTag(otherLineSb, "    }");
-        addLnTag(otherLineSb, "    protected void handleMessage(android.os.Message msg, java.util.Map<String, Object[]> links) {");
-        addLnTag(otherLineSb, "        switch (msg.what) {");
-        addLnTag(otherLineSb, "        }");
-        addLnTag(otherLineSb, "    }");
-
-        StringBuilder handleMethodSb = new StringBuilder();
+        addLnTag(otherLineSb, "    /**************************************************");
+        addLnTag(otherLineSb, "     *");
+        addLnTag(otherLineSb, "     * form");
+        addLnTag(otherLineSb, "     *");
+        addLnTag(otherLineSb, "     **************************************************/");
 
         addLnTag(otherLineSb, "    protected void linkEditText(String methodName, [EditText] et, Object... views) {", FullName.EDIT_TEXT);
-        addLnTag(otherLineSb, "        et.addTextChangedListener(new [HandlerTextWatcher](this, formHandler, et.getId()));", FullName.HANDLER_TEXT_WATCHER);
-        addLnTag(otherLineSb, "        link(formHandler.linkMap, et.getId(), methodName, views);");
+        addLnTag(otherLineSb, "        [FormTool].linkEditText(this, formHandler, methodName, et, views);", FullName.FORM_TOOL);
         addLnTag(otherLineSb, "    }");
-        addLnTag(otherLineSb, "    protected [RadioGroup] getRadioGroup([ViewGroup] viewGroup) {", FullName.RADIO_GROUP, FullName.VIEW_GROUP);
-        addLnTag(otherLineSb, "        [RadioGroup] rg = [RadioGroup].obtain(this).setBts(viewGroup);", FullName.RADIO_GROUP, FullName.RADIO_GROUP);
-        addLnTag(otherLineSb, "        viewGroup.setTag([lib4aPkg].R.id.tag_0, rg);", Pkg.LIB4A);
-        addLnTag(otherLineSb, "        return rg;", Pkg.LIB4A);
+
+        addLnTag(otherLineSb, "    protected [RadioGroup] obtainRadioGroup([ViewGroup] viewGroup) {", FullName.RADIO_GROUP, FullName.VIEW_GROUP);
+        addLnTag(otherLineSb, "        return [FormTool].obtainRadioGroup(this, viewGroup);", FullName.FORM_TOOL);
         addLnTag(otherLineSb, "    }");
-        addLnTag(otherLineSb, handleMethodSb.toString());
+
+        addLnTag(otherLineSb, "    @Override");
+        addLnTag(otherLineSb, "    public void handleMessage(android.os.Message msg, java.util.Map<String, Object[]> links) {");
+        addLnTag(otherLineSb, "        Object[] objs;");
+        addLnTag(otherLineSb, "        switch (msg.what) {");
+
+
+        Ts.maps(handleMethodMap).ls(new Ts.MapEach<Integer, List<ExecutableElement>>() {
+            @Override
+            public boolean each(Integer integer, List<ExecutableElement> ees) {
+                IdTools.Id id = handleMethodIds.get(integer);
+
+                addLnTag(otherLineSb, "            case [id]:", id.toString());
+
+                Ts.ls(ees, new Ts.EachTs<ExecutableElement>() {
+                    @Override
+                    public boolean each(int position, ExecutableElement ee) {
+                        Name name = ee.getAnnotation(Name.class);
+                        String methodId = name.value();
+                        String methodName = ElementTools.simpleName(ee);
+                        Params params = ElementTools.getMethodParamKvs(ee);
+
+                        String param = params.getParam(new Params.Convert() {
+                            @Override
+                            public String convert(int index, KV<String, String> kv) {
+                                if (index == 0) {
+                                    return "msg";
+                                }
+                                return "(" + kv.k + ") objs[" + (index - 1) + "]";
+                            }
+                        });
+
+                        addLnTag(otherLineSb, "                objs = links.get(\"[handleName]\");", methodId, methodId);
+                        addLnTag(otherLineSb, "                [handleName]([param]);", methodName, param);
+
+
+                        return false;
+                    }
+                });
+
+                addLnTag(otherLineSb, "                break;");
+
+                return false;
+            }
+        });
+
+
+        addLnTag(otherLineSb, "        }");
+        addLnTag(otherLineSb, "    }");
+
+        Ts.ls(handleMethods, new Ts.EachTs<ExecutableElement>() {
+            @Override
+            public boolean each(int position, ExecutableElement ee) {
+                String methodName = ElementTools.simpleName(ee);
+                Params params = ElementTools.getMethodParamKvs(ee);
+                addLnTag(otherLineSb,"    protected void [handleAge]([params]) {",methodName,params.getMethodParams());
+                addLnTag(otherLineSb,"    }");
+                return false;
+            }
+        });
+
     }
 
     private void dealBind(String bindConfigClassName) {
@@ -1050,7 +1074,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, View.OnLongClickListener, [[netBackIFullName]]{
+public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, View.OnLongClickListener, [[netBackIFullName]][[formHandlerCallBack]]{
                                                                                                     [<sub>][for][field]
     [sign] [type] [name];
                                                                                                     [<sub>][for][field]

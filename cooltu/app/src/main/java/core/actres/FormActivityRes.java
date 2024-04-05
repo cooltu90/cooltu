@@ -7,4 +7,5 @@ import com.codingtu.cooltu.ui.FormActivity;
 @Form
 @ResFor(FormActivity.class)
 public class FormActivityRes {
+
 }

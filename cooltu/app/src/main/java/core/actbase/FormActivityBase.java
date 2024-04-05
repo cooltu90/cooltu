@@ -7,12 +7,12 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
+public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI,com.codingtu.cooltu.lib4a.form.FormHandleCallBack{
     protected android.widget.LinearLayout numLl;
     protected android.widget.EditText nicknameEt;
     protected android.widget.TextView saveBt;
     protected android.widget.EditText nameEt;
-    protected FormHandler formHandler;
+    protected com.codingtu.cooltu.lib4a.form.FormHandler formHandler;
 
 
     @Override
@@ -101,61 +101,37 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
 
 
 
-    public static class FormHandler extends android.os.Handler implements com.codingtu.cooltu.lib4j.destory.OnDestroy {
-        public java.util.Map<Integer, java.util.Map<String, Object[]>> linkMap = new java.util.HashMap<>();
-        private FormActivityBase actBase;
-        public FormHandler(com.codingtu.cooltu.lib4j.destory.Destroys destroys, FormActivityBase actBase) {
-            destroys.add(this);
-            this.actBase = actBase;
-        }
-        @Override
-        public void handleMessage(android.os.Message msg) {
-            super.handleMessage(msg);
-            java.util.Map<String, Object[]> links = linkMap.get(msg.what);
-            actBase.handleMessage(msg, links);
-        }
-        @Override
-        public void destroy() {
-            if (linkMap != null) {
-                for (Integer index : linkMap.keySet()) {
-                    java.util.Map<String, Object[]> map = linkMap.get(index);
-                    for (String methodName :
-                            map.keySet()) {
-                        Object[] objects = map.get(methodName);
-                        for (int i = 0; i < objects.length; i++) {
-                            objects[i] = null;
-                        }
-                    }
-                    map.clear();
-                }
-                linkMap.clear();
-                linkMap = null;
-            }
-            actBase = null;
-        }
-    }
-    public void link(java.util.Map<Integer, java.util.Map<String, Object[]>> linkMap, int handleId, String methodName, Object... linkViews) {
-        java.util.Map<String, Object[]> map = linkMap.get(handleId);
-        if (map == null) {
-            map = new java.util.HashMap<>();
-            linkMap.put(handleId, map);
-        }
-        map.put(methodName, linkViews);
-    }
-    protected void handleMessage(android.os.Message msg, java.util.Map<String, Object[]> links) {
-        switch (msg.what) {
-        }
-    }
+    /**************************************************
+     *
+     * form
+     *
+     **************************************************/
     protected void linkEditText(String methodName, android.widget.EditText et, Object... views) {
-        et.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, formHandler, et.getId()));
-        link(formHandler.linkMap, et.getId(), methodName, views);
+        com.codingtu.cooltu.lib4a.form.FormTool.linkEditText(this, formHandler, methodName, et, views);
     }
-    protected com.codingtu.cooltu.lib4a.view.combine.RadioGroup getRadioGroup(android.view.ViewGroup viewGroup) {
-        com.codingtu.cooltu.lib4a.view.combine.RadioGroup rg = com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this).setBts(viewGroup);
-        viewGroup.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0, rg);
-        return rg;
+    protected com.codingtu.cooltu.lib4a.view.combine.RadioGroup obtainRadioGroup(android.view.ViewGroup viewGroup) {
+        return com.codingtu.cooltu.lib4a.form.FormTool.obtainRadioGroup(this, viewGroup);
     }
-
+    @Override
+    public void handleMessage(android.os.Message msg, java.util.Map<String, Object[]> links) {
+        Object[] objs;
+        switch (msg.what) {
+            case com.codingtu.cooltu.R.id.nicknameEt:
+                objs = links.get("handleName");
+                handleName(msg, (android.widget.EditText) objs[0], (android.widget.EditText) objs[1]);
+                break;
+            case com.codingtu.cooltu.R.id.nameEt:
+                objs = links.get("handleName");
+                handleName(msg, (android.widget.EditText) objs[0], (android.widget.EditText) objs[1]);
+                objs = links.get("handleAge");
+                handleAge(msg, (android.widget.EditText) objs[0], (android.widget.EditText) objs[1]);
+                break;
+        }
+    }
+    protected void handleName(android.os.Message msg, android.widget.EditText nameEt, android.widget.EditText nicknameEt) {
+    }
+    protected void handleAge(android.os.Message msg, android.widget.EditText nameEt, android.widget.EditText nicknameEt) {
+    }
 
 
 }

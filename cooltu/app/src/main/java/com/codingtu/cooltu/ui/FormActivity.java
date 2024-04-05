@@ -9,6 +9,7 @@ import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4a.view.combine.RadioGroup;
 import com.codingtu.cooltu.processor.annotation.form.HandleMethod;
+import com.codingtu.cooltu.processor.annotation.tools.Name;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
@@ -24,13 +25,21 @@ public class FormActivity extends FormActivityBase {
     public void onCreateComplete() {
         super.onCreateComplete();
         linkEditText("handleName", nameEt, nameEt, nicknameEt);
-        getRadioGroup(numLl).setOnSetItem(new TypeOnSetItem());
+        obtainRadioGroup(numLl).setOnSetItem(new TypeOnSetItem());
+        formHandler.link(R.id.nameEt, "", nameEt);
     }
 
+    @Name("handleName")
     @HandleMethod({R.id.nameEt, R.id.nicknameEt})
     protected void handleName(Message msg, EditText nameEt, EditText nicknameEt) {
         ViewTool.setText(nicknameEt, nameEt.getText().toString());
     }
+
+    @Name("handleAge")
+    @HandleMethod(R.id.nameEt)
+    protected void handleAge(Message msg, EditText nameEt, EditText nicknameEt) {
+    }
+
 
     @ClickView(R.id.saveBt)
     public void saveBtClick() {

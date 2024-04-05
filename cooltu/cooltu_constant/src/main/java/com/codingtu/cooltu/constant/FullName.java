@@ -39,6 +39,9 @@ public class FullName {
     public static final String DEFAULT_EDIT_TEXT_PUSH = Pkg.LIB4A_FORM_PUSH + ".DefaultEditTextPush";
     public static final String DEFAULT_RADIO_GROUP_PUSH = Pkg.LIB4A_FORM_PUSH + ".DefaultRadioGroupPush";
     public static final String DEFAULT_SEEK_BAR_PUSH = Pkg.LIB4A_FORM_PUSH + ".DefaultSeekBarPush";
+    public static final String FORM_TOOL = Pkg.LIB4A_FORM + ".FormTool";
+    public static final String FORM_HANDLER = Pkg.LIB4A_FORM + ".FormHandler";
+    public static final String FORM_HANDLE_CALL_BACK = Pkg.LIB4A_FORM + ".FormHandleCallBack";
     //lib4j_tools
     public static final String STRING_TOOL = Pkg.LIB4J_TOOLS + ".StringTool";
     public static final String COUNT_TOOL = Pkg.LIB4J_TOOLS + ".CountTool";
