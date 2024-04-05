@@ -42,7 +42,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
 
 
 
-        formHandler = new FormHandler(this, this);
+        formHandler = new com.codingtu.cooltu.lib4a.form.FormHandler(this, this);
 
 
     }

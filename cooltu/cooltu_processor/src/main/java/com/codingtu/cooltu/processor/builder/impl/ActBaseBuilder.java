@@ -241,7 +241,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addTag(formHandlerCallBack, ",[formHandlerCallBack]", FullName.FORM_HANDLE_CALL_BACK);
 
         StringBuilder onCreateCompleteOtherSb = new StringBuilder();
-        addLnTag(onCreateCompleteOtherSb, "        formHandler = new FormHandler(this, this);");
+        addLnTag(onCreateCompleteOtherSb, "        formHandler = new [FormHandler](this, this);", FullName.FORM_HANDLER);
         onCreateCompleteOtherIf(onCreateCompleteOtherSb.toString());
 
         addField(Constant.SIGN_PROTECTED, FullName.FORM_HANDLER, "formHandler");
@@ -315,8 +315,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             public boolean each(int position, ExecutableElement ee) {
                 String methodName = ElementTools.simpleName(ee);
                 Params params = ElementTools.getMethodParamKvs(ee);
-                addLnTag(otherLineSb,"    protected void [handleAge]([params]) {",methodName,params.getMethodParams());
-                addLnTag(otherLineSb,"    }");
+                addLnTag(otherLineSb, "    protected void [handleAge]([params]) {", methodName, params.getMethodParams());
+                addLnTag(otherLineSb, "    }");
                 return false;
             }
         });
