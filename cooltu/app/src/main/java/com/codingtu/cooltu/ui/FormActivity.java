@@ -24,7 +24,7 @@ public class FormActivity extends FormActivityBase {
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
-        linkEditText("handleName", nameEt, nameEt, nicknameEt);
+        linkTextView("handleName", nameEt, nameEt, nicknameEt);
         obtainRadioGroup(numLl).setOnSetItem(new TypeOnSetItem());
         formHandler.link(R.id.nameEt, "", nameEt);
     }

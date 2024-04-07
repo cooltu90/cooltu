@@ -253,8 +253,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addLnTag(otherLineSb, "     *");
         addLnTag(otherLineSb, "     **************************************************/");
 
-        addLnTag(otherLineSb, "    protected void linkEditText(String methodName, [EditText] et, Object... views) {", FullName.EDIT_TEXT);
-        addLnTag(otherLineSb, "        [FormTool].linkEditText(this, formHandler, methodName, et, views);", FullName.FORM_TOOL);
+        addLnTag(otherLineSb, "    protected void linkTextView(String methodName, [EditText] et, Object... views) {", FullName.EDIT_TEXT);
+        addLnTag(otherLineSb, "        [FormTool].linkTextView(this, formHandler, methodName, et, views);", FullName.FORM_TOOL);
         addLnTag(otherLineSb, "    }");
 
         addLnTag(otherLineSb, "    protected [RadioGroup] obtainRadioGroup([ViewGroup] viewGroup) {", FullName.RADIO_GROUP, FullName.VIEW_GROUP);
