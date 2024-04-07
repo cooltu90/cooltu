@@ -106,8 +106,8 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
      * form
      *
      **************************************************/
-    protected void linkTextView(String methodName, android.widget.EditText et, Object... views) {
-        com.codingtu.cooltu.lib4a.form.FormTool.linkTextView(this, formHandler, methodName, et, views);
+    protected void linkTextView(String methodName, android.widget.TextView tv, Object... views) {
+        com.codingtu.cooltu.lib4a.form.FormTool.linkTextView(this, formHandler, methodName, tv, views);
     }
     protected com.codingtu.cooltu.lib4a.view.combine.RadioGroup obtainRadioGroup(android.view.ViewGroup viewGroup) {
         return com.codingtu.cooltu.lib4a.form.FormTool.obtainRadioGroup(this, viewGroup);

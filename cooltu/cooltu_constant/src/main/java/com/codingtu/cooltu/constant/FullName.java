@@ -1,5 +1,7 @@
 package com.codingtu.cooltu.constant;
 
+import javax.swing.text.View;
+
 /**************************************************
  *
  * 如果更改框架结构。可能会修改这里
@@ -112,6 +114,7 @@ public class FullName {
     //不变的
     public static final String VIEW = "android.view.View";
     public static final String EDIT_TEXT = "android.widget.EditText";
+    public static final String TEXT_VIEW = "android.widget.TextView";
     public static final String VIEW_GROUP = "android.view.ViewGroup";
     public static final String STRING = "java.lang.String";
     public static final String RECYCLER_VIEW = "androidx.recyclerview.widget.RecyclerView";
