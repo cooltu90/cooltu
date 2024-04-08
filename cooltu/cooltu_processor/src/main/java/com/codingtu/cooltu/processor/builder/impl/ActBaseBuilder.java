@@ -12,6 +12,7 @@ import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
+import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.annotation.bind.Bind;
@@ -24,7 +25,14 @@ import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupIte
 import com.codingtu.cooltu.processor.annotation.bind.radiogroup.GetRadioGroupViewsMethod;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindTextView;
 import com.codingtu.cooltu.processor.annotation.bind.radiogroup.RadioGroupOnClickMethod;
-import com.codingtu.cooltu.processor.annotation.form.HandleMethod;
+import com.codingtu.cooltu.processor.annotation.forms.FormConfig;
+import com.codingtu.cooltu.processor.annotation.forms.link.Link;
+import com.codingtu.cooltu.processor.annotation.forms.link.Links;
+import com.codingtu.cooltu.processor.annotation.forms.check.CheckField;
+import com.codingtu.cooltu.processor.annotation.forms.check.Checks;
+import com.codingtu.cooltu.processor.annotation.forms.echo.Echo;
+import com.codingtu.cooltu.processor.annotation.forms.view.FormEditText;
+import com.codingtu.cooltu.processor.annotation.forms.view.FormRadioGroup;
 import com.codingtu.cooltu.processor.annotation.tools.Name;
 import com.codingtu.cooltu.processor.annotation.ui.ViewId;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindEditText;
@@ -34,7 +42,7 @@ import com.codingtu.cooltu.processor.annotation.bind.binder.BindView;
 import com.codingtu.cooltu.processor.annotation.bind.check.Check;
 import com.codingtu.cooltu.processor.annotation.bind.check.CheckMethod;
 import com.codingtu.cooltu.processor.annotation.bind.echo.EchoMethod;
-import com.codingtu.cooltu.processor.annotation.bind.echo.NoEcho;
+import com.codingtu.cooltu.processor.annotation.forms.echo.NoEcho;
 import com.codingtu.cooltu.processor.annotation.bind.parse.HandleView;
 import com.codingtu.cooltu.processor.annotation.bind.parse.ToBean;
 import com.codingtu.cooltu.processor.annotation.tools.To;
@@ -42,12 +50,13 @@ import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.bean.BindRadioGroupInfo;
 import com.codingtu.cooltu.processor.bean.DealBindInfo;
 import com.codingtu.cooltu.processor.bean.DealBindVeInfo;
+import com.codingtu.cooltu.processor.bean.DealFormInfo;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.core.UiBaseInterface;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.BindConfigDeal;
-import com.codingtu.cooltu.processor.lib.log.Logs;
+import com.codingtu.cooltu.processor.deal.FormConfigDeal;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
@@ -193,6 +202,47 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             useForm();
         }
 
+        if (uiBaseBuilder.form != null) {
+            parentViewMap = uiBaseBuilder.getParentViewMap();
+            useFormInitIf("        initFormView();");
+
+            List<String> formConfigClassNames = ClassTool.getAnnotationClasses(new ClassTool.AnnotationClassGetter() {
+                @Override
+                public Object get() {
+                    return uiBaseBuilder.form.value();
+                }
+            });
+
+            Ts.strs(formConfigClassNames).ls(new Ts.EachTs<String>() {
+                @Override
+                public boolean each(int position, String formConfigClassName) {
+                    try {
+                        dealForm(formConfigClassName);
+                    } catch (Exception e) {
+                        LibLogs.i(e);
+                    }
+
+                    return false;
+                }
+            });
+
+            addLnTag(otherLineSb, "    protected void initFormView() {");
+            addLnTag(otherLineSb, initFormSb.toString());
+            addLnTag(otherLineSb, "    }");
+
+            addLnTag(otherLineSb, "    @Override");
+            addLnTag(otherLineSb, "    public void handleMessage(android.os.Message msg, java.util.Map<String, Object[]> links) {");
+            addLnTag(otherLineSb, "        Object[] objs;");
+            addLnTag(otherLineSb, "        switch (msg.what) {");
+            addLnTag(otherLineSb, handlerSb.toString());
+            addLnTag(otherLineSb, "        }");
+            addLnTag(otherLineSb, "    }");
+
+            addLnTag(otherLineSb, obtainSb.toString());
+            addLnTag(otherLineSb, echoSb.toString());
+
+        }
+
 
         if (bind != null) {
 
@@ -234,6 +284,232 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         }
 
         otherIf(otherLineSb.toString());
+    }
+
+
+    private StringBuilder echoSb = new StringBuilder();
+    private StringBuilder obtainSb = new StringBuilder();
+    private StringBuilder initFormSb = new StringBuilder();
+    private StringBuilder handlerSb = new StringBuilder();
+
+    private void dealForm(String formConfigClassName) {
+        addTag(formHandlerCallBack, ",[formHandlerCallBack]", FullName.FORM_HANDLE_CALL_BACK);
+        DealFormInfo info = new DealFormInfo();
+        info.formConfigTe = FormConfigDeal.MAP.get(formConfigClassName);
+        info.formConfigKv = BeanTools.getBeanKv(formConfigClassName, null);
+        info.formHandlerKv = new KV<>(FullName.FORM_HANDLER, "formHandler");
+
+        addField(Constant.SIGN_PROTECTED, info.formConfigKv.k, info.formConfigKv.v);
+        addField(Constant.SIGN_PROTECTED, info.formHandlerKv.k, info.formHandlerKv.v);
+
+        addLnTag(initFormSb, "        [formHandler] = new [FormHandler](this, this);", info.formHandlerKv.v, info.formHandlerKv.k);
+        addLnTag(initFormSb, "        [dataFormConfig] = new [DataFormConfig]();", info.formConfigKv.v, info.formConfigKv.k);
+
+        FormConfig formConfig = info.formConfigTe.getAnnotation(FormConfig.class);
+        info.dataClassFullName = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+            @Override
+            public Object get() {
+                return formConfig.value();
+            }
+        });
+
+        info.formBeanKv = BeanTools.getBeanKv(info.dataClassFullName, null);
+        addLnTag(echoSb, "    protected void echo([FormDatas.FormData] [formData]) {", info.formBeanKv.k, info.formBeanKv.v);
+
+        addLnTag(obtainSb, "    protected [FormDatas.FormData] obtain[FormData]([FormDatas.FormData] [formData]) {",
+                info.formBeanKv.k, ConvertTool.toClassType(info.formBeanKv.v), info.formBeanKv.k, info.formBeanKv.v);
+        addLnTag(obtainSb, "        if ([formData] == null) {", info.formBeanKv.v);
+        addLnTag(obtainSb, "            [formData] = new [FormDatas.FormData]();", info.formBeanKv.v, info.formBeanKv.k);
+        addLnTag(obtainSb, "        }");
+
+        ElementTools.ls(info.formConfigTe.getEnclosedElements(), new Ts.EachTs<Element>() {
+            @Override
+            public boolean each(int position, Element e) {
+                if (e instanceof VariableElement) {
+                    VariableElement ve = (VariableElement) e;
+
+                    String veName = ElementTools.simpleName(ve);
+
+                    FormEditText formEditText = ve.getAnnotation(FormEditText.class);
+                    IdTools.Id editTextId = null;
+                    String editTextFieldName = null;
+                    if (formEditText != null) {
+                        editTextId = IdTools.elementToId(ve, FormEditText.class, formEditText.value());
+                        editTextFieldName = getViewFieldName(editTextId);
+                    }
+                    FormRadioGroup formRadioGroup = ve.getAnnotation(FormRadioGroup.class);
+                    IdTools.Id radioGroupId = null;
+                    String radioGroupFieldName = null;
+                    if (formRadioGroup != null) {
+                        radioGroupId = IdTools.elementToId(ve, FormRadioGroup.class, formRadioGroup.id());
+                        radioGroupFieldName = getViewFieldName(radioGroupId);
+                    }
+
+
+                    NoEcho noEcho = ve.getAnnotation(NoEcho.class);
+                    if (noEcho == null) {
+                        Echo echo = ve.getAnnotation(Echo.class);
+                        if (echo != null) {
+                            String echoName = echo.methodName();
+                            Map<Integer, IdTools.Id> idMap = IdTools.elementToIds(ve, Echo.class, echo.ids());
+
+                            String param = Params.getParam(Ts.maps(idMap).toValueTs(), new Ts.Convert<IdTools.Id, String>() {
+                                @Override
+                                public String convert(int index, IdTools.Id id) {
+                                    return getViewFieldName(id);
+                                }
+                            });
+
+                            addLnTag(echoSb, "        [dataFormConfig].[echoName]([formData], [params]);",
+                                    info.formConfigKv.v, echoName, info.formBeanKv.v, param);
+
+                        } else if (formEditText != null) {
+                            addLnTag(echoSb, "        [ViewTool].setEditTextAndSelection([nameEt], [formData].[name]);",
+                                    FullName.VIEW_TOOL, editTextFieldName, info.formBeanKv.v, veName);
+                        } else if (formRadioGroup != null) {
+                            addLnTag(echoSb, "        [ViewTool].getRadioGroup([numLl]).setSelected([formData].[num]);",
+                                    FullName.VIEW_TOOL, radioGroupFieldName, info.formBeanKv.v, veName);
+                        }
+                    }
+
+                    if (formRadioGroup != null) {
+                        IdTools.Id id = IdTools.elementToId(ve, FormRadioGroup.class, formRadioGroup.id());
+                        String viewsMethodName = formRadioGroup.viewsMethod();
+                        String onSetItemClassName = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                            @Override
+                            public Object get() {
+                                return formRadioGroup.onSetItem();
+                            }
+                        });
+
+                        String viewFieldName = getViewFieldName(id);
+
+                        addLnTag(initFormSb, "        [numLl].setTag([com.codingtu.cooltu.lib4a].R.id.tag_0,",
+                                viewFieldName, Pkg.LIB4A);
+                        addLnTag(initFormSb, "                [RadioGroup].obtain(this)", FullName.RADIO_GROUP);
+                        if (StringTool.isBlank(viewsMethodName)) {
+                            addLnTag(initFormSb, "                        .setBts([numLl])", viewFieldName);
+                        } else {
+                            addLnTag(initFormSb, "                        .setBts([dataFormConfig].[getNumViews]([numLl]))",
+                                    info.formConfigKv.v, viewsMethodName, viewFieldName);
+                        }
+                        addLnTag(initFormSb, "                        .setOnSetItem(new [TypeOnSetItem]()));", onSetItemClassName);
+                    }
+
+                    Link[] linkArr = null;
+                    Links links = ve.getAnnotation(Links.class);
+                    if (links != null) {
+                        linkArr = links.value();
+                    }
+                    Link link = ve.getAnnotation(Link.class);
+                    if (link != null) {
+                        linkArr = new Link[]{link};
+                    }
+
+                    if (linkArr != null) {
+                        if (formEditText != null) {
+                            addLnTag(initFormSb, "        [nameEt].addTextChangedListener(new [HandlerTextWatcher](this, [formHandler], [nameEt]));",
+                                    editTextFieldName, FullName.HANDLER_TEXT_WATCHER, info.formHandlerKv.v, editTextFieldName);
+
+                            extracted(ve, editTextId, editTextFieldName, linkArr, info);
+                        } else if (formRadioGroup != null) {
+                            addLnTag(initFormSb,
+                                    "        [ViewTool].getRadioGroup([numLl]).addOnSelectChange(new [HandlerOnSelectChange](this, [formHandler], [numLl].getId()));",
+                                    FullName.VIEW_TOOL, radioGroupFieldName, FullName.HANDLER_ON_SELECT_CHANGE, info.formHandlerKv.v, radioGroupFieldName);
+                            extracted(ve, radioGroupId, radioGroupFieldName, linkArr, info);
+
+                        }
+                    }
+
+                    CheckField[] checkFields = null;
+
+                    Checks checks = ve.getAnnotation(Checks.class);
+                    if (checks != null) {
+                        checkFields = checks.value();
+                    }
+
+                    CheckField checkField = ve.getAnnotation(CheckField.class);
+                    if (checkField != null) {
+                        checkFields = new CheckField[]{checkField};
+                    }
+
+                    if (checkFields != null) {
+                        for (int i = 0; i < checkFields.length; i++) {
+                            checkField = checkFields[i];
+                            String prompt = checkField.prompt();
+                            String methodName = checkField.methodName();
+                            if (StringTool.isNotBlank(methodName)) {
+                                //有检测方法
+                                Map<Integer, IdTools.Id> idMap = IdTools.elementToIds(ve, CheckField.class, checkField.ids());
+                                BaseTs<IdTools.Id> idTs = Ts.maps(idMap).toValueTs();
+                                String param = Params.getParam(idTs, new Ts.Convert<IdTools.Id, String>() {
+                                    @Override
+                                    public String convert(int index, IdTools.Id id) {
+                                        return getViewFieldName(id);
+                                    }
+                                });
+                                addLnTag(obtainSb, "        [formData] = [dataFormConfig].[checkName]([formData], [nameEt]);",
+                                        info.formBeanKv.v, info.formConfigKv.v, methodName, info.formBeanKv.v, param);
+                            } else if (formEditText != null) {
+                                addLnTag(obtainSb, "        [formData].[name] = [nameEt].getText().toString();",
+                                        info.formBeanKv.v, veName, editTextFieldName);
+                                addLnTag(obtainSb, "        if ([StringTool].isBlank([formData].[name])) {",
+                                        FullName.STRING_TOOL, info.formBeanKv.v, veName);
+                                addLnTag(obtainSb, "            throw new java.lang.RuntimeException(\"[xxx]\");", prompt);
+                                addLnTag(obtainSb, "        }");
+                            }
+
+                        }
+
+                    }
+                }
+                return false;
+            }
+        });
+
+        addLnTag(obtainSb, "        return [null];", info.formBeanKv.v);
+        addLnTag(obtainSb, "    }");
+        addLnTag(echoSb, "    }");
+    }
+
+    private void extracted(VariableElement ve, IdTools.Id editTextId, String editTextFieldName, Link[] linkArr, DealFormInfo info) {
+        addLnTag(handlerSb, "            case [R.id.nameEt]:", editTextId.toString());
+
+        for (int i = 0; i < linkArr.length; i++) {
+            Link link = linkArr[i];
+            String methodName = link.methodName();
+
+            Map<Integer, IdTools.Id> idMap = IdTools.elementToIds(ve, Link.class, link.ids());
+            BaseTs<IdTools.Id> idTs = Ts.maps(idMap).toValueTs();
+
+
+            String param = Params.getParam(idTs, new Ts.Convert<IdTools.Id, String>() {
+                @Override
+                public String convert(int index, IdTools.Id id) {
+                    return getViewFieldName(id);
+                }
+            });
+
+            String param1 = Params.getParam(idTs, new Ts.Convert<IdTools.Id, String>() {
+                @Override
+                public String convert(int index, IdTools.Id id) {
+                    LayoutTools.ViewInfo viewInfo = parentViewMap.get(id.rName);
+                    return "(" + viewInfo.tag + ") objs[" + index + "]";
+                }
+            });
+
+
+            addLnTag(initFormSb, "        [formHandler].link([nameEt].getId(), \"[xxx]\", [nameEt, nicknameEt]);",
+                    info.formHandlerKv.v, editTextFieldName, methodName, param);
+
+            addLnTag(handlerSb, "                objs = links.get(\"[handleAverage]\");", methodName);
+            addLnTag(handlerSb, "                [dataFormConfig].[handleName](msg, [param]);",
+                    info.formConfigKv.v, methodName, param1);
+
+        }
+
+
+        addLnTag(handlerSb, "                break;");
     }
 
     private void useForm() {

@@ -9,6 +9,7 @@ public class Suffix {
     public static final String FRAGMENT_RES = "FragmentRes";
     public static final String ACT_BASE = "Base";
     public static final String FRAGMENT_BASE = "Base";
+    public static final String FORM_CONFIG_BASE = "Base";
     public static final String PATH = "Path";
     public static final String NET_BACK = "Back";
     public static final String NET_PARAMS = "Params";

@@ -4,12 +4,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.TextView;
 
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 
 public class HandlerTextWatcher implements TextWatcher, OnDestroy {
 
+    private TextView tv;
     private Handler handler;
     private int id;
 
@@ -17,6 +19,13 @@ public class HandlerTextWatcher implements TextWatcher, OnDestroy {
         destroys.add(this);
         this.handler = handler;
         this.id = id;
+    }
+
+    public HandlerTextWatcher(Destroys destroys, Handler handler, TextView tv) {
+        destroys.add(this);
+        this.handler = handler;
+        this.tv = tv;
+        this.id = tv.getId();
     }
 
     @Override
@@ -40,5 +49,9 @@ public class HandlerTextWatcher implements TextWatcher, OnDestroy {
     @Override
     public void destroy() {
         handler = null;
+        if (tv != null) {
+            tv.removeTextChangedListener(this);
+            tv = null;
+        }
     }
 }

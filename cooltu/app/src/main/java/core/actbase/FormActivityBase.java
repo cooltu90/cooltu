@@ -12,6 +12,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
     protected android.widget.EditText nicknameEt;
     protected android.widget.TextView saveBt;
     protected android.widget.EditText nameEt;
+    protected com.codingtu.cooltu.form.DataFormConfig dataFormConfig;
     protected com.codingtu.cooltu.lib4a.form.FormHandler formHandler;
 
 
@@ -41,8 +42,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         saveBt.setOnClickListener(this);
 
 
-
-        formHandler = new com.codingtu.cooltu.lib4a.form.FormHandler(this, this);
+        initFormView();
 
 
     }
@@ -101,37 +101,55 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
 
 
 
-    /**************************************************
-     *
-     * form
-     *
-     **************************************************/
-    protected void linkTextView(String methodName, android.widget.TextView tv, Object... views) {
-        com.codingtu.cooltu.lib4a.form.FormTool.linkTextView(this, formHandler, methodName, tv, views);
-    }
-    protected com.codingtu.cooltu.lib4a.view.combine.RadioGroup obtainRadioGroup(android.view.ViewGroup viewGroup) {
-        return com.codingtu.cooltu.lib4a.form.FormTool.obtainRadioGroup(this, viewGroup);
+    protected void initFormView() {
+        formHandler = new com.codingtu.cooltu.lib4a.form.FormHandler(this, this);
+        dataFormConfig = new com.codingtu.cooltu.form.DataFormConfig();
+        nameEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, formHandler, nameEt));
+        formHandler.link(nameEt.getId(), "handleName", nameEt, nicknameEt);
+        formHandler.link(nameEt.getId(), "handleName1", nameEt, nicknameEt);
+        numLl.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0,
+                com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this)
+                        .setBts(dataFormConfig.getNumViews(numLl))
+                        .setOnSetItem(new com.codingtu.cooltu.form.TypeOnSetItem()));
+        com.codingtu.cooltu.lib4a.tools.ViewTool.getRadioGroup(numLl).addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(this, formHandler, numLl.getId()));
+        formHandler.link(numLl.getId(), "handleNum", numLl);
+
     }
     @Override
     public void handleMessage(android.os.Message msg, java.util.Map<String, Object[]> links) {
         Object[] objs;
         switch (msg.what) {
-            case com.codingtu.cooltu.R.id.nicknameEt:
-                objs = links.get("handleName");
-                handleName(msg, (android.widget.EditText) objs[0], (android.widget.EditText) objs[1]);
-                break;
             case com.codingtu.cooltu.R.id.nameEt:
                 objs = links.get("handleName");
-                handleName(msg, (android.widget.EditText) objs[0], (android.widget.EditText) objs[1]);
-                objs = links.get("handleAge");
-                handleAge(msg, (android.widget.EditText) objs[0], (android.widget.EditText) objs[1]);
+                dataFormConfig.handleName(msg, (android.widget.EditText) objs[0], (android.widget.EditText) objs[1]);
+                objs = links.get("handleName1");
+                dataFormConfig.handleName1(msg, (android.widget.EditText) objs[0], (android.widget.EditText) objs[1]);
                 break;
+            case com.codingtu.cooltu.R.id.numLl:
+                objs = links.get("handleNum");
+                dataFormConfig.handleNum(msg, (android.widget.LinearLayout) objs[0]);
+                break;
+
         }
     }
-    protected void handleName(android.os.Message msg, android.widget.EditText nameEt, android.widget.EditText nicknameEt) {
+    protected com.codingtu.cooltu.bean.FormDatas.FormData obtainFormData(com.codingtu.cooltu.bean.FormDatas.FormData formData) {
+        if (formData == null) {
+            formData = new com.codingtu.cooltu.bean.FormDatas.FormData();
+        }
+        formData = dataFormConfig.checkName(formData, nameEt);
+        formData.nickname = nicknameEt.getText().toString();
+        if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(formData.nickname)) {
+            throw new java.lang.RuntimeException("请输入昵称");
+        }
+        formData = dataFormConfig.checkNum(formData, numLl);
+        return formData;
     }
-    protected void handleAge(android.os.Message msg, android.widget.EditText nameEt, android.widget.EditText nicknameEt) {
+
+    protected void echo(com.codingtu.cooltu.bean.FormDatas.FormData formData) {
+        dataFormConfig.echoName(formData, nameEt, nicknameEt);
+        dataFormConfig.echoNum(formData, numLl);
     }
+
 
 
 }

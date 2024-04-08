@@ -1,8 +1,9 @@
-package com.codingtu.cooltu.processor.annotation.bind.echo;
+package com.codingtu.cooltu.processor.annotation.forms;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.SOURCE)
-public @interface NoEcho {
+public @interface FormConfig {
+    Class value();
 }

@@ -1,7 +1,7 @@
 package com.codingtu.cooltu.processor.bean;
 
 import com.codingtu.cooltu.lib4j.data.kv.KV;
-import com.codingtu.cooltu.processor.annotation.bind.echo.NoEcho;
+import com.codingtu.cooltu.processor.annotation.forms.echo.NoEcho;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 
 import java.lang.annotation.Annotation;
