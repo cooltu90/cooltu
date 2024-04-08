@@ -369,7 +369,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                                 }
                             });
 
-                            addLnTag(echoSb, "        [dataFormConfig].[echoName]([formData],[formData].[name], [params]);",
+                            addLnTag(echoSb, "        [dataFormConfig].[echoName]([formData], [formData].[name], [params]);",
                                     info.formConfigKv.v, echoName, info.formBeanKv.v, info.formBeanKv.v, veName, param);
 
                         } else if (formEditText != null) {
@@ -463,8 +463,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                                         return getViewFieldName(id);
                                     }
                                 });
-                                addLnTag(obtainSb, "        [formData] = [dataFormConfig].[checkName]([formData], [nameEt]);",
-                                        info.formBeanKv.v, info.formConfigKv.v, methodName, info.formBeanKv.v, param);
+                                addLnTag(obtainSb, "        [formData] = [dataFormConfig].[checkName]([formData], [formData].[name], [nameEt]);",
+                                        info.formBeanKv.v, info.formConfigKv.v, methodName, info.formBeanKv.v, info.formBeanKv.v, veName, param);
                             } else if (formEditText != null) {
                                 addLnTag(obtainSb, "        [formData].[name] = [nameEt].getText().toString();",
                                         info.formBeanKv.v, veName, editTextFieldName);
