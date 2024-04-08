@@ -63,7 +63,7 @@ public class DataFormConfig {
             onSetItem = TypeOnSetItem.class)
     @Link(methodName = "handleNum", ids = R.id.numLl)
     @Echo(methodName = "echoNum", ids = {R.id.numLl})
-    @CheckField(methodName = "checkNum", ids = R.id.numLl)
+    @CheckField(methodName = "checkNum", ids = R.id.numLl, prompt = "检测")
     public String num;
 
     public View[] getNumViews(LinearLayout numLl) {
@@ -78,7 +78,7 @@ public class DataFormConfig {
 
     }
 
-    public String checkNum(FormDatas.FormData formData, LinearLayout numLl) {
+    public String checkNum(FormDatas.FormData formData, LinearLayout numLl, String prompt) {
         return null;
     }
 

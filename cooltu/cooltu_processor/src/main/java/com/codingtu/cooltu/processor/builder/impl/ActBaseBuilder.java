@@ -463,8 +463,14 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                                         return getViewFieldName(id);
                                     }
                                 });
-                                addLnTag(obtainSb, "        [formData].[num] = [dataFormConfig].[checkName]([formData], [nameEt]);",
-                                        info.formBeanKv.v, veName, info.formConfigKv.v, methodName, info.formBeanKv.v, param);
+
+                                String p1 = "";
+                                if (StringTool.isNotBlank(prompt)) {
+                                    p1 = ", \"" + prompt + "\"";
+                                }
+
+                                addLnTag(obtainSb, "        [formData].[num] = [dataFormConfig].[checkName]([formData], [nameEt][prompt]);",
+                                        info.formBeanKv.v, veName, info.formConfigKv.v, methodName, info.formBeanKv.v, param, p1);
                             } else if (formEditText != null) {
                                 addLnTag(obtainSb, "        [formData].[name] = [nameEt].getText().toString();",
                                         info.formBeanKv.v, veName, editTextFieldName);

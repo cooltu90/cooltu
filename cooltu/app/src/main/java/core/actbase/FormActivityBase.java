@@ -138,7 +138,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         }
         formData.name = dataFormConfig.checkName(formData, nameEt);
         formData.nickname = nicknameEt.getText().toString();
-        formData.num = dataFormConfig.checkNum(formData, numLl);
+        formData.num = dataFormConfig.checkNum(formData, numLl, "检测");
         return formData;
     }
 
