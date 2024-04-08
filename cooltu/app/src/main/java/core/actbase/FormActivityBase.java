@@ -136,9 +136,9 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         if (formData == null) {
             formData = new com.codingtu.cooltu.bean.FormDatas.FormData();
         }
-        formData = dataFormConfig.checkName(formData, formData.name, nameEt);
+        formData.name = dataFormConfig.checkName(formData, nameEt);
         formData.nickname = nicknameEt.getText().toString();
-        formData = dataFormConfig.checkNum(formData, formData.num, numLl);
+        formData.num = dataFormConfig.checkNum(formData, numLl);
         return formData;
     }
 

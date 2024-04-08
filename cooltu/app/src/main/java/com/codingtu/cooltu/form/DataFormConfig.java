@@ -36,12 +36,12 @@ public class DataFormConfig {
 
     }
 
-    public FormDatas.FormData checkName(FormDatas.FormData formData,String name, EditText nameEt) {
+    public String checkName(FormDatas.FormData formData, EditText nameEt) {
         formData.name = nameEt.getText().toString();
         if (StringTool.isBlank(formData.name)) {
             throw new RuntimeException("xxxx");
         }
-        return formData;
+        return name;
     }
 
     public void handleName(Message msg, EditText nameEt, EditText nicknameEt) {
@@ -78,8 +78,8 @@ public class DataFormConfig {
 
     }
 
-    public FormDatas.FormData checkNum(FormDatas.FormData formData, String num, LinearLayout numLl) {
-        return formData;
+    public String checkNum(FormDatas.FormData formData, LinearLayout numLl) {
+        return null;
     }
 
 }
