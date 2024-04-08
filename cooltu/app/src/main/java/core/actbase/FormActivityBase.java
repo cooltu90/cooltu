@@ -7,7 +7,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI,com.codingtu.cooltu.lib4a.form.FormHandleCallBack{
+public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI, com.codingtu.cooltu.lib4a.form.FormHandleCallBack {
     protected android.widget.LinearLayout numLl;
     protected android.widget.EditText nicknameEt;
     protected android.widget.TextView saveBt;
@@ -25,10 +25,6 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         nicknameEt = findViewById(com.codingtu.cooltu.R.id.nicknameEt);
         saveBt = findViewById(com.codingtu.cooltu.R.id.saveBt);
         nameEt = findViewById(com.codingtu.cooltu.R.id.nameEt);
-
-
-
-
 
 
         onCreateComplete();
@@ -59,7 +55,8 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         }
     }
 
-    protected void saveBtClick() {}
+    protected void saveBtClick() {
+    }
 
 
     @Override
@@ -75,7 +72,6 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
 
     @Override
     public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
-
 
 
     }
@@ -95,12 +91,6 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
     }
 
 
-
-
-
-
-
-
     protected void initFormView() {
         formHandler = new com.codingtu.cooltu.lib4a.form.FormHandler(this, this);
         dataFormConfig = new com.codingtu.cooltu.form.DataFormConfig();
@@ -115,6 +105,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         formHandler.link(numLl.getId(), "handleNum", numLl);
 
     }
+
     @Override
     public void handleMessage(android.os.Message msg, java.util.Map<String, Object[]> links) {
         Object[] objs;
@@ -132,6 +123,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
 
         }
     }
+
     protected com.codingtu.cooltu.bean.FormDatas.FormData obtainFormData(com.codingtu.cooltu.bean.FormDatas.FormData formData) {
         if (formData == null) {
             formData = new com.codingtu.cooltu.bean.FormDatas.FormData();
@@ -143,10 +135,9 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
     }
 
     protected void echo(com.codingtu.cooltu.bean.FormDatas.FormData formData) {
-        dataFormConfig.echoName(formData, nameEt, nicknameEt);
-        dataFormConfig.echoNum(formData, numLl);
+        dataFormConfig.echoName(formData, formData.name, nameEt, nicknameEt);
+        dataFormConfig.echoNum(formData, formData.num, numLl);
     }
-
 
 
 }

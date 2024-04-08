@@ -35,7 +35,6 @@ public class FormActivity extends FormActivityBase {
 
     protected void echo(FormDatas.FormData formData) {
         ViewTool.setEditTextAndSelection(nameEt, formData.name);
-        dataFormConfig.echoName(formData, nameEt, nicknameEt);
         ViewTool.setEditTextAndSelection(nicknameEt, formData.nickname);
     }
 

@@ -369,8 +369,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                                 }
                             });
 
-                            addLnTag(echoSb, "        [dataFormConfig].[echoName]([formData], [params]);",
-                                    info.formConfigKv.v, echoName, info.formBeanKv.v, param);
+                            addLnTag(echoSb, "        [dataFormConfig].[echoName]([formData],[formData].[name], [params]);",
+                                    info.formConfigKv.v, echoName, info.formBeanKv.v, info.formBeanKv.v, veName, param);
 
                         } else if (formEditText != null) {
                             addLnTag(echoSb, "        [ViewTool].setEditTextAndSelection([nameEt], [formData].[name]);",

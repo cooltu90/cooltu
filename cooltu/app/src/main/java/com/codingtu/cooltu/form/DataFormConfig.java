@@ -32,7 +32,7 @@ public class DataFormConfig {
     )
     public String name;
 
-    public void echoName(FormDatas.FormData formData, EditText nameEt, EditText nicknameEt) {
+    public void echoName(FormDatas.FormData formData, String name, EditText nameEt, EditText nicknameEt) {
 
     }
 
@@ -70,7 +70,7 @@ public class DataFormConfig {
         return null;
     }
 
-    public void echoNum(FormDatas.FormData formData, LinearLayout numLl) {
+    public void echoNum(FormDatas.FormData formData, String num, LinearLayout numLl) {
 
     }
 
