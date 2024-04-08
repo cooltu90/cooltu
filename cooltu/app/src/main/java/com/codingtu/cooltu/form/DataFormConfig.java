@@ -54,7 +54,7 @@ public class DataFormConfig {
 
     @NoEcho
     @FormEditText(R.id.nicknameEt)
-    @CheckField(prompt = "请输入昵称")
+    @CheckField
     public String nickname;
 
     @FormRadioGroup(

@@ -468,21 +468,24 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                             } else if (formEditText != null) {
                                 addLnTag(obtainSb, "        [formData].[name] = [nameEt].getText().toString();",
                                         info.formBeanKv.v, veName, editTextFieldName);
-                                addLnTag(obtainSb, "        if ([StringTool].isBlank([formData].[name])) {",
-                                        FullName.STRING_TOOL, info.formBeanKv.v, veName);
-                                addLnTag(obtainSb, "            throw new java.lang.RuntimeException(\"[xxx]\");", prompt);
-                                addLnTag(obtainSb, "        }");
+                                if (StringTool.isNotBlank(prompt)) {
+                                    addLnTag(obtainSb, "        if ([StringTool].isBlank([formData].[name])) {",
+                                            FullName.STRING_TOOL, info.formBeanKv.v, veName);
+                                    addLnTag(obtainSb, "            throw new java.lang.RuntimeException(\"[xxx]\");", prompt);
+                                    addLnTag(obtainSb, "        }");
+                                }
                             } else if (formTextView != null) {
                                 addLnTag(obtainSb, "        [formData].[name] = [nameEt].getText().toString();",
                                         info.formBeanKv.v, veName, textVeiwFieldName);
-                                addLnTag(obtainSb, "        if ([StringTool].isBlank([formData].[name])) {",
-                                        FullName.STRING_TOOL, info.formBeanKv.v, veName);
-                                addLnTag(obtainSb, "            throw new java.lang.RuntimeException(\"[xxx]\");", prompt);
-                                addLnTag(obtainSb, "        }");
+                                if (StringTool.isNotBlank(prompt)) {
+                                    addLnTag(obtainSb, "        if ([StringTool].isBlank([formData].[name])) {",
+                                            FullName.STRING_TOOL, info.formBeanKv.v, veName);
+                                    addLnTag(obtainSb, "            throw new java.lang.RuntimeException(\"[xxx]\");", prompt);
+                                    addLnTag(obtainSb, "        }");
+                                }
                             }
 
                         }
-
                     }
                 }
                 return false;

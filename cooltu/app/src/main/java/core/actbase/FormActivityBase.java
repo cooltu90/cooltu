@@ -138,9 +138,6 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         }
         formData = dataFormConfig.checkName(formData, nameEt);
         formData.nickname = nicknameEt.getText().toString();
-        if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(formData.nickname)) {
-            throw new java.lang.RuntimeException("请输入昵称");
-        }
         formData = dataFormConfig.checkNum(formData, numLl);
         return formData;
     }
