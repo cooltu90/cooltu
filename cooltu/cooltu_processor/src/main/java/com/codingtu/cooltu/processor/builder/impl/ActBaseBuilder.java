@@ -33,6 +33,7 @@ import com.codingtu.cooltu.processor.annotation.forms.check.Checks;
 import com.codingtu.cooltu.processor.annotation.forms.echo.Echo;
 import com.codingtu.cooltu.processor.annotation.forms.view.FormEditText;
 import com.codingtu.cooltu.processor.annotation.forms.view.FormRadioGroup;
+import com.codingtu.cooltu.processor.annotation.forms.view.FormTextView;
 import com.codingtu.cooltu.processor.annotation.tools.Name;
 import com.codingtu.cooltu.processor.annotation.ui.ViewId;
 import com.codingtu.cooltu.processor.annotation.bind.binder.BindEditText;
@@ -345,6 +346,14 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         radioGroupFieldName = getViewFieldName(radioGroupId);
                     }
 
+                    FormTextView formTextView = ve.getAnnotation(FormTextView.class);
+                    IdTools.Id textVeiwId = null;
+                    String textVeiwFieldName = null;
+                    if (formTextView != null) {
+                        textVeiwId = IdTools.elementToId(ve, FormTextView.class, formTextView.value());
+                        textVeiwFieldName = getViewFieldName(textVeiwId);
+                    }
+
 
                     NoEcho noEcho = ve.getAnnotation(NoEcho.class);
                     if (noEcho == null) {
@@ -366,6 +375,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         } else if (formEditText != null) {
                             addLnTag(echoSb, "        [ViewTool].setEditTextAndSelection([nameEt], [formData].[name]);",
                                     FullName.VIEW_TOOL, editTextFieldName, info.formBeanKv.v, veName);
+                        } else if (formTextView != null) {
+                            addLnTag(echoSb, "        [ViewTool].setText([nameEt], [formData].[name]);",
+                                    FullName.VIEW_TOOL, textVeiwFieldName, info.formBeanKv.v, veName);
                         } else if (formRadioGroup != null) {
                             addLnTag(echoSb, "        [ViewTool].getRadioGroup([numLl]).setSelected([formData].[num]);",
                                     FullName.VIEW_TOOL, radioGroupFieldName, info.formBeanKv.v, veName);
@@ -410,8 +422,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         if (formEditText != null) {
                             addLnTag(initFormSb, "        [nameEt].addTextChangedListener(new [HandlerTextWatcher](this, [formHandler], [nameEt]));",
                                     editTextFieldName, FullName.HANDLER_TEXT_WATCHER, info.formHandlerKv.v, editTextFieldName);
-
                             extracted(ve, editTextId, editTextFieldName, linkArr, info);
+                        } else if (formTextView != null) {
+                            addLnTag(initFormSb, "        [nameEt].addTextChangedListener(new [HandlerTextWatcher](this, [formHandler], [nameEt]));",
+                                    textVeiwFieldName, FullName.HANDLER_TEXT_WATCHER, info.formHandlerKv.v, textVeiwFieldName);
+                            extracted(ve, textVeiwId, textVeiwFieldName, linkArr, info);
                         } else if (formRadioGroup != null) {
                             addLnTag(initFormSb,
                                     "        [ViewTool].getRadioGroup([numLl]).addOnSelectChange(new [HandlerOnSelectChange](this, [formHandler], [numLl].getId()));",
@@ -453,6 +468,13 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                             } else if (formEditText != null) {
                                 addLnTag(obtainSb, "        [formData].[name] = [nameEt].getText().toString();",
                                         info.formBeanKv.v, veName, editTextFieldName);
+                                addLnTag(obtainSb, "        if ([StringTool].isBlank([formData].[name])) {",
+                                        FullName.STRING_TOOL, info.formBeanKv.v, veName);
+                                addLnTag(obtainSb, "            throw new java.lang.RuntimeException(\"[xxx]\");", prompt);
+                                addLnTag(obtainSb, "        }");
+                            } else if (formTextView != null) {
+                                addLnTag(obtainSb, "        [formData].[name] = [nameEt].getText().toString();",
+                                        info.formBeanKv.v, veName, textVeiwFieldName);
                                 addLnTag(obtainSb, "        if ([StringTool].isBlank([formData].[name])) {",
                                         FullName.STRING_TOOL, info.formBeanKv.v, veName);
                                 addLnTag(obtainSb, "            throw new java.lang.RuntimeException(\"[xxx]\");", prompt);
