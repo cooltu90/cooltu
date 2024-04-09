@@ -419,6 +419,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
                         String viewFieldName = getViewFieldName(id);
 
+                        ExecutableElement ee = methods.get(viewsMethodName);
+                        viewsMethodName = ElementTools.simpleName(ee);
+
                         addLnTag(initFormSb, "        [numLl].setTag([com.codingtu.cooltu.lib4a].R.id.tag_0,",
                                 viewFieldName, Pkg.LIB4A);
                         addLnTag(initFormSb, "                [RadioGroup].obtain(this)", FullName.RADIO_GROUP);

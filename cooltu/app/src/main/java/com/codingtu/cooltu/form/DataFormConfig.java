@@ -72,6 +72,7 @@ public class DataFormConfig {
     @CheckField(methodName = "checkNum", ids = R.id.numLl, prompt = "检测")
     public String num;
 
+    @Name("getNumViews")
     public View[] getNumViews(LinearLayout numLl) {
         return null;
     }
