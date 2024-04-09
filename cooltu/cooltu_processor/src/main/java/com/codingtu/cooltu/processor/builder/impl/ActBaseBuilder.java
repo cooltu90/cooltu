@@ -58,6 +58,7 @@ import com.codingtu.cooltu.processor.builder.core.UiBaseInterface;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
 import com.codingtu.cooltu.processor.deal.BindConfigDeal;
 import com.codingtu.cooltu.processor.deal.FormConfigDeal;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
@@ -323,6 +324,26 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addLnTag(obtainSb, "            [formData] = new [FormDatas.FormData]();", info.formBeanKv.v, info.formBeanKv.k);
         addLnTag(obtainSb, "        }");
 
+
+        Map<String, ExecutableElement> methods = new HashMap<>();
+        ElementTools.ls(info.formConfigTe.getEnclosedElements(), new Ts.EachTs<Element>() {
+            @Override
+            public boolean each(int position, Element element) {
+                if (element instanceof ExecutableElement) {
+                    ExecutableElement ee = (ExecutableElement) element;
+                    String methodName = ElementTools.simpleName(ee);
+                    Logs.i("methodName:" + methodName);
+                    Name name = ee.getAnnotation(Name.class);
+                    if (name != null) {
+                        methodName = name.value();
+                    }
+                    methods.put(methodName, ee);
+                }
+                return false;
+            }
+        });
+
+
         ElementTools.ls(info.formConfigTe.getEnclosedElements(), new Ts.EachTs<Element>() {
             @Override
             public boolean each(int position, Element e) {
@@ -368,6 +389,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                                     return getViewFieldName(id);
                                 }
                             });
+                            ExecutableElement ee = methods.get(echoName);
+                            echoName = ElementTools.simpleName(ee);
 
                             addLnTag(echoSb, "        [dataFormConfig].[echoName]([formData], [formData].[name], [params]);",
                                     info.formConfigKv.v, echoName, info.formBeanKv.v, info.formBeanKv.v, veName, param);
@@ -422,16 +445,16 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                         if (formEditText != null) {
                             addLnTag(initFormSb, "        [nameEt].addTextChangedListener(new [HandlerTextWatcher](this, [formHandler], [nameEt]));",
                                     editTextFieldName, FullName.HANDLER_TEXT_WATCHER, info.formHandlerKv.v, editTextFieldName);
-                            extracted(ve, editTextId, editTextFieldName, linkArr, info);
+                            extracted(methods, ve, editTextId, editTextFieldName, linkArr, info);
                         } else if (formTextView != null) {
                             addLnTag(initFormSb, "        [nameEt].addTextChangedListener(new [HandlerTextWatcher](this, [formHandler], [nameEt]));",
                                     textVeiwFieldName, FullName.HANDLER_TEXT_WATCHER, info.formHandlerKv.v, textVeiwFieldName);
-                            extracted(ve, textVeiwId, textVeiwFieldName, linkArr, info);
+                            extracted(methods, ve, textVeiwId, textVeiwFieldName, linkArr, info);
                         } else if (formRadioGroup != null) {
                             addLnTag(initFormSb,
                                     "        [ViewTool].getRadioGroup([numLl]).addOnSelectChange(new [HandlerOnSelectChange](this, [formHandler], [numLl].getId()));",
                                     FullName.VIEW_TOOL, radioGroupFieldName, FullName.HANDLER_ON_SELECT_CHANGE, info.formHandlerKv.v, radioGroupFieldName);
-                            extracted(ve, radioGroupId, radioGroupFieldName, linkArr, info);
+                            extracted(methods, ve, radioGroupId, radioGroupFieldName, linkArr, info);
 
                         }
                     }
@@ -469,6 +492,9 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                                     p1 = ", \"" + prompt + "\"";
                                 }
 
+                                ExecutableElement ee = methods.get(methodName);
+                                methodName = ElementTools.simpleName(ee);
+
                                 addLnTag(obtainSb, "        [formData].[num] = [dataFormConfig].[checkName]([formData], [nameEt][prompt]);",
                                         info.formBeanKv.v, veName, info.formConfigKv.v, methodName, info.formBeanKv.v, param, p1);
                             } else if (formEditText != null) {
@@ -503,7 +529,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         addLnTag(echoSb, "    }");
     }
 
-    private void extracted(VariableElement ve, IdTools.Id editTextId, String editTextFieldName, Link[] linkArr, DealFormInfo info) {
+    private void extracted(Map<String, ExecutableElement> methods, VariableElement ve, IdTools.Id editTextId, String editTextFieldName, Link[] linkArr, DealFormInfo info) {
         addLnTag(handlerSb, "            case [R.id.nameEt]:", editTextId.toString());
 
         for (int i = 0; i < linkArr.length; i++) {
@@ -533,13 +559,16 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                 }
             });
 
+            ExecutableElement ee = methods.get(methodName);
+            String methodName1 = ElementTools.simpleName(ee);
+
 
             addLnTag(initFormSb, "        [formHandler].link([nameEt].getId(), \"[xxx]\", [nameEt, nicknameEt]);",
                     info.formHandlerKv.v, editTextFieldName, methodName, param);
 
             addLnTag(handlerSb, "                objs = links.get(\"[handleAverage]\");", methodName);
             addLnTag(handlerSb, "                [dataFormConfig].[handleName](msg, [param]);",
-                    info.formConfigKv.v, methodName, param1);
+                    info.formConfigKv.v, methodName1, param1);
 
         }
 

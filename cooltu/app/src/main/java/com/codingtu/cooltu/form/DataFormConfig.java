@@ -17,14 +17,17 @@ import com.codingtu.cooltu.processor.annotation.forms.echo.Echo;
 import com.codingtu.cooltu.processor.annotation.forms.echo.NoEcho;
 import com.codingtu.cooltu.processor.annotation.forms.view.FormEditText;
 import com.codingtu.cooltu.processor.annotation.forms.view.FormRadioGroup;
+import com.codingtu.cooltu.processor.annotation.tools.Name;
+
+import retrofit2.http.QueryName;
 
 @FormConfig(FormDatas.FormData.class)
 public class DataFormConfig {
 
-    @Echo(methodName = "echoName", ids = {R.id.nameEt, R.id.nicknameEt})
+    @Echo(methodName = "echoNamexxx", ids = {R.id.nameEt, R.id.nicknameEt})
     @FormEditText(R.id.nameEt)
     @Links({
-            @Link(methodName = "handleName", ids = {R.id.nameEt, R.id.nicknameEt}),
+            @Link(methodName = "handleNamexxx", ids = {R.id.nameEt, R.id.nicknameEt}),
             @Link(methodName = "handleName1", ids = {R.id.nameEt, R.id.nicknameEt})
     })
     @Checks(
@@ -32,10 +35,12 @@ public class DataFormConfig {
     )
     public String name;
 
+    @Name("echoNamexxx")
     public void echoName(FormDatas.FormData formData, String name, EditText nameEt, EditText nicknameEt) {
 
     }
 
+    @Name("checkName")
     public String checkName(FormDatas.FormData formData, EditText nameEt) {
         formData.name = nameEt.getText().toString();
         if (StringTool.isBlank(formData.name)) {
@@ -44,6 +49,7 @@ public class DataFormConfig {
         return name;
     }
 
+    @Name("handleNamexxx")
     public void handleName(Message msg, EditText nameEt, EditText nicknameEt) {
 
     }

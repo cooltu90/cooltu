@@ -105,7 +105,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         formHandler = new com.codingtu.cooltu.lib4a.form.FormHandler(this, this);
         dataFormConfig = new com.codingtu.cooltu.form.DataFormConfig();
         nameEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, formHandler, nameEt));
-        formHandler.link(nameEt.getId(), "handleName", nameEt, nicknameEt);
+        formHandler.link(nameEt.getId(), "handleNamexxx", nameEt, nicknameEt);
         formHandler.link(nameEt.getId(), "handleName1", nameEt, nicknameEt);
         numLl.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0,
                 com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this)
@@ -120,7 +120,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         Object[] objs;
         switch (msg.what) {
             case com.codingtu.cooltu.R.id.nameEt:
-                objs = links.get("handleName");
+                objs = links.get("handleNamexxx");
                 dataFormConfig.handleName(msg, (android.widget.EditText) objs[0], (android.widget.EditText) objs[1]);
                 objs = links.get("handleName1");
                 dataFormConfig.handleName1(msg, (android.widget.EditText) objs[0], (android.widget.EditText) objs[1]);
