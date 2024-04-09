@@ -525,7 +525,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                 @Override
                 public String convert(int index, IdTools.Id id) {
                     LayoutTools.ViewInfo viewInfo = parentViewMap.get(id.rName);
-                    return "(" + viewInfo.tag + ") objs[" + index + "]";
+                    if (viewInfo != null) {
+                        return "(" + viewInfo.tag + ") objs[" + index + "]";
+                    } else {
+                        return null;
+                    }
                 }
             });
 
