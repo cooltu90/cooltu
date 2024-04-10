@@ -84,7 +84,6 @@ public abstract class UiBaseBuilder {
 
     public boolean isToastDialog;
     public boolean isNoticeDialog;
-    public boolean useForm;
     public UseForm form;
     private List<String> inBaseInParent;
     private Map<String, LayoutTools.ViewInfo> childViewMap;
@@ -465,6 +464,12 @@ public abstract class UiBaseBuilder {
             @Override
             public boolean each(int clickViewInfoIndex, ClickViewInfo info) {
                 uiBase.isOnClickCheckLogin(clickViewInfoIndex, info.isCheckLogin);
+
+                if (ClassTool.isNotVoid(info.checkClassName)) {
+                    JavaInfo javaInfo = CurrentPath.javaInfo(info.checkClassName);
+                    uiBase.onClickCheckFormIf(clickViewInfoIndex, javaInfo.name);
+                }
+
                 uiBase.isCheckForm(clickViewInfoIndex, false);
                 uiBase.onClickMethods(clickViewInfoIndex, info.method, info.methodParams.getMethodParams());
                 uiBase.onClickSwith(clickViewInfoIndex, info.method);

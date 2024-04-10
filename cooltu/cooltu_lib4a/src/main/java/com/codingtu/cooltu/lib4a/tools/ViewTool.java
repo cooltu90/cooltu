@@ -341,6 +341,14 @@ public class ViewTool {
         view.setLayoutParams(lp);
     }
 
+    public static View[] getChildren(int skip, ViewGroup vp) {
+        BaseTs<View> ts = Ts.ts(View.class);
+        for (int i = skip; i < vp.getChildCount(); i++) {
+            ts.add(vp.getChildAt(i));
+        }
+        return ts.toArray();
+    }
+
     public static View[] getChildren(ViewGroup... vps) {
         int count = 0;
         for (int i = 0; i < vps.length; i++) {

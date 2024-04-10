@@ -38,13 +38,9 @@ public class FormActivity extends FormActivityBase {
         ViewTool.setEditTextAndSelection(nicknameEt, formData.nickname);
     }
 
-    @ClickView(R.id.saveBt)
+    @ClickView(value = R.id.saveBt, check = FormDatas.FormData.class)
     public void saveBtClick() {
-        try {
-            FormDatas.FormData formData = obtainFormData(null);
-        } catch (Exception e) {
-            toast(e.getMessage());
-        }
+        checkFormData();
     }
 
 }

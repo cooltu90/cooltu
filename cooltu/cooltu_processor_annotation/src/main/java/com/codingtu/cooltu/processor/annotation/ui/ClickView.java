@@ -16,5 +16,7 @@ public @interface ClickView {
 
     boolean checkLogin() default false;
 
+    Class check() default Void.class;
+
 }
 

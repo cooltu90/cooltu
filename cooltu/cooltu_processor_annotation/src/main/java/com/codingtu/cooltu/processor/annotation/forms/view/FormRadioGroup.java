@@ -7,6 +7,4 @@ import java.lang.annotation.RetentionPolicy;
 public @interface FormRadioGroup {
     int id();
     Class onSetItem();
-
-    String viewsMethod() default "";
 }

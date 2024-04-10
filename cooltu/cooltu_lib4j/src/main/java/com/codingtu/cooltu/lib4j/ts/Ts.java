@@ -218,12 +218,22 @@ public class Ts {
         });
     }
 
-    public static <T> BaseTs<T> get(int count, EachGetter<T> getter) {
+    public static <T> BaseTs<T> get(int totalCount, EachGetter<T> getter) {
+        return get(totalCount, 0, getter);
+    }
+
+    public static <T> BaseTs<T> get(int totalCount, int skip, EachGetter<T> getter) {
         BaseTs<T> ts = new BaseTs<>();
-        for (int i = 0; i < count; i++) {
+        for (int i = skip; i < totalCount; i++) {
             ts.add(getter.get(i));
         }
         return ts;
     }
+
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
 
 }

@@ -9,10 +9,7 @@ import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Maps;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.bind.Bind;
-import com.codingtu.cooltu.processor.annotation.form.HandleMethod;
-import com.codingtu.cooltu.processor.annotation.forms.UseForm;
 import com.codingtu.cooltu.processor.annotation.net.NetBack;
-import com.codingtu.cooltu.processor.annotation.tools.Name;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
@@ -31,8 +28,6 @@ import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
-
-import java.util.Map;
 
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
@@ -100,34 +95,12 @@ public class ActBaseDeal extends TypeBaseDeal {
                 if (permission != null) {
                     dealPermissionBack(baseBuilder, permission, ee);
                 }
-
-                HandleMethod handleMethod = ee.getAnnotation(HandleMethod.class);
-                if (handleMethod != null) {
-                    Name name = ee.getAnnotation(Name.class);
-                    if (name != null) {
-                        dealHandleMethod(baseBuilder, handleMethod, ee);
-                    }
-                }
-
             }
 
             return false;
         });
 
         baseBuilder.bind = te.getAnnotation(Bind.class);
-    }
-
-    private void dealHandleMethod(ActBaseBuilder baseBuilder, HandleMethod handleMethod, ExecutableElement ee) {
-        Map<Integer, IdTools.Id> ids = IdTools.elementToIds(ee, HandleMethod.class, handleMethod.value());
-        Ts.ints(handleMethod.value()).ls(new Ts.EachTs<Integer>() {
-            @Override
-            public boolean each(int position, Integer integer) {
-                baseBuilder.handleMethodMap.get(integer).add(ee);
-                baseBuilder.handleMethodIds.put(integer, ids.get(integer));
-                return false;
-            }
-        });
-        baseBuilder.handleMethods.add(ee);
     }
 
     private void dealLongClickView(UiBaseBuilder uiBaseBuilder, LongClickView clickView, ExecutableElement ee) {
@@ -174,6 +147,14 @@ public class ActBaseDeal extends TypeBaseDeal {
                 return false;
             }
         });
+
+        clickViewInfo.checkClassName = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+            @Override
+            public Object get() {
+                return clickView.check();
+            }
+        });
+
         uiBaseBuilder.clickViews.add(clickViewInfo);
 
     }

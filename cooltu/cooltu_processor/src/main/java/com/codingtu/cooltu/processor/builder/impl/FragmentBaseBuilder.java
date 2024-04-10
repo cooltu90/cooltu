@@ -97,6 +97,11 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
         otherLinesSb.append(others);
     }
 
+    @Override
+    public void onClickCheckFormIf(int clickViewInfoIndex, String s) {
+
+    }
+
 }
 /* model_temp_start
 package [[pkg]];

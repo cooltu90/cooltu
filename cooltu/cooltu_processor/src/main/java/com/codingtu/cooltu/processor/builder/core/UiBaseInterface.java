@@ -150,4 +150,6 @@ public interface UiBaseInterface {
     void addOthers(String others);
 
     int findViewCount();
+
+    void onClickCheckFormIf(int clickViewInfoIndex, String s);
 }

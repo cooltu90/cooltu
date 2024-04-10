@@ -14,6 +14,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
     protected android.widget.EditText nameEt;
     protected com.codingtu.cooltu.form.DataFormConfig dataFormConfig;
     protected com.codingtu.cooltu.lib4a.form.FormHandler formHandler;
+    protected com.codingtu.cooltu.bean.FormDatas.FormData formData;
 
 
     @Override
@@ -52,6 +53,9 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
 
         switch (v.getId()) {
             case com.codingtu.cooltu.R.id.saveBt:
+                if (!checkFormData()) {
+                    return;
+                }
                 saveBtClick(
                 );
                 break;
@@ -104,12 +108,15 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
     protected void initFormView() {
         formHandler = new com.codingtu.cooltu.lib4a.form.FormHandler(this, this);
         dataFormConfig = new com.codingtu.cooltu.form.DataFormConfig();
+        if (formData == null)
+            formData = new com.codingtu.cooltu.bean.FormDatas.FormData();
         nameEt.addTextChangedListener(new com.codingtu.cooltu.lib4a.view.textview.HandlerTextWatcher(this, formHandler, nameEt));
         formHandler.link(nameEt.getId(), "handleNamexxx", nameEt, nicknameEt);
         formHandler.link(nameEt.getId(), "handleName1", nameEt, nicknameEt);
         numLl.setTag(com.codingtu.cooltu.lib4a.R.id.tag_0,
                 com.codingtu.cooltu.lib4a.view.combine.RadioGroup.obtain(this)
                         .setBts(dataFormConfig.getNumViews(numLl))
+                        .initItems()
                         .setOnSetItem(new com.codingtu.cooltu.form.TypeOnSetItem()));
         com.codingtu.cooltu.lib4a.tools.ViewTool.getRadioGroup(numLl).addOnSelectChange(new com.codingtu.cooltu.lib4a.view.combine.HandlerOnSelectChange(this, formHandler, numLl.getId()));
         formHandler.link(numLl.getId(), "handleNum", numLl);
@@ -132,19 +139,29 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
 
         }
     }
-    protected com.codingtu.cooltu.bean.FormDatas.FormData obtainFormData(com.codingtu.cooltu.bean.FormDatas.FormData formData) {
-        if (formData == null) {
-            formData = new com.codingtu.cooltu.bean.FormDatas.FormData();
+    protected boolean checkFormData() {
+        try {
+            formData.name = dataFormConfig.checkName(formData, nameEt);
+            formData.nickname = nicknameEt.getText().toString();
+            if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(formData.nickname)) {
+                throw new java.lang.RuntimeException("请输入昵称");
+            }
+            com.codingtu.cooltu.lib4a.view.combine.RadioGroup numLlRg = com.codingtu.cooltu.lib4a.tools.ViewTool.getRadioGroup(numLl);
+            formData.num = numLlRg.getCurrentItem();
+            if (com.codingtu.cooltu.lib4j.tools.StringTool.isBlank(formData.num)) {
+                throw new java.lang.RuntimeException("检测");
+            }
+            return true;
+        } catch (java.lang.Exception e) {
+            toast(e.getMessage());
+            return false;
         }
-        formData.name = dataFormConfig.checkName(formData, nameEt);
-        formData.nickname = nicknameEt.getText().toString();
-        formData.num = dataFormConfig.checkNum(formData, numLl, "检测");
-        return formData;
     }
 
-    protected void echo(com.codingtu.cooltu.bean.FormDatas.FormData formData) {
+    protected void echo() {
         dataFormConfig.echoName(formData, formData.name, nameEt, nicknameEt);
-        dataFormConfig.echoNum(formData, formData.num, numLl);
+        com.codingtu.cooltu.lib4a.view.combine.RadioGroup numLlRg = com.codingtu.cooltu.lib4a.tools.ViewTool.getRadioGroup(numLl);
+        numLlRg.setSelected(numLlRg.getIndex(formData.num));
     }
 
 

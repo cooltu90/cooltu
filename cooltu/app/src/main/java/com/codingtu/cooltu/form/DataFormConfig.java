@@ -7,7 +7,12 @@ import android.widget.LinearLayout;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.FormDatas;
+import com.codingtu.cooltu.lib4a.log.Logs;
+import com.codingtu.cooltu.lib4a.tools.ViewTool;
+import com.codingtu.cooltu.lib4a.view.combine.RadioGroup;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
+import com.codingtu.cooltu.lib4j.ts.BaseTs;
+import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.forms.FormConfig;
 import com.codingtu.cooltu.processor.annotation.forms.link.Link;
 import com.codingtu.cooltu.processor.annotation.forms.link.Links;
@@ -15,6 +20,8 @@ import com.codingtu.cooltu.processor.annotation.forms.check.CheckField;
 import com.codingtu.cooltu.processor.annotation.forms.check.Checks;
 import com.codingtu.cooltu.processor.annotation.forms.echo.Echo;
 import com.codingtu.cooltu.processor.annotation.forms.echo.NoEcho;
+import com.codingtu.cooltu.processor.annotation.forms.radiogroup.FormRadioGroupGetViews;
+import com.codingtu.cooltu.processor.annotation.forms.radiogroup.FormRadioGroupItems;
 import com.codingtu.cooltu.processor.annotation.forms.view.FormEditText;
 import com.codingtu.cooltu.processor.annotation.forms.view.FormRadioGroup;
 import com.codingtu.cooltu.processor.annotation.tools.Name;
@@ -42,8 +49,8 @@ public class DataFormConfig {
 
     @Name("checkName")
     public String checkName(FormDatas.FormData formData, EditText nameEt) {
-        formData.name = nameEt.getText().toString();
-        if (StringTool.isBlank(formData.name)) {
+        String name = nameEt.getText().toString();
+        if (StringTool.isBlank(name)) {
             throw new RuntimeException("xxxx");
         }
         return name;
@@ -60,25 +67,19 @@ public class DataFormConfig {
 
     @NoEcho
     @FormEditText(R.id.nicknameEt)
-    @CheckField
+    @CheckField(prompt = "请输入昵称")
     public String nickname;
 
-    @FormRadioGroup(
-            id = R.id.numLl,
-            viewsMethod = "getNumViews",
-            onSetItem = TypeOnSetItem.class)
+    @FormRadioGroup(id = R.id.numLl, onSetItem = TypeOnSetItem.class)
+    @FormRadioGroupItems
+    @FormRadioGroupGetViews("getNumViews")
     @Link(methodName = "handleNum", ids = R.id.numLl)
-    @Echo(methodName = "echoNum", ids = {R.id.numLl})
-    @CheckField(methodName = "checkNum", ids = R.id.numLl, prompt = "检测")
+    @CheckField(prompt = "检测")
     public String num;
 
     @Name("getNumViews")
     public View[] getNumViews(LinearLayout numLl) {
-        return null;
-    }
-
-    public void echoNum(FormDatas.FormData formData, String num, LinearLayout numLl) {
-
+        return ViewTool.getChildren(numLl);
     }
 
     public void handleNum(Message msg, LinearLayout numLl) {
@@ -86,7 +87,13 @@ public class DataFormConfig {
     }
 
     public String checkNum(FormDatas.FormData formData, LinearLayout numLl, String prompt) {
-        return null;
+        RadioGroup rg = ViewTool.getRadioGroup(numLl);
+        String currentItem = rg.getCurrentItem();
+        Logs.i("currentItem:" + currentItem);
+        if (StringTool.isBlank(currentItem)) {
+            throw new RuntimeException(prompt);
+        }
+        return currentItem;
     }
 
 }

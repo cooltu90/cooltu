@@ -31,6 +31,8 @@ import com.codingtu.cooltu.processor.annotation.forms.link.Links;
 import com.codingtu.cooltu.processor.annotation.forms.check.CheckField;
 import com.codingtu.cooltu.processor.annotation.forms.check.Checks;
 import com.codingtu.cooltu.processor.annotation.forms.echo.Echo;
+import com.codingtu.cooltu.processor.annotation.forms.radiogroup.FormRadioGroupGetViews;
+import com.codingtu.cooltu.processor.annotation.forms.radiogroup.FormRadioGroupItems;
 import com.codingtu.cooltu.processor.annotation.forms.view.FormEditText;
 import com.codingtu.cooltu.processor.annotation.forms.view.FormRadioGroup;
 import com.codingtu.cooltu.processor.annotation.forms.view.FormTextView;
@@ -200,10 +202,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
         isOnCreateCompleteInit(!uiBaseBuilder.hasChild());
 
-        if (uiBaseBuilder.useForm) {
-            useForm();
-        }
-
         if (uiBaseBuilder.form != null) {
             parentViewMap = uiBaseBuilder.getParentViewMap();
             useFormInitIf("        initFormView();");
@@ -244,7 +242,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             addLnTag(otherLineSb, echoSb.toString());
 
         }
-
 
         if (bind != null) {
 
@@ -316,13 +313,15 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
         });
 
         info.formBeanKv = BeanTools.getBeanKv(info.dataClassFullName, null);
-        addLnTag(echoSb, "    protected void echo([FormDatas.FormData] [formData]) {", info.formBeanKv.k, info.formBeanKv.v);
+        addField(Constant.SIGN_PROTECTED, info.formBeanKv.k, info.formBeanKv.v);
 
-        addLnTag(obtainSb, "    protected [FormDatas.FormData] obtain[FormData]([FormDatas.FormData] [formData]) {",
-                info.formBeanKv.k, ConvertTool.toClassType(info.formBeanKv.v), info.formBeanKv.k, info.formBeanKv.v);
-        addLnTag(obtainSb, "        if ([formData] == null) {", info.formBeanKv.v);
-        addLnTag(obtainSb, "            [formData] = new [FormDatas.FormData]();", info.formBeanKv.v, info.formBeanKv.k);
-        addLnTag(obtainSb, "        }");
+        addLnTag(initFormSb, "        if ([formData] == null)", info.formBeanKv.v);
+        addLnTag(initFormSb, "            [formData] = new [FormData]();", info.formBeanKv.v, info.formBeanKv.k);
+
+        addLnTag(echoSb, "    protected void echo() {");
+
+        addLnTag(obtainSb, "    protected boolean check[FormData]() {", ConvertTool.toClassType(info.formBeanKv.v));
+        addLnTag(obtainSb, "        try {");
 
 
         Map<String, ExecutableElement> methods = new HashMap<>();
@@ -349,8 +348,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             public boolean each(int position, Element e) {
                 if (e instanceof VariableElement) {
                     VariableElement ve = (VariableElement) e;
-
-                    String veName = ElementTools.simpleName(ve);
+                    KV<String, String> veKv = ElementTools.getFieldKv(ve);
+                    String veName = veKv.v;
 
                     FormEditText formEditText = ve.getAnnotation(FormEditText.class);
                     IdTools.Id editTextId = null;
@@ -380,7 +379,6 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     if (noEcho == null) {
                         Echo echo = ve.getAnnotation(Echo.class);
                         if (echo != null) {
-                            String echoName = echo.methodName();
                             Map<Integer, IdTools.Id> idMap = IdTools.elementToIds(ve, Echo.class, echo.ids());
 
                             String param = Params.getParam(Ts.maps(idMap).toValueTs(), new Ts.Convert<IdTools.Id, String>() {
@@ -389,11 +387,8 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                                     return getViewFieldName(id);
                                 }
                             });
-                            ExecutableElement ee = methods.get(echoName);
-                            echoName = ElementTools.simpleName(ee);
-
                             addLnTag(echoSb, "        [dataFormConfig].[echoName]([formData], [formData].[name], [params]);",
-                                    info.formConfigKv.v, echoName, info.formBeanKv.v, info.formBeanKv.v, veName, param);
+                                    info.formConfigKv.v, getMethodName(methods, echo.methodName()), info.formBeanKv.v, info.formBeanKv.v, veName, param);
 
                         } else if (formEditText != null) {
                             addLnTag(echoSb, "        [ViewTool].setEditTextAndSelection([nameEt], [formData].[name]);",
@@ -402,37 +397,50 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                             addLnTag(echoSb, "        [ViewTool].setText([nameEt], [formData].[name]);",
                                     FullName.VIEW_TOOL, textVeiwFieldName, info.formBeanKv.v, veName);
                         } else if (formRadioGroup != null) {
-                            addLnTag(echoSb, "        [ViewTool].getRadioGroup([numLl]).setSelected([formData].[num]);",
-                                    FullName.VIEW_TOOL, radioGroupFieldName, info.formBeanKv.v, veName);
+                            if (isInt(veKv.k)) {
+                                addLnTag(echoSb, "        [ViewTool].getRadioGroup([numLl]).setSelected([formData].[num]);",
+                                        FullName.VIEW_TOOL, radioGroupFieldName, info.formBeanKv.v, veName);
+                            } else if (ClassTool.isString(veKv.k)) {
+                                addLnTag(echoSb, "        [RadioGroup] [numLl]Rg = [ViewTool].getRadioGroup([numLl]);",
+                                        FullName.RADIO_GROUP, radioGroupFieldName, FullName.VIEW_TOOL, radioGroupFieldName);
+                                addLnTag(echoSb, "        [numLl]Rg.setSelected([numLl]Rg.getIndex([formData].[num]));",
+                                        radioGroupFieldName, radioGroupFieldName, info.formBeanKv.v, veName);
+                            }
                         }
                     }
 
                     if (formRadioGroup != null) {
                         IdTools.Id id = IdTools.elementToId(ve, FormRadioGroup.class, formRadioGroup.id());
-                        String viewsMethodName = formRadioGroup.viewsMethod();
-                        String onSetItemClassName = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
-                            @Override
-                            public Object get() {
-                                return formRadioGroup.onSetItem();
-                            }
-                        });
 
                         String viewFieldName = getViewFieldName(id);
-
                         addLnTag(initFormSb, "        [numLl].setTag([com.codingtu.cooltu.lib4a].R.id.tag_0,",
                                 viewFieldName, Pkg.LIB4A);
                         addLnTag(initFormSb, "                [RadioGroup].obtain(this)", FullName.RADIO_GROUP);
-                        if (StringTool.isBlank(viewsMethodName)) {
+
+                        FormRadioGroupGetViews getViews = ve.getAnnotation(FormRadioGroupGetViews.class);
+                        if (getViews == null) {
                             addLnTag(initFormSb, "                        .setBts([numLl])", viewFieldName);
                         } else {
-
-                            ExecutableElement ee = methods.get(viewsMethodName);
-                            viewsMethodName = ElementTools.simpleName(ee);
-
                             addLnTag(initFormSb, "                        .setBts([dataFormConfig].[getNumViews]([numLl]))",
-                                    info.formConfigKv.v, viewsMethodName, viewFieldName);
+                                    info.formConfigKv.v, getMethodName(methods, getViews.value()), viewFieldName);
                         }
-                        addLnTag(initFormSb, "                        .setOnSetItem(new [TypeOnSetItem]()));", onSetItemClassName);
+
+                        FormRadioGroupItems items = ve.getAnnotation(FormRadioGroupItems.class);
+                        if (items != null) {
+                            String param = Params.getParam(items.value(), new Ts.Convert<String, String>() {
+                                @Override
+                                public String convert(int index, String s) {
+                                    return "\"" + s + "\"";
+                                }
+                            });
+                            if (StringTool.isBlank(param)) {
+                                addLnTag(initFormSb, "                        .initItems()");
+                            } else {
+                                addLnTag(initFormSb, "                        .setItems([params])", param);
+                            }
+                        }
+
+                        addLnTag(initFormSb, "                        .setOnSetItem(new [TypeOnSetItem]()));", ClassTool.getAnnotationClass(() -> formRadioGroup.onSetItem()));
                     }
 
                     Link[] linkArr = null;
@@ -495,29 +503,44 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                                 if (StringTool.isNotBlank(prompt)) {
                                     p1 = ", \"" + prompt + "\"";
                                 }
-
-                                ExecutableElement ee = methods.get(methodName);
-                                methodName = ElementTools.simpleName(ee);
-
-                                addLnTag(obtainSb, "        [formData].[num] = [dataFormConfig].[checkName]([formData], [nameEt][prompt]);",
-                                        info.formBeanKv.v, veName, info.formConfigKv.v, methodName, info.formBeanKv.v, param, p1);
+                                addLnTag(obtainSb, "            [formData].[num] = [dataFormConfig].[checkName]([formData], [nameEt][prompt]);",
+                                        info.formBeanKv.v, veName, info.formConfigKv.v, getMethodName(methods, methodName), info.formBeanKv.v, param, p1);
                             } else if (formEditText != null) {
-                                addLnTag(obtainSb, "        [formData].[name] = [nameEt].getText().toString();",
+                                addLnTag(obtainSb, "            [formData].[name] = [nameEt].getText().toString();",
                                         info.formBeanKv.v, veName, editTextFieldName);
                                 if (StringTool.isNotBlank(prompt)) {
-                                    addLnTag(obtainSb, "        if ([StringTool].isBlank([formData].[name])) {",
+                                    addLnTag(obtainSb, "            if ([StringTool].isBlank([formData].[name])) {",
                                             FullName.STRING_TOOL, info.formBeanKv.v, veName);
-                                    addLnTag(obtainSb, "            throw new java.lang.RuntimeException(\"[xxx]\");", prompt);
-                                    addLnTag(obtainSb, "        }");
+                                    addLnTag(obtainSb, "                throw new java.lang.RuntimeException(\"[xxx]\");", prompt);
+                                    addLnTag(obtainSb, "            }");
                                 }
                             } else if (formTextView != null) {
-                                addLnTag(obtainSb, "        [formData].[name] = [nameEt].getText().toString();",
+                                addLnTag(obtainSb, "            [formData].[name] = [nameEt].getText().toString();",
                                         info.formBeanKv.v, veName, textVeiwFieldName);
                                 if (StringTool.isNotBlank(prompt)) {
-                                    addLnTag(obtainSb, "        if ([StringTool].isBlank([formData].[name])) {",
+                                    addLnTag(obtainSb, "            if ([StringTool].isBlank([formData].[name])) {",
                                             FullName.STRING_TOOL, info.formBeanKv.v, veName);
-                                    addLnTag(obtainSb, "            throw new java.lang.RuntimeException(\"[xxx]\");", prompt);
-                                    addLnTag(obtainSb, "        }");
+                                    addLnTag(obtainSb, "                throw new java.lang.RuntimeException(\"[xxx]\");", prompt);
+                                    addLnTag(obtainSb, "            }");
+                                }
+                            } else if (formRadioGroup != null) {
+                                addLnTag(obtainSb, "            [RadioGroup] [numLl]Rg = [ViewTool].getRadioGroup([numLl]);",
+                                        FullName.RADIO_GROUP, radioGroupFieldName, FullName.VIEW_TOOL, radioGroupFieldName);
+                                if (isInt(veKv.k)) {
+                                    addLnTag(obtainSb, "            [formData].[num] = [numLl]Rg.getSelected();", info.formBeanKv.v, veName, radioGroupFieldName);
+                                    if (StringTool.isNotBlank(prompt)) {
+                                        addLnTag(obtainSb, "            if ([formData].[num] < 0) {", info.formBeanKv.v, veName);
+                                        addLnTag(obtainSb, "                throw new java.lang.RuntimeException(\"[xxx]\");", prompt);
+                                        addLnTag(obtainSb, "            }");
+                                    }
+                                } else if (ClassTool.isString(veKv.k)) {
+                                    addLnTag(obtainSb, "            [formData].[num] = [numLl]Rg.getCurrentItem();", info.formBeanKv.v, veName, radioGroupFieldName);
+                                    if (StringTool.isNotBlank(prompt)) {
+                                        addLnTag(obtainSb, "            if ([StringTool].isBlank([formData].[num])) {",
+                                                FullName.STRING_TOOL, info.formBeanKv.v, veName);
+                                        addLnTag(obtainSb, "                throw new java.lang.RuntimeException(\"[xxx]\");", prompt);
+                                        addLnTag(obtainSb, "            }");
+                                    }
                                 }
                             }
 
@@ -528,9 +551,21 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             }
         });
 
-        addLnTag(obtainSb, "        return [null];", info.formBeanKv.v);
+        addLnTag(obtainSb, "            return true;");
+        addLnTag(obtainSb, "        } catch (java.lang.Exception e) {");
+        addLnTag(obtainSb, "            toast(e.getMessage());");
+        addLnTag(obtainSb, "            return false;");
+        addLnTag(obtainSb, "        }");
         addLnTag(obtainSb, "    }");
         addLnTag(echoSb, "    }");
+    }
+
+    private boolean isInt(String type) {
+        return ClassTool.isInt(type) || ClassTool.isInteger(type);
+    }
+
+    private String getMethodName(Map<String, ExecutableElement> methods, String viewsMethodName) {
+        return ElementTools.simpleName(methods.get(viewsMethodName));
     }
 
     private void extracted(Map<String, ExecutableElement> methods, VariableElement ve, IdTools.Id editTextId, String editTextFieldName, Link[] linkArr, DealFormInfo info) {
@@ -562,109 +597,13 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     }
                 }
             });
-
-            ExecutableElement ee = methods.get(methodName);
-            String methodName1 = ElementTools.simpleName(ee);
-
-
             addLnTag(initFormSb, "        [formHandler].link([nameEt].getId(), \"[xxx]\", [nameEt, nicknameEt]);",
                     info.formHandlerKv.v, editTextFieldName, methodName, param);
-
             addLnTag(handlerSb, "                objs = links.get(\"[handleAverage]\");", methodName);
             addLnTag(handlerSb, "                [dataFormConfig].[handleName](msg, [param]);",
-                    info.formConfigKv.v, methodName1, param1);
-
+                    info.formConfigKv.v, getMethodName(methods, methodName), param1);
         }
-
-
         addLnTag(handlerSb, "                break;");
-    }
-
-    private void useForm() {
-
-        addTag(formHandlerCallBack, ",[formHandlerCallBack]", FullName.FORM_HANDLE_CALL_BACK);
-
-        StringBuilder onCreateCompleteOtherSb = new StringBuilder();
-        addLnTag(onCreateCompleteOtherSb, "        formHandler = new [FormHandler](this, this);", FullName.FORM_HANDLER);
-        onCreateCompleteOtherIf(onCreateCompleteOtherSb.toString());
-
-        addField(Constant.SIGN_PROTECTED, FullName.FORM_HANDLER, "formHandler");
-
-
-        addLnTag(otherLineSb, "    /**************************************************");
-        addLnTag(otherLineSb, "     *");
-        addLnTag(otherLineSb, "     * form");
-        addLnTag(otherLineSb, "     *");
-        addLnTag(otherLineSb, "     **************************************************/");
-
-        addLnTag(otherLineSb, "    protected void linkTextView(String methodName, [TextView] tv, Object... views) {", FullName.TEXT_VIEW);
-        addLnTag(otherLineSb, "        [FormTool].linkTextView(this, formHandler, methodName, tv, views);", FullName.FORM_TOOL);
-        addLnTag(otherLineSb, "    }");
-
-        addLnTag(otherLineSb, "    protected [RadioGroup] obtainRadioGroup([ViewGroup] viewGroup) {", FullName.RADIO_GROUP, FullName.VIEW_GROUP);
-        addLnTag(otherLineSb, "        return [FormTool].obtainRadioGroup(this, viewGroup);", FullName.FORM_TOOL);
-        addLnTag(otherLineSb, "    }");
-
-        addLnTag(otherLineSb, "    @Override");
-        addLnTag(otherLineSb, "    public void handleMessage(android.os.Message msg, java.util.Map<String, Object[]> links) {");
-        addLnTag(otherLineSb, "        Object[] objs;");
-        addLnTag(otherLineSb, "        switch (msg.what) {");
-
-
-        Ts.maps(handleMethodMap).ls(new Ts.MapEach<Integer, List<ExecutableElement>>() {
-            @Override
-            public boolean each(Integer integer, List<ExecutableElement> ees) {
-                IdTools.Id id = handleMethodIds.get(integer);
-
-                addLnTag(otherLineSb, "            case [id]:", id.toString());
-
-                Ts.ls(ees, new Ts.EachTs<ExecutableElement>() {
-                    @Override
-                    public boolean each(int position, ExecutableElement ee) {
-                        Name name = ee.getAnnotation(Name.class);
-                        String methodId = name.value();
-                        String methodName = ElementTools.simpleName(ee);
-                        Params params = ElementTools.getMethodParamKvs(ee);
-
-                        String param = params.getParam(new Params.Convert() {
-                            @Override
-                            public String convert(int index, KV<String, String> kv) {
-                                if (index == 0) {
-                                    return "msg";
-                                }
-                                return "(" + kv.k + ") objs[" + (index - 1) + "]";
-                            }
-                        });
-
-                        addLnTag(otherLineSb, "                objs = links.get(\"[handleName]\");", methodId, methodId);
-                        addLnTag(otherLineSb, "                [handleName]([param]);", methodName, param);
-
-
-                        return false;
-                    }
-                });
-
-                addLnTag(otherLineSb, "                break;");
-
-                return false;
-            }
-        });
-
-
-        addLnTag(otherLineSb, "        }");
-        addLnTag(otherLineSb, "    }");
-
-        Ts.ls(handleMethods, new Ts.EachTs<ExecutableElement>() {
-            @Override
-            public boolean each(int position, ExecutableElement ee) {
-                String methodName = ElementTools.simpleName(ee);
-                Params params = ElementTools.getMethodParamKvs(ee);
-                addLnTag(otherLineSb, "    protected void [handleAge]([params]) {", methodName, params.getMethodParams());
-                addLnTag(otherLineSb, "    }");
-                return false;
-            }
-        });
-
     }
 
     private void dealBind(String bindConfigClassName) {

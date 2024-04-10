@@ -2,7 +2,6 @@ package com.codingtu.cooltu.processor.deal.base;
 
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.processor.annotation.form.Form;
 import com.codingtu.cooltu.processor.annotation.forms.UseForm;
 import com.codingtu.cooltu.processor.annotation.res.ColorRes;
 import com.codingtu.cooltu.processor.annotation.res.ColorStr;
@@ -21,12 +20,10 @@ import com.codingtu.cooltu.processor.annotation.ui.fix.FixInt;
 import com.codingtu.cooltu.processor.annotation.ui.fix.FixString;
 import com.codingtu.cooltu.processor.annotation.ui.fix.FixValue;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 
-import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 
@@ -50,9 +47,6 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
 
         uiBaseBuilder.isToastDialog = te.getAnnotation(ToastDialogUse.class) != null;
         uiBaseBuilder.isNoticeDialog = te.getAnnotation(NoticeDialogUse.class) != null;
-
-        Form form = te.getAnnotation(Form.class);
-        uiBaseBuilder.useForm = form != null;
 
         UseForm useForm = te.getAnnotation(UseForm.class);
         uiBaseBuilder.form = useForm;
