@@ -37,13 +37,18 @@ public class WelcomeActivity extends WelcomeActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActStart.formActivity(getAct());
+        //ActStart.formActivity(getAct());
     }
 
 
     @ClickView(R.id.showBt)
     public void showBtClick() {
-        showMenuDialog();
+        showEditDialog("xx");
+    }
+
+    @Override
+    protected boolean editDialogYes(String text) {
+        return true;
     }
 
     @ClickView(value = R.id.reportTv, inAct = false)

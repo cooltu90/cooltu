@@ -281,11 +281,14 @@ public class Layer extends RelativeLayout implements OnDestroy {
     }
 
     public final void hidden(OnHiddenFinishedCallBack onHiddenFinishedCallBack) {
-        this.onHiddenFinishedCallBack = onHiddenFinishedCallBack;
         if (stopAnimation) {
             ViewTool.gone(this);
             isAnimation = false;
+            if (onHiddenFinishedCallBack != null) {
+                onHiddenFinishedCallBack.onHiddenFinished();
+            }
         } else {
+            this.onHiddenFinishedCallBack = onHiddenFinishedCallBack;
             shadowView.startAnimation(hiddenShadowAnim);
             dealHidden();
         }

@@ -226,6 +226,7 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
     }
 
     private void clickNoBt(View v) {
+        //ViewTool.inputHidden(et);
         layer.hidden(getOnHiddenFinishedCallBack());
     }
 
@@ -235,6 +236,7 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
         }
         String text = et.getText().toString();
         if (yes.yes(text, obj)) {
+            //ViewTool.inputHidden(et);
             layer.hidden(getOnHiddenFinishedCallBack());
         }
     }

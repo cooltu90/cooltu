@@ -59,7 +59,8 @@ public class WelcomeActivityRes {
 
     @EditDialogUse(
             title = "提示",
-            hint = "请输入文字"
+            hint = "请输入文字",
+            stopAnimation = true
     )
     EditDialog editDialog;
 
