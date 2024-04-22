@@ -1,5 +1,6 @@
 package com.codingtu.cooltu.lib4j.ts;
 
+import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
@@ -649,6 +650,86 @@ public class CoreTs<T, THIS> {
         SymbolTs symbols = Ts.symbols();
         symbols.add(this.ts);
         return symbols;
+    }
+
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+
+    public interface GroupSortGetter<T> {
+        String getGroup(int level, T t);
+
+        int getLevels();
+
+        int compare(T o1, T o2);
+
+    }
+
+    public THIS groupSort(GroupSortGetter<T> getter) {
+        ListValueMap<String, String> totalMap = new ListValueMap<>();
+        Map<String, T> tMap = new HashMap<>();
+
+        Collections.sort(ts, new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                return getter.compare(o1, o2);
+            }
+        });
+
+        ls(new Ts.EachTs<T>() {
+            @Override
+            public boolean each(int i, T t) {
+                tMap.put(getter.getGroup(getter.getLevels() - 1, t), t);
+
+                String[] gs = new String[getter.getLevels()];
+                for (int j = 0; j < gs.length; j++) {
+                    gs[j] = getter.getGroup(j, t);
+                }
+
+                List<String> list = totalMap.get(getRootGroupKey());
+
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < gs.length; j++) {
+                    if (j < gs.length - 1) {
+                        sb.append(gs[j]);
+                        List<String> subList = totalMap.get(sb.toString());
+                        if (CountTool.isNull(subList)) {
+                            list.add(gs[j]);
+                        }
+                        list = subList;
+                    } else {
+                        list.add(gs[j]);
+                    }
+
+                }
+                return false;
+            }
+        });
+
+        List<T> as = new ArrayList<>();
+        groupSort(as, getter.getLevels(), 0, totalMap, tMap, getRootGroupKey());
+        ts = as;
+        return (THIS) this;
+    }
+
+    private void groupSort(List<T> container, int levels, int level, ListValueMap<String, String> categorgMap, Map<String, T> tMap, String key) {
+        Ts.ts(categorgMap.get(key)).ls(new Ts.EachTs<String>() {
+            @Override
+            public boolean each(int i, String s) {
+                if (level < levels - 1) {
+                    groupSort(container, levels, level + 1, categorgMap, tMap, (getRootGroupKey().equals(key) ? "" : key) + s);
+                } else {
+                    container.add(tMap.get(s));
+                }
+                return false;
+            }
+        });
+    }
+
+    private String getRootGroupKey() {
+        return "root";
     }
 
 
