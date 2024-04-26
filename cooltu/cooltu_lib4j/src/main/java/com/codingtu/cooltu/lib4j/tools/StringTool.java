@@ -51,14 +51,55 @@ public class StringTool {
      *
      *
      **************************************************/
+//    public static String parseNumber(double num, int bit, boolean trim) {
+//        String type = null;
+//        if (trim) {
+//            type = "#." + repeatString(bit, "#");
+//        } else {
+//            type = "0." + repeatString(bit, "0");
+//        }
+//        return new DecimalFormat(type).format(num);
+//    }
     public static String parseNumber(double num, int bit, boolean trim) {
-        String type = null;
-        if (trim) {
-            type = "#." + repeatString(bit, "#");
-        } else {
-            type = "0." + repeatString(bit, "0");
+        if (bit < 0)
+            throw new RuntimeException("bit必须大于等于0");
+
+        String s = String.valueOf(num);
+        String[] split = s.split("\\.");
+        String z = split[0];
+        String x = split[1];
+
+        if (x.length() <= bit) {
+            return s;
         }
-        return new DecimalFormat(type).format(num);
+
+        String xx = x.substring(0, bit);
+        s = z + xx;
+
+        System.out.println(s);
+
+        String xxx = x.substring(bit, bit + 1);
+        if (Integer.parseInt(xxx) >= 5) {
+            //进一位
+            s = (Integer.parseInt(s) + 1) + "";
+        }
+
+        z = s.substring(0, s.length() - bit);
+        x = s.substring(s.length() - bit);
+
+        if (trim) {
+            x = trimRight(x, '0');
+        }
+
+        if (StringTool.isBlank(z)) {
+            z = "0";
+        }
+
+        if (StringTool.isBlank(x)) {
+            return z;
+        } else {
+            return z + "." + x;
+        }
     }
 
     /**************************************************
@@ -410,6 +451,76 @@ public class StringTool {
             }
         }
         return true;
+    }
+
+    /**************************************************
+     *
+     * trim
+     *
+     **************************************************/
+    public static String trim(String str, char x) {
+        if (str == null) {
+            return null;
+        }
+
+        int left = getLeftIndex(str, x);
+        int right = getRightIndex(str, x);
+
+        if (left >= right) {
+            return null;
+        } else {
+            return str.substring(left, right);
+        }
+    }
+
+    public static String trimLeft(String str, char x) {
+        if (str == null) {
+            return null;
+        }
+        int index = getLeftIndex(str, x);
+
+        if (index == str.length()) {
+            return null;
+        } else {
+            return str.substring(index);
+        }
+    }
+
+    public static String trimRight(String str, char x) {
+        if (str == null) {
+            return null;
+        }
+
+        int index = getRightIndex(str, x);
+        if (index == 0) {
+            return null;
+        } else {
+            return str.substring(0, index);
+        }
+    }
+
+    private static int getLeftIndex(String str, char x) {
+        int index = 0;
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (c != x) {
+                break;
+            }
+            index++;
+        }
+        return index;
+    }
+
+    private static int getRightIndex(String str, char x) {
+        int index = str.length();
+        for (int i = str.length() - 1; i >= 0; i--) {
+            char c = str.charAt(i);
+            if (c != x) {
+                break;
+            }
+            index--;
+        }
+        return index;
     }
 
 }
