@@ -1,6 +1,8 @@
 package com.codingtu.cooltu.lib4a.path;
 
 import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
+import com.codingtu.cooltu.lib4j.ts.BaseTs;
+import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.io.File;
 
@@ -16,6 +18,18 @@ public class BasePath extends CoreBean {
 
     public BasePath(String root) {
         this.root = root;
+    }
+
+    public String child(String name) {
+        return this.root + addPrexSeparator(name);
+    }
+
+    public BaseTs<File> getFileTs() {
+        return Ts.ts(rootFile().listFiles());
+    }
+
+    public <T> BaseTs<T> list(Ts.Convert<File, T> convert) {
+        return getFileTs().convert(convert);
     }
 
     public String root() {
