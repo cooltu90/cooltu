@@ -10,8 +10,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import core.path.CheckPath;
-
 public class MainActivity extends AppCompatActivity {
 
 
@@ -19,8 +17,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        CheckPath checkPath = CheckPath.obtain("xx", "xxx");
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             Supplier supplier = new Supplier() {
