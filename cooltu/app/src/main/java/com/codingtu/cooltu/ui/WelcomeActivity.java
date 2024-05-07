@@ -44,6 +44,7 @@ public class WelcomeActivity extends WelcomeActivityBase {
     @ClickView(R.id.showBt)
     public void showBtClick() {
         showEditDialog("xx");
+//        showDialog();
     }
 
     @Override

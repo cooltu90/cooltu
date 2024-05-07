@@ -11,6 +11,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
 
 import com.codingtu.cooltu.lib4a.R;
+import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.tools.DestoryTool;
 import com.codingtu.cooltu.lib4a.tools.HandlerTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
@@ -252,6 +253,10 @@ public class Layer extends RelativeLayout implements OnDestroy {
     }
 
     public final void show(OnShowFinishedCallBack onShowFinishedCallBack) {
+        if (isAnimation)
+            return;
+        isAnimation = true;
+
         this.onShowFinishedCallBack = onShowFinishedCallBack;
         ViewTool.visible(this);
         if (!stopAnimation) {
@@ -263,7 +268,7 @@ public class Layer extends RelativeLayout implements OnDestroy {
     }
 
     private final void dealShow() {
-        if (dialogView == null || isAnimation) {
+        if (dialogView == null) {
             HandlerTool.getMainHandler().post(new Runnable() {
                 @Override
                 public void run() {
@@ -271,7 +276,6 @@ public class Layer extends RelativeLayout implements OnDestroy {
                 }
             });
         } else {
-            isAnimation = true;
             realShow();
         }
     }
@@ -281,6 +285,11 @@ public class Layer extends RelativeLayout implements OnDestroy {
     }
 
     public final void hidden(OnHiddenFinishedCallBack onHiddenFinishedCallBack) {
+        if (isAnimation || ViewTool.isGone(this))
+            return;
+
+        isAnimation = true;
+
         if (stopAnimation) {
             ViewTool.gone(this);
             isAnimation = false;
@@ -295,7 +304,7 @@ public class Layer extends RelativeLayout implements OnDestroy {
     }
 
     private final void dealHidden() {
-        if (dialogView == null || isAnimation) {
+        if (dialogView == null) {
             HandlerTool.getMainHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -303,7 +312,6 @@ public class Layer extends RelativeLayout implements OnDestroy {
                 }
             }, defaultDuration);
         } else {
-            isAnimation = true;
             realHidden();
         }
     }
