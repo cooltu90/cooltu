@@ -34,13 +34,17 @@ public abstract class BaseStepFragmentBase extends com.codingtu.cooltu.lib4a.ui.
         catAdapter.setVH(core.vh.CatVH.class);
         catAdapter.setClick(this);
         rv.setAdapter(catAdapter);
-        new com.codingtu.cooltu.lib4a.ui.recyclerview.DefaultConfig().config(getAct(), rv);
+        new com.codingtu.cooltu.lib4a.ui.recyclerview.DefaultConfig().config(getAct(), rv, () -> rvObj());
 
         tv2.setOnClickListener(this);
 
         tv2.setOnLongClickListener(this);
 
     }
+    protected Object rvObj() {
+        return null;
+    }
+
 
     @Override
     public void onClick(View v) {

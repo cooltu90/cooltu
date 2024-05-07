@@ -35,6 +35,7 @@ public abstract class StepsOneActivityBase extends com.codingtu.cooltu.ui.base.B
 
     }
 
+
     @Override
     public void onClick(View v) {
 

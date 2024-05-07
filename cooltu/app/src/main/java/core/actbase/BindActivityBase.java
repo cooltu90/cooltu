@@ -51,6 +51,7 @@ public abstract class BindActivityBase extends com.codingtu.cooltu.ui.base.BaseA
 
     }
 
+
     @Override
     public void onClick(View v) {
 

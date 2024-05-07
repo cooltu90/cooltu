@@ -58,12 +58,16 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
         dogAdapter.setVH(core.vh.DogVH.class);
         dogAdapter.setClick(this);
         rv1.setAdapter(dogAdapter);
-        new com.codingtu.cooltu.lib4a.ui.recyclerview.DefaultConfig().config(getAct(), rv1);
+        new com.codingtu.cooltu.lib4a.ui.recyclerview.DefaultConfig().config(getAct(), rv1, () -> rv1Obj());
 
         tv1.setOnClickListener(this);
 
 
     }
+    protected Object rv1Obj() {
+        return null;
+    }
+
 
     @Override
     public void onClick(View v) {

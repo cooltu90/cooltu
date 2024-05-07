@@ -27,6 +27,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     protected java.util.Map<String, Integer> setOnLongClickCounts;
     protected StringBuilder setOnLongClickSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> setOnLongClick;
+    protected java.util.Map<String, Boolean> adapterObjsIfs;
+    protected java.util.Map<String, Integer> adapterObjsCounts;
+    protected StringBuilder adapterObjsSb;
+    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> adapterObjs;
     protected java.util.Map<String, Boolean> superOnClickIfs;
     protected java.util.Map<String, Integer> superOnClickCounts;
     protected StringBuilder superOnClickSb;
@@ -131,6 +135,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         setOnLongClickCounts = new java.util.HashMap<>();
         setOnLongClickSb = map.get("setOnLongClick");
         setOnLongClick = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        adapterObjsIfs = new java.util.HashMap<>();
+        adapterObjsCounts = new java.util.HashMap<>();
+        adapterObjsSb = map.get("adapterObjs");
+        adapterObjs = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         superOnClickIfs = new java.util.HashMap<>();
         superOnClickCounts = new java.util.HashMap<>();
         superOnClickSb = map.get("superOnClick");
@@ -264,7 +272,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         return count(listAdapterCounts, getForKey("listAdapter"));
     }
     public void listAdapter(int i0, String adapterName, String vhFullName, String rvName, String configName) {
-        addForMap(this.listAdapter, getForKey("listAdapter", i0), adapterName, vhFullName, adapterName, rvName, adapterName, configName, rvName);
+        addForMap(this.listAdapter, getForKey("listAdapter", i0), adapterName, vhFullName, adapterName, rvName, adapterName, configName, rvName, rvName);
         countAdd(listAdapterCounts, getForKey("listAdapter"));
     }
     public int setOnClickCount() {
@@ -280,6 +288,13 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     public void setOnLongClick(int i0, String fieldName) {
         addForMap(this.setOnLongClick, getForKey("setOnLongClick", i0), fieldName);
         countAdd(setOnLongClickCounts, getForKey("setOnLongClick"));
+    }
+    public int adapterObjsCount() {
+        return count(adapterObjsCounts, getForKey("adapterObjs"));
+    }
+    public void adapterObjs(int i0, String rvName) {
+        addForMap(this.adapterObjs, getForKey("adapterObjs", i0), rvName);
+        countAdd(adapterObjsCounts, getForKey("adapterObjs"));
     }
     public int onClickCaseCount(int i0) {
         return count(onClickSwithCounts, getForKey("onClickCase", i0));
@@ -589,7 +604,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             addLnTag(listAdapterSb, "        [adapterName].setVH([vhFullName].class);", listAdapter0.get(0), listAdapter0.get(1));
             addLnTag(listAdapterSb, "        [adapterName].setClick(this);", listAdapter0.get(2));
             addLnTag(listAdapterSb, "        [rvName].setAdapter([adapterName]);", listAdapter0.get(3), listAdapter0.get(4));
-            addLnTag(listAdapterSb, "        new [configName]().config(getAct(), [rvName]);", listAdapter0.get(5), listAdapter0.get(6));
+            addLnTag(listAdapterSb, "        new [configName]().config(getAct(), [rvName], () -> [rvName]Obj());", listAdapter0.get(5), listAdapter0.get(6), listAdapter0.get(7));
         }
         for (int i0 = 0; i0 < count(setOnClickCounts, getForKey("setOnClick")); i0++) {
             List<String> setOnClick0 = setOnClick.get(getForKey("setOnClick", i0));
@@ -598,6 +613,12 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         for (int i0 = 0; i0 < count(setOnLongClickCounts, getForKey("setOnLongClick")); i0++) {
             List<String> setOnLongClick0 = setOnLongClick.get(getForKey("setOnLongClick", i0));
             addLnTag(setOnLongClickSb, "        [fieldName].setOnLongClickListener(this);", setOnLongClick0.get(0));
+        }
+        for (int i0 = 0; i0 < count(adapterObjsCounts, getForKey("adapterObjs")); i0++) {
+            List<String> adapterObjs0 = adapterObjs.get(getForKey("adapterObjs", i0));
+            addLnTag(adapterObjsSb, "    protected Object [rvName]Obj() {", adapterObjs0.get(0));
+            addLnTag(adapterObjsSb, "        return null;");
+            addLnTag(adapterObjsSb, "    }");
         }
         if (isIf(superOnClickIfs, getIfKey("superOnClick"))) {
             List<String> superOnClick0 = superOnClick.get(getIfKey("superOnClick"));
@@ -969,6 +990,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("[[setOnClick]]");
         lines.add("[[setOnLongClick]]");
         lines.add("    }");
+        lines.add("[[adapterObjs]]");
         lines.add("");
         lines.add("    @Override");
         lines.add("    public void onClick(View v) {");

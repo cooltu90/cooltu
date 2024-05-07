@@ -4,8 +4,10 @@ import android.content.Context;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.codingtu.cooltu.lib4j.function.Supplier;
+
 public interface Config {
 
-    void config(Context context, RecyclerView rv);
+    void config(Context context, RecyclerView rv, Supplier supplier);
 
 }

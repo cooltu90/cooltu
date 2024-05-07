@@ -41,7 +41,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
         catAdapter.setVH(core.vh.CatVH.class);
         catAdapter.setClick(this);
         rv.setAdapter(catAdapter);
-        new com.codingtu.cooltu.lib4a.ui.recyclerview.DefaultConfig().config(getAct(), rv);
+        new com.codingtu.cooltu.lib4a.ui.recyclerview.DefaultConfig().config(getAct(), rv, () -> rvObj());
         // dogAdapter
         dogAdapter = new com.codingtu.cooltu.ui.adapter.DogAdapter() {
             @Override
@@ -52,13 +52,20 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
         dogAdapter.setVH(core.vh.DogVH.class);
         dogAdapter.setClick(this);
         rv1.setAdapter(dogAdapter);
-        new com.codingtu.cooltu.lib4a.ui.recyclerview.DefaultConfig().config(getAct(), rv1);
+        new com.codingtu.cooltu.lib4a.ui.recyclerview.DefaultConfig().config(getAct(), rv1, () -> rv1Obj());
 
 
 
 
 
     }
+    protected Object rvObj() {
+        return null;
+    }
+    protected Object rv1Obj() {
+        return null;
+    }
+
 
     @Override
     public void onClick(View v) {

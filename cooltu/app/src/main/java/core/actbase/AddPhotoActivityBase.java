@@ -57,6 +57,7 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
 
     }
 
+
     @Override
     public void onClick(View v) {
 

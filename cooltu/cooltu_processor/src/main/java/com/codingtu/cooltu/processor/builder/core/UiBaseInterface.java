@@ -152,4 +152,6 @@ public interface UiBaseInterface {
     int findViewCount();
 
     void onClickCheckFormIf(int clickViewInfoIndex, String s);
+
+    void adapterObjs(int adapterIndex, String rvName);
 }

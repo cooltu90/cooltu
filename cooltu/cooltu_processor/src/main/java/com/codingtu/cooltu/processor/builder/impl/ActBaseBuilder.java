@@ -604,6 +604,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     info.formConfigKv.v, getMethodName(methods, methodName), param1);
         }
         addLnTag(handlerSb, "                break;");
+
     }
 
     private void dealBind(String bindConfigClassName) {
@@ -1411,7 +1412,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         [adapterName].setVH([vhFullName].class);
         [adapterName].setClick(this);
         [rvName].setAdapter([adapterName]);
-        new [configName]().config(getAct(), [rvName]);
+        new [configName]().config(getAct(), [rvName], () -> [rvName]Obj());
                                                                                                     [<sub>][for][listAdapter]
                                                                                                     [<sub>][for][setOnClick]
         [fieldName].setOnClickListener(this);
@@ -1426,6 +1427,11 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
 [onCreateCompleteOther]
                                                                                                     [<sub>][if][onCreateCompleteOther]
     }
+                                                                                                    [<sub>][for][adapterObjs]
+    protected Object [rvName]Obj() {
+        return null;
+    }
+                                                                                                    [<sub>][for][adapterObjs]
 
     @Override
     public void onClick(View v) {

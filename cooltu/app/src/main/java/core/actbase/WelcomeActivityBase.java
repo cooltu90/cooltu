@@ -52,6 +52,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
     }
 
+
     @Override
     public void onClick(View v) {
         super.onClick(v);

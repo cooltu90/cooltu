@@ -84,6 +84,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
     }
 
+
     @Override
     public void onClick(View v) {
 

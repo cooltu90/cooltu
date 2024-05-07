@@ -33,6 +33,7 @@ public abstract class FormTestBaseActivityBase extends com.codingtu.cooltu.ui.ba
 
     }
 
+
     @Override
     public void onClick(View v) {
 

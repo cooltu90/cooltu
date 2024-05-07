@@ -598,6 +598,7 @@ public abstract class UiBaseBuilder {
                 } else if (adapter.type() == AdapterType.DEFAULT_LIST) {
                     uiBase.defaultListAdapterIf(adapterIndex, kv.v, kv.k);
                 }
+                uiBase.adapterObjs(adapterIndex, adapter.rvName());
                 return false;
             }
         });
