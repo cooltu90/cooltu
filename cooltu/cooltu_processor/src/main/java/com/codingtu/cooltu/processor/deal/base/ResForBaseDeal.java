@@ -60,6 +60,7 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
         InBase inBase = ve.getAnnotation(InBase.class);
         if (inBase != null) {
             uiBaseBuilder.addInBase(kv);
+            uiBaseBuilder.addInBase1(ve);
             Init init = ve.getAnnotation(Init.class);
             if (init != null) {
                 uiBaseBuilder.addInits(ve);

@@ -2,6 +2,7 @@ package core.actres;
 
 import com.codingtu.cooltu.Constants;
 import com.codingtu.cooltu.R;
+import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.form.TestCallBack;
 import com.codingtu.cooltu.lib4a.view.dialogview.Dialog;
 import com.codingtu.cooltu.lib4a.view.dialogview.EditDialog;
@@ -85,11 +86,11 @@ public class WelcomeActivityRes {
     @FixValue("com.codingtu.cooltu.Constants.PKG_MODULE_APP")
     String getXXX;
 
-    @InBase
+    @InBase(Constant.SIGN_PROTECTED)
     @InitAbstract
     TestCallBack testCallBack;
 
-    @InBase
+    @InBase(Constant.SIGN_PROTECTED)
     @Init
     String testName;
 

@@ -17,6 +17,7 @@ import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.forms.UseForm;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
+import com.codingtu.cooltu.processor.annotation.ui.InBase;
 import com.codingtu.cooltu.processor.annotation.ui.Init;
 import com.codingtu.cooltu.processor.annotation.ui.InitAbstract;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
@@ -28,10 +29,8 @@ import com.codingtu.cooltu.processor.annotation.ui.fix.FixString;
 import com.codingtu.cooltu.processor.annotation.ui.fix.FixValue;
 import com.codingtu.cooltu.processor.bean.ClickViewInfo;
 import com.codingtu.cooltu.processor.bean.NetBackInfo;
-import com.codingtu.cooltu.processor.builder.impl.ActBackIntentBuilder;
 import com.codingtu.cooltu.processor.deal.NetDeal;
 import com.codingtu.cooltu.processor.deal.VHDeal;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
@@ -40,17 +39,12 @@ import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
 import com.codingtu.cooltu.processor.lib.tools.TagTools;
-import com.sun.tools.javac.tree.JCTree;
-
-import org.checkerframework.checker.units.qual.K;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.lang.model.element.AnnotationMirror;
-import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 
@@ -60,6 +54,7 @@ public abstract class UiBaseBuilder {
     public String baseClass;
     public IdTools.Id layout;
     public List<KV<String, String>> inBases = new ArrayList<>();
+    public List<VariableElement> inBases1 = new ArrayList<>();
     public HashMap<String, String> inBaseMap = new HashMap<>();
     public HashMap<String, String> fieldMap = new HashMap<>();
     public List<ClickViewInfo> clickViews = new ArrayList<>();
@@ -116,6 +111,10 @@ public abstract class UiBaseBuilder {
 
     public void addInBase(KV<String, String> fieldKv) {
         inBases.add(fieldKv);
+    }
+
+    public void addInBase1(VariableElement ve) {
+        inBases1.add(ve);
     }
 
     public void addInits(VariableElement ve) {
@@ -364,13 +363,24 @@ public abstract class UiBaseBuilder {
     }
 
     private void setBaseField() {
-        Ts.ls(inBases, new Ts.EachTs<KV<String, String>>() {
+//        Ts.ls(inBases, new Ts.EachTs<KV<String, String>>() {
+//            @Override
+//            public boolean each(int position, KV<String, String> kv) {
+//                addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
+//                return false;
+//            }
+//        });
+
+        Ts.ls(inBases1, new Ts.EachTs<VariableElement>() {
             @Override
-            public boolean each(int position, KV<String, String> kv) {
-                addField(Constant.SIGN_PROTECTED, kv.k, kv.v);
+            public boolean each(int position, VariableElement ve) {
+                InBase inBase = ve.getAnnotation(InBase.class);
+                KV<String, String> kv = ElementTools.getFieldKv(ve);
+                addField(inBase.value(), kv.k, kv.v);
                 return false;
             }
         });
+
     }
 
     private void setLayout() {

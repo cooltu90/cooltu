@@ -2,6 +2,7 @@ package core.actres;
 
 import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.constant.AdapterType;
+import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.lib4a.constant.InputType;
 import com.codingtu.cooltu.lib4a.view.dialogview.Dialog;
 import com.codingtu.cooltu.lib4a.view.dialogview.EditDialog;
@@ -48,11 +49,11 @@ public class StepOneActivityRes {
     )
     Dialog dialog;
 
-    @InBase
+    @InBase(Constant.SIGN_PROTECTED)
     @Init
     User user;
 
-    @InBase
+    @InBase(Constant.SIGN_PROTECTED)
     @Init(isDestory = true)
     TestView testView;
 
