@@ -2,7 +2,9 @@ package com.codingtu.cooltu.lib4a.tools;
 
 import android.os.Build;
 
+import com.codingtu.cooltu.lib4a.exception.VersionException;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
 
 public class VersionTool {
 
@@ -47,28 +49,52 @@ public class VersionTool {
         return Build.VERSION.SDK_INT == version;
     }
 
-    public static boolean isNewVersion(String myVersion, String getVersion) {
-        String[] myVersions = myVersion.split("\\.");
-        String[] getVersions = getVersion.split("\\.");
-        int myCount = CountTool.count(myVersions);
-        int getCount = CountTool.count(getVersions);
-        for (int i = 0; i < myCount; i++) {
-            int my = Integer.parseInt(myVersions[i]);
-            if (i < getCount) {
-                int get = Integer.parseInt(getVersions[i]);
-                if (my > get) {
+    public static boolean aIsLessThanB(String aVersion, String bVersion) throws VersionException {
+        return isNewVersion(aVersion, bVersion);
+    }
+
+    public static boolean aIsLessOrEqualsThanB(String aVersion, String bVersion) throws VersionException {
+        return !isNewVersion(bVersion, aVersion);
+    }
+
+
+    public static boolean aIsGreaterThanB(String aVersion, String bVersion) throws VersionException {
+        return isNewVersion(bVersion, aVersion);
+    }
+
+    public static boolean aIsGreaterOrEqualsThanB(String aVersion, String bVersion) throws VersionException {
+        return !isNewVersion(aVersion, bVersion);
+    }
+
+    private static boolean isNewVersion(String myVersion, String getVersion) throws VersionException {
+        if (StringTool.isBlank(myVersion) || StringTool.isBlank(getVersion)) {
+            throw new VersionException("版本号不能为空");
+        }
+        try {
+            String[] myVersions = myVersion.split("\\.");
+            String[] getVersions = getVersion.split("\\.");
+            int myCount = CountTool.count(myVersions);
+            int getCount = CountTool.count(getVersions);
+            for (int i = 0; i < myCount; i++) {
+                int my = Integer.parseInt(myVersions[i]);
+                if (i < getCount) {
+                    int get = Integer.parseInt(getVersions[i]);
+                    if (my > get) {
+                        return false;
+                    } else if (my < get) {
+                        return true;
+                    }
+                } else {
                     return false;
-                } else if (my < get) {
-                    return true;
                 }
-            } else {
-                return false;
             }
+            if (getCount > myCount) {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            throw new VersionException("版本号格式错误");
         }
-        if (getCount > myCount) {
-            return true;
-        }
-        return false;
     }
 
 }
