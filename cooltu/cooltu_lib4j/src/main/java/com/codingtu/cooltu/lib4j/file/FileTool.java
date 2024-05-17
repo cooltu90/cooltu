@@ -1,6 +1,7 @@
 package com.codingtu.cooltu.lib4j.file;
 
 import com.codingtu.cooltu.lib4j.file.bean.FileInfo;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -129,4 +130,53 @@ public class FileTool {
         return new File(getRename(file, oldDirPath, newDirPath));
     }
 
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+
+    public static class LengthInfo {
+        public long length;
+        public String size;
+        public String unit;
+
+        @Override
+        public String toString() {
+            return size + " " + unit;
+        }
+    }
+
+    public static LengthInfo lengthFormat(long length) {
+        return lengthFormat(length, 1000, 2, true);
+    }
+
+    public static LengthInfo lengthFormat(long length, int divider, int bit, boolean trim) {
+        LengthInfo lengthInfo = new LengthInfo();
+        lengthInfo.length = length;
+
+        double d = length / 1024d;
+        if (d < divider) {
+            lengthInfo.size = StringTool.parseNumber(d, bit, trim);
+            lengthInfo.unit = "KB";
+            return lengthInfo;
+        }
+        d = d / 1024d;
+        if (d < divider) {
+            lengthInfo.size = StringTool.parseNumber(d, bit, trim);
+            lengthInfo.unit = "MB";
+            return lengthInfo;
+        }
+        d = d / 1024d;
+        if (d < divider) {
+            lengthInfo.size = StringTool.parseNumber(d, bit, trim);
+            lengthInfo.unit = "GB";
+            return lengthInfo;
+        }
+
+        d = d / 1024d;
+        lengthInfo.size = StringTool.parseNumber(d, bit, trim);
+        lengthInfo.unit = "TB";
+        return lengthInfo;
+    }
 }

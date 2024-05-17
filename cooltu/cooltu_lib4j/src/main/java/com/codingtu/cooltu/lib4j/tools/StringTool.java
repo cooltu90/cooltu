@@ -522,5 +522,4 @@ public class StringTool {
         }
         return index;
     }
-
 }
