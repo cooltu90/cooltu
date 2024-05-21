@@ -262,6 +262,7 @@ public class Zip implements OnDestroy {
         if (this.onFinish != null) {
             this.onFinish.onFinish(file);
         }
+        destroy();
     }
 
     private void onError(Throwable throwable) {
