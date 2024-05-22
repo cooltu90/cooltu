@@ -6,6 +6,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 
+/**************************************************
+ *
+ * 备份
+ *
+ **************************************************/
 public class AppJumpSettingTool {
 
     public final class ANDROIDSETTINGS {

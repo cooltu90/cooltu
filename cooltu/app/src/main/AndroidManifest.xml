@@ -28,6 +28,18 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.codingtu.cooltu.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths">
+
+            </meta-data>
+        </provider>
         <activity
             android:name="com.codingtu.cooltu.ui.StepOneActivity"
             android:screenOrientation="portrait" />
@@ -42,9 +54,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.codingtu.cooltu.ui.StepTwoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.codingtu.cooltu.ui.step.StepOneActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.codingtu.cooltu.ui.view.step.StepsOneActivity"
