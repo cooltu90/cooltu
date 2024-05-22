@@ -23,6 +23,39 @@ public class FileType {
     public static final String TXT = "txt";
     public static final String d_TXT = "." + TXT;
 
+    public static final String HTML = "html";
+    public static final String d_HTML = "." + HTML;
+
+    public static final String CSS = "css";
+    public static final String d_CSS = "." + CSS;
+
+    public static final String JS = "js";
+    public static final String d_JS = "." + JS;
+
+    public static final String TMP = "tmp";
+    public static final String d_TMP = "." + TMP;
+
+    public static final String PDF = "pdf";
+    public static final String d_PDF = "." + PDF;
+
+    public static final String DOC = "doc";
+    public static final String d_DOC = "." + DOC;
+
+    public static final String DOCX = "docx";
+    public static final String d_DOCX = "." + DOCX;
+
+    public static final String XLS = "xls";
+    public static final String d_XLS = "." + XLS;
+
+    public static final String XLSX = "xlsx";
+    public static final String d_XLSX = "." + XLSX;
+
+    public static final String EXE = "exe";
+    public static final String d_EXE = "." + EXE;
+
+    public static final String APK = "apk";
+    public static final String d_APK = "." + APK;
+
     //图片不可见类型（pic no see）
     public static final String PNC = "pnc";
     public static final String d_PNC = "." + PNC;

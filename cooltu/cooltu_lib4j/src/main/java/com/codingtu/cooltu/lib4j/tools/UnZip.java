@@ -118,6 +118,15 @@ public class UnZip implements OnDestroy {
         return this;
     }
 
+    public void unzipWithThread() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                unzip();
+            }
+        }).start();
+    }
+
     public void unzip() {
         if (!src.exists()) {
             onError(new RuntimeException("没有找到需要解压的文件"));

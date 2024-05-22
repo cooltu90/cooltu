@@ -45,7 +45,6 @@ public class ZipWithThread implements OnDestroy {
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case PROGRESS:
-                        //progress
                         Progress progress = (Progress) msg.obj;
                         if (onProgress != null) {
                             onProgress.onProgress(progress.totalLen, progress.currentLen);

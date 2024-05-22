@@ -2,6 +2,7 @@ package com.codingtu.cooltu.lib4j.tools;
 
 import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FileType;
+import com.codingtu.cooltu.lib4j.data.progress.Progress;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
 
@@ -124,6 +125,15 @@ public class Zip implements OnDestroy {
     public Zip start(OnStart onStart) {
         this.onStart = onStart;
         return this;
+    }
+
+    public void zipWithThread() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                zip();
+            }
+        }).start();
     }
 
     public void zip() {
