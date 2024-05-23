@@ -159,6 +159,7 @@ public class OpenTool {
         }
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(uri, mimeType);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         act.startActivity(intent);
     }
 
