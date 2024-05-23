@@ -50,6 +50,12 @@ public class FileType {
     public static final String XLSX = "xlsx";
     public static final String d_XLSX = "." + XLSX;
 
+    public static final String PPT = "ppt";
+    public static final String d_PPT = "." + PPT;
+
+    public static final String PPTX = "pptx";
+    public static final String d_PPTX = "." + PPTX;
+
     public static final String EXE = "exe";
     public static final String d_EXE = "." + EXE;
 

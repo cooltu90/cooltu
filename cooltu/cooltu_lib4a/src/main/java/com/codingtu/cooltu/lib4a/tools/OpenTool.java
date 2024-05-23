@@ -146,4 +146,20 @@ public class OpenTool {
         CoreApp.APP.startActivity(intent);
     }
 
+    public static void openFile(Activity act, File file) {
+        String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+        if (mimeType == null) {
+            mimeType = "application/octet-stream"; // 通用二进制流类型
+        }
+        Uri uri = null;
+        if (VersionTool.isLess(VersionTool.A7)) {
+            uri = Uri.fromFile(file);
+        } else {
+            uri = FileProvider.getUriForFile(act, CoreConfigs.configs().getImageGetterFileProvider(), file);
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(uri, mimeType);
+        act.startActivity(intent);
+    }
+
 }
