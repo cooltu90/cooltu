@@ -36,7 +36,21 @@ public class ClipBoardTool {
                 manager.setPrimaryClip(manager.getPrimaryClip());
                 manager.setPrimaryClip(ClipData.newPlainText("", ""));
             } catch (Exception e) {
-                e.printStackTrace();
+            }
+        }
+    }
+
+    /**************************************************
+     *
+     * 像剪切板添加文字
+     *
+     **************************************************/
+    public static void setText(String text) {
+        ClipboardManager manager = SystemTool.getClipboardManager();
+        if (manager != null) {
+            try {
+                manager.setPrimaryClip(ClipData.newPlainText("", text));
+            } catch (Exception e) {
             }
         }
     }
