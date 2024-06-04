@@ -9,7 +9,7 @@ import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.lib.BuilderMap;
-import com.codingtu.cooltu.processor.lib.tools.TagTools;
+import com.codingtu.cooltu.lib4j.tools.TagTools;
 
 import java.io.File;
 import java.util.ArrayList;

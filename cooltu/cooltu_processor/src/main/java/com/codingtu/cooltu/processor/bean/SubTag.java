@@ -1,7 +1,7 @@
 package com.codingtu.cooltu.processor.bean;
 
 import com.codingtu.cooltu.processor.constant.Tags;
-import com.codingtu.cooltu.processor.lib.tools.TagTools;
+import com.codingtu.cooltu.lib4j.tools.TagTools;
 
 import java.util.List;
 

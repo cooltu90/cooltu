@@ -68,7 +68,7 @@ import com.codingtu.cooltu.processor.lib.tools.BeanTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
-import com.codingtu.cooltu.processor.lib.tools.TagTools;
+import com.codingtu.cooltu.lib4j.tools.TagTools;
 
 import java.util.ArrayList;
 import java.util.HashMap;

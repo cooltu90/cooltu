@@ -21,6 +21,7 @@ import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4a.bean.WH;
 import com.codingtu.cooltu.lib4a.view.combine.RadioGroup;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
+import com.codingtu.cooltu.lib4j.tools.TagTools;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.StringTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
@@ -224,6 +225,11 @@ public class ViewTool {
         }
     }
 
+    public static void setText(View tv, String line, Object... tags) {
+        setText(tv, TagTools.dealLine(line, tags));
+    }
+
+
     public static void setTextColor(View tv, int id) {
         if (tv != null && tv instanceof TextView) {
             ((TextView) tv).setTextColor(CoreApp.APP.getResources().getColor(id));
@@ -240,6 +246,10 @@ public class ViewTool {
                 et.setSelection(length);
             }
         }
+    }
+
+    public static void setEditTextAndSelection(View view, String line, Object... tags) {
+        setEditTextAndSelection(view, TagTools.dealLine(line, tags));
     }
 
 
