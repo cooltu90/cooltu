@@ -8,6 +8,7 @@ import java.util.List;
 public class BaseTs<T> extends CoreTs<T, BaseTs<T>> {
 
     public BaseTs() {
+        super();
     }
 
     public BaseTs(List<T> list) {

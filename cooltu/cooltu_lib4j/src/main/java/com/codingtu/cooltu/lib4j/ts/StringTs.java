@@ -1,8 +1,16 @@
 package com.codingtu.cooltu.lib4j.ts;
 
+import java.util.List;
 import java.util.Objects;
 
 public class StringTs extends CoreTs<String, StringTs> {
+
+    public StringTs() {
+    }
+
+    public StringTs(List<String> list) {
+        super(list);
+    }
 
     private Ts.IsThisOne<String> getIsThisOne(String... symbols) {
         return new Ts.IsThisOne<String>() {

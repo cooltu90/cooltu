@@ -7,6 +7,13 @@ import java.util.Objects;
 
 public class SymbolTs<SYMBOL extends Symbol> extends CoreTs<SYMBOL, SymbolTs<SYMBOL>> {
 
+    public SymbolTs() {
+    }
+
+    public SymbolTs(List<SYMBOL> list) {
+        super(list);
+    }
+
     private String obtainSymbol(SYMBOL t) {
         return ((Symbol) t).obtainSymbol();
     }

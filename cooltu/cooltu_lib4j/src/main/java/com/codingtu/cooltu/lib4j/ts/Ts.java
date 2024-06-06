@@ -24,6 +24,10 @@ public class Ts {
         return ts;
     }
 
+    public static BaseTs<Boolean> bools(List<Boolean> booleans) {
+        return new BaseTs<>(booleans);
+    }
+
     public static BaseTs<Byte> bytes(byte... bytes) {
         BaseTs<Byte> ts = new BaseTs<>();
         for (int i = 0; i < bytes.length; i++) {
@@ -32,12 +36,20 @@ public class Ts {
         return ts;
     }
 
-    public static BaseTs<Character> chars(char... bytes) {
+    public static BaseTs<Byte> bytes(List<Byte> bytes) {
+        return new BaseTs<>(bytes);
+    }
+
+    public static BaseTs<Character> chars(char... chars) {
         BaseTs<Character> ts = new BaseTs<>();
-        for (int i = 0; i < bytes.length; i++) {
-            ts.ts.add(bytes[i]);
+        for (int i = 0; i < chars.length; i++) {
+            ts.ts.add(chars[i]);
         }
         return ts;
+    }
+
+    public static BaseTs<Character> chars(List<Character> chars) {
+        return new BaseTs<>(chars);
     }
 
     public static BaseTs<Double> doubles(double... doubles) {
@@ -48,12 +60,20 @@ public class Ts {
         return ts;
     }
 
+    public static BaseTs<Double> doubles(List<Double> doubles) {
+        return new BaseTs<>(doubles);
+    }
+
     public static BaseTs<Float> floats(float... floats) {
         BaseTs<Float> ts = new BaseTs<>();
         for (int i = 0; i < floats.length; i++) {
             ts.ts.add(floats[i]);
         }
         return ts;
+    }
+
+    public static BaseTs<Float> floats(List<Float> floats) {
+        return new BaseTs<>(floats);
     }
 
     public static BaseTs<Integer> ints(int... ints) {
@@ -64,8 +84,8 @@ public class Ts {
         return ts;
     }
 
-    public static BaseTs<Integer> ints() {
-        return new BaseTs<>();
+    public static BaseTs<Integer> ints(List<Integer> ints) {
+        return new BaseTs<>(ints);
     }
 
     public static BaseTs<Long> longs(long... longs) {
@@ -76,6 +96,10 @@ public class Ts {
         return ts;
     }
 
+    public static BaseTs<Long> longs(List<Long> longs) {
+        return new BaseTs<>(longs);
+    }
+
     public static BaseTs<Short> shorts(short... shorts) {
         BaseTs<Short> ts = new BaseTs<>();
         for (int i = 0; i < shorts.length; i++) {
@@ -84,8 +108,8 @@ public class Ts {
         return ts;
     }
 
-    public static BaseTs<Short> shorts() {
-        return new BaseTs<>();
+    public static BaseTs<Short> shorts(List<Short> shorts) {
+        return new BaseTs<>(shorts);
     }
 
     public static StringTs strs(String... strs) {
@@ -95,19 +119,17 @@ public class Ts {
     }
 
     public static StringTs strs(List<String> strs) {
-        StringTs ts = new StringTs();
-        ts.add(strs);
-        return ts;
+        return new StringTs(strs);
     }
 
-    public static StringTs strs() {
-        return new StringTs();
-    }
+//    public static StringTs strs() {
+//        return new StringTs();
+//    }
 
 
-    public static <SYMBOL extends Symbol> SymbolTs<SYMBOL> symbols() {
-        return new SymbolTs<>();
-    }
+//    public static <SYMBOL extends Symbol> SymbolTs<SYMBOL> symbols() {
+//        return new SymbolTs<>();
+//    }
 
     public static <SYMBOL extends Symbol> SymbolTs<SYMBOL> symbols(SYMBOL... symbols) {
         SymbolTs<SYMBOL> ts = new SymbolTs<>();
@@ -116,9 +138,7 @@ public class Ts {
     }
 
     public static <SYMBOL extends Symbol> SymbolTs<SYMBOL> symbols(List<SYMBOL> symbols) {
-        SymbolTs<SYMBOL> ts = new SymbolTs<>();
-        ts.add(symbols);
-        return ts;
+        return new SymbolTs<>(symbols);
     }
 
     public static <T> BaseTs<T> ts(T... srcTs) {
