@@ -16,5 +16,7 @@ public @interface LongClickView {
 
     boolean checkLogin() default false;
 
+    boolean catchException() default false;
+
 }
 

@@ -73,13 +73,18 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
     public void onClick(View v) {
         super.onClick(v);
 
-        switch (v.getId()) {
-            case com.codingtu.cooltu.R.id.tv1:
-                tv1Click(
-                        (com.codingtu.cooltu.bean.User) v.getTag(com.codingtu.cooltu.lib4a.R.id.tag_0)
-                );
-                break;
+        try {
+            switch (v.getId()) {
+                case com.codingtu.cooltu.R.id.tv1:
+                    tv1Click(
+                            (com.codingtu.cooltu.bean.User) v.getTag(com.codingtu.cooltu.lib4a.R.id.tag_0)
+                    );
+                    break;
 
+            }
+        } catch (Exception e) {
+            toast(e.getMessage());
+            com.codingtu.cooltu.lib4a.log.Logs.e(e);
         }
     }
     protected void tv1Click(com.codingtu.cooltu.bean.User user) {}

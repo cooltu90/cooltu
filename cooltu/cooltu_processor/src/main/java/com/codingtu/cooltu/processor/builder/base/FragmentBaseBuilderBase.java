@@ -628,25 +628,25 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             List<String> onClickSwith0 = onClickSwith.get(getForKey("onClickSwith", i0));
             for (int i1 = 0; i1 < count(onClickSwithCounts, getForKey("onClickCase", i0)); i1++) {
                 List<String> onClickSwith1 = onClickSwith.get(getForKey("onClickCase", i0, i1));
-                addLnTag(onClickSwithSb, "            case [id]:", onClickSwith1.get(0));
+                addLnTag(onClickSwithSb, "                case [id]:", onClickSwith1.get(0));
             }
             if (isIf(onClickSwithIfs, getIfKey("onClickCheckLogin", i0))) {
                 List<String> onClickSwith1 = onClickSwith.get(getIfKey("onClickCheckLogin", i0));
-                addLnTag(onClickSwithSb, "                if (!isLogin(getAct())) {");
-                addLnTag(onClickSwithSb, "                    return;");
-                addLnTag(onClickSwithSb, "                }");
+                addLnTag(onClickSwithSb, "                    if (!isLogin(getAct())) {");
+                addLnTag(onClickSwithSb, "                        return;");
+                addLnTag(onClickSwithSb, "                    }");
             }
-            addLnTag(onClickSwithSb, "                [methodName](", onClickSwith0.get(0));
+            addLnTag(onClickSwithSb, "                    [methodName](", onClickSwith0.get(0));
             if (isIf(onClickSwithIfs, getIfKey("onClickSwitchParams", i0))) {
                 List<String> onClickSwith1 = onClickSwith.get(getIfKey("onClickSwitchParams", i0));
-                addLnTag(onClickSwithSb, "                        v[divider]", onClickSwith1.get(0));
+                addLnTag(onClickSwithSb, "                            v[divider]", onClickSwith1.get(0));
             }
             for (int i1 = 0; i1 < count(onClickSwithCounts, getForKey("onClickSwitchParams", i0)); i1++) {
                 List<String> onClickSwith1 = onClickSwith.get(getForKey("onClickSwitchParams", i0, i1));
-                addLnTag(onClickSwithSb, "                        ([type]) v.getTag([pkg].R.id.tag_[index])[divider]", onClickSwith1.get(0), onClickSwith1.get(1), onClickSwith1.get(2), onClickSwith1.get(3));
+                addLnTag(onClickSwithSb, "                            ([type]) v.getTag([pkg].R.id.tag_[index])[divider]", onClickSwith1.get(0), onClickSwith1.get(1), onClickSwith1.get(2), onClickSwith1.get(3));
             }
-            addLnTag(onClickSwithSb, "                );");
-            addLnTag(onClickSwithSb, "                break;");
+            addLnTag(onClickSwithSb, "                    );");
+            addLnTag(onClickSwithSb, "                    break;");
         }
         for (int i0 = 0; i0 < count(onClickMethodsCounts, getForKey("onClickMethods")); i0++) {
             List<String> onClickMethods0 = onClickMethods.get(getForKey("onClickMethods", i0));
@@ -995,8 +995,13 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("    @Override");
         lines.add("    public void onClick(View v) {");
         lines.add("[[superOnClick]]");
-        lines.add("        switch (v.getId()) {");
+        lines.add("        try {");
+        lines.add("            switch (v.getId()) {");
         lines.add("[[onClickSwith]]");
+        lines.add("            }");
+        lines.add("        } catch (Exception e) {");
+        lines.add("            toast(e.getMessage());");
+        lines.add("            com.codingtu.cooltu.lib4a.log.Logs.e(e);");
         lines.add("        }");
         lines.add("    }");
         lines.add("[[onClickMethods]]");

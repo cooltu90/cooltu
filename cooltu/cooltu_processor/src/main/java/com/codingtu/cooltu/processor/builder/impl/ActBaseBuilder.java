@@ -1438,31 +1438,36 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][if][superOnClick]
         super.onClick(v);
                                                                                                     [<sub>][if][superOnClick]
-        switch (v.getId()) {
+        try {
+            switch (v.getId()) {
                                                                                                     [<sub>][for][onClickSwith]
                                                                                                     [<sub>][for][onClickCase]
-            case [id]:
+                case [id]:
                                                                                                     [<sub>][for][onClickCase]
                                                                                                     [<sub>][if][onClickCheckLogin]
-                if (!isLogin(getAct())) {
-                    return;
-                }
+                    if (!isLogin(getAct())) {
+                        return;
+                    }
                                                                                                     [<sub>][if][onClickCheckLogin]
                                                                                                     [<sub>][if][onClickCheckForm]
-                if (!check[formBean]()) {
-                    return;
-                }
+                    if (!check[formBean]()) {
+                        return;
+                    }
                                                                                                     [<sub>][if][onClickCheckForm]
-                [methodName](
+                    [methodName](
                                                                                                     [<sub>][if][onClickSwitchParams]
-                        v[divider]
+                            v[divider]
                                                                                                     [<sub>][if][onClickSwitchParams]
                                                                                                     [<sub>][for][onClickSwitchParams]
-                        ([type]) v.getTag([pkg].R.id.tag_[index])[divider]
+                            ([type]) v.getTag([pkg].R.id.tag_[index])[divider]
                                                                                                     [<sub>][for][onClickSwitchParams]
-                );
-                break;
+                    );
+                    break;
                                                                                                     [<sub>][for][onClickSwith]
+            }
+        } catch (Exception e) {
+            toast(e.getMessage());
+            com.codingtu.cooltu.lib4a.log.Logs.e(e);
         }
     }
 

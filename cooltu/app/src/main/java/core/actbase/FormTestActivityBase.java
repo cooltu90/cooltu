@@ -56,8 +56,13 @@ public abstract class FormTestActivityBase extends com.codingtu.cooltu.ui.FormTe
     public void onClick(View v) {
         super.onClick(v);
 
-        switch (v.getId()) {
+        try {
+            switch (v.getId()) {
 
+            }
+        } catch (Exception e) {
+            toast(e.getMessage());
+            com.codingtu.cooltu.lib4a.log.Logs.e(e);
         }
     }
 

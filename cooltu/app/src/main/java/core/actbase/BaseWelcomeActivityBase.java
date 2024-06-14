@@ -67,14 +67,19 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
     public void onClick(View v) {
         super.onClick(v);
 
-        switch (v.getId()) {
-            case com.codingtu.cooltu.R.id.tv1:
-            case com.codingtu.cooltu.R.id.tv3:
-            case com.codingtu.cooltu.R.id.tv:
-                tv3Click(
-                );
-                break;
+        try {
+            switch (v.getId()) {
+                case com.codingtu.cooltu.R.id.tv1:
+                case com.codingtu.cooltu.R.id.tv3:
+                case com.codingtu.cooltu.R.id.tv:
+                    tv3Click(
+                    );
+                    break;
 
+            }
+        } catch (Exception e) {
+            toast(e.getMessage());
+            com.codingtu.cooltu.lib4a.log.Logs.e(e);
         }
     }
 

@@ -88,12 +88,17 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()) {
-            case com.codingtu.cooltu.R.id.saveBt1:
-                saveBt1Click(
-                );
-                break;
+        try {
+            switch (v.getId()) {
+                case com.codingtu.cooltu.R.id.saveBt1:
+                    saveBt1Click(
+                    );
+                    break;
 
+            }
+        } catch (Exception e) {
+            toast(e.getMessage());
+            com.codingtu.cooltu.lib4a.log.Logs.e(e);
         }
     }
 

@@ -70,8 +70,13 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()) {
+        try {
+            switch (v.getId()) {
 
+            }
+        } catch (Exception e) {
+            toast(e.getMessage());
+            com.codingtu.cooltu.lib4a.log.Logs.e(e);
         }
     }
 

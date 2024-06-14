@@ -61,22 +61,27 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()) {
-            case com.codingtu.cooltu.R.id.reportTv:
-                reportTvClick(
-                        (java.lang.String) v.getTag(com.codingtu.cooltu.lib4a.R.id.tag_0)
-                );
-                break;
-            case com.codingtu.cooltu.R.id.deleteItemBt:
-                deleteItemBtClick(
-                        (java.lang.String) v.getTag(com.codingtu.cooltu.lib4a.R.id.tag_0)
-                );
-                break;
-            case com.codingtu.cooltu.R.id.deleteItemBt1:
-                deleteItemBt1Click(
-                );
-                break;
+        try {
+            switch (v.getId()) {
+                case com.codingtu.cooltu.R.id.reportTv:
+                    reportTvClick(
+                            (java.lang.String) v.getTag(com.codingtu.cooltu.lib4a.R.id.tag_0)
+                    );
+                    break;
+                case com.codingtu.cooltu.R.id.deleteItemBt:
+                    deleteItemBtClick(
+                            (java.lang.String) v.getTag(com.codingtu.cooltu.lib4a.R.id.tag_0)
+                    );
+                    break;
+                case com.codingtu.cooltu.R.id.deleteItemBt1:
+                    deleteItemBt1Click(
+                    );
+                    break;
 
+            }
+        } catch (Exception e) {
+            toast(e.getMessage());
+            com.codingtu.cooltu.lib4a.log.Logs.e(e);
         }
     }
 

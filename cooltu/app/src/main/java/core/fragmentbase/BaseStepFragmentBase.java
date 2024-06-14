@@ -49,12 +49,17 @@ public abstract class BaseStepFragmentBase extends com.codingtu.cooltu.lib4a.ui.
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()) {
-            case com.codingtu.cooltu.R.id.tv2:
-                tv2Click(
-                );
-                break;
+        try {
+            switch (v.getId()) {
+                case com.codingtu.cooltu.R.id.tv2:
+                    tv2Click(
+                    );
+                    break;
 
+            }
+        } catch (Exception e) {
+            toast(e.getMessage());
+            com.codingtu.cooltu.lib4a.log.Logs.e(e);
         }
     }
     protected void tv2Click() {}

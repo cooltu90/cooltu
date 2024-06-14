@@ -52,15 +52,20 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()) {
-            case com.codingtu.cooltu.R.id.saveBt:
-                if (!checkFormData()) {
-                    return;
-                }
-                saveBtClick(
-                );
-                break;
+        try {
+            switch (v.getId()) {
+                case com.codingtu.cooltu.R.id.saveBt:
+                    if (!checkFormData()) {
+                        return;
+                    }
+                    saveBtClick(
+                    );
+                    break;
 
+            }
+        } catch (Exception e) {
+            toast(e.getMessage());
+            com.codingtu.cooltu.lib4a.log.Logs.e(e);
         }
     }
 
