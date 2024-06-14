@@ -87,7 +87,7 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
             com.codingtu.cooltu.lib4a.log.Logs.e(e);
         }
     }
-    protected void tv1Click(com.codingtu.cooltu.bean.User user) {}
+    protected void tv1Click(com.codingtu.cooltu.bean.User user) throws Exception {}
 
 
     @Override

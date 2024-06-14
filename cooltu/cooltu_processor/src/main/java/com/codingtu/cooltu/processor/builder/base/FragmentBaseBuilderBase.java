@@ -650,7 +650,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         }
         for (int i0 = 0; i0 < count(onClickMethodsCounts, getForKey("onClickMethods")); i0++) {
             List<String> onClickMethods0 = onClickMethods.get(getForKey("onClickMethods", i0));
-            addLnTag(onClickMethodsSb, "    protected void [methodName]([params]) {}", onClickMethods0.get(0), onClickMethods0.get(1));
+            addLnTag(onClickMethodsSb, "    protected void [methodName]([params]) throws Exception {}", onClickMethods0.get(0), onClickMethods0.get(1));
         }
         for (int i0 = 0; i0 < count(onLongClickSwithCounts, getForKey("onLongClickSwith")); i0++) {
             List<String> onLongClickSwith0 = onLongClickSwith.get(getForKey("onLongClickSwith", i0));

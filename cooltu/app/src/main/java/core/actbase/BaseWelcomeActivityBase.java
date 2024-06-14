@@ -83,7 +83,7 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
         }
     }
 
-    protected void tv3Click() {}
+    protected void tv3Click() throws Exception {}
 
 
     @Override

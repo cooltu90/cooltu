@@ -85,9 +85,9 @@ public abstract class AddPhotoActivityBase extends com.codingtu.cooltu.ui.base.B
         }
     }
 
-    protected void reportTvClick(java.lang.String str) {}
-    protected void deleteItemBtClick(java.lang.String str) {}
-    protected void deleteItemBt1Click() {}
+    protected void reportTvClick(java.lang.String str) throws Exception {}
+    protected void deleteItemBtClick(java.lang.String str) throws Exception {}
+    protected void deleteItemBt1Click() throws Exception {}
 
 
     @Override

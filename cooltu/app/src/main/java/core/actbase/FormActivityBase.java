@@ -69,7 +69,7 @@ public abstract class FormActivityBase extends com.codingtu.cooltu.ui.base.BaseA
         }
     }
 
-    protected void saveBtClick() {}
+    protected void saveBtClick() throws Exception {}
 
 
     @Override

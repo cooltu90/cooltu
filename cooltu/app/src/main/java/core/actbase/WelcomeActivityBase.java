@@ -75,8 +75,8 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         }
     }
 
-    protected void showBtClick() {}
-    protected void reportTvClick() {}
+    protected void showBtClick() throws Exception {}
+    protected void reportTvClick() throws Exception {}
 
 
     @Override

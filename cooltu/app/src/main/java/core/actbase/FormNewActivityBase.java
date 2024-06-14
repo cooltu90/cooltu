@@ -102,7 +102,7 @@ public abstract class FormNewActivityBase extends com.codingtu.cooltu.ui.base.Ba
         }
     }
 
-    protected void saveBt1Click() {}
+    protected void saveBt1Click() throws Exception {}
 
 
     @Override

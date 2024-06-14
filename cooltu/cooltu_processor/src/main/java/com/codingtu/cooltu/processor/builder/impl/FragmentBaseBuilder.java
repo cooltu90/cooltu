@@ -226,7 +226,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
         }
     }
                                                                                                     [<sub>][for][onClickMethods]
-    protected void [methodName]([params]) {}
+    protected void [methodName]([params]) throws Exception {}
                                                                                                     [<sub>][for][onClickMethods]
 
     @Override
