@@ -29,7 +29,7 @@ public class CoreLinearLayout extends LinearLayout implements OnDestroy {
     }
 
     protected void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        DestoryTool.onDestory(context, this);
+        //DestoryTool.onDestory(context, this);
     }
 
     @Override

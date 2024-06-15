@@ -24,7 +24,7 @@ public class CoreTextView extends androidx.appcompat.widget.AppCompatTextView im
     }
 
     protected void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        DestoryTool.onDestory(context, this);
+        //DestoryTool.onDestory(context, this);
     }
 
     @Override

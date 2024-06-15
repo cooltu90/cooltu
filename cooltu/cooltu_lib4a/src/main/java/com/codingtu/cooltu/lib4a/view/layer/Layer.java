@@ -80,7 +80,7 @@ public class Layer extends RelativeLayout implements OnDestroy {
     }
 
     protected void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        DestoryTool.onDestory(context, this);
+        //DestoryTool.onDestory(context, this);
         AttrsTools.getAttrs(context, attrs, R.styleable.LayerView, new GetAttrs() {
             @Override
             public void getAttrs(Attrs attrs) {

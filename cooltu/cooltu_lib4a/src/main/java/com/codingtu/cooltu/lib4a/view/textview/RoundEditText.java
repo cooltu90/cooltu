@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.codingtu.cooltu.lib4a.R;
-import com.codingtu.cooltu.lib4a.tools.DestoryTool;
 import com.codingtu.cooltu.lib4a.view.base.CoreEditText;
 import com.codingtu.cooltu.lib4a.view.tools.RoundBgTool;
 
@@ -32,7 +31,7 @@ public class RoundEditText extends CoreEditText {
     protected void init(Context context, AttributeSet attrs, int defStyleAttr) {
         super.init(context, attrs, defStyleAttr);
         roundBgTool = new RoundBgTool();
-        DestoryTool.onDestory(context, roundBgTool);
+        //DestoryTool.onDestory(context, roundBgTool);
         roundBgTool.init(context, this, attrs,
                 R.styleable.RoundEditText,
                 R.styleable.RoundEditText_android_radius,
@@ -66,6 +65,8 @@ public class RoundEditText extends CoreEditText {
 
     @Override
     public void destroy() {
-        roundBgTool = null;
+        RoundBgTool roundBgTool = this.roundBgTool;
+        this.roundBgTool = null;
+        roundBgTool.destroy();
     }
 }

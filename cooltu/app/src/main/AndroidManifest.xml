@@ -44,29 +44,9 @@
             android:name="com.codingtu.cooltu.ui.StepOneActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codingtu.cooltu.ui.FormTestBaseActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.codingtu.cooltu.ui.FormTestActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.codingtu.cooltu.ui.AddPhotoActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.codingtu.cooltu.ui.StepTwoActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.codingtu.cooltu.ui.view.step.StepsOneActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.codingtu.cooltu.ui.FormNewActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.codingtu.cooltu.ui.BindActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.codingtu.cooltu.ui.FormActivity"
-            android:screenOrientation="portrait" />
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

@@ -27,7 +27,7 @@ public class RoundTextView extends CoreTextView {
     protected void init(Context context, AttributeSet attrs, int defStyleAttr) {
         super.init(context, attrs, defStyleAttr);
         roundBgTool = new RoundBgTool();
-        DestoryTool.onDestory(context, roundBgTool);
+        //DestoryTool.onDestory(context, roundBgTool);
         roundBgTool.init(context, this, attrs,
                 R.styleable.RoundTextView,
                 R.styleable.RoundTextView_android_radius,
@@ -61,7 +61,9 @@ public class RoundTextView extends CoreTextView {
 
     @Override
     public void destroy() {
-        roundBgTool = null;
+        RoundBgTool roundBgTool = this.roundBgTool;
+        this.roundBgTool = null;
+        roundBgTool.destroy();
     }
 
 

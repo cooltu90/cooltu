@@ -29,10 +29,6 @@ public class DownloadDialog implements OnDestroy {
 
     public DownloadDialog(Activity act) {
         this.act = act;
-        if (act instanceof Destroys) {
-            ((Destroys) act).add(this);
-        }
-
         this.totalWidth = MobileTool.dpToPx(228.68f);
         this.rlv = new Layer(this.act);
         this.rlv.setHiddenWhenBackClick(false);
