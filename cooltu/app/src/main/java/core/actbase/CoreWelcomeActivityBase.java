@@ -32,7 +32,6 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
 
 
-
     }
 
 

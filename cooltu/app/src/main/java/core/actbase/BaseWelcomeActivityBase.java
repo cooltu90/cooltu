@@ -59,7 +59,6 @@ public abstract class BaseWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
 
 
-
     }
 
 

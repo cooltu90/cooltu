@@ -56,10 +56,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected java.util.Map<String, Integer> setOnLongClickCounts;
     protected StringBuilder setOnLongClickSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> setOnLongClick;
-    protected java.util.Map<String, Boolean> useFormInitIfs;
-    protected java.util.Map<String, Integer> useFormInitCounts;
-    protected StringBuilder useFormInitSb;
-    protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> useFormInit;
     protected java.util.Map<String, Boolean> onCreateCompleteOtherIfs;
     protected java.util.Map<String, Integer> onCreateCompleteOtherCounts;
     protected StringBuilder onCreateCompleteOtherSb;
@@ -213,10 +209,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         setOnLongClickCounts = new java.util.HashMap<>();
         setOnLongClickSb = map.get("setOnLongClick");
         setOnLongClick = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
-        useFormInitIfs = new java.util.HashMap<>();
-        useFormInitCounts = new java.util.HashMap<>();
-        useFormInitSb = map.get("useFormInit");
-        useFormInit = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
         onCreateCompleteOtherIfs = new java.util.HashMap<>();
         onCreateCompleteOtherCounts = new java.util.HashMap<>();
         onCreateCompleteOtherSb = map.get("onCreateCompleteOther");
@@ -550,10 +542,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         addForMap(this.listAdapter, getIfKey("defaultListMoreAdapter", i0), adapterName, adapterName, adapterFullName, adapterName);
         listAdapterIfs.put(getIfKey("defaultListMoreAdapter", i0), true);
     }
-    public void useFormInitIf(String userFormInit) {
-        addForMap(this.useFormInit, getIfKey("useFormInit"), userFormInit);
-        useFormInitIfs.put(getIfKey("useFormInit"), true);
-    }
     public void onCreateCompleteOtherIf(String onCreateCompleteOther) {
         addForMap(this.onCreateCompleteOther, getIfKey("onCreateCompleteOther"), onCreateCompleteOther);
         onCreateCompleteOtherIfs.put(getIfKey("onCreateCompleteOther"), true);
@@ -752,10 +740,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         for (int i0 = 0; i0 < count(setOnLongClickCounts, getForKey("setOnLongClick")); i0++) {
             List<String> setOnLongClick0 = setOnLongClick.get(getForKey("setOnLongClick", i0));
             addLnTag(setOnLongClickSb, "        [fieldName].setOnLongClickListener(this);", setOnLongClick0.get(0));
-        }
-        if (isIf(useFormInitIfs, getIfKey("useFormInit"))) {
-            List<String> useFormInit0 = useFormInit.get(getIfKey("useFormInit"));
-            addLnTag(useFormInitSb, "[userFormInit]", useFormInit0.get(0));
         }
         if (isIf(onCreateCompleteOtherIfs, getIfKey("onCreateCompleteOther"))) {
             List<String> onCreateCompleteOther0 = onCreateCompleteOther.get(getIfKey("onCreateCompleteOther"));
@@ -1172,7 +1156,6 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[listAdapter]]");
         lines.add("[[setOnClick]]");
         lines.add("[[setOnLongClick]]");
-        lines.add("[[useFormInit]]");
         lines.add("[[onCreateCompleteOther]]");
         lines.add("    }");
         lines.add("[[adapterObjs]]");

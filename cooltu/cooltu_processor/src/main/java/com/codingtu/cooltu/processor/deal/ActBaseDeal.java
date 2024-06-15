@@ -8,7 +8,6 @@ import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Maps;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.processor.annotation.bind.Bind;
 import com.codingtu.cooltu.processor.annotation.net.NetBack;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
@@ -100,7 +99,6 @@ public class ActBaseDeal extends TypeBaseDeal {
             return false;
         });
 
-        baseBuilder.bind = te.getAnnotation(Bind.class);
     }
 
     private void dealLongClickView(UiBaseBuilder uiBaseBuilder, LongClickView clickView, ExecutableElement ee) {
