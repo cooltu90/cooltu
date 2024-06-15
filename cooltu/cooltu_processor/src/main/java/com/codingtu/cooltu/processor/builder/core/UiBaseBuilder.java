@@ -11,10 +11,10 @@ import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
+import com.codingtu.cooltu.lib4j.tools.TagTools;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.StringTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.processor.annotation.forms.UseForm;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.annotation.ui.InBase;
@@ -38,7 +38,6 @@ import com.codingtu.cooltu.processor.lib.tools.BeanTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
-import com.codingtu.cooltu.lib4j.tools.TagTools;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,7 +78,6 @@ public abstract class UiBaseBuilder {
 
     public boolean isToastDialog;
     public boolean isNoticeDialog;
-    public UseForm form;
     private List<String> inBaseInParent;
     private Map<String, LayoutTools.ViewInfo> childViewMap;
     private Map<String, LayoutTools.ViewInfo> allViewMap;

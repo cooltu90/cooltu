@@ -2,7 +2,6 @@ package com.codingtu.cooltu.processor.deal.base;
 
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.processor.annotation.forms.UseForm;
 import com.codingtu.cooltu.processor.annotation.res.ColorRes;
 import com.codingtu.cooltu.processor.annotation.res.ColorStr;
 import com.codingtu.cooltu.processor.annotation.res.Dimen;
@@ -47,9 +46,6 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
 
         uiBaseBuilder.isToastDialog = te.getAnnotation(ToastDialogUse.class) != null;
         uiBaseBuilder.isNoticeDialog = te.getAnnotation(NoticeDialogUse.class) != null;
-
-        UseForm useForm = te.getAnnotation(UseForm.class);
-        uiBaseBuilder.form = useForm;
 
     }
 
