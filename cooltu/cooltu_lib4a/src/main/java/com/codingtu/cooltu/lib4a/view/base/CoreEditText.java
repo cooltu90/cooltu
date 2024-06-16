@@ -27,7 +27,6 @@ public class CoreEditText extends androidx.appcompat.widget.AppCompatEditText im
     }
 
     protected void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        //DestoryTool.onDestory(context, this);
     }
 
     @Override

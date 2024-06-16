@@ -31,7 +31,6 @@ public class RoundEditText extends CoreEditText {
     protected void init(Context context, AttributeSet attrs, int defStyleAttr) {
         super.init(context, attrs, defStyleAttr);
         roundBgTool = new RoundBgTool();
-        //DestoryTool.onDestory(context, roundBgTool);
         roundBgTool.init(context, this, attrs,
                 R.styleable.RoundEditText,
                 R.styleable.RoundEditText_android_radius,

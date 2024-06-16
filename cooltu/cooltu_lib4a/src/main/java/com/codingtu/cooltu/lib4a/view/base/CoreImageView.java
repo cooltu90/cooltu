@@ -26,7 +26,6 @@ public class CoreImageView extends AppCompatImageView implements OnDestroy {
     }
 
     protected void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        //DestoryTool.onDestory(context, this);
     }
 
     @Override
