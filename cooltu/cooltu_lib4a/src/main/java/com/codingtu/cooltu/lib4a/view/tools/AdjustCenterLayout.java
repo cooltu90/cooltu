@@ -23,10 +23,13 @@ public class AdjustCenterLayout implements OnDestroy {
 
     public AdjustCenterLayout act(Activity act) {
         this.act = act;
-        if (act instanceof Destroys) {
-            ((Destroys) act).add(this);
-        }
         lastH = MobileTool.getWindowVisibleDisplayH(act);
+        return this;
+    }
+
+    public AdjustCenterLayout destorys(Destroys destroys) {
+        if (destroys != null)
+            destroys.add(this);
         return this;
     }
 

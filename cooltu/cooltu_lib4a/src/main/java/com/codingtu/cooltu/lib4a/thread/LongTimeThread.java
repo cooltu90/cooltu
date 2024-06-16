@@ -48,6 +48,7 @@ public class LongTimeThread<T> implements OnDestroy {
                             if (subRunnable != null)
                                 subRunnable.run();
                         }
+                        destroy();
                     }
                 }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -68,10 +69,12 @@ public class LongTimeThread<T> implements OnDestroy {
     @Override
     public void destroy() {
         isRun = false;
-        if (subRunnable != null) {
+        if (this.subRunnable != null) {
+            SubRunnable<T> subRunnable = this.subRunnable;
+            this.subRunnable = null;
             subRunnable.destroy();
         }
-        subRunnable = null;
+
         mainRunnable = null;
     }
 

@@ -59,5 +59,6 @@ public class PrefixFixedSizeTextWather extends DefaultTextWatcher implements OnD
     @Override
     public void destroy() {
         et = null;
+        prefix = null;
     }
 }

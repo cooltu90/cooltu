@@ -15,7 +15,7 @@ public class AddMinusEt implements View.OnClickListener, OnDestroy {
     private ImageView minusBt;
     private EditText et;
 
-    public AddMinusEt(Destroys destroys, ImageView addBt, ImageView minusBt, EditText et) {
+    public AddMinusEt(ImageView addBt, ImageView minusBt, EditText et) {
         this.addBt = addBt;
         this.minusBt = minusBt;
         this.et = et;
@@ -23,7 +23,6 @@ public class AddMinusEt implements View.OnClickListener, OnDestroy {
         addBt.setOnClickListener(this);
         minusBt.setTag(R.id.tag_add_bt, false);
         minusBt.setOnClickListener(this);
-        destroys.add(this);
     }
 
     @Override
@@ -69,9 +68,11 @@ public class AddMinusEt implements View.OnClickListener, OnDestroy {
 
     @Override
     public void destroy() {
-        addBt.setOnClickListener(null);
+        if (addBt != null)
+            addBt.setOnClickListener(null);
         addBt = null;
-        minusBt.setOnClickListener(null);
+        if (minusBt != null)
+            minusBt.setOnClickListener(null);
         minusBt = null;
         et = null;
     }

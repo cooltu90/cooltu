@@ -152,9 +152,6 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
 
     public EditDialog(Activity act) {
         this.act = act;
-        if (act instanceof Destroys) {
-            ((Destroys) act).add(this);
-        }
     }
 
     public void setObject(Object obj) {
@@ -175,10 +172,13 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
         noBt = null;
         yesBt = null;
         et = null;
-        layer = null;
-        act = null;
         yes = null;
         obj = null;
+        ViewTool.removeFromAct(act, layer);
+        if (layer != null)
+            layer.destroy();
+        layer = null;
+        act = null;
     }
 
     private Integer restHeight;

@@ -46,7 +46,8 @@ public class RepeatThread implements OnDestroy {
     }
 
     public RepeatThread destroy(Destroys destroys) {
-        destroys.add(this);
+        if (destroys != null)
+            destroys.add(this);
         return this;
     }
 
@@ -73,6 +74,7 @@ public class RepeatThread implements OnDestroy {
                                 Thread.sleep(nextTime);
                             }
                         }
+                        destroy();
                     }
                 }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

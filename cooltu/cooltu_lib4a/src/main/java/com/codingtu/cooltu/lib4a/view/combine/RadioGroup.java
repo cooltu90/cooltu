@@ -44,10 +44,14 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
 
     }
 
-    public static RadioGroup obtain(Destroys destroys) {
-        RadioGroup radioGroup = new RadioGroup();
-        destroys.add(radioGroup);
-        return radioGroup;
+    public static RadioGroup obtain() {
+        return new RadioGroup();
+    }
+
+    public RadioGroup destroys(Destroys destroys) {
+        if (destroys != null)
+            destroys.add(this);
+        return this;
     }
 
 

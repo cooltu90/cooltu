@@ -382,7 +382,15 @@ public class ViewTool {
     }
 
     public static void addToAct(Activity act, View view) {
+        if (act == null || view == null)
+            return;
         getRootViewGroup(act).addView(view, ViewTool.MATCH_PARENT, ViewTool.MATCH_PARENT);
+    }
+
+    public static void removeFromAct(Activity act, View view) {
+        if (act == null || view == null)
+            return;
+        getRootViewGroup(act).removeView(view);
     }
 
     /***************************************

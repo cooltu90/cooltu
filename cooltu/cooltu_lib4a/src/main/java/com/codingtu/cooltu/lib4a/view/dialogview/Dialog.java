@@ -30,9 +30,6 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
 
     public Dialog(Activity act) {
         this.act = act;
-        if (act instanceof Destroys) {
-            ((Destroys) act).add(this);
-        }
     }
 
     public Dialog setTitle(String title) {
@@ -136,12 +133,13 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
         }
         rightBt = null;
         leftBt = null;
-        layer = null;
         inflate = null;
         onBtClick = null;
         obj = null;
         contentTv = null;
+        ViewTool.removeFromAct(act, layer);
         act = null;
+        layer = null;
     }
 
     public void show() {

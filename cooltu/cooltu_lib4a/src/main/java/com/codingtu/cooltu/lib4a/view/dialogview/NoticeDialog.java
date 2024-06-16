@@ -22,15 +22,16 @@ public final class NoticeDialog implements OnDestroy, View.OnClickListener {
 
     public NoticeDialog(Activity act) {
         this.act = act;
-        if (act instanceof Destroys) {
-            ((Destroys) act).add(this);
-        }
     }
+
 
     @Override
     public void destroy() {
         contentTv = null;
         inflate = null;
+        ViewTool.removeFromAct(act, layer);
+        if (layer != null)
+            layer.destroy();
         layer = null;
         act = null;
     }
