@@ -62,7 +62,7 @@ public abstract class CoreTagActivity extends CoreActivity {
                 return false;
             }
         });
-        radioGroup = RadioGroup.obtain(this).setBts(bts)
+        radioGroup = RadioGroup.obtain().destroys(this).setBts(bts)
                 .setOnSetItem(new RadioGroup.OnSetItem() {
                     @Override
                     public void setSelected(View view) {

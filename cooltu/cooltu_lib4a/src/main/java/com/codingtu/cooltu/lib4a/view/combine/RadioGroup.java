@@ -15,6 +15,11 @@ import com.codingtu.cooltu.lib4j.ts.Ts;
 import java.util.ArrayList;
 import java.util.List;
 
+/**************************************************
+ *
+ * onDestory
+ *
+ **************************************************/
 public class RadioGroup implements OnDestroy, View.OnClickListener {
     private boolean hasNull;
     private int selected = -1;
@@ -149,26 +154,29 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
         this.selected = index;
         change();
         for (int i = 0; i < CountTool.count(onSelectChanges); i++) {
-            onSelectChanges.get(i).onChange(this.selected);
+            OnSelectChange onSelectChange = onSelectChanges.get(i);
+            if (onSelectChange != null)
+                onSelectChange.onChange(this.selected);
         }
     }
 
     private void change() {
-        bts.ls(new Ts.EachTs<View>() {
-            @Override
-            public boolean each(int i, View view) {
-                if (selected == i) {
-                    if (onSetItem != null) {
-                        onSetItem.setSelected(view);
+        if (bts != null)
+            bts.ls(new Ts.EachTs<View>() {
+                @Override
+                public boolean each(int i, View view) {
+                    if (selected == i) {
+                        if (onSetItem != null) {
+                            onSetItem.setSelected(view);
+                        }
+                    } else {
+                        if (onSetItem != null) {
+                            onSetItem.setSelectno(view);
+                        }
                     }
-                } else {
-                    if (onSetItem != null) {
-                        onSetItem.setSelectno(view);
-                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
     }
 
 

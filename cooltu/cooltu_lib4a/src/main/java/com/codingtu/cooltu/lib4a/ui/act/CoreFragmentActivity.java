@@ -24,7 +24,8 @@ public abstract class CoreFragmentActivity extends CoreActivity {
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
-        radioGroup = RadioGroup.obtain(this)
+        radioGroup = RadioGroup.obtain()
+                .destroys(this)
                 .setBts(getBts())
                 .setOnSetItem(new RadioGroup.OnSetItem() {
                     @Override
