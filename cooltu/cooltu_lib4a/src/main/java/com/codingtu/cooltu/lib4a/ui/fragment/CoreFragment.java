@@ -6,8 +6,14 @@ import androidx.fragment.app.Fragment;
 
 import com.codingtu.cooltu.lib4a.tools.ToastTool;
 import com.codingtu.cooltu.lib4a.uicore.CoreFragmentInterface;
+import com.codingtu.cooltu.lib4j.destory.Destroys;
+import com.codingtu.cooltu.lib4j.destory.OnDestroy;
+import com.codingtu.cooltu.lib4j.ts.Ts;
 
-public class CoreFragment extends Fragment implements CoreFragmentInterface {
+import java.util.ArrayList;
+import java.util.List;
+
+public class CoreFragment extends Fragment implements CoreFragmentInterface, Destroys {
 
     @Override
     public void toast(String msg) {
@@ -41,7 +47,34 @@ public class CoreFragment extends Fragment implements CoreFragmentInterface {
     }
 
     public void onFragmentShow() {
-        
+
+    }
+
+    /**************************************************
+     *
+     * OnDestroy
+     *
+     **************************************************/
+    protected List<OnDestroy> onDestroys;
+
+    public List<OnDestroy> getOnDestroys() {
+        if (onDestroys == null)
+            onDestroys = new ArrayList<OnDestroy>();
+        return onDestroys;
+    }
+
+    public void add(OnDestroy onDestroy) {
+        getOnDestroys().add(onDestroy);
+    }
+
+    public void destroyAll() {
+        Ts.ls(getOnDestroys(), new Ts.EachTs<OnDestroy>() {
+            @Override
+            public boolean each(int position, OnDestroy onDestroy) {
+                onDestroy.destroy();
+                return false;
+            }
+        });
     }
 
 }

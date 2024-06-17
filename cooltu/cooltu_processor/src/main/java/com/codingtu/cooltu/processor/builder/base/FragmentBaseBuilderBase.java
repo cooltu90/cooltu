@@ -738,6 +738,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             addLnTag(toastDialogSb, "    protected [toastDialogFullName] getToastDialog() {", toastDialog0.get(1));
             addLnTag(toastDialogSb, "        if (toastDialog == null)");
             addLnTag(toastDialogSb, "            toastDialog = new [toastDialogFullName](getAct())", toastDialog0.get(2));
+            addLnTag(toastDialogSb, "                    .destroys(this)");
             addLnTag(toastDialogSb, "                    .setLayout([layout])", toastDialog0.get(3));
             addLnTag(toastDialogSb, "                    .build();");
             addLnTag(toastDialogSb, "        return toastDialog;");
@@ -784,6 +785,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             addLnTag(noticeDialogSb, "    protected void noticeShow(String msg) {");
             addLnTag(noticeDialogSb, "        if (noticeDialog == null)");
             addLnTag(noticeDialogSb, "            noticeDialog = new [noticeDialogFullName](getAct())", noticeDialog0.get(1));
+            addLnTag(noticeDialogSb, "                    .destroys(this)");
             addLnTag(noticeDialogSb, "                    .setLayout([layout])", noticeDialog0.get(2));
             addLnTag(noticeDialogSb, "                    .build();");
             addLnTag(noticeDialogSb, "        noticeDialog.setContent(msg);");
@@ -801,7 +803,8 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             }
             addLnTag(editDialogSb, "    protected void show[edClassName](String text[edShowParam]) {", editDialog0.get(2), edShowParamSb.toString());
             addLnTag(editDialogSb, "        if ([edName] == null)", editDialog0.get(3));
-            addLnTag(editDialogSb, "            [edName] = new [editDialogFullName].Builder(getAct())", editDialog0.get(4), editDialog0.get(5));
+            addLnTag(editDialogSb, "            [edName] = new [editDialogFullName](getAct())", editDialog0.get(4), editDialog0.get(5));
+            addLnTag(editDialogSb, "                    .destroys(this)");
             addLnTag(editDialogSb, "                    .setTitle(\"[title]\")", editDialog0.get(6));
             addLnTag(editDialogSb, "                    .setHint(\"[hint]\")", editDialog0.get(7));
             addLnTag(editDialogSb, "                    .setInputType([inputType])", editDialog0.get(8));
@@ -860,6 +863,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
                 addLnTag(dialogSb, "    protected void show[dialogClassName]([showDialogParam]) {", dialog1.get(0), dialog1.get(1));
                 addLnTag(dialogSb, "        if ([dialogName] == null) {", dialog1.get(2));
                 addLnTag(dialogSb, "            [dialogName] = new [dialogFullName](getAct())", dialog1.get(3), dialog1.get(4));
+                addLnTag(dialogSb, "                    .destroys(this)");
                 addLnTag(dialogSb, "                    .setTitle(\"[title]\")", dialog1.get(5));
                 if (isIf(dialogIfs, getIfKey("showDialogSetContentStr", i0, i1))) {
                     List<String> dialog2 = dialog.get(getIfKey("showDialogSetContentStr", i0, i1));

@@ -12,8 +12,7 @@ public class PrefixFixedSizeTextWather extends DefaultTextWatcher implements OnD
     private EditText et;
     private String prefix;
 
-    public PrefixFixedSizeTextWather(Destroys destroys, EditText et, int bit, String prefix) {
-        destroys.add(this);
+    public PrefixFixedSizeTextWather(EditText et, int bit, String prefix) {
         this.bit = bit;
         this.et = et;
         this.prefix = prefix;

@@ -41,6 +41,12 @@ public final class NoticeDialog implements OnDestroy, View.OnClickListener {
         return this;
     }
 
+    public NoticeDialog destroys(Destroys destroys) {
+        if (destroys != null)
+            destroys.add(this);
+        return this;
+    }
+
     public NoticeDialog build() {
         layer = new Layer(act);
         layer.setHiddenWhenBackClick(false);

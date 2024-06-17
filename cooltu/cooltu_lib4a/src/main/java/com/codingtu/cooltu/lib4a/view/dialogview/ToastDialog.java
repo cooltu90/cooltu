@@ -35,6 +35,12 @@ public final class ToastDialog implements OnDestroy {
         act = null;
     }
 
+    public ToastDialog destroys(Destroys destroys) {
+        if (destroys != null)
+            destroys.add(this);
+        return this;
+    }
+
     public ToastDialog setLayout(int layout) {
         this.layout = layout;
         return this;

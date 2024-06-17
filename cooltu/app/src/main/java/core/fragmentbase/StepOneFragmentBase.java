@@ -136,6 +136,7 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
     protected com.codingtu.cooltu.lib4a.view.dialogview.ToastDialog getToastDialog() {
         if (toastDialog == null)
             toastDialog = new com.codingtu.cooltu.lib4a.view.dialogview.ToastDialog(getAct())
+                    .destroys(this)
                     .setLayout(com.codingtu.cooltu.R.layout.dialog_toast)
                     .build();
         return toastDialog;
@@ -180,7 +181,8 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
 
     protected void showEd(String text, com.codingtu.cooltu.bean.User user) {
         if (ed == null)
-            ed = new com.codingtu.cooltu.lib4a.view.dialogview.EditDialog.Builder(getAct())
+            ed = new com.codingtu.cooltu.lib4a.view.dialogview.EditDialog(getAct())
+                    .destroys(this)
                     .setTitle("xxx")
                     .setHint("xxx")
                     .setInputType(2)
@@ -211,8 +213,9 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
     protected void showDialog(com.codingtu.cooltu.bean.User user) {
         if (dialog == null) {
             dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
-                    .setTitle("xxx")
-                    .setContent("xxx")
+                    .destroys(this)
+                    .setTitle("xxx1")
+                    .setContent("xxx1")
                     .setLeftBtText("取消")
                     .setRighBtText("确定")
                     .setLayout(com.codingtu.cooltu.R.layout.dialog)
@@ -235,7 +238,8 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
     protected void showDialog(String content, com.codingtu.cooltu.bean.User user) {
         if (dialog == null) {
             dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
-                    .setTitle("xxx")
+                    .destroys(this)
+                    .setTitle("xxx1")
                     .setContent(content)
                     .setLeftBtText("取消")
                     .setRighBtText("确定")
@@ -264,6 +268,7 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
     protected void showDialog1() {
         if (dialog1 == null) {
             dialog1 = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
+                    .destroys(this)
                     .setTitle("xxx")
                     .setContent("32343234")
                     .setLeftBtText("取消")
@@ -288,6 +293,7 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
     protected void showDialog1(String content) {
         if (dialog1 == null) {
             dialog1 = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
+                    .destroys(this)
                     .setTitle("xxx")
                     .setContent(content)
                     .setLeftBtText("取消")

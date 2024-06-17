@@ -32,6 +32,13 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
         this.act = act;
     }
 
+    public Dialog destroys(Destroys destroys) {
+        if (destroys == null) {
+            destroys.add(this);
+        }
+        return this;
+    }
+
     public Dialog setTitle(String title) {
         this.title = title;
         return this;
@@ -138,6 +145,9 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
         obj = null;
         contentTv = null;
         ViewTool.removeFromAct(act, layer);
+        if (layer != null) {
+            layer.destroy();
+        }
         act = null;
         layer = null;
     }

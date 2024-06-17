@@ -120,6 +120,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected com.codingtu.cooltu.lib4a.view.dialogview.ToastDialog getToastDialog() {
         if (toastDialog == null)
             toastDialog = new com.codingtu.cooltu.lib4a.view.dialogview.ToastDialog(getAct())
+                    .destroys(this)
                     .setLayout(com.codingtu.cooltu.R.layout.dialog_toast)
                     .build();
         return toastDialog;
@@ -164,6 +165,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected void noticeShow(String msg) {
         if (noticeDialog == null)
             noticeDialog = new com.codingtu.cooltu.lib4a.view.dialogview.NoticeDialog(getAct())
+                    .destroys(this)
                     .setLayout(com.codingtu.cooltu.R.layout.dialog_notice)
                     .build();
         noticeDialog.setContent(msg);
@@ -174,7 +176,8 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
     protected void showEd(String text, com.codingtu.cooltu.bean.User user) {
         if (ed == null)
-            ed = new com.codingtu.cooltu.lib4a.view.dialogview.EditDialog.Builder(getAct())
+            ed = new com.codingtu.cooltu.lib4a.view.dialogview.EditDialog(getAct())
+                    .destroys(this)
                     .setTitle("xxx")
                     .setHint("xxx")
                     .setInputType(2)
@@ -205,6 +208,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected void showDialog(com.codingtu.cooltu.bean.User user) {
         if (dialog == null) {
             dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
+                    .destroys(this)
                     .setTitle("xxx")
                     .setContent("xxx")
                     .setLeftBtText("取消")
@@ -229,6 +233,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected void showDialog(String content, com.codingtu.cooltu.bean.User user) {
         if (dialog == null) {
             dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
+                    .destroys(this)
                     .setTitle("xxx")
                     .setContent(content)
                     .setLeftBtText("取消")

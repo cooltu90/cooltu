@@ -802,6 +802,7 @@ public abstract class UiBaseBuilder {
                 TagTools.addLnTag(sb, "    protected void show[MenuDialog]([String obj]) {", ConvertTool.toClassType(kv.v), param);
                 TagTools.addLnTag(sb, "        if ([menuDialog] == null) {", kv.v);
                 TagTools.addLnTag(sb, "            [menuDialog] = new [MenuDialog](getAct())", kv.v, kv.k);
+                TagTools.addLnTag(sb, "                    .destroys(this)");
                 TagTools.addLnTag(sb, "                    .setLayout([layout])", Constant.DEFAULT_MENU_DIALOG_LAYOUT);
                 TagTools.addLnTag(sb, "                    .setItemLayout([item])", Constant.DEFAULT_MENU_DIALOG_ITEM_LAYOUT);
 

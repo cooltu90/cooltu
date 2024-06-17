@@ -398,6 +398,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     protected [toastDialogFullName] getToastDialog() {
         if (toastDialog == null)
             toastDialog = new [toastDialogFullName](getAct())
+                    .destroys(this)
                     .setLayout([layout])
                     .build();
         return toastDialog;
@@ -443,6 +444,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     protected void noticeShow(String msg) {
         if (noticeDialog == null)
             noticeDialog = new [noticeDialogFullName](getAct())
+                    .destroys(this)
                     .setLayout([layout])
                     .build();
         noticeDialog.setContent(msg);
@@ -454,7 +456,8 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
 
     protected void show[edClassName](String text[if:edShowParam], [type] [name][if:edShowParam]) {
         if ([edName] == null)
-            [edName] = new [editDialogFullName].Builder(getAct())
+            [edName] = new [editDialogFullName](getAct())
+                    .destroys(this)
                     .setTitle("[title]")
                     .setHint("[hint]")
                     .setInputType([inputType])
@@ -493,6 +496,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     protected void show[dialogClassName]([showDialogParam]) {
         if ([dialogName] == null) {
             [dialogName] = new [dialogFullName](getAct())
+                    .destroys(this)
                     .setTitle("[title]")
                                                                                                     [<sub>][if][showDialogSetContentStr]
                     .setContent("[content]")

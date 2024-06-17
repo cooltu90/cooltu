@@ -8,6 +8,7 @@ import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4a.tools.InflateTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4a.view.layer.Layer;
+import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 
@@ -40,8 +41,6 @@ public class MenuDialog implements OnDestroy, View.OnClickListener {
 
     @Override
     public void destroy() {
-        act = null;
-        layer = null;
         inflate = null;
         title = null;
         obj = null;
@@ -60,10 +59,22 @@ public class MenuDialog implements OnDestroy, View.OnClickListener {
             itemViews = null;
         }
         showItem = null;
+        ViewTool.removeFromAct(act, layer);
+        if (layer != null)
+            layer.destroy();
+        act = null;
+        layer = null;
     }
 
     public MenuDialog(Activity act) {
         this.act = act;
+    }
+
+    public MenuDialog destroys(Destroys destroys) {
+        if (destroys != null) {
+            destroys.add(this);
+        }
+        return this;
     }
 
     public MenuDialog setLayout(int layout) {

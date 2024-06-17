@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.form.TestCallBack;
+import com.codingtu.cooltu.lib4a.view.dialogview.Dialog;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
@@ -50,4 +51,5 @@ public class WelcomeActivity extends WelcomeActivityBase {
             }
         };
     }
+
 }

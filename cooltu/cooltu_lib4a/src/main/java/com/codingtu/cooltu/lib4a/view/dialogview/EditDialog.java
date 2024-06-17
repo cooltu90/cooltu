@@ -10,145 +10,80 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.codingtu.cooltu.lib4a.R;
-import com.codingtu.cooltu.lib4a.view.layer.Layer;
-import com.codingtu.cooltu.lib4a.view.layer.event.OnHiddenFinishedCallBack;
-import com.codingtu.cooltu.lib4j.destory.Destroys;
-import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4a.tools.InflateTool;
 import com.codingtu.cooltu.lib4a.tools.Margins;
 import com.codingtu.cooltu.lib4a.tools.MobileTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
+import com.codingtu.cooltu.lib4a.view.layer.Layer;
+import com.codingtu.cooltu.lib4a.view.layer.event.OnHiddenFinishedCallBack;
+import com.codingtu.cooltu.lib4j.destory.Destroys;
+import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 
 public final class EditDialog implements OnDestroy, View.OnClickListener {
 
     private Activity act;
+
+    private String title;
+    private String hint;
+    private Integer inputType;
+    private int layout;
+    private boolean isStopAnimation;
+    private Yes yes;
+    private EdTextWatcher textWatcher;
+
+
     private Layer layer;
     private View inflate;
     private EditText et;
     private View noBt;
     private View yesBt;
-    private Yes yes;
     private Object obj;
 
-    public static class Builder {
-        private Activity act;
-        private String title;
-        private String hint;
-        private Integer inputType;
-        private int layout;
-        private boolean isStopAnimation;
-        private Yes yes;
-        private EdTextWatcher textWatcher;
-
-        public Builder(Activity act) {
-            this.act = act;
+    public EditDialog destroys(Destroys destroys) {
+        if (destroys != null) {
+            destroys.add(this);
         }
-
-
-        public Builder setTitle(String title) {
-            this.title = title;
-            return this;
-        }
-
-        public Builder setHint(String hint) {
-            this.hint = hint;
-            return this;
-        }
-
-        public Builder setInputType(Integer inputType) {
-            this.inputType = inputType;
-            return this;
-        }
-
-        public Builder setLayout(int layout) {
-            this.layout = layout;
-            return this;
-        }
-
-
-        public Builder stopAnimation() {
-            isStopAnimation = true;
-            return this;
-        }
-
-        public Builder setYes(Yes yes) {
-            this.yes = yes;
-            return this;
-        }
-
-        public Builder setTextWatcher(EdTextWatcher textWatcher) {
-            this.textWatcher = textWatcher;
-            return this;
-        }
-
-        public EditDialog build() {
-            EditDialog editDialog = new EditDialog(act);
-            editDialog.layer = new Layer(act);
-            editDialog.layer.setHiddenWhenBackClick(false);
-            editDialog.layer.setHiddenWhenShadowClick(false);
-            ViewTool.addToAct(act, editDialog.layer);
-            ViewTool.gone(editDialog.layer);
-            editDialog.inflate = InflateTool.inflate(act, layout);
-            editDialog.layer.addView(editDialog.inflate, ViewTool.WRAP_CONTENT, ViewTool.WRAP_CONTENT);
-            if (isStopAnimation)
-                editDialog.layer.stopAnimation();
-
-            View titleTv = editDialog.inflate.findViewById(R.id.editDialogTitleTv);
-            ViewTool.setText(titleTv, title);
-
-            editDialog.et = editDialog.inflate.findViewById(R.id.editDialogTitleEt);
-            editDialog.et.setHint(hint);
-            editDialog.et.setImeOptions(EditorInfo.IME_ACTION_DONE);
-            if (textWatcher != null) {
-                textWatcher.setEditText(editDialog.et);
-                editDialog.et.addTextChangedListener(textWatcher);
-            }
-            editDialog.et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        //处理搜索事件
-                        if (editDialog.yes == null) {
-                            return false;
-                        }
-                        String text = editDialog.et.getText().toString();
-                        if (editDialog.yes.yes(text, editDialog.obj)) {
-                            editDialog.layer.hidden();
-                        }
-                        return true;
-                    }
-                    return false;
-                }
-            });
-
-            if (inputType != null) {
-                editDialog.et.setInputType(inputType);
-            }
-
-            editDialog.noBt = editDialog.inflate.findViewById(R.id.editDialogNoBt);
-            editDialog.yesBt = editDialog.inflate.findViewById(R.id.editDialogYesBt);
-            editDialog.yesBt.setOnClickListener(editDialog);
-            editDialog.noBt.setOnClickListener(editDialog);
-
-//            editDialog.rlv.setLayerListener(new LayerListener() {
-//                @Override
-//                public void event(LayerEvent event) {
-//                    if (event.type == LayerEventType.HIDDEN_START) {
-//                        ViewTool.inputHidden(editDialog.et);
-//                    } else if (event.type == LayerEventType.HIDDEN_FINISHED) {
-//                        editDialog.obj = null;
-//                    }
-//                }
-//            });
-            editDialog.yes = yes;
-            return editDialog;
-        }
+        return this;
     }
 
-    public View getRootView() {
-        return this.inflate;
+
+    public EditDialog setTitle(String title) {
+        this.title = title;
+        return this;
     }
+
+    public EditDialog setHint(String hint) {
+        this.hint = hint;
+        return this;
+    }
+
+    public EditDialog setInputType(Integer inputType) {
+        this.inputType = inputType;
+        return this;
+    }
+
+    public EditDialog setLayout(int layout) {
+        this.layout = layout;
+        return this;
+    }
+
+
+    public EditDialog stopAnimation() {
+        isStopAnimation = true;
+        return this;
+    }
+
+    public EditDialog setYes(Yes yes) {
+        this.yes = yes;
+        return this;
+    }
+
+    public EditDialog setTextWatcher(EdTextWatcher textWatcher) {
+        this.textWatcher = textWatcher;
+        return this;
+    }
+
 
     public EditDialog(Activity act) {
         this.act = act;
@@ -162,6 +97,56 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
         ViewTool.setEditTextAndSelection(et, StringTool.toString(text));
     }
 
+    public EditDialog build() {
+        this.layer = new Layer(act);
+        this.layer.setHiddenWhenBackClick(false);
+        this.layer.setHiddenWhenShadowClick(false);
+        ViewTool.addToAct(act, this.layer);
+        ViewTool.gone(this.layer);
+        this.inflate = InflateTool.inflate(act, layout);
+        this.layer.addView(this.inflate, ViewTool.WRAP_CONTENT, ViewTool.WRAP_CONTENT);
+        if (isStopAnimation)
+            this.layer.stopAnimation();
+
+        View titleTv = this.inflate.findViewById(R.id.editDialogTitleTv);
+        ViewTool.setText(titleTv, title);
+
+        this.et = this.inflate.findViewById(R.id.editDialogTitleEt);
+        this.et.setHint(hint);
+        this.et.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        if (textWatcher != null) {
+            textWatcher.setEditText(this.et);
+            this.et.addTextChangedListener(textWatcher);
+        }
+        this.et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    //处理搜索事件
+                    if (yes == null) {
+                        return false;
+                    }
+                    String text = et.getText().toString();
+                    if (yes.yes(text, obj)) {
+                        layer.hidden();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        if (inputType != null) {
+            this.et.setInputType(inputType);
+        }
+
+        this.noBt = this.inflate.findViewById(R.id.editDialogNoBt);
+        this.yesBt = this.inflate.findViewById(R.id.editDialogYesBt);
+        this.yesBt.setOnClickListener(this);
+        this.noBt.setOnClickListener(this);
+        return this;
+    }
+
     @Override
     public void destroy() {
         if (yesBt != null)
@@ -173,6 +158,7 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
         yesBt = null;
         et = null;
         yes = null;
+        textWatcher = null;
         obj = null;
         ViewTool.removeFromAct(act, layer);
         if (layer != null)
@@ -226,7 +212,6 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
     }
 
     private void clickNoBt(View v) {
-        //ViewTool.inputHidden(et);
         layer.hidden(getOnHiddenFinishedCallBack());
     }
 
@@ -236,7 +221,6 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
         }
         String text = et.getText().toString();
         if (yes.yes(text, obj)) {
-            //ViewTool.inputHidden(et);
             layer.hidden(getOnHiddenFinishedCallBack());
         }
     }

@@ -117,6 +117,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected com.codingtu.cooltu.lib4a.view.dialogview.ToastDialog getToastDialog() {
         if (toastDialog == null)
             toastDialog = new com.codingtu.cooltu.lib4a.view.dialogview.ToastDialog(getAct())
+                    .destroys(this)
                     .setLayout(com.codingtu.cooltu.R.layout.dialog_toast)
                     .build();
         return toastDialog;
@@ -161,6 +162,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected void noticeShow(String msg) {
         if (noticeDialog == null)
             noticeDialog = new com.codingtu.cooltu.lib4a.view.dialogview.NoticeDialog(getAct())
+                    .destroys(this)
                     .setLayout(com.codingtu.cooltu.R.layout.dialog_notice)
                     .build();
         noticeDialog.setContent(msg);
@@ -171,7 +173,8 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
     protected void showEditDialog(String text) {
         if (editDialog == null)
-            editDialog = new com.codingtu.cooltu.lib4a.view.dialogview.EditDialog.Builder(getAct())
+            editDialog = new com.codingtu.cooltu.lib4a.view.dialogview.EditDialog(getAct())
+                    .destroys(this)
                     .setTitle("提示")
                     .setHint("请输入文字")
                     .setInputType(1)
@@ -197,6 +200,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected void showDialog() {
         if (dialog == null) {
             dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
+                    .destroys(this)
                     .setTitle("提示")
                     .setContent("胜多负少的")
                     .setLeftBtText("取消")
@@ -221,6 +225,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected void showDialog(String content) {
         if (dialog == null) {
             dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
+                    .destroys(this)
                     .setTitle("提示")
                     .setContent(content)
                     .setLeftBtText("取消")
@@ -268,6 +273,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected void showMenuDialog() {
         if (menuDialog == null) {
             menuDialog = new com.codingtu.cooltu.lib4a.view.dialogview.MenuDialog(getAct())
+                    .destroys(this)
                     .setLayout(com.codingtu.cooltu.R.layout.dialog_menu)
                     .setItemLayout(com.codingtu.cooltu.R.layout.dialog_menu_item)
                     .setItem(com.codingtu.cooltu.R.id.reportTv, "导出工单")

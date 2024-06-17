@@ -16,7 +16,6 @@ import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.ToastDialogUse;
 import com.codingtu.cooltu.ui.StepOneFragment;
-import com.codingtu.cooltu.ui.adapter.CatAdapter;
 import com.codingtu.cooltu.ui.adapter.DogAdapter;
 
 @ToastDialogUse
@@ -49,8 +48,8 @@ public class StepOneFragmentRes {
     EditDialog ed;
 
     @DialogUse(
-            title = "xxx",
-            content = "xxx",
+            title = "xxx1",
+            content = "xxx1",
             objType = User.class,
             leftBtText = "取消",
             rightBtText = "确定"

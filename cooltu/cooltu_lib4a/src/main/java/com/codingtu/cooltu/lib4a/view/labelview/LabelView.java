@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.View;
 
 import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4a.tools.DrawTool;
@@ -18,7 +19,7 @@ import com.codingtu.cooltu.lib4j.tools.CountTool;
 
 import java.util.List;
 
-public class LabelView extends CoreLabelView {
+public class LabelView extends CoreLabelView implements View.OnClickListener {
 
     private boolean isInit;
     private int labelBgColor;
@@ -109,7 +110,6 @@ public class LabelView extends CoreLabelView {
             TagTextView ttv = new TagTextView(getContext());
             addView(ttv, ViewTool.WRAP_CONTENT, labelH);
             ttv.setText(labelStr);
-//            ttv.setBgColor(labelBgColor);
             ttv.setBackgroundColor(labelBgColor);
             ttv.setTextColor(labelTextColor);
             ttv.setRadius(labelRadius);
@@ -121,8 +121,7 @@ public class LabelView extends CoreLabelView {
 
             ttv.setId(labelId);
             ttv.setTag(R.id.tag_0, label);
-            if (onClickListener != null)
-                ttv.setOnClickListener(onClickListener);
+            ttv.setOnClickListener(this);
         }
     }
 
@@ -138,5 +137,12 @@ public class LabelView extends CoreLabelView {
         if (labels != null)
             labels.clear();
         labels = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (this.onClickListener != null) {
+            onClickListener.onClick(v);
+        }
     }
 }

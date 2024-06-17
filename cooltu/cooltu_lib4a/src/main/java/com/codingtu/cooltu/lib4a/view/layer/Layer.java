@@ -39,13 +39,16 @@ public class Layer extends RelativeLayout implements OnDestroy {
 
     protected boolean isAnimation;
 
-    protected OnShowFinishedCallBack onShowFinishedCallBack;
-    protected OnHiddenFinishedCallBack onHiddenFinishedCallBack;
     private ScaleAnimation showScaleAnim;
     private ScaleAnimation hiddenScaleAnim;
     protected View dialogView;
+
     protected Animation.AnimationListener showAnimationListener;
     protected Animation.AnimationListener hiddenAnimationListener;
+
+    protected OnShowFinishedCallBack onShowFinishedCallBack;
+    protected OnHiddenFinishedCallBack onHiddenFinishedCallBack;
+
 
     @Override
     public void destroy() {
@@ -80,7 +83,6 @@ public class Layer extends RelativeLayout implements OnDestroy {
     }
 
     protected void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        //DestoryTool.onDestory(context, this);
         AttrsTools.getAttrs(context, attrs, R.styleable.LayerView, new GetAttrs() {
             @Override
             public void getAttrs(Attrs attrs) {
