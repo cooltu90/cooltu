@@ -1140,6 +1140,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("");
         lines.add("public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, View.OnLongClickListener, [[netBackIFullName]][[formHandlerCallBack]]{");
         lines.add("[[field]]");
+        lines.add("    public String baseClassName = \"[[name]]\";");
         lines.add("");
         lines.add("    @Override");
         lines.add("    protected void onCreate(android.os.Bundle savedInstanceState) {");
@@ -1152,6 +1153,10 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("[[dimenInit]]");
         lines.add("[[startInit]]");
         lines.add("[[onCreateCompleteInit]]");
+        lines.add("        String nowBaseClassName = getClass().getSimpleName() + \"Base\";");
+        lines.add("        if (nowBaseClassName.equals(baseClassName)) {");
+        lines.add("            onCreateComplete();");
+        lines.add("        }");
         lines.add("    }");
         lines.add("");
         lines.add("    @Override");

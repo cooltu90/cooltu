@@ -123,6 +123,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][field]
     [sign] [type] [name];
                                                                                                     [<sub>][for][field]
+    public String baseClassName = "[[name]]";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -152,8 +153,10 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][startInit]
         [name] = [passFullName].[name](getIntent());
                                                                                                     [<sub>][for][startInit]
-
-        onCreateComplete();
+        String nowBaseClassName = getClass().getSimpleName() + "Base";
+        if (nowBaseClassName.equals(baseClassName)) {
+            onCreateComplete();
+        }
         return view;
     }
                                                                                                     [<sub>][if][layout]

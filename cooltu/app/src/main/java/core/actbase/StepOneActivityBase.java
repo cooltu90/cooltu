@@ -15,6 +15,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected com.codingtu.cooltu.ui.adapter.CatAdapter catAdapter;
     protected com.codingtu.cooltu.ui.adapter.DogAdapter dogAdapter;
 
+    public String baseClassName = "StepOneActivityBase";
 
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
@@ -29,8 +30,11 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
 
-        onCreateComplete();
 
+        String nowBaseClassName = getClass().getSimpleName() + "Base";
+        if (nowBaseClassName.equals(baseClassName)) {
+            onCreateComplete();
+        }
     }
 
     @Override

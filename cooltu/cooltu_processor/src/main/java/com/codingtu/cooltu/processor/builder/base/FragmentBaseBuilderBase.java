@@ -579,8 +579,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
                 List<String> layout1 = layout.get(getForKey("startInit", i0));
                 addLnTag(layoutSb, "        [name] = [passFullName].[name](getIntent());", layout1.get(0), layout1.get(1), layout1.get(2));
             }
-            addLnTag(layoutSb, "");
-            addLnTag(layoutSb, "        onCreateComplete();");
+            addLnTag(layoutSb, "        String nowBaseClassName = getClass().getSimpleName() + \"Base\";");
+            addLnTag(layoutSb, "        if (nowBaseClassName.equals(baseClassName)) {");
+            addLnTag(layoutSb, "            onCreateComplete();");
+            addLnTag(layoutSb, "        }");
             addLnTag(layoutSb, "        return view;");
             addLnTag(layoutSb, "    }");
         }
@@ -979,6 +981,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("");
         lines.add("public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, View.OnLongClickListener, [[netBackIFullName]]{");
         lines.add("[[field]]");
+        lines.add("    public String baseClassName = \"[[name]]\";");
         lines.add("");
         lines.add("    @Override");
         lines.add("    public void onCreate(@Nullable Bundle savedInstanceState) {");

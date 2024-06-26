@@ -136,7 +136,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
             }
         });
 
-        isOnCreateCompleteInit(!uiBaseBuilder.hasChild());
+        isOnCreateCompleteInit(false);
 
         otherIf(otherLineSb.toString());
     }
@@ -194,6 +194,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][field]
     [sign] [type] [name];
                                                                                                     [<sub>][for][field]
+    public String baseClassName = "[[name]]";
 
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
@@ -222,6 +223,10 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][if][onCreateCompleteInit]
         onCreateComplete();
                                                                                                     [<sub>][if][onCreateCompleteInit]
+        String nowBaseClassName = getClass().getSimpleName() + "Base";
+        if (nowBaseClassName.equals(baseClassName)) {
+            onCreateComplete();
+        }
     }
 
     @Override

@@ -18,6 +18,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected java.lang.String name;
     protected int age;
 
+    public String baseClassName = "WelcomeActivityBase";
 
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
@@ -37,8 +38,11 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         age = core.tools.Pass.age(getIntent());
         isTest = core.tools.Pass.isTest(getIntent());
 
-        onCreateComplete();
 
+        String nowBaseClassName = getClass().getSimpleName() + "Base";
+        if (nowBaseClassName.equals(baseClassName)) {
+            onCreateComplete();
+        }
     }
 
     @Override

@@ -18,6 +18,7 @@ public abstract class BaseStepFragmentBase extends com.codingtu.cooltu.lib4a.ui.
     protected com.codingtu.cooltu.ui.adapter.CatAdapter catAdapter;
     protected androidx.recyclerview.widget.RecyclerView rv;
 
+    public String baseClassName = "BaseStepFragmentBase";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

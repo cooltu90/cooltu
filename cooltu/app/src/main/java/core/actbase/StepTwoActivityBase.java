@@ -9,6 +9,7 @@ import retrofit2.adapter.rxjava2.Result;
 
 public abstract class StepTwoActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
 
+    public String baseClassName = "StepTwoActivityBase";
 
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
@@ -21,8 +22,11 @@ public abstract class StepTwoActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
 
-        onCreateComplete();
 
+        String nowBaseClassName = getClass().getSimpleName() + "Base";
+        if (nowBaseClassName.equals(baseClassName)) {
+            onCreateComplete();
+        }
     }
 
     @Override

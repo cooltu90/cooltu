@@ -22,6 +22,7 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
     protected com.codingtu.cooltu.ui.adapter.DogAdapter dogAdapter;
     protected androidx.recyclerview.widget.RecyclerView rv1;
 
+    public String baseClassName = "StepOneFragmentBase";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,8 +40,10 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
         tvColor = com.codingtu.cooltu.lib4a.tools.ResourceTool.getColor(com.codingtu.cooltu.R.color.black);
         dp = com.codingtu.cooltu.lib4a.tools.MobileTool.dpToPx(12.5f);
         dp1 = com.codingtu.cooltu.lib4a.tools.ResourceTool.getDimen(com.codingtu.cooltu.R.dimen.xxx);
-
-        onCreateComplete();
+        String nowBaseClassName = getClass().getSimpleName() + "Base";
+        if (nowBaseClassName.equals(baseClassName)) {
+            onCreateComplete();
+        }
         return view;
     }
 

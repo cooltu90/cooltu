@@ -11,6 +11,7 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
     protected android.widget.RelativeLayout tv3;
     protected boolean isTest;
 
+    public String baseClassName = "CoreWelcomeActivityBase";
 
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
@@ -23,6 +24,10 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
 
 
+        String nowBaseClassName = getClass().getSimpleName() + "Base";
+        if (nowBaseClassName.equals(baseClassName)) {
+            onCreateComplete();
+        }
     }
 
     @Override

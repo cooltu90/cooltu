@@ -13,6 +13,7 @@ import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
 
 import core.actbase.WelcomeActivityBase;
 import core.actres.WelcomeActivityRes;
+import core.tools.ActStart;
 
 @To(WelcomeActivityRes.class)
 @ToRes(R.layout.activity_welcome)
@@ -28,7 +29,7 @@ public class WelcomeActivity extends WelcomeActivityBase {
 
     @ClickView(R.id.showBt)
     public void showBtClick() {
-
+        ActStart.stepTwoActivity(getAct());
     }
 
 
