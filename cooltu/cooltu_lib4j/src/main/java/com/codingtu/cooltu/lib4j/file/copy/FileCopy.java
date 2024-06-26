@@ -73,9 +73,9 @@ public class FileCopy {
         }
         targetPath = target.getAbsolutePath();
         srcPath = src.getAbsolutePath();
-        if (targetPath.startsWith(srcPath)) {
-            return;
-        }
+//        if (targetPath.startsWith(srcPath)) {
+//            return;
+//        }
 
         toTarget(src);
     }
