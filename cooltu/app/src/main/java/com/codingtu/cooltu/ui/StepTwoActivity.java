@@ -2,6 +2,8 @@ package com.codingtu.cooltu.ui;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.lib4a.log.Logs;
+import com.codingtu.cooltu.lib4a.thread.OnceThread;
+import com.codingtu.cooltu.lib4j.tools.Zip;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 
@@ -15,10 +17,19 @@ public class StepTwoActivity extends StepTwoActivityBase {
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
-        String name = getClass().getName();
-        String canonicalName = getClass().getCanonicalName();
-        Logs.i("name:"+name);
-        Logs.i("canonicalName:"+canonicalName);
+
+        OnceThread.sub(new Runnable() {
+            @Override
+            public void run() {
+                Zip.src("/storage/emulated/0/LdarData/建档/默认空间/csqy_测试企业/任务2")
+                        .desc("/storage/emulated/0/LdarData/建档/默认空间/csqy_测试企业/任务21.zip").zip();
+            }
+        }).main(new OnceThread.MainRunnable() {
+            @Override
+            public void run(Throwable throwable) {
+                Logs.i("finish");
+            }
+        }).start();
     }
 }
 
