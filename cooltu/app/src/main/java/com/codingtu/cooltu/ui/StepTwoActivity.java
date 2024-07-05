@@ -22,7 +22,8 @@ public class StepTwoActivity extends StepTwoActivityBase {
             @Override
             public void run() {
                 Zip.src("/storage/emulated/0/LdarData/建档/默认空间/csqy_测试企业/任务2")
-                        .desc("/storage/emulated/0/LdarData/建档/默认空间/csqy_测试企业/任务21.zip").zip();
+                        .desc("/storage/emulated/0/LdarData/建档/默认空间/csqy_测试企业/任务2.zip")
+                        .zip();
             }
         }).main(new OnceThread.MainRunnable() {
             @Override

@@ -59,6 +59,7 @@ public class Zip implements OnDestroy {
     private OnFinish onFinish;
     private OnStart onStart;
     private long lastTime;
+    private String rootDir;
 
     private Zip(File src) {
         this.src = src;
@@ -171,6 +172,9 @@ public class Zip implements OnDestroy {
         ZipOutputStream out = null;
         try {
             out = new ZipOutputStream(new FileOutputStream(zipFilePath));
+
+            rootDir = StringTool.cutSuffix(desc.getName(), FileType.d_ZIP);
+
             recursivePressFile(out, needPressFile, "");
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -192,7 +196,8 @@ public class Zip implements OnDestroy {
             }
             File[] files = needPressFile.listFiles();
             for (File file : files) {
-                recursivePressFile(out, file, (StringTool.isBlank(parentDirName) ? ("") : (parentDirName + Constant.SEPARATOR)) + needPressFile.getName());
+                String newParentDirName = StringTool.isBlank(parentDirName) ? rootDir : (parentDirName + Constant.SEPARATOR + needPressFile.getName());
+                recursivePressFile(out, file, newParentDirName);
             }
         } else {
             if (pass != null && pass.pass(needPressFile)) {
