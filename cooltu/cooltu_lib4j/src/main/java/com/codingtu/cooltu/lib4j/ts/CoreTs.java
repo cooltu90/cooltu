@@ -148,6 +148,11 @@ public class CoreTs<T, THIS> {
         return get(isThisOne) != null;
     }
 
+    public boolean contains(T t) {
+        return this.ts.contains(t);
+    }
+
+
     /**************************************************
      *
      * 获取索引
@@ -656,6 +661,25 @@ public class CoreTs<T, THIS> {
             }
         }
         return total;
+    }
+
+    public THIS removeSameItem() {
+        ArrayList<T> ts1 = new ArrayList<>();
+        int count = count();
+        if (count > 0) {
+            for (int i = 0; i < count; i++) {
+                T t = ts.get(i);
+                if (!ts1.contains(t)) {
+                    ts1.add(t);
+                }
+            }
+        }
+        count = CountTool.count(ts1);
+        this.ts.clear();
+        for (int i = 0; i < count; i++) {
+            this.ts.add(ts1.get(i));
+        }
+        return (THIS) this;
     }
 
     public static interface Counter<T> {

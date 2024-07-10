@@ -11,6 +11,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
     protected com.codingtu.cooltu.bean.User user;
     protected com.codingtu.cooltu.ui.view.TestView testView;
     protected androidx.recyclerview.widget.RecyclerView rv;
+    protected android.widget.LinearLayout tvLl;
     protected androidx.recyclerview.widget.RecyclerView rv1;
     protected com.codingtu.cooltu.ui.adapter.CatAdapter catAdapter;
     protected com.codingtu.cooltu.ui.adapter.DogAdapter dogAdapter;
@@ -23,6 +24,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
         setContentView(com.codingtu.cooltu.R.layout.activity_step_one);
 
         rv = findViewById(com.codingtu.cooltu.R.id.rv);
+        tvLl = findViewById(com.codingtu.cooltu.R.id.tvLl);
         rv1 = findViewById(com.codingtu.cooltu.R.id.rv1);
 
 

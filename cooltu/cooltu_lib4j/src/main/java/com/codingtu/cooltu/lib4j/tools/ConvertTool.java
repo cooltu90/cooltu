@@ -233,4 +233,21 @@ public class ConvertTool {
         return null;
     }
 
+    public static byte[] toBytes(int[] ints) {
+        int count = CountTool.count(ints);
+        byte[] bytes = new byte[count];
+        for (int i = 0; i < count; i++) {
+            bytes[i] = (byte) ints[i];
+        }
+        return bytes;
+    }
+
+    public static byte[] getBytes(byte[] datas, int skip, int bits) {
+        byte[] bytes = new byte[bits];
+        for (int i = 0; i < bits; i++) {
+            bytes[i] = datas[i + skip];
+        }
+        return bytes;
+    }
+
 }

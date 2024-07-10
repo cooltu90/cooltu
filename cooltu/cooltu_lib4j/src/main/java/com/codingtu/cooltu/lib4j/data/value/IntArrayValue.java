@@ -1,5 +1,7 @@
 package com.codingtu.cooltu.lib4j.data.value;
 
+import com.codingtu.cooltu.lib4j.tools.CountTool;
+
 public class IntArrayValue {
     private int[] value;
     private boolean reverse;
@@ -29,5 +31,14 @@ public class IntArrayValue {
             num = num | (value[3] & 0xff);
         }
         return Float.intBitsToFloat(num);
+    }
+
+    public byte[] toByteArray() {
+        int count = CountTool.count(value);
+        byte[] bytes = new byte[count];
+        for (int i = 0; i < count; i++) {
+            bytes[i] = (byte) value[i];
+        }
+        return bytes;
     }
 }
