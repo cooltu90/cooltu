@@ -7,15 +7,19 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
+import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 
 import com.codingtu.cooltu.lib4a.CoreApp;
 import com.codingtu.cooltu.lib4a.connect.ConnectDeviceBaseData;
 import com.codingtu.cooltu.lib4a.connect.ConnectStatus;
 
+import java.util.UUID;
+
 @SuppressLint("MissingPermission")
 public abstract class BleBluetoothConnectDevice extends ConnectDevice {
     protected BluetoothGatt bluetoothGatt;
+    private BluetoothGattCharacteristic writeCharacteristic;
 
     public BleBluetoothConnectDevice(int connectType, int deviceType, String name, String mac) {
         super(connectType, deviceType, name, mac);
@@ -35,10 +39,16 @@ public abstract class BleBluetoothConnectDevice extends ConnectDevice {
                 super.onConnectionStateChange(gatt, status, newState);
                 if (status == BluetoothGatt.GATT_SUCCESS) {
                     if (newState == BluetoothProfile.STATE_CONNECTED) {
-                        if (!gatt.discoverServices()) {
-                            sendMessage(ConnectStatus.FAIL, null);
+
+                        Integer mtu = getMTU();
+                        if (mtu != null) {
+                            gatt.requestMtu(mtu);
                         } else {
-                            sendMessage(ConnectStatus.SUCCESS, null);
+                            if (!gatt.discoverServices()) {
+                                sendMessage(ConnectStatus.FAIL, null);
+                            } else {
+                                sendMessage(ConnectStatus.SUCCESS, null);
+                            }
                         }
                     } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                         gatt.close();
@@ -46,6 +56,20 @@ public abstract class BleBluetoothConnectDevice extends ConnectDevice {
                     }
                 } else {
                     gatt.close();
+                    sendMessage(ConnectStatus.FAIL, null);
+                }
+            }
+
+            @Override
+            public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
+                super.onMtuChanged(gatt, mtu, status);
+                if (status == BluetoothGatt.GATT_SUCCESS) {
+                    if (!gatt.discoverServices()) {
+                        sendMessage(ConnectStatus.FAIL, null);
+                    } else {
+                        sendMessage(ConnectStatus.SUCCESS, null);
+                    }
+                } else {
                     sendMessage(ConnectStatus.FAIL, null);
                 }
             }
@@ -89,6 +113,10 @@ public abstract class BleBluetoothConnectDevice extends ConnectDevice {
         });
     }
 
+    protected Integer getMTU() {
+        return null;
+    }
+
     protected void onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
 
     }
@@ -110,12 +138,29 @@ public abstract class BleBluetoothConnectDevice extends ConnectDevice {
     }
 
     protected void onServicesDiscovered(BluetoothGatt gatt, int status) {
+        BluetoothGattService service = gatt.getService(UUID.fromString(getServiceUUID()));
+        writeCharacteristic = service.getCharacteristic(UUID.fromString(getWriterUUID()));
 
+        BluetoothGattCharacteristic characteristic = service.getCharacteristic(UUID.fromString(getReaderUUID()));
+        BluetoothGattDescriptor descriptor = characteristic.getDescriptor(UUID.fromString(getReaderDescriptorUUID()));
+        descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+        gatt.writeDescriptor(descriptor);
+        gatt.setCharacteristicNotification(characteristic, true);
     }
+
+    protected abstract String getWriterUUID();
+
+    protected abstract String getReaderUUID();
+
+    protected abstract String getReaderDescriptorUUID();
+
+    protected abstract String getServiceUUID();
+
 
     @Override
     public void disconnect(DisconnectFinish disconnectFinish) {
         super.disconnect(disconnectFinish);
+        writeCharacteristic = null;
         if (bluetoothGatt != null) {
             bluetoothGatt.disconnect();
         }
