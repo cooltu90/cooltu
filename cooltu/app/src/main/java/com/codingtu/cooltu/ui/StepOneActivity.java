@@ -5,6 +5,7 @@ import android.widget.TextView;
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.lib4j.data.value.ByteArrayValue;
+import com.codingtu.cooltu.lib4j.data.value.ByteValue;
 import com.codingtu.cooltu.lib4j.data.value.FloatValue;
 import com.codingtu.cooltu.lib4j.data.value.IntArrayValue;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
@@ -85,7 +86,15 @@ public class StepOneActivity extends StepOneActivityBase {
 
         byte[] bytes = ConvertTool.toBytes(ints);
         byte[] bytes1 = ConvertTool.getBytes(bytes, 2, 4);
+        byte[] bytes2 = crc16(bytes1);
 
+        ints[ints.length - 4] = ByteValue.obtain(bytes2[0]).toInt();
+        ints[ints.length - 3] = ByteValue.obtain(bytes2[1]).toInt();
 
+        //write(ints);
+    }
+
+    private byte[] crc16(byte[] bytes) {
+        return new byte[0];
     }
 }

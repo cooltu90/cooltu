@@ -19,7 +19,7 @@ import java.util.UUID;
 @SuppressLint("MissingPermission")
 public abstract class BleBluetoothConnectDevice extends ConnectDevice {
     protected BluetoothGatt bluetoothGatt;
-    private BluetoothGattCharacteristic writeCharacteristic;
+    protected BluetoothGattCharacteristic writeCharacteristic;
 
     public BleBluetoothConnectDevice(int connectType, int deviceType, String name, String mac) {
         super(connectType, deviceType, name, mac);
@@ -113,10 +113,6 @@ public abstract class BleBluetoothConnectDevice extends ConnectDevice {
         });
     }
 
-    protected Integer getMTU() {
-        return null;
-    }
-
     protected void onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
 
     }
@@ -148,14 +144,6 @@ public abstract class BleBluetoothConnectDevice extends ConnectDevice {
         gatt.setCharacteristicNotification(characteristic, true);
     }
 
-    protected abstract String getWriterUUID();
-
-    protected abstract String getReaderUUID();
-
-    protected abstract String getReaderDescriptorUUID();
-
-    protected abstract String getServiceUUID();
-
 
     @Override
     public void disconnect(DisconnectFinish disconnectFinish) {
@@ -166,4 +154,17 @@ public abstract class BleBluetoothConnectDevice extends ConnectDevice {
         }
         bluetoothGatt = null;
     }
+
+
+    protected Integer getMTU() {
+        return null;
+    }
+
+    protected abstract String getServiceUUID();
+
+    protected abstract String getWriterUUID();
+
+    protected abstract String getReaderUUID();
+
+    protected abstract String getReaderDescriptorUUID();
 }

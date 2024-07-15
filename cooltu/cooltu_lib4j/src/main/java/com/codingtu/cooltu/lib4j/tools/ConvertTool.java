@@ -250,4 +250,24 @@ public class ConvertTool {
         return bytes;
     }
 
+    private byte[] crc16(byte[] bytes) {
+        int crc = 0xffff;
+        int poly = 0xA001;
+        for (byte b : bytes) {
+            crc ^= b & 0xff;
+            for (int i = 0; i < 8; i++) {
+                if ((crc & 0x0001) != 0) {
+                    crc >>= 1;
+                    crc ^= poly;
+                } else {
+                    crc >>= 1;
+                }
+            }
+        }
+        byte[] bytes1 = new byte[2];
+        bytes1[0] = (byte) crc;
+        bytes1[1] = (byte) (crc >> 8);
+        return bytes1;
+    }
+
 }
