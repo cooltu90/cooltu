@@ -44,12 +44,21 @@ public class ImageTools {
     }
 
     public static void setImage(ImageView iv, String url, int defaultId) {
-//        if (iv == null || StringFunc.isBlank(url))
-//            return;
-        Glide
-                .with(CoreApp.APP)
-                .load(url).apply(RequestOptions.errorOf(defaultId))
-                .into(iv);
+        File file = new File(url);
+        if (file.exists()) {
+            RequestOptions opts = new RequestOptions();
+            opts.diskCacheStrategy(DiskCacheStrategy.NONE);
+            opts.error(defaultId);
+            Glide
+                    .with(CoreApp.APP)
+                    .load(file).apply(opts)
+                    .into(iv);
+        } else {
+            Glide
+                    .with(CoreApp.APP)
+                    .load(url).apply(RequestOptions.errorOf(defaultId))
+                    .into(iv);
+        }
     }
 
     public static void getImage(String url, final ImageBitmapGetter getter) {
@@ -66,11 +75,11 @@ public class ImageTools {
                     @Override
                     public Bitmap apply(String s) throws Exception {
                         File file = new File(s);
-                        if(file.exists()){
+                        if (file.exists()) {
                             RequestOptions opts = new RequestOptions();
                             opts.diskCacheStrategy(DiskCacheStrategy.NONE);
                             return Glide.with(CoreApp.APP).asBitmap().load(file).apply(opts).submit().get();
-                        }else{
+                        } else {
                             return Glide.with(CoreApp.APP).asBitmap().load(s).submit().get();
                         }
                     }
