@@ -1,8 +1,11 @@
-package com.codingtu.cooltu.lib4j.tools;
+package com.codingtu.cooltu.lib4j.zip;
 
 import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4j.file.FileTool;
+import com.codingtu.cooltu.lib4j.function.OnError;
+import com.codingtu.cooltu.lib4j.function.OnProgress;
+import com.codingtu.cooltu.lib4j.function.OnStart;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,23 +18,10 @@ import java.util.zip.ZipFile;
 
 public class UnZip implements OnDestroy {
 
-    public static interface OnError {
-        public void onError(Throwable throwable);
-
-    }
-
     public static interface OnFinish {
         public void onFinish(long totalLen);
     }
 
-
-    public static interface OnProgress {
-        public void onProgress(long totalLen, long unzipedLen);
-    }
-
-    public static interface OnStart {
-        public void onStart();
-    }
 
     public static interface ZipedNameDeal {
         public String deal(String zipedName);

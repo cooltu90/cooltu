@@ -3,7 +3,7 @@ package com.codingtu.cooltu.ui;
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.thread.OnceThread;
-import com.codingtu.cooltu.lib4j.tools.Zip;
+import com.codingtu.cooltu.lib4j.zip.Zip;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 

@@ -1,10 +1,14 @@
-package com.codingtu.cooltu.lib4j.tools;
+package com.codingtu.cooltu.lib4j.zip;
 
 import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FileType;
-import com.codingtu.cooltu.lib4j.data.progress.Progress;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
+import com.codingtu.cooltu.lib4j.function.OnError;
+import com.codingtu.cooltu.lib4j.function.OnProgress;
+import com.codingtu.cooltu.lib4j.function.OnStart;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
+import com.codingtu.cooltu.lib4j.tools.CountTool;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,22 +26,8 @@ public class Zip implements OnDestroy {
         public String deal(String path);
     }
 
-    public static interface OnError {
-        public void onError(Throwable throwable);
-
-    }
-
     public static interface OnFinish {
         public void onFinish(File file);
-    }
-
-
-    public static interface OnProgress {
-        public void onProgress(long totalLen, long zipedLen);
-    }
-
-    public static interface OnStart {
-        public void onStart();
     }
 
 
