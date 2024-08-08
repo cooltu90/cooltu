@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4a.view.layer.Layer;
 import com.codingtu.cooltu.lib4a.view.layer.event.OnHiddenFinishedCallBack;
+import com.codingtu.cooltu.lib4a.view.layer.event.OnShowFinishedCallBack;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4a.tools.InflateTool;
@@ -88,6 +89,10 @@ public final class ToastDialog implements OnDestroy {
 
     public void show() {
         layer.show();
+    }
+
+    public void show(OnShowFinishedCallBack onShowFinishedCallBack) {
+        layer.show(onShowFinishedCallBack);
     }
 
     public void hidden(OnHiddenFinishedCallBack callBack) {
