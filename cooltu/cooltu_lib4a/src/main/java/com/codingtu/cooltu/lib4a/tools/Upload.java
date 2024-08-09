@@ -1,6 +1,9 @@
 package com.codingtu.cooltu.lib4a.tools;
 
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
+import com.codingtu.cooltu.lib4j.function.OnError;
+import com.codingtu.cooltu.lib4j.function.OnProgress;
+import com.codingtu.cooltu.lib4j.function.OnStart;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -12,18 +15,17 @@ import java.io.File;
 
 public class Upload implements OnDestroy {
 
-    public static interface OnProgress {
-        public void onProgress(long totalLen, long currentSize);
-    }
+//    public static interface OnProgress {
+//        public void onProgress(long totalLen, long currentSize);
+//    }
 
-    public static interface OnStart {
-        public void onStart();
-    }
+//    public static interface OnStart {
+//        public void onStart();
+//    }
 
-    public static interface OnError {
-        public void onError(Throwable throwable);
-
-    }
+//    public static interface OnError {
+//        public void onError(Throwable throwable);
+//    }
 
     public static interface OnFinish {
         void onFinish(String msg);
