@@ -59,8 +59,10 @@ public abstract class BaseStepFragmentBase extends com.codingtu.cooltu.lib4a.ui.
 
             }
         } catch (Exception e) {
-            toast(e.getMessage());
             com.codingtu.cooltu.lib4a.log.Logs.e(e);
+            if (!(e instanceof com.codingtu.cooltu.lib4a.exception.NotToastException)) {
+                toast(e.getMessage());
+            }
         }
     }
     protected void tv2Click() throws Exception {}

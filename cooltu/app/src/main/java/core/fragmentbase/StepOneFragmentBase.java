@@ -86,8 +86,10 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
 
             }
         } catch (Exception e) {
-            toast(e.getMessage());
             com.codingtu.cooltu.lib4a.log.Logs.e(e);
+            if (!(e instanceof com.codingtu.cooltu.lib4a.exception.NotToastException)) {
+                toast(e.getMessage());
+            }
         }
     }
     protected void tv1Click(com.codingtu.cooltu.bean.User user) throws Exception {}

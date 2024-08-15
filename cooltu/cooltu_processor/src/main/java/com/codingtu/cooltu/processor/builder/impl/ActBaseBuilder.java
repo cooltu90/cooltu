@@ -300,8 +300,10 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][for][onClickSwith]
             }
         } catch (Exception e) {
-            toast(e.getMessage());
             com.codingtu.cooltu.lib4a.log.Logs.e(e);
+            if (!(e instanceof com.codingtu.cooltu.lib4a.exception.NotToastException)) {
+                toast(e.getMessage());
+            }
         }
     }
 

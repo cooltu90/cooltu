@@ -1007,8 +1007,10 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("[[onClickSwith]]");
         lines.add("            }");
         lines.add("        } catch (Exception e) {");
-        lines.add("            toast(e.getMessage());");
         lines.add("            com.codingtu.cooltu.lib4a.log.Logs.e(e);");
+        lines.add("            if (!(e instanceof com.codingtu.cooltu.lib4a.exception.NotToastException)) {");
+        lines.add("                toast(e.getMessage());");
+        lines.add("            }");
         lines.add("        }");
         lines.add("    }");
         lines.add("[[onClickMethods]]");

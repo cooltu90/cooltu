@@ -48,8 +48,10 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
             }
         } catch (Exception e) {
-            toast(e.getMessage());
             com.codingtu.cooltu.lib4a.log.Logs.e(e);
+            if (!(e instanceof com.codingtu.cooltu.lib4a.exception.NotToastException)) {
+                toast(e.getMessage());
+            }
         }
     }
 
