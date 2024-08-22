@@ -94,5 +94,21 @@ public class Maps<K, V> {
         return Ts.ts(list);
     }
 
+    public static interface ToMap<K, V, K1, V1> {
+        void toMap(Map<K1, V1> newMap, K k, V v);
+    }
+
+
+    public <K1, V1> Map<K1, V1> toMap(ToMap<K, V, K1, V1> toMap) {
+        Map<K1, V1> newMap = new HashMap<>();
+        Ts.ts(map.keySet()).ls(new Ts.EachTs<K>() {
+            @Override
+            public boolean each(int position, K k) {
+                toMap.toMap(newMap, k, map.get(k));
+                return false;
+            }
+        });
+        return newMap;
+    }
 
 }

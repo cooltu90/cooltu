@@ -1,5 +1,8 @@
 package com.codingtu.cooltu.lib4j.tools;
 
+import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
+import com.codingtu.cooltu.lib4j.json.JsonTool;
+
 public class OsTool {
 
     public static <T> T[] objsToArrays(Object[] objs) {
@@ -13,5 +16,9 @@ public class OsTool {
             return newArray;
         }
         return null;
+    }
+
+    public static <T extends CoreBean> T copy(T t) {
+        return JsonTool.toBean((Class<T>) t.getClass(), t.toJson());
     }
 }

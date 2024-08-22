@@ -772,5 +772,26 @@ public class CoreTs<T, THIS> {
         return "root";
     }
 
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+    public static interface ToMap<K, V, T> {
+
+        void deal(Map<K, V> map, int i, T t);
+    }
+
+    public <K, V, T> Map<K, V> toMap(ToMap<K, V, T> toMap) {
+        Map<K, V> map = new HashMap<>();
+        int count = CountTool.count(ts);
+        if (count > 0) {
+            for (int i = 0; i < count; i++) {
+                T t = (T) ts.get(i);
+                toMap.deal(map, i, t);
+            }
+        }
+        return map;
+    }
 
 }
