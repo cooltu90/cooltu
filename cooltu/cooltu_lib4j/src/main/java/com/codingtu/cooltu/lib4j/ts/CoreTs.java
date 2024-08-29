@@ -2,6 +2,7 @@ package com.codingtu.cooltu.lib4j.ts;
 
 import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
+import com.codingtu.cooltu.lib4j.data.symbol.Symbol;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 
@@ -782,16 +783,66 @@ public class CoreTs<T, THIS> {
         void deal(Map<K, V> map, int i, T t);
     }
 
-    public <K, V, T> Map<K, V> toMap(ToMap<K, V, T> toMap) {
+    public <K, V> Map<K, V> toMap(ToMap<K, V, T> toMap) {
         Map<K, V> map = new HashMap<>();
         int count = CountTool.count(ts);
         if (count > 0) {
             for (int i = 0; i < count; i++) {
-                T t = (T) ts.get(i);
+                T t = ts.get(i);
                 toMap.deal(map, i, t);
             }
         }
         return map;
+    }
+
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+    private Ts.NearByIndex obtainNearByIndex(Ts.IsThisOne<T> isThisOne, boolean isNext) {
+        int count = count();
+        if (count == 1) {
+            return null;
+        }
+        int index = index(isThisOne);
+        if (index < 0) {
+            return null;
+        }
+
+        int step = isNext ? 1 : -1;
+
+        Ts.NearByIndex nearByIndex = new Ts.NearByIndex();
+        nearByIndex.currentIndex = index;
+        if (nearByIndex.currentIndex == (isNext ? (count - 1) : 0)) {
+            nearByIndex.nearByIndex = nearByIndex.currentIndex - step;
+        } else {
+            nearByIndex.nearByIndex = nearByIndex.currentIndex + step;
+        }
+        return nearByIndex;
+    }
+
+
+    public Ts.NearByIndex obtainNearByIndexWhenNextPriority(Ts.IsThisOne<T> isThisOne) {
+        return obtainNearByIndex(isThisOne, true);
+    }
+
+    public T obtainNearByDataWhenNextPriority(Ts.IsThisOne<T> isThisOne) {
+        Ts.NearByIndex nearByIndex = obtainNearByIndexWhenNextPriority(isThisOne);
+        if (nearByIndex == null)
+            return null;
+        return get(nearByIndex.nearByIndex);
+    }
+
+    public Ts.NearByIndex obtainNearByIndexWhenPrePriority(Ts.IsThisOne<T> isThisOne) {
+        return obtainNearByIndex(isThisOne, false);
+    }
+
+    public T obtainNearByDataWhenPrePriority(Ts.IsThisOne<T> isThisOne) {
+        Ts.NearByIndex nearByIndex = obtainNearByIndexWhenPrePriority(isThisOne);
+        if (nearByIndex == null)
+            return null;
+        return get(nearByIndex.nearByIndex);
     }
 
 }

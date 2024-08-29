@@ -69,5 +69,26 @@ public class StringTs extends CoreTs<String, StringTs> {
         return this;
     }
 
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+    public Ts.NearByIndex obtainNearByIndexWhenNextPriority(String data) {
+        return obtainNearByIndexWhenNextPriority(getIsThisOne(data));
+    }
+
+    public String obtainNearByDataWhenNextPriority(String data) {
+        return obtainNearByDataWhenNextPriority(getIsThisOne(data));
+    }
+
+    public Ts.NearByIndex obtainNearByIndexWhenPrePriority(String data) {
+        return obtainNearByIndexWhenPrePriority(getIsThisOne(data));
+    }
+
+    public String obtainNearByDataWhenPrePriority(String data) {
+        return obtainNearByDataWhenPrePriority(getIsThisOne(data));
+    }
+
 
 }

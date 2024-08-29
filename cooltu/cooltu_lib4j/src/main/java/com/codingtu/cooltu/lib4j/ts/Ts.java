@@ -1,5 +1,6 @@
 package com.codingtu.cooltu.lib4j.ts;
 
+import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
 import com.codingtu.cooltu.lib4j.data.symbol.Symbol;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 
@@ -255,5 +256,14 @@ public class Ts {
      *
      *
      **************************************************/
+    public static class NearByIndex extends CoreBean {
+        public int currentIndex;
+        public int nearByIndex;
+
+        public boolean isNextOne() {
+            return nearByIndex > currentIndex;
+        }
+    }
+
 
 }

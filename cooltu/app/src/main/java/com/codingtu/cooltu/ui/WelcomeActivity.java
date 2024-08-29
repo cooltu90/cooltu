@@ -6,8 +6,12 @@ import android.os.Bundle;
 import android.provider.Settings;
 
 import com.codingtu.cooltu.R;
+import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.form.TestCallBack;
+import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.view.dialogview.Dialog;
+import com.codingtu.cooltu.lib4j.ts.BaseTs;
+import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
@@ -32,6 +36,21 @@ public class WelcomeActivity extends WelcomeActivityBase {
         Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
         intent.setData(Uri.parse("package:" + getPackageName()));
         startActivityForResult(intent, 1);
+
+
+        User user = Ts.<User>ts()
+                .add(new User("lisi1", 28))
+                .add(new User("lisi2", 28))
+                .add(new User("lisi3", 28))
+                .add(new User("lisi4", 28))
+                .obtainNearByDataWhenPrePriority(new Ts.IsThisOne<User>() {
+                    @Override
+                    public boolean isThisOne(int position, User user) {
+                        return user.name.equals("lisi5");
+                    }
+                });
+        Logs.i(user);
+
     }
 
 

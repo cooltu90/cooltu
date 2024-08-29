@@ -251,4 +251,40 @@ public class SymbolTs<SYMBOL extends Symbol> extends CoreTs<SYMBOL, SymbolTs<SYM
         return this;
     }
 
+    /**************************************************
+     *
+     * nearby
+     *
+     **************************************************/
+    public Ts.NearByIndex obtainNearByIndexWhenNextPriority(String symbol) {
+        return obtainNearByIndexWhenNextPriority(getSymbolIsThisOne(symbol));
+    }
+
+    public SYMBOL obtainNearByDataWhenNextPriority(String symbol) {
+        return obtainNearByDataWhenNextPriority(getSymbolIsThisOne(symbol));
+    }
+
+    public Ts.NearByIndex obtainNearByIndexWhenNextPriority(SYMBOL symbol) {
+        return obtainNearByIndexWhenNextPriority(getSymbolIsThisOne(symbol));
+    }
+
+    public SYMBOL obtainNearByDataWhenNextPriority(SYMBOL symbol) {
+        return obtainNearByDataWhenNextPriority(getSymbolIsThisOne(symbol));
+    }
+
+    public Ts.NearByIndex obtainNearByIndexWhenPrePriority(String symbol) {
+        return obtainNearByIndexWhenPrePriority(getSymbolIsThisOne(symbol));
+    }
+
+    public SYMBOL obtainNearByDataWhenPrePriority(String symbol) {
+        return obtainNearByDataWhenPrePriority(getSymbolIsThisOne(symbol));
+    }
+
+    public Ts.NearByIndex obtainNearByIndexWhenPrePriority(SYMBOL symbol) {
+        return obtainNearByIndexWhenPrePriority(getSymbolIsThisOne(symbol));
+    }
+
+    public SYMBOL obtainNearByDataWhenPrePriority(SYMBOL symbol) {
+        return obtainNearByDataWhenPrePriority(getSymbolIsThisOne(symbol));
+    }
 }
