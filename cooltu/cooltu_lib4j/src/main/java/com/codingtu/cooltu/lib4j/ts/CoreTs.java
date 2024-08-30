@@ -21,7 +21,10 @@ public class CoreTs<T, THIS> {
     }
 
     public CoreTs(List<T> list) {
-        this.ts = list;
+        if (list == null)
+            this.ts = new ArrayList<>();
+        else
+            this.ts = list;
     }
 
 
