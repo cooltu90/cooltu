@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4a.path;
+package com.codingtu.cooltu.lib4j.path;
 
 import java.io.File;
 

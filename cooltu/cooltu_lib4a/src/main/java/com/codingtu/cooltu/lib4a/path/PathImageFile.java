@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.codingtu.cooltu.lib4a.bean.WH;
 import com.codingtu.cooltu.lib4a.image.FileBitmap;
 import com.codingtu.cooltu.lib4a.tools.SDCardTool;
+import com.codingtu.cooltu.lib4j.path.PathBaseFile;
 
 public class PathImageFile extends PathBaseFile {
     public PathImageFile(String root, String type) {

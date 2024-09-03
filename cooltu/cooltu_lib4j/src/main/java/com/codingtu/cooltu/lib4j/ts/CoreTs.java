@@ -803,12 +803,13 @@ public class CoreTs<T, THIS> {
      *
      *
      **************************************************/
-    private Ts.NearByIndex obtainNearByIndex(Ts.IsThisOne<T> isThisOne, boolean isNext) {
+
+    //两个基础方法
+    private Ts.NearByIndex obtainNearByIndex(int index, boolean isNext) {
         int count = count();
         if (count == 1) {
             return null;
         }
-        int index = index(isThisOne);
         if (index < 0) {
             return null;
         }
@@ -825,7 +826,11 @@ public class CoreTs<T, THIS> {
         return nearByIndex;
     }
 
+    private Ts.NearByIndex obtainNearByIndex(Ts.IsThisOne<T> isThisOne, boolean isNext) {
+        return obtainNearByIndex(index(isThisOne), isNext);
+    }
 
+    //下一个优先
     public Ts.NearByIndex obtainNearByIndexWhenNextPriority(Ts.IsThisOne<T> isThisOne) {
         return obtainNearByIndex(isThisOne, true);
     }
@@ -837,6 +842,7 @@ public class CoreTs<T, THIS> {
         return get(nearByIndex.nearByIndex);
     }
 
+    //上一个优先
     public Ts.NearByIndex obtainNearByIndexWhenPrePriority(Ts.IsThisOne<T> isThisOne) {
         return obtainNearByIndex(isThisOne, false);
     }
