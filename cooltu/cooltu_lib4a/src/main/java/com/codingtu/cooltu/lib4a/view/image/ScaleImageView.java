@@ -12,7 +12,7 @@ import com.codingtu.cooltu.lib4a.bean.LTRB;
 import com.codingtu.cooltu.lib4a.bean.WH;
 import com.codingtu.cooltu.lib4a.image.ImageTools;
 import com.codingtu.cooltu.lib4a.tools.AdjustTool;
-import com.codingtu.cooltu.lib4a.tools.BitmapTool;
+import com.codingtu.cooltu.lib4a.image.BitmapTool;
 import com.codingtu.cooltu.lib4a.tools.HandlerTool;
 import com.codingtu.cooltu.lib4a.tools.MobileTool;
 import com.codingtu.cooltu.lib4a.view.base.CoreView;

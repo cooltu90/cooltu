@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4a.tools;
+package com.codingtu.cooltu.lib4a.image;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -24,6 +24,9 @@ import android.view.View;
 import com.codingtu.cooltu.lib4a.CoreApp;
 import com.codingtu.cooltu.lib4a.bean.LTRB;
 import com.codingtu.cooltu.lib4a.bean.WH;
+import com.codingtu.cooltu.lib4a.tools.AdjustTool;
+import com.codingtu.cooltu.lib4a.tools.DrawTool;
+import com.codingtu.cooltu.lib4a.tools.RectTool;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -1,2 +1,1 @@
-1、创建Fragment
-2、使用dialog
+1、BitmapTools包名修改

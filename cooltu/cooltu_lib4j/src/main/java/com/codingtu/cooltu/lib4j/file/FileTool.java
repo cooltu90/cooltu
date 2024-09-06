@@ -1,6 +1,9 @@
 package com.codingtu.cooltu.lib4j.file;
 
 import com.codingtu.cooltu.lib4j.file.bean.FileInfo;
+import com.codingtu.cooltu.lib4j.file.read.FileReader;
+import com.codingtu.cooltu.lib4j.file.read.ReadLine;
+import com.codingtu.cooltu.lib4j.json.JsonTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 
 import java.io.BufferedReader;
@@ -10,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.List;
 
 public class FileTool {
 
@@ -178,5 +182,24 @@ public class FileTool {
         lengthInfo.size = StringTool.parseNumber(d, bit, trim);
         lengthInfo.unit = "TB";
         return lengthInfo;
+    }
+
+    public static <T> T readFileToBean(Class<T> tClass, File file) {
+        return JsonTool.toBean(tClass, readFileToStr(file));
+    }
+
+    public static <T> List<T> readFileToBeanList(Class<T> tClass, File file) {
+        return JsonTool.toBeanList(tClass, readFileToStr(file));
+    }
+
+    public static String readFileToStr(File file) {
+        StringBuilder sb = new StringBuilder();
+        FileReader.from(file).readLine(new ReadLine<String>() {
+            @Override
+            public void readLine(String s) {
+                sb.append(s);
+            }
+        });
+        return sb.toString();
     }
 }

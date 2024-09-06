@@ -208,6 +208,10 @@ public class Ts {
         boolean isThisOne(int position, T t);
     }
 
+    public interface IsThisOneInMap<K, V> {
+        boolean isThisOne(K k, V v);
+    }
+
     public interface IsThisOnePro<T> {
         boolean isThisOne(int position, T src, T t);
     }

@@ -17,7 +17,7 @@ import android.view.View;
 
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4a.bean.LTRB;
-import com.codingtu.cooltu.lib4a.tools.BitmapTool;
+import com.codingtu.cooltu.lib4a.image.BitmapTool;
 import com.codingtu.cooltu.lib4a.tools.DrawTool;
 import com.codingtu.cooltu.lib4a.view.attrs.Attrs;
 import com.codingtu.cooltu.lib4a.view.attrs.AttrsTools;

@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4a.bean.LTRB;
 import com.codingtu.cooltu.lib4a.bean.WH;
-import com.codingtu.cooltu.lib4a.tools.BitmapTool;
+import com.codingtu.cooltu.lib4a.image.BitmapTool;
 import com.codingtu.cooltu.lib4a.tools.DrawTool;
 import com.codingtu.cooltu.lib4a.tools.HandlerTool;
 import com.codingtu.cooltu.lib4a.view.attrs.Attrs;

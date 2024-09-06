@@ -3,7 +3,6 @@ package com.codingtu.cooltu.lib4a.image;
 import android.graphics.BitmapFactory;
 
 import com.codingtu.cooltu.lib4a.bean.WH;
-import com.codingtu.cooltu.lib4a.tools.BitmapTool;
 
 import java.io.File;
 

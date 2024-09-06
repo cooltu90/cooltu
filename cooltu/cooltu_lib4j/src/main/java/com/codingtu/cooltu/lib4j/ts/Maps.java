@@ -3,11 +3,14 @@ package com.codingtu.cooltu.lib4j.ts;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.symbol.Symbol;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
+import com.codingtu.cooltu.lib4j.ts.pack.IntValue;
+import com.codingtu.cooltu.lib4j.ts.pack.TValue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Maps<K, V> {
 
@@ -109,6 +112,29 @@ public class Maps<K, V> {
             }
         });
         return newMap;
+    }
+
+    public KV<K, V> get(Ts.IsThisOneInMap<K, V> isThisOne) {
+        if (isThisOne == null)
+            return null;
+        TValue<KV<K, V>> kv = TValue.obtain();
+        ls(new Ts.MapEach<K, V>() {
+            @Override
+            public boolean each(K k, V v) {
+                if (isThisOne.isThisOne(k, v)) {
+                    kv.value = new KV<>();
+                    kv.value.k = k;
+                    kv.value.v = v;
+                    return true;
+                }
+                return false;
+            }
+        });
+        return kv.value;
+    }
+
+    public boolean has(Ts.IsThisOneInMap<K, V> isThisOne) {
+        return get(isThisOne) != null;
     }
 
 }

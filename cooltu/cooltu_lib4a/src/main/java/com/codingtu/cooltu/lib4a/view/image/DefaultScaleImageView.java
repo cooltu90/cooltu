@@ -8,7 +8,7 @@ import com.codingtu.cooltu.lib4a.bean.LTRB;
 import com.codingtu.cooltu.lib4a.image.FileBitmap;
 import com.codingtu.cooltu.lib4a.image.ImageTools;
 import com.codingtu.cooltu.lib4a.tools.AdjustTool;
-import com.codingtu.cooltu.lib4a.tools.BitmapTool;
+import com.codingtu.cooltu.lib4a.image.BitmapTool;
 
 public class DefaultScaleImageView extends CoreScaleView {
 

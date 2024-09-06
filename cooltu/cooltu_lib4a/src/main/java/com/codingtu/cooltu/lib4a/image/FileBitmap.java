@@ -6,7 +6,6 @@ import android.graphics.BitmapRegionDecoder;
 import android.graphics.Rect;
 
 import com.codingtu.cooltu.lib4a.bean.WH;
-import com.codingtu.cooltu.lib4a.tools.BitmapTool;
 
 import java.io.File;
 

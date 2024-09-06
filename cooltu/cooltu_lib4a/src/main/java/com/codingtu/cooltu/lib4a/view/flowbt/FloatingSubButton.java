@@ -17,7 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.codingtu.cooltu.lib4a.R;
-import com.codingtu.cooltu.lib4a.tools.BitmapTool;
+import com.codingtu.cooltu.lib4a.image.BitmapTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4a.view.attrs.Attrs;
 import com.codingtu.cooltu.lib4a.view.attrs.AttrsTools;
