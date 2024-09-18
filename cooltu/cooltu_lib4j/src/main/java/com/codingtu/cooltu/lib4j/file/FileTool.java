@@ -3,7 +3,9 @@ package com.codingtu.cooltu.lib4j.file;
 import com.codingtu.cooltu.lib4j.file.bean.FileInfo;
 import com.codingtu.cooltu.lib4j.file.read.FileReader;
 import com.codingtu.cooltu.lib4j.file.read.ReadLine;
+import com.codingtu.cooltu.lib4j.function.FilePass;
 import com.codingtu.cooltu.lib4j.json.JsonTool;
+import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 
 import java.io.BufferedReader;
@@ -201,5 +203,23 @@ public class FileTool {
             }
         });
         return sb.toString();
+    }
+
+
+    public static long obtainTotalLength(File file, FilePass filePass) {
+        long len = 0;
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (int i = 0; i < CountTool.count(files); i++) {
+                len += obtainTotalLength(files[i], filePass);
+            }
+        } else {
+            if (filePass != null && filePass.pass(file)) {
+                return 0;
+            }
+            len = file.length();
+
+        }
+        return len;
     }
 }

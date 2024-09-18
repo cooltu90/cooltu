@@ -3,6 +3,7 @@ package com.codingtu.cooltu.lib4a.tools;
 import com.codingtu.cooltu.lib4a.net.interceptor.HeaderInterceptor;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4j.function.OnError;
+import com.codingtu.cooltu.lib4j.function.OnFinish;
 import com.codingtu.cooltu.lib4j.function.OnProgress;
 import com.codingtu.cooltu.lib4j.function.OnStart;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
@@ -16,30 +17,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Download implements OnDestroy {
 
-//    public static interface OnProgress {
-//        public void onProgress(long totalLen, long currentSize);
-//    }
-
-//    public static interface OnStart {
-//        public void onStart();
-//    }
-//
-//    public static interface OnError {
-//        public void onError(Throwable throwable);
-//
-//    }
-
-    public static interface OnFinish {
-        public void onFinish(File file);
-    }
-
-
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
-
     private String url;
     private File file;
     private File dir;
@@ -48,7 +25,7 @@ public class Download implements OnDestroy {
     private Long timeout;
     private HeaderInterceptor headerInterceptor;
 
-    private OnFinish onFinish;
+    private OnFinish<File> onFinish;
     private OnError onError;
     private OnProgress onProgress;
     private OnStart onStart;
@@ -117,7 +94,7 @@ public class Download implements OnDestroy {
         return this;
     }
 
-    public Download finish(OnFinish onFinish) {
+    public Download finish(OnFinish<File> onFinish) {
         this.onFinish = onFinish;
         return this;
     }

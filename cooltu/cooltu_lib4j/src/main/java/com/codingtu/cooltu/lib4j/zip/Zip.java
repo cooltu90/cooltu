@@ -3,11 +3,14 @@ package com.codingtu.cooltu.lib4j.zip;
 import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FileType;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
+import com.codingtu.cooltu.lib4j.file.FileTool;
+import com.codingtu.cooltu.lib4j.function.FilePass;
 import com.codingtu.cooltu.lib4j.function.OnError;
+import com.codingtu.cooltu.lib4j.function.OnFinish;
 import com.codingtu.cooltu.lib4j.function.OnProgress;
 import com.codingtu.cooltu.lib4j.function.OnStart;
+import com.codingtu.cooltu.lib4j.function.PathDeal;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
-import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 
 import java.io.File;
@@ -18,35 +21,16 @@ import java.util.zip.ZipOutputStream;
 
 public class Zip implements OnDestroy {
 
-    public static interface Pass {
-        public boolean pass(File file);
-    }
-
-    public static interface ZipedPathDeal {
-        public String deal(String path);
-    }
-
-    public static interface OnFinish {
-        public void onFinish(File file);
-    }
-
-
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
-
     private File src;
     private File desc;
     private long totalLen;
     private long zipedLen;
     private Integer cacheSize;
-    private Pass pass;
-    private ZipedPathDeal zipedPathDeal;
+    private FilePass pass;
+    private PathDeal zipedPathDeal;
     private OnProgress onProgress;
     private OnError onError;
-    private OnFinish onFinish;
+    private OnFinish<File> onFinish;
     private OnStart onStart;
     private long lastTime;
     private String rootDir;
@@ -87,7 +71,7 @@ public class Zip implements OnDestroy {
         return this;
     }
 
-    public Zip pass(Pass pass) {
+    public Zip pass(FilePass pass) {
         this.pass = pass;
         return this;
     }
@@ -97,12 +81,12 @@ public class Zip implements OnDestroy {
         return this;
     }
 
-    public Zip finish(OnFinish onFinish) {
+    public Zip finish(OnFinish<File> onFinish) {
         this.onFinish = onFinish;
         return this;
     }
 
-    public Zip zipedPathDeal(ZipedPathDeal zipedPathDeal) {
+    public Zip zipedPathDeal(PathDeal zipedPathDeal) {
         this.zipedPathDeal = zipedPathDeal;
         return this;
     }
@@ -150,7 +134,7 @@ public class Zip implements OnDestroy {
         }
 
         String zipPath = desc.getAbsolutePath();
-        totalLen = getLength(src);
+        totalLen = FileTool.obtainTotalLength(src, pass);
         lastTime = System.currentTimeMillis();
 
         zip(src, zipPath);
@@ -238,23 +222,6 @@ public class Zip implements OnDestroy {
             input = null;
         }
 
-    }
-
-    private long getLength(File file) {
-        long len = 0;
-        if (file.isDirectory()) {
-            File[] files = file.listFiles();
-            for (int i = 0; i < CountTool.count(files); i++) {
-                len += getLength(files[i]);
-            }
-        } else {
-            if (pass != null && pass.pass(file)) {
-                return 0;
-            }
-            len = file.length();
-
-        }
-        return len;
     }
 
     private void onProgress(long currentLen) {

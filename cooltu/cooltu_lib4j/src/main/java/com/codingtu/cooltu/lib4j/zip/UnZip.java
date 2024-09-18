@@ -4,8 +4,10 @@ import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4j.file.FileTool;
 import com.codingtu.cooltu.lib4j.function.OnError;
+import com.codingtu.cooltu.lib4j.function.OnFinish;
 import com.codingtu.cooltu.lib4j.function.OnProgress;
 import com.codingtu.cooltu.lib4j.function.OnStart;
+import com.codingtu.cooltu.lib4j.function.PathDeal;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,32 +20,17 @@ import java.util.zip.ZipFile;
 
 public class UnZip implements OnDestroy {
 
-    public static interface OnFinish {
-        public void onFinish(long totalLen);
-    }
-
-
-    public static interface ZipedNameDeal {
-        public String deal(String zipedName);
-    }
-
-
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
     private File src;
     private File destDir;
     private Integer cacheSize;
     private long totalLen;
 
     private OnError onError;
-    private OnFinish onFinish;
+    private OnFinish<Long> onFinish;
     private OnProgress onProgress;
     private OnStart onStart;
 
-    private ZipedNameDeal zipedNameDeal;
+    private PathDeal zipedNameDeal;
 
     UnZip() {
     }
@@ -81,7 +68,7 @@ public class UnZip implements OnDestroy {
         return this;
     }
 
-    public UnZip finish(OnFinish onFinish) {
+    public UnZip finish(OnFinish<Long> onFinish) {
         this.onFinish = onFinish;
         return this;
     }
@@ -103,7 +90,7 @@ public class UnZip implements OnDestroy {
     }
 
 
-    public UnZip zipedNameDeal(ZipedNameDeal zipedNameDeal) {
+    public UnZip zipedNameDeal(PathDeal zipedNameDeal) {
         this.zipedNameDeal = zipedNameDeal;
         return this;
     }

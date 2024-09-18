@@ -3,7 +3,12 @@ package com.codingtu.cooltu.lib4j.file.copy;
 import com.codingtu.cooltu.lib4j.file.FileTool;
 import com.codingtu.cooltu.lib4j.file.list.FileLister;
 import com.codingtu.cooltu.lib4j.file.list.ListFile;
+import com.codingtu.cooltu.lib4j.file.read.FileReader;
+import com.codingtu.cooltu.lib4j.function.OnFinish;
+import com.codingtu.cooltu.lib4j.function.OnProgress;
+import com.codingtu.cooltu.lib4j.function.OnStart;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
+import com.codingtu.cooltu.lib4j.ts.pack.TValue;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,6 +23,12 @@ public class FileCopy {
     private boolean force;
     private String targetPath;
     private String srcPath;
+    private OnProgress onProgress;
+    private OnFinish onFinish;
+    private OnStart onStart;
+    private long totalLen;
+    private long currentLen;
+    private long lastTime;
 
     public static FileCopy src(String path) {
         FileCopy fileCopy = new FileCopy();
@@ -46,6 +57,21 @@ public class FileCopy {
         return this;
     }
 
+    public FileCopy progress(OnProgress onProgress) {
+        this.onProgress = onProgress;
+        return this;
+    }
+
+    public FileCopy finish(OnFinish onFinish) {
+        this.onFinish = onFinish;
+        return this;
+    }
+
+    public FileCopy start(OnStart onStart) {
+        this.onStart = onStart;
+        return this;
+    }
+
     public void to(String path) {
         this.target = new File(path);
         toTarget();
@@ -66,7 +92,6 @@ public class FileCopy {
         toTarget();
     }
 
-
     private void toTarget() {
         if (!force && target.exists()) {
             return;
@@ -77,7 +102,17 @@ public class FileCopy {
 //            return;
 //        }
 
+        if (onStart != null) {
+            onStart.onStart();
+        }
+
+        lastTime = System.currentTimeMillis();
+        totalLen = FileTool.obtainTotalLength(src, null);
         toTarget(src);
+        onProgress(totalLen);
+        if (onFinish != null) {
+            onFinish.onFinish(null);
+        }
     }
 
     private void toTarget(File file) {
@@ -113,6 +148,16 @@ public class FileCopy {
             int len = 0;
             while ((len = input.read(bytes)) > 0) {
                 output.write(bytes, 0, len);
+                currentLen += len;
+
+                long nowTime = System.currentTimeMillis();
+                if (nowTime - lastTime > 100) {
+                    if (currentLen < totalLen) {
+                        onProgress(currentLen);
+                    }
+                    lastTime = nowTime;
+                }
+
             }
         } catch (Exception e) {
             LibLogs.e(e);
@@ -131,6 +176,12 @@ public class FileCopy {
             }
         }
 
+    }
+
+    private void onProgress(long currentLen) {
+        if (this.onProgress != null) {
+            this.onProgress.onProgress(totalLen, currentLen);
+        }
     }
 
 }

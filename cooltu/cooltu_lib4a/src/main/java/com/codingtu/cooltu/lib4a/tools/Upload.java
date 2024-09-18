@@ -2,6 +2,7 @@ package com.codingtu.cooltu.lib4a.tools;
 
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4j.function.OnError;
+import com.codingtu.cooltu.lib4j.function.OnFinish;
 import com.codingtu.cooltu.lib4j.function.OnProgress;
 import com.codingtu.cooltu.lib4j.function.OnStart;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
@@ -15,22 +16,6 @@ import java.io.File;
 
 public class Upload implements OnDestroy {
 
-//    public static interface OnProgress {
-//        public void onProgress(long totalLen, long currentSize);
-//    }
-
-//    public static interface OnStart {
-//        public void onStart();
-//    }
-
-//    public static interface OnError {
-//        public void onError(Throwable throwable);
-//    }
-
-    public static interface OnFinish {
-        void onFinish(String msg);
-    }
-
     /**************************************************
      *
      *
@@ -42,7 +27,7 @@ public class Upload implements OnDestroy {
     private File file;
     private String fileKey;
 
-    private OnFinish onFinish;
+    private OnFinish<String> onFinish;
     private OnError onError;
     private OnProgress onProgress;
     private OnStart onStart;
@@ -97,7 +82,7 @@ public class Upload implements OnDestroy {
         return this;
     }
 
-    public Upload finish(OnFinish onFinish) {
+    public Upload finish(OnFinish<String> onFinish) {
         this.onFinish = onFinish;
         return this;
     }

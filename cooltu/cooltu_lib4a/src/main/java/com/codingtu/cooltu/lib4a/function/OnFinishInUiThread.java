@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4a.function.zip;
+package com.codingtu.cooltu.lib4a.function;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -6,31 +6,28 @@ import android.os.Message;
 
 import androidx.annotation.NonNull;
 
-import com.codingtu.cooltu.lib4j.zip.Zip;
+import com.codingtu.cooltu.lib4j.function.OnFinish;
 
-import java.io.File;
-
-public abstract class OnZipFinishInUiThread implements Zip.OnFinish {
+public abstract class OnFinishInUiThread<T> implements OnFinish<T> {
 
     private final Handler handler;
 
-    public OnZipFinishInUiThread() {
+    public OnFinishInUiThread() {
         handler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(@NonNull Message msg) {
                 super.handleMessage(msg);
-                File file = (File) msg.obj;
-                finish(file);
+                finish((T) msg.obj);
             }
         };
     }
 
-    public abstract void finish(File file);
+    public abstract void finish(T t);
 
     @Override
-    public final void onFinish(File file) {
+    public void onFinish(T t) {
         Message msg = Message.obtain();
-        msg.obj = file;
+        msg.obj = t;
         handler.sendMessage(msg);
     }
 
