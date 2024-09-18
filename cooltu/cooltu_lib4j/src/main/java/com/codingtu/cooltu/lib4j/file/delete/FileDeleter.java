@@ -1,15 +1,64 @@
 package com.codingtu.cooltu.lib4j.file.delete;
 
+import com.codingtu.cooltu.lib4j.file.FileTool;
+import com.codingtu.cooltu.lib4j.file.copy.FileCopy;
+import com.codingtu.cooltu.lib4j.function.OnFinish;
+import com.codingtu.cooltu.lib4j.function.OnProgress;
+import com.codingtu.cooltu.lib4j.function.OnStart;
+
 import java.io.File;
 
 public class FileDeleter {
 
-    public static void delete(String path) {
-        delete(new File(path));
+    private File deleteFile;
+    private OnProgress onProgress;
+    private OnFinish onFinish;
+    private OnStart onStart;
+    private long totalLen;
+    private long currentLen;
+    private long lastTime;
+
+    public static FileDeleter file(String path) {
+        return file(new File(path));
     }
 
+    public static FileDeleter file(File file) {
+        FileDeleter fileDeleter = new FileDeleter();
+        fileDeleter.deleteFile = file;
+        return fileDeleter;
+    }
 
-    public static void delete(File file) {
+    public FileDeleter progress(OnProgress onProgress) {
+        this.onProgress = onProgress;
+        return this;
+    }
+
+    public FileDeleter finish(OnFinish onFinish) {
+        this.onFinish = onFinish;
+        return this;
+    }
+
+    public FileDeleter start(OnStart onStart) {
+        this.onStart = onStart;
+        return this;
+    }
+
+    public void delete() {
+        totalLen = FileTool.obtainTotalLength(deleteFile, null);
+
+        if (onStart != null) {
+            onStart.onStart();
+        }
+        deleteReal(deleteFile);
+
+        onProgress(totalLen);
+
+        if (onFinish != null) {
+            onFinish.onFinish(null);
+        }
+    }
+
+    private void deleteReal(File file) {
         if (!file.exists()) {
             return;
         }
@@ -18,10 +67,26 @@ public class FileDeleter {
             File[] files = file.listFiles();
             int size = files == null ? 0 : files.length;
             for (int i = 0; i < size; i++) {
-                delete(files[i]);
+                deleteReal(files[i]);
             }
+        } else {
+            currentLen += file.length();
         }
         file.delete();
+
+        long nowTime = System.currentTimeMillis();
+        if (nowTime - lastTime > 100) {
+            if (currentLen < totalLen) {
+                onProgress(currentLen);
+            }
+            lastTime = nowTime;
+        }
+    }
+
+    private void onProgress(long currentLen) {
+        if (this.onProgress != null) {
+            this.onProgress.onProgress(totalLen, currentLen);
+        }
     }
 
 }

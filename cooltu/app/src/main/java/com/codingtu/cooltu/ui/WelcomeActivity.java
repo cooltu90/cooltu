@@ -16,6 +16,8 @@ import com.codingtu.cooltu.lib4a.tools.SDCardTool;
 import com.codingtu.cooltu.lib4a.view.dialogview.Dialog;
 import com.codingtu.cooltu.lib4j.data.progress.Progress;
 import com.codingtu.cooltu.lib4j.file.copy.FileCopy;
+import com.codingtu.cooltu.lib4j.file.delete.FileDeleter;
+import com.codingtu.cooltu.lib4j.function.OnProgress;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Maps;
 import com.codingtu.cooltu.lib4j.ts.Ts;
@@ -54,23 +56,13 @@ public class WelcomeActivity extends WelcomeActivityBase {
         OnceThread.sub(new Runnable() {
             @Override
             public void run() {
-                String path0 = SDCardTool.getSDCard() + "/LdarData/建档/默认空间/csqy_测试企业/7/新乡化纤8.14下_pack00.zip";
-                String path1 = SDCardTool.getSDCard() + "/LdarData/建档/默认空间/csqy_测试企业/7/新乡化纤8.14下_pack01.zip";
-
-                File file = new File(path0);
-                Logs.i(file.exists());
-
-                FileCopy.src(path0).progress(new OnProgressInUiThread() {
+                String path0 = SDCardTool.getSDCard() + "/LdarData/建档/默认空间/csqy_测试企业/3";
+                FileDeleter.file(path0).progress(new OnProgress() {
                     @Override
-                    public void progress(long totalLen, long currentLen) {
+                    public void onProgress(long totalLen, long currentLen) {
                         Logs.i("totalLen:" + totalLen + " currentLen:" + currentLen);
                     }
-                }).finish(new OnFinishInUiThread() {
-                    @Override
-                    public void finish(Object o) {
-
-                    }
-                }).force().to(path1);
+                }).delete();
             }
         }).main(new OnceThread.MainRunnable() {
             @Override

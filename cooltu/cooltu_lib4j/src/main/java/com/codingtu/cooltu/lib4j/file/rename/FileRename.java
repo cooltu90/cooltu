@@ -55,6 +55,6 @@ public class FileRename {
             }
         });
 
-        FileDeleter.delete(src);
+        FileDeleter.file(src).delete();
     }
 }
