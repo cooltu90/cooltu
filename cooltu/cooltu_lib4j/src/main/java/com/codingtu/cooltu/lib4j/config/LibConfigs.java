@@ -22,6 +22,8 @@ public abstract class LibConfigs {
 
     public abstract boolean isLogHttpConnect();
 
+    public abstract boolean isLogJsonException();
+
     public abstract String getDefaultLogTag();
 
     public abstract void baseLog(int level, String tag, String msg);

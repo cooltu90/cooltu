@@ -2,6 +2,7 @@ package com.codingtu.cooltu.lib4j.json.fastjson;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.codingtu.cooltu.lib4j.config.LibConfigs;
 import com.codingtu.cooltu.lib4j.json.base.JA;
 import com.codingtu.cooltu.lib4j.json.base.JO;
 import com.codingtu.cooltu.lib4j.json.base.JsonHolder;
@@ -15,7 +16,8 @@ public class FastJsonHolder implements JsonHolder {
         try {
             return JSON.parseObject(json, tClass);
         } catch (Throwable e) {
-            LibLogs.w(e);
+            if (LibConfigs.configs().isLogJsonException())
+                LibLogs.w(e);
             return null;
         }
     }

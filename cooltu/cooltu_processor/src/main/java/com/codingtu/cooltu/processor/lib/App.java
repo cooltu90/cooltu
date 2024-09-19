@@ -35,6 +35,11 @@ public class App extends LibApp {
             }
 
             @Override
+            public boolean isLogJsonException() {
+                return false;
+            }
+
+            @Override
             public String getDefaultLogTag() {
                 return "";
             }

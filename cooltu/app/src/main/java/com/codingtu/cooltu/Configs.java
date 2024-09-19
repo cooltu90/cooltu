@@ -24,6 +24,11 @@ public class Configs extends CoreConfigs {
     }
 
     @Override
+    public boolean isLogJsonException() {
+        return false;
+    }
+
+    @Override
     public String getDefaultLogTag() {
         return "TestApp";
     }
