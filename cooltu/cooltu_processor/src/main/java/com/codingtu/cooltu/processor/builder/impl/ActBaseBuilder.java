@@ -449,13 +449,25 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     private [noticeDialogFullName] noticeDialog;
 
     protected void noticeShow(String msg) {
+        noticeShow(msg, null);
+    }
+
+    protected void noticeShow(String msg, Object obj) {
         if (noticeDialog == null)
             noticeDialog = new [noticeDialogFullName](getAct())
                     .destroys(this)
                     .setLayout([layout])
+                    .onClick(v -> {
+                        noticeDialogYes(noticeDialog.obtainData());
+                    })
                     .build();
+        noticeDialog.data(obj);
         noticeDialog.setContent(msg);
         noticeDialog.show();
+    }
+
+    public void noticeDialogYes(Object data) {
+        noticeDialog.hidden();
     }
                                                                                                     [<sub>][if][noticeDialog]
                                                                                                     [<sub>][for][editDialog]

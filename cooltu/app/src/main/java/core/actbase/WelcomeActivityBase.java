@@ -166,13 +166,25 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     private com.codingtu.cooltu.lib4a.view.dialogview.NoticeDialog noticeDialog;
 
     protected void noticeShow(String msg) {
+        noticeShow(msg, null);
+    }
+
+    protected void noticeShow(String msg, Object obj) {
         if (noticeDialog == null)
             noticeDialog = new com.codingtu.cooltu.lib4a.view.dialogview.NoticeDialog(getAct())
                     .destroys(this)
                     .setLayout(com.codingtu.cooltu.R.layout.dialog_notice)
+                    .onClick(v -> {
+                        noticeDialogYes(noticeDialog.obtainData());
+                    })
                     .build();
+        noticeDialog.data(obj);
         noticeDialog.setContent(msg);
         noticeDialog.show();
+    }
+
+    public void noticeDialogYes(Object data) {
+        noticeDialog.hidden();
     }
 
     private com.codingtu.cooltu.lib4a.view.dialogview.EditDialog editDialog;

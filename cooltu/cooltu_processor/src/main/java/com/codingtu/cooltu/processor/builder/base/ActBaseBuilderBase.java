@@ -946,13 +946,25 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             addLnTag(noticeDialogSb, "    private [noticeDialogFullName] noticeDialog;", noticeDialog0.get(0));
             addLnTag(noticeDialogSb, "");
             addLnTag(noticeDialogSb, "    protected void noticeShow(String msg) {");
+            addLnTag(noticeDialogSb, "        noticeShow(msg, null);");
+            addLnTag(noticeDialogSb, "    }");
+            addLnTag(noticeDialogSb, "");
+            addLnTag(noticeDialogSb, "    protected void noticeShow(String msg, Object obj) {");
             addLnTag(noticeDialogSb, "        if (noticeDialog == null)");
             addLnTag(noticeDialogSb, "            noticeDialog = new [noticeDialogFullName](getAct())", noticeDialog0.get(1));
             addLnTag(noticeDialogSb, "                    .destroys(this)");
             addLnTag(noticeDialogSb, "                    .setLayout([layout])", noticeDialog0.get(2));
+            addLnTag(noticeDialogSb, "                    .onClick(v -> {");
+            addLnTag(noticeDialogSb, "                        noticeDialogYes(noticeDialog.obtainData());");
+            addLnTag(noticeDialogSb, "                    })");
             addLnTag(noticeDialogSb, "                    .build();");
+            addLnTag(noticeDialogSb, "        noticeDialog.data(obj);");
             addLnTag(noticeDialogSb, "        noticeDialog.setContent(msg);");
             addLnTag(noticeDialogSb, "        noticeDialog.show();");
+            addLnTag(noticeDialogSb, "    }");
+            addLnTag(noticeDialogSb, "");
+            addLnTag(noticeDialogSb, "    public void noticeDialogYes(Object data) {");
+            addLnTag(noticeDialogSb, "        noticeDialog.hidden();");
             addLnTag(noticeDialogSb, "    }");
         }
         for (int i0 = 0; i0 < count(editDialogCounts, getForKey("editDialog")); i0++) {

@@ -19,6 +19,8 @@ public final class NoticeDialog implements OnDestroy, View.OnClickListener {
     private int layout;
     private View inflate;
     private View contentTv;
+    private View.OnClickListener onClickListener;
+    private Object data;
 
     public NoticeDialog(Activity act) {
         this.act = act;
@@ -34,6 +36,8 @@ public final class NoticeDialog implements OnDestroy, View.OnClickListener {
             layer.destroy();
         layer = null;
         act = null;
+        onClickListener = null;
+        data = null;
     }
 
     public NoticeDialog setLayout(int layout) {
@@ -47,6 +51,20 @@ public final class NoticeDialog implements OnDestroy, View.OnClickListener {
         return this;
     }
 
+    public NoticeDialog onClick(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+        return this;
+    }
+
+    public NoticeDialog data(Object data) {
+        this.data = data;
+        return this;
+    }
+
+    public Object obtainData() {
+        return this.data;
+    }
+
     public NoticeDialog build() {
         layer = new Layer(act);
         layer.setHiddenWhenBackClick(false);
@@ -56,7 +74,7 @@ public final class NoticeDialog implements OnDestroy, View.OnClickListener {
         inflate = InflateTool.inflate(act, layout);
         layer.addView(inflate, ViewTool.WRAP_CONTENT, ViewTool.WRAP_CONTENT);
         contentTv = inflate.findViewById(R.id.dialogContentTv);
-        inflate.findViewById(R.id.noticeDialogYesBt).setOnClickListener(this);
+        inflate.findViewById(R.id.noticeDialogYesBt).setOnClickListener(onClickListener == null ? this : onClickListener);
 
         ViewTool.inRelativeCenter(inflate);
         return this;
