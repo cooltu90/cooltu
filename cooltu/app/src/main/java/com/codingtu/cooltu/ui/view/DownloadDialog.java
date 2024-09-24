@@ -9,7 +9,6 @@ import com.codingtu.cooltu.lib4a.tools.InflateTool;
 import com.codingtu.cooltu.lib4a.tools.MobileTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4a.view.layer.Layer;
-import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 
@@ -120,7 +119,7 @@ public class DownloadDialog implements OnDestroy {
         if (totalSize == currentSize) {
             setProgressTv("100");
         } else {
-            String s = StringTool.parseNumber(currentSize * 100d / totalSize, 2, false);
+            String s = StringTool.formatDouble(currentSize * 100d / totalSize, 2, false);
             setProgressTv(s);
         }
 
@@ -154,21 +153,21 @@ public class DownloadDialog implements OnDestroy {
     private String getSizeStr(long size) {
         double dSize = size / 1024d;
         if (dSize < 1024) {
-            return StringTool.parseNumber(dSize, 2, true) + "KB";
+            return StringTool.formatDouble(dSize, 2, true) + "KB";
         }
 
         dSize /= 1024d;
         if (dSize < 1024) {
-            return StringTool.parseNumber(dSize, 2, true) + "MB";
+            return StringTool.formatDouble(dSize, 2, true) + "MB";
         }
 
         dSize /= 1024d;
         if (dSize < 1024) {
-            return StringTool.parseNumber(dSize, 2, true) + "GB";
+            return StringTool.formatDouble(dSize, 2, true) + "GB";
         }
 
         dSize /= 1024d;
-        return StringTool.parseNumber(dSize, 2, true) + "TB";
+        return StringTool.formatDouble(dSize, 2, true) + "TB";
     }
 
     public void show() {

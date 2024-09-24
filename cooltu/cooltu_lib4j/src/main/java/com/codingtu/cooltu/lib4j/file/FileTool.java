@@ -163,25 +163,25 @@ public class FileTool {
 
         double d = length / 1024d;
         if (d < divider) {
-            lengthInfo.size = StringTool.parseNumber(d, bit, trim);
+            lengthInfo.size = StringTool.formatDouble(d, bit, trim);
             lengthInfo.unit = "KB";
             return lengthInfo;
         }
         d = d / 1024d;
         if (d < divider) {
-            lengthInfo.size = StringTool.parseNumber(d, bit, trim);
+            lengthInfo.size = StringTool.formatDouble(d, bit, trim);
             lengthInfo.unit = "MB";
             return lengthInfo;
         }
         d = d / 1024d;
         if (d < divider) {
-            lengthInfo.size = StringTool.parseNumber(d, bit, trim);
+            lengthInfo.size = StringTool.formatDouble(d, bit, trim);
             lengthInfo.unit = "GB";
             return lengthInfo;
         }
 
         d = d / 1024d;
-        lengthInfo.size = StringTool.parseNumber(d, bit, trim);
+        lengthInfo.size = StringTool.formatDouble(d, bit, trim);
         lengthInfo.unit = "TB";
         return lengthInfo;
     }

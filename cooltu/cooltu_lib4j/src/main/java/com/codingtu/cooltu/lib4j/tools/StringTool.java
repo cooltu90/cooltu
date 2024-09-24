@@ -2,7 +2,6 @@ package com.codingtu.cooltu.lib4j.tools;
 
 import com.codingtu.cooltu.lib4j.ts.Ts;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +47,11 @@ public class StringTool {
 
     /**************************************************
      *
-     *
+     * 将double类型进行格式化，精确到小数点后几位，并且四舍五入
+     * bit为格式化的位数
+     * trim为是否去掉最后一位的0
+     * 例如：12.3956，bit=2，trim=true。结果为12.4
+     *      12.3956，bit=2，trim=false。结果为12.40
      *
      **************************************************/
 //    public static String parseNumber(double num, int bit, boolean trim) {
@@ -60,7 +63,7 @@ public class StringTool {
 //        }
 //        return new DecimalFormat(type).format(num);
 //    }
-    public static String parseNumber(double num, int bit, boolean trim) {
+    public static String formatDouble(double num, int bit, boolean trim) {
         if (bit < 0)
             throw new RuntimeException("bit必须大于等于0");
 
@@ -229,9 +232,12 @@ public class StringTool {
         }
         startIndex += left.length();
 
-        int endIndex = oriStr.indexOf(right, startIndex);
-        if (endIndex < 0) {
-            return null;
+        int endIndex = oriStr.length();
+        if (isNotBlank(right)) {
+            endIndex = oriStr.indexOf(right, startIndex);
+            if (endIndex < 0) {
+                return null;
+            }
         }
         return oriStr.substring(startIndex, endIndex);
     }
@@ -277,11 +283,6 @@ public class StringTool {
         return getSub(str, startIndex, endIndex);
     }
 
-    public static String getSubFromStart(String str, int bit) {
-        return getSubFromStart(str, 0, bit);
-    }
-
-
     /**************************************************
      *
      * 获取子字符串
@@ -297,6 +298,23 @@ public class StringTool {
     public static String getSubFromEnd(String str, int bit) {
         return getSubFromEnd(str, str.length(), bit);
     }
+
+    /**************************************************
+     *
+     * 获取子字符串
+     *
+     **************************************************/
+    public static String getSubToEnd(String str, int bit) {
+        return getSubToEnd(str, str.length(), bit);
+    }
+
+    public static String getSubToEnd(String str, int endIndex, int bit) {
+        if (endIndex <= bit) {
+            return null;
+        }
+        return getSub(str, 0, endIndex - bit);
+    }
+
 
     /**************************************************
      *
@@ -410,19 +428,6 @@ public class StringTool {
         }
 
         return sb.toString();
-    }
-
-    /**************************************************
-     *
-     * 从末尾剪掉几个
-     *
-     **************************************************/
-    public static String cutFromEnd(String str, int bit) {
-        int len = CountTool.count(str);
-        if (len <= bit) {
-            return null;
-        }
-        return str.substring(0, len - bit);
     }
 
     public static byte[] hexStringToByteArray(String s) {
