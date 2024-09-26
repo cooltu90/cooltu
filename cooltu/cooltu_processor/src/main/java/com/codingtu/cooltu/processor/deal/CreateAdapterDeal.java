@@ -3,6 +3,7 @@ package com.codingtu.cooltu.processor.deal;
 import com.codingtu.cooltu.constant.AdapterType;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.exception.FileCopyException;
 import com.codingtu.cooltu.lib4j.file.copy.FileCopy;
 import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
 import com.codingtu.cooltu.processor.builder.impl.DefaultListAdapterBuilder;
@@ -27,9 +28,13 @@ public class CreateAdapterDeal extends TypeBaseDeal {
         //创建layout
         IdTools.Id layoutTempId = IdTools.elementToId(te, CreateAdapter.class, createAdapter.layoutTemp());
         String layoutName = "item_" + name;
-        FileCopy
-                .src(CurrentPath.layout(layoutTempId.rName))
-                .to(new File(CurrentPath.layout(layoutName)));
+        try {
+            FileCopy
+                    .src(CurrentPath.layout(layoutTempId.rName))
+                    .to(new File(CurrentPath.layout(layoutName)));
+        } catch (FileCopyException e) {
+            e.printStackTrace();
+        }
         //生成VH
         IdTools.Id layoutId = new IdTools.Id(Pkg.R, "layout", layoutName);
         JavaInfo vh = CurrentPath.vh(name);

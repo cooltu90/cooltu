@@ -2,6 +2,7 @@ package com.codingtu.cooltu.processor.deal;
 
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.exception.FileCopyException;
 import com.codingtu.cooltu.lib4j.file.copy.FileCopy;
 import com.codingtu.cooltu.lib4j.file.deal.FileLineDealer;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
@@ -37,9 +38,13 @@ public class CreateActDeal extends TypeBaseDeal {
         //创建layout
         IdTools.Id layoutTempId = IdTools.elementToId(te, CreateAct.class, createAct.layoutTemp());
         String layoutName = "activity_" + name;
-        FileCopy
-                .src(CurrentPath.layout(layoutTempId.rName))
-                .to(new File(CurrentPath.layout(layoutName)));
+        try {
+            FileCopy
+                    .src(CurrentPath.layout(layoutTempId.rName))
+                    .to(new File(CurrentPath.layout(layoutName)));
+        } catch (FileCopyException e) {
+            e.printStackTrace();
+        }
         //创建ActRes
         JavaInfo actResJavaInfo = CurrentPath.actRes(packages, name);
         new ActResBuilder(actResJavaInfo, actJavaInfo);

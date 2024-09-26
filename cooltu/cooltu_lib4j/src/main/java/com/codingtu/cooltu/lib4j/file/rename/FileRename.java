@@ -1,5 +1,6 @@
 package com.codingtu.cooltu.lib4j.file.rename;
 
+import com.codingtu.cooltu.lib4j.exception.FileCopyException;
 import com.codingtu.cooltu.lib4j.file.FileTool;
 import com.codingtu.cooltu.lib4j.file.copy.FileCopy;
 import com.codingtu.cooltu.lib4j.file.delete.FileDeleter;
@@ -50,7 +51,11 @@ public class FileRename {
                 if (file.isDirectory()) {
                     newFile.mkdirs();
                 } else {
-                    FileCopy.src(file).to(newFile);
+                    try {
+                        FileCopy.src(file).to(newFile);
+                    } catch (FileCopyException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
