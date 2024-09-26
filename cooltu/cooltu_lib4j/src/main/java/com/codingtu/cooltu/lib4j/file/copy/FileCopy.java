@@ -1,5 +1,6 @@
 package com.codingtu.cooltu.lib4j.file.copy;
 
+import com.codingtu.cooltu.lib4j.exception.FileCopyException;
 import com.codingtu.cooltu.lib4j.file.FileTool;
 import com.codingtu.cooltu.lib4j.file.list.FileLister;
 import com.codingtu.cooltu.lib4j.file.list.ListFile;
@@ -8,6 +9,7 @@ import com.codingtu.cooltu.lib4j.function.OnFinish;
 import com.codingtu.cooltu.lib4j.function.OnProgress;
 import com.codingtu.cooltu.lib4j.function.OnStart;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
+import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.pack.TValue;
 
 import java.io.File;
@@ -72,27 +74,27 @@ public class FileCopy {
         return this;
     }
 
-    public void to(String path) {
+    public void to(String path) throws FileCopyException {
         this.target = new File(path);
         toTarget();
     }
 
-    public void to(File target) {
+    public void to(File target) throws FileCopyException {
         this.target = target;
         toTarget();
     }
 
-    public void toDir(String dir) {
+    public void toDir(String dir) throws FileCopyException {
         this.target = new File(dir, src.getName());
         toTarget();
     }
 
-    public void toDir(File dir) {
+    public void toDir(File dir) throws FileCopyException {
         this.target = new File(dir, src.getName());
         toTarget();
     }
 
-    private void toTarget() {
+    private void toTarget() throws FileCopyException {
         if (!force && target.exists()) {
             return;
         }
@@ -115,52 +117,35 @@ public class FileCopy {
         }
     }
 
-    private void toTarget(File file) {
+    private void toTarget(File file) throws FileCopyException {
         String rename = FileTool.getRename(file, srcPath, targetPath);
         File newFile = new File(rename);
         if (file.isDirectory()) {
             newFile.mkdirs();
-            FileLister.dir(file).listOnce(new ListFile() {
-                @Override
-                public void list(File file) {
-                    toTarget(file);
+            File[] files = file.listFiles();
+            int count = CountTool.count(files);
+            if (count > 0) {
+                for (int i = 0; i < count; i++) {
+                    File file1 = files[i];
+                    toTarget(file1);
+
                 }
-            });
+            }
         } else {
             copy(file, newFile);
         }
     }
 
-    private void copy(File oldFile, File newFile) {
+    private void copy(File oldFile, File newFile) throws FileCopyException {
+        InputStream input = null;
+        OutputStream output = null;
         try {
             FileTool.createFileDir(newFile);
-            InputStream input = new FileInputStream(oldFile);
-            OutputStream output = new FileOutputStream(newFile);
+            input = new FileInputStream(oldFile);
+            output = new FileOutputStream(newFile);
             copy(input, output);
         } catch (Exception e) {
-            LibLogs.e(e);
-        }
-    }
-
-    private void copy(InputStream input, OutputStream output) {
-        try {
-            byte[] bytes = new byte[1024];
-            int len = 0;
-            while ((len = input.read(bytes)) > 0) {
-                output.write(bytes, 0, len);
-                currentLen += len;
-
-                long nowTime = System.currentTimeMillis();
-                if (nowTime - lastTime > 100) {
-                    if (currentLen < totalLen) {
-                        onProgress(currentLen);
-                    }
-                    lastTime = nowTime;
-                }
-
-            }
-        } catch (Exception e) {
-            LibLogs.e(e);
+            throw new FileCopyException("文件拷贝错误 旧文件：" + oldFile.getAbsolutePath() + " 新文件：" + newFile.getAbsolutePath());
         } finally {
             if (output != null) {
                 try {
@@ -175,7 +160,24 @@ public class FileCopy {
                 }
             }
         }
+    }
 
+    private void copy(InputStream input, OutputStream output) throws IOException {
+        byte[] bytes = new byte[1024];
+        int len = 0;
+        while ((len = input.read(bytes)) > 0) {
+            output.write(bytes, 0, len);
+            currentLen += len;
+
+            long nowTime = System.currentTimeMillis();
+            if (nowTime - lastTime > 100) {
+                if (currentLen < totalLen) {
+                    onProgress(currentLen);
+                }
+                lastTime = nowTime;
+            }
+
+        }
     }
 
     private void onProgress(long currentLen) {

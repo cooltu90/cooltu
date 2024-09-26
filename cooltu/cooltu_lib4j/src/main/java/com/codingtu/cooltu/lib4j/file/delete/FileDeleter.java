@@ -16,7 +16,6 @@ public class FileDeleter {
     private OnStart onStart;
     private long totalLen;
     private long currentLen;
-    private long lastTime;
 
     public static FileDeleter file(String path) {
         return file(new File(path));
@@ -73,14 +72,7 @@ public class FileDeleter {
             currentLen += file.length();
         }
         file.delete();
-
-        long nowTime = System.currentTimeMillis();
-        if (nowTime - lastTime > 100) {
-            if (currentLen < totalLen) {
-                onProgress(currentLen);
-            }
-            lastTime = nowTime;
-        }
+        onProgress(currentLen);
     }
 
     private void onProgress(long currentLen) {
