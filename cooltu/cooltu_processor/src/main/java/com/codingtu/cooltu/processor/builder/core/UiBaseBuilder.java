@@ -855,11 +855,11 @@ public abstract class UiBaseBuilder {
                 TagTools.addLnTag(sb, "                    .build();");
                 TagTools.addLnTag(sb, "        }");
                 if (ClassTool.isVoid(objType)) {
-                    TagTools.addLnTag(sb, "        menuDialog.setObj(null);");
+                    TagTools.addLnTag(sb, "        [menuDialog].setObj(null);", kv.v);
                 } else {
-                    TagTools.addLnTag(sb, "        menuDialog.setObj(obj);");
+                    TagTools.addLnTag(sb, "        [menuDialog].setObj(obj);", kv.v);
                 }
-                TagTools.addLnTag(sb, "        menuDialog.show();");
+                TagTools.addLnTag(sb, "        [menuDialog].show();", kv.v);
                 TagTools.addLnTag(sb, "    }");
 
                 idTs.ls(new Ts.EachTs<IdTools.Id>() {
