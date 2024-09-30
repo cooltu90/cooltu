@@ -45,9 +45,15 @@ public class WelcomeActivity extends WelcomeActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-        intent.setData(Uri.parse("package:" + getPackageName()));
-        startActivityForResult(intent, 1);
+//        Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+//        intent.setData(Uri.parse("package:" + getPackageName()));
+//        startActivityForResult(intent, 1);
+
+        //0.032048253164765
+        //0.03533525348935628
+
+        String s = StringTool.formatDouble(0.03533525348935628, 2, false);
+        Logs.i(s);
     }
 
 

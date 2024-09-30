@@ -1,5 +1,6 @@
 package com.codingtu.cooltu.lib4j.tools;
 
+import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.util.ArrayList;
@@ -71,7 +72,6 @@ public class StringTool {
         String[] split = s.split("\\.");
         String z = split[0];
         String x = split[1];
-
         if (x.length() <= bit) {
             return s;
         }
@@ -79,12 +79,14 @@ public class StringTool {
         String xx = x.substring(0, bit);
         s = z + xx;
 
-        System.out.println(s);
-
         String xxx = x.substring(bit, bit + 1);
         if (Integer.parseInt(xxx) >= 5) {
             //进一位
             s = (Integer.parseInt(s) + 1) + "";
+            int n = z.length() + bit - s.length();
+            if (n > 0) {
+                s = repeatString(n, "0") + s;
+            }
         }
 
         z = s.substring(0, s.length() - bit);
