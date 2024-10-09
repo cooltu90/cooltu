@@ -13,6 +13,10 @@ import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.concurrent.TimeUnit;
 
 public class Download implements OnDestroy {
@@ -29,6 +33,11 @@ public class Download implements OnDestroy {
     private OnError onError;
     private OnProgress onProgress;
     private OnStart onStart;
+    private boolean sync;
+    private long totalLen;
+    private Integer cacheSize;
+    private long downloadedLen;
+    private long lastTime;
 
 
     Download() {
@@ -89,6 +98,11 @@ public class Download implements OnDestroy {
         return this;
     }
 
+    public Download cacheSize(int cacheSize) {
+        this.cacheSize = cacheSize;
+        return this;
+    }
+
     public Download error(OnError onError) {
         this.onError = onError;
         return this;
@@ -106,6 +120,11 @@ public class Download implements OnDestroy {
 
     public Download start(OnStart onStart) {
         this.onStart = onStart;
+        return this;
+    }
+
+    public Download sync() {
+        this.sync = true;
         return this;
     }
 
@@ -134,30 +153,6 @@ public class Download implements OnDestroy {
             onStart.onStart();
         }
 
-        FileCallback fileCallback = new FileCallback(dir.getAbsolutePath(), fileName) {
-            @Override
-            public void onSuccess(Response<File> response) {
-                if (onFinish != null) {
-                    onFinish.onFinish(response.body());
-                }
-                destroy();
-            }
-
-            @Override
-            public void onError(Response<File> response) {
-                super.onError(response);
-                Download.this.onError(response.getException());
-            }
-
-            @Override
-            public void downloadProgress(Progress progress) {
-                super.downloadProgress(progress);
-                if (onProgress != null) {
-                    onProgress.onProgress(progress.totalSize, progress.currentSize);
-                }
-            }
-        };
-
         OkGo okGo = OkGo.getInstance();
         if (timeout != null && headerInterceptor != null) {
             okGo.setOkHttpClient(
@@ -182,6 +177,81 @@ public class Download implements OnDestroy {
                             .build()
             );
         }
+
+        if (sync) {
+            //同步
+
+            InputStream input = null;
+            OutputStream out = null;
+
+            try {
+
+                if (cacheSize == null) {
+                    cacheSize = 1024 * 512;
+                }
+
+                okhttp3.Response response = okGo.<File>get(url)
+                        .tag(tag)
+                        .execute();
+                totalLen = response.body().contentLength();
+                input = response.body().byteStream();
+                out = new FileOutputStream(file);
+
+                byte[] buff = new byte[cacheSize];
+                int len = 0;
+
+                while ((len = input.read(buff)) != -1) {
+                    out.write(buff, 0, len);
+                    downloadedLen += len;
+
+                    long nowTime = System.currentTimeMillis();
+                    if (nowTime - lastTime > 100) {
+                        if (downloadedLen < totalLen) {
+                            if (onProgress != null) {
+                                onProgress.onProgress(totalLen, downloadedLen);
+                            }
+                        }
+                        lastTime = nowTime;
+                    }
+
+                }
+
+
+            } catch (IOException e) {
+                Download.this.onError(e);
+            }
+
+            if (onFinish != null) {
+                onFinish.onFinish(file);
+            }
+            destroy();
+
+            return;
+        }
+
+        FileCallback fileCallback = new FileCallback(dir.getAbsolutePath(), fileName) {
+            @Override
+            public void onSuccess(Response<File> response) {
+                if (onFinish != null) {
+                    onFinish.onFinish(response.body());
+                }
+                destroy();
+            }
+
+            @Override
+            public void onError(Response<File> response) {
+                super.onError(response);
+                Download.this.onError(response.getException());
+            }
+
+            @Override
+            public void downloadProgress(Progress progress) {
+                super.downloadProgress(progress);
+                if (onProgress != null) {
+                    onProgress.onProgress(progress.totalSize, progress.currentSize);
+                }
+            }
+        };
         okGo.<File>get(url)
                 .tag(tag)
                 .execute(fileCallback);
