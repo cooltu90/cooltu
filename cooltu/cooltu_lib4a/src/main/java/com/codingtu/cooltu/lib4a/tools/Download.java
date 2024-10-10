@@ -216,6 +216,9 @@ public class Download implements OnDestroy {
 
                 }
 
+                if (onProgress != null) {
+                    onProgress.onProgress(totalLen, totalLen);
+                }
 
             } catch (IOException e) {
                 Download.this.onError(e);
