@@ -410,40 +410,6 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                     .build();
         return toastDialog;
     }
-    protected void toastShow(String msg) {
-        [toastDialogFullName] td = getToastDialog();
-        td.setContent(msg);
-        if (!td.isShow()) {
-            td.show();
-        }
-    }
-    protected void toastShow(long time, String msg, [onHiddenFinishedFullName] onHiddenFinished) {
-        toastShow(msg);
-        [handlerToolFullName].getMainHandler().postDelayed(new java.lang.Runnable() {
-            @Override
-            public void run() {
-                getToastDialog().hidden(onHiddenFinished);
-            }
-        }, time);
-    }
-
-    protected void toastShow(long time, String msg) {
-        toastShow(time, msg, null);
-    }
-
-    protected void toastHidden(long time, String msg, [onHiddenFinishedFullName] onHiddenFinished) {
-        getToastDialog().setContent(msg);
-        [handlerToolFullName].getMainHandler().postDelayed(new java.lang.Runnable() {
-            @Override
-            public void run() {
-                getToastDialog().hidden(onHiddenFinished);
-            }
-        }, time);
-    }
-
-    protected void toastHidden(long time, String msg) {
-        toastHidden(time, msg, null);
-    }
                                                                                                     [<sub>][if][toastDialog]
                                                                                                     [<sub>][if][noticeDialog]
     private [noticeDialogFullName] noticeDialog;

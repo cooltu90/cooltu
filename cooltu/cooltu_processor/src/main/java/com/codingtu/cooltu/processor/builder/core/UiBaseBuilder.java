@@ -715,9 +715,7 @@ public abstract class UiBaseBuilder {
         if (isToastDialog) {
             uiBase.toastDialogIf(
                     FullName.TOAST_DIALOG,
-                    Constant.DEFAULT_TOAST_DIALOG_LAYOUT,
-                    FullName.ON_HIDDEN_FINISHED_CALLBACK,
-                    FullName.HANDLER_TOOL
+                    Constant.DEFAULT_TOAST_DIALOG_LAYOUT
             );
         }
     }

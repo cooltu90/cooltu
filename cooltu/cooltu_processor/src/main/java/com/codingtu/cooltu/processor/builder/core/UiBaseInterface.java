@@ -75,7 +75,7 @@ public interface UiBaseInterface {
 
     void actBackMethod(int actBackIndex, String methodName, String methodParams);
 
-    void toastDialogIf(String toastDialogFullName, String layout, String onHiddenFinishedFullName, String handlerToolFullName);
+    void toastDialogIf(String toastDialogFullName, String layout);
 
     void noticeDialogIf(String noticeDialog, String defaultNoticeDialogLayout);
 

@@ -83,22 +83,36 @@ public final class ToastDialog implements OnDestroy {
         return ((TextView) contentTv).getText().toString();
     }
 
-    public boolean isShow() {
-        return ViewTool.isVisible(layer);
-    }
-
-
-    public void show() {
-        layer.show();
-    }
-
-    public void show(OnShowFinishedCallBack onShowFinishedCallBack) {
-        layer.show(onShowFinishedCallBack);
-    }
 
     /**************************************************
      * show
      **************************************************/
+    private boolean isShowing;
+
+    private boolean isShow() {
+        return ViewTool.isVisible(layer);
+    }
+
+    public void show() {
+        show(null);
+    }
+
+    public void show(OnShowFinishedCallBack onShowFinishedCallBack) {
+        isShowing = true;
+        layer.show(new OnShowFinishedCallBack() {
+            @Override
+            public void onShowFinished() {
+                isShowing = false;
+                if (onShowFinishedCallBack != null) {
+                    onShowFinishedCallBack.onShowFinished();
+                }
+                if (onHiddenButShowingCallBack != null) {
+                    onHiddenButShowingCallBack.onShowFinished();
+                }
+                onHiddenButShowingCallBack = null;
+            }
+        });
+    }
 
 
     /**************************************************
@@ -106,18 +120,39 @@ public final class ToastDialog implements OnDestroy {
      **************************************************/
     private Long hiddenTime;
     private OnHiddenFinishedCallBack onHiddenFinishedCallBack;
+    private OnShowFinishedCallBack onHiddenButShowingCallBack;
 
     public ToastDialog hiddenTime(Long hiddenTime) {
         this.hiddenTime = hiddenTime;
         return this;
     }
 
-    public ToastDialog onHiddenFinishedCallBack(OnHiddenFinishedCallBack onHiddenFinishedCallBack) {
+    public ToastDialog onHiddenFinished(OnHiddenFinishedCallBack onHiddenFinishedCallBack) {
         this.onHiddenFinishedCallBack = onHiddenFinishedCallBack;
         return this;
     }
 
     public void hidden() {
+        if (!isShow()) {
+            show(new OnShowFinishedCallBack() {
+                @Override
+                public void onShowFinished() {
+                    hiddenReal();
+                }
+            });
+        } else if (isShowing) {
+            onHiddenButShowingCallBack = new OnShowFinishedCallBack() {
+                @Override
+                public void onShowFinished() {
+                    hiddenReal();
+                }
+            };
+        } else {
+            hiddenReal();
+        }
+    }
+
+    private void hiddenReal() {
         if (hiddenTime != null) {
             HandlerTool.getMainHandler().postDelayed(new Runnable() {
                 @Override
@@ -131,12 +166,5 @@ public final class ToastDialog implements OnDestroy {
             layer.hidden(onHiddenFinishedCallBack);
             onHiddenFinishedCallBack = null;
         }
-    }
-
-    /**************************************************
-     * 删除
-     **************************************************/
-    public void hidden(OnHiddenFinishedCallBack callBack) {
-        layer.hidden(callBack);
     }
 }

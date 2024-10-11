@@ -464,8 +464,8 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
     public void isActBackParamDivider(int i0, int i1, boolean is) {
         actBackIfs.put(getIfKey("actBackParamDivider", i0, i1), is);
     }
-    public void toastDialogIf(String toastDialogFullName, String layout, String onHiddenFinishedFullName, String handlerToolFullName) {
-        addForMap(this.toastDialog, getIfKey("toastDialog"), toastDialogFullName, toastDialogFullName, toastDialogFullName, layout, toastDialogFullName, onHiddenFinishedFullName, handlerToolFullName, onHiddenFinishedFullName, handlerToolFullName);
+    public void toastDialogIf(String toastDialogFullName, String layout) {
+        addForMap(this.toastDialog, getIfKey("toastDialog"), toastDialogFullName, toastDialogFullName, toastDialogFullName, layout);
         toastDialogIfs.put(getIfKey("toastDialog"), true);
     }
     public void noticeDialogIf(String noticeDialogFullName, String layout) {
@@ -744,40 +744,6 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
             addLnTag(toastDialogSb, "                    .setLayout([layout])", toastDialog0.get(3));
             addLnTag(toastDialogSb, "                    .build();");
             addLnTag(toastDialogSb, "        return toastDialog;");
-            addLnTag(toastDialogSb, "    }");
-            addLnTag(toastDialogSb, "    protected void toastShow(String msg) {");
-            addLnTag(toastDialogSb, "        [toastDialogFullName] td = getToastDialog();", toastDialog0.get(4));
-            addLnTag(toastDialogSb, "        td.setContent(msg);");
-            addLnTag(toastDialogSb, "        if (!td.isShow()) {");
-            addLnTag(toastDialogSb, "            td.show();");
-            addLnTag(toastDialogSb, "        }");
-            addLnTag(toastDialogSb, "    }");
-            addLnTag(toastDialogSb, "    protected void toastShow(long time, String msg, [onHiddenFinishedFullName] onHiddenFinished) {", toastDialog0.get(5));
-            addLnTag(toastDialogSb, "        toastShow(msg);");
-            addLnTag(toastDialogSb, "        [handlerToolFullName].getMainHandler().postDelayed(new java.lang.Runnable() {", toastDialog0.get(6));
-            addLnTag(toastDialogSb, "            @Override");
-            addLnTag(toastDialogSb, "            public void run() {");
-            addLnTag(toastDialogSb, "                getToastDialog().hidden(onHiddenFinished);");
-            addLnTag(toastDialogSb, "            }");
-            addLnTag(toastDialogSb, "        }, time);");
-            addLnTag(toastDialogSb, "    }");
-            addLnTag(toastDialogSb, "");
-            addLnTag(toastDialogSb, "    protected void toastShow(long time, String msg) {");
-            addLnTag(toastDialogSb, "        toastShow(time, msg, null);");
-            addLnTag(toastDialogSb, "    }");
-            addLnTag(toastDialogSb, "");
-            addLnTag(toastDialogSb, "    protected void toastHidden(long time, String msg, [onHiddenFinishedFullName] onHiddenFinished) {", toastDialog0.get(7));
-            addLnTag(toastDialogSb, "        getToastDialog().setContent(msg);");
-            addLnTag(toastDialogSb, "        [handlerToolFullName].getMainHandler().postDelayed(new java.lang.Runnable() {", toastDialog0.get(8));
-            addLnTag(toastDialogSb, "            @Override");
-            addLnTag(toastDialogSb, "            public void run() {");
-            addLnTag(toastDialogSb, "                getToastDialog().hidden(onHiddenFinished);");
-            addLnTag(toastDialogSb, "            }");
-            addLnTag(toastDialogSb, "        }, time);");
-            addLnTag(toastDialogSb, "    }");
-            addLnTag(toastDialogSb, "");
-            addLnTag(toastDialogSb, "    protected void toastHidden(long time, String msg) {");
-            addLnTag(toastDialogSb, "        toastHidden(time, msg, null);");
             addLnTag(toastDialogSb, "    }");
         }
         if (isIf(noticeDialogIfs, getIfKey("noticeDialog"))) {
