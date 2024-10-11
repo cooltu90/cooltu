@@ -14,8 +14,8 @@ import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4a.tools.InflateTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
+import com.codingtu.cooltu.lib4j.function.OnError;
 import com.codingtu.cooltu.lib4j.function.OnFinish;
-import com.codingtu.cooltu.lib4j.tools.StringTool;
 
 public final class ToastDialog implements OnDestroy {
 
@@ -156,7 +156,7 @@ public final class ToastDialog implements OnDestroy {
             start(null);
         }
 
-        public void start(OnFinish onFinish) {
+        public void start(OnFinish<Throwable> onFinish) {
             toastDialogShow.start(new OnShowFinishedCallBack() {
                 @Override
                 public void onShowFinished() {
@@ -171,7 +171,7 @@ public final class ToastDialog implements OnDestroy {
                                             mainRunnable.run(throwable);
                                         }
                                         if (onFinish != null)
-                                            onFinish.onFinish(null);
+                                            onFinish.onFinish(throwable);
                                     }
                                 }).start();
                     } else if (onFinish != null) {
@@ -184,6 +184,54 @@ public final class ToastDialog implements OnDestroy {
         public ToastDialogHidden hiddenWhenThreadFinished() {
             ToastDialogHidden toastDialogHidden = new ToastDialogHidden(this);
             return toastDialogHidden;
+        }
+
+        public ToastDialogThreadFinished onError(OnError onError) {
+            ToastDialogThreadFinished x = new ToastDialogThreadFinished(this);
+            x.onError = onError;
+            return x;
+        }
+
+        public ToastDialogThreadFinished onFinish(OnFinish onFinish) {
+            ToastDialogThreadFinished x = new ToastDialogThreadFinished(this);
+            x.onFinish = onFinish;
+            return x;
+        }
+    }
+
+    public static class ToastDialogThreadFinished {
+        private OnFinish onFinish;
+        private OnError onError;
+        private ToastDialogWhenShowFinishedStartThread toastDialogWhenShowFinishedStartThread;
+
+        public ToastDialogThreadFinished(ToastDialogWhenShowFinishedStartThread toastDialogWhenShowFinishedStartThread) {
+            this.toastDialogWhenShowFinishedStartThread = toastDialogWhenShowFinishedStartThread;
+        }
+
+        public ToastDialogThreadFinished onFinish(OnFinish onFinish) {
+            this.onFinish = onFinish;
+            return this;
+        }
+
+        public ToastDialogThreadFinished onError(OnError onError) {
+            this.onError = onError;
+            return this;
+        }
+
+        public void start() {
+            toastDialogWhenShowFinishedStartThread.start(new OnFinish<Throwable>() {
+                @Override
+                public void onFinish(Throwable o) {
+                    if (o != null) {
+                        if (onError != null) {
+                            onError.onError(o);
+                        }
+                    } else {
+                        if (onFinish != null)
+                            onFinish.onFinish(null);
+                    }
+                }
+            });
         }
     }
 

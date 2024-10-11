@@ -19,6 +19,8 @@ import com.codingtu.cooltu.lib4a.view.layer.event.OnShowFinishedCallBack;
 import com.codingtu.cooltu.lib4j.data.progress.Progress;
 import com.codingtu.cooltu.lib4j.file.copy.FileCopy;
 import com.codingtu.cooltu.lib4j.file.delete.FileDeleter;
+import com.codingtu.cooltu.lib4j.function.OnError;
+import com.codingtu.cooltu.lib4j.function.OnFinish;
 import com.codingtu.cooltu.lib4j.function.OnProgress;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
@@ -63,13 +65,26 @@ public class WelcomeActivity extends WelcomeActivityBase {
     @ClickView(R.id.showBt)
     public void showBtClick() {
         getToastDialog()
-                .setContent("xxxx")
-                .hidden()
+                .setContent("正在处理数据")
+                .show()
+                .whenShowFinishedStartThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        //throw new RuntimeException("我错完了");
+                    }
+                })
+                .hiddenWhenThreadFinished()
+                .setContent("处理玩了")
                 .hiddenTime(1000)
                 .onHiddenFinished(new OnHiddenFinishedCallBack() {
                     @Override
                     public void onHiddenFinished() {
-
+                        toast("c处理完了");
                     }
                 })
                 .start();
