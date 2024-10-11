@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.codingtu.cooltu.lib4a.R;
+import com.codingtu.cooltu.lib4a.tools.HandlerTool;
 import com.codingtu.cooltu.lib4a.view.layer.Layer;
 import com.codingtu.cooltu.lib4a.view.layer.event.OnHiddenFinishedCallBack;
 import com.codingtu.cooltu.lib4a.view.layer.event.OnShowFinishedCallBack;
@@ -95,11 +96,47 @@ public final class ToastDialog implements OnDestroy {
         layer.show(onShowFinishedCallBack);
     }
 
-    public void hidden(OnHiddenFinishedCallBack callBack) {
-        layer.hidden(callBack);
+    /**************************************************
+     * show
+     **************************************************/
+
+
+    /**************************************************
+     * hidden
+     **************************************************/
+    private Long hiddenTime;
+    private OnHiddenFinishedCallBack onHiddenFinishedCallBack;
+
+    public ToastDialog hiddenTime(Long hiddenTime) {
+        this.hiddenTime = hiddenTime;
+        return this;
+    }
+
+    public ToastDialog onHiddenFinishedCallBack(OnHiddenFinishedCallBack onHiddenFinishedCallBack) {
+        this.onHiddenFinishedCallBack = onHiddenFinishedCallBack;
+        return this;
     }
 
     public void hidden() {
-        hidden(null);
+        if (hiddenTime != null) {
+            HandlerTool.getMainHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    layer.hidden(onHiddenFinishedCallBack);
+                    onHiddenFinishedCallBack = null;
+                }
+            }, hiddenTime);
+            hiddenTime = null;
+        } else {
+            layer.hidden(onHiddenFinishedCallBack);
+            onHiddenFinishedCallBack = null;
+        }
+    }
+
+    /**************************************************
+     * 删除
+     **************************************************/
+    public void hidden(OnHiddenFinishedCallBack callBack) {
+        layer.hidden(callBack);
     }
 }

@@ -59,6 +59,7 @@ public class WelcomeActivity extends WelcomeActivityBase {
 
     @ClickView(R.id.showBt)
     public void showBtClick() {
+        ActStart.stepOneActivity(getAct());
     }
 
 
