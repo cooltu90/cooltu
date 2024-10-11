@@ -14,6 +14,8 @@ import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.thread.OnceThread;
 import com.codingtu.cooltu.lib4a.tools.SDCardTool;
 import com.codingtu.cooltu.lib4a.view.dialogview.Dialog;
+import com.codingtu.cooltu.lib4a.view.layer.event.OnHiddenFinishedCallBack;
+import com.codingtu.cooltu.lib4a.view.layer.event.OnShowFinishedCallBack;
 import com.codingtu.cooltu.lib4j.data.progress.Progress;
 import com.codingtu.cooltu.lib4j.file.copy.FileCopy;
 import com.codingtu.cooltu.lib4j.file.delete.FileDeleter;
@@ -33,6 +35,7 @@ import java.util.HashMap;
 
 import core.actbase.WelcomeActivityBase;
 import core.actres.WelcomeActivityRes;
+import core.net.Net;
 import core.tools.ActStart;
 import core.tools.Code4Request;
 
@@ -59,7 +62,18 @@ public class WelcomeActivity extends WelcomeActivityBase {
 
     @ClickView(R.id.showBt)
     public void showBtClick() {
-        ActStart.stepOneActivity(getAct());
+        getToastDialog()
+                .setContent("xxxx")
+                .hidden()
+                .hiddenTime(1000)
+                .onHiddenFinished(new OnHiddenFinishedCallBack() {
+                    @Override
+                    public void onHiddenFinished() {
+
+                    }
+                })
+                .start();
+
     }
 
 

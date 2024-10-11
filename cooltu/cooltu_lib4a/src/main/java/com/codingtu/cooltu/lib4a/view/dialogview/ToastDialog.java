@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.codingtu.cooltu.lib4a.R;
+import com.codingtu.cooltu.lib4a.thread.OnceThread;
 import com.codingtu.cooltu.lib4a.tools.HandlerTool;
 import com.codingtu.cooltu.lib4a.view.layer.Layer;
 import com.codingtu.cooltu.lib4a.view.layer.event.OnHiddenFinishedCallBack;
@@ -13,6 +14,8 @@ import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4a.tools.InflateTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
+import com.codingtu.cooltu.lib4j.function.OnFinish;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
 
 public final class ToastDialog implements OnDestroy {
 
@@ -83,88 +86,184 @@ public final class ToastDialog implements OnDestroy {
         return ((TextView) contentTv).getText().toString();
     }
 
-
-    /**************************************************
-     * show
-     **************************************************/
-    private boolean isShowing;
-
     private boolean isShow() {
         return ViewTool.isVisible(layer);
     }
 
-    public void show() {
-        show(null);
-    }
-
-    public void show(OnShowFinishedCallBack onShowFinishedCallBack) {
-        isShowing = true;
-        layer.show(new OnShowFinishedCallBack() {
-            @Override
-            public void onShowFinished() {
-                isShowing = false;
-                if (onShowFinishedCallBack != null) {
-                    onShowFinishedCallBack.onShowFinished();
-                }
-                if (onHiddenButShowingCallBack != null) {
-                    onHiddenButShowingCallBack.onShowFinished();
-                }
-                onHiddenButShowingCallBack = null;
-            }
-        });
-    }
-
-
     /**************************************************
-     * hidden
+     *
      **************************************************/
-    private Long hiddenTime;
-    private OnHiddenFinishedCallBack onHiddenFinishedCallBack;
-    private OnShowFinishedCallBack onHiddenButShowingCallBack;
 
-    public ToastDialog hiddenTime(Long hiddenTime) {
-        this.hiddenTime = hiddenTime;
-        return this;
+    public ToastDialogShow show() {
+        return new ToastDialogShow(this);
     }
 
-    public ToastDialog onHiddenFinished(OnHiddenFinishedCallBack onHiddenFinishedCallBack) {
-        this.onHiddenFinishedCallBack = onHiddenFinishedCallBack;
-        return this;
-    }
+    public static class ToastDialogShow {
+        private final ToastDialog toastDialog;
+        private OnShowFinishedCallBack onShowFinishedCallBack;
 
-    public void hidden() {
-        if (!isShow()) {
-            show(new OnShowFinishedCallBack() {
+        private ToastDialogShow(ToastDialog toastDialog) {
+            this.toastDialog = toastDialog;
+        }
+
+        public ToastDialogShow onShowFinished(OnShowFinishedCallBack onShowFinishedCallBack) {
+            this.onShowFinishedCallBack = onShowFinishedCallBack;
+            return this;
+        }
+
+        private void onShowFinishedForCustomer() {
+            if (onShowFinishedCallBack != null) {
+                onShowFinishedCallBack.onShowFinished();
+            }
+        }
+
+        public void start() {
+            start(new OnShowFinishedCallBack() {
                 @Override
                 public void onShowFinished() {
-                    hiddenReal();
+                    onShowFinishedForCustomer();
                 }
             });
-        } else if (isShowing) {
-            onHiddenButShowingCallBack = new OnShowFinishedCallBack() {
-                @Override
-                public void onShowFinished() {
-                    hiddenReal();
-                }
-            };
-        } else {
-            hiddenReal();
+        }
+
+        private void start(OnShowFinishedCallBack onShowFinishedCallBack) {
+            toastDialog.layer.show(onShowFinishedCallBack);
+        }
+
+        public ToastDialogWhenShowFinishedStartThread whenShowFinishedStartThread(Runnable subRunnable) {
+            ToastDialogWhenShowFinishedStartThread startThread = new ToastDialogWhenShowFinishedStartThread(this);
+            startThread.subRunnable = subRunnable;
+            return startThread;
         }
     }
 
-    private void hiddenReal() {
-        if (hiddenTime != null) {
-            HandlerTool.getMainHandler().postDelayed(new Runnable() {
+    public static class ToastDialogWhenShowFinishedStartThread {
+        private Runnable subRunnable;
+        private OnceThread.MainRunnable mainRunnable;
+        private ToastDialogShow toastDialogShow;
+        private OnHiddenFinishedCallBack onHiddenFinishedCallBack;
+
+        public ToastDialogWhenShowFinishedStartThread(ToastDialogShow toastDialogShow) {
+            this.toastDialogShow = toastDialogShow;
+        }
+
+        public ToastDialogWhenShowFinishedStartThread onMainThread(OnceThread.MainRunnable mainRunnable) {
+            this.mainRunnable = mainRunnable;
+            return this;
+        }
+
+        public void start() {
+            start(null);
+        }
+
+        public void start(OnFinish onFinish) {
+            toastDialogShow.start(new OnShowFinishedCallBack() {
                 @Override
-                public void run() {
-                    layer.hidden(onHiddenFinishedCallBack);
-                    onHiddenFinishedCallBack = null;
+                public void onShowFinished() {
+                    toastDialogShow.onShowFinishedForCustomer();
+                    if (subRunnable != null) {
+                        OnceThread
+                                .sub(subRunnable)
+                                .main(new OnceThread.MainRunnable() {
+                                    @Override
+                                    public void run(Throwable throwable) {
+                                        if (mainRunnable != null) {
+                                            mainRunnable.run(throwable);
+                                        }
+                                        if (onFinish != null)
+                                            onFinish.onFinish(null);
+                                    }
+                                }).start();
+                    } else if (onFinish != null) {
+                        onFinish.onFinish(null);
+                    }
                 }
-            }, hiddenTime);
-            hiddenTime = null;
-        } else {
-            layer.hidden(onHiddenFinishedCallBack);
-            onHiddenFinishedCallBack = null;
+            });
+        }
+
+        public ToastDialogHidden hiddenWhenThreadFinished() {
+            ToastDialogHidden toastDialogHidden = new ToastDialogHidden(this);
+            return toastDialogHidden;
+        }
+    }
+
+    /**************************************************
+     *
+     **************************************************/
+    public ToastDialogHidden hidden() {
+        ToastDialogHidden toastDialogHidden = new ToastDialogHidden(this);
+        return toastDialogHidden;
+    }
+
+    public static class ToastDialogHidden {
+        private Long hiddenTime;
+        private OnHiddenFinishedCallBack onHiddenFinishedCallBack;
+        private ToastDialog toastDialog;
+        private ToastDialogWhenShowFinishedStartThread toastDialogWhenShowFinishedStartThread;
+        private String content;
+
+        private ToastDialogHidden(ToastDialog toastDialog) {
+            this.toastDialog = toastDialog;
+        }
+
+        public ToastDialogHidden(ToastDialogWhenShowFinishedStartThread toastDialogWhenShowFinishedStartThread) {
+            this.toastDialogWhenShowFinishedStartThread = toastDialogWhenShowFinishedStartThread;
+            this.toastDialog = toastDialogWhenShowFinishedStartThread.toastDialogShow.toastDialog;
+        }
+
+        public ToastDialogHidden hiddenTime(long time) {
+            this.hiddenTime = time;
+            return this;
+        }
+
+        public ToastDialogHidden onHiddenFinished(OnHiddenFinishedCallBack onHiddenFinishedCallBack) {
+            this.onHiddenFinishedCallBack = onHiddenFinishedCallBack;
+            return this;
+        }
+
+        public void start() {
+            if (toastDialogWhenShowFinishedStartThread != null) {
+                toastDialogWhenShowFinishedStartThread.start(new OnFinish() {
+                    @Override
+                    public void onFinish(Object o) {
+                        hiddenDeal();
+                    }
+                });
+            } else if (toastDialog.isShow()) {
+                hiddenDeal();
+            } else {
+                toastDialog.show().onShowFinished(new OnShowFinishedCallBack() {
+                    @Override
+                    public void onShowFinished() {
+                        hiddenDeal();
+                    }
+                }).start();
+            }
+
+        }
+
+        private void hiddenDeal() {
+            if (content != null)
+                toastDialog.setContent(content);
+            if (hiddenTime != null) {
+                HandlerTool.getMainHandler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        hiddenReal();
+                    }
+                }, hiddenTime);
+            } else {
+                hiddenReal();
+            }
+        }
+
+        private void hiddenReal() {
+            toastDialog.layer.hidden(onHiddenFinishedCallBack);
+        }
+
+        public ToastDialogHidden setContent(String content) {
+            this.content = content;
+            return this;
         }
     }
 }

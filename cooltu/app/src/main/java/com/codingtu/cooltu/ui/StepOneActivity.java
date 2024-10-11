@@ -1,7 +1,7 @@
 package com.codingtu.cooltu.ui;
 
 import com.codingtu.cooltu.R;
-import com.codingtu.cooltu.lib4a.view.layer.event.OnHiddenFinishedCallBack;
+import com.codingtu.cooltu.lib4a.view.layer.event.OnShowFinishedCallBack;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 
@@ -16,17 +16,6 @@ public class StepOneActivity extends StepOneActivityBase {
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
-
-        getToastDialog()
-                .setContent("hi")
-                .hiddenTime(1000l)
-                .onHiddenFinished(new OnHiddenFinishedCallBack() {
-                    @Override
-                    public void onHiddenFinished() {
-                        toast("hiddenFinish");
-                    }
-                })
-                .hidden();
     }
 
     @Override
