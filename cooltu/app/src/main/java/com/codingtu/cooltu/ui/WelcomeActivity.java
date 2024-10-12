@@ -8,11 +8,14 @@ import android.provider.Settings;
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.form.TestCallBack;
+import com.codingtu.cooltu.lib4a.function.OnErrorInUiThread;
 import com.codingtu.cooltu.lib4a.function.OnFinishInUiThread;
 import com.codingtu.cooltu.lib4a.function.OnProgressInUiThread;
 import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.thread.OnceThread;
 import com.codingtu.cooltu.lib4a.tools.SDCardTool;
+import com.codingtu.cooltu.lib4a.tools.ToastTool;
+import com.codingtu.cooltu.lib4a.tools.Upload;
 import com.codingtu.cooltu.lib4a.view.dialogview.Dialog;
 import com.codingtu.cooltu.lib4a.view.layer.event.OnHiddenFinishedCallBack;
 import com.codingtu.cooltu.lib4a.view.layer.event.OnShowFinishedCallBack;
@@ -22,6 +25,7 @@ import com.codingtu.cooltu.lib4j.file.delete.FileDeleter;
 import com.codingtu.cooltu.lib4j.function.OnError;
 import com.codingtu.cooltu.lib4j.function.OnFinish;
 import com.codingtu.cooltu.lib4j.function.OnProgress;
+import com.codingtu.cooltu.lib4j.path.BasePath;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Maps;
@@ -30,6 +34,7 @@ import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
+import com.codingtu.cooltu.tools.Me;
 import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
 
 import java.io.File;
@@ -50,15 +55,6 @@ public class WelcomeActivity extends WelcomeActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-//        intent.setData(Uri.parse("package:" + getPackageName()));
-//        startActivityForResult(intent, 1);
-
-        //0.032048253164765
-        //0.03533525348935628
-
-        String s = StringTool.formatDouble(0.03533525348935628, 2, false);
-        Logs.i(s);
     }
 
 
@@ -70,12 +66,12 @@ public class WelcomeActivity extends WelcomeActivityBase {
                 .whenShowFinishedStartThread(new Runnable() {
                     @Override
                     public void run() {
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        //throw new RuntimeException("我错完了");
+                    }
+                })
+                .onMainThread(new OnceThread.MainRunnable() {
+                    @Override
+                    public void run(Throwable throwable) {
+                        Logs.i("onMainThread");
                     }
                 })
                 .hiddenWhenThreadFinished()
@@ -88,7 +84,6 @@ public class WelcomeActivity extends WelcomeActivityBase {
                     }
                 })
                 .start();
-
     }
 
 

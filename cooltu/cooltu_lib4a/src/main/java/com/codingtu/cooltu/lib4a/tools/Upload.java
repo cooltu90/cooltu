@@ -11,8 +11,13 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.PostRequest;
+import com.lzy.okgo.request.base.ProgressRequestBody;
 
 import java.io.File;
+
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okio.BufferedSink;
 
 public class Upload implements OnDestroy {
 
@@ -31,6 +36,7 @@ public class Upload implements OnDestroy {
     private OnError onError;
     private OnProgress onProgress;
     private OnStart onStart;
+    private boolean sync;
 
     @Override
     public void destroy() {
@@ -97,6 +103,11 @@ public class Upload implements OnDestroy {
         return this;
     }
 
+    public Upload sync() {
+        this.sync = true;
+        return this;
+    }
+
     public void upload() {
         if (post == null) {
             return;
@@ -110,7 +121,52 @@ public class Upload implements OnDestroy {
         if (onStart != null) {
             onStart.onStart();
         }
-        post.params(fileKey, file).execute(new StringCallback() {
+
+        post.params(fileKey, file);
+
+        if (sync) {
+            String responseResult = null;
+            try {
+                post.setCallback(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                    }
+
+                    @Override
+                    public void uploadProgress(Progress progress) {
+                        super.uploadProgress(progress);
+                        if (onProgress != null) {
+                            onProgress.onProgress(progress.totalSize, progress.currentSize);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        Upload.this.onError(response.getException());
+                    }
+                });
+                okhttp3.Response response = post.execute();
+                responseResult = response.body().string();
+                try {
+                    response.close();
+                } catch (Exception e) {
+
+                }
+            } catch (Exception e) {
+                onError(e);
+            } finally {
+
+            }
+            if (onFinish != null) {
+                onFinish.onFinish(responseResult);
+            }
+            destroy();
+            return;
+        }
+
+        post.execute(new StringCallback() {
             @Override
             public void onSuccess(Response<String> response) {
                 if (onFinish != null) {

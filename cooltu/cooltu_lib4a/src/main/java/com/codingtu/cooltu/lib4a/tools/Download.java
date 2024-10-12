@@ -183,6 +183,7 @@ public class Download implements OnDestroy {
 
             InputStream input = null;
             OutputStream out = null;
+            okhttp3.Response response = null;
 
             try {
 
@@ -190,7 +191,7 @@ public class Download implements OnDestroy {
                     cacheSize = 1024 * 512;
                 }
 
-                okhttp3.Response response = okGo.<File>get(url)
+                response = okGo.<File>get(url)
                         .tag(tag)
                         .execute();
                 totalLen = response.body().contentLength();
@@ -222,6 +223,28 @@ public class Download implements OnDestroy {
 
             } catch (IOException e) {
                 Download.this.onError(e);
+            } finally {
+                if (input != null) {
+                    try {
+                        input.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (response != null) {
+                    try {
+                        response.close();
+                    } catch (Exception e) {
+                    }
+                }
             }
 
             if (onFinish != null) {
