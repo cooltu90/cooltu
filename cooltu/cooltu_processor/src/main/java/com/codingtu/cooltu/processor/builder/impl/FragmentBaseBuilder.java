@@ -322,11 +322,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][if][noticeDialog]
     private [noticeDialogFullName] noticeDialog;
 
-    protected void noticeShow(String msg) {
-        noticeShow(msg, null);
-    }
-
-    protected void noticeShow(String msg, Object obj) {
+    protected [noticeDialogFullName] getNoticeDialog() {
         if (noticeDialog == null)
             noticeDialog = new [noticeDialogFullName](getAct())
                     .destroys(this)
@@ -335,9 +331,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                         noticeDialogYes(noticeDialog.obtainData());
                     })
                     .build();
-        noticeDialog.data(obj);
-        noticeDialog.setContent(msg);
-        noticeDialog.show();
+        return noticeDialog;
     }
 
     public void noticeDialogYes(Object data) {

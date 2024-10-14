@@ -147,6 +147,23 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
         return toastDialog;
     }
 
+    private com.codingtu.cooltu.lib4a.view.dialogview.NoticeDialog noticeDialog;
+
+    protected com.codingtu.cooltu.lib4a.view.dialogview.NoticeDialog getNoticeDialog() {
+        if (noticeDialog == null)
+            noticeDialog = new com.codingtu.cooltu.lib4a.view.dialogview.NoticeDialog(getAct())
+                    .destroys(this)
+                    .setLayout(com.codingtu.cooltu.R.layout.dialog_notice)
+                    .onClick(v -> {
+                        noticeDialogYes(noticeDialog.obtainData());
+                    })
+                    .build();
+        return noticeDialog;
+    }
+
+    public void noticeDialogYes(Object data) {
+        noticeDialog.hidden();
+    }
 
     private com.codingtu.cooltu.lib4a.view.dialogview.EditDialog ed;
 

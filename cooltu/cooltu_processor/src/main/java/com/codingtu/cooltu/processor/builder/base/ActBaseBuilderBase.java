@@ -595,7 +595,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         toastDialogIfs.put(getIfKey("toastDialog"), true);
     }
     public void noticeDialogIf(String noticeDialogFullName, String layout) {
-        addForMap(this.noticeDialog, getIfKey("noticeDialog"), noticeDialogFullName, noticeDialogFullName, layout);
+        addForMap(this.noticeDialog, getIfKey("noticeDialog"), noticeDialogFullName, noticeDialogFullName, noticeDialogFullName, layout);
         noticeDialogIfs.put(getIfKey("noticeDialog"), true);
     }
     public void edShowParamIf(int i0, String type, String name) {
@@ -911,22 +911,16 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
             List<String> noticeDialog0 = noticeDialog.get(getIfKey("noticeDialog"));
             addLnTag(noticeDialogSb, "    private [noticeDialogFullName] noticeDialog;", noticeDialog0.get(0));
             addLnTag(noticeDialogSb, "");
-            addLnTag(noticeDialogSb, "    protected void noticeShow(String msg) {");
-            addLnTag(noticeDialogSb, "        noticeShow(msg, null);");
-            addLnTag(noticeDialogSb, "    }");
-            addLnTag(noticeDialogSb, "");
-            addLnTag(noticeDialogSb, "    protected void noticeShow(String msg, Object obj) {");
+            addLnTag(noticeDialogSb, "    protected [noticeDialogFullName] getNoticeDialog() {", noticeDialog0.get(1));
             addLnTag(noticeDialogSb, "        if (noticeDialog == null)");
-            addLnTag(noticeDialogSb, "            noticeDialog = new [noticeDialogFullName](getAct())", noticeDialog0.get(1));
+            addLnTag(noticeDialogSb, "            noticeDialog = new [noticeDialogFullName](getAct())", noticeDialog0.get(2));
             addLnTag(noticeDialogSb, "                    .destroys(this)");
-            addLnTag(noticeDialogSb, "                    .setLayout([layout])", noticeDialog0.get(2));
+            addLnTag(noticeDialogSb, "                    .setLayout([layout])", noticeDialog0.get(3));
             addLnTag(noticeDialogSb, "                    .onClick(v -> {");
             addLnTag(noticeDialogSb, "                        noticeDialogYes(noticeDialog.obtainData());");
             addLnTag(noticeDialogSb, "                    })");
             addLnTag(noticeDialogSb, "                    .build();");
-            addLnTag(noticeDialogSb, "        noticeDialog.data(obj);");
-            addLnTag(noticeDialogSb, "        noticeDialog.setContent(msg);");
-            addLnTag(noticeDialogSb, "        noticeDialog.show();");
+            addLnTag(noticeDialogSb, "        return noticeDialog;");
             addLnTag(noticeDialogSb, "    }");
             addLnTag(noticeDialogSb, "");
             addLnTag(noticeDialogSb, "    public void noticeDialogYes(Object data) {");

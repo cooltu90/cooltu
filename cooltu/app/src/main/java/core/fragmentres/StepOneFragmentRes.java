@@ -14,10 +14,12 @@ import com.codingtu.cooltu.processor.annotation.res.ResForFragment;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.DialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.EditDialogUse;
+import com.codingtu.cooltu.processor.annotation.ui.dialog.NoticeDialogUse;
 import com.codingtu.cooltu.processor.annotation.ui.dialog.ToastDialogUse;
 import com.codingtu.cooltu.ui.StepOneFragment;
 import com.codingtu.cooltu.ui.adapter.DogAdapter;
 
+@NoticeDialogUse
 @ToastDialogUse
 @ResForFragment(StepOneFragment.class)
 public class StepOneFragmentRes {

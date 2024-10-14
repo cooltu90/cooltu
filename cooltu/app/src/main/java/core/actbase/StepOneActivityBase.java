@@ -136,11 +136,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
     private com.codingtu.cooltu.lib4a.view.dialogview.NoticeDialog noticeDialog;
 
-    protected void noticeShow(String msg) {
-        noticeShow(msg, null);
-    }
-
-    protected void noticeShow(String msg, Object obj) {
+    protected com.codingtu.cooltu.lib4a.view.dialogview.NoticeDialog getNoticeDialog() {
         if (noticeDialog == null)
             noticeDialog = new com.codingtu.cooltu.lib4a.view.dialogview.NoticeDialog(getAct())
                     .destroys(this)
@@ -149,9 +145,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
                         noticeDialogYes(noticeDialog.obtainData());
                     })
                     .build();
-        noticeDialog.data(obj);
-        noticeDialog.setContent(msg);
-        noticeDialog.show();
+        return noticeDialog;
     }
 
     public void noticeDialogYes(Object data) {
