@@ -1,6 +1,8 @@
 package com.codingtu.cooltu.lib4a.view.dialogview;
 
 import android.app.Activity;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import com.codingtu.cooltu.lib4a.tools.InflateTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4j.function.OnError;
 import com.codingtu.cooltu.lib4j.function.OnFinish;
+import com.codingtu.cooltu.lib4j.ts.pack.TValue;
 
 public final class ToastDialog implements OnDestroy {
 
@@ -162,18 +165,29 @@ public final class ToastDialog implements OnDestroy {
                 public void onShowFinished() {
                     toastDialogShow.onShowFinishedForCustomer();
                     if (subRunnable != null) {
-                        OnceThread
-                                .sub(subRunnable)
-                                .main(new OnceThread.MainRunnable() {
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                TValue<Throwable> throwable = TValue.obtain();
+                                try {
+                                    subRunnable.run();
+                                } catch (Exception e) {
+                                    throwable.value = e;
+
+                                }
+                                HandlerTool.getMainHandler().post(new Runnable() {
                                     @Override
-                                    public void run(Throwable throwable) {
+                                    public void run() {
                                         if (mainRunnable != null) {
-                                            mainRunnable.run(throwable);
+                                            mainRunnable.run(throwable.value);
                                         }
                                         if (onFinish != null)
-                                            onFinish.onFinish(throwable);
+                                            onFinish.onFinish(throwable.value);
                                     }
-                                }).start();
+                                });
+                            }
+                        }).start();
                     } else if (onFinish != null) {
                         onFinish.onFinish(null);
                     }

@@ -3,7 +3,12 @@ package com.codingtu.cooltu.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.provider.Settings;
+
+import androidx.annotation.NonNull;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.bean.User;
@@ -66,21 +71,29 @@ public class WelcomeActivity extends WelcomeActivityBase {
                 .whenShowFinishedStartThread(new Runnable() {
                     @Override
                     public void run() {
+                        Looper.prepare();
+                        Handler subHandler = new Handler(Looper.myLooper()) {
+                            @Override
+                            public void handleMessage(@NonNull Message msg) {
+                                super.handleMessage(msg);
+                                if (msg.what == 0) {
+                                    Looper.myLooper().quit();
+                                }
+                            }
+                        };
+                        Message msg = Message.obtain(subHandler);
+                        msg.what = 0;
+                        subHandler.sendMessage(msg);
+                        Looper.loop();
+
                     }
                 })
                 .onMainThread(new OnceThread.MainRunnable() {
                     @Override
                     public void run(Throwable throwable) {
-                        Logs.i("onMainThread");
-                    }
-                })
-                .hiddenWhenThreadFinished()
-                .setContent("处理玩了")
-                .hiddenTime(1000)
-                .onHiddenFinished(new OnHiddenFinishedCallBack() {
-                    @Override
-                    public void onHiddenFinished() {
-                        toast("c处理完了");
+                        getToastDialog().hidden()
+                                .hiddenTime(1000)
+                                .start();
                     }
                 })
                 .start();
