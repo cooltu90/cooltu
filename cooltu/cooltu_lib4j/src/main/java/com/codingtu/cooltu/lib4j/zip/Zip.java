@@ -3,6 +3,7 @@ package com.codingtu.cooltu.lib4j.zip;
 import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FileType;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
+import com.codingtu.cooltu.lib4j.exception.ZipException;
 import com.codingtu.cooltu.lib4j.file.FileTool;
 import com.codingtu.cooltu.lib4j.function.FilePass;
 import com.codingtu.cooltu.lib4j.function.OnError;
@@ -15,6 +16,7 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -102,15 +104,6 @@ public class Zip implements OnDestroy {
         return this;
     }
 
-    public void zipWithThread() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                zip();
-            }
-        }).start();
-    }
-
     public void zip() {
         if (!src.exists()) {
             onError(new RuntimeException("没有找到需要压缩打包的文件"));
@@ -146,12 +139,10 @@ public class Zip implements OnDestroy {
         ZipOutputStream out = null;
         try {
             out = new ZipOutputStream(new FileOutputStream(zipFilePath));
-
             rootDir = StringTool.cutSuffix(desc.getName(), FileType.d_ZIP);
-
             recursivePressFile(out, needPressFile, "");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            onError.onError(e);
         } finally {
             if (out != null) {
                 try {
@@ -163,7 +154,7 @@ public class Zip implements OnDestroy {
         }
     }
 
-    private void recursivePressFile(ZipOutputStream out, File needPressFile, String parentDirName) throws Exception {
+    private void recursivePressFile(ZipOutputStream out, File needPressFile, String parentDirName) throws ZipException {
         if (needPressFile.isDirectory()) {
             if (pass != null && pass.pass(needPressFile)) {
                 return;
@@ -183,7 +174,7 @@ public class Zip implements OnDestroy {
 
     }
 
-    private void pressFile(ZipOutputStream out, File file, String parentDirName) throws Exception {
+    private void pressFile(ZipOutputStream out, File file, String parentDirName) throws ZipException {
         FileInputStream input = null;
         try {
             input = new FileInputStream(file);
@@ -210,7 +201,7 @@ public class Zip implements OnDestroy {
 
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new ZipException(e);
         } finally {
             if (input != null) {
                 try {
