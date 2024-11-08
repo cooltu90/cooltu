@@ -23,6 +23,7 @@ public class Pkg {
     public static final String FRAGMENT_RES = "core.fragmentres";
     public static final String CORE_NET = "core.net";
     public static final String CORE_VH = "core.vh";
+    public static final String CORE_MSTHREAD = "core.msthread";
     public static final String CORE_FORM = "core.form";
     public static final String CORE_NET_API = CORE_NET + ".api";
     public static final String CORE_NET_PARAMS = CORE_NET + ".params";

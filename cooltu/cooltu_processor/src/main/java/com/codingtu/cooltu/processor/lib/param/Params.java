@@ -70,6 +70,30 @@ public class Params {
         return sb.toString();
     }
 
+    public String getParams(boolean hasFirst, boolean hasNext) {
+        StringBuilder sb = new StringBuilder();
+        int count = CountTool.count(kvs);
+        if (count > 0 && hasFirst) {
+            sb.append(", ");
+        }
+        Ts.ls(kvs, new Ts.EachTs<KV<String, String>>() {
+            @Override
+            public boolean each(int position, KV<String, String> kv) {
+                if (position != 0) {
+                    sb.append(", ");
+                }
+                sb.append(" ").append(kv.v);
+                return false;
+            }
+        });
+
+        if (count > 0 && hasNext) {
+            sb.append(", ");
+        }
+
+        return sb.toString();
+    }
+
     public String getMethodParams(boolean hasFirst, boolean hasNext) {
         StringBuilder sb = new StringBuilder();
         int count = CountTool.count(kvs);

@@ -7,6 +7,8 @@ import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
+import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.annotation.tools.To;
@@ -15,6 +17,7 @@ import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.core.UiBaseInterface;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
+import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.BaseTools;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
@@ -37,7 +40,12 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
     public List<KV<String, String>> starts = new ArrayList<>();
     public List<Permission> permissions = new ArrayList<>();
     public List<ExecutableElement> permissionMethods = new ArrayList<>();
+    public String msThreadInterfaceFullName;
+    public String msThreadFullName;
+    public String msThreadFieldName;
     private StringBuilder otherLineSb = new StringBuilder();
+    private StringBuilder onCompleteOtherLineSb = new StringBuilder();
+    public BaseTs<ExecutableElement> msThreadMethodTs = Ts.ts();
 
     public ActBaseBuilder(JavaInfo info) {
         super(info);
@@ -138,7 +146,49 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
         isOnCreateCompleteInit(false);
 
+        if (StringTool.isNotBlank(msThreadInterfaceFullName)) {
+            //    protected FtpPlayActivityMSThread ftpPlayActivityMSThread;
+            addLnTag(msThreadInterface, ", " + msThreadInterfaceFullName);
+            addField(Constant.SIGN_PROTECTED, msThreadFullName, msThreadFieldName);
+
+            addLnTag(onCompleteOtherLineSb, "        [ftpPlayActivityMSThread] = [FtpPlayActivityMSThread].obtain().dealer(this);",
+                    msThreadFieldName, msThreadFullName);
+            addLnTag(onCompleteOtherLineSb,"        [ftpPlayActivityMSThread].start();",msThreadFieldName);
+
+            addLnTag(otherLineSb, "    /**************************************************");
+            addLnTag(otherLineSb, "     * MsThread");
+            addLnTag(otherLineSb, "     **************************************************/");
+
+            msThreadMethodTs.ls(new Ts.EachTs<ExecutableElement>() {
+                @Override
+                public boolean each(int position, ExecutableElement element) {
+                    Params params = ElementTools.getMethodParamKvs(element);
+
+                    String simpleName = ElementTools.simpleName(element);
+                    String methodParams = params.getMethodParams();
+                    String sendMethodName = ConvertTool.toClassType(simpleName);
+
+                    addLnTag(otherLineSb, "    @Override");
+                    addLnTag(otherLineSb, "    public void [dealDataStart]([params]) {",
+                            simpleName, methodParams);
+                    addLnTag(otherLineSb, "    }");
+                    addLnTag(otherLineSb, "");
+
+                    addLnTag(otherLineSb, "    protected boolean sendMessageFor[DealToast]([String str]) {",
+                            sendMethodName, methodParams);
+                    addLnTag(otherLineSb, "        return [ftpPlayActivityMSThread].sendMessageFor[DealToast]([str]);",
+                            msThreadFieldName, sendMethodName, params.getParams());
+                    addLnTag(otherLineSb, "    }");
+
+                    return false;
+                }
+            });
+
+        }
         otherIf(otherLineSb.toString());
+        onCreateCompleteOtherIf(onCompleteOtherLineSb.toString());
+
+
     }
 
     @Override
@@ -190,7 +240,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, View.OnLongClickListener, [[netBackIFullName]][[formHandlerCallBack]]{
+public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, View.OnLongClickListener, [[netBackIFullName]][[formHandlerCallBack]][[msThreadInterface]]{
                                                                                                     [<sub>][for][field]
     [sign] [type] [name];
                                                                                                     [<sub>][for][field]

@@ -7,15 +7,16 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
-    protected android.widget.RelativeLayout tv3;
-    protected boolean isTest;
+public abstract class SubThreadActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI, core.msthread.SubThreadActivityMsThreadInterface
+{
+    protected core.msthread.SubThreadActivityMsThread subThreadActivityMsThread;
 
-    public String baseClassName = "CoreWelcomeActivityBase";
+    public String baseClassName = "SubThreadActivityBase";
 
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(com.codingtu.cooltu.R.layout.activity_sub_thread);
 
 
 
@@ -36,6 +37,8 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
 
 
+        subThreadActivityMsThread = core.msthread.SubThreadActivityMsThread.obtain().dealer(this);
+        subThreadActivityMsThread.start();
 
 
     }
@@ -97,6 +100,37 @@ public abstract class CoreWelcomeActivityBase extends com.codingtu.cooltu.ui.bas
 
 
 
+    /**************************************************
+     * MsThread
+     **************************************************/
+    @Override
+    public void dealToast(java.lang.String str) {
+    }
+
+    protected boolean sendMessageForDealToast(java.lang.String str) {
+        return subThreadActivityMsThread.sendMessageForDealToast(str);
+    }
+    @Override
+    public void dealToast1(java.lang.String str, int age) {
+    }
+
+    protected boolean sendMessageForDealToast1(java.lang.String str, int age) {
+        return subThreadActivityMsThread.sendMessageForDealToast1(str, age);
+    }
+    @Override
+    public void dealDataStart() {
+    }
+
+    protected boolean sendMessageForDealDataStart() {
+        return subThreadActivityMsThread.sendMessageForDealDataStart();
+    }
+    @Override
+    public void dealDataStart1(int num) {
+    }
+
+    protected boolean sendMessageForDealDataStart1(int num) {
+        return subThreadActivityMsThread.sendMessageForDealDataStart1(num);
+    }
 
 
 }

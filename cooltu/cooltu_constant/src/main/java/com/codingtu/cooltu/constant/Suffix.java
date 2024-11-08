@@ -17,5 +17,8 @@ public class Suffix {
     public static final String LINK = "Link";
     public static final String VH = "VH";
     public static final String ADAPTER = "Adapter";
+    public static final String MSTHREAD_TYPE = "MsThreadType";
+    public static final String MSTHREAD_INTERFACE = "MsThreadInterface";
+    public static final String MSTHREAD = "MsThread";
 
 }

@@ -63,6 +63,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
 
 
 
+
     }
     protected Object rvObj() {
         return null;

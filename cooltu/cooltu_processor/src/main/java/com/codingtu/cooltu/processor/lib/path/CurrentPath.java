@@ -241,6 +241,47 @@ public class CurrentPath {
 
     /**************************************************
      *
+     **************************************************/
+    public static String msThreadTypeFullName(String name) {
+        return Pkg.CORE_MSTHREAD
+                + "."
+                + name
+                + Suffix.MSTHREAD_TYPE;
+    }
+
+    public static JavaInfo msThreadType(String name) {
+        return javaInfo(msThreadTypeFullName(name));
+    }
+
+    /**************************************************
+     *
+     **************************************************/
+    public static String msThreadInterfaceFullName(String name) {
+        return Pkg.CORE_MSTHREAD
+                + "."
+                + name
+                + Suffix.MSTHREAD_INTERFACE;
+    }
+
+    public static JavaInfo msThreadInterface(String name) {
+        return javaInfo(msThreadInterfaceFullName(name));
+    }
+    /**************************************************
+     *
+     **************************************************/
+    public static String msThreadFullName(String name) {
+        return Pkg.CORE_MSTHREAD
+                + "."
+                + name
+                + Suffix.MSTHREAD;
+    }
+
+    public static JavaInfo msThread(String name) {
+        return javaInfo(msThreadFullName(name));
+    }
+
+    /**************************************************
+     *
      * manifest
      *
      **************************************************/

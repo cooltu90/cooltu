@@ -8,6 +8,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
     protected StringBuilder baseClass;
     protected StringBuilder netBackIFullName;
     protected StringBuilder formHandlerCallBack;
+    protected StringBuilder msThreadInterface;
     protected java.util.Map<String, Boolean> fieldIfs;
     protected java.util.Map<String, Integer> fieldCounts;
     protected StringBuilder fieldSb;
@@ -161,6 +162,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         baseClass = map.get("baseClass");
         netBackIFullName = map.get("netBackIFullName");
         formHandlerCallBack = map.get("formHandlerCallBack");
+        msThreadInterface = map.get("msThreadInterface");
         fieldIfs = new java.util.HashMap<>();
         fieldCounts = new java.util.HashMap<>();
         fieldSb = map.get("field");
@@ -1110,7 +1112,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         lines.add("import okhttp3.ResponseBody;");
         lines.add("import retrofit2.adapter.rxjava2.Result;");
         lines.add("");
-        lines.add("public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, View.OnLongClickListener, [[netBackIFullName]][[formHandlerCallBack]]{");
+        lines.add("public abstract class [[name]] extends [[baseClass]] implements View.OnClickListener, View.OnLongClickListener, [[netBackIFullName]][[formHandlerCallBack]][[msThreadInterface]]{");
         lines.add("[[field]]");
         lines.add("    public String baseClassName = \"[[name]]\";");
         lines.add("");

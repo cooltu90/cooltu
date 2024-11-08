@@ -4,6 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 
 public class ActStart {
+    public static final void subThreadActivity(Activity act) {
+        Intent intent = new Intent(act, com.codingtu.cooltu.ui.SubThreadActivity.class);
+        intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
+        com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.SUB_THREAD_ACTIVITY);
+    }
     public static final void stepTwoActivity(Activity act) {
         Intent intent = new Intent(act, com.codingtu.cooltu.ui.StepTwoActivity.class);
         intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
