@@ -650,6 +650,8 @@ public abstract class UiBaseBuilder {
                             if (ClassTool.isList(returnType)) {
                                 String beanType = StringTool.getSub(returnType, "List", "<", ">");
                                 return mock + ConvertTool.toMethodType(CurrentPath.javaInfo(beanType).name) + "s";
+                            }else if(ClassTool.isString(returnType)){
+                                return mock + "json";
                             } else {
                                 return mock + ConvertTool.toMethodType(CurrentPath.javaInfo(returnType).name);
                             }

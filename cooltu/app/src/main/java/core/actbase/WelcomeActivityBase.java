@@ -101,8 +101,18 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         super.accept(code, result, params, objs);
 
 
+        if ("addObj1Back".equals(code)) {
+            new core.net.back.AddObj1Back() {
+                @Override
+                public void accept(String code, Result<ResponseBody> result, com.codingtu.cooltu.lib4a.net.bean.CoreSendParams params, List objs) {
+                    super.accept(code, result, params, objs);
+                    addObj1Back(json);
+                }
+            }.accept(code, result, params, objs);
+        }
 
     }
+    protected void addObj1Back(java.lang.String json) {}
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {

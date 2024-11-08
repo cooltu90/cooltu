@@ -35,6 +35,7 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Maps;
 import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.processor.annotation.net.NetBack;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
@@ -118,6 +119,11 @@ public class WelcomeActivity extends WelcomeActivityBase {
 
             }
         };
+    }
+    
+    @NetBack
+    public void addObj1Back(String json) {
+    
     }
 
 }
