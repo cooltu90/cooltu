@@ -153,7 +153,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
         noticeDialog.hidden();
     }
 
-    private com.codingtu.cooltu.lib4a.view.dialogview.EditDialog ed;
+    protected com.codingtu.cooltu.lib4a.view.dialogview.EditDialog ed;
 
     protected void showEd(String text, com.codingtu.cooltu.bean.User user) {
         if (ed == null)

@@ -165,7 +165,7 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
         noticeDialog.hidden();
     }
 
-    private com.codingtu.cooltu.lib4a.view.dialogview.EditDialog ed;
+    protected com.codingtu.cooltu.lib4a.view.dialogview.EditDialog ed;
 
     protected void showEd(String text, com.codingtu.cooltu.bean.User user) {
         if (ed == null)

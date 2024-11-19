@@ -158,7 +158,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         noticeDialog.hidden();
     }
 
-    private com.codingtu.cooltu.lib4a.view.dialogview.EditDialog editDialog;
+    protected com.codingtu.cooltu.lib4a.view.dialogview.EditDialog editDialog;
 
     protected void showEditDialog(String text) {
         if (editDialog == null)

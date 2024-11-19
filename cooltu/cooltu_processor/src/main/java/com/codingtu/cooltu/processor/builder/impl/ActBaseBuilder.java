@@ -481,7 +481,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     }
                                                                                                     [<sub>][if][noticeDialog]
                                                                                                     [<sub>][for][editDialog]
-    private [editDialogFullName] [edName];
+    protected [editDialogFullName] [edName];
 
     protected void show[edClassName](String text[if:edShowParam], [type] [name][if:edShowParam]) {
         if ([edName] == null)

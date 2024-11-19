@@ -768,7 +768,7 @@ public abstract class FragmentBaseBuilderBase extends com.codingtu.cooltu.proces
         }
         for (int i0 = 0; i0 < count(editDialogCounts, getForKey("editDialog")); i0++) {
             List<String> editDialog0 = editDialog.get(getForKey("editDialog", i0));
-            addLnTag(editDialogSb, "    private [editDialogFullName] [edName];", editDialog0.get(0), editDialog0.get(1));
+            addLnTag(editDialogSb, "    protected [editDialogFullName] [edName];", editDialog0.get(0), editDialog0.get(1));
             addLnTag(editDialogSb, "");
             StringBuilder edShowParamSb = new StringBuilder();
             if (isIf(editDialogIfs, getIfKey("edShowParam", i0))) {

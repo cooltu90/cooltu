@@ -2,6 +2,7 @@ package com.codingtu.cooltu.processor.builder.impl;
 
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
+import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.builder.base.FragmentBaseBuilderBase;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
@@ -22,6 +23,7 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
 
     public FragmentBaseBuilder(JavaInfo info) {
         super(info);
+        LibLogs.i("xxx");
         uiBaseBuilder = new UiBaseBuilder(this) {
             @Override
             protected BaseTools.GetThis<UiBaseBuilder> getChildGetter() {
@@ -339,7 +341,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
     }
                                                                                                     [<sub>][if][noticeDialog]
                                                                                                     [<sub>][for][editDialog]
-    private [editDialogFullName] [edName];
+    protected [editDialogFullName] [edName];
 
     protected void show[edClassName](String text[if:edShowParam], [type] [name][if:edShowParam]) {
         if ([edName] == null)
