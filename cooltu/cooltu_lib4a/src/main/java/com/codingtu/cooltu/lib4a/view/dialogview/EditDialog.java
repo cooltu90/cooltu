@@ -39,6 +39,7 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
     private View noBt;
     private View yesBt;
     private Object obj;
+    private View titleTv;
 
     public EditDialog destroys(Destroys destroys) {
         if (destroys != null) {
@@ -97,6 +98,10 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
         ViewTool.setEditTextAndSelection(et, StringTool.toString(text));
     }
 
+    public void setTitleTv(String title) {
+        ViewTool.setText(titleTv, title);
+    }
+
     public EditDialog build() {
         this.layer = new Layer(act);
         this.layer.setHiddenWhenBackClick(false);
@@ -108,7 +113,7 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
         if (isStopAnimation)
             this.layer.stopAnimation();
 
-        View titleTv = this.inflate.findViewById(R.id.editDialogTitleTv);
+        this.titleTv = this.inflate.findViewById(R.id.editDialogTitleTv);
         ViewTool.setText(titleTv, title);
 
         this.et = this.inflate.findViewById(R.id.editDialogTitleEt);
@@ -165,6 +170,7 @@ public final class EditDialog implements OnDestroy, View.OnClickListener {
             layer.destroy();
         layer = null;
         act = null;
+        titleTv = null;
     }
 
     private Integer restHeight;
