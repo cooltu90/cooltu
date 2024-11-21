@@ -7,4 +7,6 @@ import java.lang.annotation.RetentionPolicy;
 public @interface SubThread {
     boolean isStart() default false;
 
+    int thread() default 0;
+
 }

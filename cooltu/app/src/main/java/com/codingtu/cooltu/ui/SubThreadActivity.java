@@ -21,20 +21,17 @@ public class SubThreadActivity extends SubThreadActivityBase {
     }
 
     @SubThread
-    public void dealDataStart1(int num) {
+    public void dealDataStart(int num) {
 
     }
 
     @MainThread
     public void dealToast(String str) {
-        if (sendMessageForDealToast(str)) {
-            return;
-        }
         toast("xxx");
     }
 
     @MainThread
-    public void dealToast1(String str, int age) {
+    public void dealToast(String str, int age) {
 
     }
 
