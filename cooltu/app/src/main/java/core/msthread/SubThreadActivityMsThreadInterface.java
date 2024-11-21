@@ -4,7 +4,11 @@ public interface SubThreadActivityMsThreadInterface {
 
     void dealDataStart();
 
-    void dealDataStart(int num);
+    void dealDataStart0();
+
+    void method0();
+
+    void method1();
 
     void dealToast(java.lang.String str);
 

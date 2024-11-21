@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.test;
+package core.msthread;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -31,6 +31,7 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
                 createSubHandler1();
             }
         }).start();
+
     }
 
     private void createMainHandler() {
@@ -69,6 +70,7 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
         Looper.loop();
     }
 
+
     ///////////////////////////////////////////////////////
     //
     // 初始化方法
@@ -97,46 +99,52 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
         return Thread.currentThread() == subHandler1.getLooper().getThread();
     }
 
+
     ///////////////////////////////////////////////////////
     //
     // 主线程的消息处理
     //
     ///////////////////////////////////////////////////////
     private void handleMessageInMain(Message msg) {
-        if (msg.what == type(SubThreadActivityMsThreadType.DEAL_TOAST)) {
+        if (msg.what == type(SubThreadActivityMsThreadType.DEAL_TOAST_1)) {
+            Object[] objects = (Object[]) msg.obj;
+            dealer.dealToast((java.lang.String) objects[0], (int) objects[1]);
+            return;
+        }
+        if (msg.what == type(SubThreadActivityMsThreadType.DEAL_TOAST_0)) {
             dealer.dealToast((java.lang.String) msg.obj);
             return;
         }
-        if (msg.what == type(SubThreadActivityMsThreadType.DEAL_TOAST1)) {
-            Object[] objects = (Object[]) msg.obj;
-            dealer.dealToast1((java.lang.String) objects[0], (int) objects[1]);
-            return;
-        }
+
     }
 
-    public boolean sendMessageForDealToast(java.lang.String str) {
-        if (isMainThread()) {
-            sendMessage(mainHandler, type(SubThreadActivityMsThreadType.DEAL_TOAST), str);
+    public boolean sendMessageForDealToast(java.lang.String str, int age) {
+        if (!isMainThread()) {
+            sendMessage(mainHandler, type(SubThreadActivityMsThreadType.DEAL_TOAST_1), str, age);
             return true;
         }
         return false;
     }
+
+    public boolean sendMessageForDealToast(java.lang.String str) {
+        if (!isMainThread()) {
+            sendMessage(mainHandler, type(SubThreadActivityMsThreadType.DEAL_TOAST_0), str);
+            return true;
+        }
+        return false;
+    }
+
 
     ///////////////////////////////////////////////////////
     //
     // 线程0的消息处理
     //
     ///////////////////////////////////////////////////////
-
     private int subThread0StartType() {
-        return type(SubThreadActivityMsThreadType.DEAL_DATA_START);
+        return 0;
     }
 
     private void handleMessageInThread0(Message msg) {
-        if (msg.what == type(SubThreadActivityMsThreadType.DEAL_DATA_START1)) {
-            dealer.dealDataStart1((int) msg.obj);
-            return;
-        }
     }
 
     ///////////////////////////////////////////////////////
@@ -144,15 +152,12 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
     // 线程1的消息处理
     //
     ///////////////////////////////////////////////////////
-
     private int subThread1StartType() {
         return 0;
     }
 
     private void handleMessageInThread1(Message msg) {
-
     }
-
 
 }
 

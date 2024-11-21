@@ -6,7 +6,7 @@ import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.pack.BoolValue;
 import com.codingtu.cooltu.processor.annotation.msthread.MainThread;
 import com.codingtu.cooltu.processor.annotation.msthread.SubThread;
-import com.codingtu.cooltu.processor.builder.impl.MsThreadBuilder;
+import com.codingtu.cooltu.processor.builder.impl.MsMultiThreadBuilder;
 import com.codingtu.cooltu.processor.builder.impl.MsThreadInterfaceBuilder;
 import com.codingtu.cooltu.processor.builder.impl.MsThreadTypeBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
@@ -14,7 +14,9 @@ import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
@@ -30,6 +32,9 @@ public class MsMultiThreadDeal extends TypeBaseDeal {
         Map<String, Integer> staticMethodNameMap = new HashMap<>();
         BaseTs<String> staticMethodNameTs = Ts.ts();
         BaseTs<ExecutableElement> interfaceMethodTs = Ts.ts();
+        Set<Integer> subThreadNumSet = new HashSet<>();
+        Map<String, ExecutableElement> mainMethodMap = new HashMap<>();
+
 
         ElementTools.ls(te.getEnclosedElements(), new Ts.EachTs<Element>() {
             @Override
@@ -46,9 +51,9 @@ public class MsMultiThreadDeal extends TypeBaseDeal {
                         String typeName = staticSimpleName + "_" + num;
                         staticMethodNameMap.put(staticSimpleName, num + 1);
                         staticMethodNameTs.add(typeName);
-
                         interfaceMethodTs.add(ee);
 
+                        mainMethodMap.put(typeName, ee);
                     }
 
                     SubThread subThread = ee.getAnnotation(SubThread.class);
@@ -61,8 +66,10 @@ public class MsMultiThreadDeal extends TypeBaseDeal {
                         String typeName = staticSimpleName + "_" + num;
                         staticMethodNameMap.put(staticSimpleName, num + 1);
                         staticMethodNameTs.add(typeName);
-
                         interfaceMethodTs.add(ee);
+
+                        subThreadNumSet.add(subThread.value());
+
 
                     }
                 }
@@ -81,6 +88,13 @@ public class MsMultiThreadDeal extends TypeBaseDeal {
         JavaInfo interfaceJavaInfo = CurrentPath.msThreadInterface(objClassSimpleName);
         MsThreadInterfaceBuilder msThreadInterfaceBuilder = new MsThreadInterfaceBuilder(interfaceJavaInfo);
         msThreadInterfaceBuilder.addMethods(interfaceMethodTs);
+
+        //msThreadJavaInfo
+        JavaInfo msThreadJavaInfo = CurrentPath.msThread(objClassSimpleName);
+        MsMultiThreadBuilder msThreadBuilder = new MsMultiThreadBuilder(msThreadJavaInfo, interfaceJavaInfo.name, typeJavaInfo.name);
+        msThreadBuilder.addSubThreadNumSet(subThreadNumSet);
+        msThreadBuilder.addMainMethodMap(mainMethodMap);
+
 
     }
 

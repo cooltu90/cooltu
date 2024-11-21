@@ -15,13 +15,23 @@ import core.actres.SubThreadActivityRes;
 @ActBase(layout = R.layout.activity_sub_thread)
 public class SubThreadActivity extends SubThreadActivityBase {
 
-    @SubThread(isStart = true)
+    @SubThread(isStart = true, value = 0)
     public void dealDataStart() {
 
     }
 
-    @SubThread
-    public void dealDataStart(int num) {
+    @SubThread(isStart = true, value = 1)
+    public void dealDataStart0() {
+
+    }
+
+    @SubThread(0)
+    public void method0() {
+
+    }
+
+    @SubThread(1)
+    public void method1() {
 
     }
 
