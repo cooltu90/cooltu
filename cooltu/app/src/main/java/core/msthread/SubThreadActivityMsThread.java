@@ -141,11 +141,36 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
     //
     ///////////////////////////////////////////////////////
     private int subThread0StartType() {
-        return 0;
+        return type(SubThreadActivityMsThreadType.DEAL_DATA_START0_0);
     }
 
     private void handleMessageInThread0(Message msg) {
+        if (msg.what == type(SubThreadActivityMsThreadType.DEAL_DATA_START0_0)) {
+            dealer.dealDataStart0();
+            return;
+        }
+        if (msg.what == type(SubThreadActivityMsThreadType.METHOD0_0)) {
+            dealer.method0();
+            return;
+        }
     }
+
+    public boolean sendMessageForDealDataStart0() {
+        if (!isSubThread0()) {
+            sendMessage(subHandler0, type(SubThreadActivityMsThreadType.DEAL_DATA_START0_0));
+            return true;
+        }
+        return false;
+    }
+
+    public boolean sendMessageForMethod0() {
+        if (!isSubThread0()) {
+            sendMessage(subHandler0, type(SubThreadActivityMsThreadType.METHOD0_0));
+            return true;
+        }
+        return false;
+    }
+
 
     ///////////////////////////////////////////////////////
     //
@@ -153,11 +178,36 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
     //
     ///////////////////////////////////////////////////////
     private int subThread1StartType() {
-        return 0;
+        return type(SubThreadActivityMsThreadType.DEAL_DATA_START1_0);
     }
 
     private void handleMessageInThread1(Message msg) {
+        if (msg.what == type(SubThreadActivityMsThreadType.DEAL_DATA_START1_0)) {
+            dealer.dealDataStart1();
+            return;
+        }
+        if (msg.what == type(SubThreadActivityMsThreadType.METHOD1_0)) {
+            dealer.method1((java.lang.String) msg.obj);
+            return;
+        }
     }
+
+    public boolean sendMessageForDealDataStart1() {
+        if (!isSubThread1()) {
+            sendMessage(subHandler1, type(SubThreadActivityMsThreadType.DEAL_DATA_START1_0));
+            return true;
+        }
+        return false;
+    }
+
+    public boolean sendMessageForMethod1(java.lang.String name) {
+        if (!isSubThread1()) {
+            sendMessage(subHandler1, type(SubThreadActivityMsThreadType.METHOD1_0), name);
+            return true;
+        }
+        return false;
+    }
+
 
 }
 

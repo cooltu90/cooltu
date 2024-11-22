@@ -28,9 +28,8 @@ import com.codingtu.cooltu.processor.deal.DefaultMenuDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultNoticeDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.DefaultToastDialogLayoutDeal;
 import com.codingtu.cooltu.processor.deal.FragmentBaseDeal;
-import com.codingtu.cooltu.processor.deal.MsMultiThreadDeal;
-import com.codingtu.cooltu.processor.deal.MsThreadDeal;
 import com.codingtu.cooltu.processor.deal.ModuleInfoDeal;
+import com.codingtu.cooltu.processor.deal.MsThreadDeal;
 import com.codingtu.cooltu.processor.deal.NetDeal;
 import com.codingtu.cooltu.processor.deal.ResForDeal;
 import com.codingtu.cooltu.processor.deal.ResForFragmentDeal;
@@ -57,8 +56,7 @@ public class SupportTypes {
                 FragmentBase.class, FragmentBaseDeal.class,
                 ResFor.class, ResForDeal.class,
                 ResForFragment.class, ResForFragmentDeal.class,
-                //MsThread.class, MsThreadDeal.class,
-                MsThread.class, MsMultiThreadDeal.class,
+                MsThread.class, MsThreadDeal.class,
                 Apis.class, NetDeal.class,
                 CreateAct.class, CreateActDeal.class,
                 CreateAdapter.class, CreateAdapterDeal.class,

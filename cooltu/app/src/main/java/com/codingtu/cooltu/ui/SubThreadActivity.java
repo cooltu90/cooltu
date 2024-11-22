@@ -16,22 +16,24 @@ import core.actres.SubThreadActivityRes;
 public class SubThreadActivity extends SubThreadActivityBase {
 
     @SubThread(isStart = true, value = 0)
-    public void dealDataStart() {
+    public void dealDataStart0() {
 
     }
 
     @SubThread(isStart = true, value = 1)
-    public void dealDataStart0() {
+    public void dealDataStart1() {
 
     }
 
     @SubThread(0)
     public void method0() {
-
+        if(sendMessageForMethod0()){
+            return;
+        }
     }
 
     @SubThread(1)
-    public void method1() {
+    public void method1(String name) {
 
     }
 
@@ -42,7 +44,6 @@ public class SubThreadActivity extends SubThreadActivityBase {
 
     @MainThread
     public void dealToast(String str, int age) {
-
     }
 
 }

@@ -139,6 +139,14 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
         }
     }
 
+    public boolean sendMessageForDealDataStart(java.lang.String str) {
+        if (!isSubThread0()) {
+            sendMessage(subHandler0, type(SubThreadActivityMsThreadType.DEAL_TOAST), str);
+            return true;
+        }
+        return false;
+    }
+
     ///////////////////////////////////////////////////////
     //
     // 线程1的消息处理

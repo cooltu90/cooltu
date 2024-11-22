@@ -7,7 +7,9 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class SubThreadActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
+public abstract class SubThreadActivityBase extends com.codingtu.cooltu.ui.base.BaseActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI, core.msthread.SubThreadActivityMsThreadInterface
+{
+    protected core.msthread.SubThreadActivityMsThread subThreadActivityMsThread;
 
     public String baseClassName = "SubThreadActivityBase";
 
@@ -35,6 +37,8 @@ public abstract class SubThreadActivityBase extends com.codingtu.cooltu.ui.base.
 
 
 
+        subThreadActivityMsThread = core.msthread.SubThreadActivityMsThread.obtain().dealer(this);
+        subThreadActivityMsThread.start();
 
 
     }
@@ -96,6 +100,51 @@ public abstract class SubThreadActivityBase extends com.codingtu.cooltu.ui.base.
 
 
 
+    /**************************************************
+     * MsThread
+     **************************************************/
+    @Override
+    public void dealDataStart0() {
+    }
+
+    protected boolean sendMessageForDealDataStart0() {
+        return subThreadActivityMsThread.sendMessageForDealDataStart0();
+    }
+    @Override
+    public void dealDataStart1() {
+    }
+
+    protected boolean sendMessageForDealDataStart1() {
+        return subThreadActivityMsThread.sendMessageForDealDataStart1();
+    }
+    @Override
+    public void method0() {
+    }
+
+    protected boolean sendMessageForMethod0() {
+        return subThreadActivityMsThread.sendMessageForMethod0();
+    }
+    @Override
+    public void method1(java.lang.String name) {
+    }
+
+    protected boolean sendMessageForMethod1(java.lang.String name) {
+        return subThreadActivityMsThread.sendMessageForMethod1(name);
+    }
+    @Override
+    public void dealToast(java.lang.String str) {
+    }
+
+    protected boolean sendMessageForDealToast(java.lang.String str) {
+        return subThreadActivityMsThread.sendMessageForDealToast(str);
+    }
+    @Override
+    public void dealToast(java.lang.String str, int age) {
+    }
+
+    protected boolean sendMessageForDealToast(java.lang.String str, int age) {
+        return subThreadActivityMsThread.sendMessageForDealToast(str, age);
+    }
 
 
 }
