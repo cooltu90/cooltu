@@ -124,7 +124,6 @@ public class Upload implements OnDestroy {
         }
 
         post.params(fileKey, file);
-
         if (sync) {
             String responseResult = null;
             try {

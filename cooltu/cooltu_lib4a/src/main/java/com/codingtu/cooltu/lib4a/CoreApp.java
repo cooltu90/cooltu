@@ -7,6 +7,11 @@ import androidx.annotation.NonNull;
 import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4j.config.LibApp;
 import com.codingtu.cooltu.lib4j.config.LibConfigs;
+import com.lzy.okgo.OkGo;
+
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 
 public abstract class CoreApp extends Application implements Thread.UncaughtExceptionHandler {
 
@@ -24,6 +29,14 @@ public abstract class CoreApp extends Application implements Thread.UncaughtExce
             }
         };
         Thread.setDefaultUncaughtExceptionHandler(this);
+
+        // 配置OkGo
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .readTimeout(10 * 60 * 1000, TimeUnit.MILLISECONDS)
+                .writeTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
+
+        // 全局配置OkGo
+        OkGo.getInstance().init(this).setOkHttpClient(builder.build());
     }
 
     @Override
