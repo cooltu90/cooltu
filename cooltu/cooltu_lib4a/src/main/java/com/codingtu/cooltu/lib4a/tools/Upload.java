@@ -1,5 +1,6 @@
 package com.codingtu.cooltu.lib4a.tools;
 
+import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
 import com.codingtu.cooltu.lib4j.function.OnError;
 import com.codingtu.cooltu.lib4j.function.OnFinish;
@@ -144,6 +145,7 @@ public class Upload implements OnDestroy {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
+                        Logs.i("post error");
                         Upload.this.onError(response.getException());
                     }
                 });
@@ -152,9 +154,9 @@ public class Upload implements OnDestroy {
                 try {
                     response.close();
                 } catch (Exception e) {
-
                 }
             } catch (Exception e) {
+                Logs.i("response error");
                 onError(e);
             } finally {
 
