@@ -8,6 +8,7 @@ public class Suffix {
     public static final String FRAGMENT = "Fragment";
     public static final String FRAGMENT_RES = "FragmentRes";
     public static final String ACT_BASE = "Base";
+    public static final String MS_THREAD_BASE = "BaseForMsThread";
     public static final String FRAGMENT_BASE = "Base";
     public static final String FORM_CONFIG_BASE = "Base";
     public static final String PATH = "Path";

@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.test;
+package core.msthread;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -6,7 +6,7 @@ import android.os.Message;
 
 import com.codingtu.cooltu.lib4a.msthread.CoreMultiMsThread;
 
-public class SubThreadActivityMsThread extends CoreMultiMsThread {
+public class TesUdMsThread extends CoreMultiMsThread {
 
     ///////////////////////////////////////////////////////
     //
@@ -15,7 +15,6 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
     ///////////////////////////////////////////////////////
     private Handler mainHandler;
     private Handler subHandler0;
-    private Handler subHandler1;
 
     public void start() {
         createMainHandler();
@@ -25,12 +24,7 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
                 createSubHandler0();
             }
         }).start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                createSubHandler1();
-            }
-        }).start();
+
     }
 
     private void createMainHandler() {
@@ -56,36 +50,24 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
         Looper.loop();
     }
 
-    private void createSubHandler1() {
-        Looper.prepare();
-        subHandler1 = new Handler(Looper.myLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                handleMessageInThread1(msg);
-            }
-        };
-        sendMessage(subHandler1, subThread1StartType());
-        Looper.loop();
-    }
 
     ///////////////////////////////////////////////////////
     //
     // 初始化方法
     //
     ///////////////////////////////////////////////////////
-    private SubThreadActivityMsThreadInterface dealer;
+    private TesUdMsThreadInterface dealer;
 
-    public static SubThreadActivityMsThread obtain() {
-        return new SubThreadActivityMsThread();
+    public static TesUdMsThread obtain() {
+        return new TesUdMsThread();
     }
 
-    public SubThreadActivityMsThread dealer(SubThreadActivityMsThreadInterface dealer) {
+    public TesUdMsThread dealer(TesUdMsThreadInterface dealer) {
         this.dealer = dealer;
         return this;
     }
 
-    private int type(SubThreadActivityMsThreadType type) {
+    private int type(TesUdMsThreadType type) {
         return type.ordinal();
     }
 
@@ -93,9 +75,6 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
         return Thread.currentThread() == subHandler0.getLooper().getThread();
     }
 
-    protected boolean isSubThread1() {
-        return Thread.currentThread() == subHandler1.getLooper().getThread();
-    }
 
     ///////////////////////////////////////////////////////
     //
@@ -103,62 +82,44 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
     //
     ///////////////////////////////////////////////////////
     private void handleMessageInMain(Message msg) {
-        if (msg.what == type(SubThreadActivityMsThreadType.DEAL_TOAST)) {
-            dealer.dealToast((java.lang.String) msg.obj);
+        if (msg.what == type(TesUdMsThreadType.TOAST_0)) {
+            dealer.toast((java.lang.String) msg.obj);
             return;
         }
-        if (msg.what == type(SubThreadActivityMsThreadType.DEAL_TOAST1)) {
-            Object[] objects = (Object[]) msg.obj;
-            dealer.dealToast1((java.lang.String) objects[0], (int) objects[1]);
-            return;
-        }
+
     }
 
-    public boolean sendMessageForDealToast(java.lang.String str) {
-        if (isMainThread()) {
-            sendMessage(mainHandler, type(SubThreadActivityMsThreadType.DEAL_TOAST), str);
+    public boolean sendMessageForToast(java.lang.String msg) {
+        if (!isMainThread()) {
+            sendMessage(mainHandler, type(TesUdMsThreadType.TOAST_0), msg);
             return true;
         }
         return false;
     }
+
 
     ///////////////////////////////////////////////////////
     //
     // 线程0的消息处理
     //
     ///////////////////////////////////////////////////////
-
     private int subThread0StartType() {
-        return type(SubThreadActivityMsThreadType.DEAL_DATA_START);
+        return type(TesUdMsThreadType.SUB_START_0);
     }
 
     private void handleMessageInThread0(Message msg) {
-        if (msg.what == type(SubThreadActivityMsThreadType.DEAL_DATA_START1)) {
-            dealer.dealDataStart1((int) msg.obj);
+        if (msg.what == type(TesUdMsThreadType.SUB_START_0)) {
+            dealer.subStart();
             return;
         }
     }
 
-    public boolean sendMessageForDealDataStart(java.lang.String str) {
+    public boolean sendMessageForSubStart() {
         if (!isSubThread0()) {
-            sendMessage(subHandler0, type(SubThreadActivityMsThreadType.DEAL_TOAST), str);
+            sendMessage(subHandler0, type(TesUdMsThreadType.SUB_START_0));
             return true;
         }
         return false;
-    }
-
-    ///////////////////////////////////////////////////////
-    //
-    // 线程1的消息处理
-    //
-    ///////////////////////////////////////////////////////
-
-    private int subThread1StartType() {
-        return 0;
-    }
-
-    private void handleMessageInThread1(Message msg) {
-
     }
 
 

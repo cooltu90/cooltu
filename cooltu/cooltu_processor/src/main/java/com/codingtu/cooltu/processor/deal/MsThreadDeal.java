@@ -10,6 +10,7 @@ import com.codingtu.cooltu.processor.annotation.msthread.MainThread;
 import com.codingtu.cooltu.processor.annotation.msthread.SubThread;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
+import com.codingtu.cooltu.processor.builder.impl.MsThreadBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.MsThreadBuilder;
 import com.codingtu.cooltu.processor.builder.impl.MsThreadInterfaceBuilder;
 import com.codingtu.cooltu.processor.builder.impl.MsThreadTypeBuilder;
@@ -48,8 +49,6 @@ public class MsThreadDeal extends TypeBaseDeal {
         Map<Integer, String> startTypeMap = new HashMap<>();
 
         BaseTs<ExecutableElement> allMethodTs = Ts.ts();
-
-
 
 
         ElementTools.ls(te.getEnclosedElements(), new Ts.EachTs<Element>() {
@@ -148,6 +147,10 @@ public class MsThreadDeal extends TypeBaseDeal {
             builder.msThreadInterfaceFullName = interfaceJavaInfo.fullName;
             builder.msThreadFullName = msThreadJavaInfo.fullName;
             builder.msThreadFieldName = ConvertTool.toMethodType(msThreadJavaInfo.name);
+            builder.msThreadMethodTs.add(allMethodTs);
+        } else {
+            JavaInfo msThreadBaseJavaInfo = CurrentPath.msThreadBase(objClassSimpleName);
+            MsThreadBaseBuilder builder = new MsThreadBaseBuilder(msThreadBaseJavaInfo, interfaceJavaInfo.name, msThreadJavaInfo.name);
             builder.msThreadMethodTs.add(allMethodTs);
         }
 

@@ -279,6 +279,19 @@ public class CurrentPath {
     public static JavaInfo msThread(String name) {
         return javaInfo(msThreadFullName(name));
     }
+    /**************************************************
+     *
+     **************************************************/
+    public static String msThreadBaseFullName(String name) {
+        return Pkg.CORE_MSTHREAD
+                + "."
+                + name
+                + Suffix.MS_THREAD_BASE;
+    }
+
+    public static JavaInfo msThreadBase(String name) {
+        return javaInfo(msThreadBaseFullName(name));
+    }
 
     /**************************************************
      *
