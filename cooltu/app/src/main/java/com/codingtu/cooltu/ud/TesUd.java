@@ -13,8 +13,6 @@ public class TesUd extends TesUdBaseForMsThread {
     @SubThread(isStart = true)
     public void subStart() {
 
-
-
     }
 
     @MainThread

@@ -37,7 +37,7 @@ public abstract class MsThreadBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("");
         lines.add("    protected [[msThreadType]] [[msThreadName]];");
         lines.add("");
-        lines.add("    public [[name]]() {");
+        lines.add("    public void start() {");
         lines.add("        [[msThreadName]] = [[msThreadType]].obtain().dealer(this);");
         lines.add("        [[msThreadName]].start();");
         lines.add("    }");

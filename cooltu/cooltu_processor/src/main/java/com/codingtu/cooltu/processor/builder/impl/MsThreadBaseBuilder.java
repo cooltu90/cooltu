@@ -81,7 +81,7 @@ public class [[name]] implements [[interfaceType]] {
 
     protected [[msThreadType]] [[msThreadName]];
 
-    public [[name]]() {
+    public void start() {
         [[msThreadName]] = [[msThreadType]].obtain().dealer(this);
         [[msThreadName]].start();
     }

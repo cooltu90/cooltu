@@ -4,7 +4,7 @@ public class TesUdBaseForMsThread implements TesUdMsThreadInterface {
 
     protected TesUdMsThread tesUdMsThread;
 
-    public TesUdBaseForMsThread() {
+    public void start() {
         tesUdMsThread = TesUdMsThread.obtain().dealer(this);
         tesUdMsThread.start();
     }
