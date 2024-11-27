@@ -5,6 +5,7 @@ import java.util.List;
 public abstract class MsThreadBaseBuilderBase extends com.codingtu.cooltu.processor.builder.core.CoreBuilder {
     protected StringBuilder pkg;
     protected StringBuilder name;
+    protected StringBuilder base;
     protected StringBuilder interfaceType;
     protected StringBuilder msThreadType;
     protected StringBuilder msThreadName;
@@ -14,6 +15,7 @@ public abstract class MsThreadBaseBuilderBase extends com.codingtu.cooltu.proces
         super(info);
         pkg = map.get("pkg");
         name = map.get("name");
+        base = map.get("base");
         interfaceType = map.get("interfaceType");
         msThreadType = map.get("msThreadType");
         msThreadName = map.get("msThreadName");
@@ -33,7 +35,7 @@ public abstract class MsThreadBaseBuilderBase extends com.codingtu.cooltu.proces
         List<String> lines = new ArrayList<>();
         lines.add("package [[pkg]];");
         lines.add("");
-        lines.add("public class [[name]] implements [[interfaceType]] {");
+        lines.add("public class [[name]][[base]] implements [[interfaceType]] {");
         lines.add("");
         lines.add("    protected [[msThreadType]] [[msThreadName]];");
         lines.add("");

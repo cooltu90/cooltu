@@ -2,7 +2,9 @@ package com.codingtu.cooltu.processor.builder.impl;
 
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.builder.base.MsThreadBaseBuilderBase;
@@ -19,6 +21,7 @@ public class MsThreadBaseBuilder extends MsThreadBaseBuilderBase {
     private final String msThreadTypeStr;
     private final String msThreadFieldName;
     public BaseTs<ExecutableElement> msThreadMethodTs = Ts.ts();
+    public String baseFullName;
 
     public MsThreadBaseBuilder(JavaInfo info, String interfaceName, String typeName) {
         super(info);
@@ -71,13 +74,19 @@ public class MsThreadBaseBuilder extends MsThreadBaseBuilderBase {
             }
         });
 
+        if (StringTool.isNotBlank(baseFullName) && ClassTool.isNotVoid(baseFullName)) {
+            //
+            addTag(base, "<THIS extends [CheckUploadNewBaseForMsThread]> extends [CheckUploadBase]<THIS>",
+                    javaInfo.name, baseFullName);
+        }
+
 
     }
 }
 /* model_temp_start
 package [[pkg]];
 
-public class [[name]] implements [[interfaceType]] {
+public class [[name]][[base]] implements [[interfaceType]] {
 
     protected [[msThreadType]] [[msThreadName]];
 

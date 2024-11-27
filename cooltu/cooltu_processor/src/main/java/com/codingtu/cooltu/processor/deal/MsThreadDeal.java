@@ -2,11 +2,13 @@ package com.codingtu.cooltu.processor.deal;
 
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.map.ValueMap;
+import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.pack.BoolValue;
 import com.codingtu.cooltu.processor.annotation.msthread.MainThread;
+import com.codingtu.cooltu.processor.annotation.msthread.MsThread;
 import com.codingtu.cooltu.processor.annotation.msthread.SubThread;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
@@ -149,9 +151,19 @@ public class MsThreadDeal extends TypeBaseDeal {
             builder.msThreadFieldName = ConvertTool.toMethodType(msThreadJavaInfo.name);
             builder.msThreadMethodTs.add(allMethodTs);
         } else {
+
+            MsThread msThread = te.getAnnotation(MsThread.class);
+            String baseFullName = ClassTool.getAnnotationClass(new ClassTool.AnnotationClassGetter() {
+                @Override
+                public Object get() {
+                    return msThread.base();
+                }
+            });
+
             JavaInfo msThreadBaseJavaInfo = CurrentPath.msThreadBase(objClassSimpleName);
             MsThreadBaseBuilder builder = new MsThreadBaseBuilder(msThreadBaseJavaInfo, interfaceJavaInfo.name, msThreadJavaInfo.name);
             builder.msThreadMethodTs.add(allMethodTs);
+            builder.baseFullName = baseFullName;
         }
 
 

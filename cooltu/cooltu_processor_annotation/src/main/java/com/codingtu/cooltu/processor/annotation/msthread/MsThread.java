@@ -5,4 +5,5 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.SOURCE)
 public @interface MsThread {
+    Class base() default Void.class;
 }

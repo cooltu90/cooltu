@@ -1,6 +1,6 @@
 package core.msthread;
 
-public class TesUdBaseForMsThread implements TesUdMsThreadInterface {
+public class TesUdBaseForMsThread<THIS extends TesUdBaseForMsThread> extends com.codingtu.cooltu.test.TestUdBase<THIS> implements TesUdMsThreadInterface {
 
     protected TesUdMsThread tesUdMsThread;
 
