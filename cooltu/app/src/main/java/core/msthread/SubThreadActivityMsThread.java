@@ -70,7 +70,11 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
         Looper.loop();
     }
 
+    public void stop() {
+        subHandler0.getLooper().quitSafely();
+        subHandler1.getLooper().quitSafely();
 
+    }
     ///////////////////////////////////////////////////////
     //
     // 初始化方法

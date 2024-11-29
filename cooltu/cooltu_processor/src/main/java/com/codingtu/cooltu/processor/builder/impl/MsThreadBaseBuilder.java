@@ -96,5 +96,12 @@ public class [[name]][[base]] implements [[interfaceType]] {
     }
 
 [[methods]]
+
+    protected void stopMsThread() {
+        if ([[msThreadName]] != null)
+            [[msThreadName]].stop();
+        [[msThreadName]] = null;
+    }
+
 }
 model_temp_end */

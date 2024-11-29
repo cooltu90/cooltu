@@ -110,6 +110,8 @@ public class MsThreadBuilder extends MsThreadBuilderBase {
                 addLnTag(subThreadMethods, "    }");
                 addLnTag(subThreadMethods, sendMessageMethodsForSub.toString());
 
+                addLnTag(stop, "        subHandler[0].getLooper().quitSafely();", index);
+
                 return false;
             }
         });
@@ -203,7 +205,9 @@ public class [[name]] extends CoreMultiMsThread {
         };
     }
 [[createSubHandlerMethods]]
-
+    public void stop() {
+[[stop]]
+    }
     ///////////////////////////////////////////////////////
     //
     // 初始化方法

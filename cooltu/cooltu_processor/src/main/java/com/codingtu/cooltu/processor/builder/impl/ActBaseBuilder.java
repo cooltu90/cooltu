@@ -153,7 +153,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
             addLnTag(onCompleteOtherLineSb, "        [ftpPlayActivityMSThread] = [FtpPlayActivityMSThread].obtain().dealer(this);",
                     msThreadFieldName, msThreadFullName);
-            addLnTag(onCompleteOtherLineSb,"        [ftpPlayActivityMSThread].start();",msThreadFieldName);
+            addLnTag(onCompleteOtherLineSb, "        [ftpPlayActivityMSThread].start();", msThreadFieldName);
 
             addLnTag(otherLineSb, "    /**************************************************");
             addLnTag(otherLineSb, "     * MsThread");
@@ -183,6 +183,12 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     return false;
                 }
             });
+
+            addLnTag(otherLineSb, "    protected void stopMsThread() {");
+            addLnTag(otherLineSb, "        if ([tesUdMsThread] != null)", msThreadFieldName);
+            addLnTag(otherLineSb, "            [tesUdMsThread].stop();", msThreadFieldName);
+            addLnTag(otherLineSb, "        [tesUdMsThread] = null;", msThreadFieldName);
+            addLnTag(otherLineSb, "    }");
 
         }
         otherIf(otherLineSb.toString());

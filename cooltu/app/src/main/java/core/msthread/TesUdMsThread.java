@@ -50,7 +50,10 @@ public class TesUdMsThread extends CoreMultiMsThread {
         Looper.loop();
     }
 
+    public void stop() {
+        subHandler0.getLooper().quitSafely();
 
+    }
     ///////////////////////////////////////////////////////
     //
     // 初始化方法

@@ -145,6 +145,11 @@ public abstract class SubThreadActivityBase extends com.codingtu.cooltu.ui.base.
     protected boolean sendMessageForDealToast(java.lang.String str, int age) {
         return subThreadActivityMsThread.sendMessageForDealToast(str, age);
     }
+    protected void stopMsThread() {
+        if (subThreadActivityMsThread != null)
+            subThreadActivityMsThread.stop();
+        subThreadActivityMsThread = null;
+    }
 
 
 }

@@ -45,6 +45,13 @@ public abstract class MsThreadBaseBuilderBase extends com.codingtu.cooltu.proces
         lines.add("    }");
         lines.add("");
         lines.add("[[methods]]");
+        lines.add("");
+        lines.add("    protected void stopMsThread() {");
+        lines.add("        if ([[msThreadName]] != null)");
+        lines.add("            [[msThreadName]].stop();");
+        lines.add("        [[msThreadName]] = null;");
+        lines.add("    }");
+        lines.add("");
         lines.add("}");
 
         return lines;

@@ -24,4 +24,11 @@ public class TesUdBaseForMsThread<THIS extends TesUdBaseForMsThread> extends com
         return tesUdMsThread.sendMessageForToast(msg);
     }
 
+
+    protected void stopMsThread() {
+        if (tesUdMsThread != null)
+            tesUdMsThread.stop();
+        tesUdMsThread = null;
+    }
+
 }

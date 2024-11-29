@@ -8,6 +8,7 @@ public abstract class MsThreadBuilderBase extends com.codingtu.cooltu.processor.
     protected StringBuilder subFields;
     protected StringBuilder createSubHandler;
     protected StringBuilder createSubHandlerMethods;
+    protected StringBuilder stop;
     protected StringBuilder interfaceName;
     protected StringBuilder typeName;
     protected StringBuilder checkThreadMethods;
@@ -22,6 +23,7 @@ public abstract class MsThreadBuilderBase extends com.codingtu.cooltu.processor.
         subFields = map.get("subFields");
         createSubHandler = map.get("createSubHandler");
         createSubHandlerMethods = map.get("createSubHandlerMethods");
+        stop = map.get("stop");
         interfaceName = map.get("interfaceName");
         typeName = map.get("typeName");
         checkThreadMethods = map.get("checkThreadMethods");
@@ -73,7 +75,9 @@ public abstract class MsThreadBuilderBase extends com.codingtu.cooltu.processor.
         lines.add("        };");
         lines.add("    }");
         lines.add("[[createSubHandlerMethods]]");
-        lines.add("");
+        lines.add("    public void stop() {");
+        lines.add("[[stop]]");
+        lines.add("    }");
         lines.add("    ///////////////////////////////////////////////////////");
         lines.add("    //");
         lines.add("    // 初始化方法");
