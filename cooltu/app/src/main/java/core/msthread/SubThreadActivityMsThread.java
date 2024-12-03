@@ -75,6 +75,7 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
         subHandler1.getLooper().quitSafely();
 
     }
+
     ///////////////////////////////////////////////////////
     //
     // 初始化方法

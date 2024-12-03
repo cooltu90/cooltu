@@ -6,7 +6,7 @@ import android.os.Message;
 
 public class CoreMultiMsThread {
 
-    protected void sendMessage(Handler handler, int what, Object... objects) {
+    protected void sendMessage(Handler handler, int what, long delayMillis, Object... objects) {
         Message msg = Message.obtain(handler);
         msg.what = what;
         if (objects != null) {
@@ -16,7 +16,15 @@ public class CoreMultiMsThread {
                 msg.obj = objects;
             }
         }
-        handler.sendMessage(msg);
+        if (delayMillis > 0) {
+            handler.sendMessageDelayed(msg, delayMillis);
+        } else {
+            handler.sendMessage(msg);
+        }
+    }
+
+    protected void sendMessage(Handler handler, int what, Object... objects) {
+        sendMessage(handler, what, 0, objects);
     }
 
     protected boolean isMainThread() {

@@ -27,7 +27,7 @@ public class SubThreadActivity extends SubThreadActivityBase {
 
     @SubThread(0)
     public void method0() {
-        if(sendMessageForMethod0()){
+        if (sendMessageForMethod0()) {
             return;
         }
     }
@@ -37,7 +37,7 @@ public class SubThreadActivity extends SubThreadActivityBase {
 
     }
 
-    @MainThread
+    @MainThread(isDelay = true, defaultDelayMillis = 300)
     public void dealToast(String str) {
         toast("xxx");
     }
