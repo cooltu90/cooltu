@@ -4,6 +4,7 @@ import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.map.ValueMap;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
+import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.pack.BoolValue;
@@ -121,7 +122,7 @@ public class MsThreadDeal extends TypeBaseDeal {
             }
         });
 
-        if (!hasStart.value) {
+        if (!hasStart.value && !CountTool.isNull(subThreadNumSet)) {
             return;
         }
 

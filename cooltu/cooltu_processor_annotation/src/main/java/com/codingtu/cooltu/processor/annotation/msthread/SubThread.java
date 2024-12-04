@@ -13,6 +13,6 @@ public @interface SubThread {
 
     boolean isDelay() default false;
 
-    long defaultDelayMillis() default 0;
+    long defaultDelayMillis() default -1;
 
 }

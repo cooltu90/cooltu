@@ -46,7 +46,7 @@ public class TesUdMsThread extends CoreMultiMsThread {
                 handleMessageInThread0(msg);
             }
         };
-        sendMessage(subHandler0, subThread0StartType());
+        sendMessage(subHandler0, subThread0StartType(), 0l);
         Looper.loop();
     }
 
@@ -94,7 +94,7 @@ public class TesUdMsThread extends CoreMultiMsThread {
 
     public boolean sendMessageForToast(java.lang.String msg) {
         if (!isMainThread()) {
-            sendMessage(mainHandler, type(TesUdMsThreadType.TOAST_0), msg);
+            sendMessage(mainHandler, type(TesUdMsThreadType.TOAST_0), 0l, msg);
             return true;
         }
         return false;
@@ -119,7 +119,7 @@ public class TesUdMsThread extends CoreMultiMsThread {
 
     public boolean sendMessageForSubStart() {
         if (!isSubThread0()) {
-            sendMessage(subHandler0, type(TesUdMsThreadType.SUB_START_0));
+            sendMessage(subHandler0, type(TesUdMsThreadType.SUB_START_0), 0l);
             return true;
         }
         return false;

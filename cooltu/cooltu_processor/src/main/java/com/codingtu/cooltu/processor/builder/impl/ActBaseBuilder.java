@@ -11,6 +11,8 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.BuilderType;
+import com.codingtu.cooltu.processor.annotation.msthread.MainThread;
+import com.codingtu.cooltu.processor.annotation.msthread.SubThread;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.Permission;
 import com.codingtu.cooltu.processor.builder.base.ActBaseBuilderBase;
@@ -166,7 +168,38 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
                     String simpleName = ElementTools.simpleName(element);
                     String methodParams = params.getMethodParams();
+                    String params1 = params.getParams();
                     String sendMethodName = ConvertTool.toClassType(simpleName);
+
+                    boolean isDelay = false;
+                    long defaultDelayMillis = -1;
+                    MainThread mainThread = element.getAnnotation(MainThread.class);
+                    if (mainThread != null) {
+                        isDelay = mainThread.isDelay();
+                        defaultDelayMillis = mainThread.defaultDelayMillis();
+                    }
+
+                    SubThread subThread = element.getAnnotation(SubThread.class);
+                    if (subThread != null) {
+                        isDelay = subThread.isDelay();
+                        defaultDelayMillis = subThread.defaultDelayMillis();
+                    }
+
+                    StringBuilder delayParamSb = new StringBuilder();
+                    StringBuilder delayParamSb1 = new StringBuilder();
+                    if (isDelay) {
+                        if (defaultDelayMillis < 0) {
+                            delayParamSb.append("long delayMillis");
+                            delayParamSb1.append("delayMillis");
+                            if (StringTool.isNotBlank(methodParams)) {
+                                delayParamSb.append(", ");
+                            }
+                            if (StringTool.isNotBlank(params1)) {
+                                delayParamSb1.append(", ");
+                            }
+                        }
+                    }
+
 
                     addLnTag(otherLineSb, "    @Override");
                     addLnTag(otherLineSb, "    public void [dealDataStart]([params]) {",
@@ -174,10 +207,10 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
                     addLnTag(otherLineSb, "    }");
                     addLnTag(otherLineSb, "");
 
-                    addLnTag(otherLineSb, "    protected boolean sendMessageFor[DealToast]([String str]) {",
-                            sendMethodName, methodParams);
-                    addLnTag(otherLineSb, "        return [ftpPlayActivityMSThread].sendMessageFor[DealToast]([str]);",
-                            msThreadFieldName, sendMethodName, params.getParams());
+                    addLnTag(otherLineSb, "    protected boolean sendMessageFor[DealToast]([delayParam][String str]) {",
+                            sendMethodName, delayParamSb.toString(), methodParams);
+                    addLnTag(otherLineSb, "        return [ftpPlayActivityMSThread].sendMessageFor[DealToast]([delayParam][str]);",
+                            msThreadFieldName, sendMethodName, delayParamSb1.toString(), params1);
                     addLnTag(otherLineSb, "    }");
 
                     return false;

@@ -7,5 +7,5 @@ import java.lang.annotation.RetentionPolicy;
 public @interface MainThread {
     boolean isDelay() default false;
 
-    long defaultDelayMillis() default 0;
+    long defaultDelayMillis() default -1;
 }

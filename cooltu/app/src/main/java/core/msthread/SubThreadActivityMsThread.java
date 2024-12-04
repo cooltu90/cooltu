@@ -53,7 +53,7 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
                 handleMessageInThread0(msg);
             }
         };
-        sendMessage(subHandler0, subThread0StartType());
+        sendMessage(subHandler0, subThread0StartType(), 0l);
         Looper.loop();
     }
 
@@ -66,7 +66,7 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
                 handleMessageInThread1(msg);
             }
         };
-        sendMessage(subHandler1, subThread1StartType());
+        sendMessage(subHandler1, subThread1StartType(), 0l);
         Looper.loop();
     }
 
@@ -75,7 +75,6 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
         subHandler1.getLooper().quitSafely();
 
     }
-
     ///////////////////////////////////////////////////////
     //
     // 初始化方法
@@ -125,7 +124,7 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
 
     public boolean sendMessageForDealToast(java.lang.String str, int age) {
         if (!isMainThread()) {
-            sendMessage(mainHandler, type(SubThreadActivityMsThreadType.DEAL_TOAST_1), str, age);
+            sendMessage(mainHandler, type(SubThreadActivityMsThreadType.DEAL_TOAST_1), 0l, str, age);
             return true;
         }
         return false;
@@ -133,7 +132,7 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
 
     public boolean sendMessageForDealToast(java.lang.String str) {
         if (!isMainThread()) {
-            sendMessage(mainHandler, type(SubThreadActivityMsThreadType.DEAL_TOAST_0), str);
+            sendMessage(mainHandler, type(SubThreadActivityMsThreadType.DEAL_TOAST_0), 300l, str);
             return true;
         }
         return false;
@@ -162,7 +161,7 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
 
     public boolean sendMessageForDealDataStart0() {
         if (!isSubThread0()) {
-            sendMessage(subHandler0, type(SubThreadActivityMsThreadType.DEAL_DATA_START0_0));
+            sendMessage(subHandler0, type(SubThreadActivityMsThreadType.DEAL_DATA_START0_0), 0l);
             return true;
         }
         return false;
@@ -170,7 +169,7 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
 
     public boolean sendMessageForMethod0() {
         if (!isSubThread0()) {
-            sendMessage(subHandler0, type(SubThreadActivityMsThreadType.METHOD0_0));
+            sendMessage(subHandler0, type(SubThreadActivityMsThreadType.METHOD0_0), 0l);
             return true;
         }
         return false;
@@ -199,7 +198,7 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
 
     public boolean sendMessageForDealDataStart1() {
         if (!isSubThread1()) {
-            sendMessage(subHandler1, type(SubThreadActivityMsThreadType.DEAL_DATA_START1_0));
+            sendMessage(subHandler1, type(SubThreadActivityMsThreadType.DEAL_DATA_START1_0), 0l);
             return true;
         }
         return false;
@@ -207,7 +206,7 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
 
     public boolean sendMessageForMethod1(java.lang.String name) {
         if (!isSubThread1()) {
-            sendMessage(subHandler1, type(SubThreadActivityMsThreadType.METHOD1_0), name);
+            sendMessage(subHandler1, type(SubThreadActivityMsThreadType.METHOD1_0), 0l, name);
             return true;
         }
         return false;

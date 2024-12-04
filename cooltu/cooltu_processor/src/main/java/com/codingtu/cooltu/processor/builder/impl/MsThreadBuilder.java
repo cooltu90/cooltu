@@ -5,7 +5,10 @@ import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.ValueMap;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.processor.annotation.msthread.MainThread;
+import com.codingtu.cooltu.processor.annotation.msthread.SubThread;
 import com.codingtu.cooltu.processor.builder.base.MsThreadBuilderBase;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
@@ -76,7 +79,7 @@ public class MsThreadBuilder extends MsThreadBuilderBase {
                 addLnTag(createSubHandlerMethods, "                handleMessageInThread[0](msg);", index);
                 addLnTag(createSubHandlerMethods, "            }");
                 addLnTag(createSubHandlerMethods, "        };");
-                addLnTag(createSubHandlerMethods, "        sendMessage(subHandler[0], subThread[0]StartType());", index, index);
+                addLnTag(createSubHandlerMethods, "        sendMessage(subHandler[0], subThread[0]StartType(), 0l);", index, index);
                 addLnTag(createSubHandlerMethods, "        Looper.loop();");
                 addLnTag(createSubHandlerMethods, "    }");
 
@@ -105,7 +108,16 @@ public class MsThreadBuilder extends MsThreadBuilderBase {
 
                 dealSubThread(subMethodMap1,
                         subThreadMethods, sendMessageMethodsForSub,
-                        "isSubThread" + index, "subHandler" + index);
+                        "isSubThread" + index, "subHandler" + index, new DelayInfoGetter() {
+                            @Override
+                            public DelayInfo obtainDelayInfo(ExecutableElement ee) {
+                                SubThread subThread = ee.getAnnotation(SubThread.class);
+                                DelayInfo delayInfo = new DelayInfo();
+                                delayInfo.isDelay = subThread.isDelay();
+                                delayInfo.delayMillis = subThread.defaultDelayMillis();
+                                return delayInfo;
+                            }
+                        });
 
                 addLnTag(subThreadMethods, "    }");
                 addLnTag(subThreadMethods, sendMessageMethodsForSub.toString());
@@ -118,14 +130,32 @@ public class MsThreadBuilder extends MsThreadBuilderBase {
 
         dealSubThread(mainMethodMap,
                 dealMainMessage, sendMessageMethodsForMain,
-                "isMainThread", "mainHandler");
+                "isMainThread", "mainHandler", new DelayInfoGetter() {
+                    @Override
+                    public DelayInfo obtainDelayInfo(ExecutableElement ee) {
+                        MainThread mainThread = ee.getAnnotation(MainThread.class);
+                        DelayInfo delayInfo = new DelayInfo();
+                        delayInfo.isDelay = mainThread.isDelay();
+                        delayInfo.delayMillis = mainThread.defaultDelayMillis();
+                        return delayInfo;
+                    }
+                });
 
 
     }
 
+    public static class DelayInfo {
+        public boolean isDelay;
+        public long delayMillis;
+    }
+
+    public static interface DelayInfoGetter {
+        public DelayInfo obtainDelayInfo(ExecutableElement ee);
+    }
+
     private void dealSubThread(Map<String, ExecutableElement> methodMap,
                                StringBuilder dealMessageSb, StringBuilder sendMessageMethodsSb,
-                               String checkThread, String handlerName) {
+                               String checkThread, String handlerName, DelayInfoGetter delayInfoGetter) {
         Ts.maps(methodMap).ls(new Ts.MapEach<String, ExecutableElement>() {
             @Override
             public boolean each(String type, ExecutableElement element) {
@@ -154,12 +184,32 @@ public class MsThreadBuilder extends MsThreadBuilderBase {
                 addLnTag(dealMessageSb, "            return;");
                 addLnTag(dealMessageSb, "        }");
 
+                String methodParams = params.getMethodParams();
+
+                DelayInfo delayInfo = delayInfoGetter.obtainDelayInfo(element);
+                StringBuilder delayParamSb = new StringBuilder();
+                StringBuilder delayParamSb1 = new StringBuilder();
+                if (delayInfo.isDelay) {
+                    if (delayInfo.delayMillis < 0) {
+                        delayParamSb.append("long delayMillis");
+                        delayParamSb1.append(", delayMillis");
+                        if (StringTool.isNotBlank(methodParams)) {
+                            delayParamSb.append(", ");
+                        }
+                    } else {
+                        delayParamSb1.append(", ").append(delayInfo.delayMillis).append("l");
+                    }
+                } else {
+                    delayParamSb1.append(", 0l");
+                }
+
                 addLnTag(sendMessageMethodsSb, "");
-                addLnTag(sendMessageMethodsSb, "    public boolean sendMessageFor[DealToast]([String str]) {",
-                        ConvertTool.toClassType(methodName), params.getMethodParams());
+                addLnTag(sendMessageMethodsSb, "    public boolean sendMessageFor[DealToast]([delayParam][String str]) {",
+                        ConvertTool.toClassType(methodName), delayParamSb.toString(), methodParams);
                 addLnTag(sendMessageMethodsSb, "        if (![isMainThread]()) {", checkThread);
-                addLnTag(sendMessageMethodsSb, "            sendMessage([mainHandler], type([FtpPlayActivityMSThreadType].[DEAL_TOAST])[, str]);"
-                        , handlerName, typeNameStr, type, params.getParams(true, false));
+
+                addLnTag(sendMessageMethodsSb, "            sendMessage([mainHandler], type([FtpPlayActivityMSThreadType].[DEAL_TOAST])[delayParam][, str]);"
+                        , handlerName, typeNameStr, type, delayParamSb1.toString(), params.getParams(true, false));
                 addLnTag(sendMessageMethodsSb, "            return true;");
                 addLnTag(sendMessageMethodsSb, "        }");
                 addLnTag(sendMessageMethodsSb, "        return false;");
