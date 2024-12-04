@@ -1,12 +1,16 @@
 package com.codingtu.cooltu.lib4a.tools;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -17,8 +21,88 @@ import com.codingtu.cooltu.lib4a.CoreApp;
 import com.codingtu.cooltu.lib4j.tools.MathTool;
 
 import java.lang.reflect.Field;
+import java.net.NetworkInterface;
+import java.util.Collections;
+import java.util.List;
 
 public class MobileTool {
+
+    /**************************************************
+     *
+     **************************************************/
+    public static String getMacAddress() {
+        String macAddress = null;
+        try {
+            // For Android 6.0 and above
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                // Use the new getMacAddress() method for API 23 and above
+                macAddress = getMacAddressByNetworkInterface();
+                if (macAddress != null && !macAddress.isEmpty()) {
+                    return macAddress;
+                }
+            }
+            // For Android 5.0 to 5.1.1
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                macAddress = getMacAddressByWifiInfo();
+                if (macAddress != null && !macAddress.isEmpty()) {
+                    return macAddress;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return macAddress;
+    }
+
+    private static String getMacAddressByNetworkInterface() {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(String.format("%02X:", b));
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    @SuppressLint("MissingPermission")
+    private static String getMacAddressByWifiInfo() {
+        try {
+            WifiManager wifi = SystemTool.getWifiManager();
+            if (wifi != null) {
+                WifiInfo winfo = wifi.getConnectionInfo();
+                if (winfo != null) {
+                    return winfo.getMacAddress();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /**************************************************
+     * 获取androidId
+     **************************************************/
+    public static String getAndroidID() {
+        return Settings.Secure.getString(CoreApp.APP.getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
 
     /************************************************
      *

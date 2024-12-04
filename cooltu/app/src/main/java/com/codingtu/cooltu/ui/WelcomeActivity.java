@@ -18,6 +18,7 @@ import com.codingtu.cooltu.lib4a.function.OnFinishInUiThread;
 import com.codingtu.cooltu.lib4a.function.OnProgressInUiThread;
 import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.thread.OnceThread;
+import com.codingtu.cooltu.lib4a.tools.NetConnectTool;
 import com.codingtu.cooltu.lib4a.tools.SDCardTool;
 import com.codingtu.cooltu.lib4a.tools.ToastTool;
 import com.codingtu.cooltu.lib4a.tools.Upload;
@@ -34,6 +35,7 @@ import com.codingtu.cooltu.lib4j.path.BasePath;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Maps;
+import com.codingtu.cooltu.lib4j.ts.StringTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.net.NetBack;
 import com.codingtu.cooltu.processor.annotation.tools.To;
@@ -66,38 +68,14 @@ public class WelcomeActivity extends WelcomeActivityBase {
 
     @ClickView(R.id.showBt)
     public void showBtClick() {
-        getToastDialog()
-                .setContent("正在处理数据")
-                .show()
-                .whenShowFinishedStartThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Looper.prepare();
-                        Handler subHandler = new Handler(Looper.myLooper()) {
-                            @Override
-                            public void handleMessage(@NonNull Message msg) {
-                                super.handleMessage(msg);
-                                if (msg.what == 0) {
-                                    Looper.myLooper().quit();
-                                }
-                            }
-                        };
-                        Message msg = Message.obtain(subHandler);
-                        msg.what = 0;
-                        subHandler.sendMessage(msg);
-                        Looper.loop();
-
-                    }
-                })
-                .onMainThread(new OnceThread.MainRunnable() {
-                    @Override
-                    public void run(Throwable throwable) {
-                        getToastDialog().hidden()
-                                .hiddenTime(1000)
-                                .start();
-                    }
-                })
-                .start();
+        StringTs hostIPs = NetConnectTool.getHostIPs();
+        hostIPs.ls(new Ts.EachTs<String>() {
+            @Override
+            public boolean each(int position, String s) {
+                Logs.i(s);
+                return false;
+            }
+        });
     }
 
 
@@ -120,10 +98,10 @@ public class WelcomeActivity extends WelcomeActivityBase {
             }
         };
     }
-    
+
     @NetBack
     public void addObj1Back(String json) {
-    
+
     }
 
 }
