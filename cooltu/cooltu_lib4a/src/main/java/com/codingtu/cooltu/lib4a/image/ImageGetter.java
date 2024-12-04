@@ -171,16 +171,32 @@ public final class ImageGetter implements PermissionBack, OnActBack {
 
 
     private void clear() {
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
+//        new Handler().post(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    if (ImageGetter.this.act != null) {
+//                        ((CoreUiInterface) act).getBase().removePermissionBack(ImageGetter.this);
+//                        ((CoreUiInterface) act).getBase().removeOnActBack(ImageGetter.this);
+//                    }
+//                    ImageGetter.this.act = null;
+//                    ImageGetter.this.back = null;
+//                } catch (Exception e) {
+//
+//                }
+//            }
+//        });
+
+        try {
+            if (ImageGetter.this.act != null) {
                 ((CoreUiInterface) act).getBase().removePermissionBack(ImageGetter.this);
                 ((CoreUiInterface) act).getBase().removeOnActBack(ImageGetter.this);
-
-                ImageGetter.this.act = null;
-                ImageGetter.this.back = null;
             }
-        });
+            ImageGetter.this.act = null;
+            ImageGetter.this.back = null;
+        } catch (Exception e) {
+
+        }
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.codingtu.cooltu.form.TestCallBack;
 import com.codingtu.cooltu.lib4a.function.OnErrorInUiThread;
 import com.codingtu.cooltu.lib4a.function.OnFinishInUiThread;
 import com.codingtu.cooltu.lib4a.function.OnProgressInUiThread;
+import com.codingtu.cooltu.lib4a.image.ImageGetter;
 import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.thread.OnceThread;
 import com.codingtu.cooltu.lib4a.tools.NetConnectTool;
@@ -68,12 +69,10 @@ public class WelcomeActivity extends WelcomeActivityBase {
 
     @ClickView(R.id.showBt)
     public void showBtClick() {
-        StringTs hostIPs = NetConnectTool.getHostIPs();
-        hostIPs.ls(new Ts.EachTs<String>() {
+        ImageGetter.getPicFromCamera(this, new ImageGetter.ImageGetterBack() {
             @Override
-            public boolean each(int position, String s) {
-                Logs.i(s);
-                return false;
+            public void imageBack(String image) {
+                Logs.i(image);
             }
         });
     }
