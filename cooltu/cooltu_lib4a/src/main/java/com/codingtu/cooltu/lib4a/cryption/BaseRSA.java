@@ -134,7 +134,7 @@ public abstract class BaseRSA<THIS extends BaseRSA> {
                 });
                 data = params.toString();
             }
-            return new String(RsaTool.sign(signType, privateKey(), data.getBytes()));
+            return Base64Tool.encodeToBase64Str(RsaTool.sign(signType, privateKey(), data.getBytes()));
         } catch (Exception e) {
             Logs.e(e);
         }
