@@ -93,13 +93,17 @@ public abstract class BaseRSA<THIS extends BaseRSA> {
      *
      **************************************************/
     public PrivateKey privateKey() {
-        if (keyPair == null) {
-            String privateKeyStr = obtainPrivateKeyStrFormLocal();
-            Logs.i("privateKeyStr:"+privateKeyStr);
-            PrivateKey privateKey = RsaTool.privateKey(Base64Tool.decodeToBase64(privateKeyStr.getBytes()));
-            keyPair = new KeyPair(null, privateKey);
+        try {
+            if (keyPair == null) {
+                String privateKeyStr = obtainPrivateKeyStrFormLocal();
+                PrivateKey privateKey = RsaTool.privateKey(Base64Tool.decodeToBase64(privateKeyStr.getBytes()));
+                keyPair = new KeyPair(null, privateKey);
+            }
+            return keyPair.getPrivate();
+        } catch (Exception e) {
+            Logs.e(e);
         }
-        return keyPair.getPrivate();
+        return null;
     }
 
     protected abstract String obtainPrivateKeyStrFormLocal();
@@ -109,27 +113,33 @@ public abstract class BaseRSA<THIS extends BaseRSA> {
      *
      **************************************************/
     public String sign(Object... objs) {
-        if (objs.length == 0) {
-            return null;
-        }
-        String data = null;
-        if (objs.length == 1) {
-            data = StringTool.toString(objs[0]);
-        } else {
-            StringBuilder params = new StringBuilder();
-            Ts.ts(objs).ls(new Ts.EachTs<Object>() {
-                @Override
-                public boolean each(int position, Object o) {
-                    if (position != 0) {
-                        params.append(",");
+        try {
+            if (objs.length == 0) {
+                return null;
+            }
+            String data = null;
+            if (objs.length == 1) {
+                data = StringTool.toString(objs[0]);
+            } else {
+                StringBuilder params = new StringBuilder();
+                Ts.ts(objs).ls(new Ts.EachTs<Object>() {
+                    @Override
+                    public boolean each(int position, Object o) {
+                        if (position != 0) {
+                            params.append(",");
+                        }
+                        params.append(o);
+                        return false;
                     }
-                    params.append(o);
-                    return false;
-                }
-            });
-            data = params.toString();
+                });
+                data = params.toString();
+            }
+            return new String(RsaTool.sign(signType, privateKey(), data.getBytes()));
+        } catch (Exception e) {
+            Logs.e(e);
         }
-        return new String(RsaTool.sign(signType, privateKey(), data.getBytes()));
+        return null;
+
     }
 
     /**************************************************
