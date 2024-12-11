@@ -8,9 +8,13 @@ public interface JO {
 
     Integer getInteger(String key);
 
-    boolean getBoolean(String key);
+    Long getLong(String key);
 
-    double getDouble(String key);
+    Boolean getBoolean(String key);
+
+    Double getDouble(String key);
+
+    Float getFloat(String key);
 
     JA getJA(String key);
 

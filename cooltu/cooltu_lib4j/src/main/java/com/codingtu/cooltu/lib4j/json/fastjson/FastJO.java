@@ -25,13 +25,23 @@ public class FastJO implements JO {
     }
 
     @Override
-    public boolean getBoolean(String key) {
-        return jo.getBooleanValue(key);
+    public Long getLong(String key) {
+        return jo.getLong(key);
     }
 
     @Override
-    public double getDouble(String key) {
-        return jo.getDoubleValue(key);
+    public Boolean getBoolean(String key) {
+        return jo.getBoolean(key);
+    }
+
+    @Override
+    public Double getDouble(String key) {
+        return jo.getDouble(key);
+    }
+
+    @Override
+    public Float getFloat(String key) {
+        return jo.getFloat(key);
     }
 
     @Override
