@@ -80,6 +80,10 @@ public class TestMsThreadMsThread extends CoreMultiMsThread {
             sendMessage(mainHandler, type(TestMsThreadMsThreadType.TOAST_1), 300l, msg);
             return true;
         }
+        try {
+            Thread.sleep(300l);
+        } catch (Exception e) {
+        }
         return false;
     }
 

@@ -130,6 +130,11 @@ public class Zip implements OnDestroy {
         totalLen = FileTool.obtainTotalLength(src, pass);
         lastTime = System.currentTimeMillis();
 
+        File parentFile = desc.getParentFile();
+        if (!parentFile.exists()) {
+            parentFile.mkdirs();
+        }
+
         zip(src, zipPath);
         onProgress(totalLen);
         onFinish(desc);

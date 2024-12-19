@@ -135,6 +135,10 @@ public class SubThreadActivityMsThread extends CoreMultiMsThread {
             sendMessage(mainHandler, type(SubThreadActivityMsThreadType.DEAL_TOAST_0), 300l, str);
             return true;
         }
+        try {
+            Thread.sleep(300l);
+        } catch (Exception e) {
+        }
         return false;
     }
 

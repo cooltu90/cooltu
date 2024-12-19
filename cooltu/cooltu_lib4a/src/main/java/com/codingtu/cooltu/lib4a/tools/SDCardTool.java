@@ -24,6 +24,7 @@ public class SDCardTool extends FileTool {
         OutputStream bitMapOutputStream = null;
         boolean isSuccess = false;
         try {
+            createFileDir(targetFile);
             bitMapOutputStream = new FileOutputStream(targetFile);
             originalBitmap.compress(Bitmap.CompressFormat.JPEG, pressPercent, bitMapOutputStream);
             isSuccess = true;

@@ -189,6 +189,8 @@ public class MsThreadBuilder extends MsThreadBuilderBase {
                 DelayInfo delayInfo = delayInfoGetter.obtainDelayInfo(element);
                 StringBuilder delayParamSb = new StringBuilder();
                 StringBuilder delayParamSb1 = new StringBuilder();
+
+                long delayMillis = 0;
                 if (delayInfo.isDelay) {
                     if (delayInfo.delayMillis < 0) {
                         delayParamSb.append("long delayMillis");
@@ -198,6 +200,7 @@ public class MsThreadBuilder extends MsThreadBuilderBase {
                         }
                     } else {
                         delayParamSb1.append(", ").append(delayInfo.delayMillis).append("l");
+                        delayMillis = delayInfo.delayMillis;
                     }
                 } else {
                     delayParamSb1.append(", 0l");
@@ -212,6 +215,15 @@ public class MsThreadBuilder extends MsThreadBuilderBase {
                         , handlerName, typeNameStr, type, delayParamSb1.toString(), params.getParams(true, false));
                 addLnTag(sendMessageMethodsSb, "            return true;");
                 addLnTag(sendMessageMethodsSb, "        }");
+
+                if (delayMillis > 0) {
+                    addLnTag(sendMessageMethodsSb, "        try {");
+                    addLnTag(sendMessageMethodsSb, "            Thread.sleep([delayMills]l);", delayMillis);
+                    addLnTag(sendMessageMethodsSb, "        } catch (Exception e) {");
+                    addLnTag(sendMessageMethodsSb, "        }");
+                }
+
+
                 addLnTag(sendMessageMethodsSb, "        return false;");
                 addLnTag(sendMessageMethodsSb, "    }");
 

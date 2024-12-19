@@ -23,10 +23,6 @@ public class CoreMultiMsThread {
         }
     }
 
-//    protected void sendMessage(Handler handler, int what, Object... objects) {
-//        sendMessage(handler, what, 0, objects);
-//    }
-
     protected boolean isMainThread() {
         return Thread.currentThread() == Looper.getMainLooper().getThread();
     }

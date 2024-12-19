@@ -39,6 +39,9 @@ public class SubThreadActivity extends SubThreadActivityBase {
 
     @MainThread(isDelay = true, defaultDelayMillis = 300)
     public void dealToast(String str) {
+        if (sendMessageForDealToast(str)) {
+            return;
+        }
         toast("xxx");
     }
 
