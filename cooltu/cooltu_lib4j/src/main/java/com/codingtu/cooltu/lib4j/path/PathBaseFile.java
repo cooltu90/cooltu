@@ -6,6 +6,8 @@ public class PathBaseFile {
 
     protected String root;
 
+    private File ROOT_FILE;
+
     protected String type;
 
     public PathBaseFile(String root, String type) {
@@ -18,9 +20,11 @@ public class PathBaseFile {
     }
 
     public File rootFile() {
-        return new File(root());
+        if (ROOT_FILE == null) {
+            ROOT_FILE = new File(root());
+        }
+        return ROOT_FILE;
     }
-
 
     public String type() {
         return type;
