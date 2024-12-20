@@ -178,9 +178,10 @@ public class Download implements OnDestroy {
             );
         }
 
+        SDCardTool.createFileDir(file);
+
         if (sync) {
             //同步
-
             InputStream input = null;
             OutputStream out = null;
             okhttp3.Response response = null;

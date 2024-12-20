@@ -15,6 +15,7 @@ public class BasePath extends CoreBean {
     }
 
     protected String root;
+    private File ROOT_FILE;
 
     public BasePath(String root) {
         this.root = root;
@@ -37,6 +38,9 @@ public class BasePath extends CoreBean {
     }
 
     public File rootFile() {
-        return new File(root());
+        if (ROOT_FILE == null) {
+            ROOT_FILE = new File(root());
+        }
+        return ROOT_FILE;
     }
 }
