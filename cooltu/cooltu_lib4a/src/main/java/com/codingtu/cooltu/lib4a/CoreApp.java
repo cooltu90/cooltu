@@ -32,7 +32,7 @@ public abstract class CoreApp extends Application implements Thread.UncaughtExce
 
         // 配置OkGo
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .readTimeout(10 * 60 * 1000, TimeUnit.MILLISECONDS)
+                .readTimeout(CoreConfigs.configs().getOkGoReadTimeout(), TimeUnit.MILLISECONDS)
                 .writeTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
 
         // 全局配置OkGo

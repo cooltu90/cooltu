@@ -69,4 +69,8 @@ public abstract class CoreConfigs extends LibConfigs {
     public CoreConnectConfigs getConnectConfigs() {
         return null;
     }
+
+    public int getOkGoReadTimeout() {
+        return 10 * 60 * 1000;
+    }
 }
