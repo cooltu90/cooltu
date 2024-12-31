@@ -185,7 +185,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         return false;
     }
 
-    private com.codingtu.cooltu.lib4a.view.dialogview.Dialog dialog;
+    protected com.codingtu.cooltu.lib4a.view.dialogview.Dialog dialog;
     protected void showDialog() {
         if (dialog == null) {
             dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())

@@ -5,6 +5,7 @@ import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
+import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
@@ -51,6 +52,7 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
     public ActBaseBuilder(JavaInfo info) {
         super(info);
+        LibLogs.i("xx");
         uiBaseBuilder = new UiBaseBuilder(this) {
             @Override
             protected BaseTools.GetThis<UiBaseBuilder> getChildGetter() {
@@ -209,8 +211,11 @@ public class ActBaseBuilder extends ActBaseBuilderBase implements UiBaseInterfac
 
                     addLnTag(otherLineSb, "    protected boolean sendMessageFor[DealToast]([delayParam][String str]) {",
                             sendMethodName, delayParamSb.toString(), methodParams);
-                    addLnTag(otherLineSb, "        return [ftpPlayActivityMSThread].sendMessageFor[DealToast]([delayParam][str]);",
+                    addLnTag(otherLineSb, "        if ([ftpPlayActivityMSThread] != null) {", msThreadFieldName);
+                    addLnTag(otherLineSb, "            return [ftpPlayActivityMSThread].sendMessageFor[DealToast]([delayParam][str]);",
                             msThreadFieldName, sendMethodName, delayParamSb1.toString(), params1);
+                    addLnTag(otherLineSb, "        }");
+                    addLnTag(otherLineSb, "        return true;");
                     addLnTag(otherLineSb, "    }");
 
                     return false;
@@ -559,7 +564,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][if][setTextWatcherMethod]
                                                                                                     [<sub>][for][editDialog]
                                                                                                     [<sub>][for][dialog]
-    private [dialogFullName] [dialogName];
+    protected [dialogFullName] [dialogName];
                                                                                                     [<sub>][for][showDialog]
     protected void show[dialogClassName]([showDialogParam]) {
         if ([dialogName] == null) {

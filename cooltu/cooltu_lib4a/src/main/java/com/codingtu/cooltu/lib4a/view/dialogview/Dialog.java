@@ -26,6 +26,7 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
     private View contentTv;
     private String leftBtText;
     private String rightBtText;
+    private View titleTv;
 
 
     public Dialog(Activity act) {
@@ -76,7 +77,7 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
         layer.addView(inflate, ViewTool.WRAP_CONTENT, ViewTool.WRAP_CONTENT);
         ViewTool.gone(layer);
 
-        TextView titleTv = inflate.findViewById(R.id.dialogTitleTv);
+        titleTv = inflate.findViewById(R.id.dialogTitleTv);
         ViewTool.setText(titleTv, title);
         contentTv = inflate.findViewById(R.id.dialogContentTv);
         ViewTool.setText(contentTv, content);
@@ -93,6 +94,10 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
 
     public void updateContent(String content) {
         ViewTool.setText(contentTv, content);
+    }
+
+    public void updateTitle(String title) {
+        ViewTool.setText(titleTv, title);
     }
 
     @Override
@@ -144,6 +149,7 @@ public final class Dialog implements View.OnClickListener, OnDestroy {
         onBtClick = null;
         obj = null;
         contentTv = null;
+        titleTv = null;
         ViewTool.removeFromAct(act, layer);
         if (layer != null) {
             layer.destroy();

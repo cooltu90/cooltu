@@ -7,6 +7,9 @@ import android.os.Message;
 public class CoreMultiMsThread {
 
     protected void sendMessage(Handler handler, int what, long delayMillis, Object... objects) {
+        if (handler == null)
+            return;
+
         Message msg = Message.obtain(handler);
         msg.what = what;
         if (objects != null) {

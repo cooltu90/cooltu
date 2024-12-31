@@ -380,7 +380,7 @@ public abstract class [[name]] extends [[baseClass]] implements View.OnClickList
                                                                                                     [<sub>][if][setTextWatcherMethod]
                                                                                                     [<sub>][for][editDialog]
                                                                                                     [<sub>][for][dialog]
-    private [dialogFullName] [dialogName];
+    protected [dialogFullName] [dialogName];
                                                                                                     [<sub>][for][showDialog]
     protected void show[dialogClassName]([showDialogParam]) {
         if ([dialogName] == null) {

@@ -185,7 +185,7 @@ public abstract class StepOneActivityBase extends com.codingtu.cooltu.ui.base.Ba
         return null;
     }
 
-    private com.codingtu.cooltu.lib4a.view.dialogview.Dialog dialog;
+    protected com.codingtu.cooltu.lib4a.view.dialogview.Dialog dialog;
     protected void showDialog(com.codingtu.cooltu.bean.User user) {
         if (dialog == null) {
             dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())

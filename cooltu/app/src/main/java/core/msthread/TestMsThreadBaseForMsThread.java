@@ -14,21 +14,30 @@ public class TestMsThreadBaseForMsThread implements TestMsThreadMsThreadInterfac
     }
 
     protected boolean sendMessageForToast(long delayMillis) {
-        return testMsThreadMsThread.sendMessageForToast(delayMillis);
+        if (testMsThreadMsThread != null) {
+            return testMsThreadMsThread.sendMessageForToast(delayMillis);
+        }
+        return true;
     }
     @Override
     public void toast(java.lang.String msg) {
     }
 
     protected boolean sendMessageForToast(java.lang.String msg) {
-        return testMsThreadMsThread.sendMessageForToast(msg);
+        if (testMsThreadMsThread != null) {
+            return testMsThreadMsThread.sendMessageForToast(msg);
+        }
+        return true;
     }
     @Override
     public void toast(int age) {
     }
 
     protected boolean sendMessageForToast(int age) {
-        return testMsThreadMsThread.sendMessageForToast(age);
+        if (testMsThreadMsThread != null) {
+            return testMsThreadMsThread.sendMessageForToast(age);
+        }
+        return true;
     }
 
 

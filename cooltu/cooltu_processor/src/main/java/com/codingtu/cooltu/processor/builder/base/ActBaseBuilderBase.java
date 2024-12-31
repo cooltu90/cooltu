@@ -994,7 +994,7 @@ public abstract class ActBaseBuilderBase extends com.codingtu.cooltu.processor.b
         }
         for (int i0 = 0; i0 < count(dialogCounts, getForKey("dialog")); i0++) {
             List<String> dialog0 = dialog.get(getForKey("dialog", i0));
-            addLnTag(dialogSb, "    private [dialogFullName] [dialogName];", dialog0.get(0), dialog0.get(1));
+            addLnTag(dialogSb, "    protected [dialogFullName] [dialogName];", dialog0.get(0), dialog0.get(1));
             for (int i1 = 0; i1 < count(dialogCounts, getForKey("showDialog", i0)); i1++) {
                 List<String> dialog1 = dialog.get(getForKey("showDialog", i0, i1));
                 addLnTag(dialogSb, "    protected void show[dialogClassName]([showDialogParam]) {", dialog1.get(0), dialog1.get(1));

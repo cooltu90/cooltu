@@ -108,42 +108,60 @@ public abstract class SubThreadActivityBase extends com.codingtu.cooltu.ui.base.
     }
 
     protected boolean sendMessageForDealDataStart0() {
-        return subThreadActivityMsThread.sendMessageForDealDataStart0();
+        if (subThreadActivityMsThread != null) {
+            return subThreadActivityMsThread.sendMessageForDealDataStart0();
+        }
+        return true;
     }
     @Override
     public void dealDataStart1() {
     }
 
     protected boolean sendMessageForDealDataStart1() {
-        return subThreadActivityMsThread.sendMessageForDealDataStart1();
+        if (subThreadActivityMsThread != null) {
+            return subThreadActivityMsThread.sendMessageForDealDataStart1();
+        }
+        return true;
     }
     @Override
     public void method0() {
     }
 
     protected boolean sendMessageForMethod0() {
-        return subThreadActivityMsThread.sendMessageForMethod0();
+        if (subThreadActivityMsThread != null) {
+            return subThreadActivityMsThread.sendMessageForMethod0();
+        }
+        return true;
     }
     @Override
     public void method1(java.lang.String name) {
     }
 
     protected boolean sendMessageForMethod1(java.lang.String name) {
-        return subThreadActivityMsThread.sendMessageForMethod1(name);
+        if (subThreadActivityMsThread != null) {
+            return subThreadActivityMsThread.sendMessageForMethod1(name);
+        }
+        return true;
     }
     @Override
     public void dealToast(java.lang.String str) {
     }
 
     protected boolean sendMessageForDealToast(java.lang.String str) {
-        return subThreadActivityMsThread.sendMessageForDealToast(str);
+        if (subThreadActivityMsThread != null) {
+            return subThreadActivityMsThread.sendMessageForDealToast(str);
+        }
+        return true;
     }
     @Override
     public void dealToast(java.lang.String str, int age) {
     }
 
     protected boolean sendMessageForDealToast(java.lang.String str, int age) {
-        return subThreadActivityMsThread.sendMessageForDealToast(str, age);
+        if (subThreadActivityMsThread != null) {
+            return subThreadActivityMsThread.sendMessageForDealToast(str, age);
+        }
+        return true;
     }
     protected void stopMsThread() {
         if (subThreadActivityMsThread != null)

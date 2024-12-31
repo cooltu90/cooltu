@@ -14,14 +14,20 @@ public class TesUdBaseForMsThread<THIS extends TesUdBaseForMsThread> extends com
     }
 
     protected boolean sendMessageForSubStart() {
-        return tesUdMsThread.sendMessageForSubStart();
+        if (tesUdMsThread != null) {
+            return tesUdMsThread.sendMessageForSubStart();
+        }
+        return true;
     }
     @Override
     public void toast(java.lang.String msg) {
     }
 
     protected boolean sendMessageForToast(java.lang.String msg) {
-        return tesUdMsThread.sendMessageForToast(msg);
+        if (tesUdMsThread != null) {
+            return tesUdMsThread.sendMessageForToast(msg);
+        }
+        return true;
     }
 
 

@@ -98,8 +98,11 @@ public class MsThreadBaseBuilder extends MsThreadBaseBuilderBase {
 
                 addLnTag(methods, "    protected boolean sendMessageFor[DealToast]([delayParam][String str]) {",
                         sendMethodName, delayParamSb.toString(), methodParams);
-                addLnTag(methods, "        return [ftpPlayActivityMSThread].sendMessageFor[DealToast]([delayParam][str]);",
+                addLnTag(methods, "        if ([ftpPlayActivityMSThread] != null) {", msThreadFieldName);
+                addLnTag(methods, "            return [ftpPlayActivityMSThread].sendMessageFor[DealToast]([delayParam][str]);",
                         msThreadFieldName, sendMethodName, delayParamSb1.toString(), params1);
+                addLnTag(methods, "        }");
+                addLnTag(methods, "        return true;");
                 addLnTag(methods, "    }");
 
                 return false;

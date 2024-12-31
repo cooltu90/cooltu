@@ -197,7 +197,7 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
         return null;
     }
 
-    private com.codingtu.cooltu.lib4a.view.dialogview.Dialog dialog;
+    protected com.codingtu.cooltu.lib4a.view.dialogview.Dialog dialog;
     protected void showDialog(com.codingtu.cooltu.bean.User user) {
         if (dialog == null) {
             dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
@@ -252,7 +252,7 @@ public abstract class StepOneFragmentBase extends com.codingtu.cooltu.ui.BaseSte
     }
     protected void dialogLeft(com.codingtu.cooltu.bean.User user) { }
     protected void dialogRight(com.codingtu.cooltu.bean.User user) { }
-    private com.codingtu.cooltu.lib4a.view.dialogview.Dialog dialog1;
+    protected com.codingtu.cooltu.lib4a.view.dialogview.Dialog dialog1;
     protected void showDialog1() {
         if (dialog1 == null) {
             dialog1 = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
