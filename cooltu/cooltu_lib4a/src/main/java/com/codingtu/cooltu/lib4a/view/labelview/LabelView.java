@@ -15,6 +15,7 @@ import com.codingtu.cooltu.lib4a.view.attrs.Attrs;
 import com.codingtu.cooltu.lib4a.view.attrs.AttrsTools;
 import com.codingtu.cooltu.lib4a.view.attrs.GetAttrs;
 import com.codingtu.cooltu.lib4a.view.textview.TagTextView;
+import com.codingtu.cooltu.lib4j.function.OnFinish;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class LabelView extends CoreLabelView implements View.OnClickListener {
     private List<? extends Label> labels;
     private int labelId;
     private OnClickListener onClickListener;
+    private OnFinish onAddFinish;
 
     public LabelView(Context context) {
         super(context);
@@ -76,6 +78,10 @@ public class LabelView extends CoreLabelView implements View.OnClickListener {
         this.labelId = labelId;
         this.labels = labels;
         startAdd();
+    }
+
+    public void addOnAddFinish(OnFinish onFinish) {
+        this.onAddFinish = onFinish;
     }
 
     private void startAdd() {
@@ -122,6 +128,9 @@ public class LabelView extends CoreLabelView implements View.OnClickListener {
             ttv.setId(labelId);
             ttv.setTag(R.id.tag_0, label);
             ttv.setOnClickListener(this);
+        }
+        if (onAddFinish != null) {
+            onAddFinish.onFinish(null);
         }
     }
 
