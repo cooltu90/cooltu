@@ -49,6 +49,11 @@ public class Layer extends RelativeLayout implements OnDestroy {
     protected OnShowFinishedCallBack onShowFinishedCallBack;
     protected OnHiddenFinishedCallBack onHiddenFinishedCallBack;
 
+    protected OnHiddenFinishedCallBack defaultOnHiddenFinishedCallBack;
+
+    public void setDefaultOnHiddenFinishedCallBack(OnHiddenFinishedCallBack defaultOnHiddenFinishedCallBack) {
+        this.defaultOnHiddenFinishedCallBack = defaultOnHiddenFinishedCallBack;
+    }
 
     @Override
     public void destroy() {
@@ -144,6 +149,9 @@ public class Layer extends RelativeLayout implements OnDestroy {
                 isAnimation = false;
                 if (onHiddenFinishedCallBack != null) {
                     onHiddenFinishedCallBack.onHiddenFinished();
+                }
+                if (defaultOnHiddenFinishedCallBack != null) {
+                    defaultOnHiddenFinishedCallBack.onHiddenFinished();
                 }
             }
 
