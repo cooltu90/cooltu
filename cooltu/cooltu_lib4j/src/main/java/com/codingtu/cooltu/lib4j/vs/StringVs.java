@@ -85,12 +85,8 @@ public class StringVs extends CoreVs<String, StringVs> {
         return -1;
     }
 
-    @Override
-    public int firstIndex(Vs.IsThisOne<String> isThisOne) {
-        return super.firstIndex(isThisOne);
-    }
 
-
+    @Deprecated
     @Override
     public IntegerVs allIndexByValueSymbol(String valueSymbol) {
         return allIndex(valueSymbol);

@@ -47,14 +47,11 @@ public class WelcomeActivity extends WelcomeActivityBase {
         //
         IntegerVs integerVs = new IntegerVs();
         integerVs.add(10).add(11).add(13);
-        integerVs.firstIndex(10);
 
 
         //
         StringVs stringVs = new StringVs();
         stringVs.add("L-0001").add("zhangsan").add("llll").add("L-0001");
-        stringVs.firstin
-
     }
 
 
