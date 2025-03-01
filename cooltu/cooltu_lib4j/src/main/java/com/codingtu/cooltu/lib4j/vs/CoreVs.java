@@ -325,65 +325,130 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    //替换 第一个符合条件的项被替换为提供的对象。
-    //有些注定没有重复的可以用这个来替换。免去全员遍历。
+    //替换第一个
     public THIS replaceFirst(T target, Vs.IsThisOne<T> isThisOne) {
-        if (target == null || isThisOne == null) return (THIS) this;
-
-        int index = firstIndex(isThisOne);
-        if (index >= 0) {
-            replaceByIndex(index, target);
+        if (isThisOne != null) {
+            int firstIndex = firstIndex(isThisOne);
+            if (firstIndex >= 0) {
+                replaceByIndex(firstIndex, target);
+            }
         }
         return (THIS) this;
     }
 
-    public THIS replaceByValueId(String valueId, T target) {
-        int index = firstIndexByValueSymbol(valueId);
-        if (index >= 0) {
-            replaceByIndex(index, target);
+    public THIS replaceFirstByValueSymbol(String valueSymbol, T target) {
+        int firstIndex = firstIndexByValueSymbol(valueSymbol);
+        if (firstIndex >= 0) {
+            replaceByIndex(firstIndex, target);
         }
         return (THIS) this;
     }
 
+    public THIS replaceFirst(T target) {
+        if (target != null) {
+            replaceFirstByValueSymbol(valueSymbol(target), target);
+        }
+        return (THIS) this;
+    }
+
+    //替换所有
     public THIS replaceAll(T target, Vs.IsThisOne<T> isThisOne) {
-        if (target == null || isThisOne == null) return (THIS) this;
+        if (isThisOne != null) {
+            int count = count();
+            for (int i = 0; i < count; i++) {
+                if (isThisOne.isThisOne(i, getByIndex(i))) {
+                    replaceByIndex(i, target);
+                }
+            }
+        }
+        return (THIS) this;
+    }
 
+    public THIS replaceAllByValueSymbol(String valueSymbol, T target) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (isThisOne.isThisOne(i, getByIndex(i))) {
+            if (valueSymbol(getByIndex(i)).equals(valueSymbol)) {
                 replaceByIndex(i, target);
             }
         }
         return (THIS) this;
     }
 
+    public THIS replaceAll(T target) {
+        if (target != null) {
+            replaceAllByValueSymbol(valueSymbol(target), target);
+        }
+        return (THIS) this;
+    }
 
+
+    //替换第一个或者添加
     public THIS replaceFirstOrAdd(T target, Vs.IsThisOne<T> isThisOne) {
-        if (target == null || isThisOne == null) return (THIS) this;
+        if (isThisOne != null) {
+            int firstIndex = firstIndex(isThisOne);
+            if (firstIndex >= 0) {
+                replaceByIndex(firstIndex, target);
+            } else if (target != null) {
+                ts.add(target);
+            }
+        }
+        return (THIS) this;
+    }
 
-        int index = firstIndex(isThisOne);
-        if (index >= 0) {
-            replaceByIndex(index, target);
-        } else {
+    public THIS replaceFirstOrAddByValueSymbol(String valueSymbol, T target) {
+        int firstIndex = firstIndexByValueSymbol(valueSymbol);
+        if (firstIndex >= 0) {
+            replaceByIndex(firstIndex, target);
+        } else if (target != null) {
             ts.add(target);
         }
         return (THIS) this;
     }
 
+    public THIS repalceFirstOrAdd(T target) {
+        if (target != null) {
+            replaceFirstOrAddByValueSymbol(valueSymbol(target), target);
+        }
+        return (THIS) this;
+    }
 
+    //替换所有或者添加
     public THIS replaceAllOrAdd(T target, Ts.IsThisOne<T> isThisOne) {
-        if (target == null || isThisOne == null) return (THIS) this;
+        if (isThisOne != null) {
+            int count = count();
+            boolean isReplace = false;
+            for (int i = 0; i < count; i++) {
+                if (isThisOne.isThisOne(i, getByIndex(i))) {
+                    replaceByIndex(i, target);
+                    isReplace = true;
+                }
+            }
+            if (!isReplace && target != null) {
+                this.ts.add(target);
+            }
+        }
+        return (THIS) this;
+    }
 
+    public THIS replaceAllOrAddByValueSymbol(String valueSymbol, T target) {
         int count = count();
         boolean isReplace = false;
         for (int i = 0; i < count; i++) {
-            if (isThisOne.isThisOne(i, getByIndex(i))) {
+            if (valueSymbol(getByIndex(i)).equals(valueSymbol)) {
                 replaceByIndex(i, target);
                 isReplace = true;
             }
         }
-        if (!isReplace) {
+        if (!isReplace && target != null) {
             this.ts.add(target);
+        }
+
+        return (THIS) this;
+    }
+
+    public THIS repalceAllOrAdd(T target) {
+        if (target != null) {
+            replaceAllOrAddByValueSymbol(valueSymbol(target), target);
         }
         return (THIS) this;
     }
