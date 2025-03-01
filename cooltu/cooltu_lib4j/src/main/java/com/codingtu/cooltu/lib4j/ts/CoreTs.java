@@ -179,90 +179,6 @@ public class CoreTs<T, THIS> {
 
     /**************************************************
      *
-     * 替换
-     * 第一个符合条件的项被替换为提供的对象
-     *
-     **************************************************/
-    public THIS replace(T target, Ts.IsThisOne<T> isThisOne) {
-        if (target == null || isThisOne == null)
-            return (THIS) this;
-
-        int index = index(isThisOne);
-        if (index >= 0) {
-            set(index, target);
-        }
-        return (THIS) this;
-    }
-
-    /**************************************************
-     *
-     * replaceOrAdd
-     * 第一个符合条件的项被替换为提供的对象
-     * 如果没有符合条件的项则直接添加到列表里
-     *
-     **************************************************/
-
-    public THIS replaceOrAdd(T target, Ts.IsThisOne<T> isThisOne) {
-        if (target == null || isThisOne == null)
-            return (THIS) this;
-
-        int index = index(isThisOne);
-        if (index >= 0) {
-            set(index, target);
-        } else {
-            ts.add(target);
-        }
-        return (THIS) this;
-    }
-
-    /**************************************************
-     *
-     * replaceAll：所有符合条件的项被替换为提供的对象
-     *
-     **************************************************/
-    public THIS replaceAll(T target, Ts.IsThisOne<T> isThisOne) {
-        if (target == null || isThisOne == null)
-            return (THIS) this;
-
-        int count = count();
-        for (int i = 0; i < count; i++) {
-            if (isThisOne.isThisOne(i, get(i))) {
-                set(i, target);
-            }
-        }
-        return (THIS) this;
-    }
-
-
-    /**************************************************
-     *
-     * replaceAllOrAdd：
-     * 所有符合条件的项被替换为提供的对象
-     * 如果没有符合条件的项则直接添加到列表里
-     *
-     **************************************************/
-
-    public THIS replaceAllOrAdd(T target, Ts.IsThisOne<T> isThisOne) {
-        if (target == null || isThisOne == null)
-            return (THIS) this;
-
-        int count = count();
-        boolean isReplace = false;
-        for (int i = 0; i < count; i++) {
-            if (isThisOne.isThisOne(i, get(i))) {
-                set(i, target);
-                isReplace = true;
-            }
-        }
-        if (!isReplace) {
-            this.ts.add(target);
-        }
-        return (THIS) this;
-    }
-
-
-    /**************************************************
-     *
      * 添加
      *
      **************************************************/
@@ -296,6 +212,89 @@ public class CoreTs<T, THIS> {
 
     /**************************************************
      *
+     * 替换
+     * 第一个符合条件的项被替换为提供的对象
+     *
+     **************************************************/
+    public THIS replace(T target, Ts.IsThisOne<T> isThisOne) {
+        if (target == null || isThisOne == null)
+            return (THIS) this;
+
+        int index = index(isThisOne);
+        if (index >= 0) {
+            set(index, target);
+        }
+        return (THIS) this;
+    }
+
+    /**************************************************
+     *
+     * replaceAll：所有符合条件的项被替换为提供的对象
+     *
+     **************************************************/
+    public THIS replaceAll(T target, Ts.IsThisOne<T> isThisOne) {
+        if (target == null || isThisOne == null)
+            return (THIS) this;
+
+        int count = count();
+        for (int i = 0; i < count; i++) {
+            if (isThisOne.isThisOne(i, get(i))) {
+                set(i, target);
+            }
+        }
+        return (THIS) this;
+    }
+
+    /**************************************************
+     *
+     * replaceOrAdd
+     * 第一个符合条件的项被替换为提供的对象
+     * 如果没有符合条件的项则直接添加到列表里
+     *
+     **************************************************/
+
+    public THIS replaceOrAdd(T target, Ts.IsThisOne<T> isThisOne) {
+        if (target == null || isThisOne == null)
+            return (THIS) this;
+
+        int index = index(isThisOne);
+        if (index >= 0) {
+            set(index, target);
+        } else {
+            ts.add(target);
+        }
+        return (THIS) this;
+    }
+
+
+    /**************************************************
+     *
+     * replaceAllOrAdd：
+     * 所有符合条件的项被替换为提供的对象
+     * 如果没有符合条件的项则直接添加到列表里
+     *
+     **************************************************/
+
+    public THIS replaceAllOrAdd(T target, Ts.IsThisOne<T> isThisOne) {
+        if (target == null || isThisOne == null)
+            return (THIS) this;
+
+        int count = count();
+        boolean isReplace = false;
+        for (int i = 0; i < count; i++) {
+            if (isThisOne.isThisOne(i, get(i))) {
+                set(i, target);
+                isReplace = true;
+            }
+        }
+        if (!isReplace) {
+            this.ts.add(target);
+        }
+        return (THIS) this;
+    }
+
+    /**************************************************
+     *
      *
      *
      **************************************************/
@@ -303,6 +302,7 @@ public class CoreTs<T, THIS> {
         this.ts.remove(position);
         return (THIS) this;
     }
+
 
 
     /**************************************************
@@ -319,7 +319,6 @@ public class CoreTs<T, THIS> {
         }
         return (THIS) this;
     }
-
     /**************************************************
      *
      * 删除全部：删除所有符合条件的项
@@ -338,6 +337,14 @@ public class CoreTs<T, THIS> {
         this.ts.addAll(ts);
         return (THIS) this;
     }
+
+    ///////////////////////////////////////////////////////
+    //
+    // 分割
+    //
+    ///////////////////////////////////////////////////////
+
+
 
 
     /**************************************************

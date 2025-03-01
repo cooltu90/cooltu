@@ -4,18 +4,20 @@ import android.os.Bundle;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.form.TestCallBack;
-import com.codingtu.cooltu.lib4a.cryption.BaseRSA;
 import com.codingtu.cooltu.lib4a.log.Logs;
+import com.codingtu.cooltu.lib4j.vs.BaseVs;
+import com.codingtu.cooltu.lib4j.vs.IntegerVs;
+import com.codingtu.cooltu.lib4j.vs.StringVs;
+import com.codingtu.cooltu.lib4j.vs.Vs;
+import com.codingtu.cooltu.lib4j.vs.test.TestValue;
+import com.codingtu.cooltu.lib4j.vs.test.TestValue1;
+import com.codingtu.cooltu.lib4j.vs.test.TestValue1Vs;
 import com.codingtu.cooltu.processor.annotation.net.NetBack;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
-import com.codingtu.cooltu.tools.RSA;
 import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
-
-import java.security.KeyPair;
-import java.security.PrivateKey;
 
 import core.actbase.WelcomeActivityBase;
 import core.actres.WelcomeActivityRes;
@@ -34,6 +36,25 @@ public class WelcomeActivity extends WelcomeActivityBase {
 
     @ClickView(R.id.showBt)
     public void showBtClick() {
+        //
+        TestValue1Vs vs = new TestValue1Vs();
+        vs.add(new TestValue1("7790", "lisi1"));
+        vs.add(new TestValue1("7791", "lisi1"));
+        vs.add(new TestValue1("7792", "lisi2"));
+        vs.add(new TestValue1("7793", "lisi1"));
+        vs.add(new TestValue1("7794", "lisi1"));
+
+        //
+        IntegerVs integerVs = new IntegerVs();
+        integerVs.add(10).add(11).add(13);
+        integerVs.firstIndex(10);
+
+
+        //
+        StringVs stringVs = new StringVs();
+        stringVs.add("L-0001").add("zhangsan").add("llll").add("L-0001");
+        stringVs.firstin
+
     }
 
 
