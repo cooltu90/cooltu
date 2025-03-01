@@ -461,30 +461,69 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
+    //删除第一个
     public THIS deleteFirst(Vs.IsThisOne<T> isThisOne) {
-        if (isThisOne == null) return (THIS) this;
-        int index = firstIndex(isThisOne);
-        if (index >= 0) {
-            ts.remove(index);
+        if (isThisOne != null) {
+            int firstIndex = firstIndex(isThisOne);
+            if (firstIndex >= 0) {
+                this.ts.remove(firstIndex);
+            }
         }
         return (THIS) this;
     }
 
+    public THIS deleteFirstByValueSymbol(String valueSymbol) {
+        int firstIndex = firstIndexByValueSymbol(valueSymbol);
+        if (firstIndex >= 0) {
+            this.ts.remove(firstIndex);
+        }
+        return (THIS) this;
+    }
+
+    public THIS deleteFirst(T target) {
+        if (target != null) {
+            deleteFirstByValueSymbol(valueSymbol(target));
+        }
+        return (THIS) this;
+    }
+
+    //删除所有
     public THIS deleteAll(Vs.IsThisOne<T> isThisOne) {
-        if (isThisOne == null) return (THIS) this;
+        if (isThisOne != null) {
+            List<T> newTs = new ArrayList<>();
+            int count = count();
+            T t = null;
+            for (int i = 0; i < count; i++) {
+                t = getByIndex(i);
+                if (!isThisOne.isThisOne(i, t)) {
+                    newTs.add(t);
+                }
+            }
+            this.ts.clear();
+            this.ts.addAll(newTs);
+        }
+        return (THIS) this;
+    }
 
+    public THIS deleteAllByValueSymbol(String valueSymbol) {
         List<T> newTs = new ArrayList<>();
-
         int count = count();
         T t = null;
         for (int i = 0; i < count; i++) {
             t = getByIndex(i);
-            if (!isThisOne.isThisOne(i, t)) {
+            if (!valueSymbol(t).equals(valueSymbol)) {
                 newTs.add(t);
             }
         }
         this.ts.clear();
         this.ts.addAll(newTs);
+        return (THIS) this;
+    }
+
+    public THIS deleteAll(T target) {
+        if (target != null) {
+            deleteAllByValueSymbol(valueSymbol(target));
+        }
         return (THIS) this;
     }
 
