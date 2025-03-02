@@ -108,12 +108,45 @@ public class StringVs extends CoreVs<String, StringVs> {
      * replace
      **************************************************/
 
+    @Deprecated
+    @Override
+    public StringVs replaceFirstByValueSymbol(String valueSymbol, String target) {
+        return super.replaceFirstByValueSymbol(valueSymbol, target);
+    }
+
+    @Deprecated
+    @Override
+    public StringVs replaceAllByValueSymbol(String valueSymbol, String target) {
+        return super.replaceAllByValueSymbol(valueSymbol, target);
+    }
+
     /**************************************************
      * replaceOrAdd
      **************************************************/
+    @Deprecated
+    @Override
+    public StringVs replaceFirstOrAddByValueSymbol(String valueSymbol, String target) {
+        return super.replaceFirstOrAddByValueSymbol(valueSymbol, target);
+    }
+
+    @Deprecated
+    @Override
+    public StringVs replaceAllOrAddByValueSymbol(String valueSymbol, String target) {
+        return super.replaceAllOrAddByValueSymbol(valueSymbol, target);
+    }
 
     /**************************************************
      * delete
      **************************************************/
+    @Deprecated
+    @Override
+    public StringVs deleteFirstByValueSymbol(String valueSymbol) {
+        return super.deleteFirstByValueSymbol(valueSymbol);
+    }
 
+    @Deprecated
+    @Override
+    public StringVs deleteAllByValueSymbol(String valueSymbol) {
+        return super.deleteAllByValueSymbol(valueSymbol);
+    }
 }

@@ -46,12 +46,20 @@ public class WelcomeActivity extends WelcomeActivityBase {
 
         //
         IntegerVs integerVs = new IntegerVs();
-        integerVs.add(10).add(11).add(13);
+        integerVs.add(10).add(11).add(13).add(13).add(13).add(15).add(13);
+
+        integerVs.deleteFirst(13);
+
+        integerVs.log();
 
 
         //
         StringVs stringVs = new StringVs();
-        stringVs.add("L-0001").add("zhangsan").add("llll").add("L-0001");
+        stringVs.add("L-0001").add("zhangsan").add("L-0001")
+                .add("zhangsan").add("llll").add("zhangsan").add("L-0001").add("L-0001");
+        stringVs.deleteAll("zhangsan");
+
+        stringVs.log();
     }
 
 

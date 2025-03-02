@@ -405,7 +405,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS repalceFirstOrAdd(T target) {
+    public THIS replaceFirstOrAdd(T target) {
         if (target != null) {
             replaceFirstOrAddByValueSymbol(valueSymbol(target), target);
         }
@@ -446,7 +446,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS repalceAllOrAdd(T target) {
+    public THIS replaceAllOrAdd(T target) {
         if (target != null) {
             replaceAllOrAddByValueSymbol(valueSymbol(target), target);
         }

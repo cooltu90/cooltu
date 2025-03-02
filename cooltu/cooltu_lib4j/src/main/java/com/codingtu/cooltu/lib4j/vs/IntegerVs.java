@@ -1,5 +1,10 @@
 package com.codingtu.cooltu.lib4j.vs;
 
+import com.codingtu.cooltu.lib4j.ts.Ts;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class IntegerVs extends CoreVs<Integer, IntegerVs> {
     @Override
     protected String valueSymbol(Integer integer) {
@@ -109,12 +114,96 @@ public class IntegerVs extends CoreVs<Integer, IntegerVs> {
     /**************************************************
      * replace
      **************************************************/
+    @Deprecated
+    @Override
+    public IntegerVs replaceFirst(Integer target) {
+        return super.replaceFirst(target);
+    }
+
+    @Deprecated
+    @Override
+    public IntegerVs replaceFirstByValueSymbol(String valueSymbol, Integer target) {
+        return super.replaceFirstByValueSymbol(valueSymbol, target);
+    }
+
+    @Deprecated
+    @Override
+    public IntegerVs replaceAll(Integer target) {
+        return super.replaceAll(target);
+    }
+
+    @Deprecated
+    @Override
+    public IntegerVs replaceAllByValueSymbol(String valueSymbol, Integer target) {
+        return super.replaceAllByValueSymbol(valueSymbol, target);
+    }
+
 
     /**************************************************
      * replaceOrAdd
      **************************************************/
 
+    @Deprecated
+    @Override
+    public IntegerVs replaceFirstOrAddByValueSymbol(String valueSymbol, Integer target) {
+        return super.replaceFirstOrAddByValueSymbol(valueSymbol, target);
+    }
+
+    @Deprecated
+    @Override
+    public IntegerVs replaceFirstOrAdd(Integer target) {
+        return super.replaceFirstOrAdd(target);
+    }
+
+    @Deprecated
+    @Override
+    public IntegerVs replaceAllOrAdd(Integer target) {
+        return super.replaceAllOrAdd(target);
+    }
+
+    @Deprecated
+    @Override
+    public IntegerVs replaceAllOrAddByValueSymbol(String valueSymbol, Integer target) {
+        return super.replaceAllOrAddByValueSymbol(valueSymbol, target);
+    }
+
     /**************************************************
      * delete
      **************************************************/
+    @Deprecated
+    @Override
+    public IntegerVs deleteFirstByValueSymbol(String valueSymbol) {
+        return super.deleteFirstByValueSymbol(valueSymbol);
+    }
+
+    @Override
+    public IntegerVs deleteFirst(Integer target) {
+        int firstIndex = firstIndex(target);
+        if (firstIndex >= 0) {
+            this.ts.remove(firstIndex);
+        }
+        return this;
+    }
+
+    @Deprecated
+    @Override
+    public IntegerVs deleteAllByValueSymbol(String valueSymbol) {
+        return super.deleteAllByValueSymbol(valueSymbol);
+    }
+
+    @Override
+    public IntegerVs deleteAll(Integer target) {
+        List<Integer> newTs = new ArrayList<>();
+        int count = count();
+        Integer t = null;
+        for (int i = 0; i < count; i++) {
+            t = getByIndex(i);
+            if (t != target) {
+                newTs.add(t);
+            }
+        }
+        this.ts.clear();
+        this.ts.addAll(newTs);
+        return this;
+    }
 }
