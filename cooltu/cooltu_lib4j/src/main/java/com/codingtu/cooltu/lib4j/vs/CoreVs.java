@@ -1,9 +1,15 @@
 package com.codingtu.cooltu.lib4j.vs;
 
 import com.codingtu.cooltu.lib4j.log.LibLogs;
+import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
+import com.codingtu.cooltu.lib4j.tools.OtherTool;
+import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.vs.value.ValueSymbol;
 
+import java.lang.annotation.Target;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -525,6 +531,77 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             deleteAllByValueSymbol(valueSymbol(target));
         }
         return (THIS) this;
+    }
+
+    /**************************************************
+     * 转换
+     **************************************************/
+    public <TARGET extends ValueSymbol> BaseVs<TARGET> convert(Vs.Convert<T, TARGET> convert) {
+        BaseVs baseVs = new BaseVs();
+        if (convert != null) {
+            int count = count();
+            TARGET target = null;
+            for (int i = 0; i < count; i++) {
+                target = convert.convert(i, getByIndex(i));
+                if (target != null) {
+                    baseVs.add(target);
+                }
+            }
+        }
+        return baseVs;
+    }
+
+    public <TARGET, VS extends CoreVs> VS convert(Class<VS> vsClass, Vs.Convert<T, TARGET> convert) {
+        VS vs;
+        try {
+            vs = (VS) vsClass.getConstructor().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        int count = count();
+        TARGET target = null;
+        for (int i = 0; i < count; i++) {
+            target = convert.convert(i, getByIndex(i));
+            if (target != null) {
+                vs.add(target);
+            }
+        }
+        return vs;
+    }
+
+    public <TARGET extends ValueSymbol> BaseVs<TARGET> convertList(Vs.Convert<T, List<TARGET>> convert) {
+        BaseVs<TARGET> vs = new BaseVs<>();
+        if (convert != null) {
+            int count = count();
+            List<TARGET> list = null;
+            for (int i = 0; i < count; i++) {
+                list = convert.convert(i, getByIndex(i));
+                if (!CountTool.isNull(list)) {
+                    vs.add(list);
+                }
+            }
+        }
+        return vs;
+    }
+
+    public <VS extends CoreVs, TARGET> VS convertList(Class<VS> vsClass, Vs.Convert<T, List<TARGET>> convert) {
+        VS vs;
+        try {
+            vs = (VS) vsClass.getConstructor().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        if (convert != null) {
+            int count = count();
+            List<TARGET> list = null;
+            for (int i = 0; i < count; i++) {
+                list = convert.convert(i, getByIndex(i));
+                if (!CountTool.isNull(list)) {
+                    vs.add(list);
+                }
+            }
+        }
+        return vs;
     }
 
 
