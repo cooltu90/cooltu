@@ -304,7 +304,6 @@ public class CoreTs<T, THIS> {
     }
 
 
-
     /**************************************************
      *
      * 删除：删除第一个符合条件的项
@@ -319,6 +318,7 @@ public class CoreTs<T, THIS> {
         }
         return (THIS) this;
     }
+
     /**************************************************
      *
      * 删除全部：删除所有符合条件的项
@@ -337,14 +337,6 @@ public class CoreTs<T, THIS> {
         this.ts.addAll(ts);
         return (THIS) this;
     }
-
-    ///////////////////////////////////////////////////////
-    //
-    // 分割
-    //
-    ///////////////////////////////////////////////////////
-
-
 
 
     /**************************************************
@@ -415,6 +407,79 @@ public class CoreTs<T, THIS> {
 
     /**************************************************
      *
+     * 排序
+     *
+     **************************************************/
+    public THIS sort(Comparator<T> comparator) {
+        if (count() > 0) {
+            Collections.sort(ts, comparator);
+        }
+        return (THIS) this;
+    }
+
+    public THIS clear() {
+        this.ts.clear();
+        return (THIS) this;
+    }
+
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+
+    //两个基础方法
+    private Ts.NearByIndex obtainNearByIndex(int index, boolean isNext) {
+        int count = count();
+        if (count == 1) {
+            return null;
+        }
+        if (index < 0) {
+            return null;
+        }
+
+        int step = isNext ? 1 : -1;
+
+        Ts.NearByIndex nearByIndex = new Ts.NearByIndex();
+        nearByIndex.currentIndex = index;
+        if (nearByIndex.currentIndex == (isNext ? (count - 1) : 0)) {
+            nearByIndex.nearByIndex = nearByIndex.currentIndex - step;
+        } else {
+            nearByIndex.nearByIndex = nearByIndex.currentIndex + step;
+        }
+        return nearByIndex;
+    }
+
+    private Ts.NearByIndex obtainNearByIndex(Ts.IsThisOne<T> isThisOne, boolean isNext) {
+        return obtainNearByIndex(index(isThisOne), isNext);
+    }
+
+    //下一个优先
+    public Ts.NearByIndex obtainNearByIndexWhenNextPriority(Ts.IsThisOne<T> isThisOne) {
+        return obtainNearByIndex(isThisOne, true);
+    }
+
+    public T obtainNearByDataWhenNextPriority(Ts.IsThisOne<T> isThisOne) {
+        Ts.NearByIndex nearByIndex = obtainNearByIndexWhenNextPriority(isThisOne);
+        if (nearByIndex == null)
+            return null;
+        return get(nearByIndex.nearByIndex);
+    }
+
+    //上一个优先
+    public Ts.NearByIndex obtainNearByIndexWhenPrePriority(Ts.IsThisOne<T> isThisOne) {
+        return obtainNearByIndex(isThisOne, false);
+    }
+
+    public T obtainNearByDataWhenPrePriority(Ts.IsThisOne<T> isThisOne) {
+        Ts.NearByIndex nearByIndex = obtainNearByIndexWhenPrePriority(isThisOne);
+        if (nearByIndex == null)
+            return null;
+        return get(nearByIndex.nearByIndex);
+    }
+
+    /**************************************************
+     *
      * 查找最后一个符合条件的元素
      *
      **************************************************/
@@ -432,6 +497,14 @@ public class CoreTs<T, THIS> {
         return last;
     }
 
+    ///////////////////////////////////////////////////////
+    //
+    // 分割
+    //
+    ///////////////////////////////////////////////////////
+
+
+
     /**************************************************
      *
      * 全部替换为默认元素
@@ -445,17 +518,6 @@ public class CoreTs<T, THIS> {
         return (THIS) this;
     }
 
-    /**************************************************
-     *
-     * 排序
-     *
-     **************************************************/
-    public THIS sort(Comparator<T> comparator) {
-        if (count() > 0) {
-            Collections.sort(ts, comparator);
-        }
-        return (THIS) this;
-    }
 
     /**************************************************
      *
@@ -654,11 +716,6 @@ public class CoreTs<T, THIS> {
     }
 
 
-    public THIS clear() {
-        this.ts.clear();
-        return (THIS) this;
-    }
-
     public int count(Counter<T> counter) {
         if (counter == null)
             return 0;
@@ -805,60 +862,5 @@ public class CoreTs<T, THIS> {
         return map;
     }
 
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
-
-    //两个基础方法
-    private Ts.NearByIndex obtainNearByIndex(int index, boolean isNext) {
-        int count = count();
-        if (count == 1) {
-            return null;
-        }
-        if (index < 0) {
-            return null;
-        }
-
-        int step = isNext ? 1 : -1;
-
-        Ts.NearByIndex nearByIndex = new Ts.NearByIndex();
-        nearByIndex.currentIndex = index;
-        if (nearByIndex.currentIndex == (isNext ? (count - 1) : 0)) {
-            nearByIndex.nearByIndex = nearByIndex.currentIndex - step;
-        } else {
-            nearByIndex.nearByIndex = nearByIndex.currentIndex + step;
-        }
-        return nearByIndex;
-    }
-
-    private Ts.NearByIndex obtainNearByIndex(Ts.IsThisOne<T> isThisOne, boolean isNext) {
-        return obtainNearByIndex(index(isThisOne), isNext);
-    }
-
-    //下一个优先
-    public Ts.NearByIndex obtainNearByIndexWhenNextPriority(Ts.IsThisOne<T> isThisOne) {
-        return obtainNearByIndex(isThisOne, true);
-    }
-
-    public T obtainNearByDataWhenNextPriority(Ts.IsThisOne<T> isThisOne) {
-        Ts.NearByIndex nearByIndex = obtainNearByIndexWhenNextPriority(isThisOne);
-        if (nearByIndex == null)
-            return null;
-        return get(nearByIndex.nearByIndex);
-    }
-
-    //上一个优先
-    public Ts.NearByIndex obtainNearByIndexWhenPrePriority(Ts.IsThisOne<T> isThisOne) {
-        return obtainNearByIndex(isThisOne, false);
-    }
-
-    public T obtainNearByDataWhenPrePriority(Ts.IsThisOne<T> isThisOne) {
-        Ts.NearByIndex nearByIndex = obtainNearByIndexWhenPrePriority(isThisOne);
-        if (nearByIndex == null)
-            return null;
-        return get(nearByIndex.nearByIndex);
-    }
 
 }

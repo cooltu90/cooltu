@@ -1,6 +1,9 @@
 package com.codingtu.cooltu.lib4j.vs;
 
-import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.function.ToDouble;
+import com.codingtu.cooltu.lib4j.function.ToInt;
+import com.codingtu.cooltu.lib4j.function.ToLong;
+import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -205,5 +208,41 @@ public class IntegerVs extends CoreVs<Integer, IntegerVs> {
         this.ts.clear();
         this.ts.addAll(newTs);
         return this;
+    }
+
+    /**************************************************
+     * maxMin
+     **************************************************/
+    @Deprecated
+    @Override
+    public MaxMin<Integer> maxMin(ToInt<Integer> toInt) {
+        return super.maxMin(toInt);
+    }
+
+    @Deprecated
+    @Override
+    public MaxMin<Integer> maxMin(ToLong<Integer> toLong) {
+        return super.maxMin(toLong);
+    }
+
+    @Deprecated
+    @Override
+    public MaxMin<Integer> maxMin(ToDouble<Integer> toDouble) {
+        return super.maxMin(toDouble);
+    }
+
+    @Deprecated
+    @Override
+    public MaxMin<Integer> maxMin(Vs.NowMax<Integer> nowMax) {
+        return super.maxMin(nowMax);
+    }
+
+    public MaxMin<Integer> maxMin() {
+        return super.maxMin(new ToInt<Integer>() {
+            @Override
+            public int toInt(Integer integer) {
+                return integer;
+            }
+        });
     }
 }

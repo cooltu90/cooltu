@@ -1,16 +1,17 @@
 package com.codingtu.cooltu.lib4j.vs;
 
+import com.codingtu.cooltu.lib4j.function.ToDouble;
+import com.codingtu.cooltu.lib4j.function.ToInt;
+import com.codingtu.cooltu.lib4j.function.ToLong;
+import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
-import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.tools.OtherTool;
-import com.codingtu.cooltu.lib4j.ts.BaseTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.vs.value.ValueSymbol;
+import com.codingtu.cooltu.lib4j.data.symbol.ValueSymbol;
 
-import java.lang.annotation.Target;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public abstract class CoreVs<T, THIS extends CoreVs> {
@@ -604,5 +605,179 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return vs;
     }
 
+    /**************************************************
+     * 获取最大最小值
+     **************************************************/
+    public MaxMin<T> maxMin(Vs.NowMax<T> nowMax) {
+        if (nowMax == null) return null;
+
+        int count = count();
+        MaxMin<T> maxMin = null;
+        for (int i = 0; i < count; i++) {
+            T now = getByIndex(i);
+            if (i == 0) {
+                maxMin = new MaxMin<>();
+                maxMin.max = now;
+                maxMin.min = now;
+            } else {
+                maxMin.max = nowMax.isNowMax(maxMin.max, now) ? now : maxMin.max;
+                maxMin.min = nowMax.isNowMax(maxMin.min, now) ? maxMin.min : now;
+            }
+        }
+
+        return maxMin;
+    }
+
+    public MaxMin<T> maxMin(ToInt<T> toInt) {
+        return maxMin(new Vs.NowMax<T>() {
+            @Override
+            public boolean isNowMax(T last, T now) {
+                return toInt.toInt(now) > toInt.toInt(last);
+            }
+        });
+    }
+
+    public MaxMin<T> maxMin(ToLong<T> toLong) {
+        return maxMin(new Vs.NowMax<T>() {
+            @Override
+            public boolean isNowMax(T last, T now) {
+                return toLong.toLong(now) > toLong.toLong(last);
+            }
+        });
+    }
+
+    public MaxMin<T> maxMin(ToDouble<T> toDouble) {
+        return maxMin(new Vs.NowMax<T>() {
+            @Override
+            public boolean isNowMax(T last, T now) {
+                return toDouble.toDouble(now) > toDouble.toDouble(last);
+            }
+        });
+    }
+
+    /**************************************************
+     * 排序
+     **************************************************/
+    public THIS sort(Comparator<T> comparator) {
+        if (count() > 0) {
+            Collections.sort(ts, comparator);
+        }
+        return (THIS) this;
+    }
+
+    /**************************************************
+     * 清除
+     **************************************************/
+    public THIS clear() {
+        this.ts.clear();
+        return (THIS) this;
+    }
+
+    /**************************************************
+     * nearby
+     **************************************************/
+    private Vs.NearByIndex obtainNearByIndex(int index, boolean isNext) {
+        int count = count();
+        if (count == 1) {
+            return null;
+        }
+        if (index < 0) {
+            return null;
+        }
+
+        int step = isNext ? 1 : -1;
+
+        Vs.NearByIndex nearByIndex = new Vs.NearByIndex();
+        nearByIndex.currentIndex = index;
+        if (nearByIndex.currentIndex == (isNext ? (count - 1) : 0)) {
+            nearByIndex.nearByIndex = nearByIndex.currentIndex - step;
+        } else {
+            nearByIndex.nearByIndex = nearByIndex.currentIndex + step;
+        }
+        return nearByIndex;
+    }
+
+    private Vs.NearByIndex obtainNearByIndex(Vs.IsThisOne<T> isThisOne, boolean isNext) {
+        return obtainNearByIndex(firstIndex(isThisOne), isNext);
+    }
+
+    private Vs.NearByIndex obtainNearByIndexByValueSymbol(String valueSymbol, boolean isNext) {
+        return obtainNearByIndex(firstIndexByValueSymbol(valueSymbol), isNext);
+    }
+
+    private Vs.NearByIndex obtainNearByIndex(T t, boolean isNext) {
+        return obtainNearByIndex(firstIndex(t), isNext);
+    }
+
+    private T obtainNearByData(Vs.NearByIndex nearByIndex) {
+        if (nearByIndex == null) return null;
+        return getByIndex(nearByIndex.nearByIndex);
+    }
+
+    //下一个优先
+    public Vs.NearByIndex obtainNearByIndexWhenNextPriority(Vs.IsThisOne<T> isThisOne) {
+        return obtainNearByIndex(isThisOne, true);
+    }
+
+    public Vs.NearByIndex obtainNearByIndexWhenNextPriorityByValueSymbol(String valueSymbol) {
+        return obtainNearByIndexByValueSymbol(valueSymbol, true);
+    }
+
+    public Vs.NearByIndex obtainNearByIndexWhenNextPriority(T t) {
+        return obtainNearByIndex(t, true);
+    }
+
+    public T obtainNearByDataWhenNextPriority(Vs.IsThisOne<T> isThisOne) {
+        return obtainNearByData(obtainNearByIndexWhenNextPriority(isThisOne));
+    }
+
+    public T obtainNearByDataWhenNextPriorityByVauleSymbol(String valueSymbol) {
+        return obtainNearByData(obtainNearByIndexWhenNextPriorityByValueSymbol(valueSymbol));
+    }
+
+    public T obtainNearByDataWhenNextPriority(T t) {
+        return obtainNearByData(obtainNearByIndexWhenNextPriority(t));
+    }
+
+    //上一个优先
+    public Vs.NearByIndex obtainNearByIndexWhenPrePriority(Vs.IsThisOne<T> isThisOne) {
+        return obtainNearByIndex(isThisOne, false);
+    }
+
+    public Vs.NearByIndex obtainNearByIndexWhenPrePriorityByValueSymbol(String valueSymbol) {
+        return obtainNearByIndexByValueSymbol(valueSymbol, false);
+    }
+
+    public Vs.NearByIndex obtainNearByIndexWhenPrePriority(T t) {
+        return obtainNearByIndex(t, false);
+    }
+
+    public T obtainNearByDataWhenPrePriority(Vs.IsThisOne<T> isThisOne) {
+        return obtainNearByData(obtainNearByIndexWhenPrePriority(isThisOne));
+    }
+
+    public T obtainNearByDataWhenPrePriorityByValueSymbol(String valueSymbol) {
+        return obtainNearByData(obtainNearByIndexWhenPrePriorityByValueSymbol(valueSymbol));
+    }
+
+    public T obtainNearByDataWhenPrePriority(T t) {
+        return obtainNearByData(obtainNearByIndexWhenPrePriority(t));
+    }
+
+    /**************************************************
+     * 查找最后一个符合条件的元素
+     **************************************************/
+
+    public T findFinal(Vs.IsNow<T> isNow) {
+        if (isNow == null) return null;
+
+        int count = count();
+        T last = null;
+        for (int i = 0; i < count; i++) {
+            T now = getByIndex(i);
+            last = last == null ? now : (isNow.isNow(last, now) ? now : last);
+        }
+        return last;
+    }
 
 }

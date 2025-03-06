@@ -1,6 +1,6 @@
 package com.codingtu.cooltu.lib4j.vs;
 
-import com.codingtu.cooltu.lib4j.vs.value.ValueSymbol;
+import com.codingtu.cooltu.lib4j.data.symbol.ValueSymbol;
 
 import java.util.List;
 
