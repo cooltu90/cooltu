@@ -4,14 +4,29 @@ import com.codingtu.cooltu.lib4j.function.ToDouble;
 import com.codingtu.cooltu.lib4j.function.ToInt;
 import com.codingtu.cooltu.lib4j.function.ToLong;
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
+import com.codingtu.cooltu.lib4j.tools.CountTool;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class IntegerVs extends CoreVs<Integer, IntegerVs> {
     @Override
     protected String valueSymbol(Integer integer) {
         return String.valueOf(integer);
+    }
+
+    /**************************************************
+     * add
+     **************************************************/
+    public IntegerVs addInts(int... ts) {
+        int count = CountTool.count(ts);
+        if (count > 0) {
+            for (int i = 0; i < count; i++) {
+                this.ts.add(ts[i]);
+            }
+        }
+        return this;
     }
 
     /**************************************************
@@ -66,7 +81,7 @@ public class IntegerVs extends CoreVs<Integer, IntegerVs> {
     public boolean has(Integer integer) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (getByIndex(i) == integer) {
+            if (this.ts.get(i) == integer) {
                 return true;
             }
         }
@@ -88,7 +103,7 @@ public class IntegerVs extends CoreVs<Integer, IntegerVs> {
     public int firstIndex(Integer integer) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (getByIndex(i) == integer) {
+            if (this.ts.get(i) == integer) {
                 return i;
             }
         }
@@ -103,15 +118,15 @@ public class IntegerVs extends CoreVs<Integer, IntegerVs> {
 
     @Override
     public IntegerVs allIndex(Integer integer) {
-        IntegerVs integerVs = new IntegerVs();
+        List<Integer> indexs = new ArrayList<>();
         int count = count();
         for (int i = 0; i < count; i++) {
-            Integer integer1 = getByIndex(i);
+            Integer integer1 = this.ts.get(i);
             if (integer1 == integer) {
-                integerVs.add(i);
+                indexs.add(i);
             }
         }
-        return integerVs;
+        return Vs.ints(indexs);
     }
 
     /**************************************************
@@ -119,8 +134,29 @@ public class IntegerVs extends CoreVs<Integer, IntegerVs> {
      **************************************************/
     @Deprecated
     @Override
-    public IntegerVs replaceFirst(Integer target) {
-        return super.replaceFirst(target);
+    public IntegerVs replaceFirst(Integer... targets) {
+        return super.replaceFirst(targets);
+    }
+
+    @Deprecated
+    @Override
+    public IntegerVs replaceFirst(List<Integer> targets) {
+        return super.replaceFirst(targets);
+    }
+
+    @Deprecated
+    @Override
+    public IntegerVs replaceFirst(IntegerVs integerVs) {
+        return super.replaceFirst(integerVs);
+    }
+
+    @Override
+    public IntegerVs replaceFirst(Integer symbol, Integer target) {
+        int firstIndex = firstIndex(symbol);
+        if (firstIndex >= 0) {
+            replaceByIndex(firstIndex, target);
+        }
+        return this;
     }
 
     @Deprecated
@@ -131,8 +167,20 @@ public class IntegerVs extends CoreVs<Integer, IntegerVs> {
 
     @Deprecated
     @Override
-    public IntegerVs replaceAll(Integer target) {
-        return super.replaceAll(target);
+    public IntegerVs replaceAll(Integer... targets) {
+        return super.replaceAll(targets);
+    }
+
+    @Deprecated
+    @Override
+    public IntegerVs replaceAll(List<Integer> targets) {
+        return super.replaceAll(targets);
+    }
+
+    @Deprecated
+    @Override
+    public IntegerVs replaceAll(IntegerVs integerVs) {
+        return super.replaceAll(integerVs);
     }
 
     @Deprecated
@@ -141,6 +189,16 @@ public class IntegerVs extends CoreVs<Integer, IntegerVs> {
         return super.replaceAllByValueSymbol(valueSymbol, target);
     }
 
+    @Override
+    public IntegerVs replaceAll(Integer symbolT, Integer target) {
+        int count = count();
+        for (int i = 0; i < count; i++) {
+            if (this.ts.get(i) == symbolT) {
+                replaceByIndex(i, target);
+            }
+        }
+        return this;
+    }
 
     /**************************************************
      * replaceOrAdd
@@ -154,20 +212,73 @@ public class IntegerVs extends CoreVs<Integer, IntegerVs> {
 
     @Deprecated
     @Override
-    public IntegerVs replaceFirstOrAdd(Integer target) {
-        return super.replaceFirstOrAdd(target);
+    public IntegerVs replaceFirstOrAdd(Integer... targets) {
+        return super.replaceFirstOrAdd(targets);
     }
 
     @Deprecated
     @Override
-    public IntegerVs replaceAllOrAdd(Integer target) {
-        return super.replaceAllOrAdd(target);
+    public IntegerVs replaceFirstOrAdd(List<Integer> targets) {
+        return super.replaceFirstOrAdd(targets);
+    }
+
+    @Deprecated
+    @Override
+    public IntegerVs replaceFirstOrAdd(IntegerVs integerVs) {
+        return super.replaceFirstOrAdd(integerVs);
+    }
+
+    @Override
+    public IntegerVs replaceFirstOrAdd(Integer symbolT, Integer target) {
+        int firstIndex = firstIndex(symbolT);
+        if (firstIndex >= 0) {
+            replaceByIndex(firstIndex, target);
+        } else if (target != null) {
+            ts.add(target);
+        }
+        return this;
+    }
+
+    @Deprecated
+    @Override
+    public IntegerVs replaceAllOrAdd(Integer... targets) {
+        return super.replaceAllOrAdd(targets);
+    }
+
+    @Deprecated
+    @Override
+    public IntegerVs replaceAllOrAdd(List<Integer> targets) {
+        return super.replaceAllOrAdd(targets);
+    }
+
+    @Deprecated
+    @Override
+    public IntegerVs replaceAllOrAdd(IntegerVs integerVs) {
+        return super.replaceAllOrAdd(integerVs);
     }
 
     @Deprecated
     @Override
     public IntegerVs replaceAllOrAddByValueSymbol(String valueSymbol, Integer target) {
         return super.replaceAllOrAddByValueSymbol(valueSymbol, target);
+    }
+
+    @Override
+    public IntegerVs replaceAllOrAdd(Integer symboleT, Integer target) {
+        int count = count();
+        boolean isReplace = false;
+        if (count > 0) {
+            for (int i = 0; i < count; i++) {
+                if (this.ts.get(i) == symboleT) {
+                    replaceByIndex(i, target);
+                    isReplace = true;
+                }
+            }
+        }
+        if (!isReplace && target != null) {
+            this.ts.add(target);
+        }
+        return this;
     }
 
     /**************************************************
@@ -180,10 +291,43 @@ public class IntegerVs extends CoreVs<Integer, IntegerVs> {
     }
 
     @Override
-    public IntegerVs deleteFirst(Integer target) {
-        int firstIndex = firstIndex(target);
-        if (firstIndex >= 0) {
-            this.ts.remove(firstIndex);
+    public IntegerVs deleteFirst(Integer... targets) {
+        int count = CountTool.count(targets);
+        if (count > 0) {
+            for (int i = 0; i < count; i++) {
+                int firstIndex = firstIndex(targets[i]);
+                if (firstIndex >= 0) {
+                    this.ts.remove(firstIndex);
+                }
+            }
+        }
+        return this;
+    }
+
+    @Override
+    public IntegerVs deleteFirst(List<Integer> targets) {
+        int count = CountTool.count(targets);
+        if (count > 0) {
+            for (int i = 0; i < count; i++) {
+                int firstIndex = firstIndex(targets.get(i));
+                if (firstIndex >= 0) {
+                    this.ts.remove(firstIndex);
+                }
+            }
+        }
+        return this;
+    }
+
+    @Override
+    public IntegerVs deleteFirst(IntegerVs integerVs) {
+        int count = integerVs.count();
+        if (count > 0) {
+            for (int i = 0; i < count; i++) {
+                int firstIndex = firstIndex(integerVs.ts.get(i));
+                if (firstIndex >= 0) {
+                    this.ts.remove(firstIndex);
+                }
+            }
         }
         return this;
     }
@@ -200,7 +344,7 @@ public class IntegerVs extends CoreVs<Integer, IntegerVs> {
         int count = count();
         Integer t = null;
         for (int i = 0; i < count; i++) {
-            t = getByIndex(i);
+            t = this.ts.get(i);
             if (t != target) {
                 newTs.add(t);
             }
@@ -244,5 +388,58 @@ public class IntegerVs extends CoreVs<Integer, IntegerVs> {
                 return integer;
             }
         });
+    }
+
+
+    /**************************************************
+     * neighbor
+     **************************************************/
+    //下一个优先
+    @Deprecated
+    @Override
+    public Vs.NeighborIndex obtainNeighborIndexWhenNextPriorityByValueSymbol(String valueSymbol) {
+        return super.obtainNeighborIndexWhenNextPriorityByValueSymbol(valueSymbol);
+    }
+
+    @Deprecated
+    @Override
+    public Integer obtainNeighborDataWhenNextPriorityByVauleSymbol(String valueSymbol) {
+        return super.obtainNeighborDataWhenNextPriorityByVauleSymbol(valueSymbol);
+    }
+
+    //上一个优先
+    @Deprecated
+    @Override
+    public Vs.NeighborIndex obtainNeighborIndexWhenPrePriorityByValueSymbol(String valueSymbol) {
+        return super.obtainNeighborIndexWhenPrePriorityByValueSymbol(valueSymbol);
+    }
+
+    @Deprecated
+    @Override
+    public Integer obtainNeighborDataWhenPrePriorityByValueSymbol(String valueSymbol) {
+        return super.obtainNeighborDataWhenPrePriorityByValueSymbol(valueSymbol);
+    }
+
+    /**************************************************
+     *
+     **************************************************/
+    public int[] toInts() {
+        int count = count();
+        int[] ints = new int[count];
+        if (count > 0) {
+            for (int i = 0; i < count; i++) {
+                ints[i] = this.ts.get(i);
+            }
+        }
+        return ints;
+    }
+
+    /**************************************************
+     *
+     **************************************************/
+    @Deprecated
+    @Override
+    public Map<String, Integer> toMap() {
+        return super.toMap();
     }
 }

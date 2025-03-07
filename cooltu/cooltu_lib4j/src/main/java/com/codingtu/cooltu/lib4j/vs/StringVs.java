@@ -1,5 +1,8 @@
 package com.codingtu.cooltu.lib4j.vs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StringVs extends CoreVs<String, StringVs> {
     @Override
     protected String valueSymbol(String s) {
@@ -58,7 +61,7 @@ public class StringVs extends CoreVs<String, StringVs> {
     public boolean has(String s) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (getByIndex(i).equals(s)) {
+            if (this.ts.get(i).equals(s)) {
                 return true;
             }
         }
@@ -78,7 +81,7 @@ public class StringVs extends CoreVs<String, StringVs> {
     public int firstIndex(String s) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (getByIndex(i).equals(s)) {
+            if (this.ts.get(i).equals(s)) {
                 return i;
             }
         }
@@ -95,13 +98,13 @@ public class StringVs extends CoreVs<String, StringVs> {
     @Override
     public IntegerVs allIndex(String s) {
         int count = count();
-        IntegerVs integerVs = new IntegerVs();
+        List<Integer> indexs = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            if (getByIndex(i).equals(s)) {
-                integerVs.add(i);
+            if (this.ts.get(i).equals(s)) {
+                indexs.add(i);
             }
         }
-        return integerVs;
+        return Vs.ints(indexs);
     }
 
     /**************************************************
@@ -116,8 +119,44 @@ public class StringVs extends CoreVs<String, StringVs> {
 
     @Deprecated
     @Override
+    public StringVs replaceFirst(String... targets) {
+        return super.replaceFirst(targets);
+    }
+
+    @Deprecated
+    @Override
+    public StringVs replaceFirst(List<String> targets) {
+        return super.replaceFirst(targets);
+    }
+
+    @Deprecated
+    @Override
+    public StringVs replaceFirst(StringVs stringVs) {
+        return super.replaceFirst(stringVs);
+    }
+
+    @Deprecated
+    @Override
     public StringVs replaceAllByValueSymbol(String valueSymbol, String target) {
         return super.replaceAllByValueSymbol(valueSymbol, target);
+    }
+
+    @Deprecated
+    @Override
+    public StringVs replaceAll(String... targets) {
+        return super.replaceAll(targets);
+    }
+
+    @Deprecated
+    @Override
+    public StringVs replaceAll(List<String> targets) {
+        return super.replaceAll(targets);
+    }
+
+    @Deprecated
+    @Override
+    public StringVs replaceAll(StringVs stringVs) {
+        return super.replaceAll(stringVs);
     }
 
     /**************************************************
@@ -131,8 +170,44 @@ public class StringVs extends CoreVs<String, StringVs> {
 
     @Deprecated
     @Override
+    public StringVs replaceFirstOrAdd(String... targets) {
+        return super.replaceFirstOrAdd(targets);
+    }
+
+    @Deprecated
+    @Override
+    public StringVs replaceFirstOrAdd(List<String> targets) {
+        return super.replaceFirstOrAdd(targets);
+    }
+
+    @Deprecated
+    @Override
+    public StringVs replaceFirstOrAdd(StringVs stringVs) {
+        return super.replaceFirstOrAdd(stringVs);
+    }
+
+    @Deprecated
+    @Override
     public StringVs replaceAllOrAddByValueSymbol(String valueSymbol, String target) {
         return super.replaceAllOrAddByValueSymbol(valueSymbol, target);
+    }
+
+    @Deprecated
+    @Override
+    public StringVs replaceAllOrAdd(String... targets) {
+        return super.replaceAllOrAdd(targets);
+    }
+
+    @Deprecated
+    @Override
+    public StringVs replaceAllOrAdd(List<String> targets) {
+        return super.replaceAllOrAdd(targets);
+    }
+
+    @Deprecated
+    @Override
+    public StringVs replaceAllOrAdd(StringVs stringVs) {
+        return super.replaceAllOrAdd(stringVs);
     }
 
     /**************************************************
@@ -144,9 +219,40 @@ public class StringVs extends CoreVs<String, StringVs> {
         return super.deleteFirstByValueSymbol(valueSymbol);
     }
 
+
     @Deprecated
     @Override
     public StringVs deleteAllByValueSymbol(String valueSymbol) {
         return super.deleteAllByValueSymbol(valueSymbol);
     }
+
+    /**************************************************
+     * neighbor
+     **************************************************/
+    //下一个优先
+    @Deprecated
+    @Override
+    public Vs.NeighborIndex obtainNeighborIndexWhenNextPriorityByValueSymbol(String valueSymbol) {
+        return super.obtainNeighborIndexWhenNextPriorityByValueSymbol(valueSymbol);
+    }
+
+    @Deprecated
+    @Override
+    public String obtainNeighborDataWhenNextPriorityByVauleSymbol(String valueSymbol) {
+        return super.obtainNeighborDataWhenNextPriorityByVauleSymbol(valueSymbol);
+    }
+
+    //上一个优先
+    @Deprecated
+    @Override
+    public Vs.NeighborIndex obtainNeighborIndexWhenPrePriorityByValueSymbol(String valueSymbol) {
+        return super.obtainNeighborIndexWhenPrePriorityByValueSymbol(valueSymbol);
+    }
+
+    @Deprecated
+    @Override
+    public String obtainNeighborDataWhenPrePriorityByValueSymbol(String valueSymbol) {
+        return super.obtainNeighborDataWhenPrePriorityByValueSymbol(valueSymbol);
+    }
+
 }

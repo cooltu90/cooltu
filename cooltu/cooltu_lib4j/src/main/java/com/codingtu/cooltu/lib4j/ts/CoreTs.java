@@ -497,28 +497,6 @@ public class CoreTs<T, THIS> {
         return last;
     }
 
-    ///////////////////////////////////////////////////////
-    //
-    // 分割
-    //
-    ///////////////////////////////////////////////////////
-
-
-
-    /**************************************************
-     *
-     * 全部替换为默认元素
-     *
-     **************************************************/
-    public THIS fill(T defaultT) {
-        int count = count();
-        for (int i = 0; i < count; i++) {
-            set(i, defaultT);
-        }
-        return (THIS) this;
-    }
-
-
     /**************************************************
      *
      * 转换列表
@@ -731,6 +709,59 @@ public class CoreTs<T, THIS> {
         return total;
     }
 
+    public static interface Counter<T> {
+        public int counter(int lastCount, int index, T t);
+    }
+
+    public SymbolTs toSymbol() {
+        SymbolTs symbols = Ts.symbols();
+        symbols.add(this.ts);
+        return symbols;
+    }
+
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+    public static interface ToMap<K, V, T> {
+
+        void deal(Map<K, V> map, int i, T t);
+    }
+
+    public <K, V> Map<K, V> toMap(ToMap<K, V, T> toMap) {
+        Map<K, V> map = new HashMap<>();
+        int count = CountTool.count(ts);
+        if (count > 0) {
+            for (int i = 0; i < count; i++) {
+                T t = ts.get(i);
+                toMap.deal(map, i, t);
+            }
+        }
+        return map;
+    }
+
+    ///////////////////////////////////////////////////////
+    //
+    // 分割
+    //
+    ///////////////////////////////////////////////////////
+
+
+    /**************************************************
+     *
+     * 全部替换为默认元素
+     *
+     **************************************************/
+    public THIS fill(T defaultT) {
+        int count = count();
+        for (int i = 0; i < count; i++) {
+            set(i, defaultT);
+        }
+        return (THIS) this;
+    }
+
+
     public THIS removeSameItem() {
         ArrayList<T> ts1 = new ArrayList<>();
         int count = count();
@@ -748,16 +779,6 @@ public class CoreTs<T, THIS> {
             this.ts.add(ts1.get(i));
         }
         return (THIS) this;
-    }
-
-    public static interface Counter<T> {
-        public int counter(int lastCount, int index, T t);
-    }
-
-    public SymbolTs toSymbol() {
-        SymbolTs symbols = Ts.symbols();
-        symbols.add(this.ts);
-        return symbols;
     }
 
     /**************************************************
@@ -840,27 +861,6 @@ public class CoreTs<T, THIS> {
         return "root";
     }
 
-    /**************************************************
-     *
-     *
-     *
-     **************************************************/
-    public static interface ToMap<K, V, T> {
-
-        void deal(Map<K, V> map, int i, T t);
-    }
-
-    public <K, V> Map<K, V> toMap(ToMap<K, V, T> toMap) {
-        Map<K, V> map = new HashMap<>();
-        int count = CountTool.count(ts);
-        if (count > 0) {
-            for (int i = 0; i < count; i++) {
-                T t = ts.get(i);
-                toMap.deal(map, i, t);
-            }
-        }
-        return map;
-    }
 
 
 }
