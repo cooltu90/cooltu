@@ -13,11 +13,11 @@ public class CountTool {
      *
      **************************************************/
 
-    public static int count(CoreTs ts) {
-        return ts == null ? 0 : ts.count();
+    public static int count(CoreVs vs) {
+        return vs == null ? 0 : vs.count();
     }
 
-    public static int count(CoreVs ts) {
+    public static int count(CoreTs ts) {
         return ts == null ? 0 : ts.count();
     }
 

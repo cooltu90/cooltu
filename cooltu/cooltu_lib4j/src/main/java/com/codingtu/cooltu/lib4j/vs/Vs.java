@@ -128,7 +128,7 @@ public class Vs {
     /**************************************************
      * booleans
      **************************************************/
-    public static BooleanVs bools(boolean... srcVs){
+    public static BooleanVs bools(boolean... srcVs) {
         BooleanVs stringVs = new BooleanVs();
         stringVs.addBools(srcVs);
         return stringVs;

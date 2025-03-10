@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StringVs extends CoreVs<String, StringVs> {
+
+    public StringVs() {
+    }
+
+    public StringVs(List<String> list) {
+        super(list);
+    }
+
     @Override
     protected String valueSymbol(String s) {
         return s;
