@@ -1,16 +1,18 @@
 package com.codingtu.cooltu.lib4j.vs;
 
-import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.function.ToDouble;
+import com.codingtu.cooltu.lib4j.function.ToFloat;
 import com.codingtu.cooltu.lib4j.function.ToInt;
 import com.codingtu.cooltu.lib4j.function.ToLong;
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
+import com.codingtu.cooltu.lib4j.json.JsonTool;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.OtherTool;
-import com.codingtu.cooltu.lib4j.ts.CoreTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.data.symbol.ValueSymbol;
+import com.codingtu.cooltu.lib4j.vs.impl.IntegerVs;
+import com.codingtu.cooltu.lib4j.vs.impl.StringVs;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -269,33 +271,6 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
 
     ///////////////////////////////////////////////////////
     //
-    // createThis
-    //
-    ///////////////////////////////////////////////////////
-    public THIS createThis(List<T> ts) {
-        try {
-            return (THIS) this.getClass().getConstructor(List.class).newInstance(ts);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public THIS createThis(T... ts) {
-        THIS aThis = createThis();
-        aThis.add(ts);
-        return aThis;
-    }
-
-    public THIS createThis() {
-        try {
-            return (THIS) this.getClass().getConstructor().newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    ///////////////////////////////////////////////////////
-    //
     // 遍历
     //
     ///////////////////////////////////////////////////////
@@ -347,7 +322,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         ls(new Vs.EachTs<T>() {
             @Override
             public boolean each(int position, T t) {
-                LibLogs.i(t);
+                LibLogs.i(JsonTool.toJson(t));
                 return false;
             }
         });
@@ -414,6 +389,34 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         }
         return (THIS) this;
     }
+
+    ///////////////////////////////////////////////////////
+    //
+    // createThis
+    //
+    ///////////////////////////////////////////////////////
+    public THIS createThis() {
+        try {
+            return (THIS) this.getClass().getConstructor().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public THIS createThis(T... ts) {
+        THIS aThis = createThis();
+        aThis.add(ts);
+        return aThis;
+    }
+
+    public THIS createThis(List<T> ts) {
+        try {
+            return (THIS) this.getClass().getConstructor(List.class).newInstance(ts);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     ///////////////////////////////////////////////////////
     //
@@ -1001,46 +1004,62 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS deleteFirst(T... targets) {
-        int count = CountTool.count(targets);
-        if (count > 0) {
-            T target = null;
-            for (int i = 0; i < count; i++) {
-                target = targets[i];
-                if (target != null) {
-                    deleteFirstByValueSymbol(valueSymbol(target));
+    protected THIS deleteFirst(Vs.EachGetter<T> getter) {
+        if (getter != null) {
+            int count = getter.count();
+            if (count > 0) {
+                T target = null;
+                for (int i = 0; i < count; i++) {
+                    target = getter.get(i);
+                    if (target != null) {
+                        deleteFirstByValueSymbol(valueSymbol(target));
+                    }
                 }
             }
         }
         return (THIS) this;
+    }
+
+    public THIS deleteFirst(T... targets) {
+        return deleteFirst(new Vs.EachGetter<T>() {
+            @Override
+            public int count() {
+                return CountTool.count(targets);
+            }
+
+            @Override
+            public T get(int position) {
+                return targets[position];
+            }
+        });
     }
 
     public THIS deleteFirst(List<T> targets) {
-        int count = CountTool.count(targets);
-        if (count > 0) {
-            T target = null;
-            for (int i = 0; i < count; i++) {
-                target = targets.get(i);
-                if (target != null) {
-                    deleteFirstByValueSymbol(valueSymbol(target));
-                }
+        return deleteFirst(new Vs.EachGetter<T>() {
+            @Override
+            public int count() {
+                return CountTool.count(targets);
             }
-        }
-        return (THIS) this;
+
+            @Override
+            public T get(int position) {
+                return targets.get(position);
+            }
+        });
     }
 
     public THIS deleteFirst(THIS targetVs) {
-        int count = targetVs.count();
-        if (count > 0) {
-            T target = null;
-            for (int i = 0; i < count; i++) {
-                target = (T) targetVs.ts.get(i);
-                if (target != null) {
-                    deleteFirstByValueSymbol(valueSymbol(target));
-                }
+        return deleteFirst(new Vs.EachGetter<T>() {
+            @Override
+            public int count() {
+                return CountTool.count(targetVs);
             }
-        }
-        return (THIS) this;
+
+            @Override
+            public T get(int position) {
+                return (T) targetVs.ts.get(position);
+            }
+        });
     }
 
     /**************************************************
@@ -1078,94 +1097,78 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS deleteAllByValueSymbol(String... valueSymbols) {
-        int valueSymbolCount = CountTool.count(valueSymbols);
-        int tCount = count();
-        if (valueSymbolCount > 0 && tCount > 0) {
-            List<T> newTs = new ArrayList<>();
+    private THIS deleteAllByValueSymbol(Vs.EachGetter<String> getter) {
+        if (getter != null) {
+            int valueSymbolCount = getter.count();
+            int tCount = count();
+            if (valueSymbolCount > 0 && tCount > 0) {
+                List<T> newTs = new ArrayList<>();
 
-            T t;
-            String tValueSymbol;
-            boolean isSame;
-            for (int i = 0; i < tCount; i++) {
-                t = this.ts.get(i);
-                tValueSymbol = valueSymbol(t);
+                T t;
+                String tValueSymbol;
+                boolean isSame;
+                for (int i = 0; i < tCount; i++) {
+                    t = this.ts.get(i);
+                    tValueSymbol = valueSymbol(t);
 
-                isSame = false;
-                for (int j = 0; j < valueSymbolCount; j++) {
-                    if (tValueSymbol.equals(valueSymbols[j])) {
-                        isSame = true;
-                        break;
+                    isSame = false;
+                    for (int j = 0; j < valueSymbolCount; j++) {
+                        if (tValueSymbol.equals(getter.get(j))) {
+                            isSame = true;
+                            break;
+                        }
+                    }
+                    if (!isSame) {
+                        newTs.add(t);
                     }
                 }
-                if (!isSame) {
-                    newTs.add(t);
-                }
+                this.ts.clear();
+                this.ts.addAll(newTs);
             }
-            this.ts.clear();
-            this.ts.addAll(newTs);
         }
         return (THIS) this;
+    }
+
+    public THIS deleteAllByValueSymbol(String... valueSymbols) {
+        return deleteAllByValueSymbol(new Vs.EachGetter<String>() {
+            @Override
+            public int count() {
+                return CountTool.count(valueSymbols);
+            }
+
+            @Override
+            public String get(int position) {
+                return valueSymbols[position];
+            }
+        });
     }
 
     public THIS deleteAllByValueSymbol(List<String> valueSymbols) {
-        int valueSymbolCount = CountTool.count(valueSymbols);
-        int tCount = count();
-        if (valueSymbolCount > 0 && tCount > 0) {
-            List<T> newTs = new ArrayList<>();
-
-            T t;
-            String tValueSymbol;
-            boolean isSame;
-            for (int i = 0; i < tCount; i++) {
-                t = this.ts.get(i);
-                tValueSymbol = valueSymbol(t);
-
-                isSame = false;
-                for (int j = 0; j < valueSymbolCount; j++) {
-                    if (tValueSymbol.equals(valueSymbols.get(j))) {
-                        isSame = true;
-                        break;
-                    }
-                }
-                if (!isSame) {
-                    newTs.add(t);
-                }
+        return deleteAllByValueSymbol(new Vs.EachGetter<String>() {
+            @Override
+            public int count() {
+                return CountTool.count(valueSymbols);
             }
-            this.ts.clear();
-            this.ts.addAll(newTs);
-        }
-        return (THIS) this;
+
+            @Override
+            public String get(int position) {
+                return valueSymbols.get(position);
+            }
+        });
     }
 
     public THIS deleteAllByValueSymbol(StringVs valueSymbolVs) {
-        int valueSymbolCount = CountTool.count(valueSymbolVs);
-        int tCount = count();
-        if (valueSymbolCount > 0 && tCount > 0) {
-            List<T> newTs = new ArrayList<>();
-
-            T t;
-            String tValueSymbol;
-            boolean isSame;
-            for (int i = 0; i < tCount; i++) {
-                t = this.ts.get(i);
-                tValueSymbol = valueSymbol(t);
-
-                isSame = false;
-                for (int j = 0; j < valueSymbolCount; j++) {
-                    if (tValueSymbol.equals(valueSymbolVs.ts.get(j))) {
-                        isSame = true;
-                        break;
-                    }
-                }
-                if (!isSame) {
-                    newTs.add(t);
-                }
+        return deleteAllByValueSymbol(new Vs.EachGetter<String>() {
+            @Override
+            public int count() {
+                return CountTool.count(valueSymbolVs);
             }
-            this.ts.clear();
-            this.ts.addAll(newTs);
-        }
-        return (THIS) this;
+
+            @Override
+            public String get(int position) {
+                return valueSymbolVs.ts.get(position);
+            }
+        });
     }
 
     //删除所有
@@ -1176,95 +1179,79 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
+    protected THIS deleteAll(Vs.EachGetter<T> getter) {
+        if (getter != null) {
+            int valueSymbolCount = getter.count();
+            int tCount = count();
+            if (valueSymbolCount > 0 && tCount > 0) {
+                List<T> newTs = new ArrayList<>();
 
-    public THIS deleteAll(T... targets) {
-        int valueSymbolCount = CountTool.count(targets);
-        int tCount = count();
-        if (valueSymbolCount > 0 && tCount > 0) {
-            List<T> newTs = new ArrayList<>();
+                T t;
+                String tValueSymbol;
+                boolean isSame;
+                for (int i = 0; i < tCount; i++) {
+                    t = this.ts.get(i);
+                    tValueSymbol = valueSymbol(t);
 
-            T t;
-            String tValueSymbol;
-            boolean isSame;
-            for (int i = 0; i < tCount; i++) {
-                t = this.ts.get(i);
-                tValueSymbol = valueSymbol(t);
-
-                isSame = false;
-                for (int j = 0; j < valueSymbolCount; j++) {
-                    if (tValueSymbol.equals(valueSymbol(targets[j]))) {
-                        isSame = true;
-                        break;
+                    isSame = false;
+                    for (int j = 0; j < valueSymbolCount; j++) {
+                        if (tValueSymbol.equals(valueSymbol(getter.get(j)))) {
+                            isSame = true;
+                            break;
+                        }
+                    }
+                    if (!isSame) {
+                        newTs.add(t);
                     }
                 }
-                if (!isSame) {
-                    newTs.add(t);
-                }
+                this.ts.clear();
+                this.ts.addAll(newTs);
             }
-            this.ts.clear();
-            this.ts.addAll(newTs);
         }
         return (THIS) this;
+    }
+
+
+    public THIS deleteAll(T... targets) {
+        return deleteAll(new Vs.EachGetter<T>() {
+            @Override
+            public int count() {
+                return CountTool.count(targets);
+            }
+
+            @Override
+            public T get(int position) {
+                return targets[position];
+            }
+        });
     }
 
     public THIS deleteAll(List<T> targets) {
-        int valueSymbolCount = CountTool.count(targets);
-        int tCount = count();
-        if (valueSymbolCount > 0 && tCount > 0) {
-            List<T> newTs = new ArrayList<>();
-
-            T t;
-            String tValueSymbol;
-            boolean isSame;
-            for (int i = 0; i < tCount; i++) {
-                t = this.ts.get(i);
-                tValueSymbol = valueSymbol(t);
-
-                isSame = false;
-                for (int j = 0; j < valueSymbolCount; j++) {
-                    if (tValueSymbol.equals(valueSymbol(targets.get(j)))) {
-                        isSame = true;
-                        break;
-                    }
-                }
-                if (!isSame) {
-                    newTs.add(t);
-                }
+        return deleteAll(new Vs.EachGetter<T>() {
+            @Override
+            public int count() {
+                return CountTool.count(targets);
             }
-            this.ts.clear();
-            this.ts.addAll(newTs);
-        }
-        return (THIS) this;
+
+            @Override
+            public T get(int position) {
+                return targets.get(position);
+            }
+        });
     }
 
     public THIS deleteAll(THIS targetVs) {
-        int valueSymbolCount = CountTool.count(targetVs);
-        int tCount = count();
-        if (valueSymbolCount > 0 && tCount > 0) {
-            List<T> newTs = new ArrayList<>();
-
-            T t;
-            String tValueSymbol;
-            boolean isSame;
-            for (int i = 0; i < tCount; i++) {
-                t = this.ts.get(i);
-                tValueSymbol = valueSymbol(t);
-
-                isSame = false;
-                for (int j = 0; j < valueSymbolCount; j++) {
-                    if (tValueSymbol.equals(valueSymbol((T) targetVs.ts.get(j)))) {
-                        isSame = true;
-                        break;
-                    }
-                }
-                if (!isSame) {
-                    newTs.add(t);
-                }
+        return deleteAll(new Vs.EachGetter<T>() {
+            @Override
+            public int count() {
+                return CountTool.count(targetVs);
             }
-            this.ts.clear();
-            this.ts.addAll(newTs);
-        }
-        return (THIS) this;
+
+            @Override
+            public T get(int position) {
+                return (T) targetVs.ts.get(position);
+            }
+        });
     }
 
     ///////////////////////////////////////////////////////
@@ -1273,8 +1260,8 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public <TARGET extends ValueSymbol> BaseVs<TARGET> convert(Vs.Convert<T, TARGET> convert) {
-        BaseVs baseVs = new BaseVs();
+    public <TARGET extends ValueSymbol> ValueSymbolVs<TARGET> convert(Vs.Convert<T, TARGET> convert) {
+        ValueSymbolVs baseVs = new ValueSymbolVs();
         if (convert != null) {
             int count = count();
             TARGET target;
@@ -1306,8 +1293,8 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return vs;
     }
 
-    public <TARGET extends ValueSymbol> BaseVs<TARGET> convertList(Vs.Convert<T, List<TARGET>> convert) {
-        BaseVs<TARGET> vs = new BaseVs<>();
+    public <TARGET extends ValueSymbol> ValueSymbolVs<TARGET> convertList(Vs.Convert<T, List<TARGET>> convert) {
+        ValueSymbolVs<TARGET> vs = new ValueSymbolVs<>();
         if (convert != null) {
             int count = count();
             List<TARGET> list;
@@ -1390,6 +1377,15 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             @Override
             public boolean isNowMax(T last, T now) {
                 return toDouble.toDouble(now) > toDouble.toDouble(last);
+            }
+        });
+    }
+
+    public MaxMin<T> maxMin(ToFloat<T> toFloat) {
+        return maxMin(new Vs.NowMax<T>() {
+            @Override
+            public boolean isNowMax(T last, T now) {
+                return toFloat.toFloat(now) > toFloat.toFloat(last);
             }
         });
     }

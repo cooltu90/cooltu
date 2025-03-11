@@ -4,12 +4,10 @@ import android.os.Bundle;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.form.TestCallBack;
-import com.codingtu.cooltu.lib4a.log.Logs;
-import com.codingtu.cooltu.lib4j.ts.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.vs.BaseVs;
-import com.codingtu.cooltu.lib4j.vs.IntegerVs;
-import com.codingtu.cooltu.lib4j.vs.StringVs;
+import com.codingtu.cooltu.lib4j.vs.ValueSymbolVs;
+import com.codingtu.cooltu.lib4j.vs.impl.DoubleVs;
+import com.codingtu.cooltu.lib4j.vs.impl.IntegerVs;
+import com.codingtu.cooltu.lib4j.vs.impl.StringVs;
 import com.codingtu.cooltu.lib4j.vs.Vs;
 import com.codingtu.cooltu.lib4j.vs.test.TestValue;
 import com.codingtu.cooltu.lib4j.vs.test.TestValue1;
@@ -20,11 +18,6 @@ import com.codingtu.cooltu.processor.annotation.tools.ToRes;
 import com.codingtu.cooltu.processor.annotation.ui.ActBase;
 import com.codingtu.cooltu.processor.annotation.ui.ClickView;
 import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import core.actbase.WelcomeActivityBase;
 import core.actres.WelcomeActivityRes;
@@ -51,7 +44,7 @@ public class WelcomeActivity extends WelcomeActivityBase {
         vs.add(new TestValue1("7790", "lisi1"));
         vs.add(new TestValue1("7794", "lisi1"));
 
-        BaseVs<TestValue> baseVs = Vs.vs();
+        ValueSymbolVs<TestValue> baseVs = Vs.vs();
         baseVs.add(new TestValue("0", "lisi1"));
         baseVs.add(new TestValue("1", "lisi2"));
         baseVs.add(new TestValue("2", "lisi3"));
@@ -67,8 +60,11 @@ public class WelcomeActivity extends WelcomeActivityBase {
         StringVs stringVs = new StringVs();
         stringVs.add("L-0001").add("zhangsan").add("L-0001").add("zhangsan").add("llll").add("zhangsan").add("L-0001").add("L-0001");
 
-        //test
+        DoubleVs doubleVs = new DoubleVs();
+        doubleVs.add(1.2d).add(1.5d).add(2.3d);
+        doubleVs.replaceFirst(1.2d, 5.6d);
 
+        //test
     }
 
 

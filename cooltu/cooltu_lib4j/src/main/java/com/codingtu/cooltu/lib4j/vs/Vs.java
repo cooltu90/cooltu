@@ -2,6 +2,9 @@ package com.codingtu.cooltu.lib4j.vs;
 
 import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
 import com.codingtu.cooltu.lib4j.data.symbol.ValueSymbol;
+import com.codingtu.cooltu.lib4j.vs.impl.BooleanVs;
+import com.codingtu.cooltu.lib4j.vs.impl.IntegerVs;
+import com.codingtu.cooltu.lib4j.vs.impl.StringVs;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +16,12 @@ public class Vs {
      **************************************************/
     public static interface EachTs<T> {
         boolean each(int position, T t);
+    }
+
+    public static interface EachGetter<T> {
+        int count();
+
+        T get(int position);
     }
 
     public static interface IsThisOne<T> {
@@ -58,20 +67,20 @@ public class Vs {
     /**************************************************
      * basevs
      **************************************************/
-    public static <T extends ValueSymbol> BaseVs<T> vs(T... srcVs) {
-        BaseVs<T> vs = new BaseVs<>();
+    public static <T extends ValueSymbol> ValueSymbolVs<T> vs(T... srcVs) {
+        ValueSymbolVs<T> vs = new ValueSymbolVs<>();
         vs.add(srcVs);
         return vs;
     }
 
-    public static <T extends ValueSymbol> BaseVs<T> vs(List<T> srcVs) {
-        BaseVs<T> vs = new BaseVs<>();
+    public static <T extends ValueSymbol> ValueSymbolVs<T> vs(List<T> srcVs) {
+        ValueSymbolVs<T> vs = new ValueSymbolVs<>();
         vs.add(srcVs);
         return vs;
     }
 
-    public static <T extends ValueSymbol> BaseVs<T> vs(BaseVs<T> srcVs) {
-        BaseVs<T> vs = new BaseVs<>();
+    public static <T extends ValueSymbol> ValueSymbolVs<T> vs(ValueSymbolVs<T> srcVs) {
+        ValueSymbolVs<T> vs = new ValueSymbolVs<>();
         vs.add(srcVs);
         return vs;
     }
@@ -81,7 +90,7 @@ public class Vs {
      **************************************************/
     public static IntegerVs ints(int... srcVs) {
         IntegerVs integerVs = new IntegerVs();
-        integerVs.addInts(srcVs);
+        integerVs.add_int(srcVs);
         return integerVs;
     }
 
@@ -130,7 +139,7 @@ public class Vs {
      **************************************************/
     public static BooleanVs bools(boolean... srcVs) {
         BooleanVs stringVs = new BooleanVs();
-        stringVs.addBools(srcVs);
+        stringVs.add_boolean(srcVs);
         return stringVs;
     }
 
