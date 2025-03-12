@@ -1,14 +1,13 @@
-package com.codingtu.cooltu.lib4j.vs.impl;
+package com.codingtu.cooltu.lib4j.es.impl;
 
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
 import com.codingtu.cooltu.lib4j.function.ToDouble;
-import com.codingtu.cooltu.lib4j.function.ToFloat;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.vs.NumVs;
+import com.codingtu.cooltu.lib4j.es.NumEs;
 
 import java.util.List;
 
-public class DoubleVs extends NumVs<Double, DoubleVs> {
+public class DoubleEs extends NumEs<Double, DoubleEs> {
 
     ///////////////////////////////////////////////////////
     //
@@ -16,22 +15,13 @@ public class DoubleVs extends NumVs<Double, DoubleVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public DoubleVs() {
+    public DoubleEs() {
     }
 
-    public DoubleVs(List<Double> list) {
+    public DoubleEs(List<Double> list) {
         super(list);
     }
 
-    ///////////////////////////////////////////////////////
-    //
-    // 获取valueSymbol
-    //
-    ///////////////////////////////////////////////////////
-    @Override
-    protected String obtainSymbol(Double aDouble) {
-        return aDouble + "";
-    }
 
     ///////////////////////////////////////////////////////
     //
@@ -39,10 +29,10 @@ public class DoubleVs extends NumVs<Double, DoubleVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public DoubleVs add_double(double... doubles) {
+    public DoubleEs add_double(double... doubles) {
         int count = CountTool.count(doubles);
         for (int i = 0; i < count; i++) {
-            this.ts.add(doubles[i]);
+            this.es.add(doubles[i]);
         }
         return this;
     }
@@ -53,8 +43,8 @@ public class DoubleVs extends NumVs<Double, DoubleVs> {
     // createThis
     //
     ///////////////////////////////////////////////////////
-    public DoubleVs createThis_double(double... doubles) {
-        DoubleVs doubleVs = new DoubleVs();
+    public DoubleEs createThis_double(double... doubles) {
+        DoubleEs doubleVs = new DoubleEs();
         doubleVs.add_double(doubles);
         return doubleVs;
     }
@@ -82,7 +72,7 @@ public class DoubleVs extends NumVs<Double, DoubleVs> {
         int count = count();
         double[] arrs = new double[count];
         for (int i = 0; i < count; i++) {
-            arrs[i] = this.ts.get(i);
+            arrs[i] = this.es.get(i);
         }
         return arrs;
     }

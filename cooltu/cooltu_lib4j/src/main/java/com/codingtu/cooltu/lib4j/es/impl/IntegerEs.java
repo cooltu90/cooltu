@@ -1,38 +1,24 @@
-package com.codingtu.cooltu.lib4j.vs.impl;
+package com.codingtu.cooltu.lib4j.es.impl;
 
-import com.codingtu.cooltu.lib4j.function.ToDouble;
 import com.codingtu.cooltu.lib4j.function.ToInt;
-import com.codingtu.cooltu.lib4j.function.ToLong;
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.vs.NumVs;
-import com.codingtu.cooltu.lib4j.vs.Vs;
+import com.codingtu.cooltu.lib4j.es.NumEs;
 
 import java.util.List;
-import java.util.Map;
 
-public class IntegerVs extends NumVs<Integer, IntegerVs> {
+public class IntegerEs extends NumEs<Integer, IntegerEs> {
 
     ///////////////////////////////////////////////////////
     //
     // 构造函数
     //
     ///////////////////////////////////////////////////////
-    public IntegerVs() {
+    public IntegerEs() {
     }
 
-    public IntegerVs(List<Integer> list) {
+    public IntegerEs(List<Integer> list) {
         super(list);
-    }
-
-    ///////////////////////////////////////////////////////
-    //
-    // 获取valueSymbol
-    //
-    ///////////////////////////////////////////////////////
-    @Override
-    protected String obtainSymbol(Integer integer) {
-        return String.valueOf(integer);
     }
 
     ///////////////////////////////////////////////////////
@@ -41,10 +27,10 @@ public class IntegerVs extends NumVs<Integer, IntegerVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public IntegerVs add_int(int... ints) {
+    public IntegerEs add_int(int... ints) {
         int count = CountTool.count(ints);
         for (int i = 0; i < count; i++) {
-            this.ts.add(ints[i]);
+            this.es.add(ints[i]);
         }
         return this;
     }
@@ -54,8 +40,8 @@ public class IntegerVs extends NumVs<Integer, IntegerVs> {
     // createThis
     //
     ///////////////////////////////////////////////////////
-    public IntegerVs createThis_int(int... ints) {
-        IntegerVs integerVs = new IntegerVs();
+    public IntegerEs createThis_int(int... ints) {
+        IntegerEs integerVs = new IntegerEs();
         integerVs.add_int(ints);
         return integerVs;
     }
@@ -84,7 +70,7 @@ public class IntegerVs extends NumVs<Integer, IntegerVs> {
         int count = count();
         int[] arrs = new int[count];
         for (int i = 0; i < count; i++) {
-            arrs[i] = this.ts.get(i);
+            arrs[i] = this.es.get(i);
         }
         return arrs;
     }

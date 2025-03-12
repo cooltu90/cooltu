@@ -1,14 +1,13 @@
-package com.codingtu.cooltu.lib4j.vs.impl;
+package com.codingtu.cooltu.lib4j.es.impl;
 
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
-import com.codingtu.cooltu.lib4j.function.ToDouble;
-import com.codingtu.cooltu.lib4j.function.ToFloat;
+import com.codingtu.cooltu.lib4j.function.ToLong;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.vs.NumVs;
+import com.codingtu.cooltu.lib4j.es.NumEs;
 
 import java.util.List;
 
-public class FloatVs extends NumVs<Float, FloatVs> {
+public class LongEs extends NumEs<Long, LongEs> {
 
     ///////////////////////////////////////////////////////
     //
@@ -16,21 +15,11 @@ public class FloatVs extends NumVs<Float, FloatVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public FloatVs() {
+    public LongEs() {
     }
 
-    public FloatVs(List<Float> list) {
+    public LongEs(List<Long> list) {
         super(list);
-    }
-
-    ///////////////////////////////////////////////////////
-    //
-    // 获取valueSymbol
-    //
-    ///////////////////////////////////////////////////////
-    @Override
-    protected String obtainSymbol(Float aFloat) {
-        return aFloat + "";
     }
 
     ///////////////////////////////////////////////////////
@@ -39,10 +28,10 @@ public class FloatVs extends NumVs<Float, FloatVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public FloatVs add_float(float... floats) {
-        int count = CountTool.count(floats);
+    public LongEs add_long(long... longs) {
+        int count = CountTool.count(longs);
         for (int i = 0; i < count; i++) {
-            this.ts.add(floats[i]);
+            this.es.add(longs[i]);
         }
         return this;
     }
@@ -52,10 +41,10 @@ public class FloatVs extends NumVs<Float, FloatVs> {
     // createThis
     //
     ///////////////////////////////////////////////////////
-    public FloatVs createThis_float(float... floats) {
-        FloatVs floatVs = new FloatVs();
-        floatVs.add_float(floats);
-        return floatVs;
+    public LongEs createThis_long(long... longs) {
+        LongEs longVs = new LongEs();
+        longVs.add_long(longs);
+        return longVs;
     }
 
     ///////////////////////////////////////////////////////
@@ -63,11 +52,11 @@ public class FloatVs extends NumVs<Float, FloatVs> {
     // maxMin
     //
     ///////////////////////////////////////////////////////
-    public MaxMin<Float> maxMin() {
-        return super.maxMin(new ToFloat<Float>() {
+    public MaxMin<Long> maxMin() {
+        return super.maxMin(new ToLong<Long>() {
             @Override
-            public double toFloat(Float aFloat) {
-                return aFloat;
+            public long toLong(Long aLong) {
+                return aLong;
             }
         });
     }
@@ -77,11 +66,12 @@ public class FloatVs extends NumVs<Float, FloatVs> {
     // toArray
     //
     ///////////////////////////////////////////////////////
-    public float[] to_floats() {
+
+    public long[] to_longs() {
         int count = count();
-        float[] arrs = new float[count];
+        long[] arrs = new long[count];
         for (int i = 0; i < count; i++) {
-            arrs[i] = this.ts.get(i);
+            arrs[i] = this.es.get(i);
         }
         return arrs;
     }
