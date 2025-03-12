@@ -3,7 +3,10 @@ package com.codingtu.cooltu.lib4j.vs;
 import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
 import com.codingtu.cooltu.lib4j.data.symbol.ValueSymbol;
 import com.codingtu.cooltu.lib4j.vs.impl.BooleanVs;
+import com.codingtu.cooltu.lib4j.vs.impl.DoubleVs;
+import com.codingtu.cooltu.lib4j.vs.impl.FloatVs;
 import com.codingtu.cooltu.lib4j.vs.impl.IntegerVs;
+import com.codingtu.cooltu.lib4j.vs.impl.LongVs;
 import com.codingtu.cooltu.lib4j.vs.impl.StringVs;
 
 import java.util.List;
@@ -52,6 +55,10 @@ public class Vs {
         void deal(Map<K, V> map, int i, T t);
     }
 
+    public interface MapEach<K, V> {
+        public boolean each(K k, V v);
+    }
+
     /**************************************************
      *
      **************************************************/
@@ -65,7 +72,7 @@ public class Vs {
     }
 
     /**************************************************
-     * basevs
+     * ValueSymbolVs
      **************************************************/
     public static <T extends ValueSymbol> ValueSymbolVs<T> vs(T... srcVs) {
         ValueSymbolVs<T> vs = new ValueSymbolVs<>();
@@ -74,9 +81,7 @@ public class Vs {
     }
 
     public static <T extends ValueSymbol> ValueSymbolVs<T> vs(List<T> srcVs) {
-        ValueSymbolVs<T> vs = new ValueSymbolVs<>();
-        vs.add(srcVs);
-        return vs;
+        return new ValueSymbolVs<>(srcVs);
     }
 
     public static <T extends ValueSymbol> ValueSymbolVs<T> vs(ValueSymbolVs<T> srcVs) {
@@ -86,61 +91,147 @@ public class Vs {
     }
 
     /**************************************************
-     * ints
+     * StringVs
      **************************************************/
-    public static IntegerVs ints(int... srcVs) {
-        IntegerVs integerVs = new IntegerVs();
-        integerVs.add_int(srcVs);
-        return integerVs;
-    }
-
-    public static IntegerVs integers(Integer... srcVs) {
-        IntegerVs integerVs = new IntegerVs();
-        integerVs.add(srcVs);
-        return integerVs;
-    }
-
-    public static IntegerVs ints(List<Integer> srcVs) {
-        IntegerVs integerVs = new IntegerVs();
-        integerVs.add(srcVs);
-        return integerVs;
-    }
-
-    public static IntegerVs ints(IntegerVs srcVs) {
-        IntegerVs integerVs = new IntegerVs();
-        integerVs.add(srcVs);
-        return integerVs;
-    }
-
-    /**************************************************
-     * Strings
-     **************************************************/
-
     public static StringVs strs(String... srcVs) {
-        StringVs stringVs = new StringVs();
-        stringVs.add(srcVs);
-        return stringVs;
+        StringVs vs = new StringVs();
+        vs.add(srcVs);
+        return vs;
     }
 
     public static StringVs strs(List<String> srcVs) {
-        StringVs stringVs = new StringVs();
-        stringVs.add(srcVs);
-        return stringVs;
+        return new StringVs(srcVs);
     }
 
     public static StringVs strs(StringVs srcVs) {
-        StringVs stringVs = new StringVs();
-        stringVs.add(srcVs);
-        return stringVs;
+        StringVs vs = new StringVs();
+        vs.add(srcVs);
+        return vs;
     }
 
     /**************************************************
-     * booleans
+     * BooleanVs
      **************************************************/
-    public static BooleanVs bools(boolean... srcVs) {
-        BooleanVs stringVs = new BooleanVs();
-        stringVs.add_boolean(srcVs);
-        return stringVs;
+    public static BooleanVs booleans(Boolean... srcVs) {
+        BooleanVs vs = new BooleanVs();
+        vs.add(srcVs);
+        return vs;
+    }
+
+    public static BooleanVs booleans(boolean... srcVs) {
+        BooleanVs vs = new BooleanVs();
+        vs.add_boolean(srcVs);
+        return vs;
+    }
+
+    public static BooleanVs booleans(List<Boolean> srcVs) {
+        return new BooleanVs(srcVs);
+    }
+
+    public static BooleanVs booleans(BooleanVs srcVs) {
+        BooleanVs vs = new BooleanVs();
+        vs.add(srcVs);
+        return vs;
+    }
+
+    /**************************************************
+     * DoubleVs
+     **************************************************/
+    public static DoubleVs doubles(Double... srcVs) {
+        DoubleVs vs = new DoubleVs();
+        vs.add(srcVs);
+        return vs;
+    }
+
+    public static DoubleVs doubles(double... srcVs) {
+        DoubleVs vs = new DoubleVs();
+        vs.add_double(srcVs);
+        return vs;
+    }
+
+    public static DoubleVs doubles(List<Double> srcVs) {
+        return new DoubleVs(srcVs);
+    }
+
+    public static DoubleVs doubles(DoubleVs srcVs) {
+        DoubleVs vs = new DoubleVs();
+        vs.add(srcVs);
+        return vs;
+    }
+
+    /**************************************************
+     * FloatVs
+     **************************************************/
+    public static FloatVs floats(Float... srcVs) {
+        FloatVs vs = new FloatVs();
+        vs.add(srcVs);
+        return vs;
+    }
+
+    public static FloatVs floats(float... srcVs) {
+        FloatVs vs = new FloatVs();
+        vs.add_float(srcVs);
+        return vs;
+    }
+
+    public static FloatVs floats(List<Float> srcVs) {
+        return new FloatVs(srcVs);
+    }
+
+    public static FloatVs floats(FloatVs srcVs) {
+        FloatVs vs = new FloatVs();
+        vs.add(srcVs);
+        return vs;
+    }
+
+    /**************************************************
+     * IntegerVs
+     **************************************************/
+    public static IntegerVs ints(Integer... srcVs) {
+        IntegerVs vs = new IntegerVs();
+        vs.add(srcVs);
+        return vs;
+    }
+
+    public static IntegerVs ints(int... srcVs) {
+        IntegerVs vs = new IntegerVs();
+        vs.add_int(srcVs);
+        return vs;
+    }
+
+    public static IntegerVs ints(List<Integer> srcVs) {
+        return new IntegerVs(srcVs);
+    }
+
+    public static IntegerVs ints(IntegerVs srcVs) {
+        IntegerVs vs = new IntegerVs();
+        vs.add(srcVs);
+        return vs;
+    }
+
+    /**************************************************
+     * LongVs
+     **************************************************/
+    public static LongVs longs(Long... srcVs) {
+        LongVs vs = new LongVs();
+        vs.add(srcVs);
+        return vs;
+    }
+
+    public static LongVs longs(long... srcVs) {
+        LongVs vs = new LongVs();
+        vs.add_long(srcVs);
+        return vs;
+    }
+
+    public static LongVs longs(List<Long> srcVs) {
+        return new LongVs(srcVs);
+    }
+
+    public static LongVs longs(LongVs srcVs) {
+        LongVs vs = new LongVs();
+        vs.add(srcVs);
+        return vs;
     }
 
 }

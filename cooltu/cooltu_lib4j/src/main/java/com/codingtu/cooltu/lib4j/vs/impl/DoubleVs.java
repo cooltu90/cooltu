@@ -72,4 +72,18 @@ public class DoubleVs extends NumVs<Double, DoubleVs> {
             }
         });
     }
+
+    ///////////////////////////////////////////////////////
+    //
+    // toArray
+    //
+    ///////////////////////////////////////////////////////
+    public double[] to_doubles() {
+        int count = count();
+        double[] arrs = new double[count];
+        for (int i = 0; i < count; i++) {
+            arrs[i] = this.ts.get(i);
+        }
+        return arrs;
+    }
 }

@@ -70,4 +70,19 @@ public class LongVs extends NumVs<Long, LongVs> {
             }
         });
     }
+
+    ///////////////////////////////////////////////////////
+    //
+    // toArray
+    //
+    ///////////////////////////////////////////////////////
+
+    public long[] to_longs() {
+        int count = count();
+        long[] arrs = new long[count];
+        for (int i = 0; i < count; i++) {
+            arrs[i] = this.ts.get(i);
+        }
+        return arrs;
+    }
 }

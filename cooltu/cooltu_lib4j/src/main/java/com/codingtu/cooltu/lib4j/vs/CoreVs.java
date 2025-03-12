@@ -1564,4 +1564,13 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         });
     }
 
+    public Map<T, T> toTMap() {
+        return toMap(new Vs.ToMap<T, T, T>() {
+            @Override
+            public void deal(Map<T, T> map, int i, T t) {
+                map.put(t, t);
+            }
+        });
+    }
+
 }

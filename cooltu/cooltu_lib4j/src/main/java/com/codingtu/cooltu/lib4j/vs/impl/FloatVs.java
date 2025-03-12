@@ -71,4 +71,18 @@ public class FloatVs extends NumVs<Float, FloatVs> {
             }
         });
     }
+
+    ///////////////////////////////////////////////////////
+    //
+    // toArray
+    //
+    ///////////////////////////////////////////////////////
+    public float[] to_floats() {
+        int count = count();
+        float[] arrs = new float[count];
+        for (int i = 0; i < count; i++) {
+            arrs[i] = this.ts.get(i);
+        }
+        return arrs;
+    }
 }

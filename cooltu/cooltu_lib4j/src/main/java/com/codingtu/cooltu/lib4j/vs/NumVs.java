@@ -11,6 +11,7 @@ import com.codingtu.cooltu.lib4j.vs.impl.StringVs;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
 
@@ -538,5 +539,16 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
     @Override
     public T obtainNeighborDataWhenPrePriorityByValueSymbol(String valueSymbol) {
         return super.obtainNeighborDataWhenPrePriorityByValueSymbol(valueSymbol);
+    }
+
+    ///////////////////////////////////////////////////////
+    //
+    // ToMap
+    //
+    ///////////////////////////////////////////////////////
+    @Deprecated
+    @Override
+    public Map<String, T> toMap() {
+        return super.toMap();
     }
 }

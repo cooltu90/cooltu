@@ -5,6 +5,7 @@ import com.codingtu.cooltu.lib4j.vs.CoreVs;
 import com.codingtu.cooltu.lib4j.vs.Vs;
 
 import java.util.List;
+import java.util.Map;
 
 public class BooleanVs extends CoreVs<Boolean, BooleanVs> {
 
@@ -542,5 +543,19 @@ public class BooleanVs extends CoreVs<Boolean, BooleanVs> {
     @Override
     public Boolean obtainNeighborDataWhenPrePriority(Boolean aBoolean) {
         return super.obtainNeighborDataWhenPrePriority(aBoolean);
+    }
+
+    ///////////////////////////////////////////////////////
+    //
+    // toArray
+    //
+    ///////////////////////////////////////////////////////
+    public boolean[] to_booleans() {
+        int count = count();
+        boolean[] arrs = new boolean[count];
+        for (int i = 0; i < count; i++) {
+            arrs[i] = this.ts.get(i);
+        }
+        return arrs;
     }
 }

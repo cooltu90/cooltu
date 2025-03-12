@@ -4,6 +4,7 @@ import com.codingtu.cooltu.lib4j.vs.CoreVs;
 import com.codingtu.cooltu.lib4j.vs.Vs;
 
 import java.util.List;
+import java.util.Map;
 
 public class StringVs extends CoreVs<String, StringVs> {
 
@@ -425,6 +426,4 @@ public class StringVs extends CoreVs<String, StringVs> {
     public String obtainNeighborDataWhenPrePriorityByValueSymbol(String valueSymbol) {
         return super.obtainNeighborDataWhenPrePriorityByValueSymbol(valueSymbol);
     }
-
-
 }

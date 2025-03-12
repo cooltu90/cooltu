@@ -74,33 +74,18 @@ public class IntegerVs extends NumVs<Integer, IntegerVs> {
         });
     }
 
-
     ///////////////////////////////////////////////////////
     //
-    // 分割
+    // toArray
     //
     ///////////////////////////////////////////////////////
 
-    /**************************************************
-     *
-     **************************************************/
-    public int[] toInts() {
+    public int[] to_ints() {
         int count = count();
-        int[] ints = new int[count];
-        if (count > 0) {
-            for (int i = 0; i < count; i++) {
-                ints[i] = this.ts.get(i);
-            }
+        int[] arrs = new int[count];
+        for (int i = 0; i < count; i++) {
+            arrs[i] = this.ts.get(i);
         }
-        return ints;
-    }
-
-    /**************************************************
-     *
-     **************************************************/
-    @Deprecated
-    @Override
-    public Map<String, Integer> toMap() {
-        return super.toMap();
+        return arrs;
     }
 }
