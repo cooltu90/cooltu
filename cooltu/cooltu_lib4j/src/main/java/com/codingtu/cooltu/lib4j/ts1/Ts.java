@@ -2,6 +2,7 @@ package com.codingtu.cooltu.lib4j.ts1;
 
 import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
 import com.codingtu.cooltu.lib4j.data.symbol1.Symbol;
+import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts1.impl.BooleanTs;
 import com.codingtu.cooltu.lib4j.ts1.impl.DoubleTs;
 import com.codingtu.cooltu.lib4j.ts1.impl.FloatTs;
@@ -11,6 +12,7 @@ import com.codingtu.cooltu.lib4j.ts1.impl.StringTs;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Ts {
 
@@ -72,6 +74,34 @@ public class Ts {
     }
 
     /**************************************************
+     * BaseTs
+     **************************************************/
+    public static <T> BaseTs<T> baseTs(T... srcTs) {
+        BaseTs<T> ts = new BaseTs<>();
+        ts.add(srcTs);
+        return ts;
+    }
+
+    public static <T> BaseTs<T> baseTs(List<T> srcTs) {
+        return new BaseTs(srcTs);
+    }
+
+    public static <T> BaseTs<T> baseTs(Set<T> srcTs) {
+        BaseTs<T> ts = new BaseTs<>();
+        if (!CountTool.isNull(srcTs)) {
+            ts.ts.addAll(srcTs);
+        }
+        return ts;
+    }
+
+    public static <T> BaseTs<T> baseTs(BaseTs<T> srcTs) {
+        BaseTs<T> ts = new BaseTs<>();
+        ts.add(srcTs);
+        return ts;
+    }
+
+
+    /**************************************************
      * SymbolTs
      **************************************************/
     public static <T extends Symbol> SymbolTs<T> ts(T... srcTs) {
@@ -82,6 +112,14 @@ public class Ts {
 
     public static <T extends Symbol> SymbolTs<T> ts(List<T> srcTs) {
         return new SymbolTs<>(srcTs);
+    }
+
+    public static <T extends Symbol> SymbolTs<T> ts(Set<T> srcTs) {
+        SymbolTs<T> ts = new SymbolTs<>();
+        if (!CountTool.isNull(srcTs)) {
+            ts.ts.addAll(srcTs);
+        }
+        return ts;
     }
 
     public static <T extends Symbol> SymbolTs<T> ts(SymbolTs<T> srcTs) {
@@ -101,6 +139,15 @@ public class Ts {
 
     public static StringTs strs(List<String> srcTs) {
         return new StringTs(srcTs);
+    }
+
+
+    public static StringTs strs(Set<String> srcTs) {
+        StringTs ts = new StringTs();
+        if (!CountTool.isNull(srcTs)) {
+            ts.ts.addAll(srcTs);
+        }
+        return ts;
     }
 
     public static StringTs strs(StringTs srcTs) {
@@ -128,6 +175,14 @@ public class Ts {
         return new BooleanTs(srcTs);
     }
 
+    public static BooleanTs booleans(Set<Boolean> srcTs) {
+        BooleanTs ts = new BooleanTs();
+        if (!CountTool.isNull(srcTs)) {
+            ts.ts.addAll(srcTs);
+        }
+        return ts;
+    }
+
     public static BooleanTs booleans(BooleanTs srcTs) {
         BooleanTs ts = new BooleanTs();
         ts.add(srcTs);
@@ -151,6 +206,14 @@ public class Ts {
 
     public static DoubleTs doubles(List<Double> srcTs) {
         return new DoubleTs(srcTs);
+    }
+
+    public static DoubleTs doubles(Set<Double> srcTs) {
+        DoubleTs ts = new DoubleTs();
+        if (!CountTool.isNull(srcTs)) {
+            ts.ts.addAll(srcTs);
+        }
+        return ts;
     }
 
     public static DoubleTs doubles(DoubleTs srcTs) {
@@ -178,6 +241,14 @@ public class Ts {
         return new FloatTs(srcTs);
     }
 
+    public static FloatTs floats(Set<Float> srcTs) {
+        FloatTs ts = new FloatTs();
+        if (!CountTool.isNull(srcTs)) {
+            ts.ts.addAll(srcTs);
+        }
+        return ts;
+    }
+
     public static FloatTs floats(FloatTs srcTs) {
         FloatTs ts = new FloatTs();
         ts.add(srcTs);
@@ -203,6 +274,14 @@ public class Ts {
         return new IntegerTs(srcTs);
     }
 
+    public static IntegerTs ints(Set<Integer> srcTs) {
+        IntegerTs ts = new IntegerTs();
+        if (!CountTool.isNull(srcTs)) {
+            ts.ts.addAll(srcTs);
+        }
+        return ts;
+    }
+
     public static IntegerTs ints(IntegerTs srcTs) {
         IntegerTs ts = new IntegerTs();
         ts.add(srcTs);
@@ -226,6 +305,14 @@ public class Ts {
 
     public static LongTs longs(List<Long> srcTs) {
         return new LongTs(srcTs);
+    }
+
+    public static LongTs longs(Set<Long> srcTs) {
+        LongTs ts = new LongTs();
+        if (!CountTool.isNull(srcTs)) {
+            ts.ts.addAll(srcTs);
+        }
+        return ts;
     }
 
     public static LongTs longs(LongTs srcTs) {
