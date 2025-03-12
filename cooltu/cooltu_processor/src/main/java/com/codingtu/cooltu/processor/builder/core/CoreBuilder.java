@@ -3,7 +3,7 @@ package com.codingtu.cooltu.processor.builder.core;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
-import com.codingtu.cooltu.lib4j.data.symbol.Symbol;
+import com.codingtu.cooltu.lib4j.data.symbol1.Symbol;
 import com.codingtu.cooltu.lib4j.file.write.FileWriter;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;

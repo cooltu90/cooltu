@@ -3,7 +3,11 @@ package com.codingtu.cooltu.ui;
 import android.os.Bundle;
 
 import com.codingtu.cooltu.R;
+import com.codingtu.cooltu.bean.User;
 import com.codingtu.cooltu.form.TestCallBack;
+import com.codingtu.cooltu.lib4j.ts1.BaseTs;
+import com.codingtu.cooltu.lib4j.ts1.CoreTs;
+import com.codingtu.cooltu.lib4j.ts1.Ts;
 import com.codingtu.cooltu.processor.annotation.net.NetBack;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
@@ -28,7 +32,7 @@ public class WelcomeActivity extends WelcomeActivityBase {
 
     @ClickView(R.id.showBt)
     public void showBtClick() {
-
+        CoreTs tttt = Ts.tttt(new User());
     }
 
 

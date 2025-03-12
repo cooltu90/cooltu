@@ -2,6 +2,7 @@ package com.codingtu.cooltu.lib4j.ts1;
 
 import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
 import com.codingtu.cooltu.lib4j.data.symbol1.Symbol;
+import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts1.impl.BooleanTs;
 import com.codingtu.cooltu.lib4j.ts1.impl.DoubleTs;
@@ -72,6 +73,16 @@ public class Ts {
             return neighborIndex > currentIndex;
         }
     }
+
+    /**************************************************
+     *
+     **************************************************/
+    public static <T> CoreTs tttt(T... srcTs) {
+        Class aClass = srcTs.getClass();
+        LibLogs.i(aClass.getCanonicalName());
+        return null;
+    }
+
 
     /**************************************************
      * BaseTs
