@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4j.vs;
+package com.codingtu.cooltu.lib4j.ts1;
 
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.json.JsonTool;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class CoreMaps<K, V, THIS extends CoreMaps, VS extends CoreVs> {
+public abstract class CoreMaps<K, V, THIS extends CoreMaps, VS extends CoreTs> {
 
     ///////////////////////////////////////////////////////
     //
@@ -67,7 +67,7 @@ public abstract class CoreMaps<K, V, THIS extends CoreMaps, VS extends CoreVs> {
     // each
     //
     ///////////////////////////////////////////////////////
-    public THIS ls(Vs.MapEach<K, V> mapEach) {
+    public THIS ls(Ts.MapEach<K, V> mapEach) {
         Set<K> ks = this.map.keySet();
         for (K k : ks) {
             if (mapEach.each(k, map.get(k))) {
@@ -83,7 +83,7 @@ public abstract class CoreMaps<K, V, THIS extends CoreMaps, VS extends CoreVs> {
     //
     ///////////////////////////////////////////////////////
     public THIS log() {
-        ls(new Vs.MapEach<K, V>() {
+        ls(new Ts.MapEach<K, V>() {
             @Override
             public boolean each(K k, V v) {
                 LibLogs.i("k:" + k + " v:" + JsonTool.toJson(v));
@@ -113,7 +113,7 @@ public abstract class CoreMaps<K, V, THIS extends CoreMaps, VS extends CoreVs> {
 
     public VS getValueList() {
         VS vs = createVs();
-        ls(new Vs.MapEach<K, V>() {
+        ls(new Ts.MapEach<K, V>() {
             @Override
             public boolean each(K k, V v) {
                 vs.add(v);

@@ -1,36 +1,34 @@
-package com.codingtu.cooltu.lib4j.vs.impl;
+package com.codingtu.cooltu.lib4j.ts1.impl;
 
+import com.codingtu.cooltu.lib4j.function.ToInt;
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
-import com.codingtu.cooltu.lib4j.function.ToDouble;
-import com.codingtu.cooltu.lib4j.function.ToFloat;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.vs.NumVs;
+import com.codingtu.cooltu.lib4j.ts1.NumTs;
 
 import java.util.List;
 
-public class DoubleVs extends NumVs<Double, DoubleVs> {
+public class IntegerTs extends NumTs<Integer, IntegerTs> {
 
     ///////////////////////////////////////////////////////
     //
     // 构造函数
     //
     ///////////////////////////////////////////////////////
-
-    public DoubleVs() {
+    public IntegerTs() {
     }
 
-    public DoubleVs(List<Double> list) {
+    public IntegerTs(List<Integer> list) {
         super(list);
     }
 
     ///////////////////////////////////////////////////////
     //
-    // 获取valueSymbol
+    // 获取symbol
     //
     ///////////////////////////////////////////////////////
     @Override
-    protected String obtainSymbol(Double aDouble) {
-        return aDouble + "";
+    protected String obtainSymbol(Integer integer) {
+        return String.valueOf(integer);
     }
 
     ///////////////////////////////////////////////////////
@@ -39,24 +37,23 @@ public class DoubleVs extends NumVs<Double, DoubleVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public DoubleVs add_double(double... doubles) {
-        int count = CountTool.count(doubles);
+    public IntegerTs add_int(int... ints) {
+        int count = CountTool.count(ints);
         for (int i = 0; i < count; i++) {
-            this.ts.add(doubles[i]);
+            this.ts.add(ints[i]);
         }
         return this;
     }
-
 
     ///////////////////////////////////////////////////////
     //
     // createThis
     //
     ///////////////////////////////////////////////////////
-    public DoubleVs createThis_double(double... doubles) {
-        DoubleVs doubleVs = new DoubleVs();
-        doubleVs.add_double(doubles);
-        return doubleVs;
+    public IntegerTs createThis_int(int... ints) {
+        IntegerTs integerTs = new IntegerTs();
+        integerTs.add_int(ints);
+        return integerTs;
     }
 
     ///////////////////////////////////////////////////////
@@ -64,11 +61,11 @@ public class DoubleVs extends NumVs<Double, DoubleVs> {
     // maxMin
     //
     ///////////////////////////////////////////////////////
-    public MaxMin<Double> maxMin() {
-        return super.maxMin(new ToDouble<Double>() {
+    public MaxMin<Integer> maxMin() {
+        return super.maxMin(new ToInt<Integer>() {
             @Override
-            public double toDouble(Double aDouble) {
-                return aDouble;
+            public int toInt(Integer integer) {
+                return integer;
             }
         });
     }
@@ -78,9 +75,10 @@ public class DoubleVs extends NumVs<Double, DoubleVs> {
     // toArray
     //
     ///////////////////////////////////////////////////////
-    public double[] to_doubles() {
+
+    public int[] to_ints() {
         int count = count();
-        double[] arrs = new double[count];
+        int[] arrs = new int[count];
         for (int i = 0; i < count; i++) {
             arrs[i] = this.ts.get(i);
         }

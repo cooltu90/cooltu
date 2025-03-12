@@ -1,13 +1,13 @@
-package com.codingtu.cooltu.lib4j.vs.impl;
+package com.codingtu.cooltu.lib4j.ts1.impl;
 
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
-import com.codingtu.cooltu.lib4j.function.ToLong;
+import com.codingtu.cooltu.lib4j.function.ToDouble;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.vs.NumVs;
+import com.codingtu.cooltu.lib4j.ts1.NumTs;
 
 import java.util.List;
 
-public class LongVs extends NumVs<Long, LongVs> {
+public class DoubleTs extends NumTs<Double, DoubleTs> {
 
     ///////////////////////////////////////////////////////
     //
@@ -15,21 +15,21 @@ public class LongVs extends NumVs<Long, LongVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public LongVs() {
+    public DoubleTs() {
     }
 
-    public LongVs(List<Long> list) {
+    public DoubleTs(List<Double> list) {
         super(list);
     }
-    ///////////////////////////////////////////////////////
-    //
-    // 获取valueSymbol
-    //
-    ///////////////////////////////////////////////////////
 
+    ///////////////////////////////////////////////////////
+    //
+    // 获取symbol
+    //
+    ///////////////////////////////////////////////////////
     @Override
-    protected String obtainSymbol(Long aLong) {
-        return aLong + "";
+    protected String obtainSymbol(Double aDouble) {
+        return aDouble + "";
     }
 
     ///////////////////////////////////////////////////////
@@ -38,23 +38,24 @@ public class LongVs extends NumVs<Long, LongVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public LongVs add_long(long... longs) {
-        int count = CountTool.count(longs);
+    public DoubleTs add_double(double... doubles) {
+        int count = CountTool.count(doubles);
         for (int i = 0; i < count; i++) {
-            this.ts.add(longs[i]);
+            this.ts.add(doubles[i]);
         }
         return this;
     }
+
 
     ///////////////////////////////////////////////////////
     //
     // createThis
     //
     ///////////////////////////////////////////////////////
-    public LongVs createThis_long(long... longs) {
-        LongVs longVs = new LongVs();
-        longVs.add_long(longs);
-        return longVs;
+    public DoubleTs createThis_double(double... doubles) {
+        DoubleTs doubleTs = new DoubleTs();
+        doubleTs.add_double(doubles);
+        return doubleTs;
     }
 
     ///////////////////////////////////////////////////////
@@ -62,11 +63,11 @@ public class LongVs extends NumVs<Long, LongVs> {
     // maxMin
     //
     ///////////////////////////////////////////////////////
-    public MaxMin<Long> maxMin() {
-        return super.maxMin(new ToLong<Long>() {
+    public MaxMin<Double> maxMin() {
+        return super.maxMin(new ToDouble<Double>() {
             @Override
-            public long toLong(Long aLong) {
-                return aLong;
+            public double toDouble(Double aDouble) {
+                return aDouble;
             }
         });
     }
@@ -76,10 +77,9 @@ public class LongVs extends NumVs<Long, LongVs> {
     // toArray
     //
     ///////////////////////////////////////////////////////
-
-    public long[] to_longs() {
+    public double[] to_doubles() {
         int count = count();
-        long[] arrs = new long[count];
+        double[] arrs = new double[count];
         for (int i = 0; i < count; i++) {
             arrs[i] = this.ts.get(i);
         }

@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4j.vs;
+package com.codingtu.cooltu.lib4j.ts1;
 
 import com.codingtu.cooltu.lib4j.function.ToDouble;
 import com.codingtu.cooltu.lib4j.function.ToFloat;
@@ -9,10 +9,9 @@ import com.codingtu.cooltu.lib4j.json.JsonTool;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.OtherTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.data.symbol1.Symbol;
-import com.codingtu.cooltu.lib4j.vs.impl.IntegerVs;
-import com.codingtu.cooltu.lib4j.vs.impl.StringVs;
+import com.codingtu.cooltu.lib4j.ts1.impl.IntegerTs;
+import com.codingtu.cooltu.lib4j.ts1.impl.StringTs;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +28,7 @@ import java.util.Map;
  * {@link #add(Object)}
  * {@link #add(Object[])}
  * {@link #add(List)}
- * {@link #add(CoreVs)}
+ * {@link #add(CoreTs)}
  * {@link #addn(int, Object)}
  *
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -39,14 +38,14 @@ import java.util.Map;
  * 【通过索引值获取】
  * {@link #getByIndex(int)}
  *
- * 【getFirst】
- * {@link #getFirst(Vs.IsThisOne)}
- * {@link #getFirstByValueSymbol(String)}
- * {@link #getFirst(Object)}
+ * 【get】
+ * {@link #get(Ts.IsThisOne)}
+ * {@link #getBySymbol(String)}
+ * {@link #get(Object)}
  *
  * 【getAll】
- * {@link #getAll(Vs.IsThisOne)}
- * {@link #getAllByValueSymbol(String)}
+ * {@link #getAll(Ts.IsThisOne)}
+ * {@link #getAllBySymbol(String)}
  * {@link #getAll(Object)}
  *
  * 【getLast】
@@ -55,22 +54,22 @@ import java.util.Map;
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
  * ┃  has方法                ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
- * {@link #has(Vs.IsThisOne)}
- * {@link #hasByValueSymbol(String)}
+ * {@link #has(Ts.IsThisOne)}
+ * {@link #hasBySymbol(String)}
  * {@link #has(Object)}
  *
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
  * ┃  index方法              ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
  *
- * 【firstIndex】
- * {@link #firstIndex(Vs.IsThisOne)}
- * {@link #firstIndexByValueSymbol(String)}
- * {@link #firstIndex(Object)}
+ * 【index】
+ * {@link #index(Ts.IsThisOne)}
+ * {@link #indexBySymbol(String)}
+ * {@link #index(Object)}
  *
  * 【allIndex】
- * {@link #allIndex(Vs.IsThisOne)}
- * {@link #allIndexByValueSymbol(String)}
+ * {@link #allIndex(Ts.IsThisOne)}
+ * {@link #allIndexBySymbol(String)}
  * {@link #allIndex(Object)}
  *
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -80,41 +79,41 @@ import java.util.Map;
  * 【replaceByIndex】
  * {@link #replaceByIndex(int, Object)}
  *
- * 【replaceFirst】
- * {@link #replaceFirst(Object, Vs.IsThisOne)}
- * {@link #replaceFirstByValueSymbol(String, Object)}
- * {@link #replaceFirst(Object, Object)}
- * {@link #replaceFirst(Object)}
- * {@link #replaceFirst(Object[])}
- * {@link #replaceFirst(List)}
- * {@link #replaceFirst(CoreVs)}
+ * 【replace】
+ * {@link #replace(Object, Ts.IsThisOne)}
+ * {@link #replaceBySymbol(String, Object)}
+ * {@link #replace(Object, Object)}
+ * {@link #replace(Object)}
+ * {@link #replace(Object[])}
+ * {@link #replace(List)}
+ * {@link #replace(CoreTs)}
  *
  * 【replaceAll】
- * {@link #replaceAll(Object, Vs.IsThisOne)}
- * {@link #replaceAllByValueSymbol(String, Object)}
+ * {@link #replaceAll(Object, Ts.IsThisOne)}
+ * {@link #replaceAllBySymbol(String, Object)}
  * {@link #replaceAll(Object, Object)}
  * {@link #replaceAll(Object)}
  * {@link #replaceAll(Object[])}
  * {@link #replaceAll(List)}
- * {@link #replaceAll(CoreVs)}
+ * {@link #replaceAll(CoreTs)}
  *
- * 【replaceFirstOrAdd】
- * {@link #replaceFirstOrAdd(Object, Vs.IsThisOne)}
- * {@link #replaceFirstOrAddByValueSymbol(String, Object)}
- * {@link #replaceFirstOrAdd(Object, Object)}
- * {@link #replaceFirstOrAdd(Object)}
- * {@link #replaceFirstOrAdd(Object[])}
- * {@link #replaceFirstOrAdd(List)}
- * {@link #replaceFirstOrAdd(CoreVs)}
+ * 【replaceOrAdd】
+ * {@link #replaceOrAdd(Object, Ts.IsThisOne)}
+ * {@link #replaceOrAddBySymbol(String, Object)}
+ * {@link #replaceOrAdd(Object, Object)}
+ * {@link #replaceOrAdd(Object)}
+ * {@link #replaceOrAdd(Object[])}
+ * {@link #replaceOrAdd(List)}
+ * {@link #replaceOrAdd(CoreTs)}
  *
  * 【replaceAllOrAdd】
- * {@link #replaceAllOrAdd(Object, Ts.IsThisOne)}
- * {@link #replaceAllOrAddByValueSymbol(String, Object)}
+ * {@link #replaceAllOrAdd(Object, com.codingtu.cooltu.lib4j.ts.Ts.IsThisOne)}
+ * {@link #replaceAllOrAddBySymbol(String, Object)}
  * {@link #replaceAllOrAdd(Object, Object)}
  * {@link #replaceAllOrAdd(Object)}
  * {@link #replaceAllOrAdd(Object[])}
  * {@link #replaceAllOrAdd(List)}
- * {@link #replaceAllOrAdd(CoreVs)}
+ * {@link #replaceAllOrAdd(CoreTs)}
  *
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
  * ┃  delete方法             ┃
@@ -123,74 +122,74 @@ import java.util.Map;
  * 【deleteByIndex】
  * {@link #deleteByIndex(int)}
  *
- * 【deleteFirst】
- * {@link #deleteFirst(Vs.IsThisOne)}
- * {@link #deleteFirstByValueSymbol(String)}
- * {@link #deleteFirstByValueSymbol(String...)}
- * {@link #deleteFirstByValueSymbol(List)}
- * {@link #deleteFirstByValueSymbol(StringVs)}
- * {@link #deleteFirst(Object)}
- * {@link #deleteFirst(Object[])}
- * {@link #deleteFirst(List)}
- * {@link #deleteFirst(CoreVs)}
+ * 【delete】
+ * {@link #delete(Ts.IsThisOne)}
+ * {@link #deleteBySymbol(String)}
+ * {@link #deleteBySymbol(String...)}
+ * {@link #deleteBySymbol(List)}
+ * {@link #deleteBySymbol(StringTs)}
+ * {@link #delete(Object)}
+ * {@link #delete(Object[])}
+ * {@link #delete(List)}
+ * {@link #delete(CoreTs)}
  *
  * 【deleteAll】
- * {@link #deleteAll(Vs.IsThisOne)}
- * {@link #deleteAllByValueSymbol(String)}
- * {@link #deleteAllByValueSymbol(String...)}
- * {@link #deleteAllByValueSymbol(List)}
- * {@link #deleteAllByValueSymbol(StringVs)}
+ * {@link #deleteAll(Ts.IsThisOne)}
+ * {@link #deleteAllBySymbol(String)}
+ * {@link #deleteAllBySymbol(String...)}
+ * {@link #deleteAllBySymbol(List)}
+ * {@link #deleteAllBySymbol(StringTs)}
  * {@link #deleteAll(Object)}
  * {@link #deleteAll(Object[])}
  * {@link #deleteAll(List)}
- * {@link #deleteAll(CoreVs)}
+ * {@link #deleteAll(CoreTs)}
  *
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
  * ┃  conver方法             ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
- * {@link #convert(Vs.Convert)}
- * {@link #convert(Class, Vs.Convert)}
- * {@link #convertList(Vs.Convert)}
- * {@link #convertList(Class, Vs.Convert)}
+ * {@link #convert(Ts.Convert)}
+ * {@link #convert(Class, Ts.Convert)}
+ * {@link #convertList(Ts.Convert)}
+ * {@link #convertList(Class, Ts.Convert)}
  *
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
  * ┃  maxMin方法             ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
- * {@link #maxMin(Vs.NowMax)}
+ * {@link #maxMin(Ts.NowMax)}
  * {@link #maxMin(ToInt)}
  * {@link #maxMin(ToLong)}
  * {@link #maxMin(ToDouble)}
  *
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
- * ┃  neighbor方法           ┃
+ * ┃  near方法               ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
  *
  * 【基础方法】
- * {@link #obtainNeighborIndexByIndex(int, boolean)}
- * {@link #obtainNeighborIndex(Vs.IsThisOne, boolean)}
- * {@link #obtainNeighborIndexByValueSymbol(String, boolean)}
- * {@link #obtainNeighborIndex(Object, boolean)}
- * {@link #obtainNeighborData(Vs.NeighborIndex)}
+ * {@link #nearIndexByIndex(int, boolean)}
+ * {@link #nearIndex(Ts.IsThisOne, boolean)}
+ * {@link #nearIndexBySymbol(String, boolean)}
+ * {@link #nearIndex(Object, boolean)}
+ * {@link #nearData(Ts.NearIndex)}
  *
- * 【NeighborIndex下一个优先】
- * {@link #obtainNeighborIndexWhenNextPriority(Vs.IsThisOne)}
- * {@link #obtainNeighborIndexWhenNextPriorityByValueSymbol(String)}
- * {@link #obtainNeighborIndexWhenNextPriority(Object)}
+ * 【NearIndex下一个优先】
+ * {@link #nearIndexWhenNextPriority(Ts.IsThisOne)}
+ * {@link #nearIndexWhenNextPriorityBySymbol(String)}
+ * {@link #nearIndexWhenNextPriority(Object)}
  *
- * 【NeighborData下一个优先】
- * {@link #obtainNeighborDataWhenNextPriority(Vs.IsThisOne)}
- * {@link #obtainNeighborDataWhenNextPriorityByVauleSymbol(String)}
- * {@link #obtainNeighborDataWhenNextPriority(Object)}
+ * 【NearData下一个优先】
+ * {@link #nearDataWhenNextPriority(Ts.IsThisOne)}
+ * {@link #nearDataWhenNextPriorityBySymbol(String)}
+ * {@link #nearDataWhenNextPriority(Object)}
  *
- * 【NeighborIndex上一个优先】
- * {@link #obtainNeighborIndexWhenPrePriority(Vs.IsThisOne)}
- * {@link #obtainNeighborIndexWhenPrePriorityByValueSymbol(String)}
- * {@link #obtainNeighborIndexWhenPrePriority(Object)}
+ * 【NearIndex上一个优先】
+ * {@link #nearIndexWhenPrePriority(Ts.IsThisOne)}
+ * {@link #nearIndexWhenPrePriorityBySymbol(String)}
+ * {@link #nearIndexWhenPrePriority(Object)}
  *
- * 【NeighborData上一个优先】
- * {@link #obtainNeighborDataWhenPrePriority(Vs.IsThisOne)}
- * {@link #obtainNeighborDataWhenPrePriorityByValueSymbol(String)}
- * {@link #obtainNeighborDataWhenPrePriority(Object)}
+ * 【NearData上一个优先】
+ * {@link #nearDataWhenPrePriority(Ts.IsThisOne)}
+ * {@link #nearDataWhenPrePriorityBySymbol(String)}
+ * {@link #nearDataWhenPrePriority(Object)}
  *
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
  * ┃  toList方法             ┃
@@ -201,16 +200,16 @@ import java.util.Map;
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
  * ┃  findFinal方法          ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
- * {@link #findFinal(Vs.IsNow)}
+ * {@link #findFinal(Ts.IsNow)}
  *
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
  * ┃  toMap方法              ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
- * {@link #toMap(Vs.ToMap)}
+ * {@link #toMap(Ts.ToMap)}
  * {@link #toMap()}
  *
  **************************************************/
-public abstract class CoreVs<T, THIS extends CoreVs> {
+public abstract class CoreTs<T, THIS extends CoreTs> {
 
     ///////////////////////////////////////////////////////
     //
@@ -225,18 +224,18 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     // 构造函数
     //
     ///////////////////////////////////////////////////////
-    public CoreVs() {
+    public CoreTs() {
         this.ts = new ArrayList<>();
     }
 
-    public CoreVs(List<T> list) {
+    public CoreTs(List<T> list) {
         if (list == null) this.ts = new ArrayList<>();
         else this.ts = list;
     }
 
     ///////////////////////////////////////////////////////
     //
-    // 抽象方法，获取valueSymbol
+    // 抽象方法，获取Symbol
     //
     ///////////////////////////////////////////////////////
 
@@ -251,7 +250,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return CountTool.count(ts);
     }
 
-    public int count(Vs.Counter<T> counter) {
+    public int count(Ts.Counter<T> counter) {
         if (counter == null) return 0;
 
         int total = 0;
@@ -278,7 +277,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     /**************************************************
      * 正向遍历
      **************************************************/
-    public THIS ls(int step, Vs.EachTs<T> eachTs) {
+    public THIS ls(int step, Ts.EachTs<T> eachTs) {
         if (eachTs == null || step <= 0) return (THIS) this;
 
         int count = count();
@@ -290,14 +289,14 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS ls(Vs.EachTs<T> eachTs) {
+    public THIS ls(Ts.EachTs<T> eachTs) {
         return ls(1, eachTs);
     }
 
     /**************************************************
      * 反向遍历
      **************************************************/
-    public THIS rls(int step, Vs.EachTs<T> eachTs) {
+    public THIS rls(int step, Ts.EachTs<T> eachTs) {
         if (eachTs == null || step <= 0) return (THIS) this;
 
         int count = count();
@@ -309,7 +308,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS rls(Vs.EachTs<T> eachTs) {
+    public THIS rls(Ts.EachTs<T> eachTs) {
         return rls(1, eachTs);
     }
 
@@ -319,7 +318,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     //
     ///////////////////////////////////////////////////////
     public THIS log() {
-        ls(new Vs.EachTs<T>() {
+        ls(new Ts.EachTs<T>() {
             @Override
             public boolean each(int position, T t) {
                 LibLogs.i(JsonTool.toJson(t));
@@ -435,9 +434,9 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     /**************************************************
-     * getFirst
+     * get
      **************************************************/
-    public T getFirst(Vs.IsThisOne<T> isThisOne) {
+    public T get(Ts.IsThisOne<T> isThisOne) {
         if (isThisOne != null) {
             int count = count();
             T t = null;
@@ -451,26 +450,26 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return null;
     }
 
-    public T getFirstByValueSymbol(String valueSymbol) {
+    public T getBySymbol(String symbol) {
         int count = count();
         T t = null;
         for (int i = 0; i < count; i++) {
             t = this.ts.get(i);
-            if (valueSymbol.equals(obtainSymbol(t))) {
+            if (symbol.equals(obtainSymbol(t))) {
                 return t;
             }
         }
         return null;
     }
 
-    public T getFirst(T t) {
-        return getFirstByValueSymbol(obtainSymbol(t));
+    public T get(T t) {
+        return getBySymbol(obtainSymbol(t));
     }
 
     /**************************************************
      * getAll
      **************************************************/
-    public THIS getAll(Vs.IsThisOne<T> isThisOne) {
+    public THIS getAll(Ts.IsThisOne<T> isThisOne) {
         THIS ThisObj = createThis();
         if (isThisOne != null) {
             int count = count();
@@ -485,13 +484,13 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return ThisObj;
     }
 
-    public THIS getAllByValueSymbol(String valueSymbol) {
+    public THIS getAllBySymbol(String symbol) {
         THIS ThisObj = createThis();
         int count = count();
         T t = null;
         for (int i = 0; i < count; i++) {
             t = this.ts.get(i);
-            if (valueSymbol.equals(obtainSymbol(t))) {
+            if (symbol.equals(obtainSymbol(t))) {
                 ThisObj.add(t);
             }
         }
@@ -499,7 +498,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     public THIS getAll(T t) {
-        return getAllByValueSymbol(obtainSymbol(t));
+        return getAllBySymbol(obtainSymbol(t));
     }
 
     /**************************************************
@@ -517,16 +516,16 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     // has方法
     //
     ///////////////////////////////////////////////////////
-    public boolean has(Vs.IsThisOne<T> isThisOne) {
-        return getFirst(isThisOne) != null;
+    public boolean has(Ts.IsThisOne<T> isThisOne) {
+        return get(isThisOne) != null;
     }
 
-    public boolean hasByValueSymbol(String valueSymbol) {
-        return getFirstByValueSymbol(valueSymbol) != null;
+    public boolean hasBySymbol(String symbol) {
+        return getBySymbol(symbol) != null;
     }
 
     public boolean has(T t) {
-        return hasByValueSymbol(obtainSymbol(t));
+        return hasBySymbol(obtainSymbol(t));
     }
 
     ///////////////////////////////////////////////////////
@@ -536,9 +535,9 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     ///////////////////////////////////////////////////////
 
     /**************************************************
-     * firstIndex
+     * index
      **************************************************/
-    public int firstIndex(Vs.IsThisOne<T> isThisOne) {
+    public int index(Ts.IsThisOne<T> isThisOne) {
         if (isThisOne != null) {
             int count = count();
             for (int i = 0; i < count; i++) {
@@ -550,49 +549,49 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return -1;
     }
 
-    public int firstIndexByValueSymbol(String valueSymbol) {
+    public int indexBySymbol(String symbol) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (valueSymbol.equals(obtainSymbol(this.ts.get(i)))) {
+            if (symbol.equals(obtainSymbol(this.ts.get(i)))) {
                 return i;
             }
         }
         return -1;
     }
 
-    public int firstIndex(T t) {
-        return firstIndexByValueSymbol(obtainSymbol(t));
+    public int index(T t) {
+        return indexBySymbol(obtainSymbol(t));
     }
 
     /**************************************************
      * allIndex
      **************************************************/
-    public IntegerVs allIndex(Vs.IsThisOne<T> isThisOne) {
-        IntegerVs integerVs = new IntegerVs();
+    public IntegerTs allIndex(Ts.IsThisOne<T> isThisOne) {
+        IntegerTs integerTs = new IntegerTs();
         if (isThisOne != null) {
             int count = count();
             for (int i = 0; i < count; i++) {
                 if (isThisOne.isThisOne(i, this.ts.get(i))) {
-                    integerVs.add(i);
+                    integerTs.add(i);
                 }
             }
         }
-        return integerVs;
+        return integerTs;
     }
 
-    public IntegerVs allIndexByValueSymbol(String valueSymbol) {
-        IntegerVs integerVs = new IntegerVs();
+    public IntegerTs allIndexBySymbol(String symbol) {
+        IntegerTs integerTs = new IntegerTs();
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (obtainSymbol(this.ts.get(i)).equals(valueSymbol)) {
-                integerVs.add(i);
+            if (obtainSymbol(this.ts.get(i)).equals(symbol)) {
+                integerTs.add(i);
             }
         }
-        return integerVs;
+        return integerTs;
     }
 
-    public IntegerVs allIndex(T t) {
-        return allIndexByValueSymbol(obtainSymbol(t));
+    public IntegerTs allIndex(T t) {
+        return allIndexBySymbol(obtainSymbol(t));
     }
 
     ///////////////////////////////////////////////////////
@@ -610,11 +609,11 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     /**************************************************
-     * replaceFirst
+     * replace
      **************************************************/
-    public THIS replaceFirst(T target, Vs.IsThisOne<T> isThisOne) {
+    public THIS replace(T target, Ts.IsThisOne<T> isThisOne) {
         if (isThisOne != null) {
-            int firstIndex = firstIndex(isThisOne);
+            int firstIndex = index(isThisOne);
             if (firstIndex >= 0) {
                 replaceByIndex(firstIndex, target);
             }
@@ -622,61 +621,61 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS replaceFirstByValueSymbol(String valueSymbol, T target) {
-        int firstIndex = firstIndexByValueSymbol(valueSymbol);
+    public THIS replaceBySymbol(String symbol, T target) {
+        int firstIndex = indexBySymbol(symbol);
         if (firstIndex >= 0) {
             replaceByIndex(firstIndex, target);
         }
         return (THIS) this;
     }
 
-    public THIS replaceFirst(T symbolT, T target) {
+    public THIS replace(T symbolT, T target) {
         if (symbolT != null && target != null) {
-            replaceFirstByValueSymbol(obtainSymbol(symbolT), target);
+            replaceBySymbol(obtainSymbol(symbolT), target);
         }
         return (THIS) this;
     }
 
-    public THIS replaceFirst(T target) {
-        return replaceFirst(target, target);
+    public THIS replace(T target) {
+        return replace(target, target);
     }
 
-    public THIS replaceFirst(T... targets) {
+    public THIS replace(T... targets) {
         int count = CountTool.count(targets);
         if (count > 0) {
             T target;
             for (int i = 0; i < count; i++) {
                 target = targets[i];
                 if (target != null) {
-                    replaceFirstByValueSymbol(obtainSymbol(target), target);
+                    replaceBySymbol(obtainSymbol(target), target);
                 }
             }
         }
         return (THIS) this;
     }
 
-    public THIS replaceFirst(List<T> targets) {
+    public THIS replace(List<T> targets) {
         int count = CountTool.count(targets);
         if (count > 0) {
             T target;
             for (int i = 0; i < count; i++) {
                 target = targets.get(i);
                 if (target != null) {
-                    replaceFirstByValueSymbol(obtainSymbol(target), target);
+                    replaceBySymbol(obtainSymbol(target), target);
                 }
             }
         }
         return (THIS) this;
     }
 
-    public THIS replaceFirst(THIS targetVs) {
-        int count = targetVs.count();
+    public THIS replace(THIS targets) {
+        int count = targets.count();
         if (count > 0) {
             T target;
             for (int i = 0; i < count; i++) {
-                target = (T) targetVs.ts.get(i);
+                target = (T) targets.ts.get(i);
                 if (target != null) {
-                    replaceFirstByValueSymbol(obtainSymbol(target), target);
+                    replaceBySymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -686,7 +685,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     /**************************************************
      * replaceAll
      **************************************************/
-    public THIS replaceAll(T target, Vs.IsThisOne<T> isThisOne) {
+    public THIS replaceAll(T target, Ts.IsThisOne<T> isThisOne) {
         if (isThisOne != null) {
             int count = count();
             for (int i = 0; i < count; i++) {
@@ -698,10 +697,10 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS replaceAllByValueSymbol(String valueSymbol, T target) {
+    public THIS replaceAllBySymbol(String symbol, T target) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (obtainSymbol(this.ts.get(i)).equals(valueSymbol)) {
+            if (obtainSymbol(this.ts.get(i)).equals(symbol)) {
                 replaceByIndex(i, target);
             }
         }
@@ -710,7 +709,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
 
     public THIS replaceAll(T symbolT, T target) {
         if (symbolT != null && target != null) {
-            replaceAllByValueSymbol(obtainSymbol(symbolT), target);
+            replaceAllBySymbol(obtainSymbol(symbolT), target);
         }
         return (THIS) this;
     }
@@ -726,7 +725,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = targets[i];
                 if (target != null) {
-                    replaceAllByValueSymbol(obtainSymbol(target), target);
+                    replaceAllBySymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -740,21 +739,21 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = targets.get(i);
                 if (target != null) {
-                    replaceAllByValueSymbol(obtainSymbol(target), target);
+                    replaceAllBySymbol(obtainSymbol(target), target);
                 }
             }
         }
         return (THIS) this;
     }
 
-    public THIS replaceAll(THIS targetVs) {
-        int count = targetVs.count();
+    public THIS replaceAll(THIS targets) {
+        int count = targets.count();
         if (count > 0) {
             T target = null;
             for (int i = 0; i < count; i++) {
-                target = (T) targetVs.ts.get(i);
+                target = (T) targets.ts.get(i);
                 if (target != null) {
-                    replaceAllByValueSymbol(obtainSymbol(target), target);
+                    replaceAllBySymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -762,11 +761,11 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     /**************************************************
-     * replaceFirstOrAdd
+     * replaceOrAdd
      **************************************************/
-    public THIS replaceFirstOrAdd(T target, Vs.IsThisOne<T> isThisOne) {
+    public THIS replaceOrAdd(T target, Ts.IsThisOne<T> isThisOne) {
         if (isThisOne != null) {
-            int firstIndex = firstIndex(isThisOne);
+            int firstIndex = index(isThisOne);
             if (firstIndex >= 0) {
                 replaceByIndex(firstIndex, target);
             } else if (target != null) {
@@ -776,8 +775,8 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS replaceFirstOrAddByValueSymbol(String valueSymbol, T target) {
-        int firstIndex = firstIndexByValueSymbol(valueSymbol);
+    public THIS replaceOrAddBySymbol(String symbol, T target) {
+        int firstIndex = indexBySymbol(symbol);
         if (firstIndex >= 0) {
             replaceByIndex(firstIndex, target);
         } else if (target != null) {
@@ -786,53 +785,53 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS replaceFirstOrAdd(T symbolT, T target) {
+    public THIS replaceOrAdd(T symbolT, T target) {
         if (symbolT != null && target != null) {
-            replaceFirstOrAddByValueSymbol(obtainSymbol(symbolT), target);
+            replaceOrAddBySymbol(obtainSymbol(symbolT), target);
         }
         return (THIS) this;
     }
 
-    public THIS replaceFirstOrAdd(T target) {
-        return replaceFirstOrAdd(target, target);
+    public THIS replaceOrAdd(T target) {
+        return replaceOrAdd(target, target);
     }
 
-    public THIS replaceFirstOrAdd(T... targets) {
+    public THIS replaceOrAdd(T... targets) {
         int count = CountTool.count(targets);
         if (count > 0) {
             T target = null;
             for (int i = 0; i < count; i++) {
                 target = targets[i];
                 if (target != null) {
-                    replaceFirstOrAddByValueSymbol(obtainSymbol(target), target);
+                    replaceOrAddBySymbol(obtainSymbol(target), target);
                 }
             }
         }
         return (THIS) this;
     }
 
-    public THIS replaceFirstOrAdd(List<T> targets) {
+    public THIS replaceOrAdd(List<T> targets) {
         int count = CountTool.count(targets);
         if (count > 0) {
             T target = null;
             for (int i = 0; i < count; i++) {
                 target = targets.get(i);
                 if (target != null) {
-                    replaceFirstOrAddByValueSymbol(obtainSymbol(target), target);
+                    replaceOrAddBySymbol(obtainSymbol(target), target);
                 }
             }
         }
         return (THIS) this;
     }
 
-    public THIS replaceFirstOrAdd(THIS targetVs) {
-        int count = targetVs.count();
+    public THIS replaceOrAdd(THIS targets) {
+        int count = targets.count();
         if (count > 0) {
             T target = null;
             for (int i = 0; i < count; i++) {
-                target = (T) targetVs.ts.get(i);
+                target = (T) targets.ts.get(i);
                 if (target != null) {
-                    replaceFirstOrAddByValueSymbol(obtainSymbol(target), target);
+                    replaceOrAddBySymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -842,7 +841,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     /**************************************************
      * replaceAllOrAdd
      **************************************************/
-    public THIS replaceAllOrAdd(T target, Ts.IsThisOne<T> isThisOne) {
+    public THIS replaceAllOrAdd(T target, com.codingtu.cooltu.lib4j.ts.Ts.IsThisOne<T> isThisOne) {
         if (isThisOne != null) {
             int count = count();
             boolean isReplace = false;
@@ -859,11 +858,11 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS replaceAllOrAddByValueSymbol(String valueSymbol, T target) {
+    public THIS replaceAllOrAddBySymbol(String symbol, T target) {
         int count = count();
         boolean isReplace = false;
         for (int i = 0; i < count; i++) {
-            if (obtainSymbol(this.ts.get(i)).equals(valueSymbol)) {
+            if (obtainSymbol(this.ts.get(i)).equals(symbol)) {
                 replaceByIndex(i, target);
                 isReplace = true;
             }
@@ -876,7 +875,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
 
     public THIS replaceAllOrAdd(T symboleT, T target) {
         if (symboleT != null && target != null) {
-            replaceAllOrAddByValueSymbol(obtainSymbol(symboleT), target);
+            replaceAllOrAddBySymbol(obtainSymbol(symboleT), target);
         }
         return (THIS) this;
     }
@@ -892,7 +891,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = targets[i];
                 if (target != null) {
-                    replaceAllOrAddByValueSymbol(obtainSymbol(target), target);
+                    replaceAllOrAddBySymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -906,21 +905,21 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = targets.get(i);
                 if (target != null) {
-                    replaceAllOrAddByValueSymbol(obtainSymbol(target), target);
+                    replaceAllOrAddBySymbol(obtainSymbol(target), target);
                 }
             }
         }
         return (THIS) this;
     }
 
-    public THIS replaceAllOrAdd(THIS targetVs) {
-        int count = targetVs.count();
+    public THIS replaceAllOrAdd(THIS targets) {
+        int count = targets.count();
         if (count > 0) {
             T target = null;
             for (int i = 0; i < count; i++) {
-                target = (T) targetVs.ts.get(i);
+                target = (T) targets.ts.get(i);
                 if (target != null) {
-                    replaceAllOrAddByValueSymbol(obtainSymbol(target), target);
+                    replaceAllOrAddBySymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -942,12 +941,12 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     /**************************************************
-     * deleteFirst
+     * delete
      **************************************************/
     //删除第一个
-    public THIS deleteFirst(Vs.IsThisOne<T> isThisOne) {
+    public THIS delete(Ts.IsThisOne<T> isThisOne) {
         if (isThisOne != null) {
-            int firstIndex = firstIndex(isThisOne);
+            int firstIndex = index(isThisOne);
             if (firstIndex >= 0) {
                 this.ts.remove(firstIndex);
             }
@@ -955,18 +954,18 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS deleteFirstByValueSymbol(String valueSymbol) {
-        int firstIndex = firstIndexByValueSymbol(valueSymbol);
+    public THIS deleteBySymbol(String symbol) {
+        int firstIndex = indexBySymbol(symbol);
         if (firstIndex >= 0) {
             this.ts.remove(firstIndex);
         }
         return (THIS) this;
     }
 
-    public THIS deleteFirstByValueSymbol(String... valueSymbols) {
-        int count = CountTool.count(valueSymbols);
+    public THIS deleteBySymbol(String... symbols) {
+        int count = CountTool.count(symbols);
         for (int i = 0; i < count; i++) {
-            int firstIndex = firstIndexByValueSymbol(valueSymbols[i]);
+            int firstIndex = indexBySymbol(symbols[i]);
             if (firstIndex >= 0) {
                 this.ts.remove(firstIndex);
             }
@@ -974,10 +973,10 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS deleteFirstByValueSymbol(List<String> valueSymbols) {
-        int count = CountTool.count(valueSymbols);
+    public THIS deleteBySymbol(List<String> symbols) {
+        int count = CountTool.count(symbols);
         for (int i = 0; i < count; i++) {
-            int firstIndex = firstIndexByValueSymbol(valueSymbols.get(i));
+            int firstIndex = indexBySymbol(symbols.get(i));
             if (firstIndex >= 0) {
                 this.ts.remove(firstIndex);
             }
@@ -985,10 +984,10 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS deleteFirstByValueSymbol(StringVs valueSymbolVs) {
-        int count = CountTool.count(valueSymbolVs);
+    public THIS deleteBySymbol(StringTs symbolStringTs) {
+        int count = CountTool.count(symbolStringTs);
         for (int i = 0; i < count; i++) {
-            int firstIndex = firstIndexByValueSymbol(valueSymbolVs.ts.get(i));
+            int firstIndex = indexBySymbol(symbolStringTs.ts.get(i));
             if (firstIndex >= 0) {
                 this.ts.remove(firstIndex);
             }
@@ -997,14 +996,14 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
 
-    public THIS deleteFirst(T target) {
+    public THIS delete(T target) {
         if (target != null) {
-            deleteFirstByValueSymbol(obtainSymbol(target));
+            deleteBySymbol(obtainSymbol(target));
         }
         return (THIS) this;
     }
 
-    protected THIS deleteFirst(Vs.EachGetter<T> getter) {
+    protected THIS delete(Ts.EachGetter<T> getter) {
         if (getter != null) {
             int count = getter.count();
             if (count > 0) {
@@ -1012,7 +1011,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
                 for (int i = 0; i < count; i++) {
                     target = getter.get(i);
                     if (target != null) {
-                        deleteFirstByValueSymbol(obtainSymbol(target));
+                        deleteBySymbol(obtainSymbol(target));
                     }
                 }
             }
@@ -1020,8 +1019,8 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS deleteFirst(T... targets) {
-        return deleteFirst(new Vs.EachGetter<T>() {
+    public THIS delete(T... targets) {
+        return delete(new Ts.EachGetter<T>() {
             @Override
             public int count() {
                 return CountTool.count(targets);
@@ -1034,8 +1033,8 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         });
     }
 
-    public THIS deleteFirst(List<T> targets) {
-        return deleteFirst(new Vs.EachGetter<T>() {
+    public THIS delete(List<T> targets) {
+        return delete(new Ts.EachGetter<T>() {
             @Override
             public int count() {
                 return CountTool.count(targets);
@@ -1048,16 +1047,16 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         });
     }
 
-    public THIS deleteFirst(THIS targetVs) {
-        return deleteFirst(new Vs.EachGetter<T>() {
+    public THIS delete(THIS targets) {
+        return delete(new Ts.EachGetter<T>() {
             @Override
             public int count() {
-                return CountTool.count(targetVs);
+                return CountTool.count(targets);
             }
 
             @Override
             public T get(int position) {
-                return (T) targetVs.ts.get(position);
+                return (T) targets.ts.get(position);
             }
         });
     }
@@ -1065,7 +1064,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     /**************************************************
      * deleteAll
      **************************************************/
-    public THIS deleteAll(Vs.IsThisOne<T> isThisOne) {
+    public THIS deleteAll(Ts.IsThisOne<T> isThisOne) {
         if (isThisOne != null) {
             List<T> newTs = new ArrayList<>();
             int count = count();
@@ -1082,13 +1081,13 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS deleteAllByValueSymbol(String valueSymbol) {
+    public THIS deleteAllBySymbol(String symbol) {
         List<T> newTs = new ArrayList<>();
         int count = count();
         T t;
         for (int i = 0; i < count; i++) {
             t = this.ts.get(i);
-            if (!obtainSymbol(t).equals(valueSymbol)) {
+            if (!obtainSymbol(t).equals(symbol)) {
                 newTs.add(t);
             }
         }
@@ -1097,7 +1096,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    private THIS deleteAllByValueSymbol(Vs.EachGetter<String> getter) {
+    private THIS deleteAllBySymbol(Ts.EachGetter<String> getter) {
         if (getter != null) {
             int valueSymbolCount = getter.count();
             int tCount = count();
@@ -1129,44 +1128,44 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return (THIS) this;
     }
 
-    public THIS deleteAllByValueSymbol(String... valueSymbols) {
-        return deleteAllByValueSymbol(new Vs.EachGetter<String>() {
+    public THIS deleteAllBySymbol(String... symbols) {
+        return deleteAllBySymbol(new Ts.EachGetter<String>() {
             @Override
             public int count() {
-                return CountTool.count(valueSymbols);
+                return CountTool.count(symbols);
             }
 
             @Override
             public String get(int position) {
-                return valueSymbols[position];
+                return symbols[position];
             }
         });
     }
 
-    public THIS deleteAllByValueSymbol(List<String> valueSymbols) {
-        return deleteAllByValueSymbol(new Vs.EachGetter<String>() {
+    public THIS deleteAllBySymbol(List<String> symbols) {
+        return deleteAllBySymbol(new Ts.EachGetter<String>() {
             @Override
             public int count() {
-                return CountTool.count(valueSymbols);
+                return CountTool.count(symbols);
             }
 
             @Override
             public String get(int position) {
-                return valueSymbols.get(position);
+                return symbols.get(position);
             }
         });
     }
 
-    public THIS deleteAllByValueSymbol(StringVs valueSymbolVs) {
-        return deleteAllByValueSymbol(new Vs.EachGetter<String>() {
+    public THIS deleteAllBySymbol(StringTs symbolStringTs) {
+        return deleteAllBySymbol(new Ts.EachGetter<String>() {
             @Override
             public int count() {
-                return CountTool.count(valueSymbolVs);
+                return CountTool.count(symbolStringTs);
             }
 
             @Override
             public String get(int position) {
-                return valueSymbolVs.ts.get(position);
+                return symbolStringTs.ts.get(position);
             }
         });
     }
@@ -1174,12 +1173,12 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     //删除所有
     public THIS deleteAll(T target) {
         if (target != null) {
-            deleteAllByValueSymbol(obtainSymbol(target));
+            deleteAllBySymbol(obtainSymbol(target));
         }
         return (THIS) this;
     }
 
-    protected THIS deleteAll(Vs.EachGetter<T> getter) {
+    protected THIS deleteAll(Ts.EachGetter<T> getter) {
         if (getter != null) {
             int valueSymbolCount = getter.count();
             int tCount = count();
@@ -1213,7 +1212,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
 
 
     public THIS deleteAll(T... targets) {
-        return deleteAll(new Vs.EachGetter<T>() {
+        return deleteAll(new Ts.EachGetter<T>() {
             @Override
             public int count() {
                 return CountTool.count(targets);
@@ -1227,7 +1226,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     public THIS deleteAll(List<T> targets) {
-        return deleteAll(new Vs.EachGetter<T>() {
+        return deleteAll(new Ts.EachGetter<T>() {
             @Override
             public int count() {
                 return CountTool.count(targets);
@@ -1240,16 +1239,16 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         });
     }
 
-    public THIS deleteAll(THIS targetVs) {
-        return deleteAll(new Vs.EachGetter<T>() {
+    public THIS deleteAll(THIS targets) {
+        return deleteAll(new Ts.EachGetter<T>() {
             @Override
             public int count() {
-                return CountTool.count(targetVs);
+                return CountTool.count(targets);
             }
 
             @Override
             public T get(int position) {
-                return (T) targetVs.ts.get(position);
+                return (T) targets.ts.get(position);
             }
         });
     }
@@ -1260,25 +1259,25 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public <TARGET extends Symbol> SymbolVs<TARGET> convert(Vs.Convert<T, TARGET> convert) {
-        SymbolVs baseVs = new SymbolVs();
+    public <TARGET extends Symbol> SymbolTs<TARGET> convert(Ts.Convert<T, TARGET> convert) {
+        SymbolTs symbolTs = new SymbolTs();
         if (convert != null) {
             int count = count();
             TARGET target;
             for (int i = 0; i < count; i++) {
                 target = convert.convert(i, this.ts.get(i));
                 if (target != null) {
-                    baseVs.add(target);
+                    symbolTs.add(target);
                 }
             }
         }
-        return baseVs;
+        return symbolTs;
     }
 
-    public <TARGET, VS extends CoreVs> VS convert(Class<VS> vsClass, Vs.Convert<T, TARGET> convert) {
-        VS vs;
+    public <TARGET, TS extends CoreTs> TS convert(Class<TS> tsClass, Ts.Convert<T, TARGET> convert) {
+        TS ts;
         try {
-            vs = (VS) vsClass.getConstructor().newInstance();
+            ts = tsClass.getConstructor().newInstance();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -1287,31 +1286,31 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         for (int i = 0; i < count; i++) {
             target = convert.convert(i, this.ts.get(i));
             if (target != null) {
-                vs.add(target);
+                ts.add(target);
             }
         }
-        return vs;
+        return ts;
     }
 
-    public <TARGET extends Symbol> SymbolVs<TARGET> convertList(Vs.Convert<T, List<TARGET>> convert) {
-        SymbolVs<TARGET> vs = new SymbolVs<>();
+    public <TARGET extends Symbol> SymbolTs<TARGET> convertList(Ts.Convert<T, List<TARGET>> convert) {
+        SymbolTs<TARGET> ts = new SymbolTs<>();
         if (convert != null) {
             int count = count();
             List<TARGET> list;
             for (int i = 0; i < count; i++) {
                 list = convert.convert(i, this.ts.get(i));
                 if (!CountTool.isNull(list)) {
-                    vs.add(list);
+                    ts.add(list);
                 }
             }
         }
-        return vs;
+        return ts;
     }
 
-    public <VS extends CoreVs, TARGET> VS convertList(Class<VS> vsClass, Vs.Convert<T, List<TARGET>> convert) {
-        VS vs;
+    public <TS extends CoreTs, TARGET> TS convertList(Class<TS> tsClass, Ts.Convert<T, List<TARGET>> convert) {
+        TS ts;
         try {
-            vs = (VS) vsClass.getConstructor().newInstance();
+            ts = tsClass.getConstructor().newInstance();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -1321,11 +1320,11 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 list = convert.convert(i, this.ts.get(i));
                 if (!CountTool.isNull(list)) {
-                    vs.add(list);
+                    ts.add(list);
                 }
             }
         }
-        return vs;
+        return ts;
     }
 
     ///////////////////////////////////////////////////////
@@ -1334,7 +1333,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public MaxMin<T> maxMin(Vs.NowMax<T> nowMax) {
+    public MaxMin<T> maxMin(Ts.NowMax<T> nowMax) {
         if (nowMax == null) return null;
 
         int count = count();
@@ -1355,7 +1354,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     public MaxMin<T> maxMin(ToInt<T> toInt) {
-        return maxMin(new Vs.NowMax<T>() {
+        return maxMin(new Ts.NowMax<T>() {
             @Override
             public boolean isNowMax(T last, T now) {
                 return toInt.toInt(now) > toInt.toInt(last);
@@ -1364,7 +1363,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     public MaxMin<T> maxMin(ToLong<T> toLong) {
-        return maxMin(new Vs.NowMax<T>() {
+        return maxMin(new Ts.NowMax<T>() {
             @Override
             public boolean isNowMax(T last, T now) {
                 return toLong.toLong(now) > toLong.toLong(last);
@@ -1373,7 +1372,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     public MaxMin<T> maxMin(ToDouble<T> toDouble) {
-        return maxMin(new Vs.NowMax<T>() {
+        return maxMin(new Ts.NowMax<T>() {
             @Override
             public boolean isNowMax(T last, T now) {
                 return toDouble.toDouble(now) > toDouble.toDouble(last);
@@ -1382,7 +1381,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     public MaxMin<T> maxMin(ToFloat<T> toFloat) {
-        return maxMin(new Vs.NowMax<T>() {
+        return maxMin(new Ts.NowMax<T>() {
             @Override
             public boolean isNowMax(T last, T now) {
                 return toFloat.toFloat(now) > toFloat.toFloat(last);
@@ -1392,14 +1391,14 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
 
     ///////////////////////////////////////////////////////
     //
-    // neighbor方法
+    // near方法
     //
     ///////////////////////////////////////////////////////
 
     /**************************************************
      * 基础方法
      **************************************************/
-    protected Vs.NeighborIndex obtainNeighborIndexByIndex(int index, boolean isNext) {
+    protected Ts.NearIndex nearIndexByIndex(int index, boolean isNext) {
         int count = count();
         if (count == 1) {
             return null;
@@ -1410,91 +1409,91 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
 
         int step = isNext ? 1 : -1;
 
-        Vs.NeighborIndex neighborIndex = new Vs.NeighborIndex();
-        neighborIndex.currentIndex = index;
-        if (neighborIndex.currentIndex == (isNext ? (count - 1) : 0)) {
-            neighborIndex.neighborIndex = neighborIndex.currentIndex - step;
+        Ts.NearIndex nearIndex = new Ts.NearIndex();
+        nearIndex.currentIndex = index;
+        if (nearIndex.currentIndex == (isNext ? (count - 1) : 0)) {
+            nearIndex.neighborIndex = nearIndex.currentIndex - step;
         } else {
-            neighborIndex.neighborIndex = neighborIndex.currentIndex + step;
+            nearIndex.neighborIndex = nearIndex.currentIndex + step;
         }
-        return neighborIndex;
+        return nearIndex;
     }
 
-    protected Vs.NeighborIndex obtainNeighborIndex(Vs.IsThisOne<T> isThisOne, boolean isNext) {
-        return obtainNeighborIndexByIndex(firstIndex(isThisOne), isNext);
+    protected Ts.NearIndex nearIndex(Ts.IsThisOne<T> isThisOne, boolean isNext) {
+        return nearIndexByIndex(index(isThisOne), isNext);
     }
 
-    protected Vs.NeighborIndex obtainNeighborIndexByValueSymbol(String valueSymbol, boolean isNext) {
-        return obtainNeighborIndexByIndex(firstIndexByValueSymbol(valueSymbol), isNext);
+    protected Ts.NearIndex nearIndexBySymbol(String symbol, boolean isNext) {
+        return nearIndexByIndex(indexBySymbol(symbol), isNext);
     }
 
-    protected Vs.NeighborIndex obtainNeighborIndex(T t, boolean isNext) {
-        return obtainNeighborIndexByIndex(firstIndex(t), isNext);
+    protected Ts.NearIndex nearIndex(T t, boolean isNext) {
+        return nearIndexByIndex(index(t), isNext);
     }
 
-    protected T obtainNeighborData(Vs.NeighborIndex neighborIndex) {
-        if (neighborIndex == null) return null;
-        return getByIndex(neighborIndex.neighborIndex);
-    }
-
-    /**************************************************
-     * NeighborIndex下一个优先
-     **************************************************/
-    public Vs.NeighborIndex obtainNeighborIndexWhenNextPriority(Vs.IsThisOne<T> isThisOne) {
-        return obtainNeighborIndex(isThisOne, true);
-    }
-
-    public Vs.NeighborIndex obtainNeighborIndexWhenNextPriorityByValueSymbol(String valueSymbol) {
-        return obtainNeighborIndexByValueSymbol(valueSymbol, true);
-    }
-
-    public Vs.NeighborIndex obtainNeighborIndexWhenNextPriority(T t) {
-        return obtainNeighborIndex(t, true);
+    protected T nearData(Ts.NearIndex nearIndex) {
+        if (nearIndex == null) return null;
+        return getByIndex(nearIndex.neighborIndex);
     }
 
     /**************************************************
-     * NeighborData下一个优先
+     * NearIndex下一个优先
      **************************************************/
-    public T obtainNeighborDataWhenNextPriority(Vs.IsThisOne<T> isThisOne) {
-        return obtainNeighborData(obtainNeighborIndexWhenNextPriority(isThisOne));
+    public Ts.NearIndex nearIndexWhenNextPriority(Ts.IsThisOne<T> isThisOne) {
+        return nearIndex(isThisOne, true);
     }
 
-    public T obtainNeighborDataWhenNextPriorityByVauleSymbol(String valueSymbol) {
-        return obtainNeighborData(obtainNeighborIndexWhenNextPriorityByValueSymbol(valueSymbol));
+    public Ts.NearIndex nearIndexWhenNextPriorityBySymbol(String symbol) {
+        return nearIndexBySymbol(symbol, true);
     }
 
-    public T obtainNeighborDataWhenNextPriority(T t) {
-        return obtainNeighborData(obtainNeighborIndexWhenNextPriority(t));
+    public Ts.NearIndex nearIndexWhenNextPriority(T t) {
+        return nearIndex(t, true);
     }
 
     /**************************************************
-     * NeighborIndex上一个优先
+     * NearData下一个优先
      **************************************************/
-    public Vs.NeighborIndex obtainNeighborIndexWhenPrePriority(Vs.IsThisOne<T> isThisOne) {
-        return obtainNeighborIndex(isThisOne, false);
+    public T nearDataWhenNextPriority(Ts.IsThisOne<T> isThisOne) {
+        return nearData(nearIndexWhenNextPriority(isThisOne));
     }
 
-    public Vs.NeighborIndex obtainNeighborIndexWhenPrePriorityByValueSymbol(String valueSymbol) {
-        return obtainNeighborIndexByValueSymbol(valueSymbol, false);
+    public T nearDataWhenNextPriorityBySymbol(String symbol) {
+        return nearData(nearIndexWhenNextPriorityBySymbol(symbol));
     }
 
-    public Vs.NeighborIndex obtainNeighborIndexWhenPrePriority(T t) {
-        return obtainNeighborIndex(t, false);
+    public T nearDataWhenNextPriority(T t) {
+        return nearData(nearIndexWhenNextPriority(t));
     }
 
     /**************************************************
-     * NeighborData下一个优先
+     * NearIndex上一个优先
      **************************************************/
-    public T obtainNeighborDataWhenPrePriority(Vs.IsThisOne<T> isThisOne) {
-        return obtainNeighborData(obtainNeighborIndexWhenPrePriority(isThisOne));
+    public Ts.NearIndex nearIndexWhenPrePriority(Ts.IsThisOne<T> isThisOne) {
+        return nearIndex(isThisOne, false);
     }
 
-    public T obtainNeighborDataWhenPrePriorityByValueSymbol(String valueSymbol) {
-        return obtainNeighborData(obtainNeighborIndexWhenPrePriorityByValueSymbol(valueSymbol));
+    public Ts.NearIndex nearIndexWhenPrePriorityBySymbol(String symbol) {
+        return nearIndexBySymbol(symbol, false);
     }
 
-    public T obtainNeighborDataWhenPrePriority(T t) {
-        return obtainNeighborData(obtainNeighborIndexWhenPrePriority(t));
+    public Ts.NearIndex nearIndexWhenPrePriority(T t) {
+        return nearIndex(t, false);
+    }
+
+    /**************************************************
+     * NearData下一个优先
+     **************************************************/
+    public T nearDataWhenPrePriority(Ts.IsThisOne<T> isThisOne) {
+        return nearData(nearIndexWhenPrePriority(isThisOne));
+    }
+
+    public T nearDataWhenPrePriorityBySymbol(String symbol) {
+        return nearData(nearIndexWhenPrePriorityBySymbol(symbol));
+    }
+
+    public T nearDataWhenPrePriority(T t) {
+        return nearData(nearIndexWhenPrePriority(t));
     }
 
     ///////////////////////////////////////////////////////
@@ -1526,7 +1525,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     /**************************************************
      * 查找最后一个符合条件的元素
      **************************************************/
-    public T findFinal(Vs.IsNow<T> isNow) {
+    public T findFinal(Ts.IsNow<T> isNow) {
         if (isNow == null) return null;
 
         int count = count();
@@ -1543,7 +1542,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     // ToMap
     //
     ///////////////////////////////////////////////////////
-    public <K, V> Map<K, V> toMap(Vs.ToMap<K, V, T> toMap) {
+    public <K, V> Map<K, V> toMap(Ts.ToMap<K, V, T> toMap) {
         Map<K, V> map = new HashMap<>();
         int count = count();
         if (count > 0) {
@@ -1556,7 +1555,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     public Map<String, T> toMap() {
-        return toMap(new Vs.ToMap<String, T, T>() {
+        return toMap(new Ts.ToMap<String, T, T>() {
             @Override
             public void deal(Map<String, T> map, int i, T t) {
                 map.put(obtainSymbol(t), t);
@@ -1565,7 +1564,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     public Map<T, T> toTMap() {
-        return toMap(new Vs.ToMap<T, T, T>() {
+        return toMap(new Ts.ToMap<T, T, T>() {
             @Override
             public void deal(Map<T, T> map, int i, T t) {
                 map.put(t, t);

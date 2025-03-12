@@ -1,26 +1,26 @@
-package com.codingtu.cooltu.lib4j.vs;
+package com.codingtu.cooltu.lib4j.ts1;
 
 import com.codingtu.cooltu.lib4j.data.symbol1.Symbol;
 
 import java.util.List;
 
-public class SymbolVs<T extends Symbol> extends CoreVs<T, SymbolVs> {
+public class SymbolTs<T extends Symbol> extends CoreTs<T, SymbolTs> {
 
     ///////////////////////////////////////////////////////
     //
     // 构造函数
     //
     ///////////////////////////////////////////////////////
-    public SymbolVs() {
+    public SymbolTs() {
     }
 
-    public SymbolVs(List<T> list) {
+    public SymbolTs(List<T> list) {
         super(list);
     }
 
     ///////////////////////////////////////////////////////
     //
-    // 获取valueSymbol
+    // 获取Symbol
     //
     ///////////////////////////////////////////////////////
     @Override

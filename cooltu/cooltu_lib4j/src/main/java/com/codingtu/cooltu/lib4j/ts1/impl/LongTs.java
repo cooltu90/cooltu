@@ -1,38 +1,35 @@
-package com.codingtu.cooltu.lib4j.vs.impl;
+package com.codingtu.cooltu.lib4j.ts1.impl;
 
-import com.codingtu.cooltu.lib4j.function.ToDouble;
-import com.codingtu.cooltu.lib4j.function.ToInt;
-import com.codingtu.cooltu.lib4j.function.ToLong;
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
+import com.codingtu.cooltu.lib4j.function.ToLong;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.vs.NumVs;
-import com.codingtu.cooltu.lib4j.vs.Vs;
+import com.codingtu.cooltu.lib4j.ts1.NumTs;
 
 import java.util.List;
-import java.util.Map;
 
-public class IntegerVs extends NumVs<Integer, IntegerVs> {
+public class LongTs extends NumTs<Long, LongTs> {
 
     ///////////////////////////////////////////////////////
     //
     // 构造函数
     //
     ///////////////////////////////////////////////////////
-    public IntegerVs() {
+
+    public LongTs() {
     }
 
-    public IntegerVs(List<Integer> list) {
+    public LongTs(List<Long> list) {
         super(list);
     }
+    ///////////////////////////////////////////////////////
+    //
+    // 获取symbol
+    //
+    ///////////////////////////////////////////////////////
 
-    ///////////////////////////////////////////////////////
-    //
-    // 获取valueSymbol
-    //
-    ///////////////////////////////////////////////////////
     @Override
-    protected String obtainSymbol(Integer integer) {
-        return String.valueOf(integer);
+    protected String obtainSymbol(Long aLong) {
+        return aLong + "";
     }
 
     ///////////////////////////////////////////////////////
@@ -41,10 +38,10 @@ public class IntegerVs extends NumVs<Integer, IntegerVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public IntegerVs add_int(int... ints) {
-        int count = CountTool.count(ints);
+    public LongTs add_long(long... longs) {
+        int count = CountTool.count(longs);
         for (int i = 0; i < count; i++) {
-            this.ts.add(ints[i]);
+            this.ts.add(longs[i]);
         }
         return this;
     }
@@ -54,10 +51,10 @@ public class IntegerVs extends NumVs<Integer, IntegerVs> {
     // createThis
     //
     ///////////////////////////////////////////////////////
-    public IntegerVs createThis_int(int... ints) {
-        IntegerVs integerVs = new IntegerVs();
-        integerVs.add_int(ints);
-        return integerVs;
+    public LongTs createThis_long(long... longs) {
+        LongTs longTs = new LongTs();
+        longTs.add_long(longs);
+        return longTs;
     }
 
     ///////////////////////////////////////////////////////
@@ -65,11 +62,11 @@ public class IntegerVs extends NumVs<Integer, IntegerVs> {
     // maxMin
     //
     ///////////////////////////////////////////////////////
-    public MaxMin<Integer> maxMin() {
-        return super.maxMin(new ToInt<Integer>() {
+    public MaxMin<Long> maxMin() {
+        return super.maxMin(new ToLong<Long>() {
             @Override
-            public int toInt(Integer integer) {
-                return integer;
+            public long toLong(Long aLong) {
+                return aLong;
             }
         });
     }
@@ -80,9 +77,9 @@ public class IntegerVs extends NumVs<Integer, IntegerVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public int[] to_ints() {
+    public long[] to_longs() {
         int count = count();
-        int[] arrs = new int[count];
+        long[] arrs = new long[count];
         for (int i = 0; i < count; i++) {
             arrs[i] = this.ts.get(i);
         }

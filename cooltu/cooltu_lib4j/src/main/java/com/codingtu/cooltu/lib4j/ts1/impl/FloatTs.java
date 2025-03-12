@@ -1,14 +1,13 @@
-package com.codingtu.cooltu.lib4j.vs.impl;
+package com.codingtu.cooltu.lib4j.ts1.impl;
 
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
-import com.codingtu.cooltu.lib4j.function.ToDouble;
 import com.codingtu.cooltu.lib4j.function.ToFloat;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.vs.NumVs;
+import com.codingtu.cooltu.lib4j.ts1.NumTs;
 
 import java.util.List;
 
-public class FloatVs extends NumVs<Float, FloatVs> {
+public class FloatTs extends NumTs<Float, FloatTs> {
 
     ///////////////////////////////////////////////////////
     //
@@ -16,16 +15,16 @@ public class FloatVs extends NumVs<Float, FloatVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public FloatVs() {
+    public FloatTs() {
     }
 
-    public FloatVs(List<Float> list) {
+    public FloatTs(List<Float> list) {
         super(list);
     }
 
     ///////////////////////////////////////////////////////
     //
-    // 获取valueSymbol
+    // 获取symbol
     //
     ///////////////////////////////////////////////////////
     @Override
@@ -39,7 +38,7 @@ public class FloatVs extends NumVs<Float, FloatVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public FloatVs add_float(float... floats) {
+    public FloatTs add_float(float... floats) {
         int count = CountTool.count(floats);
         for (int i = 0; i < count; i++) {
             this.ts.add(floats[i]);
@@ -52,10 +51,10 @@ public class FloatVs extends NumVs<Float, FloatVs> {
     // createThis
     //
     ///////////////////////////////////////////////////////
-    public FloatVs createThis_float(float... floats) {
-        FloatVs floatVs = new FloatVs();
-        floatVs.add_float(floats);
-        return floatVs;
+    public FloatTs createThis_float(float... floats) {
+        FloatTs floatTs = new FloatTs();
+        floatTs.add_float(floats);
+        return floatTs;
     }
 
     ///////////////////////////////////////////////////////

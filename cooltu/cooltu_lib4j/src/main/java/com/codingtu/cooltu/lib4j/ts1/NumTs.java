@@ -1,35 +1,34 @@
-package com.codingtu.cooltu.lib4j.vs;
+package com.codingtu.cooltu.lib4j.ts1;
 
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
 import com.codingtu.cooltu.lib4j.function.ToDouble;
 import com.codingtu.cooltu.lib4j.function.ToFloat;
 import com.codingtu.cooltu.lib4j.function.ToInt;
 import com.codingtu.cooltu.lib4j.function.ToLong;
-import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.vs.impl.IntegerVs;
-import com.codingtu.cooltu.lib4j.vs.impl.StringVs;
+import com.codingtu.cooltu.lib4j.ts1.impl.IntegerTs;
+import com.codingtu.cooltu.lib4j.ts1.impl.StringTs;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
+public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
 
     ///////////////////////////////////////////////////////
     //
     // 构造函数
     //
     ///////////////////////////////////////////////////////
-    public NumVs() {
+    public NumTs() {
     }
 
-    public NumVs(List<T> list) {
+    public NumTs(List<T> list) {
         super(list);
     }
 
     ///////////////////////////////////////////////////////
     //
-    // 获取valueSymbol
+    // 获取Symbol
     //
     ///////////////////////////////////////////////////////
     @Override
@@ -44,18 +43,18 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
     ///////////////////////////////////////////////////////
 
     /**************************************************
-     * getFirst
+     * get
      **************************************************/
     @Deprecated
     @Override
-    public T getFirstByValueSymbol(String valueSymbol) {
-        return super.getFirstByValueSymbol(valueSymbol);
+    public T getBySymbol(String symbol) {
+        return super.getBySymbol(symbol);
     }
 
     @Deprecated
     @Override
-    public T getFirst(T t) {
-        return super.getFirst(t);
+    public T get(T t) {
+        return super.get(t);
     }
 
     /**************************************************
@@ -63,8 +62,8 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
      **************************************************/
     @Deprecated
     @Override
-    public THIS getAllByValueSymbol(String valueSymbol) {
-        return super.getAllByValueSymbol(valueSymbol);
+    public THIS getAllBySymbol(String symbol) {
+        return super.getAllBySymbol(symbol);
     }
 
     @Deprecated
@@ -81,8 +80,8 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
 
     @Deprecated
     @Override
-    public boolean hasByValueSymbol(String valueSymbol) {
-        return super.hasByValueSymbol(valueSymbol);
+    public boolean hasBySymbol(String symbol) {
+        return super.hasBySymbol(symbol);
     }
 
     @Override
@@ -103,16 +102,16 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
     ///////////////////////////////////////////////////////
 
     /**************************************************
-     * firstIndex
+     * first
      **************************************************/
     @Deprecated
     @Override
-    public int firstIndexByValueSymbol(String valueSymbol) {
-        return super.firstIndexByValueSymbol(valueSymbol);
+    public int indexBySymbol(String symbol) {
+        return super.indexBySymbol(symbol);
     }
 
     @Override
-    public int firstIndex(T t) {
+    public int index(T t) {
         int count = count();
         for (int i = 0; i < count; i++) {
             if (t == this.ts.get(i)) {
@@ -127,20 +126,20 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
      **************************************************/
     @Deprecated
     @Override
-    public IntegerVs allIndexByValueSymbol(String valueSymbol) {
-        return super.allIndexByValueSymbol(valueSymbol);
+    public IntegerTs allIndexBySymbol(String symbol) {
+        return super.allIndexBySymbol(symbol);
     }
 
     @Override
-    public IntegerVs allIndex(T t) {
+    public IntegerTs allIndex(T t) {
         int count = count();
-        IntegerVs integerVs = new IntegerVs();
+        IntegerTs integerTs = new IntegerTs();
         for (int i = 0; i < count; i++) {
             if (this.ts.get(i) == t) {
-                integerVs.add(i);
+                integerTs.add(i);
             }
         }
-        return integerVs;
+        return integerTs;
     }
 
     ///////////////////////////////////////////////////////
@@ -150,18 +149,18 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
     ///////////////////////////////////////////////////////
 
     /**************************************************
-     * replaceFirst
+     * replace
      **************************************************/
 
     @Deprecated
     @Override
-    public THIS replaceFirstByValueSymbol(String valueSymbol, T target) {
-        return super.replaceFirstByValueSymbol(valueSymbol, target);
+    public THIS replaceBySymbol(String symbol, T target) {
+        return super.replaceBySymbol(symbol, target);
     }
 
     @Override
-    public THIS replaceFirst(T symbolT, T target) {
-        int firstIndex = firstIndex(symbolT);
+    public THIS replace(T symbolT, T target) {
+        int firstIndex = index(symbolT);
         if (firstIndex >= 0) {
             replaceByIndex(firstIndex, target);
         }
@@ -170,26 +169,26 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
 
     @Deprecated
     @Override
-    public THIS replaceFirst(T target) {
-        return super.replaceFirst(target);
+    public THIS replace(T target) {
+        return super.replace(target);
     }
 
     @Deprecated
     @Override
-    public THIS replaceFirst(T... targets) {
-        return super.replaceFirst(targets);
+    public THIS replace(T... targets) {
+        return super.replace(targets);
     }
 
     @Deprecated
     @Override
-    public THIS replaceFirst(List<T> targets) {
-        return super.replaceFirst(targets);
+    public THIS replace(List<T> targets) {
+        return super.replace(targets);
     }
 
     @Deprecated
     @Override
-    public THIS replaceFirst(THIS targetVs) {
-        return super.replaceFirst(targetVs);
+    public THIS replace(THIS targets) {
+        return super.replace(targets);
     }
 
     /**************************************************
@@ -197,8 +196,8 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
      **************************************************/
     @Deprecated
     @Override
-    public THIS replaceAllByValueSymbol(String valueSymbol, T target) {
-        return super.replaceAllByValueSymbol(valueSymbol, target);
+    public THIS replaceAllBySymbol(String symbol, T target) {
+        return super.replaceAllBySymbol(symbol, target);
     }
 
     @Override
@@ -232,22 +231,22 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
 
     @Deprecated
     @Override
-    public THIS replaceAll(THIS targetVs) {
-        return super.replaceAll(targetVs);
+    public THIS replaceAll(THIS targets) {
+        return super.replaceAll(targets);
     }
 
     /**************************************************
-     * replaceFirstOrAdd
+     * replaceOrAdd
      **************************************************/
     @Deprecated
     @Override
-    public THIS replaceFirstOrAddByValueSymbol(String valueSymbol, T target) {
-        return super.replaceFirstOrAddByValueSymbol(valueSymbol, target);
+    public THIS replaceOrAddBySymbol(String symbol, T target) {
+        return super.replaceOrAddBySymbol(symbol, target);
     }
 
     @Override
-    public THIS replaceFirstOrAdd(T symbolT, T target) {
-        int firstIndex = firstIndex(symbolT);
+    public THIS replaceOrAdd(T symbolT, T target) {
+        int firstIndex = index(symbolT);
         if (firstIndex >= 0) {
             replaceByIndex(firstIndex, target);
         } else if (target != null) {
@@ -258,26 +257,26 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
 
     @Deprecated
     @Override
-    public THIS replaceFirstOrAdd(T target) {
-        return super.replaceFirstOrAdd(target);
+    public THIS replaceOrAdd(T target) {
+        return super.replaceOrAdd(target);
     }
 
     @Deprecated
     @Override
-    public THIS replaceFirstOrAdd(T... targets) {
-        return super.replaceFirstOrAdd(targets);
+    public THIS replaceOrAdd(T... targets) {
+        return super.replaceOrAdd(targets);
     }
 
     @Deprecated
     @Override
-    public THIS replaceFirstOrAdd(List<T> targets) {
-        return super.replaceFirstOrAdd(targets);
+    public THIS replaceOrAdd(List<T> targets) {
+        return super.replaceOrAdd(targets);
     }
 
     @Deprecated
     @Override
-    public THIS replaceFirstOrAdd(THIS targetVs) {
-        return super.replaceFirstOrAdd(targetVs);
+    public THIS replaceOrAdd(THIS targets) {
+        return super.replaceOrAdd(targets);
     }
 
     /**************************************************
@@ -285,8 +284,8 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
      **************************************************/
     @Deprecated
     @Override
-    public THIS replaceAllOrAddByValueSymbol(String valueSymbol, T target) {
-        return super.replaceAllOrAddByValueSymbol(valueSymbol, target);
+    public THIS replaceAllOrAddBySymbol(String symbol, T target) {
+        return super.replaceAllOrAddBySymbol(symbol, target);
     }
 
     @Override
@@ -325,8 +324,8 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
 
     @Deprecated
     @Override
-    public THIS replaceAllOrAdd(THIS targetVs) {
-        return super.replaceAllOrAdd(targetVs);
+    public THIS replaceAllOrAdd(THIS targets) {
+        return super.replaceAllOrAdd(targets);
     }
     ///////////////////////////////////////////////////////
     //
@@ -335,35 +334,35 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
     ///////////////////////////////////////////////////////
 
     /**************************************************
-     * deleteFirst
+     * delete
      **************************************************/
     @Deprecated
     @Override
-    public THIS deleteFirstByValueSymbol(String valueSymbol) {
-        return super.deleteFirstByValueSymbol(valueSymbol);
+    public THIS deleteBySymbol(String symbol) {
+        return super.deleteBySymbol(symbol);
     }
 
     @Deprecated
     @Override
-    public THIS deleteFirstByValueSymbol(String... valueSymbols) {
-        return super.deleteFirstByValueSymbol(valueSymbols);
+    public THIS deleteBySymbol(String... symbols) {
+        return super.deleteBySymbol(symbols);
     }
 
     @Deprecated
     @Override
-    public THIS deleteFirstByValueSymbol(List<String> valueSymbols) {
-        return super.deleteFirstByValueSymbol(valueSymbols);
+    public THIS deleteBySymbol(List<String> symbols) {
+        return super.deleteBySymbol(symbols);
     }
 
     @Deprecated
     @Override
-    public THIS deleteFirstByValueSymbol(StringVs valueSymbolVs) {
-        return super.deleteFirstByValueSymbol(valueSymbolVs);
+    public THIS deleteBySymbol(StringTs symbolStringTs) {
+        return super.deleteBySymbol(symbolStringTs);
     }
 
     @Override
-    public THIS deleteFirst(T target) {
-        int firstIndex = firstIndex(target);
+    public THIS delete(T target) {
+        int firstIndex = index(target);
         if (firstIndex >= 0) {
             this.ts.remove(firstIndex);
         }
@@ -371,7 +370,7 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
     }
 
     @Override
-    protected THIS deleteFirst(Vs.EachGetter<T> getter) {
+    protected THIS delete(Ts.EachGetter<T> getter) {
         if (getter != null) {
             int count = getter.count();
             if (count > 0) {
@@ -379,7 +378,7 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
                 for (int i = 0; i < count; i++) {
                     target = getter.get(i);
                     if (target != null) {
-                        deleteFirst(target);
+                        delete(target);
                     }
                 }
             }
@@ -392,26 +391,26 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
      **************************************************/
     @Deprecated
     @Override
-    public THIS deleteAllByValueSymbol(String valueSymbol) {
-        return super.deleteAllByValueSymbol(valueSymbol);
+    public THIS deleteAllBySymbol(String symbol) {
+        return super.deleteAllBySymbol(symbol);
     }
 
     @Deprecated
     @Override
-    public THIS deleteAllByValueSymbol(String... valueSymbols) {
-        return super.deleteAllByValueSymbol(valueSymbols);
+    public THIS deleteAllBySymbol(String... symbols) {
+        return super.deleteAllBySymbol(symbols);
     }
 
     @Deprecated
     @Override
-    public THIS deleteAllByValueSymbol(List<String> valueSymbols) {
-        return super.deleteAllByValueSymbol(valueSymbols);
+    public THIS deleteAllBySymbol(List<String> symbols) {
+        return super.deleteAllBySymbol(symbols);
     }
 
     @Deprecated
     @Override
-    public THIS deleteAllByValueSymbol(StringVs valueSymbolVs) {
-        return super.deleteAllByValueSymbol(valueSymbolVs);
+    public THIS deleteAllBySymbol(StringTs symbolStringTs) {
+        return super.deleteAllBySymbol(symbolStringTs);
     }
 
     @Override
@@ -431,7 +430,7 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
     }
 
     @Override
-    protected THIS deleteAll(Vs.EachGetter<T> getter) {
+    protected THIS deleteAll(Ts.EachGetter<T> getter) {
         if (getter != null) {
             int valueSymbolCount = getter.count();
             int tCount = count();
@@ -469,7 +468,7 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
 
     @Deprecated
     @Override
-    public MaxMin<T> maxMin(Vs.NowMax<T> nowMax) {
+    public MaxMin<T> maxMin(Ts.NowMax<T> nowMax) {
         return super.maxMin(nowMax);
     }
 
@@ -500,45 +499,45 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
 
     ///////////////////////////////////////////////////////
     //
-    // neighbor方法
+    // near方法
     //
     ///////////////////////////////////////////////////////
 
     /**************************************************
-     * NeighborIndex下一个优先
+     * NearIndex下一个优先
      **************************************************/
 
     @Deprecated
     @Override
-    public Vs.NeighborIndex obtainNeighborIndexWhenNextPriorityByValueSymbol(String valueSymbol) {
-        return super.obtainNeighborIndexWhenNextPriorityByValueSymbol(valueSymbol);
+    public Ts.NearIndex nearIndexWhenNextPriorityBySymbol(String symbol) {
+        return super.nearIndexWhenNextPriorityBySymbol(symbol);
     }
 
     /**************************************************
-     * NeighborData下一个优先
+     * NearData下一个优先
      **************************************************/
     @Deprecated
     @Override
-    public T obtainNeighborDataWhenNextPriorityByVauleSymbol(String valueSymbol) {
-        return super.obtainNeighborDataWhenNextPriorityByVauleSymbol(valueSymbol);
+    public T nearDataWhenNextPriorityBySymbol(String symbol) {
+        return super.nearDataWhenNextPriorityBySymbol(symbol);
     }
 
     /**************************************************
-     * NeighborIndex上一个优先
+     * NearIndex上一个优先
      **************************************************/
     @Deprecated
     @Override
-    public Vs.NeighborIndex obtainNeighborIndexWhenPrePriorityByValueSymbol(String valueSymbol) {
-        return super.obtainNeighborIndexWhenPrePriorityByValueSymbol(valueSymbol);
+    public Ts.NearIndex nearIndexWhenPrePriorityBySymbol(String symbol) {
+        return super.nearIndexWhenPrePriorityBySymbol(symbol);
     }
 
     /**************************************************
-     * NeighborData下一个优先
+     * NearData下一个优先
      **************************************************/
     @Deprecated
     @Override
-    public T obtainNeighborDataWhenPrePriorityByValueSymbol(String valueSymbol) {
-        return super.obtainNeighborDataWhenPrePriorityByValueSymbol(valueSymbol);
+    public T nearDataWhenPrePriorityBySymbol(String symbol) {
+        return super.nearDataWhenPrePriorityBySymbol(symbol);
     }
 
     ///////////////////////////////////////////////////////

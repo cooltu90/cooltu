@@ -1,7 +1,6 @@
 package com.codingtu.cooltu.lib4j.tools;
 
 import com.codingtu.cooltu.lib4j.ts.CoreTs;
-import com.codingtu.cooltu.lib4j.vs.CoreVs;
 
 import java.util.Collection;
 import java.util.Map;
@@ -13,7 +12,7 @@ public class CountTool {
      *
      **************************************************/
 
-    public static int count(CoreVs vs) {
+    public static int count(com.codingtu.cooltu.lib4j.ts1.CoreTs vs) {
         return vs == null ? 0 : vs.count();
     }
 
@@ -84,7 +83,7 @@ public class CountTool {
         return count(ts) <= 0;
     }
 
-    public static boolean isNull(CoreVs ts) {
+    public static boolean isNull(com.codingtu.cooltu.lib4j.ts1.CoreTs ts) {
         return count(ts) <= 0;
     }
 
