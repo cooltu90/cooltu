@@ -1,7 +1,7 @@
 package com.codingtu.cooltu.processor.deal.base;
 
 import com.codingtu.cooltu.lib4j.data.kv.KV;
-import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.processor.annotation.res.ColorRes;
 import com.codingtu.cooltu.processor.annotation.res.ColorStr;
 import com.codingtu.cooltu.processor.annotation.res.Dimen;
@@ -36,14 +36,13 @@ public abstract class ResForBaseDeal extends TypeBaseDeal {
         BaseTools.GetThis<UiBaseBuilder> uiBaseBuilderGetter = getUiBaseBuilderGetter();
         UiBaseBuilder uiBaseBuilder = uiBaseBuilderGetter.getThis(uiClass);
 
-        Ts.ls(te.getEnclosedElements(), (position, element) -> {
-            if (element instanceof VariableElement) {
-                VariableElement ve = (VariableElement) element;
+        ElementTools.getVariableElements(te).ls(new Es.EachEs<VariableElement>() {
+            @Override
+            public boolean each(int position, VariableElement ve) {
                 dealField(uiClass, ve, ElementTools.getFieldKv(ve), uiBaseBuilderGetter, uiBaseBuilder);
+                return false;
             }
-            return false;
         });
-
         uiBaseBuilder.isToastDialog = te.getAnnotation(ToastDialogUse.class) != null;
         uiBaseBuilder.isNoticeDialog = te.getAnnotation(NoticeDialogUse.class) != null;
 

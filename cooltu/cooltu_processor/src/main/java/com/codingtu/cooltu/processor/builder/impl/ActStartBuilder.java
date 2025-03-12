@@ -5,6 +5,7 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
 import com.codingtu.cooltu.lib4j.data.map.ValueMap;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
@@ -79,7 +80,7 @@ public class ActStartBuilder extends ActStartBuilderBase {
                             return null;
                         }
                     }
-                }, new Ts.EachTs<String>() {
+                }, new Es.EachEs<String>() {
                     @Override
                     public boolean each(int position, String actClass) {
                         startGroups.addAll(ResForDeal.START_MAP.get(actClass));

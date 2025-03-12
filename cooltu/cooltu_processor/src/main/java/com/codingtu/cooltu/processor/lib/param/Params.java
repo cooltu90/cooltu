@@ -1,10 +1,10 @@
 package com.codingtu.cooltu.processor.lib.param;
 
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.es.BaseEs;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class Params {
 
     public String getMethodParams() {
         StringBuilder sb = new StringBuilder();
-        Ts.ls(kvs, new Ts.EachTs<KV<String, String>>() {
+        Es.es(kvs).ls(new Es.EachEs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 if (position != 0) {
@@ -57,7 +57,7 @@ public class Params {
 
     public String getParams() {
         StringBuilder sb = new StringBuilder();
-        Ts.ls(kvs, new Ts.EachTs<KV<String, String>>() {
+        Es.es(kvs).ls(new Es.EachEs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 if (position != 0) {
@@ -76,7 +76,7 @@ public class Params {
         if (count > 0 && hasFirst) {
             sb.append(",");
         }
-        Ts.ls(kvs, new Ts.EachTs<KV<String, String>>() {
+        Es.es(kvs).ls(new Es.EachEs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 if (position != 0) {
@@ -86,7 +86,6 @@ public class Params {
                 return false;
             }
         });
-
         if (count > 0 && hasNext) {
             sb.append(", ");
         }
@@ -100,7 +99,7 @@ public class Params {
         if (count > 0 && hasFirst) {
             sb.append(", ");
         }
-        Ts.ls(kvs, new Ts.EachTs<KV<String, String>>() {
+        Es.es(kvs).ls(new Es.EachEs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 if (position != 0) {
@@ -143,20 +142,20 @@ public class Params {
         return sb.toString();
     }
 
-    public static <S> String getParam(S[] ss, Ts.Convert<S, String> convert) {
-        return getParam(Ts.ts(ss), convert);
+    public static <E> String getParam(E[] es, Es.Convert<E, String> convert) {
+        return getParam(Es.es(es), convert);
     }
 
-    public static <S> String getParam(List<S> ss, Ts.Convert<S, String> convert) {
-        return getParam(Ts.ts(ss), convert);
+    public static <E> String getParam(List<E> es, Es.Convert<E, String> convert) {
+        return getParam(Es.es(es), convert);
     }
 
-    public static <S> String getParam(BaseTs<S> ts, Ts.Convert<S, String> convert) {
+    public static <E> String getParam(BaseEs<E> es, Es.Convert<E, String> convert) {
         StringBuilder sb = new StringBuilder();
         int index = 0;
-        int count = ts.count();
+        int count = es.count();
         for (int i = 0; i < count; i++) {
-            String convertStr = convert.convert(i, ts.get(i));
+            String convertStr = convert.convert(i, es.getByIndex(i));
             if (StringTool.isNotBlank(convertStr)) {
                 if (index != 0) {
                     sb.append(", ");
@@ -168,8 +167,8 @@ public class Params {
         return sb.toString();
     }
 
-    public void ls(Ts.EachTs<KV<String, String>> eachTs) {
-        Ts.ls(kvs, eachTs);
+    public void ls(Es.EachEs<KV<String, String>> eachEs) {
+        Es.es(kvs).ls(eachEs);
     }
 
     public static interface Convert {

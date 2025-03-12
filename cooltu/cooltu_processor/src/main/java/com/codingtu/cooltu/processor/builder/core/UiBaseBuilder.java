@@ -7,6 +7,7 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
@@ -650,7 +651,7 @@ public abstract class UiBaseBuilder {
                             if (ClassTool.isList(returnType)) {
                                 String beanType = StringTool.getSub(returnType, "List", "<", ">");
                                 return mock + ConvertTool.toMethodType(CurrentPath.javaInfo(beanType).name) + "s";
-                            }else if(ClassTool.isString(returnType)){
+                            } else if (ClassTool.isString(returnType)) {
                                 return mock + "json";
                             } else {
                                 return mock + ConvertTool.toMethodType(CurrentPath.javaInfo(returnType).name);
@@ -698,7 +699,7 @@ public abstract class UiBaseBuilder {
                 uiBase.actBack(actBackIndex, actBackIndex == 0 ? "if" : "else if", FullName.CODE_4_REQUEST, ConvertTool.toStaticType(fromJavaInfo.name), methodName);
 
                 Params params = ElementTools.getMethodParamKvs(ee);
-                params.ls(new Ts.EachTs<KV<String, String>>() {
+                params.ls(new Es.EachEs<KV<String, String>>() {
                     @Override
                     public boolean each(int paramIndex, KV<String, String> kv) {
                         uiBase.actBackParam(actBackIndex, paramIndex, FullName.PASS, kv.v);

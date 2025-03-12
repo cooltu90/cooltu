@@ -4,10 +4,9 @@ import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts.Maps;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.net.NetBack;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
@@ -68,9 +67,9 @@ public class ActBaseDeal extends TypeBaseDeal {
          *
          **************************************************/
 
-        Ts.ls(te.getEnclosedElements(), (position, element) -> {
-            if (element instanceof ExecutableElement) {
-                ExecutableElement ee = (ExecutableElement) element;
+        ElementTools.getExecutableElements(te).ls(new Es.EachEs<ExecutableElement>() {
+            @Override
+            public boolean each(int position, ExecutableElement ee) {
                 ClickView clickView = ee.getAnnotation(ClickView.class);
                 if (clickView != null) {
                     dealClickView(uiBaseBuilder, clickView, ee);
@@ -94,23 +93,22 @@ public class ActBaseDeal extends TypeBaseDeal {
                 if (permission != null) {
                     dealPermissionBack(baseBuilder, permission, ee);
                 }
+                return false;
             }
-
-            return false;
         });
 
     }
 
     private void dealLongClickView(UiBaseBuilder uiBaseBuilder, LongClickView clickView, ExecutableElement ee) {
         ClickViewInfo clickViewInfo = new ClickViewInfo();
-        clickViewInfo.ids = Maps.map(IdTools.elementToIds(ee, LongClickView.class, clickView.value())).toValueTs().toList();
+        clickViewInfo.ids = Es.maps(IdTools.elementToIds(ee, LongClickView.class, clickView.value())).toValueList();
         clickViewInfo.method = ElementTools.simpleName(ee);
         clickViewInfo.methodParams = ElementTools.getMethodParamKvs(ee);
         clickViewInfo.isCheckLogin = clickView.checkLogin();
         //clickViewInfo.isCheckForm = clickView.check();
 
         int inActCount = CountTool.count(clickView.inAct());
-        Ts.ls(clickViewInfo.ids, new Ts.EachTs<IdTools.Id>() {
+        Es.es(clickViewInfo.ids).ls(new Es.EachEs<IdTools.Id>() {
             @Override
             public boolean each(int position, IdTools.Id id) {
                 boolean inAct = true;
@@ -127,14 +125,14 @@ public class ActBaseDeal extends TypeBaseDeal {
 
     private void dealClickView(UiBaseBuilder uiBaseBuilder, ClickView clickView, ExecutableElement ee) {
         ClickViewInfo clickViewInfo = new ClickViewInfo();
-        clickViewInfo.ids = Maps.map(IdTools.elementToIds(ee, ClickView.class, clickView.value())).toValueTs().toList();
+        clickViewInfo.ids = Es.maps(IdTools.elementToIds(ee, ClickView.class, clickView.value())).toValueList();
         clickViewInfo.method = ElementTools.simpleName(ee);
         clickViewInfo.methodParams = ElementTools.getMethodParamKvs(ee);
         clickViewInfo.isCheckLogin = clickView.checkLogin();
         //clickViewInfo.isCheckForm = clickView.check();
 
         int inActCount = CountTool.count(clickView.inAct());
-        Ts.ls(clickViewInfo.ids, new Ts.EachTs<IdTools.Id>() {
+        Es.es(clickViewInfo.ids).ls(new Es.EachEs<IdTools.Id>() {
             @Override
             public boolean each(int position, IdTools.Id id) {
                 boolean inAct = true;
@@ -168,7 +166,7 @@ public class ActBaseDeal extends TypeBaseDeal {
         uiBaseBuilder.actBacks.add(actBack);
         uiBaseBuilder.actBackMethods.add(ee);
 
-        ElementTools.getMethodParamKvs(ee).ls(new Ts.EachTs<KV<String, String>>() {
+        ElementTools.getMethodParamKvs(ee).ls(new Es.EachEs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 PassBuilder.BUILDER.add(kv);

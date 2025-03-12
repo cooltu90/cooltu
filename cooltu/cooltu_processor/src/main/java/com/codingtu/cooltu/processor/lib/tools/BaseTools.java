@@ -1,7 +1,7 @@
 package com.codingtu.cooltu.processor.lib.tools;
 
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.builder.core.UiBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.ActBaseBuilder;
 import com.codingtu.cooltu.processor.builder.impl.FragmentBaseBuilder;
@@ -47,34 +47,34 @@ public class BaseTools {
         };
     }
 
-    public static <T> List<T> getThisWithParents(T t, GetParent<T> getParent) {
-        ArrayList<T> ts = new ArrayList<>();
-        getThisWithParents(t, getParent, new Ts.EachTs<T>() {
+    public static <E> List<E> getThisWithParents(E e, GetParent<E> getParent) {
+        ArrayList<E> es = new ArrayList<>();
+        getThisWithParents(e, getParent, new Es.EachEs<E>() {
             @Override
-            public boolean each(int position, T t) {
-                ts.add(t);
+            public boolean each(int position, E e) {
+                es.add(e);
                 return false;
             }
         });
-        return ts;
+        return es;
     }
 
-    public static <T> void getThisWithParents(T t, GetParent<T> getParent, Ts.EachTs<T> eachTs) {
-        getThisWithParents(t, new int[]{0}, getParent, eachTs);
+    public static <E> void getThisWithParents(E e, GetParent<E> getParent, Es.EachEs<E> eachEs) {
+        getThisWithParents(e, new int[]{0}, getParent, eachEs);
     }
 
-    private static <T> void getThisWithParents(T t, int[] indexs, GetParent<T> getParent, Ts.EachTs<T> eachTs) {
-        if (t != null) {
-            eachTs.each(indexs[0]++, t);
-            T parent = getParent.getParent(t);
+    private static <E> void getThisWithParents(E e, int[] indexs, GetParent<E> getParent, Es.EachEs<E> eachEs) {
+        if (e != null) {
+            eachEs.each(indexs[0]++, e);
+            E parent = getParent.getParent(e);
             if (parent != null) {
-                getThisWithParents(parent, indexs, getParent, eachTs);
+                getThisWithParents(parent, indexs, getParent, eachEs);
             }
         }
     }
 
-    public static interface GetParent<T> {
-        T getParent(T t);
+    public static interface GetParent<E> {
+        E getParent(E e);
     }
 
     /**************************************************
@@ -111,12 +111,12 @@ public class BaseTools {
     }
 
 
-    public static <T> List<T> getThisWithChilds(String thisClass, GetThis<T> getThis) {
-        ArrayList<T> list = new ArrayList<>();
-        getThisWithChilds(thisClass, new Ts.EachTs<T>() {
+    public static <E> List<E> getThisWithChilds(String thisClass, GetThis<E> getThis) {
+        ArrayList<E> list = new ArrayList<>();
+        getThisWithChilds(thisClass, new Es.EachEs<E>() {
             @Override
-            public boolean each(int position, T t) {
-                list.add(t);
+            public boolean each(int position, E e) {
+                list.add(e);
                 return false;
             }
         }, getThis);
@@ -124,21 +124,21 @@ public class BaseTools {
     }
 
 
-    public static <T> void getThisWithChilds(String thisClass, Ts.EachTs<T> eachTs, GetThis<T> getThis) {
-        getThisWithChilds(thisClass, new int[]{0}, eachTs, getThis);
+    public static <E> void getThisWithChilds(String thisClass, Es.EachEs<E> eachEs, GetThis<E> getThis) {
+        getThisWithChilds(thisClass, new int[]{0}, eachEs, getThis);
     }
 
 
-    private static <T> void getThisWithChilds(String thisClass, int[] indexs, Ts.EachTs<T> eachTs, GetThis<T> getThis) {
-        T builder = getThis.getThis(thisClass);
+    private static <E> void getThisWithChilds(String thisClass, int[] indexs, Es.EachEs<E> eachEs, GetThis<E> getThis) {
+        E builder = getThis.getThis(thisClass);
         if (builder != null) {
-            eachTs.each(indexs[0]++, builder);
+            eachEs.each(indexs[0]++, builder);
             List<String> childs = getThis.getChilds(thisClass);
             int count = CountTool.count(childs);
             if (count > 0) {
                 for (int i = 0; i < count; i++) {
                     String child = childs.get(i);
-                    getThisWithChilds(child, indexs, eachTs, getThis);
+                    getThisWithChilds(child, indexs, eachEs, getThis);
                 }
             }
         }

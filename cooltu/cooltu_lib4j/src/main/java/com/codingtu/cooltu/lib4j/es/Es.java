@@ -1,6 +1,7 @@
 package com.codingtu.cooltu.lib4j.es;
 
 import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
+import com.codingtu.cooltu.lib4j.es.map.BaseMaps;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.es.impl.BooleanEs;
 import com.codingtu.cooltu.lib4j.es.impl.DoubleEs;
@@ -272,6 +273,27 @@ public class Es {
         LongEs es = new LongEs();
         es.add(srcs);
         return es;
+    }
+
+    /**************************************************
+     *
+     **************************************************/
+    public static <K, V> BaseMaps<K, V> maps(Map<K, V> map) {
+        return new BaseMaps(map);
+    }
+
+
+    public static <TARGET> BaseEs<TARGET> convertList(BaseEs<List<TARGET>> es) {
+        return es.convertList(new Es.Convert<List<TARGET>, List<TARGET>>() {
+
+            @Override
+            public List<TARGET> convert(int index, List<TARGET> targets) {
+                if (!CountTool.isNull(targets)) {
+                    return targets;
+                }
+                return null;
+            }
+        });
     }
 
 }

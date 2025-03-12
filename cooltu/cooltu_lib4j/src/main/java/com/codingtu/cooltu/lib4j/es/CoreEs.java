@@ -1359,6 +1359,18 @@ public abstract class CoreEs<E, THIS extends CoreEs> {
         return baseEs;
     }
 
+    public <TARGET> BaseEs<TARGET> convertList() {
+        return convertList(new Es.Convert<E, List<TARGET>>() {
+            @Override
+            public List<TARGET> convert(int index, E e) {
+                if (e != null) {
+                    return (List<TARGET>) e;
+                }
+                return null;
+            }
+        });
+    }
+
     public <ES extends CoreEs, TARGET> ES convertList(Class<ES> vsClass, Es.Convert<E, List<TARGET>> convert) {
         ES targetEs;
         try {

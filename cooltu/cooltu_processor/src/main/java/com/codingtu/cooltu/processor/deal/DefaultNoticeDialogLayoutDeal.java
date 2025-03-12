@@ -2,7 +2,6 @@ package com.codingtu.cooltu.processor.deal;
 
 import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultNoticeDialogLayout;
-import com.codingtu.cooltu.processor.annotation.ui.DefaultToastDialogLayout;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 

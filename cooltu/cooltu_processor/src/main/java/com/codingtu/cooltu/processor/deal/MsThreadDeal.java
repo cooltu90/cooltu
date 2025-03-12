@@ -2,6 +2,8 @@ package com.codingtu.cooltu.processor.deal;
 
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.map.ValueMap;
+import com.codingtu.cooltu.lib4j.es.BaseEs;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
@@ -37,8 +39,8 @@ public class MsThreadDeal extends TypeBaseDeal {
         String objClassSimpleName = ElementTools.simpleName(te);
 
         Map<String, Integer> staticMethodNameMap = new HashMap<>();
-        BaseTs<String> staticMethodNameTs = Ts.ts();
-        BaseTs<ExecutableElement> interfaceMethodTs = Ts.ts();
+        BaseEs<String> staticMethodNameEs = Es.es();
+        BaseEs<ExecutableElement> interfaceMethodEs = Es.es();
         Set<Integer> subThreadNumSet = new HashSet<>();
         Map<String, ExecutableElement> mainMethodMap = new HashMap<>();
         ValueMap<Integer, Map<String, ExecutableElement>> subMethodMap = new ValueMap<Integer, Map<String, ExecutableElement>>() {
@@ -54,7 +56,7 @@ public class MsThreadDeal extends TypeBaseDeal {
         BaseTs<ExecutableElement> allMethodTs = Ts.ts();
 
 
-        ElementTools.ls(te.getEnclosedElements(), new Ts.EachTs<Element>() {
+        ElementTools.ls(te.getEnclosedElements(), new Es.EachEs<Element>() {
             @Override
             public boolean each(int position, Element element) {
                 if (element instanceof ExecutableElement) {
@@ -68,8 +70,8 @@ public class MsThreadDeal extends TypeBaseDeal {
                         }
                         String typeName = staticSimpleName + "_" + num;
                         staticMethodNameMap.put(staticSimpleName, num + 1);
-                        staticMethodNameTs.add(typeName);
-                        interfaceMethodTs.add(ee);
+                        staticMethodNameEs.add(typeName);
+                        interfaceMethodEs.add(ee);
 
                         mainMethodMap.put(typeName, ee);
 
@@ -85,8 +87,8 @@ public class MsThreadDeal extends TypeBaseDeal {
                         }
                         String typeName = staticSimpleName + "_" + num;
                         staticMethodNameMap.put(staticSimpleName, num + 1);
-                        staticMethodNameTs.add(typeName);
-                        interfaceMethodTs.add(ee);
+                        staticMethodNameEs.add(typeName);
+                        interfaceMethodEs.add(ee);
 
                         subThreadNumSet.add(subThread.value());
 
@@ -112,7 +114,7 @@ public class MsThreadDeal extends TypeBaseDeal {
         });
 
         BoolValue hasStart = BoolValue.obtain(true);
-        Ts.maps(hasStartMap).ls(new Ts.MapEach<Integer, Integer>() {
+        Es.maps(hasStartMap).ls(new Es.MapEach<Integer, Integer>() {
             @Override
             public boolean each(Integer thread, Integer startNum) {
                 if (startNum != 1) {
@@ -129,12 +131,12 @@ public class MsThreadDeal extends TypeBaseDeal {
         //typeJavaInfo
         JavaInfo typeJavaInfo = CurrentPath.msThreadType(objClassSimpleName);
         MsThreadTypeBuilder msThreadTypeBuilder = new MsThreadTypeBuilder(typeJavaInfo);
-        msThreadTypeBuilder.setStaticMethodNameTs(staticMethodNameTs);
+        msThreadTypeBuilder.setStaticMethodNameEs(staticMethodNameEs);
 
         //interfaceJavaInfo
         JavaInfo interfaceJavaInfo = CurrentPath.msThreadInterface(objClassSimpleName);
         MsThreadInterfaceBuilder msThreadInterfaceBuilder = new MsThreadInterfaceBuilder(interfaceJavaInfo);
-        msThreadInterfaceBuilder.addMethods(interfaceMethodTs);
+        msThreadInterfaceBuilder.addMethods(interfaceMethodEs);
 
         //msThreadJavaInfo
         JavaInfo msThreadJavaInfo = CurrentPath.msThread(objClassSimpleName);

@@ -1,6 +1,5 @@
 package com.codingtu.cooltu.processor.deal;
 
-import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Module;
 import com.codingtu.cooltu.constant.Pkg;
@@ -12,7 +11,6 @@ import com.codingtu.cooltu.processor.builder.impl.Code4RequestBuilder;
 import com.codingtu.cooltu.processor.builder.impl.PassBuilder;
 import com.codingtu.cooltu.processor.builder.impl.PermissionBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
-import com.codingtu.cooltu.processor.lib.tools.IdTools;
 
 import javax.lang.model.element.TypeElement;
 

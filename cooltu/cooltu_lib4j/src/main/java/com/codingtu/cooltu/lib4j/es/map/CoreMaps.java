@@ -1,15 +1,19 @@
-package com.codingtu.cooltu.lib4j.es;
+package com.codingtu.cooltu.lib4j.es.map;
 
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.es.BaseEs;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.json.JsonTool;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
-import com.codingtu.cooltu.lib4j.tools.OtherTool;
+import com.codingtu.cooltu.lib4j.ts.Ts;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class CoreMaps<K, V, THIS extends CoreMaps, ES extends CoreEs> {
+public abstract class CoreMaps<K, V, THIS extends CoreMaps> {
 
     ///////////////////////////////////////////////////////
     //
@@ -103,25 +107,19 @@ public abstract class CoreMaps<K, V, THIS extends CoreMaps, ES extends CoreEs> {
         return (THIS) this;
     }
 
-    private ES createEs() {
-        try {
-            return (ES) OtherTool.getFanxing(this, 3).getConstructor().newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public ES getValueList() {
-        ES es = createEs();
+    public List<V> toValueList() {
+        ArrayList<V> list = new ArrayList<>();
         ls(new Es.MapEach<K, V>() {
             @Override
             public boolean each(K k, V v) {
-                es.add(v);
+                list.add(v);
                 return false;
             }
         });
-        return es;
+        return list;
     }
 
-
+    public BaseEs<V> toValueTs() {
+        return Es.es(toValueList());
+    }
 }
