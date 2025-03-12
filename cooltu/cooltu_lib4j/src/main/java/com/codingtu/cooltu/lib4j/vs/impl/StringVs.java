@@ -28,7 +28,7 @@ public class StringVs extends CoreVs<String, StringVs> {
     ///////////////////////////////////////////////////////
 
     @Override
-    protected String valueSymbol(String s) {
+    protected String obtainSymbol(String s) {
         return s;
     }
 

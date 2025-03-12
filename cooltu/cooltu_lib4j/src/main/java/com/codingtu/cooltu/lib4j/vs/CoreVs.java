@@ -10,7 +10,7 @@ import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.OtherTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.data.symbol.ValueSymbol;
+import com.codingtu.cooltu.lib4j.data.symbol1.Symbol;
 import com.codingtu.cooltu.lib4j.vs.impl.IntegerVs;
 import com.codingtu.cooltu.lib4j.vs.impl.StringVs;
 
@@ -240,7 +240,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     //
     ///////////////////////////////////////////////////////
 
-    protected abstract String valueSymbol(T t);
+    protected abstract String obtainSymbol(T t);
 
     ///////////////////////////////////////////////////////
     //
@@ -456,7 +456,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         T t = null;
         for (int i = 0; i < count; i++) {
             t = this.ts.get(i);
-            if (valueSymbol.equals(valueSymbol(t))) {
+            if (valueSymbol.equals(obtainSymbol(t))) {
                 return t;
             }
         }
@@ -464,7 +464,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     public T getFirst(T t) {
-        return getFirstByValueSymbol(valueSymbol(t));
+        return getFirstByValueSymbol(obtainSymbol(t));
     }
 
     /**************************************************
@@ -491,7 +491,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         T t = null;
         for (int i = 0; i < count; i++) {
             t = this.ts.get(i);
-            if (valueSymbol.equals(valueSymbol(t))) {
+            if (valueSymbol.equals(obtainSymbol(t))) {
                 ThisObj.add(t);
             }
         }
@@ -499,7 +499,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     public THIS getAll(T t) {
-        return getAllByValueSymbol(valueSymbol(t));
+        return getAllByValueSymbol(obtainSymbol(t));
     }
 
     /**************************************************
@@ -526,7 +526,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     public boolean has(T t) {
-        return hasByValueSymbol(valueSymbol(t));
+        return hasByValueSymbol(obtainSymbol(t));
     }
 
     ///////////////////////////////////////////////////////
@@ -553,7 +553,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     public int firstIndexByValueSymbol(String valueSymbol) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (valueSymbol.equals(valueSymbol(this.ts.get(i)))) {
+            if (valueSymbol.equals(obtainSymbol(this.ts.get(i)))) {
                 return i;
             }
         }
@@ -561,7 +561,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     public int firstIndex(T t) {
-        return firstIndexByValueSymbol(valueSymbol(t));
+        return firstIndexByValueSymbol(obtainSymbol(t));
     }
 
     /**************************************************
@@ -584,7 +584,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         IntegerVs integerVs = new IntegerVs();
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (valueSymbol(this.ts.get(i)).equals(valueSymbol)) {
+            if (obtainSymbol(this.ts.get(i)).equals(valueSymbol)) {
                 integerVs.add(i);
             }
         }
@@ -592,7 +592,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     }
 
     public IntegerVs allIndex(T t) {
-        return allIndexByValueSymbol(valueSymbol(t));
+        return allIndexByValueSymbol(obtainSymbol(t));
     }
 
     ///////////////////////////////////////////////////////
@@ -632,7 +632,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
 
     public THIS replaceFirst(T symbolT, T target) {
         if (symbolT != null && target != null) {
-            replaceFirstByValueSymbol(valueSymbol(symbolT), target);
+            replaceFirstByValueSymbol(obtainSymbol(symbolT), target);
         }
         return (THIS) this;
     }
@@ -648,7 +648,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = targets[i];
                 if (target != null) {
-                    replaceFirstByValueSymbol(valueSymbol(target), target);
+                    replaceFirstByValueSymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -662,7 +662,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = targets.get(i);
                 if (target != null) {
-                    replaceFirstByValueSymbol(valueSymbol(target), target);
+                    replaceFirstByValueSymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -676,7 +676,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = (T) targetVs.ts.get(i);
                 if (target != null) {
-                    replaceFirstByValueSymbol(valueSymbol(target), target);
+                    replaceFirstByValueSymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -701,7 +701,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     public THIS replaceAllByValueSymbol(String valueSymbol, T target) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (valueSymbol(this.ts.get(i)).equals(valueSymbol)) {
+            if (obtainSymbol(this.ts.get(i)).equals(valueSymbol)) {
                 replaceByIndex(i, target);
             }
         }
@@ -710,7 +710,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
 
     public THIS replaceAll(T symbolT, T target) {
         if (symbolT != null && target != null) {
-            replaceAllByValueSymbol(valueSymbol(symbolT), target);
+            replaceAllByValueSymbol(obtainSymbol(symbolT), target);
         }
         return (THIS) this;
     }
@@ -726,7 +726,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = targets[i];
                 if (target != null) {
-                    replaceAllByValueSymbol(valueSymbol(target), target);
+                    replaceAllByValueSymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -740,7 +740,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = targets.get(i);
                 if (target != null) {
-                    replaceAllByValueSymbol(valueSymbol(target), target);
+                    replaceAllByValueSymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -754,7 +754,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = (T) targetVs.ts.get(i);
                 if (target != null) {
-                    replaceAllByValueSymbol(valueSymbol(target), target);
+                    replaceAllByValueSymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -788,7 +788,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
 
     public THIS replaceFirstOrAdd(T symbolT, T target) {
         if (symbolT != null && target != null) {
-            replaceFirstOrAddByValueSymbol(valueSymbol(symbolT), target);
+            replaceFirstOrAddByValueSymbol(obtainSymbol(symbolT), target);
         }
         return (THIS) this;
     }
@@ -804,7 +804,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = targets[i];
                 if (target != null) {
-                    replaceFirstOrAddByValueSymbol(valueSymbol(target), target);
+                    replaceFirstOrAddByValueSymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -818,7 +818,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = targets.get(i);
                 if (target != null) {
-                    replaceFirstOrAddByValueSymbol(valueSymbol(target), target);
+                    replaceFirstOrAddByValueSymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -832,7 +832,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = (T) targetVs.ts.get(i);
                 if (target != null) {
-                    replaceFirstOrAddByValueSymbol(valueSymbol(target), target);
+                    replaceFirstOrAddByValueSymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -863,7 +863,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         int count = count();
         boolean isReplace = false;
         for (int i = 0; i < count; i++) {
-            if (valueSymbol(this.ts.get(i)).equals(valueSymbol)) {
+            if (obtainSymbol(this.ts.get(i)).equals(valueSymbol)) {
                 replaceByIndex(i, target);
                 isReplace = true;
             }
@@ -876,7 +876,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
 
     public THIS replaceAllOrAdd(T symboleT, T target) {
         if (symboleT != null && target != null) {
-            replaceAllOrAddByValueSymbol(valueSymbol(symboleT), target);
+            replaceAllOrAddByValueSymbol(obtainSymbol(symboleT), target);
         }
         return (THIS) this;
     }
@@ -892,7 +892,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = targets[i];
                 if (target != null) {
-                    replaceAllOrAddByValueSymbol(valueSymbol(target), target);
+                    replaceAllOrAddByValueSymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -906,7 +906,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = targets.get(i);
                 if (target != null) {
-                    replaceAllOrAddByValueSymbol(valueSymbol(target), target);
+                    replaceAllOrAddByValueSymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -920,7 +920,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
             for (int i = 0; i < count; i++) {
                 target = (T) targetVs.ts.get(i);
                 if (target != null) {
-                    replaceAllOrAddByValueSymbol(valueSymbol(target), target);
+                    replaceAllOrAddByValueSymbol(obtainSymbol(target), target);
                 }
             }
         }
@@ -999,7 +999,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
 
     public THIS deleteFirst(T target) {
         if (target != null) {
-            deleteFirstByValueSymbol(valueSymbol(target));
+            deleteFirstByValueSymbol(obtainSymbol(target));
         }
         return (THIS) this;
     }
@@ -1012,7 +1012,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
                 for (int i = 0; i < count; i++) {
                     target = getter.get(i);
                     if (target != null) {
-                        deleteFirstByValueSymbol(valueSymbol(target));
+                        deleteFirstByValueSymbol(obtainSymbol(target));
                     }
                 }
             }
@@ -1088,7 +1088,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         T t;
         for (int i = 0; i < count; i++) {
             t = this.ts.get(i);
-            if (!valueSymbol(t).equals(valueSymbol)) {
+            if (!obtainSymbol(t).equals(valueSymbol)) {
                 newTs.add(t);
             }
         }
@@ -1109,7 +1109,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
                 boolean isSame;
                 for (int i = 0; i < tCount; i++) {
                     t = this.ts.get(i);
-                    tValueSymbol = valueSymbol(t);
+                    tValueSymbol = obtainSymbol(t);
 
                     isSame = false;
                     for (int j = 0; j < valueSymbolCount; j++) {
@@ -1174,7 +1174,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     //删除所有
     public THIS deleteAll(T target) {
         if (target != null) {
-            deleteAllByValueSymbol(valueSymbol(target));
+            deleteAllByValueSymbol(obtainSymbol(target));
         }
         return (THIS) this;
     }
@@ -1191,11 +1191,11 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
                 boolean isSame;
                 for (int i = 0; i < tCount; i++) {
                     t = this.ts.get(i);
-                    tValueSymbol = valueSymbol(t);
+                    tValueSymbol = obtainSymbol(t);
 
                     isSame = false;
                     for (int j = 0; j < valueSymbolCount; j++) {
-                        if (tValueSymbol.equals(valueSymbol(getter.get(j)))) {
+                        if (tValueSymbol.equals(obtainSymbol(getter.get(j)))) {
                             isSame = true;
                             break;
                         }
@@ -1260,8 +1260,8 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
     //
     ///////////////////////////////////////////////////////
 
-    public <TARGET extends ValueSymbol> ValueSymbolVs<TARGET> convert(Vs.Convert<T, TARGET> convert) {
-        ValueSymbolVs baseVs = new ValueSymbolVs();
+    public <TARGET extends Symbol> SymbolVs<TARGET> convert(Vs.Convert<T, TARGET> convert) {
+        SymbolVs baseVs = new SymbolVs();
         if (convert != null) {
             int count = count();
             TARGET target;
@@ -1293,8 +1293,8 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return vs;
     }
 
-    public <TARGET extends ValueSymbol> ValueSymbolVs<TARGET> convertList(Vs.Convert<T, List<TARGET>> convert) {
-        ValueSymbolVs<TARGET> vs = new ValueSymbolVs<>();
+    public <TARGET extends Symbol> SymbolVs<TARGET> convertList(Vs.Convert<T, List<TARGET>> convert) {
+        SymbolVs<TARGET> vs = new SymbolVs<>();
         if (convert != null) {
             int count = count();
             List<TARGET> list;
@@ -1559,7 +1559,7 @@ public abstract class CoreVs<T, THIS extends CoreVs> {
         return toMap(new Vs.ToMap<String, T, T>() {
             @Override
             public void deal(Map<String, T> map, int i, T t) {
-                map.put(valueSymbol(t), t);
+                map.put(obtainSymbol(t), t);
             }
         });
     }

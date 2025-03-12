@@ -1,7 +1,7 @@
 package com.codingtu.cooltu.lib4j.vs;
 
 import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
-import com.codingtu.cooltu.lib4j.data.symbol.ValueSymbol;
+import com.codingtu.cooltu.lib4j.data.symbol1.Symbol;
 import com.codingtu.cooltu.lib4j.vs.impl.BooleanVs;
 import com.codingtu.cooltu.lib4j.vs.impl.DoubleVs;
 import com.codingtu.cooltu.lib4j.vs.impl.FloatVs;
@@ -74,18 +74,18 @@ public class Vs {
     /**************************************************
      * ValueSymbolVs
      **************************************************/
-    public static <T extends ValueSymbol> ValueSymbolVs<T> vs(T... srcVs) {
-        ValueSymbolVs<T> vs = new ValueSymbolVs<>();
+    public static <T extends Symbol> SymbolVs<T> vs(T... srcVs) {
+        SymbolVs<T> vs = new SymbolVs<>();
         vs.add(srcVs);
         return vs;
     }
 
-    public static <T extends ValueSymbol> ValueSymbolVs<T> vs(List<T> srcVs) {
-        return new ValueSymbolVs<>(srcVs);
+    public static <T extends Symbol> SymbolVs<T> vs(List<T> srcVs) {
+        return new SymbolVs<>(srcVs);
     }
 
-    public static <T extends ValueSymbol> ValueSymbolVs<T> vs(ValueSymbolVs<T> srcVs) {
-        ValueSymbolVs<T> vs = new ValueSymbolVs<>();
+    public static <T extends Symbol> SymbolVs<T> vs(SymbolVs<T> srcVs) {
+        SymbolVs<T> vs = new SymbolVs<>();
         vs.add(srcVs);
         return vs;
     }

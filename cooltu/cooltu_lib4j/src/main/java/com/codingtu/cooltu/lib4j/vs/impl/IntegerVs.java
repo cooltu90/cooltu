@@ -31,7 +31,7 @@ public class IntegerVs extends NumVs<Integer, IntegerVs> {
     //
     ///////////////////////////////////////////////////////
     @Override
-    protected String valueSymbol(Integer integer) {
+    protected String obtainSymbol(Integer integer) {
         return String.valueOf(integer);
     }
 

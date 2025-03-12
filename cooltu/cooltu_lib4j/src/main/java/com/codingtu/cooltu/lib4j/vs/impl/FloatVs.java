@@ -29,7 +29,7 @@ public class FloatVs extends NumVs<Float, FloatVs> {
     //
     ///////////////////////////////////////////////////////
     @Override
-    protected String valueSymbol(Float aFloat) {
+    protected String obtainSymbol(Float aFloat) {
         return aFloat + "";
     }
 

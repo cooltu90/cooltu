@@ -1,20 +1,20 @@
 package com.codingtu.cooltu.lib4j.vs;
 
-import com.codingtu.cooltu.lib4j.data.symbol.ValueSymbol;
+import com.codingtu.cooltu.lib4j.data.symbol1.Symbol;
 
 import java.util.List;
 
-public class ValueSymbolVs<T extends ValueSymbol> extends CoreVs<T, ValueSymbolVs> {
+public class SymbolVs<T extends Symbol> extends CoreVs<T, SymbolVs> {
 
     ///////////////////////////////////////////////////////
     //
     // 构造函数
     //
     ///////////////////////////////////////////////////////
-    public ValueSymbolVs() {
+    public SymbolVs() {
     }
 
-    public ValueSymbolVs(List<T> list) {
+    public SymbolVs(List<T> list) {
         super(list);
     }
 
@@ -24,7 +24,7 @@ public class ValueSymbolVs<T extends ValueSymbol> extends CoreVs<T, ValueSymbolV
     //
     ///////////////////////////////////////////////////////
     @Override
-    protected String valueSymbol(T t) {
-        return t.valueSymbol();
+    protected String obtainSymbol(T t) {
+        return t.obtainSymbol();
     }
 }

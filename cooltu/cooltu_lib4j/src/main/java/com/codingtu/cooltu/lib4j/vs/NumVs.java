@@ -33,7 +33,7 @@ public class NumVs<T, THIS extends CoreVs> extends CoreVs<T, THIS> {
     //
     ///////////////////////////////////////////////////////
     @Override
-    protected String valueSymbol(T t) {
+    protected String obtainSymbol(T t) {
         return t + "";
     }
 

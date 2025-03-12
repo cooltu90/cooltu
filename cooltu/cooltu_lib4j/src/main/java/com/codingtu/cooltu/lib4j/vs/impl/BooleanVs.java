@@ -28,7 +28,7 @@ public class BooleanVs extends CoreVs<Boolean, BooleanVs> {
     //
     ///////////////////////////////////////////////////////
     @Override
-    protected String valueSymbol(Boolean aBoolean) {
+    protected String obtainSymbol(Boolean aBoolean) {
         return aBoolean + "";
     }
 

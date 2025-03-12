@@ -28,7 +28,7 @@ public class LongVs extends NumVs<Long, LongVs> {
     ///////////////////////////////////////////////////////
 
     @Override
-    protected String valueSymbol(Long aLong) {
+    protected String obtainSymbol(Long aLong) {
         return aLong + "";
     }
 

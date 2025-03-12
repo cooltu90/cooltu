@@ -29,7 +29,7 @@ public class DoubleVs extends NumVs<Double, DoubleVs> {
     //
     ///////////////////////////////////////////////////////
     @Override
-    protected String valueSymbol(Double aDouble) {
+    protected String obtainSymbol(Double aDouble) {
         return aDouble + "";
     }
 
