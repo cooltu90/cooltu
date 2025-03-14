@@ -2,7 +2,6 @@ package com.codingtu.cooltu.ui.adapter;
 
 import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.lib4a.ui.adapter.CoreMoreListAdapter;
-import com.codingtu.cooltu.lib4j.ts.StringTs;
 import com.codingtu.cooltu.processor.annotation.ui.VH;
 
 import core.vh.DogVH;

@@ -3,15 +3,15 @@ package com.codingtu.cooltu.processor.builder.impl;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.tools.TagTools;
 import com.codingtu.cooltu.processor.bean.SubTag;
 import com.codingtu.cooltu.processor.builder.base.BuilderBuilderBase;
 import com.codingtu.cooltu.processor.constant.Tags;
 import com.codingtu.cooltu.processor.lib.path.ProcessorPath;
-import com.codingtu.cooltu.lib4j.tools.TagTools;
 import com.codingtu.cooltu.processor.lib.tools.TempTools;
 
 import java.io.File;
@@ -58,7 +58,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
                     subLines.add(line);
                 } else {
                     List<String> tags = TagTools.getTags(Tags.DOUBLE_START, Tags.DOUBEL_END, line);
-                    Ts.ls(tags, new Ts.EachTs<String>() {
+                    Es.es(tags).ls(new Es.EachEs<String>() {
                         @Override
                         public boolean each(int position, String tag) {
                             if (nameMap.get(tag) == null) {
@@ -291,7 +291,7 @@ public class BuilderBuilder extends BuilderBuilderBase {
 
 
     private List<Integer> copy(List<Integer> levels) {
-        return Ts.ts(levels).convert(new Ts.Convert<Integer, Integer>() {
+        return Es.es(levels).convert(new Es.Convert<Integer, Integer>() {
             @Override
             public Integer convert(int index, Integer integer) {
                 return integer;

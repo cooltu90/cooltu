@@ -1,8 +1,8 @@
 package com.codingtu.cooltu.processor.test;
 
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +30,7 @@ public class Test {
         if (hasPre && count != 0) {
             sb.append(", ");
         }
-        Ts.ls(params, new Ts.EachTs<String>() {
-            @Override
+        Es.es(params).ls(new Es.EachEs<String>() {
             public boolean each(int position, String param) {
                 if (position != 0) {
                     sb.append(", ");

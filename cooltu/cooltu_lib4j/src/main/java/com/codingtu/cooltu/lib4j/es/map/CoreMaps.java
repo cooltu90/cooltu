@@ -5,7 +5,6 @@ import com.codingtu.cooltu.lib4j.es.BaseEs;
 import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.json.JsonTool;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.util.ArrayList;
 import java.util.HashMap;

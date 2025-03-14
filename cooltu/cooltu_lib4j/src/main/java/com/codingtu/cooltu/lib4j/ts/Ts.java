@@ -1,12 +1,10 @@
 package com.codingtu.cooltu.lib4j.ts;
 
 import com.codingtu.cooltu.lib4j.data.bean.CoreBean;
-import com.codingtu.cooltu.lib4j.data.symbol.Symbol;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class Ts {
@@ -113,15 +111,15 @@ public class Ts {
         return new BaseTs<>(shorts);
     }
 
-    public static StringTs strs(String... strs) {
-        StringTs ts = new StringTs();
-        ts.add(strs);
-        return ts;
-    }
+//    public static StringTs strs(String... strs) {
+//        StringTs ts = new StringTs();
+//        ts.add(strs);
+//        return ts;
+//    }
 
-    public static StringTs strs(List<String> strs) {
-        return new StringTs(strs);
-    }
+//    public static StringTs strs(List<String> strs) {
+//        return new StringTs(strs);
+//    }
 
 //    public static StringTs strs() {
 //        return new StringTs();
@@ -132,15 +130,15 @@ public class Ts {
 //        return new SymbolTs<>();
 //    }
 
-    public static <SYMBOL extends Symbol> SymbolTs<SYMBOL> symbols(SYMBOL... symbols) {
-        SymbolTs<SYMBOL> ts = new SymbolTs<>();
-        ts.add(symbols);
-        return ts;
-    }
+//    public static <SYMBOL extends Symbol> SymbolTs<SYMBOL> symbols(SYMBOL... symbols) {
+//        SymbolTs<SYMBOL> ts = new SymbolTs<>();
+//        ts.add(symbols);
+//        return ts;
+//    }
 
-    public static <SYMBOL extends Symbol> SymbolTs<SYMBOL> symbols(List<SYMBOL> symbols) {
-        return new SymbolTs<>(symbols);
-    }
+//    public static <SYMBOL extends Symbol> SymbolTs<SYMBOL> symbols(List<SYMBOL> symbols) {
+//        return new SymbolTs<>(symbols);
+//    }
 
     public static <T> BaseTs<T> ts(T... srcTs) {
         BaseTs<T> ts = new BaseTs<>();
@@ -165,13 +163,13 @@ public class Ts {
         return ts;
     }
 
-    public static <K, V> Maps<K, V> maps(Map<K, V> map) {
-        return Maps.map(map);
-    }
+//    public static <K, V> Maps<K, V> maps(Map<K, V> map) {
+//        return Maps.map(map);
+//    }
 
-    public static <SYMBOL extends Symbol> SymbolMaps<SYMBOL> symbolMaps(Map<String, SYMBOL> map) {
-        return Maps.symbolMaps(map);
-    }
+//    public static <SYMBOL extends Symbol> SymbolMaps<SYMBOL> symbolMaps(Map<String, SYMBOL> map) {
+//        return Maps.symbolMaps(map);
+//    }
 
     /**************************************************
      *

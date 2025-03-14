@@ -3,7 +3,7 @@ package com.codingtu.cooltu.processor.builder.impl;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
-import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.processor.builder.base.VhBuilderBase;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 import com.codingtu.cooltu.processor.lib.tools.LayoutTools;
@@ -18,7 +18,7 @@ public class VhBuilder extends VhBuilderBase {
         super(info);
         this.layoutId = layoutId;
         List<LayoutTools.ViewInfo> viewInfos = LayoutTools.convert(layoutId.rName);
-        Ts.ls(viewInfos, new Ts.EachTs<LayoutTools.ViewInfo>() {
+        Es.es(viewInfos).ls(new Es.EachEs<LayoutTools.ViewInfo>() {
             @Override
             public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
                 field(fieldCount(), viewInfo.tag, viewInfo.fieldName);

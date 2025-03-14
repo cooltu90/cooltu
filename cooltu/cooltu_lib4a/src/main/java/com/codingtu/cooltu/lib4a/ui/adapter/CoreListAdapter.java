@@ -5,9 +5,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import com.codingtu.cooltu.lib4a.ui.adapter.viewholder.CoreAdapterVH;
+import com.codingtu.cooltu.lib4j.es.CoreEs;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.CoreTs;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.lang.reflect.Constructor;
@@ -15,6 +15,7 @@ import java.util.List;
 
 public abstract class CoreListAdapter<VH extends CoreAdapterVH, T> extends CoreAdapter<VH> {
     protected BaseTs<T> ts;
+    protected CoreEs<T, ?> es;
     private Class<VH> vhClass;
 
     @Override
@@ -32,6 +33,11 @@ public abstract class CoreListAdapter<VH extends CoreAdapterVH, T> extends CoreA
 
     public void updateItems(BaseTs<T> ts) {
         this.ts = ts;
+        notifyDataSetChanged();
+    }
+
+    public void updateItems(CoreEs<T, ?> es) {
+        this.es = es;
         notifyDataSetChanged();
     }
 

@@ -86,6 +86,20 @@ public class Es {
     /**************************************************
      * BaseVs
      **************************************************/
+
+    public static <E> BaseEs<E> es(Es.EachGetter<E> getter) {
+        return es(0, getter);
+    }
+
+    public static <E> BaseEs<E> es(int skip, Es.EachGetter<E> getter) {
+        BaseEs<E> ts = es();
+        int count = getter.count();
+        for (int i = skip; i < count; i++) {
+            ts.add(getter.get(i));
+        }
+        return ts;
+    }
+
     public static <E> BaseEs<E> es(E... srcs) {
         BaseEs<E> es = new BaseEs<>();
         es.add(srcs);

@@ -9,7 +9,6 @@ import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.ui.StartGroup;
 import com.codingtu.cooltu.processor.builder.base.ActStartBuilderBase;
 import com.codingtu.cooltu.processor.deal.ResForDeal;
@@ -65,7 +64,7 @@ public class ActStartBuilder extends ActStartBuilderBase {
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_TOOLS);
         //
-        Ts.ts(ResForDeal.HAS_START_MAP.keySet()).ls(new Ts.EachTs<String>() {
+        Es.es(ResForDeal.HAS_START_MAP.keySet()).ls(new Es.EachEs<String>() {
             @Override
             public boolean each(int position, String actClass) {
                 List<VariableElement> startGroups = new ArrayList<>();
@@ -91,7 +90,7 @@ public class ActStartBuilder extends ActStartBuilderBase {
                 if (CountTool.isNull(startGroups)) {
                     add(actClass);
                 } else {
-                    Ts.ls(startGroups, new Ts.EachTs<VariableElement>() {
+                    Es.es(startGroups).ls(new Es.EachEs<VariableElement>() {
                         @Override
                         public boolean each(int position, VariableElement ve) {
                             StartGroup startGroup = ve.getAnnotation(StartGroup.class);
@@ -99,7 +98,7 @@ public class ActStartBuilder extends ActStartBuilderBase {
                             if (CountTool.isNull(startGroup.value())) {
                                 add(actClass, 0, kv);
                             } else {
-                                Ts.ints(startGroup.value()).ls(new Ts.EachTs<Integer>() {
+                                Es.ints(startGroup.value()).ls(new Es.EachEs<Integer>() {
                                     @Override
                                     public boolean each(int position, Integer integer) {
                                         add(actClass, integer, kv);
@@ -119,7 +118,7 @@ public class ActStartBuilder extends ActStartBuilderBase {
 
         int[] index = {0};
 
-        Ts.ts(map.keySet()).ls(new Ts.EachTs<String>() {
+        Es.es(map.keySet()).ls(new Es.EachEs<String>() {
             @Override
             public boolean each(int position, String actFullName) {
                 ListValueMap<Integer, KV<String, String>> actMap = map.get(actFullName);
@@ -127,11 +126,11 @@ public class ActStartBuilder extends ActStartBuilderBase {
                     actMap.get(0);
                 }
 
-                Ts.ts(actMap.keySet()).ls(new Ts.EachTs<Integer>() {
+                Es.es(actMap.keySet()).ls(new Es.EachEs<Integer>() {
                     @Override
                     public boolean each(int position, Integer integer) {
                         List<KV<String, String>> kvs = actMap.get(integer);
-                        Ts.ls(kvs, new Ts.EachTs<KV<String, String>>() {
+                        Es.es(kvs).ls(new Es.EachEs<KV<String, String>>() {
                             @Override
                             public boolean each(int position, KV<String, String> kv) {
                                 if (ClassTool.isBaseClass(kv.k)) {

@@ -713,11 +713,11 @@ public class CoreTs<T, THIS> {
         public int counter(int lastCount, int index, T t);
     }
 
-    public SymbolTs toSymbol() {
-        SymbolTs symbols = Ts.symbols();
-        symbols.add(this.ts);
-        return symbols;
-    }
+//    public SymbolTs toSymbol() {
+//        SymbolTs symbols = Ts.symbols();
+//        symbols.add(this.ts);
+//        return symbols;
+//    }
 
     /**************************************************
      *

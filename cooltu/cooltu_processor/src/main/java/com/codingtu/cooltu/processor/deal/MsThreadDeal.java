@@ -7,8 +7,6 @@ import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.ts.pack.BoolValue;
 import com.codingtu.cooltu.processor.annotation.msthread.MainThread;
 import com.codingtu.cooltu.processor.annotation.msthread.MsThread;
@@ -28,7 +26,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 
@@ -53,62 +50,60 @@ public class MsThreadDeal extends TypeBaseDeal {
         Map<Integer, Integer> hasStartMap = new HashMap<>();
         Map<Integer, String> startTypeMap = new HashMap<>();
 
-        BaseTs<ExecutableElement> allMethodTs = Ts.ts();
+        BaseEs<ExecutableElement> allMethodEs = Es.es();
 
-
-        ElementTools.ls(te.getEnclosedElements(), new Es.EachEs<Element>() {
+        ElementTools.getExecutableElements(te).ls(new Es.EachEs<ExecutableElement>() {
             @Override
-            public boolean each(int position, Element element) {
-                if (element instanceof ExecutableElement) {
-                    ExecutableElement ee = (ExecutableElement) element;
-                    MainThread mainThread = ee.getAnnotation(MainThread.class);
-                    if (mainThread != null) {
-                        String staticSimpleName = ElementTools.staticSimpleName(ee);
-                        Integer num = staticMethodNameMap.get(staticSimpleName);
-                        if (num == null) {
-                            num = 0;
-                        }
-                        String typeName = staticSimpleName + "_" + num;
-                        staticMethodNameMap.put(staticSimpleName, num + 1);
-                        staticMethodNameEs.add(typeName);
-                        interfaceMethodEs.add(ee);
+            public boolean each(int position, ExecutableElement ee) {
 
-                        mainMethodMap.put(typeName, ee);
-
-                        allMethodTs.add(ee);
+                MainThread mainThread = ee.getAnnotation(MainThread.class);
+                if (mainThread != null) {
+                    String staticSimpleName = ElementTools.staticSimpleName(ee);
+                    Integer num = staticMethodNameMap.get(staticSimpleName);
+                    if (num == null) {
+                        num = 0;
                     }
+                    String typeName = staticSimpleName + "_" + num;
+                    staticMethodNameMap.put(staticSimpleName, num + 1);
+                    staticMethodNameEs.add(typeName);
+                    interfaceMethodEs.add(ee);
 
-                    SubThread subThread = ee.getAnnotation(SubThread.class);
-                    if (subThread != null) {
-                        String staticSimpleName = ElementTools.staticSimpleName(ee);
-                        Integer num = staticMethodNameMap.get(staticSimpleName);
-                        if (num == null) {
-                            num = 0;
-                        }
-                        String typeName = staticSimpleName + "_" + num;
-                        staticMethodNameMap.put(staticSimpleName, num + 1);
-                        staticMethodNameEs.add(typeName);
-                        interfaceMethodEs.add(ee);
+                    mainMethodMap.put(typeName, ee);
 
-                        subThreadNumSet.add(subThread.value());
-
-                        Integer startNum = hasStartMap.get(subThread.value());
-                        if (startNum == null) {
-                            startNum = 0;
-                        }
-                        if (subThread.isStart()) {
-                            startTypeMap.put(subThread.value(), typeName);
-                            startNum++;
-                        }
-                        hasStartMap.put(subThread.value(), startNum);
-
-                        Map<String, ExecutableElement> subMethodMap1 = subMethodMap.get(subThread.value());
-                        subMethodMap1.put(typeName, ee);
-
-                        allMethodTs.add(ee);
-
-                    }
+                    allMethodEs.add(ee);
                 }
+
+                SubThread subThread = ee.getAnnotation(SubThread.class);
+                if (subThread != null) {
+                    String staticSimpleName = ElementTools.staticSimpleName(ee);
+                    Integer num = staticMethodNameMap.get(staticSimpleName);
+                    if (num == null) {
+                        num = 0;
+                    }
+                    String typeName = staticSimpleName + "_" + num;
+                    staticMethodNameMap.put(staticSimpleName, num + 1);
+                    staticMethodNameEs.add(typeName);
+                    interfaceMethodEs.add(ee);
+
+                    subThreadNumSet.add(subThread.value());
+
+                    Integer startNum = hasStartMap.get(subThread.value());
+                    if (startNum == null) {
+                        startNum = 0;
+                    }
+                    if (subThread.isStart()) {
+                        startTypeMap.put(subThread.value(), typeName);
+                        startNum++;
+                    }
+                    hasStartMap.put(subThread.value(), startNum);
+
+                    Map<String, ExecutableElement> subMethodMap1 = subMethodMap.get(subThread.value());
+                    subMethodMap1.put(typeName, ee);
+
+                    allMethodEs.add(ee);
+
+                }
+
                 return false;
             }
         });
@@ -152,7 +147,7 @@ public class MsThreadDeal extends TypeBaseDeal {
             builder.msThreadInterfaceFullName = interfaceJavaInfo.fullName;
             builder.msThreadFullName = msThreadJavaInfo.fullName;
             builder.msThreadFieldName = ConvertTool.toMethodType(msThreadJavaInfo.name);
-            builder.msThreadMethodTs.add(allMethodTs);
+            builder.msThreadMethodEs.add(allMethodEs);
         } else {
 
             MsThread msThread = te.getAnnotation(MsThread.class);
@@ -165,7 +160,7 @@ public class MsThreadDeal extends TypeBaseDeal {
 
             JavaInfo msThreadBaseJavaInfo = CurrentPath.msThreadBase(objClassSimpleName);
             MsThreadBaseBuilder builder = new MsThreadBaseBuilder(msThreadBaseJavaInfo, interfaceJavaInfo.name, msThreadJavaInfo.name);
-            builder.msThreadMethodTs.add(allMethodTs);
+            builder.msThreadMethodEs.add(allMethodEs);
             builder.baseFullName = baseFullName;
         }
 

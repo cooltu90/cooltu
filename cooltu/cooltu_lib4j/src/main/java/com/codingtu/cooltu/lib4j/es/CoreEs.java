@@ -1,15 +1,6 @@
 package com.codingtu.cooltu.lib4j.es;
 
-import com.codingtu.cooltu.lib4j.function.ToDouble;
-import com.codingtu.cooltu.lib4j.function.ToFloat;
-import com.codingtu.cooltu.lib4j.function.ToInt;
-import com.codingtu.cooltu.lib4j.function.ToLong;
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
-import com.codingtu.cooltu.lib4j.json.JsonTool;
-import com.codingtu.cooltu.lib4j.log.LibLogs;
-import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.tools.OtherTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.lib4j.data.symbol.Symbol;
 import com.codingtu.cooltu.lib4j.es.impl.BooleanEs;
 import com.codingtu.cooltu.lib4j.es.impl.DoubleEs;
@@ -17,6 +8,14 @@ import com.codingtu.cooltu.lib4j.es.impl.FloatEs;
 import com.codingtu.cooltu.lib4j.es.impl.IntegerEs;
 import com.codingtu.cooltu.lib4j.es.impl.LongEs;
 import com.codingtu.cooltu.lib4j.es.impl.StringEs;
+import com.codingtu.cooltu.lib4j.function.ToDouble;
+import com.codingtu.cooltu.lib4j.function.ToFloat;
+import com.codingtu.cooltu.lib4j.function.ToInt;
+import com.codingtu.cooltu.lib4j.function.ToLong;
+import com.codingtu.cooltu.lib4j.json.JsonTool;
+import com.codingtu.cooltu.lib4j.log.LibLogs;
+import com.codingtu.cooltu.lib4j.tools.CountTool;
+import com.codingtu.cooltu.lib4j.tools.OtherTool;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -112,7 +111,7 @@ import java.util.Map;
  * {@link #replaceOrAdd(CoreEs)}
  *
  * 【replaceAllOrAdd】
- * {@link #replaceAllOrAdd(Object, Ts.IsThisOne)}
+ * {@link #replaceAllOrAdd(Object, Es.IsThisOne)}
  * {@link #replaceAllOrAddBySymbol(String, Object)}
  * {@link #replaceAllOrAdd(Object, Object)}
  * {@link #replaceAllOrAdd(Object)}
@@ -871,7 +870,7 @@ public abstract class CoreEs<E, THIS extends CoreEs> {
     /**************************************************
      * replaceAllOrAdd
      **************************************************/
-    public THIS replaceAllOrAdd(E target, Ts.IsThisOne<E> isThisOne) {
+    public THIS replaceAllOrAdd(E target, Es.IsThisOne<E> isThisOne) {
         if (isThisOne != null) {
             int count = count();
             boolean isReplace = false;

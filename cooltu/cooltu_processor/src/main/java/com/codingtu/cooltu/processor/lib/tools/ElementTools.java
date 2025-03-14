@@ -43,10 +43,13 @@ public class ElementTools {
 
     public static BaseEs<VariableElement> getVariableElements(ExecutableElement ee) {
         return Es.es(ee.getParameters()).convert((index, element) -> {
-            if (element instanceof VariableElement) {
-                return (VariableElement) element;
-            }
-            return null;
+            return (VariableElement) element;
+        });
+    }
+
+    public static BaseEs<VariableElement> getVariableElements(List<? extends VariableElement> vs) {
+        return Es.es(vs).convert((index, element) -> {
+            return (VariableElement) element;
         });
     }
 
@@ -58,6 +61,7 @@ public class ElementTools {
             return null;
         });
     }
+
     public static BaseEs<ExecutableElement> getExecutableElements(TypeElement ee) {
         return Es.es(ee.getEnclosedElements()).convert((index, element) -> {
             if (element instanceof ExecutableElement) {

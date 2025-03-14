@@ -7,15 +7,14 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.es.BaseEs;
 import com.codingtu.cooltu.lib4j.es.Es;
+import com.codingtu.cooltu.lib4j.es.impl.StringEs;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.tools.TagTools;
-import com.codingtu.cooltu.lib4j.ts.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.StringTs;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.annotation.ui.Adapter;
 import com.codingtu.cooltu.processor.annotation.ui.InBase;
@@ -177,7 +176,7 @@ public abstract class UiBaseBuilder {
         inits();
         initAbstracts();
 
-        Ts.ls(dialogUses, new Ts.EachTs<VariableElement>() {
+        Es.es(dialogUses).ls(new Es.EachEs<VariableElement>() {
             @Override
             public boolean each(int position, VariableElement ve) {
                 KV<String, String> kv = ElementTools.getFieldKv(ve);
@@ -241,7 +240,7 @@ public abstract class UiBaseBuilder {
     }
 
     private void fixInts() {
-        Ts.ls(fixInts, new Ts.EachTs<VariableElement>() {
+        Es.es(fixInts).ls(new Es.EachEs<VariableElement>() {
             @Override
             public boolean each(int position, VariableElement ve) {
                 KV<String, String> kv = ElementTools.getFieldKv(ve);
@@ -259,7 +258,7 @@ public abstract class UiBaseBuilder {
     }
 
     private void fixStrings() {
-        Ts.ls(fixStrings, new Ts.EachTs<VariableElement>() {
+        Es.es(fixStrings).ls(new Es.EachEs<VariableElement>() {
             @Override
             public boolean each(int position, VariableElement ve) {
                 KV<String, String> kv = ElementTools.getFieldKv(ve);
@@ -277,7 +276,7 @@ public abstract class UiBaseBuilder {
     }
 
     private void fixValues() {
-        Ts.ls(fixValues, new Ts.EachTs<VariableElement>() {
+        Es.es(fixValues).ls(new Es.EachEs<VariableElement>() {
             @Override
             public boolean each(int position, VariableElement ve) {
                 KV<String, String> kv = ElementTools.getFieldKv(ve);
@@ -296,7 +295,7 @@ public abstract class UiBaseBuilder {
     }
 
     private void inits() {
-        Ts.ls(inits, new Ts.EachTs<VariableElement>() {
+        Es.es(inits).ls(new Es.EachEs<VariableElement>() {
             @Override
             public boolean each(int position, VariableElement ve) {
                 KV<String, String> kv = ElementTools.getFieldKv(ve);
@@ -320,10 +319,9 @@ public abstract class UiBaseBuilder {
     }
 
     private void initAbstracts() {
-        Ts.ls(initAbstracts, new Ts.EachTs<VariableElement>() {
+        Es.es(initAbstracts).ls(new Es.EachEs<VariableElement>() {
             @Override
             public boolean each(int position, VariableElement ve) {
-
                 KV<String, String> fieldKv = ElementTools.getFieldKv(ve);
 
                 InitAbstract initAbstract = ve.getAnnotation(InitAbstract.class);
@@ -370,7 +368,7 @@ public abstract class UiBaseBuilder {
 //            }
 //        });
 
-        Ts.ls(inBases1, new Ts.EachTs<VariableElement>() {
+        Es.es(inBases1).ls(new Es.EachEs<VariableElement>() {
             @Override
             public boolean each(int position, VariableElement ve) {
                 InBase inBase = ve.getAnnotation(InBase.class);
@@ -389,7 +387,7 @@ public abstract class UiBaseBuilder {
     }
 
     private void findView() {
-        Ts.ls(viewInfos, new Ts.EachTs<LayoutTools.ViewInfo>() {
+        Es.es(viewInfos).ls(new Es.EachEs<LayoutTools.ViewInfo>() {
             @Override
             public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
                 if (!"android.widget.fragment".equals(viewInfo.tag)) {
@@ -410,7 +408,7 @@ public abstract class UiBaseBuilder {
 
 
     private void onLongClick() {
-        Ts.ls(longClickViews, new Ts.EachTs<ClickViewInfo>() {
+        Es.es(longClickViews).ls(new Es.EachEs<ClickViewInfo>() {
             @Override
             public boolean each(int clickViewInfoIndex, ClickViewInfo info) {
                 uiBase.isOnLongClickCheckLogin(clickViewInfoIndex, info.isCheckLogin);
@@ -421,7 +419,7 @@ public abstract class UiBaseBuilder {
                 List<KV<String, String>> kvs = info.methodParams.getKvs();
                 int kvCount = CountTool.count(kvs);
 
-                Ts.ls(kvs, new Ts.EachTs<KV<String, String>>() {
+                Es.es(kvs).ls(new Es.EachEs<KV<String, String>>() {
                     private int paramsIndex;
 
                     @Override
@@ -437,7 +435,7 @@ public abstract class UiBaseBuilder {
                     }
                 });
 
-                Ts.ls(info.ids, new Ts.EachTs<IdTools.Id>() {
+                Es.es(info.ids).ls(new Es.EachEs<IdTools.Id>() {
                     @Override
                     public boolean each(int idIndex, IdTools.Id id) {
                         uiBase.onLongClickCase(clickViewInfoIndex, idIndex, id.toString());
@@ -469,7 +467,7 @@ public abstract class UiBaseBuilder {
 
 
     private void onClick() {
-        Ts.ls(clickViews, new Ts.EachTs<ClickViewInfo>() {
+        Es.es(clickViews).ls(new Es.EachEs<ClickViewInfo>() {
             @Override
             public boolean each(int clickViewInfoIndex, ClickViewInfo info) {
                 uiBase.isOnClickCheckLogin(clickViewInfoIndex, info.isCheckLogin);
@@ -485,8 +483,7 @@ public abstract class UiBaseBuilder {
 
                 List<KV<String, String>> kvs = info.methodParams.getKvs();
                 int kvCount = CountTool.count(kvs);
-
-                Ts.ls(kvs, new Ts.EachTs<KV<String, String>>() {
+                Es.es(kvs).ls(new Es.EachEs<KV<String, String>>() {
                     private int paramsIndex;
 
                     @Override
@@ -501,8 +498,7 @@ public abstract class UiBaseBuilder {
                         return false;
                     }
                 });
-
-                Ts.ls(info.ids, new Ts.EachTs<IdTools.Id>() {
+                Es.es(info.ids).ls(new Es.EachEs<IdTools.Id>() {
                     @Override
                     public boolean each(int idIndex, IdTools.Id id) {
                         uiBase.onClickCase(clickViewInfoIndex, idIndex, id.toString());
@@ -530,7 +526,7 @@ public abstract class UiBaseBuilder {
 
     private void colorStr() {
         //colorStr
-        Ts.ls(colorStrs, new Ts.EachTs<KV<String, String>>() {
+        Es.es(colorStrs).ls(new Es.EachEs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 addField(Constant.SIGN_PROTECTED, "int", kv.k);
@@ -541,7 +537,7 @@ public abstract class UiBaseBuilder {
     }
 
     private void colorReses() {
-        Ts.ls(colorReses, new Ts.EachTs<KV<String, IdTools.Id>>() {
+        Es.es(colorReses).ls(new Es.EachEs<KV<String, IdTools.Id>>() {
             @Override
             public boolean each(int position, KV<String, IdTools.Id> kv) {
                 addField(Constant.SIGN_PROTECTED, "int", kv.k);
@@ -553,7 +549,7 @@ public abstract class UiBaseBuilder {
 
 
     private void dps() {
-        Ts.ls(dps, new Ts.EachTs<KV<String, Float>>() {
+        Es.es(dps).ls(new Es.EachEs<KV<String, Float>>() {
             @Override
             public boolean each(int position, KV<String, Float> kv) {
                 addField(Constant.SIGN_PROTECTED, "int", kv.k);
@@ -565,7 +561,7 @@ public abstract class UiBaseBuilder {
 
 
     private void dimens() {
-        Ts.ls(dimens, new Ts.EachTs<KV<String, IdTools.Id>>() {
+        Es.es(dimens).ls(new Es.EachEs<KV<String, IdTools.Id>>() {
             @Override
             public boolean each(int position, KV<String, IdTools.Id> kv) {
                 addField(Constant.SIGN_PROTECTED, "int", kv.k);
@@ -577,7 +573,7 @@ public abstract class UiBaseBuilder {
 
 
     private void dealListAdapter() {
-        Ts.ls(adapters, new Ts.EachTs<VariableElement>() {
+        Es.es(adapters).ls(new Es.EachEs<VariableElement>() {
             @Override
             public boolean each(int position, VariableElement ve) {
                 Adapter adapter = ve.getAnnotation(Adapter.class);
@@ -615,7 +611,7 @@ public abstract class UiBaseBuilder {
 
     private void nets() {
         uiBase.isSuperAccept(hasBaseClass());
-        Ts.ls(netBacks, new Ts.EachTs<NetBackInfo>() {
+        Es.es(netBacks).ls(new Es.EachEs<NetBackInfo>() {
             @Override
             public boolean each(int position, NetBackInfo netBackInfo) {
 
@@ -681,7 +677,7 @@ public abstract class UiBaseBuilder {
     }
 
     private void actBacks() {
-        Ts.ls(actBacks, new Ts.EachTs<ActBack>() {
+        Es.es(actBacks).ls(new Es.EachEs<ActBack>() {
             @Override
             public boolean each(int actBackIndex, ActBack actBack) {
                 ExecutableElement ee = actBackMethods.get(actBackIndex);
@@ -730,7 +726,7 @@ public abstract class UiBaseBuilder {
     }
 
     private void editDialog() {
-        Ts.ls(editDialogUses, new Ts.EachTs<VariableElement>() {
+        Es.es(editDialogUses).ls(new Es.EachEs<VariableElement>() {
             @Override
             public boolean each(int position, VariableElement ve) {
                 EditDialogUse editDialogUse = ve.getAnnotation(EditDialogUse.class);
@@ -781,7 +777,7 @@ public abstract class UiBaseBuilder {
 
     private void menuDialog() {
         StringBuilder sb = new StringBuilder();
-        Ts.ls(menuDialogUses, new Ts.EachTs<VariableElement>() {
+        Es.es(menuDialogUses).ls(new Es.EachEs<VariableElement>() {
             @Override
             public boolean each(int position, VariableElement ve) {
                 MenuDialogUse menuDialogUse = ve.getAnnotation(MenuDialogUse.class);
@@ -813,13 +809,13 @@ public abstract class UiBaseBuilder {
                 TagTools.addLnTag(sb, "                    .setItemLayout([item])", Constant.DEFAULT_MENU_DIALOG_ITEM_LAYOUT);
 
                 MenuDialogItem[] items = menuDialogUse.items();
-                BaseTs<IdTools.Id> idTs = Ts.ts(IdTools.Id.class);
-                StringTs strTs = Ts.strs();
-                Ts.ls(items, new Ts.EachTs<MenuDialogItem>() {
+                BaseEs<IdTools.Id> idEs = Es.es();
+                StringEs strTs = Es.strs();
+                Es.es(items).ls(new Es.EachEs<MenuDialogItem>() {
                     @Override
                     public boolean each(int position, MenuDialogItem menuDialogItem) {
                         IdTools.Id itemId = IdTools.elementToId(ve, MenuDialogItem.class, menuDialogItem.id());
-                        idTs.add(itemId);
+                        idEs.add(itemId);
                         String name = menuDialogItem.name();
                         strTs.add(name);
                         TagTools.addLnTag(sb, "                    .setItem([R.id.reportTv], \"[导出维修工单]\")", itemId.toString(), name);
@@ -833,7 +829,7 @@ public abstract class UiBaseBuilder {
                 TagTools.addLnTag(sb, "                        public boolean showItem(int viewId, Object obj) {");
                 TagTools.addLnTag(sb, "                            switch (viewId) {");
 
-                idTs.ls(new Ts.EachTs<IdTools.Id>() {
+                idEs.ls(new Es.EachEs<IdTools.Id>() {
                     @Override
                     public boolean each(int position, IdTools.Id id) {
                         TagTools.addLnTag(sb, "                                case [R.id.reportTv]:", id.toString());
@@ -868,7 +864,7 @@ public abstract class UiBaseBuilder {
                 TagTools.addLnTag(sb, "        [menuDialog].show();", kv.v);
                 TagTools.addLnTag(sb, "    }");
 
-                idTs.ls(new Ts.EachTs<IdTools.Id>() {
+                idEs.ls(new Es.EachEs<IdTools.Id>() {
                     @Override
                     public boolean each(int position, IdTools.Id id) {
 
@@ -896,7 +892,8 @@ public abstract class UiBaseBuilder {
 
 
     private List<String> getInBaseInParent() {
-        return Ts.ts(getParents()).convertList(new Ts.Convert<UiBaseBuilder, List<String>>() {
+        return Es.es(getParents()).convertList(new Es.Convert<UiBaseBuilder, List<String>>() {
+
             @Override
             public List<String> convert(int index, UiBaseBuilder uiBaseBuilder) {
                 if (index != 0) {
@@ -908,33 +905,33 @@ public abstract class UiBaseBuilder {
     }
 
     private List<String> getInBaseInThis() {
-        List<String> inBaseList = Ts.ts(inBases).convert(new Ts.Convert<KV<String, String>, String>() {
+        BaseEs<String> inBaseList = Es.es(inBases).convert(new Es.Convert<KV<String, String>, String>() {
             @Override
             public String convert(int index, KV<String, String> kv) {
                 return kv.v;
             }
-        }).toList();
+        });
 
         Map<String, LayoutTools.ViewInfo> viewMap = getChildViewMap();
-        inBaseList.addAll(getIds(viewMap, clickViews));
-        inBaseList.addAll(getIds(viewMap, longClickViews));
+        inBaseList.add(getIds(viewMap, clickViews));
+        inBaseList.add(getIds(viewMap, longClickViews));
 
-        inBaseList.addAll(Ts.ts(this.adapters).convert(new Ts.Convert<VariableElement, String>() {
+        inBaseList.add(Es.es(this.adapters).convert(new Es.Convert<VariableElement, String>() {
             @Override
             public String convert(int index, VariableElement ve) {
                 Adapter adapter = ve.getAnnotation(Adapter.class);
                 return adapter.rvName();
             }
-        }).toList());
+        }));
 
-        return inBaseList;
+        return inBaseList.toList();
     }
 
     private List<String> getIds(Map<String, LayoutTools.ViewInfo> viewMap, List<ClickViewInfo> clickViews) {
-        return Ts.ts(clickViews).convertList(new Ts.Convert<ClickViewInfo, List<String>>() {
+        return Es.es(clickViews).convertList(new Es.Convert<ClickViewInfo, List<String>>() {
             @Override
             public List<String> convert(int index, ClickViewInfo clickViewInfo) {
-                return Ts.ts(clickViewInfo.ids).convert(new Ts.Convert<IdTools.Id, String>() {
+                return Es.es(clickViewInfo.ids).convert(new Es.Convert<IdTools.Id, String>() {
                     @Override
                     public String convert(int index, IdTools.Id id) {
                         Boolean aBoolean = clickViewInfo.inAct.get(index);
@@ -972,10 +969,10 @@ public abstract class UiBaseBuilder {
     }
 
     private void addViewMap(HashMap<String, LayoutTools.ViewInfo> map, List<UiBaseBuilder> uiBaseBuilders) {
-        Ts.ts(uiBaseBuilders).ls(new Ts.EachTs<UiBaseBuilder>() {
+        Es.es(uiBaseBuilders).ls(new Es.EachEs<UiBaseBuilder>() {
             @Override
             public boolean each(int position, UiBaseBuilder uiBaseBuilder) {
-                Ts.ts(uiBaseBuilder.viewInfos).ls(new Ts.EachTs<LayoutTools.ViewInfo>() {
+                Es.es(uiBaseBuilder.viewInfos).ls(new Es.EachEs<LayoutTools.ViewInfo>() {
                     @Override
                     public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
                         map.put(viewInfo.id, viewInfo);

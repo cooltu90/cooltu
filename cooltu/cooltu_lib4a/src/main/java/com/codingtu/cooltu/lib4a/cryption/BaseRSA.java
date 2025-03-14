@@ -1,8 +1,8 @@
 package com.codingtu.cooltu.lib4a.cryption;
 
 import com.codingtu.cooltu.lib4a.log.Logs;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.io.ByteArrayOutputStream;
 import java.security.KeyPair;
@@ -122,7 +122,7 @@ public abstract class BaseRSA<THIS extends BaseRSA> {
                 data = StringTool.toString(objs[0]);
             } else {
                 StringBuilder params = new StringBuilder();
-                Ts.ts(objs).ls(new Ts.EachTs<Object>() {
+                Es.es(objs).ls(new Es.EachEs<Object>() {
                     @Override
                     public boolean each(int position, Object o) {
                         if (position != 0) {

@@ -1,6 +1,6 @@
 package com.codingtu.cooltu.lib4j.tools;
 
-import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.processor.annotation.bean.ConvertItem;
 import com.codingtu.cooltu.processor.annotation.bean.ConvertTo;
 
@@ -169,7 +169,7 @@ public class ConvertTool {
             HashMap<String, Method> methodHashMap = new HashMap<>();
 
             Class srcClass = srcObj.getClass();
-            Ts.ts(srcClass.getFields()).ls(new Ts.EachTs<Field>() {
+            Es.es(srcClass.getFields()).ls(new Es.EachEs<Field>() {
                 @Override
                 public boolean each(int position, Field field) {
                     ConvertItem convertItem = field.getAnnotation(ConvertItem.class);
@@ -182,7 +182,7 @@ public class ConvertTool {
                 }
             });
 
-            Ts.ts(srcClass.getMethods()).ls(new Ts.EachTs<Method>() {
+            Es.es(srcClass.getMethods()).ls(new Es.EachEs<Method>() {
                 @Override
                 public boolean each(int position, Method method) {
                     ConvertItem convertItem = method.getAnnotation(ConvertItem.class);
@@ -201,7 +201,7 @@ public class ConvertTool {
                 Class targetClass = convertTo.value();
                 Object targetObj = targetClass.newInstance();
                 Field[] fields = targetClass.getFields();
-                Ts.ts(fields).ls(new Ts.EachTs<Field>() {
+                Es.es(fields).ls(new Es.EachEs<Field>() {
                     @Override
                     public boolean each(int position, Field field) {
                         String name = field.getName();

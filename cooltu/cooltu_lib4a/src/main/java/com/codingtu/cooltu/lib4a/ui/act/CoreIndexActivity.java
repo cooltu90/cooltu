@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.codingtu.cooltu.lib4a.R;
-import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.es.Es;
 
 import java.util.HashMap;
 
@@ -34,7 +34,7 @@ public abstract class CoreIndexActivity extends CoreActivity {
                 clickTag(v.getId());
             }
         };
-        Ts.ints(allTags).ls(new Ts.EachTs<Integer>() {
+        Es.ints(allTags).ls(new Es.EachEs<Integer>() {
             @Override
             public boolean each(int position, Integer id) {
                 View bt = findViewById(id);
