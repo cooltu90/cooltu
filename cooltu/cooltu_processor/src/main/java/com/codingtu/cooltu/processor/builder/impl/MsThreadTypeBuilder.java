@@ -2,20 +2,20 @@ package com.codingtu.cooltu.processor.builder.impl;
 
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
-import com.codingtu.cooltu.lib4j.ts.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.Ts;
-import com.codingtu.cooltu.lib4j.ts.pack.IntValue;
+import com.codingtu.cooltu.lib4j.es.BaseEs;
+import com.codingtu.cooltu.lib4j.es.Es;
+import com.codingtu.cooltu.lib4j.data.value.IntValue;
 import com.codingtu.cooltu.processor.builder.base.MsThreadTypeBuilderBase;
 
 public class MsThreadTypeBuilder extends MsThreadTypeBuilderBase {
 
-    private BaseTs<String> staticMethodNameTs;
+    private BaseEs<String> staticMethodNameTs;
 
     public MsThreadTypeBuilder(JavaInfo info) {
         super(info);
     }
 
-    public void setStaticMethodNameTs(BaseTs<String> staticMethodNameTs) {
+    public void setStaticMethodNameEs(BaseEs<String> staticMethodNameTs) {
         this.staticMethodNameTs = staticMethodNameTs;
     }
 
@@ -24,7 +24,7 @@ public class MsThreadTypeBuilder extends MsThreadTypeBuilderBase {
         addTag(pkg, Pkg.CORE_MSTHREAD);
         addTag(baseName, javaInfo.name);
         IntValue num = IntValue.obtain();
-        staticMethodNameTs.ls(new Ts.EachTs<String>() {
+        staticMethodNameTs.ls(new Es.EachEs<String>() {
             @Override
             public boolean each(int position, String s) {
                 if (num.value == 0) {

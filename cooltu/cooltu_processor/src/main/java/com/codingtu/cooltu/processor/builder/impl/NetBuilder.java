@@ -4,10 +4,10 @@ import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.net.Default;
 import com.codingtu.cooltu.processor.annotation.net.Param;
 import com.codingtu.cooltu.processor.annotation.net.ParamType;
@@ -20,6 +20,8 @@ import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.lang.model.element.VariableElement;
 
 public class NetBuilder extends NetBuilderBase {
 
@@ -57,14 +59,14 @@ public class NetBuilder extends NetBuilderBase {
     @Override
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_NET);
-        Ts.ls(infos, new Ts.EachTs<NetInfo>() {
+        Es.es(infos).ls(new Es.EachEs<NetInfo>() {
             @Override
             public boolean each(int position, NetInfo netInfo) {
                 addField(ConvertTool.toStaticType(netInfo.methodName), netInfo.methodName + Suffix.NET_BACK);
                 return false;
             }
         });
-        Ts.ls(infos, new Ts.EachTs<NetInfo>() {
+        Es.es(infos).ls(new Es.EachEs<NetInfo>() {
             @Override
             public boolean each(int methodIndex, NetInfo netInfo) {
                 String baseUrl = FullName.CORE_CONFIGS + ".configs().getBaseUrl()";
@@ -90,26 +92,28 @@ public class NetBuilder extends NetBuilderBase {
                 }
 
                 Params params = Params.obtain(null);
-                Ts.ls(netInfo.params, (paramIndex, ve) -> {
-                    Default aDefault = ve.getAnnotation(Default.class);
-                    Param param = ve.getAnnotation(Param.class);
-                    KV<String, String> kv = ElementTools.getFieldKv(ve);
-                    if (aDefault == null) {
-                        params.add(kv);
-                        sendParamsSet(methodIndex, paramIndex, kv.v, kv.v);
-                    } else {
-                        sendParamsSet(methodIndex, paramIndex, kv.v, "\"" + aDefault.value() + "\"");
-                    }
+                ElementTools.getVariableElements(netInfo.params).ls(new Es.EachEs<VariableElement>() {
+                    @Override
+                    public boolean each(int paramIndex, VariableElement ve) {
+                        Default aDefault = ve.getAnnotation(Default.class);
+                        Param param = ve.getAnnotation(Param.class);
+                        KV<String, String> kv = ElementTools.getFieldKv(ve);
+                        if (aDefault == null) {
+                            params.add(kv);
+                            sendParamsSet(methodIndex, paramIndex, kv.v, kv.v);
+                        } else {
+                            sendParamsSet(methodIndex, paramIndex, kv.v, "\"" + aDefault.value() + "\"");
+                        }
 
-                    if (netInfo.isJsonBody) {
-                        postJsonBodySet(methodIndex, paramIndex, kv.v, kv.v);
-                    } else if (param.type() == ParamType.JSON_BODY) {
-                        methodParams(methodIndex, 0, FullName.NET_TOOL + ".toJsonBody(" + FullName.JSON_TOOL + ".toJson(paramsGet." + kv.v + "))", "");
-                    } else {
-                        methodParams(methodIndex, paramIndex, "paramsGet." + kv.v, paramIndex != CountTool.count(netInfo.params) - 1 ? "," : "");
+                        if (netInfo.isJsonBody) {
+                            postJsonBodySet(methodIndex, paramIndex, kv.v, kv.v);
+                        } else if (param.type() == ParamType.JSON_BODY) {
+                            methodParams(methodIndex, 0, FullName.NET_TOOL + ".toJsonBody(" + FullName.JSON_TOOL + ".toJson(paramsGet." + kv.v + "))", "");
+                        } else {
+                            methodParams(methodIndex, paramIndex, "paramsGet." + kv.v, paramIndex != CountTool.count(netInfo.params) - 1 ? "," : "");
+                        }
+                        return false;
                     }
-
-                    return false;
                 });
 
                 if (netInfo.isJsonBody) {

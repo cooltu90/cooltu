@@ -1,15 +1,18 @@
-package com.codingtu.cooltu.lib4j.ts1;
+package com.codingtu.cooltu.lib4j.es.map;
 
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.es.BaseEs;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.json.JsonTool;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
-import com.codingtu.cooltu.lib4j.tools.OtherTool;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class CoreMaps<K, V, THIS extends CoreMaps, VS extends CoreTs> {
+public abstract class CoreMaps<K, V, THIS extends CoreMaps> {
 
     ///////////////////////////////////////////////////////
     //
@@ -67,7 +70,7 @@ public abstract class CoreMaps<K, V, THIS extends CoreMaps, VS extends CoreTs> {
     // each
     //
     ///////////////////////////////////////////////////////
-    public THIS ls(Ts.MapEach<K, V> mapEach) {
+    public THIS ls(Es.MapEach<K, V> mapEach) {
         Set<K> ks = this.map.keySet();
         for (K k : ks) {
             if (mapEach.each(k, map.get(k))) {
@@ -83,7 +86,7 @@ public abstract class CoreMaps<K, V, THIS extends CoreMaps, VS extends CoreTs> {
     //
     ///////////////////////////////////////////////////////
     public THIS log() {
-        ls(new Ts.MapEach<K, V>() {
+        ls(new Es.MapEach<K, V>() {
             @Override
             public boolean each(K k, V v) {
                 LibLogs.i("k:" + k + " v:" + JsonTool.toJson(v));
@@ -103,25 +106,19 @@ public abstract class CoreMaps<K, V, THIS extends CoreMaps, VS extends CoreTs> {
         return (THIS) this;
     }
 
-    private VS createVs() {
-        try {
-            return (VS) OtherTool.getFanxing(this, 3).getConstructor().newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public VS getValueList() {
-        VS vs = createVs();
-        ls(new Ts.MapEach<K, V>() {
+    public List<V> toValueList() {
+        ArrayList<V> list = new ArrayList<>();
+        ls(new Es.MapEach<K, V>() {
             @Override
             public boolean each(K k, V v) {
-                vs.add(v);
+                list.add(v);
                 return false;
             }
         });
-        return vs;
+        return list;
     }
 
-
+    public BaseEs<V> toValueTs() {
+        return Es.es(toValueList());
+    }
 }

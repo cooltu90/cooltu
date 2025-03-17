@@ -6,10 +6,10 @@ import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.ui.ActBack;
 import com.codingtu.cooltu.processor.builder.base.ActBackIntentBuilderBase;
 import com.codingtu.cooltu.processor.lib.param.Params;
@@ -57,7 +57,7 @@ public class ActBackIntentBuilder extends ActBackIntentBuilderBase {
 
         List<String> list = CHECK_MAP.get(actBackClass);
 
-        boolean has = Ts.ts(list).has(new Ts.IsThisOne<String>() {
+        boolean has = Es.es(list).has(new Es.IsThisOne<String>() {
             @Override
             public boolean isThisOne(int position, String s) {
                 return s.equals(kParam);
@@ -90,12 +90,12 @@ public class ActBackIntentBuilder extends ActBackIntentBuilderBase {
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_TOOLS);
 
-        Ts.ls(methodNames, new Ts.EachTs<String>() {
+        Es.es(methodNames).ls(new Es.EachEs<String>() {
             @Override
             public boolean each(int methodIndex, String methodName) {
                 Params params = methodParams.get(methodIndex);
                 method(methodIndex, methodName, params.getMethodParams());
-                params.ls(new Ts.EachTs<KV<String, String>>() {
+                params.ls(new Es.EachEs<KV<String, String>>() {
                     @Override
                     public boolean each(int paramIndex, KV<String, String> kv) {
                         if (ClassTool.isBaseClass(kv.k)) {

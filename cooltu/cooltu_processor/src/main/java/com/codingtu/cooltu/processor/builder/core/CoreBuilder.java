@@ -3,13 +3,13 @@ package com.codingtu.cooltu.processor.builder.core;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
 import com.codingtu.cooltu.lib4j.data.map.StringBuilderValueMap;
-import com.codingtu.cooltu.lib4j.data.symbol1.Symbol;
+import com.codingtu.cooltu.lib4j.data.symbol.Symbol;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.file.write.FileWriter;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.tools.TagTools;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.lib.BuilderMap;
-import com.codingtu.cooltu.lib4j.tools.TagTools;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -114,7 +114,7 @@ public abstract class CoreBuilder implements Symbol {
     private String getKey(String tag, int... ii) {
         StringBuilder sb = new StringBuilder();
         sb.append(tag);
-        Ts.ints(ii).ls(new Ts.EachTs<Integer>() {
+        Es.ints(ii).ls(new Es.EachEs<Integer>() {
             @Override
             public boolean each(int position, Integer integer) {
                 sb.append("-").append(integer);
@@ -127,7 +127,7 @@ public abstract class CoreBuilder implements Symbol {
 
     protected void addForMap(ListValueMap<String, String> map, String key, String... strs) {
         List<String> list = map.get(key);
-        Ts.ls(strs, new Ts.EachTs<String>() {
+        Es.es(strs).ls(new Es.EachEs<String>() {
             @Override
             public boolean each(int position, String s) {
                 list.add(s);
@@ -142,7 +142,7 @@ public abstract class CoreBuilder implements Symbol {
         key = getForKey(key, keys);
         int count = count(counts, key);
         List<String> list = map.get(keyAppend(key, count));
-        Ts.ls(strs, new Ts.EachTs<String>() {
+        Es.es(strs).ls(new Es.EachEs<String>() {
             @Override
             public boolean each(int position, String s) {
                 list.add(s);
@@ -175,7 +175,7 @@ public abstract class CoreBuilder implements Symbol {
         if (hasPre && count != 0) {
             sb.append(", ");
         }
-        Ts.ls(params, new Ts.EachTs<String>() {
+        Es.es(params).ls(new Es.EachEs<String>() {
             @Override
             public boolean each(int position, String param) {
                 if (position != 0) {

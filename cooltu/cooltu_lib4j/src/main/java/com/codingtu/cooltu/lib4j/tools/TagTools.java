@@ -1,8 +1,6 @@
 package com.codingtu.cooltu.lib4j.tools;
 
-import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.es.Es;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,7 +126,7 @@ public class TagTools {
                 return "";
             }
         };
-        Ts.ls(readLines, new Ts.EachTs<String>() {
+        Es.es(readLines).ls(new Es.EachEs<String>() {
             @Override
             public boolean each(int position, String line) {
                 lines.add(dealLine(line, "[[", "]]", tagValue));

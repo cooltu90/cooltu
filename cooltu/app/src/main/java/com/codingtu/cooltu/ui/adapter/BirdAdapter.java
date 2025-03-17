@@ -11,7 +11,7 @@ import core.vh.BirdVH;
 @VH(layout = R.layout.item_bird, vh = BirdVH.class)
 public class BirdAdapter extends CoreListAdapter<BirdVH, String> {
     @Override
-    protected void onBindVH(@NonNull BirdVH vh, int position, String s) {
+    protected void onBindVH(@NonNull BirdVH vh, int position, String e) {
 
     }
 }

@@ -4,12 +4,12 @@ import com.codingtu.cooltu.constant.FileType;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.file.list.FileLister;
 import com.codingtu.cooltu.lib4j.file.list.ListFile;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts1.Ts;
 import com.codingtu.cooltu.processor.builder.impl.BuilderBuilder;
 import com.codingtu.cooltu.processor.deal.base.BaseDeal;
 import com.codingtu.cooltu.processor.lib.App;
@@ -67,7 +67,7 @@ public class AppProcessor extends AbstractProcessor {
     }
 
     public void dealSupportTypes() {
-        Ts.baseTs(types).ls(2, new Ts.EachTs<Class>() {
+        Es.es(types).ls(2, new Es.EachEs<Class>() {
             @Override
             public boolean each(int position, Class annoClass) {
                 supportTypes.add(annoClass.getCanonicalName());
@@ -90,12 +90,12 @@ public class AppProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnv) {
         try {
-            Ts.baseTs(types).ls(2, new Ts.EachTs<Class>() {
+            Es.es(types).ls(2, new Es.EachEs<Class>() {
                 @Override
                 public boolean each(int position, Class annoClass) {
                     Class dealClass = types[position + 1];
                     Set<Element> es = roundEnv.getElementsAnnotatedWith(annoClass);
-                    Ts.baseTs(es).ls(new Ts.EachTs<Element>() {
+                    Es.es(es).ls(new Es.EachEs<Element>() {
                         @Override
                         public boolean each(int position, Element element) {
                             try {

@@ -1,11 +1,11 @@
-package com.codingtu.cooltu.lib4j.ts1.impl;
+package com.codingtu.cooltu.lib4j.es.impl;
 
-import com.codingtu.cooltu.lib4j.ts1.CoreTs;
-import com.codingtu.cooltu.lib4j.ts1.Ts;
+import com.codingtu.cooltu.lib4j.es.CoreEs;
+import com.codingtu.cooltu.lib4j.es.Es;
 
 import java.util.List;
 
-public class StringTs extends CoreTs<String, StringTs> {
+public class StringEs extends CoreEs<String, StringEs> {
 
     ///////////////////////////////////////////////////////
     //
@@ -13,16 +13,16 @@ public class StringTs extends CoreTs<String, StringTs> {
     //
     ///////////////////////////////////////////////////////
 
-    public StringTs() {
+    public StringEs() {
     }
 
-    public StringTs(List<String> list) {
+    public StringEs(List<String> list) {
         super(list);
     }
 
     ///////////////////////////////////////////////////////
     //
-    // 获取symbol
+    // 获取Symbol
     //
     ///////////////////////////////////////////////////////
 
@@ -57,13 +57,13 @@ public class StringTs extends CoreTs<String, StringTs> {
      **************************************************/
     @Deprecated
     @Override
-    public StringTs getAllBySymbol(String symbol) {
+    public StringEs getAllBySymbol(String symbol) {
         return super.getAllBySymbol(symbol);
     }
 
     @Deprecated
     @Override
-    public StringTs getAll(String s) {
+    public StringEs getAll(String s) {
         return super.getAll(s);
     }
 
@@ -82,7 +82,7 @@ public class StringTs extends CoreTs<String, StringTs> {
     public boolean has(String s) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (this.ts.get(i).equals(s)) {
+            if (this.es.get(i).equals(s)) {
                 return true;
             }
         }
@@ -108,7 +108,7 @@ public class StringTs extends CoreTs<String, StringTs> {
     public int index(String s) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (this.ts.get(i).equals(s)) {
+            if (this.es.get(i).equals(s)) {
                 return i;
             }
         }
@@ -120,20 +120,20 @@ public class StringTs extends CoreTs<String, StringTs> {
      **************************************************/
     @Deprecated
     @Override
-    public IntegerTs allIndexBySymbol(String symbol) {
+    public IntegerEs allIndexBySymbol(String symbol) {
         return allIndex(symbol);
     }
 
     @Override
-    public IntegerTs allIndex(String s) {
+    public IntegerEs allIndex(String s) {
         int count = count();
-        IntegerTs integerTs = new IntegerTs();
+        IntegerEs integerVs = new IntegerEs();
         for (int i = 0; i < count; i++) {
-            if (this.ts.get(i).equals(s)) {
-                integerTs.add(i);
+            if (this.es.get(i).equals(s)) {
+                integerVs.add(i);
             }
         }
-        return integerTs;
+        return integerVs;
     }
 
     ///////////////////////////////////////////////////////
@@ -147,13 +147,13 @@ public class StringTs extends CoreTs<String, StringTs> {
      **************************************************/
     @Deprecated
     @Override
-    public StringTs replaceBySymbol(String symbol, String target) {
+    public StringEs replaceBySymbol(String symbol, String target) {
         return replace(symbol, target);
     }
 
     @Override
-    public StringTs replace(String src, String target) {
-        int firstIndex = index(src);
+    public StringEs replace(String symbol, String target) {
+        int firstIndex = index(symbol);
         if (firstIndex >= 0) {
             replaceByIndex(firstIndex, target);
         }
@@ -162,26 +162,26 @@ public class StringTs extends CoreTs<String, StringTs> {
 
     @Deprecated
     @Override
-    public StringTs replace(String target) {
+    public StringEs replace(String target) {
         return super.replace(target);
     }
 
     @Deprecated
     @Override
-    public StringTs replace(String... targets) {
+    public StringEs replace(String... targets) {
         return super.replace(targets);
     }
 
     @Deprecated
     @Override
-    public StringTs replace(List<String> targets) {
+    public StringEs replace(List<String> targets) {
         return super.replace(targets);
     }
 
     @Deprecated
     @Override
-    public StringTs replace(StringTs targets) {
-        return super.replace(targets);
+    public StringEs replace(StringEs targetEs) {
+        return super.replace(targetEs);
     }
 
     /**************************************************
@@ -189,32 +189,32 @@ public class StringTs extends CoreTs<String, StringTs> {
      **************************************************/
     @Deprecated
     @Override
-    public StringTs replaceAllBySymbol(String symbol, String target) {
+    public StringEs replaceAllBySymbol(String symbol, String target) {
         return super.replaceAllBySymbol(symbol, target);
     }
 
     @Deprecated
     @Override
-    public StringTs replaceAll(String target) {
+    public StringEs replaceAll(String target) {
         return super.replaceAll(target);
     }
 
     @Deprecated
     @Override
-    public StringTs replaceAll(String... targets) {
+    public StringEs replaceAll(String... targets) {
         return super.replaceAll(targets);
     }
 
     @Deprecated
     @Override
-    public StringTs replaceAll(List<String> targets) {
+    public StringEs replaceAll(List<String> targets) {
         return super.replaceAll(targets);
     }
 
     @Deprecated
     @Override
-    public StringTs replaceAll(StringTs targets) {
-        return super.replaceAll(targets);
+    public StringEs replaceAll(StringEs targetEs) {
+        return super.replaceAll(targetEs);
     }
 
     /**************************************************
@@ -222,32 +222,32 @@ public class StringTs extends CoreTs<String, StringTs> {
      **************************************************/
     @Deprecated
     @Override
-    public StringTs replaceOrAddBySymbol(String symbol, String target) {
+    public StringEs replaceOrAddBySymbol(String symbol, String target) {
         return super.replaceOrAddBySymbol(symbol, target);
     }
 
     @Deprecated
     @Override
-    public StringTs replaceOrAdd(String target) {
+    public StringEs replaceOrAdd(String target) {
         return super.replaceOrAdd(target);
     }
 
     @Deprecated
     @Override
-    public StringTs replaceOrAdd(String... targets) {
+    public StringEs replaceOrAdd(String... targets) {
         return super.replaceOrAdd(targets);
     }
 
     @Deprecated
     @Override
-    public StringTs replaceOrAdd(List<String> targets) {
+    public StringEs replaceOrAdd(List<String> targets) {
         return super.replaceOrAdd(targets);
     }
 
     @Deprecated
     @Override
-    public StringTs replaceOrAdd(StringTs targets) {
-        return super.replaceOrAdd(targets);
+    public StringEs replaceOrAdd(StringEs targetEs) {
+        return super.replaceOrAdd(targetEs);
     }
 
     /**************************************************
@@ -256,32 +256,32 @@ public class StringTs extends CoreTs<String, StringTs> {
 
     @Deprecated
     @Override
-    public StringTs replaceAllOrAddBySymbol(String symbol, String target) {
+    public StringEs replaceAllOrAddBySymbol(String symbol, String target) {
         return super.replaceAllOrAddBySymbol(symbol, target);
     }
 
     @Deprecated
     @Override
-    public StringTs replaceAllOrAdd(String target) {
+    public StringEs replaceAllOrAdd(String target) {
         return super.replaceAllOrAdd(target);
     }
 
     @Deprecated
     @Override
-    public StringTs replaceAllOrAdd(String... targets) {
+    public StringEs replaceAllOrAdd(String... targets) {
         return super.replaceAllOrAdd(targets);
     }
 
     @Deprecated
     @Override
-    public StringTs replaceAllOrAdd(List<String> targets) {
+    public StringEs replaceAllOrAdd(List<String> targets) {
         return super.replaceAllOrAdd(targets);
     }
 
     @Deprecated
     @Override
-    public StringTs replaceAllOrAdd(StringTs targets) {
-        return super.replaceAllOrAdd(targets);
+    public StringEs replaceAllOrAdd(StringEs targetEs) {
+        return super.replaceAllOrAdd(targetEs);
     }
 
     ///////////////////////////////////////////////////////
@@ -295,46 +295,46 @@ public class StringTs extends CoreTs<String, StringTs> {
      **************************************************/
     @Deprecated
     @Override
-    public StringTs deleteBySymbol(String symbol) {
+    public StringEs deleteBySymbol(String symbol) {
         return super.deleteBySymbol(symbol);
     }
 
     @Deprecated
     @Override
-    public StringTs deleteBySymbol(String... symbols) {
+    public StringEs deleteBySymbol(String... symbols) {
         return super.deleteBySymbol(symbols);
     }
 
     @Deprecated
     @Override
-    public StringTs deleteBySymbol(List<String> symbols) {
+    public StringEs deleteBySymbol(List<String> symbols) {
         return super.deleteBySymbol(symbols);
     }
 
     @Deprecated
     @Override
-    public StringTs deleteBySymbol(StringTs symbolStringTs) {
-        return super.deleteBySymbol(symbolStringTs);
+    public StringEs deleteBySymbol(StringEs symbolStringEs) {
+        return super.deleteBySymbol(symbolStringEs);
     }
 
     @Override
-    public StringTs delete(String target) {
+    public StringEs delete(String target) {
         return super.delete(target);
     }
 
     @Override
-    public StringTs delete(String... targets) {
+    public StringEs delete(String... targets) {
         return super.delete(targets);
     }
 
     @Override
-    public StringTs delete(List<String> targets) {
+    public StringEs delete(List<String> targets) {
         return super.delete(targets);
     }
 
     @Override
-    public StringTs delete(StringTs targets) {
-        return super.delete(targets);
+    public StringEs delete(StringEs targetEs) {
+        return super.delete(targetEs);
     }
 
     /**************************************************
@@ -342,46 +342,46 @@ public class StringTs extends CoreTs<String, StringTs> {
      **************************************************/
     @Deprecated
     @Override
-    public StringTs deleteAllBySymbol(String symbol) {
+    public StringEs deleteAllBySymbol(String symbol) {
         return super.deleteAllBySymbol(symbol);
     }
 
     @Deprecated
     @Override
-    public StringTs deleteAllBySymbol(String... symbols) {
+    public StringEs deleteAllBySymbol(String... symbols) {
         return super.deleteAllBySymbol(symbols);
     }
 
     @Deprecated
     @Override
-    public StringTs deleteAllBySymbol(List<String> symbols) {
+    public StringEs deleteAllBySymbol(List<String> symbols) {
         return super.deleteAllBySymbol(symbols);
     }
 
     @Deprecated
     @Override
-    public StringTs deleteAllBySymbol(StringTs symbolStringTs) {
-        return super.deleteAllBySymbol(symbolStringTs);
+    public StringEs deleteAllBySymbol(StringEs symbolStringVs) {
+        return super.deleteAllBySymbol(symbolStringVs);
     }
 
     @Override
-    public StringTs deleteAll(String target) {
+    public StringEs deleteAll(String target) {
         return super.deleteAll(target);
     }
 
     @Override
-    public StringTs deleteAll(String... targets) {
+    public StringEs deleteAll(String... targets) {
         return super.deleteAll(targets);
     }
 
     @Override
-    public StringTs deleteAll(List<String> targets) {
+    public StringEs deleteAll(List<String> targets) {
         return super.deleteAll(targets);
     }
 
     @Override
-    public StringTs deleteAll(StringTs targets) {
-        return super.deleteAll(targets);
+    public StringEs deleteAll(StringEs targetEs) {
+        return super.deleteAll(targetEs);
     }
 
     ///////////////////////////////////////////////////////
@@ -391,16 +391,16 @@ public class StringTs extends CoreTs<String, StringTs> {
     ///////////////////////////////////////////////////////
 
     /**************************************************
-     * nearIndex下一个优先
+     * NearIndex下一个优先
      **************************************************/
     @Deprecated
     @Override
-    public Ts.NearIndex nearIndexWhenNextPriorityBySymbol(String symbol) {
+    public Es.NearIndex nearIndexWhenNextPriorityBySymbol(String symbol) {
         return super.nearIndexWhenNextPriorityBySymbol(symbol);
     }
 
     /**************************************************
-     * nearData下一个优先
+     * NearData下一个优先
      **************************************************/
     @Deprecated
     @Override
@@ -409,16 +409,16 @@ public class StringTs extends CoreTs<String, StringTs> {
     }
 
     /**************************************************
-     * nearIndex上一个优先
+     * NearIndex上一个优先
      **************************************************/
     @Deprecated
     @Override
-    public Ts.NearIndex nearIndexWhenPrePriorityBySymbol(String symbol) {
+    public Es.NearIndex nearIndexWhenPrePriorityBySymbol(String symbol) {
         return super.nearIndexWhenPrePriorityBySymbol(symbol);
     }
 
     /**************************************************
-     * nearData下一个优先
+     * NearData下一个优先
      **************************************************/
     @Deprecated
     @Override

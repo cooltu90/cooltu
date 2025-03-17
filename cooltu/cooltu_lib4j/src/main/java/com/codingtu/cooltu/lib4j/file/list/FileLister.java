@@ -1,7 +1,7 @@
 package com.codingtu.cooltu.lib4j.file.list;
 
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -35,8 +35,7 @@ public class FileLister {
 
 
     public void listOnce(ListFile listFile) {
-        Ts.ls(dirFile.listFiles(), new Ts.EachTs<File>() {
-            @Override
+        Es.es(dirFile.listFiles()).ls(new Es.EachEs<File>() {
             public boolean each(int position, File file) {
                 listFile.list(file);
                 return false;

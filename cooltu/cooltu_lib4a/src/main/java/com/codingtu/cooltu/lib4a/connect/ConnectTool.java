@@ -13,8 +13,8 @@ import com.codingtu.cooltu.lib4a.connect.device.ConnectDevice;
 import com.codingtu.cooltu.lib4a.log.Logs;
 import com.codingtu.cooltu.lib4a.tools.PfTool;
 import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.util.HashMap;
 import java.util.List;
@@ -117,7 +117,7 @@ public class ConnectTool {
         ResponseData[] datas = msgType == ConnectStatus.READ ? connectDevice.parseResponseDatas((byte[]) obj) : null;
 
         List<ConnectCallBack> connectCallBacks = callbacks().get(connectDevice.baseData.connectType);
-        Ts.ls(connectCallBacks, new Ts.EachTs<ConnectCallBack>() {
+        Es.es(connectCallBacks).ls(new Es.EachEs<ConnectCallBack>() {
             @Override
             public boolean each(int position, ConnectCallBack connectCallBack) {
                 switch (msgType) {
@@ -158,20 +158,20 @@ public class ConnectTool {
 
     public static void logBluetoothServices(BluetoothGatt gatt) {
         List<BluetoothGattService> services = gatt.getServices();
-        Ts.ls(services, new Ts.EachTs<BluetoothGattService>() {
+        Es.es(services).ls(new Es.EachEs<BluetoothGattService>() {
             @Override
             public boolean each(int position, BluetoothGattService service) {
                 Logs.i("======================================");
                 Logs.i("sercie:" + service.getUuid().toString());
 
                 List<BluetoothGattCharacteristic> characteristics = service.getCharacteristics();
-                Ts.ls(characteristics, new Ts.EachTs<BluetoothGattCharacteristic>() {
+                Es.es(characteristics).ls(new Es.EachEs<BluetoothGattCharacteristic>() {
                     @Override
                     public boolean each(int position, BluetoothGattCharacteristic characteristic) {
                         Logs.i("    characteristic:" + characteristic.getUuid().toString());
                         Logs.i("    characteristic getProperties:" + characteristic.getProperties());
                         List<BluetoothGattDescriptor> descriptors = characteristic.getDescriptors();
-                        Ts.ls(descriptors, new Ts.EachTs<BluetoothGattDescriptor>() {
+                        Es.es(descriptors).ls(new Es.EachEs<BluetoothGattDescriptor>() {
                             @Override
                             public boolean each(int position, BluetoothGattDescriptor descriptor) {
                                 Logs.i("        descriptor:" + descriptor.getUuid().toString());

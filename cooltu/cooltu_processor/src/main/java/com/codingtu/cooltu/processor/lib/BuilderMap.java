@@ -1,7 +1,7 @@
 package com.codingtu.cooltu.processor.lib;
 
 import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
-import com.codingtu.cooltu.lib4j.ts1.Ts;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.processor.BuilderType;
 import com.codingtu.cooltu.processor.builder.core.CoreBuilder;
 
@@ -30,8 +30,8 @@ public class BuilderMap {
      * 查找
      *
      **************************************************/
-    public static <T> T find(BuilderType type, String id) {
-        return (T) Ts.ts(MAP.get(type.ordinal())).getBySymbol(id);
+    public static <E> E find(BuilderType type, String id) {
+        return (E) Es.es(MAP.get(type.ordinal())).getBySymbol(id);
     }
 
     /**************************************************
@@ -40,7 +40,7 @@ public class BuilderMap {
      *
      **************************************************/
     public static void create() {
-        Ts.baseTs(BuilderType.values()).ls(new Ts.EachTs<BuilderType>() {
+        Es.es(BuilderType.values()).ls(new Es.EachEs<BuilderType>() {
             @Override
             public boolean each(int position, BuilderType modelType) {
                 create(modelType.ordinal());
@@ -52,7 +52,7 @@ public class BuilderMap {
 
     private static void create(int type) {
         List<CoreBuilder> models = MAP.get(type);
-        Ts.ts(models).ls(new Ts.EachTs<CoreBuilder>() {
+        Es.es(models).ls(new Es.EachEs<CoreBuilder>() {
             @Override
             public boolean each(int position, CoreBuilder model) {
                 model.create();

@@ -10,7 +10,7 @@ import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4a.view.layer.Layer;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
-import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.es.Es;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,7 +135,7 @@ public class MenuDialog implements OnDestroy, View.OnClickListener {
         ViewTool.setText(inflate.findViewById(R.id.menuDialogTitleTv), title);
         itemLl = inflate.findViewById(R.id.menuDialogItemsLl);
         itemViews = new ArrayList<>();
-        Ts.ls(itemIds, new Ts.EachTs<Integer>() {
+        Es.es(itemIds).ls(new Es.EachEs<Integer>() {
             @Override
             public boolean each(int position, Integer viewId) {
                 View inflate = InflateTool.inflate(itemLayout);
@@ -154,7 +154,7 @@ public class MenuDialog implements OnDestroy, View.OnClickListener {
 
 
     public void show() {
-        Ts.ls(itemViews, new Ts.EachTs<View>() {
+        Es.es(itemViews).ls(new Es.EachEs<View>() {
             @Override
             public boolean each(int position, View view) {
                 ViewTool.visibleOrGone(view, showItem.showItem(view.getId(), obj));

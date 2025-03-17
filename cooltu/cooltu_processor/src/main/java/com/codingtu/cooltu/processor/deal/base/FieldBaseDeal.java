@@ -1,7 +1,5 @@
 package com.codingtu.cooltu.processor.deal.base;
 
-import com.codingtu.cooltu.processor.builder.core.CoreBuilder;
-
 import javax.lang.model.element.Element;
 import javax.lang.model.element.VariableElement;
 

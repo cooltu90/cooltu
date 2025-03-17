@@ -1,8 +1,8 @@
 package com.codingtu.cooltu.processor.deal;
 
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.net.Apis;
 import com.codingtu.cooltu.processor.annotation.net.method.GET;
 import com.codingtu.cooltu.processor.annotation.net.method.POST;
@@ -32,9 +32,9 @@ public class NetDeal extends TypeBaseDeal {
         String apiName = ElementTools.simpleName(te);
         ApiServiceBuilder apiServiceBuilder = new ApiServiceBuilder(CurrentPath.apiService(apiName));
 
-        Ts.ls(te.getEnclosedElements(), (position, element) -> {
-            if (element instanceof ExecutableElement) {
-                ExecutableElement ee = (ExecutableElement) element;
+        ElementTools.getExecutableElements(te).ls(new Es.EachEs<ExecutableElement>() {
+            @Override
+            public boolean each(int position, ExecutableElement ee) {
                 apiServiceBuilder.addMethod(ee);
                 if (!CountTool.isNull(ee.getParameters())) {
                     new NetParamsBuilder(CurrentPath.sendParams(ElementTools.simpleName(ee)), ElementTools.getMethodParamKvs(ee));
@@ -68,9 +68,8 @@ public class NetDeal extends TypeBaseDeal {
                 netInfo.params = ee.getParameters();
 
                 NetBuilder.BUILDER.addNetInfo(netInfo);
-
+                return false;
             }
-            return false;
         });
 
     }

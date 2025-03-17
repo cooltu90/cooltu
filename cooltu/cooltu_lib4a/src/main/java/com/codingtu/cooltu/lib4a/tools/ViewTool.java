@@ -21,11 +21,11 @@ import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4a.bean.WH;
 import com.codingtu.cooltu.lib4a.image.BitmapTool;
 import com.codingtu.cooltu.lib4a.view.combine.RadioGroup;
+import com.codingtu.cooltu.lib4j.es.BaseEs;
+import com.codingtu.cooltu.lib4j.es.Es;
+import com.codingtu.cooltu.lib4j.es.impl.StringEs;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.tools.TagTools;
-import com.codingtu.cooltu.lib4j.ts.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.StringTs;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 
 public class ViewTool {
     public static final int WRAP_CONTENT = ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -353,11 +353,12 @@ public class ViewTool {
     }
 
     public static View[] getChildren(int skip, ViewGroup vp) {
-        BaseTs<View> ts = Ts.ts(View.class);
-        for (int i = skip; i < vp.getChildCount(); i++) {
-            ts.add(vp.getChildAt(i));
+        int count = vp.getChildCount();
+        View[] views = new View[count];
+        for (int i = skip; i < count; i++) {
+            views[i] = vp.getChildAt(i);
         }
-        return ts.toArray();
+        return views;
     }
 
     public static View[] getChildren(ViewGroup... vps) {
@@ -473,42 +474,42 @@ public class ViewTool {
 //    }
 
     public static View[] getRadioGroupViews(int viewId, ViewGroup viewGroup) {
-        BaseTs<View> viewTs = Ts.ts(View.class);
-        getRadioGroupViews(viewId, viewTs, viewGroup);
-        return viewTs.toArray();
+        BaseEs<View> viewEs = Es.es();
+        getRadioGroupViews(viewId, viewEs, viewGroup);
+        return viewEs.toArray();
     }
 
 
-    private static void getRadioGroupViews(int viewId, BaseTs<View> viewTs, ViewGroup viewGroup) {
+    private static void getRadioGroupViews(int viewId, BaseEs<View> viewEs, ViewGroup viewGroup) {
         for (int i = 0; i < viewGroup.getChildCount(); i++) {
             View childView = viewGroup.getChildAt(i);
             if (childView.getId() == viewId) {
-                viewTs.add(childView);
+                viewEs.add(childView);
             } else if (childView instanceof ViewGroup) {
-                getRadioGroupViews(viewId, viewTs, (ViewGroup) childView);
+                getRadioGroupViews(viewId, viewEs, (ViewGroup) childView);
             }
         }
     }
 
     public static String[] getRadioGroupItems(ViewGroup viewGroup) {
-        StringTs itemTs = new StringTs();
-        getRadioGroupItems(itemTs, viewGroup);
-        return itemTs.toArray();
+        StringEs itemEs = Es.strs();
+        getRadioGroupItems(itemEs, viewGroup);
+        return itemEs.toArray();
     }
 
-    private static void getRadioGroupItems(StringTs itemTs, ViewGroup viewGroup) {
+    private static void getRadioGroupItems(StringEs itemEs, ViewGroup viewGroup) {
         for (int i = 0; i < viewGroup.getChildCount(); i++) {
             View childView = viewGroup.getChildAt(i);
             if (childView instanceof TextView) {
-                itemTs.add(((TextView) childView).getText().toString());
+                itemEs.add(((TextView) childView).getText().toString());
             } else if (childView instanceof ViewGroup) {
-                getRadioGroupItems(itemTs, (ViewGroup) childView);
+                getRadioGroupItems(itemEs, (ViewGroup) childView);
             }
         }
     }
 
     public static String[] getRadioGroupItems(int viewId, ViewGroup viewGroup) {
-        return Ts.ts(getRadioGroupViews(viewId, viewGroup)).convert(new Ts.Convert<View, String>() {
+        return Es.es(getRadioGroupViews(viewId, viewGroup)).convert(new Es.Convert<View, String>() {
             @Override
             public String convert(int index, View view) {
                 if (view instanceof TextView) {

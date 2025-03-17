@@ -2,19 +2,16 @@ package com.codingtu.cooltu.processor.builder.impl;
 
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
+import com.codingtu.cooltu.lib4j.es.BaseEs;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.msthread.MainThread;
 import com.codingtu.cooltu.processor.annotation.msthread.SubThread;
 import com.codingtu.cooltu.processor.builder.base.MsThreadBaseBuilderBase;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.param.Params;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
-
-import java.util.List;
 
 import javax.lang.model.element.ExecutableElement;
 
@@ -22,7 +19,7 @@ public class MsThreadBaseBuilder extends MsThreadBaseBuilderBase {
     private final String interfaceNameStr;
     private final String msThreadTypeStr;
     private final String msThreadFieldName;
-    public BaseTs<ExecutableElement> msThreadMethodTs = Ts.ts();
+    public BaseEs<ExecutableElement> msThreadMethodEs = Es.es();
     public String baseFullName;
 
     public MsThreadBaseBuilder(JavaInfo info, String interfaceName, String typeName) {
@@ -51,7 +48,7 @@ public class MsThreadBaseBuilder extends MsThreadBaseBuilderBase {
         addTag(msThreadType, msThreadTypeStr);
         addTag(msThreadName, ConvertTool.toMethodType(msThreadTypeStr));
 
-        msThreadMethodTs.ls(new Ts.EachTs<ExecutableElement>() {
+        msThreadMethodEs.ls(new Es.EachEs<ExecutableElement>() {
             @Override
             public boolean each(int position, ExecutableElement element) {
                 Params params = ElementTools.getMethodParamKvs(element);

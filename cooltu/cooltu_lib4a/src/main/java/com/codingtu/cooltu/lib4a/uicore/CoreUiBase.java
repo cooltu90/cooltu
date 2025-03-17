@@ -12,7 +12,7 @@ import com.codingtu.cooltu.lib4a.tools.StatusBarTool;
 import com.codingtu.cooltu.lib4a.tools.ToastTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
-import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.es.Es;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +43,7 @@ public class CoreUiBase {
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
-        Ts.ls(getPermissionBacks(), new Ts.EachTs<PermissionBack>() {
+        Es.es(getPermissionBacks()).ls(new Es.EachEs<PermissionBack>() {
             @Override
             public boolean each(int position, PermissionBack back) {
                 back.back(requestCode, permissions, grantResults);
@@ -74,7 +74,7 @@ public class CoreUiBase {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Ts.ls(getOnActBacks(), new Ts.EachTs<OnActBack>() {
+        Es.es(getOnActBacks()).ls(new Es.EachEs<OnActBack>() {
             @Override
             public boolean each(int position, OnActBack back) {
                 back.onActivityResult(requestCode, resultCode, data);
@@ -107,7 +107,7 @@ public class CoreUiBase {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         final boolean[] b = {false};
         List<WhenKeyDown> whenKeyDowns = getWhenKeyDowns();
-        Ts.ls(whenKeyDowns, new Ts.EachTs<WhenKeyDown>() {
+        Es.es(whenKeyDowns).ls(new Es.EachEs<WhenKeyDown>() {
             @Override
             public boolean each(int position, WhenKeyDown whenKeyDown) {
                 if (whenKeyDown.onKeyDown(keyCode, event)) {
@@ -137,7 +137,7 @@ public class CoreUiBase {
     }
 
     public void destroyAll() {
-        Ts.ls(getOnDestroys(), new Ts.EachTs<OnDestroy>() {
+        Es.es(getOnDestroys()).ls(new Es.EachEs<OnDestroy>() {
             @Override
             public boolean each(int position, OnDestroy onDestroy) {
                 onDestroy.destroy();

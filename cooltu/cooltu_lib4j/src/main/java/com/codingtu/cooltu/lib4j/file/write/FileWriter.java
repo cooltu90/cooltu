@@ -1,15 +1,15 @@
 package com.codingtu.cooltu.lib4j.file.write;
 
+import com.codingtu.cooltu.lib4j.es.BaseEs;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.file.FileTool;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
+import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.CoreTs;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FileWriter {
@@ -57,18 +57,18 @@ public class FileWriter {
      **************************************************/
 
     public void write(Object line) {
-        write(toList(line));
+        write(Es.es(line));
     }
 
     public void write(Object... lines) {
-        write(Ts.ts(lines));
+        write(Es.es(lines));
     }
 
     public void write(List lines) {
-        write(Ts.ts(lines));
+        write(Es.es(lines));
     }
 
-    public void write(CoreTs getter) {
+    public void write(BaseEs lineEs) {
         if (!isCover) {
             if (this.file.exists()) {
                 throw new RuntimeException("文件已经存在");
@@ -86,9 +86,9 @@ public class FileWriter {
             } else {
                 bw = FileTool.getBufferedWriter(this.file);
             }
-            int count = getter == null ? 0 : getter.count();
+            int count = CountTool.count(lineEs);
             for (int i = 0; i < count; i++) {
-                bw.write(getter.get(i).toString());
+                bw.write(lineEs.getByIndex(i).toString());
                 bw.newLine();
             }
         } catch (Exception e) {
@@ -103,17 +103,6 @@ public class FileWriter {
                 bw = null;
             }
         }
-    }
-
-    /**************************************************
-     *
-     * toList
-     *
-     **************************************************/
-    private List toList(Object t) {
-        ArrayList ts = new ArrayList();
-        ts.add(t);
-        return ts;
     }
 
 }

@@ -1,8 +1,6 @@
 package com.codingtu.cooltu.lib4a.view.dialogview;
 
 import android.app.Activity;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,7 +16,7 @@ import com.codingtu.cooltu.lib4a.tools.InflateTool;
 import com.codingtu.cooltu.lib4a.tools.ViewTool;
 import com.codingtu.cooltu.lib4j.function.OnError;
 import com.codingtu.cooltu.lib4j.function.OnFinish;
-import com.codingtu.cooltu.lib4j.ts.pack.TValue;
+import com.codingtu.cooltu.lib4j.data.value.TValue;
 
 public final class ToastDialog implements OnDestroy {
 

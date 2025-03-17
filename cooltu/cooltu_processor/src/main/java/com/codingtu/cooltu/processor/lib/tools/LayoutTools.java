@@ -1,12 +1,11 @@
 package com.codingtu.cooltu.processor.lib.tools;
 
 import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.file.read.FileReader;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.Maps;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 
 import java.util.ArrayList;
@@ -30,16 +29,7 @@ public class LayoutTools {
         dealViewInfo(viewInfoMap, info);
         dealViewinfo(viewInfoMap);
 
-        return Maps.map(viewInfoMap).toValueTs().convertList(new Ts.Convert<List<ViewInfo>, List<ViewInfo>>() {
-
-            @Override
-            public List<ViewInfo> convert(int index, List<ViewInfo> viewInfos) {
-                if (CountTool.isNull(viewInfos)) {
-                    return null;
-                }
-                return viewInfos;
-            }
-        }).toList();
+        return Es.convertList(Es.maps(viewInfoMap).toValueTs()).toList();
     }
 
 
@@ -165,9 +155,9 @@ public class LayoutTools {
             if (StringTool.isNotBlank(viewInfo.id)) {
                 viewInfoMap.get(viewInfo.fieldName).add(viewInfo);
             }
-            Ts.ls(viewInfo.childs, new Ts.EachTs<LayoutTools.ViewInfo>() {
+            Es.es(viewInfo.childs).ls(new Es.EachEs<ViewInfo>() {
                 @Override
-                public boolean each(int position, LayoutTools.ViewInfo viewInfo) {
+                public boolean each(int position, ViewInfo viewInfo) {
                     dealViewInfo(viewInfoMap, viewInfo);
                     return false;
                 }
@@ -177,7 +167,7 @@ public class LayoutTools {
 
     private static void dealViewinfo(ListValueMap<String, ViewInfo> viewInfoMap) {
         boolean isFinish = true;
-        List<String> keys = Ts.ts(viewInfoMap.keySet()).toList();
+        List<String> keys = Es.es(viewInfoMap.keySet()).toList();
         for (String key : keys) {
             List<LayoutTools.ViewInfo> viewInfos = viewInfoMap.get(key);
             int count = CountTool.count(viewInfos);

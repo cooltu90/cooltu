@@ -1,8 +1,8 @@
 package com.codingtu.cooltu.lib4j.path;
 
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.file.read.FileReader;
 import com.codingtu.cooltu.lib4j.file.write.FileWriter;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.util.List;
 
@@ -20,8 +20,7 @@ public class PathTextFile extends PathBaseFile {
     public String getText() {
         List<String> lines = getTextLins();
         StringBuilder sb = new StringBuilder();
-        Ts.ls(lines, new Ts.EachTs<String>() {
-            @Override
+        Es.es(lines).ls(new Es.EachEs<String>() {
             public boolean each(int position, String s) {
                 sb.append(s);
                 return false;

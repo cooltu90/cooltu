@@ -1,7 +1,6 @@
 package com.codingtu.cooltu.lib4j.tools;
 
-import com.codingtu.cooltu.lib4j.log.LibLogs;
-import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.es.Es;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,7 +158,7 @@ public class StringTool {
      **************************************************/
     @Deprecated
     public static boolean inRange(String str, String... strs) {
-        return Ts.strs(strs).has(str);
+        return Es.strs(strs).has(str);
     }
 
 

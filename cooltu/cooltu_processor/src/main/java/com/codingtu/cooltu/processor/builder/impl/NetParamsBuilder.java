@@ -4,7 +4,7 @@ import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
-import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.processor.builder.base.NetParamsBuilderBase;
 import com.codingtu.cooltu.processor.lib.param.Params;
 
@@ -40,7 +40,7 @@ public class NetParamsBuilder extends NetParamsBuilderBase {
         addTag(coreSendParamsFullName, FullName.CORE_SEND_PARAMS);
         addTag(name, javaInfo.name);
 
-        Ts.ls(params.getKvs(), new Ts.EachTs<KV<String, String>>() {
+        Es.es(params.getKvs()).ls(new Es.EachEs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
                 field(position, kv.k, kv.v);

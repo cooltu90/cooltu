@@ -2,7 +2,7 @@ package com.codingtu.cooltu.processor.builder.impl;
 
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
-import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.processor.builder.base.Code4RequestBuilderBase;
 import com.codingtu.cooltu.processor.deal.ResForDeal;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
@@ -50,17 +50,17 @@ public class Code4RequestBuilder extends Code4RequestBuilderBase {
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_TOOLS);
 
-        Ts.ts(ResForDeal.HAS_START_MAP.keySet()).ls(new Ts.EachTs<String>() {
+        Es.es(ResForDeal.HAS_START_MAP.keySet()).ls(new Es.EachEs<String>() {
             @Override
             public boolean each(int position, String s) {
                 //field(position, CurrentPath.actStaticName(s), position + "");
-                fullNames.put(CurrentPath.actStaticName(s),"");
+                fullNames.put(CurrentPath.actStaticName(s), "");
                 return false;
             }
         });
 
 
-        Ts.ts(fullNames.keySet()).ls(new Ts.EachTs<String>() {
+        Es.es(fullNames.keySet()).ls(new Es.EachEs<String>() {
             @Override
             public boolean each(int position, String s) {
                 field(position, s, position + "");

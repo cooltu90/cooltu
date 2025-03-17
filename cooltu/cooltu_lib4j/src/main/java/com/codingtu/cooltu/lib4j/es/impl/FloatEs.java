@@ -1,13 +1,13 @@
-package com.codingtu.cooltu.lib4j.ts1.impl;
+package com.codingtu.cooltu.lib4j.es.impl;
 
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
-import com.codingtu.cooltu.lib4j.function.ToDouble;
+import com.codingtu.cooltu.lib4j.function.ToFloat;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts1.NumTs;
+import com.codingtu.cooltu.lib4j.es.NumEs;
 
 import java.util.List;
 
-public class DoubleTs extends NumTs<Double, DoubleTs> {
+public class FloatEs extends NumEs<Float, FloatEs> {
 
     ///////////////////////////////////////////////////////
     //
@@ -15,21 +15,11 @@ public class DoubleTs extends NumTs<Double, DoubleTs> {
     //
     ///////////////////////////////////////////////////////
 
-    public DoubleTs() {
+    public FloatEs() {
     }
 
-    public DoubleTs(List<Double> list) {
+    public FloatEs(List<Float> list) {
         super(list);
-    }
-
-    ///////////////////////////////////////////////////////
-    //
-    // 获取symbol
-    //
-    ///////////////////////////////////////////////////////
-    @Override
-    protected String obtainSymbol(Double aDouble) {
-        return aDouble + "";
     }
 
     ///////////////////////////////////////////////////////
@@ -38,24 +28,23 @@ public class DoubleTs extends NumTs<Double, DoubleTs> {
     //
     ///////////////////////////////////////////////////////
 
-    public DoubleTs add_double(double... doubles) {
-        int count = CountTool.count(doubles);
+    public FloatEs add_float(float... floats) {
+        int count = CountTool.count(floats);
         for (int i = 0; i < count; i++) {
-            this.ts.add(doubles[i]);
+            this.es.add(floats[i]);
         }
         return this;
     }
-
 
     ///////////////////////////////////////////////////////
     //
     // createThis
     //
     ///////////////////////////////////////////////////////
-    public DoubleTs createThis_double(double... doubles) {
-        DoubleTs doubleTs = new DoubleTs();
-        doubleTs.add_double(doubles);
-        return doubleTs;
+    public FloatEs createThis_float(float... floats) {
+        FloatEs floatVs = new FloatEs();
+        floatVs.add_float(floats);
+        return floatVs;
     }
 
     ///////////////////////////////////////////////////////
@@ -63,11 +52,11 @@ public class DoubleTs extends NumTs<Double, DoubleTs> {
     // maxMin
     //
     ///////////////////////////////////////////////////////
-    public MaxMin<Double> maxMin() {
-        return super.maxMin(new ToDouble<Double>() {
+    public MaxMin<Float> maxMin() {
+        return super.maxMin(new ToFloat<Float>() {
             @Override
-            public double toDouble(Double aDouble) {
-                return aDouble;
+            public double toFloat(Float aFloat) {
+                return aFloat;
             }
         });
     }
@@ -77,11 +66,11 @@ public class DoubleTs extends NumTs<Double, DoubleTs> {
     // toArray
     //
     ///////////////////////////////////////////////////////
-    public double[] to_doubles() {
+    public float[] to_floats() {
         int count = count();
-        double[] arrs = new double[count];
+        float[] arrs = new float[count];
         for (int i = 0; i < count; i++) {
-            arrs[i] = this.ts.get(i);
+            arrs[i] = this.es.get(i);
         }
         return arrs;
     }

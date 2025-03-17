@@ -1,13 +1,13 @@
-package com.codingtu.cooltu.lib4j.ts1.impl;
+package com.codingtu.cooltu.lib4j.es.impl;
 
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
-import com.codingtu.cooltu.lib4j.function.ToLong;
+import com.codingtu.cooltu.lib4j.function.ToDouble;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts1.NumTs;
+import com.codingtu.cooltu.lib4j.es.NumEs;
 
 import java.util.List;
 
-public class LongTs extends NumTs<Long, LongTs> {
+public class DoubleEs extends NumEs<Double, DoubleEs> {
 
     ///////////////////////////////////////////////////////
     //
@@ -15,22 +15,13 @@ public class LongTs extends NumTs<Long, LongTs> {
     //
     ///////////////////////////////////////////////////////
 
-    public LongTs() {
+    public DoubleEs() {
     }
 
-    public LongTs(List<Long> list) {
+    public DoubleEs(List<Double> list) {
         super(list);
     }
-    ///////////////////////////////////////////////////////
-    //
-    // 获取symbol
-    //
-    ///////////////////////////////////////////////////////
 
-    @Override
-    protected String obtainSymbol(Long aLong) {
-        return aLong + "";
-    }
 
     ///////////////////////////////////////////////////////
     //
@@ -38,23 +29,24 @@ public class LongTs extends NumTs<Long, LongTs> {
     //
     ///////////////////////////////////////////////////////
 
-    public LongTs add_long(long... longs) {
-        int count = CountTool.count(longs);
+    public DoubleEs add_double(double... doubles) {
+        int count = CountTool.count(doubles);
         for (int i = 0; i < count; i++) {
-            this.ts.add(longs[i]);
+            this.es.add(doubles[i]);
         }
         return this;
     }
+
 
     ///////////////////////////////////////////////////////
     //
     // createThis
     //
     ///////////////////////////////////////////////////////
-    public LongTs createThis_long(long... longs) {
-        LongTs longTs = new LongTs();
-        longTs.add_long(longs);
-        return longTs;
+    public DoubleEs createThis_double(double... doubles) {
+        DoubleEs doubleVs = new DoubleEs();
+        doubleVs.add_double(doubles);
+        return doubleVs;
     }
 
     ///////////////////////////////////////////////////////
@@ -62,11 +54,11 @@ public class LongTs extends NumTs<Long, LongTs> {
     // maxMin
     //
     ///////////////////////////////////////////////////////
-    public MaxMin<Long> maxMin() {
-        return super.maxMin(new ToLong<Long>() {
+    public MaxMin<Double> maxMin() {
+        return super.maxMin(new ToDouble<Double>() {
             @Override
-            public long toLong(Long aLong) {
-                return aLong;
+            public double toDouble(Double aDouble) {
+                return aDouble;
             }
         });
     }
@@ -76,12 +68,11 @@ public class LongTs extends NumTs<Long, LongTs> {
     // toArray
     //
     ///////////////////////////////////////////////////////
-
-    public long[] to_longs() {
+    public double[] to_doubles() {
         int count = count();
-        long[] arrs = new long[count];
+        double[] arrs = new double[count];
         for (int i = 0; i < count; i++) {
-            arrs[i] = this.ts.get(i);
+            arrs[i] = this.es.get(i);
         }
         return arrs;
     }

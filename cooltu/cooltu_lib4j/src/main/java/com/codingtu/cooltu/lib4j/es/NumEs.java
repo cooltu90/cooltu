@@ -1,39 +1,39 @@
-package com.codingtu.cooltu.lib4j.ts1;
+package com.codingtu.cooltu.lib4j.es;
 
 import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
 import com.codingtu.cooltu.lib4j.function.ToDouble;
 import com.codingtu.cooltu.lib4j.function.ToFloat;
 import com.codingtu.cooltu.lib4j.function.ToInt;
 import com.codingtu.cooltu.lib4j.function.ToLong;
-import com.codingtu.cooltu.lib4j.ts1.impl.IntegerTs;
-import com.codingtu.cooltu.lib4j.ts1.impl.StringTs;
+import com.codingtu.cooltu.lib4j.es.impl.IntegerEs;
+import com.codingtu.cooltu.lib4j.es.impl.StringEs;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
+public class NumEs<E, THIS extends NumEs> extends CoreEs<E, THIS> {
 
     ///////////////////////////////////////////////////////
     //
     // 构造函数
     //
     ///////////////////////////////////////////////////////
-    public NumTs() {
+    public NumEs() {
     }
 
-    public NumTs(List<T> list) {
+    public NumEs(List<E> list) {
         super(list);
     }
 
     ///////////////////////////////////////////////////////
     //
-    // 获取Symbol
+    // 获取valueSymbol
     //
     ///////////////////////////////////////////////////////
     @Override
-    protected String obtainSymbol(T t) {
-        return t + "";
+    protected String obtainSymbol(E e) {
+        return e + "";
     }
 
     ///////////////////////////////////////////////////////
@@ -47,14 +47,14 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
      **************************************************/
     @Deprecated
     @Override
-    public T getBySymbol(String symbol) {
+    public E getBySymbol(String symbol) {
         return super.getBySymbol(symbol);
     }
 
     @Deprecated
     @Override
-    public T get(T t) {
-        return super.get(t);
+    public E get(E e) {
+        return super.get(e);
     }
 
     /**************************************************
@@ -68,8 +68,8 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
 
     @Deprecated
     @Override
-    public THIS getAll(T t) {
-        return super.getAll(t);
+    public THIS getAll(E e) {
+        return super.getAll(e);
     }
 
     ///////////////////////////////////////////////////////
@@ -85,10 +85,10 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
     }
 
     @Override
-    public boolean has(T t) {
+    public boolean has(E e) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (this.ts.get(i) == t) {
+            if (this.es.get(i) == e) {
                 return true;
             }
         }
@@ -102,7 +102,7 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
     ///////////////////////////////////////////////////////
 
     /**************************************************
-     * first
+     * index
      **************************************************/
     @Deprecated
     @Override
@@ -111,10 +111,10 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
     }
 
     @Override
-    public int index(T t) {
+    public int index(E e) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (t == this.ts.get(i)) {
+            if (e == this.es.get(i)) {
                 return i;
             }
         }
@@ -126,20 +126,20 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
      **************************************************/
     @Deprecated
     @Override
-    public IntegerTs allIndexBySymbol(String symbol) {
+    public IntegerEs allIndexBySymbol(String symbol) {
         return super.allIndexBySymbol(symbol);
     }
 
     @Override
-    public IntegerTs allIndex(T t) {
+    public IntegerEs allIndex(E e) {
         int count = count();
-        IntegerTs integerTs = new IntegerTs();
+        IntegerEs integerVs = new IntegerEs();
         for (int i = 0; i < count; i++) {
-            if (this.ts.get(i) == t) {
-                integerTs.add(i);
+            if (this.es.get(i) == e) {
+                integerVs.add(i);
             }
         }
-        return integerTs;
+        return integerVs;
     }
 
     ///////////////////////////////////////////////////////
@@ -154,13 +154,13 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
 
     @Deprecated
     @Override
-    public THIS replaceBySymbol(String symbol, T target) {
+    public THIS replaceBySymbol(String symbol, E target) {
         return super.replaceBySymbol(symbol, target);
     }
 
     @Override
-    public THIS replace(T symbolT, T target) {
-        int firstIndex = index(symbolT);
+    public THIS replace(E symbol, E target) {
+        int firstIndex = index(symbol);
         if (firstIndex >= 0) {
             replaceByIndex(firstIndex, target);
         }
@@ -169,26 +169,26 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
 
     @Deprecated
     @Override
-    public THIS replace(T target) {
+    public THIS replace(E target) {
         return super.replace(target);
     }
 
     @Deprecated
     @Override
-    public THIS replace(T... targets) {
+    public THIS replace(E... targets) {
         return super.replace(targets);
     }
 
     @Deprecated
     @Override
-    public THIS replace(List<T> targets) {
+    public THIS replace(List<E> targets) {
         return super.replace(targets);
     }
 
     @Deprecated
     @Override
-    public THIS replace(THIS targets) {
-        return super.replace(targets);
+    public THIS replace(THIS targetEs) {
+        return super.replace(targetEs);
     }
 
     /**************************************************
@@ -196,15 +196,15 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
      **************************************************/
     @Deprecated
     @Override
-    public THIS replaceAllBySymbol(String symbol, T target) {
+    public THIS replaceAllBySymbol(String symbol, E target) {
         return super.replaceAllBySymbol(symbol, target);
     }
 
     @Override
-    public THIS replaceAll(T symbolT, T target) {
+    public THIS replaceAll(E symbol, E target) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (this.ts.get(i) == symbolT) {
+            if (this.es.get(i) == symbol) {
                 replaceByIndex(i, target);
             }
         }
@@ -213,26 +213,26 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
 
     @Deprecated
     @Override
-    public THIS replaceAll(T target) {
+    public THIS replaceAll(E target) {
         return super.replaceAll(target);
     }
 
     @Deprecated
     @Override
-    public THIS replaceAll(T... targets) {
+    public THIS replaceAll(E... targets) {
         return super.replaceAll(targets);
     }
 
     @Deprecated
     @Override
-    public THIS replaceAll(List<T> targets) {
+    public THIS replaceAll(List<E> targets) {
         return super.replaceAll(targets);
     }
 
     @Deprecated
     @Override
-    public THIS replaceAll(THIS targets) {
-        return super.replaceAll(targets);
+    public THIS replaceAll(THIS targetEs) {
+        return super.replaceAll(targetEs);
     }
 
     /**************************************************
@@ -240,43 +240,43 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
      **************************************************/
     @Deprecated
     @Override
-    public THIS replaceOrAddBySymbol(String symbol, T target) {
+    public THIS replaceOrAddBySymbol(String symbol, E target) {
         return super.replaceOrAddBySymbol(symbol, target);
     }
 
     @Override
-    public THIS replaceOrAdd(T symbolT, T target) {
-        int firstIndex = index(symbolT);
+    public THIS replaceOrAdd(E symbol, E target) {
+        int firstIndex = index(symbol);
         if (firstIndex >= 0) {
             replaceByIndex(firstIndex, target);
         } else if (target != null) {
-            ts.add(target);
+            es.add(target);
         }
         return (THIS) this;
     }
 
     @Deprecated
     @Override
-    public THIS replaceOrAdd(T target) {
+    public THIS replaceOrAdd(E target) {
         return super.replaceOrAdd(target);
     }
 
     @Deprecated
     @Override
-    public THIS replaceOrAdd(T... targets) {
+    public THIS replaceOrAdd(E... targets) {
         return super.replaceOrAdd(targets);
     }
 
     @Deprecated
     @Override
-    public THIS replaceOrAdd(List<T> targets) {
+    public THIS replaceOrAdd(List<E> targets) {
         return super.replaceOrAdd(targets);
     }
 
     @Deprecated
     @Override
-    public THIS replaceOrAdd(THIS targets) {
-        return super.replaceOrAdd(targets);
+    public THIS replaceOrAdd(THIS targetEs) {
+        return super.replaceOrAdd(targetEs);
     }
 
     /**************************************************
@@ -284,48 +284,48 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
      **************************************************/
     @Deprecated
     @Override
-    public THIS replaceAllOrAddBySymbol(String symbol, T target) {
+    public THIS replaceAllOrAddBySymbol(String symbol, E target) {
         return super.replaceAllOrAddBySymbol(symbol, target);
     }
 
     @Override
-    public THIS replaceAllOrAdd(T symboleT, T target) {
+    public THIS replaceAllOrAdd(E symbole, E target) {
         int count = count();
         boolean isReplace = false;
         for (int i = 0; i < count; i++) {
-            if (this.ts.get(i) == symboleT) {
+            if (this.es.get(i) == symbole) {
                 replaceByIndex(i, target);
                 isReplace = true;
             }
         }
         if (!isReplace && target != null) {
-            this.ts.add(target);
+            this.es.add(target);
         }
         return (THIS) this;
     }
 
     @Deprecated
     @Override
-    public THIS replaceAllOrAdd(T target) {
+    public THIS replaceAllOrAdd(E target) {
         return super.replaceAllOrAdd(target);
     }
 
     @Deprecated
     @Override
-    public THIS replaceAllOrAdd(T... targets) {
+    public THIS replaceAllOrAdd(E... targets) {
         return super.replaceAllOrAdd(targets);
     }
 
     @Deprecated
     @Override
-    public THIS replaceAllOrAdd(List<T> targets) {
+    public THIS replaceAllOrAdd(List<E> targets) {
         return super.replaceAllOrAdd(targets);
     }
 
     @Deprecated
     @Override
-    public THIS replaceAllOrAdd(THIS targets) {
-        return super.replaceAllOrAdd(targets);
+    public THIS replaceAllOrAdd(THIS targetEs) {
+        return super.replaceAllOrAdd(targetEs);
     }
     ///////////////////////////////////////////////////////
     //
@@ -356,25 +356,25 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
 
     @Deprecated
     @Override
-    public THIS deleteBySymbol(StringTs symbolStringTs) {
-        return super.deleteBySymbol(symbolStringTs);
+    public THIS deleteBySymbol(StringEs symbolStringEs) {
+        return super.deleteBySymbol(symbolStringEs);
     }
 
     @Override
-    public THIS delete(T target) {
+    public THIS delete(E target) {
         int firstIndex = index(target);
         if (firstIndex >= 0) {
-            this.ts.remove(firstIndex);
+            this.es.remove(firstIndex);
         }
         return (THIS) this;
     }
 
     @Override
-    protected THIS delete(Ts.EachGetter<T> getter) {
+    protected THIS delete(Es.EachGetter<E> getter) {
         if (getter != null) {
             int count = getter.count();
             if (count > 0) {
-                T target = null;
+                E target = null;
                 for (int i = 0; i < count; i++) {
                     target = getter.get(i);
                     if (target != null) {
@@ -409,52 +409,52 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
 
     @Deprecated
     @Override
-    public THIS deleteAllBySymbol(StringTs symbolStringTs) {
-        return super.deleteAllBySymbol(symbolStringTs);
+    public THIS deleteAllBySymbol(StringEs symbolStringVs) {
+        return super.deleteAllBySymbol(symbolStringVs);
     }
 
     @Override
-    public THIS deleteAll(T target) {
-        List<T> newTs = new ArrayList<>();
+    public THIS deleteAll(E target) {
+        List<E> newEs = new ArrayList<>();
         int count = count();
-        T t;
+        E e;
         for (int i = 0; i < count; i++) {
-            t = this.ts.get(i);
-            if (t != target) {
-                newTs.add(t);
+            e = this.es.get(i);
+            if (e != target) {
+                newEs.add(e);
             }
         }
-        this.ts.clear();
-        this.ts.addAll(newTs);
+        this.es.clear();
+        this.es.addAll(newEs);
         return (THIS) this;
     }
 
     @Override
-    protected THIS deleteAll(Ts.EachGetter<T> getter) {
+    protected THIS deleteAll(Es.EachGetter<E> getter) {
         if (getter != null) {
             int valueSymbolCount = getter.count();
             int tCount = count();
             if (valueSymbolCount > 0 && tCount > 0) {
-                List<T> newTs = new ArrayList<>();
+                List<E> newEs = new ArrayList<>();
 
-                T t;
+                E e;
                 boolean isSame;
                 for (int i = 0; i < tCount; i++) {
-                    t = this.ts.get(i);
+                    e = this.es.get(i);
 
                     isSame = false;
                     for (int j = 0; j < valueSymbolCount; j++) {
-                        if (t == getter.get(j)) {
+                        if (e == getter.get(j)) {
                             isSame = true;
                             break;
                         }
                     }
                     if (!isSame) {
-                        newTs.add(t);
+                        newEs.add(e);
                     }
                 }
-                this.ts.clear();
-                this.ts.addAll(newTs);
+                this.es.clear();
+                this.es.addAll(newEs);
             }
         }
         return (THIS) this;
@@ -468,31 +468,31 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
 
     @Deprecated
     @Override
-    public MaxMin<T> maxMin(Ts.NowMax<T> nowMax) {
+    public MaxMin<E> maxMin(Es.NowMax<E> nowMax) {
         return super.maxMin(nowMax);
     }
 
     @Deprecated
     @Override
-    public MaxMin<T> maxMin(ToInt<T> toInt) {
+    public MaxMin<E> maxMin(ToInt<E> toInt) {
         return super.maxMin(toInt);
     }
 
     @Deprecated
     @Override
-    public MaxMin<T> maxMin(ToLong<T> toLong) {
+    public MaxMin<E> maxMin(ToLong<E> toLong) {
         return super.maxMin(toLong);
     }
 
     @Deprecated
     @Override
-    public MaxMin<T> maxMin(ToDouble<T> toDouble) {
+    public MaxMin<E> maxMin(ToDouble<E> toDouble) {
         return super.maxMin(toDouble);
     }
 
     @Deprecated
     @Override
-    public MaxMin<T> maxMin(ToFloat<T> toFloat) {
+    public MaxMin<E> maxMin(ToFloat<E> toFloat) {
         return super.maxMin(toFloat);
     }
 
@@ -509,7 +509,7 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
 
     @Deprecated
     @Override
-    public Ts.NearIndex nearIndexWhenNextPriorityBySymbol(String symbol) {
+    public Es.NearIndex nearIndexWhenNextPriorityBySymbol(String symbol) {
         return super.nearIndexWhenNextPriorityBySymbol(symbol);
     }
 
@@ -518,7 +518,7 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
      **************************************************/
     @Deprecated
     @Override
-    public T nearDataWhenNextPriorityBySymbol(String symbol) {
+    public E nearDataWhenNextPriorityBySymbol(String symbol) {
         return super.nearDataWhenNextPriorityBySymbol(symbol);
     }
 
@@ -527,7 +527,7 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
      **************************************************/
     @Deprecated
     @Override
-    public Ts.NearIndex nearIndexWhenPrePriorityBySymbol(String symbol) {
+    public Es.NearIndex nearIndexWhenPrePriorityBySymbol(String symbol) {
         return super.nearIndexWhenPrePriorityBySymbol(symbol);
     }
 
@@ -536,7 +536,7 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
      **************************************************/
     @Deprecated
     @Override
-    public T nearDataWhenPrePriorityBySymbol(String symbol) {
+    public E nearDataWhenPrePriorityBySymbol(String symbol) {
         return super.nearDataWhenPrePriorityBySymbol(symbol);
     }
 
@@ -547,7 +547,7 @@ public class NumTs<T, THIS extends CoreTs> extends CoreTs<T, THIS> {
     ///////////////////////////////////////////////////////
     @Deprecated
     @Override
-    public Map<String, T> toMap() {
+    public Map<String, E> toMap() {
         return super.toMap();
     }
 }

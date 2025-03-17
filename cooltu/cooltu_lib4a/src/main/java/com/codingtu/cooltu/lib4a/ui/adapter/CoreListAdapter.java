@@ -5,33 +5,38 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import com.codingtu.cooltu.lib4a.ui.adapter.viewholder.CoreAdapterVH;
+import com.codingtu.cooltu.lib4j.es.BaseEs;
+import com.codingtu.cooltu.lib4j.es.CoreEs;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.CoreTs;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-public abstract class CoreListAdapter<VH extends CoreAdapterVH, T> extends CoreAdapter<VH> {
-    protected BaseTs<T> ts;
+public abstract class CoreListAdapter<VH extends CoreAdapterVH, E> extends CoreAdapter<VH> {
+    protected BaseEs<E> es;
     private Class<VH> vhClass;
 
     @Override
     public int getItemCount() {
-        return CountTool.count(ts);
+        return CountTool.count(es);
     }
 
-    public void updateItems(List<T> ts) {
-        updateItems(Ts.ts(ts));
+    public void updateItems(List<E> items) {
+        this.es = Es.es(items);
+        notifyDataSetChanged();
     }
 
-    public void updateItems(T... ts) {
-        updateItems(Ts.ts(ts));
+    public void updateItems(E... items) {
+        this.es = Es.es(items);
+        notifyDataSetChanged();
     }
 
-    public void updateItems(BaseTs<T> ts) {
-        this.ts = ts;
+    public void updateItems(CoreEs<E, ?> items) {
+        this.es = Es.es();
+        if (items != null) {
+            this.es.addAllKindsOfEs(items);
+        }
         notifyDataSetChanged();
     }
 
@@ -53,20 +58,20 @@ public abstract class CoreListAdapter<VH extends CoreAdapterVH, T> extends CoreA
 
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
-        onBindVH(holder, position, this.ts.get(position));
+        onBindVH(holder, position, this.es.getByIndex(position));
     }
 
-    protected abstract void onBindVH(@NonNull VH holder, int position, T t);
+    protected abstract void onBindVH(@NonNull VH holder, int position, E e);
 
-    public BaseTs<T> getItems() {
-        return this.ts;
+    public BaseEs<E> getItems() {
+        return this.es;
     }
 
-    public void addItem(T t) {
-        if (this.ts == null) {
-            this.ts = new BaseTs<>();
+    public void addItem(E e) {
+        if (this.es == null) {
+            this.es = new BaseEs<>();
         }
-        this.ts.add(t);
+        this.es.add(e);
         notifyDataSetChanged();
     }
 }

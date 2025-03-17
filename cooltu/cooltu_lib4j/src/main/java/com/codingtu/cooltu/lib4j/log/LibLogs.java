@@ -1,10 +1,10 @@
 package com.codingtu.cooltu.lib4j.log;
 
 import com.codingtu.cooltu.lib4j.config.LibConfigs;
+import com.codingtu.cooltu.lib4j.es.BaseEs;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.CoreTs;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -103,7 +103,7 @@ public class LibLogs {
             } else if (msg instanceof Map) {
                 logMap(level, tag, (Map) msg);
             } else if (msg.getClass().isArray()) {
-                logArray(level, tag, Ts.ts(msg));
+                logArray(level, tag, Es.es(msg));
             } else {
                 logOther(level, tag, msg);
             }
@@ -178,14 +178,14 @@ public class LibLogs {
         baseLog(level, tag, "└───────────────────────────────────────────────────────────────────────────────────────");
     }
 
-    private static <T> void logArray(int level, String tag, CoreTs getter) {
+    private static <T> void logArray(int level, String tag, BaseEs getter) {
         baseLog(level, tag, "");
         baseLog(level, tag, "┌──Array────────────────────────────────────────────────────────────────────────────────");
         if (getter == null || getter.count() <= 0) {
             baseLog(level, tag, "│\tArray is empty");
         } else {
             for (int i = 0; i < getter.count(); i++) {
-                baseLog(level, tag, "│\tindex:" + i + " | " + getter.get(i));
+                baseLog(level, tag, "│\tindex:" + i + " | " + getter.getByIndex(i));
             }
         }
         baseLog(level, tag, "└───────────────────────────────────────────────────────────────────────────────────────");

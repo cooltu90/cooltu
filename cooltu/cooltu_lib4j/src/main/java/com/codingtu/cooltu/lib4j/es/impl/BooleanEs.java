@@ -1,12 +1,12 @@
-package com.codingtu.cooltu.lib4j.ts1.impl;
+package com.codingtu.cooltu.lib4j.es.impl;
 
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts1.CoreTs;
-import com.codingtu.cooltu.lib4j.ts1.Ts;
+import com.codingtu.cooltu.lib4j.es.CoreEs;
+import com.codingtu.cooltu.lib4j.es.Es;
 
 import java.util.List;
 
-public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
+public class BooleanEs extends CoreEs<Boolean, BooleanEs> {
 
     ///////////////////////////////////////////////////////
     //
@@ -14,16 +14,16 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
     //
     ///////////////////////////////////////////////////////
 
-    public BooleanTs() {
+    public BooleanEs() {
     }
 
-    public BooleanTs(List<Boolean> list) {
+    public BooleanEs(List<Boolean> list) {
         super(list);
     }
 
     ///////////////////////////////////////////////////////
     //
-    // 获取symbol
+    // 获取Symbol
     //
     ///////////////////////////////////////////////////////
     @Override
@@ -37,10 +37,10 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
     //
     ///////////////////////////////////////////////////////
 
-    public BooleanTs add_boolean(boolean... booleans) {
+    public BooleanEs add_boolean(boolean... booleans) {
         int count = CountTool.count(booleans);
         for (int i = 0; i < count; i++) {
-            this.ts.add(booleans[i]);
+            this.es.add(booleans[i]);
         }
         return this;
     }
@@ -50,10 +50,10 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
     // createThis
     //
     ///////////////////////////////////////////////////////
-    public BooleanTs createThis_boolean(boolean... booleans) {
-        BooleanTs booleanTs = new BooleanTs();
-        booleanTs.add_boolean(booleans);
-        return booleanTs;
+    public BooleanEs createThis_boolean(boolean... booleans) {
+        BooleanEs booleanVs = new BooleanEs();
+        booleanVs.add_boolean(booleans);
+        return booleanVs;
     }
 
     ///////////////////////////////////////////////////////
@@ -67,7 +67,7 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
      **************************************************/
     @Deprecated
     @Override
-    public Boolean get(Ts.IsThisOne<Boolean> isThisOne) {
+    public Boolean get(Es.IsThisOne<Boolean> isThisOne) {
         return super.get(isThisOne);
     }
 
@@ -88,19 +88,19 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
      **************************************************/
     @Deprecated
     @Override
-    public BooleanTs getAll(Ts.IsThisOne<Boolean> isThisOne) {
+    public BooleanEs getAll(Es.IsThisOne<Boolean> isThisOne) {
         return super.getAll(isThisOne);
     }
 
     @Deprecated
     @Override
-    public BooleanTs getAllBySymbol(String symbol) {
+    public BooleanEs getAllBySymbol(String symbol) {
         return super.getAllBySymbol(symbol);
     }
 
     @Deprecated
     @Override
-    public BooleanTs getAll(Boolean aBoolean) {
+    public BooleanEs getAll(Boolean aBoolean) {
         return super.getAll(aBoolean);
     }
 
@@ -120,7 +120,7 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
     public boolean has(Boolean aBoolean) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (ts.get(i) == aBoolean) {
+            if (es.get(i) == aBoolean) {
                 return true;
             }
         }
@@ -146,7 +146,7 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
     public int index(Boolean aBoolean) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (aBoolean == this.ts.get(i)) {
+            if (aBoolean == this.es.get(i)) {
                 return i;
             }
         }
@@ -158,20 +158,20 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
      **************************************************/
     @Deprecated
     @Override
-    public IntegerTs allIndexBySymbol(String symbol) {
+    public IntegerEs allIndexBySymbol(String symbol) {
         return super.allIndexBySymbol(symbol);
     }
 
     @Override
-    public IntegerTs allIndex(Boolean aBoolean) {
+    public IntegerEs allIndex(Boolean aBoolean) {
         int count = count();
-        IntegerTs integerTs = new IntegerTs();
+        IntegerEs integerEs = new IntegerEs();
         for (int i = 0; i < count; i++) {
-            if (this.ts.get(i) == aBoolean) {
-                integerTs.add(i);
+            if (this.es.get(i) == aBoolean) {
+                integerEs.add(i);
             }
         }
-        return integerTs;
+        return integerEs;
     }
 
     ///////////////////////////////////////////////////////
@@ -186,38 +186,38 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
 
     @Deprecated
     @Override
-    public BooleanTs replaceBySymbol(String symbol, Boolean target) {
+    public BooleanEs replaceBySymbol(String symbol, Boolean target) {
         return super.replaceBySymbol(symbol, target);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replace(Boolean symbolT, Boolean target) {
-        return super.replace(symbolT, target);
+    public BooleanEs replace(Boolean symbol, Boolean target) {
+        return super.replace(symbol, target);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replace(Boolean target) {
+    public BooleanEs replace(Boolean target) {
         return super.replace(target);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replace(Boolean... targets) {
+    public BooleanEs replace(Boolean... targets) {
         return super.replace(targets);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replace(List<Boolean> targets) {
+    public BooleanEs replace(List<Boolean> targets) {
         return super.replace(targets);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replace(BooleanTs targets) {
-        return super.replace(targets);
+    public BooleanEs replace(BooleanEs targetEs) {
+        return super.replace(targetEs);
     }
 
 
@@ -226,38 +226,38 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
      **************************************************/
     @Deprecated
     @Override
-    public BooleanTs replaceAllBySymbol(String symbol, Boolean target) {
+    public BooleanEs replaceAllBySymbol(String symbol, Boolean target) {
         return super.replaceAllBySymbol(symbol, target);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replaceAll(Boolean symbolT, Boolean target) {
+    public BooleanEs replaceAll(Boolean symbolT, Boolean target) {
         return super.replaceAll(symbolT, target);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replaceAll(Boolean target) {
+    public BooleanEs replaceAll(Boolean target) {
         return super.replaceAll(target);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replaceAll(Boolean... targets) {
+    public BooleanEs replaceAll(Boolean... targets) {
         return super.replaceAll(targets);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replaceAll(List<Boolean> targets) {
+    public BooleanEs replaceAll(List<Boolean> targets) {
         return super.replaceAll(targets);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replaceAll(BooleanTs targets) {
-        return super.replaceAll(targets);
+    public BooleanEs replaceAll(BooleanEs targetEs) {
+        return super.replaceAll(targetEs);
     }
 
     /**************************************************
@@ -266,38 +266,38 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
 
     @Deprecated
     @Override
-    public BooleanTs replaceOrAddBySymbol(String symbol, Boolean target) {
+    public BooleanEs replaceOrAddBySymbol(String symbol, Boolean target) {
         return super.replaceOrAddBySymbol(symbol, target);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replaceOrAdd(Boolean symbolT, Boolean target) {
-        return super.replaceOrAdd(symbolT, target);
+    public BooleanEs replaceOrAdd(Boolean symbol, Boolean target) {
+        return super.replaceOrAdd(symbol, target);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replaceOrAdd(Boolean target) {
+    public BooleanEs replaceOrAdd(Boolean target) {
         return super.replaceOrAdd(target);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replaceOrAdd(Boolean... targets) {
+    public BooleanEs replaceOrAdd(Boolean... targets) {
         return super.replaceOrAdd(targets);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replaceOrAdd(List<Boolean> targets) {
+    public BooleanEs replaceOrAdd(List<Boolean> targets) {
         return super.replaceOrAdd(targets);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replaceOrAdd(BooleanTs targets) {
-        return super.replaceOrAdd(targets);
+    public BooleanEs replaceOrAdd(BooleanEs targetEs) {
+        return super.replaceOrAdd(targetEs);
     }
 
     /**************************************************
@@ -305,38 +305,38 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
      **************************************************/
     @Deprecated
     @Override
-    public BooleanTs replaceAllOrAddBySymbol(String symbol, Boolean target) {
+    public BooleanEs replaceAllOrAddBySymbol(String symbol, Boolean target) {
         return super.replaceAllOrAddBySymbol(symbol, target);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replaceAllOrAdd(Boolean symboleT, Boolean target) {
-        return super.replaceAllOrAdd(symboleT, target);
+    public BooleanEs replaceAllOrAdd(Boolean symbole, Boolean target) {
+        return super.replaceAllOrAdd(symbole, target);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replaceAllOrAdd(Boolean target) {
+    public BooleanEs replaceAllOrAdd(Boolean target) {
         return super.replaceAllOrAdd(target);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replaceAllOrAdd(Boolean... targets) {
+    public BooleanEs replaceAllOrAdd(Boolean... targets) {
         return super.replaceAllOrAdd(targets);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replaceAllOrAdd(List<Boolean> targets) {
+    public BooleanEs replaceAllOrAdd(List<Boolean> targets) {
         return super.replaceAllOrAdd(targets);
     }
 
     @Deprecated
     @Override
-    public BooleanTs replaceAllOrAdd(BooleanTs targets) {
-        return super.replaceAllOrAdd(targets);
+    public BooleanEs replaceAllOrAdd(BooleanEs targetEs) {
+        return super.replaceAllOrAdd(targetEs);
     }
 
     ///////////////////////////////////////////////////////
@@ -350,54 +350,54 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
      **************************************************/
     @Deprecated
     @Override
-    public BooleanTs deleteBySymbol(String symbol) {
+    public BooleanEs deleteBySymbol(String symbol) {
         return super.deleteBySymbol(symbol);
     }
 
     @Deprecated
     @Override
-    public BooleanTs deleteBySymbol(String... symbols) {
+    public BooleanEs deleteBySymbol(String... symbols) {
         return super.deleteBySymbol(symbols);
     }
 
     @Deprecated
     @Override
-    public BooleanTs deleteBySymbol(List<String> symbols) {
+    public BooleanEs deleteBySymbol(List<String> symbols) {
         return super.deleteBySymbol(symbols);
     }
 
     @Deprecated
     @Override
-    public BooleanTs deleteBySymbol(StringTs symbolStringTs) {
-        return super.deleteBySymbol(symbolStringTs);
+    public BooleanEs deleteBySymbol(StringEs symbolStringEs) {
+        return super.deleteBySymbol(symbolStringEs);
     }
 
     @Deprecated
     @Override
-    public BooleanTs delete(Boolean target) {
+    public BooleanEs delete(Boolean target) {
         int firstIndex = index(target);
         if (firstIndex >= 0) {
-            this.ts.remove(firstIndex);
+            this.es.remove(firstIndex);
         }
         return this;
     }
 
     @Deprecated
     @Override
-    public BooleanTs delete(Boolean... targets) {
+    public BooleanEs delete(Boolean... targets) {
         return super.delete(targets);
     }
 
     @Deprecated
     @Override
-    public BooleanTs delete(List<Boolean> targets) {
+    public BooleanEs delete(List<Boolean> targets) {
         return super.delete(targets);
     }
 
     @Deprecated
     @Override
-    public BooleanTs delete(BooleanTs targets) {
-        return super.delete(targets);
+    public BooleanEs delete(BooleanEs targetEs) {
+        return super.delete(targetEs);
     }
 
     /**************************************************
@@ -405,50 +405,50 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
      **************************************************/
     @Deprecated
     @Override
-    public BooleanTs deleteAllBySymbol(String symbol) {
+    public BooleanEs deleteAllBySymbol(String symbol) {
         return super.deleteAllBySymbol(symbol);
     }
 
     @Deprecated
     @Override
-    public BooleanTs deleteAllBySymbol(String... symbols) {
+    public BooleanEs deleteAllBySymbol(String... symbols) {
         return super.deleteAllBySymbol(symbols);
     }
 
     @Deprecated
     @Override
-    public BooleanTs deleteAllBySymbol(List<String> symbols) {
+    public BooleanEs deleteAllBySymbol(List<String> symbols) {
         return super.deleteAllBySymbol(symbols);
     }
 
     @Deprecated
     @Override
-    public BooleanTs deleteAllBySymbol(StringTs symbolStringTs) {
-        return super.deleteAllBySymbol(symbolStringTs);
+    public BooleanEs deleteAllBySymbol(StringEs symbolStringVs) {
+        return super.deleteAllBySymbol(symbolStringVs);
     }
 
     @Deprecated
     @Override
-    public BooleanTs deleteAll(Boolean target) {
+    public BooleanEs deleteAll(Boolean target) {
         return super.deleteAll(target);
     }
 
     @Deprecated
     @Override
-    public BooleanTs deleteAll(Boolean... targets) {
+    public BooleanEs deleteAll(Boolean... targets) {
         return super.deleteAll(targets);
     }
 
     @Deprecated
     @Override
-    public BooleanTs deleteAll(List<Boolean> targets) {
+    public BooleanEs deleteAll(List<Boolean> targets) {
         return super.deleteAll(targets);
     }
 
     @Deprecated
     @Override
-    public BooleanTs deleteAll(BooleanTs targets) {
-        return super.deleteAll(targets);
+    public BooleanEs deleteAll(BooleanEs targetEs) {
+        return super.deleteAll(targetEs);
     }
 
     ///////////////////////////////////////////////////////
@@ -458,34 +458,34 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
     ///////////////////////////////////////////////////////
 
     /**************************************************
-     * nearIndex下一个优先
+     * NearIndex下一个优先
      **************************************************/
     @Deprecated
     @Override
-    public Ts.NearIndex nearIndexWhenNextPriority(Ts.IsThisOne<Boolean> isThisOne) {
+    public Es.NearIndex nearIndexWhenNextPriority(Es.IsThisOne<Boolean> isThisOne) {
         return super.nearIndexWhenNextPriority(isThisOne);
     }
 
 
     @Deprecated
     @Override
-    public Ts.NearIndex nearIndexWhenNextPriorityBySymbol(String symbol) {
+    public Es.NearIndex nearIndexWhenNextPriorityBySymbol(String symbol) {
         return super.nearIndexWhenNextPriorityBySymbol(symbol);
     }
 
     @Deprecated
     @Override
-    public Ts.NearIndex nearIndexWhenNextPriority(Boolean aBoolean) {
+    public Es.NearIndex nearIndexWhenNextPriority(Boolean aBoolean) {
         return super.nearIndexWhenNextPriority(aBoolean);
     }
 
 
     /**************************************************
-     * nearData下一个优先
+     * NearData下一个优先
      **************************************************/
     @Deprecated
     @Override
-    public Boolean nearDataWhenNextPriority(Ts.IsThisOne<Boolean> isThisOne) {
+    public Boolean nearDataWhenNextPriority(Es.IsThisOne<Boolean> isThisOne) {
         return super.nearDataWhenNextPriority(isThisOne);
     }
 
@@ -503,32 +503,32 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
 
 
     /**************************************************
-     * nearIndex上一个优先
+     * NearIndex上一个优先
      **************************************************/
     @Deprecated
     @Override
-    public Ts.NearIndex nearIndexWhenPrePriority(Ts.IsThisOne<Boolean> isThisOne) {
+    public Es.NearIndex nearIndexWhenPrePriority(Es.IsThisOne<Boolean> isThisOne) {
         return super.nearIndexWhenPrePriority(isThisOne);
     }
 
     @Deprecated
     @Override
-    public Ts.NearIndex nearIndexWhenPrePriorityBySymbol(String symbol) {
+    public Es.NearIndex nearIndexWhenPrePriorityBySymbol(String symbol) {
         return super.nearIndexWhenPrePriorityBySymbol(symbol);
     }
 
     @Deprecated
     @Override
-    public Ts.NearIndex nearIndexWhenPrePriority(Boolean aBoolean) {
+    public Es.NearIndex nearIndexWhenPrePriority(Boolean aBoolean) {
         return super.nearIndexWhenPrePriority(aBoolean);
     }
 
     /**************************************************
-     * nearData下一个优先
+     * NearData下一个优先
      **************************************************/
     @Deprecated
     @Override
-    public Boolean nearDataWhenPrePriority(Ts.IsThisOne<Boolean> isThisOne) {
+    public Boolean nearDataWhenPrePriority(Es.IsThisOne<Boolean> isThisOne) {
         return super.nearDataWhenPrePriority(isThisOne);
     }
 
@@ -553,7 +553,7 @@ public class BooleanTs extends CoreTs<Boolean, BooleanTs> {
         int count = count();
         boolean[] arrs = new boolean[count];
         for (int i = 0; i < count; i++) {
-            arrs[i] = this.ts.get(i);
+            arrs[i] = this.es.get(i);
         }
         return arrs;
     }

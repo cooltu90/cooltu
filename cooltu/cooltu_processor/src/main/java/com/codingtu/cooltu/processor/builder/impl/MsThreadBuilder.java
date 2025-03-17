@@ -4,9 +4,9 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
 import com.codingtu.cooltu.lib4j.data.map.ValueMap;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.msthread.MainThread;
 import com.codingtu.cooltu.processor.annotation.msthread.SubThread;
 import com.codingtu.cooltu.processor.builder.base.MsThreadBuilderBase;
@@ -56,7 +56,7 @@ public class MsThreadBuilder extends MsThreadBuilderBase {
         addTag(interfaceName, interfaceNameStr);
         addTag(typeName, typeNameStr);
 
-        Ts.ts(subThreadNumSet).ls(new Ts.EachTs<Integer>() {
+        Es.es(subThreadNumSet).ls(new Es.EachEs<Integer>() {
             @Override
             public boolean each(int position, Integer index) {
 
@@ -156,7 +156,7 @@ public class MsThreadBuilder extends MsThreadBuilderBase {
     private void dealSubThread(Map<String, ExecutableElement> methodMap,
                                StringBuilder dealMessageSb, StringBuilder sendMessageMethodsSb,
                                String checkThread, String handlerName, DelayInfoGetter delayInfoGetter) {
-        Ts.maps(methodMap).ls(new Ts.MapEach<String, ExecutableElement>() {
+        Es.maps(methodMap).ls(new Es.MapEach<String, ExecutableElement>() {
             @Override
             public boolean each(String type, ExecutableElement element) {
 

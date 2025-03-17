@@ -3,7 +3,6 @@ package com.codingtu.cooltu.processor.deal;
 import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultMenuDialogLayout;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
-import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.tools.IdTools;
 
 import javax.lang.model.element.TypeElement;

@@ -1,17 +1,22 @@
-package com.codingtu.cooltu.lib4j.ts1;
+package com.codingtu.cooltu.lib4j.es;
 
+import com.codingtu.cooltu.lib4j.data.map.ListValueMap;
+import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
+import com.codingtu.cooltu.lib4j.data.symbol.Symbol;
+import com.codingtu.cooltu.lib4j.es.impl.BooleanEs;
+import com.codingtu.cooltu.lib4j.es.impl.DoubleEs;
+import com.codingtu.cooltu.lib4j.es.impl.FloatEs;
+import com.codingtu.cooltu.lib4j.es.impl.IntegerEs;
+import com.codingtu.cooltu.lib4j.es.impl.LongEs;
+import com.codingtu.cooltu.lib4j.es.impl.StringEs;
 import com.codingtu.cooltu.lib4j.function.ToDouble;
 import com.codingtu.cooltu.lib4j.function.ToFloat;
 import com.codingtu.cooltu.lib4j.function.ToInt;
 import com.codingtu.cooltu.lib4j.function.ToLong;
-import com.codingtu.cooltu.lib4j.data.maxmin.MaxMin;
 import com.codingtu.cooltu.lib4j.json.JsonTool;
 import com.codingtu.cooltu.lib4j.log.LibLogs;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.OtherTool;
-import com.codingtu.cooltu.lib4j.data.symbol1.Symbol;
-import com.codingtu.cooltu.lib4j.ts1.impl.IntegerTs;
-import com.codingtu.cooltu.lib4j.ts1.impl.StringTs;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +33,7 @@ import java.util.Map;
  * {@link #add(Object)}
  * {@link #add(Object[])}
  * {@link #add(List)}
- * {@link #add(CoreTs)}
+ * {@link #add(CoreEs)}
  * {@link #addn(int, Object)}
  *
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -39,12 +44,12 @@ import java.util.Map;
  * {@link #getByIndex(int)}
  *
  * 【get】
- * {@link #get(Ts.IsThisOne)}
+ * {@link #get(Es.IsThisOne)}
  * {@link #getBySymbol(String)}
  * {@link #get(Object)}
  *
  * 【getAll】
- * {@link #getAll(Ts.IsThisOne)}
+ * {@link #getAll(Es.IsThisOne)}
  * {@link #getAllBySymbol(String)}
  * {@link #getAll(Object)}
  *
@@ -54,7 +59,7 @@ import java.util.Map;
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
  * ┃  has方法                ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
- * {@link #has(Ts.IsThisOne)}
+ * {@link #has(Es.IsThisOne)}
  * {@link #hasBySymbol(String)}
  * {@link #has(Object)}
  *
@@ -63,12 +68,12 @@ import java.util.Map;
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
  *
  * 【index】
- * {@link #index(Ts.IsThisOne)}
+ * {@link #index(Es.IsThisOne)}
  * {@link #indexBySymbol(String)}
  * {@link #index(Object)}
  *
  * 【allIndex】
- * {@link #allIndex(Ts.IsThisOne)}
+ * {@link #allIndex(Es.IsThisOne)}
  * {@link #allIndexBySymbol(String)}
  * {@link #allIndex(Object)}
  *
@@ -80,40 +85,40 @@ import java.util.Map;
  * {@link #replaceByIndex(int, Object)}
  *
  * 【replace】
- * {@link #replace(Object, Ts.IsThisOne)}
+ * {@link #replace(Object, Es.IsThisOne)}
  * {@link #replaceBySymbol(String, Object)}
  * {@link #replace(Object, Object)}
  * {@link #replace(Object)}
  * {@link #replace(Object[])}
  * {@link #replace(List)}
- * {@link #replace(CoreTs)}
+ * {@link #replace(CoreEs)}
  *
  * 【replaceAll】
- * {@link #replaceAll(Object, Ts.IsThisOne)}
+ * {@link #replaceAll(Object, Es.IsThisOne)}
  * {@link #replaceAllBySymbol(String, Object)}
  * {@link #replaceAll(Object, Object)}
  * {@link #replaceAll(Object)}
  * {@link #replaceAll(Object[])}
  * {@link #replaceAll(List)}
- * {@link #replaceAll(CoreTs)}
+ * {@link #replaceAll(CoreEs)}
  *
  * 【replaceOrAdd】
- * {@link #replaceOrAdd(Object, Ts.IsThisOne)}
+ * {@link #replaceOrAdd(Object, Es.IsThisOne)}
  * {@link #replaceOrAddBySymbol(String, Object)}
  * {@link #replaceOrAdd(Object, Object)}
  * {@link #replaceOrAdd(Object)}
  * {@link #replaceOrAdd(Object[])}
  * {@link #replaceOrAdd(List)}
- * {@link #replaceOrAdd(CoreTs)}
+ * {@link #replaceOrAdd(CoreEs)}
  *
  * 【replaceAllOrAdd】
- * {@link #replaceAllOrAdd(Object, com.codingtu.cooltu.lib4j.ts.Ts.IsThisOne)}
+ * {@link #replaceAllOrAdd(Object, Es.IsThisOne)}
  * {@link #replaceAllOrAddBySymbol(String, Object)}
  * {@link #replaceAllOrAdd(Object, Object)}
  * {@link #replaceAllOrAdd(Object)}
  * {@link #replaceAllOrAdd(Object[])}
  * {@link #replaceAllOrAdd(List)}
- * {@link #replaceAllOrAdd(CoreTs)}
+ * {@link #replaceAllOrAdd(CoreEs)}
  *
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
  * ┃  delete方法             ┃
@@ -123,39 +128,51 @@ import java.util.Map;
  * {@link #deleteByIndex(int)}
  *
  * 【delete】
- * {@link #delete(Ts.IsThisOne)}
+ * {@link #delete(Es.IsThisOne)}
  * {@link #deleteBySymbol(String)}
  * {@link #deleteBySymbol(String...)}
  * {@link #deleteBySymbol(List)}
- * {@link #deleteBySymbol(StringTs)}
+ * {@link #deleteBySymbol(StringEs)}
  * {@link #delete(Object)}
  * {@link #delete(Object[])}
  * {@link #delete(List)}
- * {@link #delete(CoreTs)}
+ * {@link #delete(CoreEs)}
  *
  * 【deleteAll】
- * {@link #deleteAll(Ts.IsThisOne)}
+ * {@link #deleteAll(Es.IsThisOne)}
  * {@link #deleteAllBySymbol(String)}
  * {@link #deleteAllBySymbol(String...)}
  * {@link #deleteAllBySymbol(List)}
- * {@link #deleteAllBySymbol(StringTs)}
+ * {@link #deleteAllBySymbol(StringEs)}
  * {@link #deleteAll(Object)}
  * {@link #deleteAll(Object[])}
  * {@link #deleteAll(List)}
- * {@link #deleteAll(CoreTs)}
+ * {@link #deleteAll(CoreEs)}
  *
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
  * ┃  conver方法             ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
- * {@link #convert(Ts.Convert)}
- * {@link #convert(Class, Ts.Convert)}
- * {@link #convertList(Ts.Convert)}
- * {@link #convertList(Class, Ts.Convert)}
+ * {@link #convert(Es.Convert)}
+ * {@link #convert(Class, Es.Convert)}
+ * {@link #convertToString(Es.Convert)}
+ * {@link #convertToBoolean(Es.Convert)}
+ * {@link #convertToInteger(Es.Convert)}
+ * {@link #convertToLong(Es.Convert)}
+ * {@link #convertToDouble(Es.Convert)}
+ * {@link #convertToFloat(Es.Convert)}
+ * {@link #convertList(Es.Convert)}
+ * {@link #convertList(Class, Es.Convert)}
+ * {@link #converToStringList(Es.Convert)}
+ * {@link #converToBooleanList(Es.Convert)}
+ * {@link #converToIntegerList(Es.Convert)}
+ * {@link #converToLongList(Es.Convert)}
+ * {@link #converToDoubleList(Es.Convert)}
+ * {@link #converToFloatList(Es.Convert)}
  *
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
  * ┃  maxMin方法             ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
- * {@link #maxMin(Ts.NowMax)}
+ * {@link #maxMin(Es.NowMax)}
  * {@link #maxMin(ToInt)}
  * {@link #maxMin(ToLong)}
  * {@link #maxMin(ToDouble)}
@@ -166,28 +183,28 @@ import java.util.Map;
  *
  * 【基础方法】
  * {@link #nearIndexByIndex(int, boolean)}
- * {@link #nearIndex(Ts.IsThisOne, boolean)}
+ * {@link #nearIndex(Es.IsThisOne, boolean)}
  * {@link #nearIndexBySymbol(String, boolean)}
  * {@link #nearIndex(Object, boolean)}
- * {@link #nearData(Ts.NearIndex)}
+ * {@link #nearData(Es.NearIndex)}
  *
- * 【NearIndex下一个优先】
- * {@link #nearIndexWhenNextPriority(Ts.IsThisOne)}
+ * 【NeighborIndex下一个优先】
+ * {@link #nearIndexWhenNextPriority(Es.IsThisOne)}
  * {@link #nearIndexWhenNextPriorityBySymbol(String)}
  * {@link #nearIndexWhenNextPriority(Object)}
  *
- * 【NearData下一个优先】
- * {@link #nearDataWhenNextPriority(Ts.IsThisOne)}
+ * 【NeighborData下一个优先】
+ * {@link #nearDataWhenNextPriority(Es.IsThisOne)}
  * {@link #nearDataWhenNextPriorityBySymbol(String)}
  * {@link #nearDataWhenNextPriority(Object)}
  *
- * 【NearIndex上一个优先】
- * {@link #nearIndexWhenPrePriority(Ts.IsThisOne)}
+ * 【NeighborIndex上一个优先】
+ * {@link #nearIndexWhenPrePriority(Es.IsThisOne)}
  * {@link #nearIndexWhenPrePriorityBySymbol(String)}
  * {@link #nearIndexWhenPrePriority(Object)}
  *
- * 【NearData上一个优先】
- * {@link #nearDataWhenPrePriority(Ts.IsThisOne)}
+ * 【NeighborData上一个优先】
+ * {@link #nearDataWhenPrePriority(Es.IsThisOne)}
  * {@link #nearDataWhenPrePriorityBySymbol(String)}
  * {@link #nearDataWhenPrePriority(Object)}
  *
@@ -200,16 +217,16 @@ import java.util.Map;
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
  * ┃  findFinal方法          ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
- * {@link #findFinal(Ts.IsNow)}
+ * {@link #findFinal(Es.IsNow)}
  *
  * ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
  * ┃  toMap方法              ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
- * {@link #toMap(Ts.ToMap)}
+ * {@link #toMap(Es.ToMap)}
  * {@link #toMap()}
  *
  **************************************************/
-public abstract class CoreTs<T, THIS extends CoreTs> {
+public abstract class CoreEs<E, THIS extends CoreEs> {
 
     ///////////////////////////////////////////////////////
     //
@@ -217,29 +234,42 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     //
     ///////////////////////////////////////////////////////
 
-    protected List<T> ts;
+    protected List<E> es;
+    private Boolean isSymbol;
 
     ///////////////////////////////////////////////////////
     //
     // 构造函数
     //
     ///////////////////////////////////////////////////////
-    public CoreTs() {
-        this.ts = new ArrayList<>();
+    public CoreEs() {
+        this.es = new ArrayList<>();
     }
 
-    public CoreTs(List<T> list) {
-        if (list == null) this.ts = new ArrayList<>();
-        else this.ts = list;
+    public CoreEs(List<E> es) {
+        if (es == null) {
+            this.es = new ArrayList<>();
+        } else {
+            this.es = es;
+        }
     }
 
     ///////////////////////////////////////////////////////
     //
-    // 抽象方法，获取Symbol
+    // 抽象方法，获取valueSymbol
     //
     ///////////////////////////////////////////////////////
 
-    protected abstract String obtainSymbol(T t);
+    protected String obtainSymbol(E e) {
+        if (isSymbol == null) {
+            isSymbol = e instanceof Symbol;
+        }
+        if (isSymbol) {
+            return ((Symbol) e).obtainSymbol();
+        } else {
+            return e.toString();
+        }
+    }
 
     ///////////////////////////////////////////////////////
     //
@@ -247,18 +277,18 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     //
     ///////////////////////////////////////////////////////
     public int count() {
-        return CountTool.count(ts);
+        return CountTool.count(es);
     }
 
-    public int count(Ts.Counter<T> counter) {
+    public int count(Es.Counter<E> counter) {
         if (counter == null) return 0;
 
         int total = 0;
         int count = count();
         if (count > 0) {
             for (int i = 0; i < count; i++) {
-                T t = this.ts.get(i);
-                total = counter.counter(total, i, t);
+                E e = this.es.get(i);
+                total = counter.counter(total, i, e);
             }
         }
         return total;
@@ -277,39 +307,39 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     /**************************************************
      * 正向遍历
      **************************************************/
-    public THIS ls(int step, Ts.EachTs<T> eachTs) {
-        if (eachTs == null || step <= 0) return (THIS) this;
+    public THIS ls(int step, Es.EachEs<E> eachEs) {
+        if (eachEs == null || step <= 0) return (THIS) this;
 
         int count = count();
         for (int i = 0; i < count; i += step) {
-            if (eachTs.each(i, this.ts.get(i))) {
+            if (eachEs.each(i, this.es.get(i))) {
                 return (THIS) this;
             }
         }
         return (THIS) this;
     }
 
-    public THIS ls(Ts.EachTs<T> eachTs) {
-        return ls(1, eachTs);
+    public THIS ls(Es.EachEs<E> eachEs) {
+        return ls(1, eachEs);
     }
 
     /**************************************************
      * 反向遍历
      **************************************************/
-    public THIS rls(int step, Ts.EachTs<T> eachTs) {
-        if (eachTs == null || step <= 0) return (THIS) this;
+    public THIS rls(int step, Es.EachEs<E> eachEs) {
+        if (eachEs == null || step <= 0) return (THIS) this;
 
         int count = count();
         for (int i = count - 1; i >= 0; i -= step) {
-            if (eachTs.each(i, this.ts.get(i))) {
+            if (eachEs.each(i, this.es.get(i))) {
                 return (THIS) this;
             }
         }
         return (THIS) this;
     }
 
-    public THIS rls(Ts.EachTs<T> eachTs) {
-        return rls(1, eachTs);
+    public THIS rls(Es.EachEs<E> eachEs) {
+        return rls(1, eachEs);
     }
 
     ///////////////////////////////////////////////////////
@@ -318,10 +348,10 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     //
     ///////////////////////////////////////////////////////
     public THIS log() {
-        ls(new Ts.EachTs<T>() {
+        ls(new Es.EachEs<E>() {
             @Override
-            public boolean each(int position, T t) {
-                LibLogs.i(JsonTool.toJson(t));
+            public boolean each(int position, E e) {
+                LibLogs.i(JsonTool.toJson(e));
                 return false;
             }
         });
@@ -333,9 +363,9 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     // 排序
     //
     ///////////////////////////////////////////////////////
-    public THIS sort(Comparator<T> comparator) {
+    public THIS sort(Comparator<E> comparator) {
         if (count() > 0) {
-            Collections.sort(ts, comparator);
+            Collections.sort(es, comparator);
         }
         return (THIS) this;
     }
@@ -346,7 +376,7 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     //
     ///////////////////////////////////////////////////////
     public THIS clear() {
-        this.ts.clear();
+        this.es.clear();
         return (THIS) this;
     }
 
@@ -355,36 +385,43 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     // add方法
     //
     ///////////////////////////////////////////////////////
-    public THIS add(T t) {
-        this.ts.add(t);
+    public THIS add(E e) {
+        this.es.add(e);
         return (THIS) this;
     }
 
-    public THIS add(T... ts) {
-        int count = CountTool.count(ts);
+    public THIS add(E... es) {
+        int count = CountTool.count(es);
         for (int i = 0; i < count; i++) {
-            this.ts.add(ts[i]);
+            this.es.add(es[i]);
         }
         return (THIS) this;
     }
 
-    public THIS add(List<T> ts) {
-        if (!CountTool.isNull(ts)) {
-            this.ts.addAll(ts);
+    public THIS add(List<E> es) {
+        if (!CountTool.isNull(es)) {
+            this.es.addAll(es);
         }
         return (THIS) this;
     }
 
-    public THIS add(THIS ts) {
-        if (!CountTool.isNull(ts)) {
-            this.ts.addAll(ts.ts);
+    public THIS add(THIS es) {
+        if (!CountTool.isNull(es)) {
+            this.es.addAll(es.es);
         }
         return (THIS) this;
     }
 
-    public THIS addn(int n, T t) {
+    public THIS addAllKindsOfEs(CoreEs<E, ?> addEs) {
+        if (!CountTool.isNull(addEs)) {
+            this.es.addAll(addEs.es);
+        }
+        return (THIS) this;
+    }
+
+    public THIS addn(int n, E e) {
         for (int i = 0; i < n; i++) {
-            this.ts.add(t);
+            this.es.add(e);
         }
         return (THIS) this;
     }
@@ -402,15 +439,15 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         }
     }
 
-    public THIS createThis(T... ts) {
+    public THIS createThis(E... es) {
         THIS aThis = createThis();
-        aThis.add(ts);
+        aThis.add(es);
         return aThis;
     }
 
-    public THIS createThis(List<T> ts) {
+    public THIS createThis(List<E> list) {
         try {
-            return (THIS) this.getClass().getConstructor(List.class).newInstance(ts);
+            return (THIS) this.getClass().getConstructor(List.class).newInstance(list);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -426,9 +463,9 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     /**************************************************
      * 通过索引值获取
      **************************************************/
-    public T getByIndex(int index) {
+    public E getByIndex(int index) {
         if (index < count() && index >= 0) {
-            return ts.get(index);
+            return es.get(index);
         }
         return null;
     }
@@ -436,48 +473,48 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     /**************************************************
      * get
      **************************************************/
-    public T get(Ts.IsThisOne<T> isThisOne) {
+    public E get(Es.IsThisOne<E> isThisOne) {
         if (isThisOne != null) {
             int count = count();
-            T t = null;
+            E e = null;
             for (int i = 0; i < count; i++) {
-                t = this.ts.get(i);
-                if (isThisOne.isThisOne(i, t)) {
-                    return t;
+                e = this.es.get(i);
+                if (isThisOne.isThisOne(i, e)) {
+                    return e;
                 }
             }
         }
         return null;
     }
 
-    public T getBySymbol(String symbol) {
+    public E getBySymbol(String symbol) {
         int count = count();
-        T t = null;
+        E e = null;
         for (int i = 0; i < count; i++) {
-            t = this.ts.get(i);
-            if (symbol.equals(obtainSymbol(t))) {
-                return t;
+            e = this.es.get(i);
+            if (symbol.equals(obtainSymbol(e))) {
+                return e;
             }
         }
         return null;
     }
 
-    public T get(T t) {
-        return getBySymbol(obtainSymbol(t));
+    public E get(E e) {
+        return getBySymbol(obtainSymbol(e));
     }
 
     /**************************************************
      * getAll
      **************************************************/
-    public THIS getAll(Ts.IsThisOne<T> isThisOne) {
+    public THIS getAll(Es.IsThisOne<E> isThisOne) {
         THIS ThisObj = createThis();
         if (isThisOne != null) {
             int count = count();
-            T t = null;
+            E e = null;
             for (int i = 0; i < count; i++) {
-                t = this.ts.get(i);
-                if (isThisOne.isThisOne(i, t)) {
-                    ThisObj.add(t);
+                e = this.es.get(i);
+                if (isThisOne.isThisOne(i, e)) {
+                    ThisObj.add(e);
                 }
             }
         }
@@ -487,28 +524,28 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     public THIS getAllBySymbol(String symbol) {
         THIS ThisObj = createThis();
         int count = count();
-        T t = null;
+        E e = null;
         for (int i = 0; i < count; i++) {
-            t = this.ts.get(i);
-            if (symbol.equals(obtainSymbol(t))) {
-                ThisObj.add(t);
+            e = this.es.get(i);
+            if (symbol.equals(obtainSymbol(e))) {
+                ThisObj.add(e);
             }
         }
         return ThisObj;
     }
 
-    public THIS getAll(T t) {
-        return getAllBySymbol(obtainSymbol(t));
+    public THIS getAll(E e) {
+        return getAllBySymbol(obtainSymbol(e));
     }
 
     /**************************************************
      * getLast
      **************************************************/
-    public T getLast() {
+    public E getLast() {
         if (count() <= 0) {
             return null;
         }
-        return this.ts.get(count() - 1);
+        return this.es.get(count() - 1);
     }
 
     ///////////////////////////////////////////////////////
@@ -516,7 +553,7 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     // has方法
     //
     ///////////////////////////////////////////////////////
-    public boolean has(Ts.IsThisOne<T> isThisOne) {
+    public boolean has(Es.IsThisOne<E> isThisOne) {
         return get(isThisOne) != null;
     }
 
@@ -524,8 +561,8 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         return getBySymbol(symbol) != null;
     }
 
-    public boolean has(T t) {
-        return hasBySymbol(obtainSymbol(t));
+    public boolean has(E e) {
+        return hasBySymbol(obtainSymbol(e));
     }
 
     ///////////////////////////////////////////////////////
@@ -537,11 +574,11 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     /**************************************************
      * index
      **************************************************/
-    public int index(Ts.IsThisOne<T> isThisOne) {
+    public int index(Es.IsThisOne<E> isThisOne) {
         if (isThisOne != null) {
             int count = count();
             for (int i = 0; i < count; i++) {
-                if (isThisOne.isThisOne(i, this.ts.get(i))) {
+                if (isThisOne.isThisOne(i, this.es.get(i))) {
                     return i;
                 }
             }
@@ -552,46 +589,46 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     public int indexBySymbol(String symbol) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (symbol.equals(obtainSymbol(this.ts.get(i)))) {
+            if (symbol.equals(obtainSymbol(this.es.get(i)))) {
                 return i;
             }
         }
         return -1;
     }
 
-    public int index(T t) {
-        return indexBySymbol(obtainSymbol(t));
+    public int index(E e) {
+        return indexBySymbol(obtainSymbol(e));
     }
 
     /**************************************************
      * allIndex
      **************************************************/
-    public IntegerTs allIndex(Ts.IsThisOne<T> isThisOne) {
-        IntegerTs integerTs = new IntegerTs();
+    public IntegerEs allIndex(Es.IsThisOne<E> isThisOne) {
+        IntegerEs integerEs = new IntegerEs();
         if (isThisOne != null) {
             int count = count();
             for (int i = 0; i < count; i++) {
-                if (isThisOne.isThisOne(i, this.ts.get(i))) {
-                    integerTs.add(i);
+                if (isThisOne.isThisOne(i, this.es.get(i))) {
+                    integerEs.add(i);
                 }
             }
         }
-        return integerTs;
+        return integerEs;
     }
 
-    public IntegerTs allIndexBySymbol(String symbol) {
-        IntegerTs integerTs = new IntegerTs();
+    public IntegerEs allIndexBySymbol(String symbol) {
+        IntegerEs integerEs = new IntegerEs();
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (obtainSymbol(this.ts.get(i)).equals(symbol)) {
-                integerTs.add(i);
+            if (obtainSymbol(this.es.get(i)).equals(symbol)) {
+                integerEs.add(i);
             }
         }
-        return integerTs;
+        return integerEs;
     }
 
-    public IntegerTs allIndex(T t) {
-        return allIndexBySymbol(obtainSymbol(t));
+    public IntegerEs allIndex(E e) {
+        return allIndexBySymbol(obtainSymbol(e));
     }
 
     ///////////////////////////////////////////////////////
@@ -603,15 +640,15 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     /**************************************************
      * replaceByIndex
      **************************************************/
-    public THIS replaceByIndex(int index, T t) {
-        this.ts.set(index, t);
+    public THIS replaceByIndex(int index, E e) {
+        this.es.set(index, e);
         return (THIS) this;
     }
 
     /**************************************************
      * replace
      **************************************************/
-    public THIS replace(T target, Ts.IsThisOne<T> isThisOne) {
+    public THIS replace(E target, Es.IsThisOne<E> isThisOne) {
         if (isThisOne != null) {
             int firstIndex = index(isThisOne);
             if (firstIndex >= 0) {
@@ -621,7 +658,7 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         return (THIS) this;
     }
 
-    public THIS replaceBySymbol(String symbol, T target) {
+    public THIS replaceBySymbol(String symbol, E target) {
         int firstIndex = indexBySymbol(symbol);
         if (firstIndex >= 0) {
             replaceByIndex(firstIndex, target);
@@ -629,21 +666,21 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         return (THIS) this;
     }
 
-    public THIS replace(T symbolT, T target) {
-        if (symbolT != null && target != null) {
-            replaceBySymbol(obtainSymbol(symbolT), target);
+    public THIS replace(E symbol, E target) {
+        if (symbol != null && target != null) {
+            replaceBySymbol(obtainSymbol(symbol), target);
         }
         return (THIS) this;
     }
 
-    public THIS replace(T target) {
+    public THIS replace(E target) {
         return replace(target, target);
     }
 
-    public THIS replace(T... targets) {
+    public THIS replace(E... targets) {
         int count = CountTool.count(targets);
         if (count > 0) {
-            T target;
+            E target;
             for (int i = 0; i < count; i++) {
                 target = targets[i];
                 if (target != null) {
@@ -654,10 +691,10 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         return (THIS) this;
     }
 
-    public THIS replace(List<T> targets) {
+    public THIS replace(List<E> targets) {
         int count = CountTool.count(targets);
         if (count > 0) {
-            T target;
+            E target;
             for (int i = 0; i < count; i++) {
                 target = targets.get(i);
                 if (target != null) {
@@ -668,12 +705,12 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         return (THIS) this;
     }
 
-    public THIS replace(THIS targets) {
-        int count = targets.count();
+    public THIS replace(THIS targetEs) {
+        int count = targetEs.count();
         if (count > 0) {
-            T target;
+            E target;
             for (int i = 0; i < count; i++) {
-                target = (T) targets.ts.get(i);
+                target = (E) targetEs.es.get(i);
                 if (target != null) {
                     replaceBySymbol(obtainSymbol(target), target);
                 }
@@ -685,11 +722,11 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     /**************************************************
      * replaceAll
      **************************************************/
-    public THIS replaceAll(T target, Ts.IsThisOne<T> isThisOne) {
+    public THIS replaceAll(E target, Es.IsThisOne<E> isThisOne) {
         if (isThisOne != null) {
             int count = count();
             for (int i = 0; i < count; i++) {
-                if (isThisOne.isThisOne(i, this.ts.get(i))) {
+                if (isThisOne.isThisOne(i, this.es.get(i))) {
                     replaceByIndex(i, target);
                 }
             }
@@ -697,31 +734,31 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         return (THIS) this;
     }
 
-    public THIS replaceAllBySymbol(String symbol, T target) {
+    public THIS replaceAllBySymbol(String symbol, E target) {
         int count = count();
         for (int i = 0; i < count; i++) {
-            if (obtainSymbol(this.ts.get(i)).equals(symbol)) {
+            if (obtainSymbol(this.es.get(i)).equals(symbol)) {
                 replaceByIndex(i, target);
             }
         }
         return (THIS) this;
     }
 
-    public THIS replaceAll(T symbolT, T target) {
-        if (symbolT != null && target != null) {
-            replaceAllBySymbol(obtainSymbol(symbolT), target);
+    public THIS replaceAll(E symbolE, E target) {
+        if (symbolE != null && target != null) {
+            replaceAllBySymbol(obtainSymbol(symbolE), target);
         }
         return (THIS) this;
     }
 
-    public THIS replaceAll(T target) {
+    public THIS replaceAll(E target) {
         return replaceAll(target, target);
     }
 
-    public THIS replaceAll(T... targets) {
+    public THIS replaceAll(E... targets) {
         int count = CountTool.count(targets);
         if (count > 0) {
-            T target = null;
+            E target = null;
             for (int i = 0; i < count; i++) {
                 target = targets[i];
                 if (target != null) {
@@ -732,10 +769,10 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         return (THIS) this;
     }
 
-    public THIS replaceAll(List<T> targets) {
+    public THIS replaceAll(List<E> targets) {
         int count = CountTool.count(targets);
         if (count > 0) {
-            T target = null;
+            E target = null;
             for (int i = 0; i < count; i++) {
                 target = targets.get(i);
                 if (target != null) {
@@ -746,12 +783,12 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         return (THIS) this;
     }
 
-    public THIS replaceAll(THIS targets) {
-        int count = targets.count();
+    public THIS replaceAll(THIS targetEs) {
+        int count = targetEs.count();
         if (count > 0) {
-            T target = null;
+            E target = null;
             for (int i = 0; i < count; i++) {
-                target = (T) targets.ts.get(i);
+                target = (E) targetEs.es.get(i);
                 if (target != null) {
                     replaceAllBySymbol(obtainSymbol(target), target);
                 }
@@ -763,43 +800,43 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     /**************************************************
      * replaceOrAdd
      **************************************************/
-    public THIS replaceOrAdd(T target, Ts.IsThisOne<T> isThisOne) {
+    public THIS replaceOrAdd(E target, Es.IsThisOne<E> isThisOne) {
         if (isThisOne != null) {
             int firstIndex = index(isThisOne);
             if (firstIndex >= 0) {
                 replaceByIndex(firstIndex, target);
             } else if (target != null) {
-                ts.add(target);
+                es.add(target);
             }
         }
         return (THIS) this;
     }
 
-    public THIS replaceOrAddBySymbol(String symbol, T target) {
+    public THIS replaceOrAddBySymbol(String symbol, E target) {
         int firstIndex = indexBySymbol(symbol);
         if (firstIndex >= 0) {
             replaceByIndex(firstIndex, target);
         } else if (target != null) {
-            ts.add(target);
+            es.add(target);
         }
         return (THIS) this;
     }
 
-    public THIS replaceOrAdd(T symbolT, T target) {
-        if (symbolT != null && target != null) {
-            replaceOrAddBySymbol(obtainSymbol(symbolT), target);
+    public THIS replaceOrAdd(E symbol, E target) {
+        if (symbol != null && target != null) {
+            replaceOrAddBySymbol(obtainSymbol(symbol), target);
         }
         return (THIS) this;
     }
 
-    public THIS replaceOrAdd(T target) {
+    public THIS replaceOrAdd(E target) {
         return replaceOrAdd(target, target);
     }
 
-    public THIS replaceOrAdd(T... targets) {
+    public THIS replaceOrAdd(E... targets) {
         int count = CountTool.count(targets);
         if (count > 0) {
-            T target = null;
+            E target = null;
             for (int i = 0; i < count; i++) {
                 target = targets[i];
                 if (target != null) {
@@ -810,10 +847,10 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         return (THIS) this;
     }
 
-    public THIS replaceOrAdd(List<T> targets) {
+    public THIS replaceOrAdd(List<E> targets) {
         int count = CountTool.count(targets);
         if (count > 0) {
-            T target = null;
+            E target = null;
             for (int i = 0; i < count; i++) {
                 target = targets.get(i);
                 if (target != null) {
@@ -824,12 +861,12 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         return (THIS) this;
     }
 
-    public THIS replaceOrAdd(THIS targets) {
-        int count = targets.count();
+    public THIS replaceOrAdd(THIS targetEs) {
+        int count = targetEs.count();
         if (count > 0) {
-            T target = null;
+            E target = null;
             for (int i = 0; i < count; i++) {
-                target = (T) targets.ts.get(i);
+                target = (E) targetEs.es.get(i);
                 if (target != null) {
                     replaceOrAddBySymbol(obtainSymbol(target), target);
                 }
@@ -841,53 +878,53 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     /**************************************************
      * replaceAllOrAdd
      **************************************************/
-    public THIS replaceAllOrAdd(T target, com.codingtu.cooltu.lib4j.ts.Ts.IsThisOne<T> isThisOne) {
+    public THIS replaceAllOrAdd(E target, Es.IsThisOne<E> isThisOne) {
         if (isThisOne != null) {
             int count = count();
             boolean isReplace = false;
             for (int i = 0; i < count; i++) {
-                if (isThisOne.isThisOne(i, this.ts.get(i))) {
+                if (isThisOne.isThisOne(i, this.es.get(i))) {
                     replaceByIndex(i, target);
                     isReplace = true;
                 }
             }
             if (!isReplace && target != null) {
-                this.ts.add(target);
+                this.es.add(target);
             }
         }
         return (THIS) this;
     }
 
-    public THIS replaceAllOrAddBySymbol(String symbol, T target) {
+    public THIS replaceAllOrAddBySymbol(String symbol, E target) {
         int count = count();
         boolean isReplace = false;
         for (int i = 0; i < count; i++) {
-            if (obtainSymbol(this.ts.get(i)).equals(symbol)) {
+            if (obtainSymbol(this.es.get(i)).equals(symbol)) {
                 replaceByIndex(i, target);
                 isReplace = true;
             }
         }
         if (!isReplace && target != null) {
-            this.ts.add(target);
+            this.es.add(target);
         }
         return (THIS) this;
     }
 
-    public THIS replaceAllOrAdd(T symboleT, T target) {
-        if (symboleT != null && target != null) {
-            replaceAllOrAddBySymbol(obtainSymbol(symboleT), target);
+    public THIS replaceAllOrAdd(E symbole, E target) {
+        if (symbole != null && target != null) {
+            replaceAllOrAddBySymbol(obtainSymbol(symbole), target);
         }
         return (THIS) this;
     }
 
-    public THIS replaceAllOrAdd(T target) {
+    public THIS replaceAllOrAdd(E target) {
         return replaceAllOrAdd(target, target);
     }
 
-    public THIS replaceAllOrAdd(T... targets) {
+    public THIS replaceAllOrAdd(E... targets) {
         int count = CountTool.count(targets);
         if (count > 0) {
-            T target = null;
+            E target = null;
             for (int i = 0; i < count; i++) {
                 target = targets[i];
                 if (target != null) {
@@ -898,10 +935,10 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         return (THIS) this;
     }
 
-    public THIS replaceAllOrAdd(List<T> targets) {
+    public THIS replaceAllOrAdd(List<E> targets) {
         int count = CountTool.count(targets);
         if (count > 0) {
-            T target = null;
+            E target = null;
             for (int i = 0; i < count; i++) {
                 target = targets.get(i);
                 if (target != null) {
@@ -912,12 +949,12 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         return (THIS) this;
     }
 
-    public THIS replaceAllOrAdd(THIS targets) {
-        int count = targets.count();
+    public THIS replaceAllOrAdd(THIS targetEs) {
+        int count = targetEs.count();
         if (count > 0) {
-            T target = null;
+            E target = null;
             for (int i = 0; i < count; i++) {
-                target = (T) targets.ts.get(i);
+                target = (E) targetEs.es.get(i);
                 if (target != null) {
                     replaceAllOrAddBySymbol(obtainSymbol(target), target);
                 }
@@ -936,7 +973,7 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
      * deleteByIndex
      **************************************************/
     public THIS deleteByIndex(int position) {
-        this.ts.remove(position);
+        this.es.remove(position);
         return (THIS) this;
     }
 
@@ -944,11 +981,11 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
      * delete
      **************************************************/
     //删除第一个
-    public THIS delete(Ts.IsThisOne<T> isThisOne) {
+    public THIS delete(Es.IsThisOne<E> isThisOne) {
         if (isThisOne != null) {
             int firstIndex = index(isThisOne);
             if (firstIndex >= 0) {
-                this.ts.remove(firstIndex);
+                this.es.remove(firstIndex);
             }
         }
         return (THIS) this;
@@ -957,7 +994,7 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     public THIS deleteBySymbol(String symbol) {
         int firstIndex = indexBySymbol(symbol);
         if (firstIndex >= 0) {
-            this.ts.remove(firstIndex);
+            this.es.remove(firstIndex);
         }
         return (THIS) this;
     }
@@ -967,7 +1004,7 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         for (int i = 0; i < count; i++) {
             int firstIndex = indexBySymbol(symbols[i]);
             if (firstIndex >= 0) {
-                this.ts.remove(firstIndex);
+                this.es.remove(firstIndex);
             }
         }
         return (THIS) this;
@@ -978,36 +1015,36 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         for (int i = 0; i < count; i++) {
             int firstIndex = indexBySymbol(symbols.get(i));
             if (firstIndex >= 0) {
-                this.ts.remove(firstIndex);
+                this.es.remove(firstIndex);
             }
         }
         return (THIS) this;
     }
 
-    public THIS deleteBySymbol(StringTs symbolStringTs) {
-        int count = CountTool.count(symbolStringTs);
+    public THIS deleteBySymbol(StringEs symbolStringEs) {
+        int count = CountTool.count(symbolStringEs);
         for (int i = 0; i < count; i++) {
-            int firstIndex = indexBySymbol(symbolStringTs.ts.get(i));
+            int firstIndex = indexBySymbol(symbolStringEs.es.get(i));
             if (firstIndex >= 0) {
-                this.ts.remove(firstIndex);
+                this.es.remove(firstIndex);
             }
         }
         return (THIS) this;
     }
 
 
-    public THIS delete(T target) {
+    public THIS delete(E target) {
         if (target != null) {
             deleteBySymbol(obtainSymbol(target));
         }
         return (THIS) this;
     }
 
-    protected THIS delete(Ts.EachGetter<T> getter) {
+    protected THIS delete(Es.EachGetter<E> getter) {
         if (getter != null) {
             int count = getter.count();
             if (count > 0) {
-                T target = null;
+                E target = null;
                 for (int i = 0; i < count; i++) {
                     target = getter.get(i);
                     if (target != null) {
@@ -1019,44 +1056,44 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         return (THIS) this;
     }
 
-    public THIS delete(T... targets) {
-        return delete(new Ts.EachGetter<T>() {
+    public THIS delete(E... targets) {
+        return delete(new Es.EachGetter<E>() {
             @Override
             public int count() {
                 return CountTool.count(targets);
             }
 
             @Override
-            public T get(int position) {
+            public E get(int position) {
                 return targets[position];
             }
         });
     }
 
-    public THIS delete(List<T> targets) {
-        return delete(new Ts.EachGetter<T>() {
+    public THIS delete(List<E> targets) {
+        return delete(new Es.EachGetter<E>() {
             @Override
             public int count() {
                 return CountTool.count(targets);
             }
 
             @Override
-            public T get(int position) {
+            public E get(int position) {
                 return targets.get(position);
             }
         });
     }
 
-    public THIS delete(THIS targets) {
-        return delete(new Ts.EachGetter<T>() {
+    public THIS delete(THIS targetEs) {
+        return delete(new Es.EachGetter<E>() {
             @Override
             public int count() {
-                return CountTool.count(targets);
+                return CountTool.count(targetEs);
             }
 
             @Override
-            public T get(int position) {
-                return (T) targets.ts.get(position);
+            public E get(int position) {
+                return (E) targetEs.es.get(position);
             }
         });
     }
@@ -1064,51 +1101,51 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     /**************************************************
      * deleteAll
      **************************************************/
-    public THIS deleteAll(Ts.IsThisOne<T> isThisOne) {
+    public THIS deleteAll(Es.IsThisOne<E> isThisOne) {
         if (isThisOne != null) {
-            List<T> newTs = new ArrayList<>();
+            List<E> newEs = new ArrayList<>();
             int count = count();
-            T t;
+            E e;
             for (int i = 0; i < count; i++) {
-                t = this.ts.get(i);
-                if (!isThisOne.isThisOne(i, t)) {
-                    newTs.add(t);
+                e = this.es.get(i);
+                if (!isThisOne.isThisOne(i, e)) {
+                    newEs.add(e);
                 }
             }
-            this.ts.clear();
-            this.ts.addAll(newTs);
+            this.es.clear();
+            this.es.addAll(newEs);
         }
         return (THIS) this;
     }
 
     public THIS deleteAllBySymbol(String symbol) {
-        List<T> newTs = new ArrayList<>();
+        List<E> newEs = new ArrayList<>();
         int count = count();
-        T t;
+        E e;
         for (int i = 0; i < count; i++) {
-            t = this.ts.get(i);
-            if (!obtainSymbol(t).equals(symbol)) {
-                newTs.add(t);
+            e = this.es.get(i);
+            if (!obtainSymbol(e).equals(symbol)) {
+                newEs.add(e);
             }
         }
-        this.ts.clear();
-        this.ts.addAll(newTs);
+        this.es.clear();
+        this.es.addAll(newEs);
         return (THIS) this;
     }
 
-    private THIS deleteAllBySymbol(Ts.EachGetter<String> getter) {
+    private THIS deleteAllBySymbol(Es.EachGetter<String> getter) {
         if (getter != null) {
             int valueSymbolCount = getter.count();
             int tCount = count();
             if (valueSymbolCount > 0 && tCount > 0) {
-                List<T> newTs = new ArrayList<>();
+                List<E> newEs = new ArrayList<>();
 
-                T t;
+                E e;
                 String tValueSymbol;
                 boolean isSame;
                 for (int i = 0; i < tCount; i++) {
-                    t = this.ts.get(i);
-                    tValueSymbol = obtainSymbol(t);
+                    e = this.es.get(i);
+                    tValueSymbol = obtainSymbol(e);
 
                     isSame = false;
                     for (int j = 0; j < valueSymbolCount; j++) {
@@ -1118,18 +1155,18 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
                         }
                     }
                     if (!isSame) {
-                        newTs.add(t);
+                        newEs.add(e);
                     }
                 }
-                this.ts.clear();
-                this.ts.addAll(newTs);
+                this.es.clear();
+                this.es.addAll(newEs);
             }
         }
         return (THIS) this;
     }
 
     public THIS deleteAllBySymbol(String... symbols) {
-        return deleteAllBySymbol(new Ts.EachGetter<String>() {
+        return deleteAllBySymbol(new Es.EachGetter<String>() {
             @Override
             public int count() {
                 return CountTool.count(symbols);
@@ -1143,7 +1180,7 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     }
 
     public THIS deleteAllBySymbol(List<String> symbols) {
-        return deleteAllBySymbol(new Ts.EachGetter<String>() {
+        return deleteAllBySymbol(new Es.EachGetter<String>() {
             @Override
             public int count() {
                 return CountTool.count(symbols);
@@ -1156,41 +1193,40 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         });
     }
 
-    public THIS deleteAllBySymbol(StringTs symbolStringTs) {
-        return deleteAllBySymbol(new Ts.EachGetter<String>() {
+    public THIS deleteAllBySymbol(StringEs symbolStringVs) {
+        return deleteAllBySymbol(new Es.EachGetter<String>() {
             @Override
             public int count() {
-                return CountTool.count(symbolStringTs);
+                return CountTool.count(symbolStringVs);
             }
 
             @Override
             public String get(int position) {
-                return symbolStringTs.ts.get(position);
+                return symbolStringVs.es.get(position);
             }
         });
     }
 
-    //删除所有
-    public THIS deleteAll(T target) {
+    public THIS deleteAll(E target) {
         if (target != null) {
             deleteAllBySymbol(obtainSymbol(target));
         }
         return (THIS) this;
     }
 
-    protected THIS deleteAll(Ts.EachGetter<T> getter) {
+    protected THIS deleteAll(Es.EachGetter<E> getter) {
         if (getter != null) {
             int valueSymbolCount = getter.count();
             int tCount = count();
             if (valueSymbolCount > 0 && tCount > 0) {
-                List<T> newTs = new ArrayList<>();
+                List<E> newEs = new ArrayList<>();
 
-                T t;
+                E e;
                 String tValueSymbol;
                 boolean isSame;
                 for (int i = 0; i < tCount; i++) {
-                    t = this.ts.get(i);
-                    tValueSymbol = obtainSymbol(t);
+                    e = this.es.get(i);
+                    tValueSymbol = obtainSymbol(e);
 
                     isSame = false;
                     for (int j = 0; j < valueSymbolCount; j++) {
@@ -1200,55 +1236,55 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
                         }
                     }
                     if (!isSame) {
-                        newTs.add(t);
+                        newEs.add(e);
                     }
                 }
-                this.ts.clear();
-                this.ts.addAll(newTs);
+                this.es.clear();
+                this.es.addAll(newEs);
             }
         }
         return (THIS) this;
     }
 
 
-    public THIS deleteAll(T... targets) {
-        return deleteAll(new Ts.EachGetter<T>() {
+    public THIS deleteAll(E... targets) {
+        return deleteAll(new Es.EachGetter<E>() {
             @Override
             public int count() {
                 return CountTool.count(targets);
             }
 
             @Override
-            public T get(int position) {
+            public E get(int position) {
                 return targets[position];
             }
         });
     }
 
-    public THIS deleteAll(List<T> targets) {
-        return deleteAll(new Ts.EachGetter<T>() {
+    public THIS deleteAll(List<E> targets) {
+        return deleteAll(new Es.EachGetter<E>() {
             @Override
             public int count() {
                 return CountTool.count(targets);
             }
 
             @Override
-            public T get(int position) {
+            public E get(int position) {
                 return targets.get(position);
             }
         });
     }
 
-    public THIS deleteAll(THIS targets) {
-        return deleteAll(new Ts.EachGetter<T>() {
+    public THIS deleteAll(THIS targetEs) {
+        return deleteAll(new Es.EachGetter<E>() {
             @Override
             public int count() {
-                return CountTool.count(targets);
+                return CountTool.count(targetEs);
             }
 
             @Override
-            public T get(int position) {
-                return (T) targets.ts.get(position);
+            public E get(int position) {
+                return (E) targetEs.es.get(position);
             }
         });
     }
@@ -1258,59 +1294,94 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     // 转换
     //
     ///////////////////////////////////////////////////////
-
-    public <TARGET extends Symbol> SymbolTs<TARGET> convert(Ts.Convert<T, TARGET> convert) {
-        SymbolTs symbolTs = new SymbolTs();
+    public <TARGET> BaseEs<TARGET> convert(Es.Convert<E, TARGET> convert) {
+        BaseEs baseEs = new BaseEs();
         if (convert != null) {
             int count = count();
             TARGET target;
             for (int i = 0; i < count; i++) {
-                target = convert.convert(i, this.ts.get(i));
+                target = convert.convert(i, this.es.get(i));
                 if (target != null) {
-                    symbolTs.add(target);
+                    baseEs.add(target);
                 }
             }
         }
-        return symbolTs;
+        return baseEs;
     }
 
-    public <TARGET, TS extends CoreTs> TS convert(Class<TS> tsClass, Ts.Convert<T, TARGET> convert) {
-        TS ts;
+    public <TARGET, ES extends CoreEs> ES convert(Class<ES> vsClass, Es.Convert<E, TARGET> convert) {
+        ES targetEs;
         try {
-            ts = tsClass.getConstructor().newInstance();
+            targetEs = vsClass.getConstructor().newInstance();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         int count = count();
         TARGET target;
         for (int i = 0; i < count; i++) {
-            target = convert.convert(i, this.ts.get(i));
+            target = convert.convert(i, this.es.get(i));
             if (target != null) {
-                ts.add(target);
+                targetEs.add(target);
             }
         }
-        return ts;
+        return targetEs;
     }
 
-    public <TARGET extends Symbol> SymbolTs<TARGET> convertList(Ts.Convert<T, List<TARGET>> convert) {
-        SymbolTs<TARGET> ts = new SymbolTs<>();
+    public StringEs convertToString(Es.Convert<E, String> convert) {
+        return convert(StringEs.class, convert);
+    }
+
+    public BooleanEs convertToBoolean(Es.Convert<E, Boolean> convert) {
+        return convert(BooleanEs.class, convert);
+    }
+
+    public IntegerEs convertToInteger(Es.Convert<E, Integer> convert) {
+        return convert(IntegerEs.class, convert);
+    }
+
+    public LongEs convertToLong(Es.Convert<E, Long> convert) {
+        return convert(LongEs.class, convert);
+    }
+
+    public DoubleEs convertToDouble(Es.Convert<E, Double> convert) {
+        return convert(DoubleEs.class, convert);
+    }
+
+    public FloatEs convertToFloat(Es.Convert<E, Float> convert) {
+        return convert(FloatEs.class, convert);
+    }
+
+    public <TARGET> BaseEs<TARGET> convertList(Es.Convert<E, List<TARGET>> convert) {
+        BaseEs<TARGET> baseEs = new BaseEs<>();
         if (convert != null) {
             int count = count();
             List<TARGET> list;
             for (int i = 0; i < count; i++) {
-                list = convert.convert(i, this.ts.get(i));
+                list = convert.convert(i, this.es.get(i));
                 if (!CountTool.isNull(list)) {
-                    ts.add(list);
+                    baseEs.add(list);
                 }
             }
         }
-        return ts;
+        return baseEs;
     }
 
-    public <TS extends CoreTs, TARGET> TS convertList(Class<TS> tsClass, Ts.Convert<T, List<TARGET>> convert) {
-        TS ts;
+    public <TARGET> BaseEs<TARGET> convertList() {
+        return convertList(new Es.Convert<E, List<TARGET>>() {
+            @Override
+            public List<TARGET> convert(int index, E e) {
+                if (e != null) {
+                    return (List<TARGET>) e;
+                }
+                return null;
+            }
+        });
+    }
+
+    public <ES extends CoreEs, TARGET> ES convertList(Class<ES> vsClass, Es.Convert<E, List<TARGET>> convert) {
+        ES targetEs;
         try {
-            ts = tsClass.getConstructor().newInstance();
+            targetEs = vsClass.getConstructor().newInstance();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -1318,13 +1389,37 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
             int count = count();
             List<TARGET> list;
             for (int i = 0; i < count; i++) {
-                list = convert.convert(i, this.ts.get(i));
+                list = convert.convert(i, this.es.get(i));
                 if (!CountTool.isNull(list)) {
-                    ts.add(list);
+                    targetEs.add(list);
                 }
             }
         }
-        return ts;
+        return targetEs;
+    }
+
+    public StringEs converToStringList(Es.Convert<E, List<String>> convert) {
+        return convertList(StringEs.class, convert);
+    }
+
+    public BooleanEs converToBooleanList(Es.Convert<E, List<Boolean>> convert) {
+        return convertList(BooleanEs.class, convert);
+    }
+
+    public IntegerEs converToIntegerList(Es.Convert<E, List<Integer>> convert) {
+        return convertList(IntegerEs.class, convert);
+    }
+
+    public LongEs converToLongList(Es.Convert<E, List<Long>> convert) {
+        return convertList(LongEs.class, convert);
+    }
+
+    public DoubleEs converToDoubleList(Es.Convert<E, List<Double>> convert) {
+        return convertList(DoubleEs.class, convert);
+    }
+
+    public FloatEs converToFloatList(Es.Convert<E, List<Float>> convert) {
+        return convertList(FloatEs.class, convert);
     }
 
     ///////////////////////////////////////////////////////
@@ -1333,13 +1428,13 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     //
     ///////////////////////////////////////////////////////
 
-    public MaxMin<T> maxMin(Ts.NowMax<T> nowMax) {
+    public MaxMin<E> maxMin(Es.NowMax<E> nowMax) {
         if (nowMax == null) return null;
 
         int count = count();
-        MaxMin<T> maxMin = null;
+        MaxMin<E> maxMin = null;
         for (int i = 0; i < count; i++) {
-            T now = this.ts.get(i);
+            E now = this.es.get(i);
             if (i == 0) {
                 maxMin = new MaxMin<>();
                 maxMin.max = now;
@@ -1353,37 +1448,37 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
         return maxMin;
     }
 
-    public MaxMin<T> maxMin(ToInt<T> toInt) {
-        return maxMin(new Ts.NowMax<T>() {
+    public MaxMin<E> maxMin(ToInt<E> toInt) {
+        return maxMin(new Es.NowMax<E>() {
             @Override
-            public boolean isNowMax(T last, T now) {
+            public boolean isNowMax(E last, E now) {
                 return toInt.toInt(now) > toInt.toInt(last);
             }
         });
     }
 
-    public MaxMin<T> maxMin(ToLong<T> toLong) {
-        return maxMin(new Ts.NowMax<T>() {
+    public MaxMin<E> maxMin(ToLong<E> toLong) {
+        return maxMin(new Es.NowMax<E>() {
             @Override
-            public boolean isNowMax(T last, T now) {
+            public boolean isNowMax(E last, E now) {
                 return toLong.toLong(now) > toLong.toLong(last);
             }
         });
     }
 
-    public MaxMin<T> maxMin(ToDouble<T> toDouble) {
-        return maxMin(new Ts.NowMax<T>() {
+    public MaxMin<E> maxMin(ToDouble<E> toDouble) {
+        return maxMin(new Es.NowMax<E>() {
             @Override
-            public boolean isNowMax(T last, T now) {
+            public boolean isNowMax(E last, E now) {
                 return toDouble.toDouble(now) > toDouble.toDouble(last);
             }
         });
     }
 
-    public MaxMin<T> maxMin(ToFloat<T> toFloat) {
-        return maxMin(new Ts.NowMax<T>() {
+    public MaxMin<E> maxMin(ToFloat<E> toFloat) {
+        return maxMin(new Es.NowMax<E>() {
             @Override
-            public boolean isNowMax(T last, T now) {
+            public boolean isNowMax(E last, E now) {
                 return toFloat.toFloat(now) > toFloat.toFloat(last);
             }
         });
@@ -1398,7 +1493,7 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     /**************************************************
      * 基础方法
      **************************************************/
-    protected Ts.NearIndex nearIndexByIndex(int index, boolean isNext) {
+    protected Es.NearIndex nearIndexByIndex(int index, boolean isNext) {
         int count = count();
         if (count == 1) {
             return null;
@@ -1409,91 +1504,91 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
 
         int step = isNext ? 1 : -1;
 
-        Ts.NearIndex nearIndex = new Ts.NearIndex();
+        Es.NearIndex nearIndex = new Es.NearIndex();
         nearIndex.currentIndex = index;
         if (nearIndex.currentIndex == (isNext ? (count - 1) : 0)) {
-            nearIndex.neighborIndex = nearIndex.currentIndex - step;
+            nearIndex.nearIndex = nearIndex.currentIndex - step;
         } else {
-            nearIndex.neighborIndex = nearIndex.currentIndex + step;
+            nearIndex.nearIndex = nearIndex.currentIndex + step;
         }
         return nearIndex;
     }
 
-    protected Ts.NearIndex nearIndex(Ts.IsThisOne<T> isThisOne, boolean isNext) {
+    protected Es.NearIndex nearIndex(Es.IsThisOne<E> isThisOne, boolean isNext) {
         return nearIndexByIndex(index(isThisOne), isNext);
     }
 
-    protected Ts.NearIndex nearIndexBySymbol(String symbol, boolean isNext) {
+    protected Es.NearIndex nearIndexBySymbol(String symbol, boolean isNext) {
         return nearIndexByIndex(indexBySymbol(symbol), isNext);
     }
 
-    protected Ts.NearIndex nearIndex(T t, boolean isNext) {
-        return nearIndexByIndex(index(t), isNext);
+    protected Es.NearIndex nearIndex(E e, boolean isNext) {
+        return nearIndexByIndex(index(e), isNext);
     }
 
-    protected T nearData(Ts.NearIndex nearIndex) {
+    protected E nearData(Es.NearIndex nearIndex) {
         if (nearIndex == null) return null;
-        return getByIndex(nearIndex.neighborIndex);
+        return getByIndex(nearIndex.nearIndex);
     }
 
     /**************************************************
      * NearIndex下一个优先
      **************************************************/
-    public Ts.NearIndex nearIndexWhenNextPriority(Ts.IsThisOne<T> isThisOne) {
+    public Es.NearIndex nearIndexWhenNextPriority(Es.IsThisOne<E> isThisOne) {
         return nearIndex(isThisOne, true);
     }
 
-    public Ts.NearIndex nearIndexWhenNextPriorityBySymbol(String symbol) {
+    public Es.NearIndex nearIndexWhenNextPriorityBySymbol(String symbol) {
         return nearIndexBySymbol(symbol, true);
     }
 
-    public Ts.NearIndex nearIndexWhenNextPriority(T t) {
-        return nearIndex(t, true);
+    public Es.NearIndex nearIndexWhenNextPriority(E e) {
+        return nearIndex(e, true);
     }
 
     /**************************************************
      * NearData下一个优先
      **************************************************/
-    public T nearDataWhenNextPriority(Ts.IsThisOne<T> isThisOne) {
+    public E nearDataWhenNextPriority(Es.IsThisOne<E> isThisOne) {
         return nearData(nearIndexWhenNextPriority(isThisOne));
     }
 
-    public T nearDataWhenNextPriorityBySymbol(String symbol) {
+    public E nearDataWhenNextPriorityBySymbol(String symbol) {
         return nearData(nearIndexWhenNextPriorityBySymbol(symbol));
     }
 
-    public T nearDataWhenNextPriority(T t) {
-        return nearData(nearIndexWhenNextPriority(t));
+    public E nearDataWhenNextPriority(E e) {
+        return nearData(nearIndexWhenNextPriority(e));
     }
 
     /**************************************************
      * NearIndex上一个优先
      **************************************************/
-    public Ts.NearIndex nearIndexWhenPrePriority(Ts.IsThisOne<T> isThisOne) {
+    public Es.NearIndex nearIndexWhenPrePriority(Es.IsThisOne<E> isThisOne) {
         return nearIndex(isThisOne, false);
     }
 
-    public Ts.NearIndex nearIndexWhenPrePriorityBySymbol(String symbol) {
+    public Es.NearIndex nearIndexWhenPrePriorityBySymbol(String symbol) {
         return nearIndexBySymbol(symbol, false);
     }
 
-    public Ts.NearIndex nearIndexWhenPrePriority(T t) {
-        return nearIndex(t, false);
+    public Es.NearIndex nearIndexWhenPrePriority(E e) {
+        return nearIndex(e, false);
     }
 
     /**************************************************
      * NearData下一个优先
      **************************************************/
-    public T nearDataWhenPrePriority(Ts.IsThisOne<T> isThisOne) {
+    public E nearDataWhenPrePriority(Es.IsThisOne<E> isThisOne) {
         return nearData(nearIndexWhenPrePriority(isThisOne));
     }
 
-    public T nearDataWhenPrePriorityBySymbol(String symbol) {
+    public E nearDataWhenPrePriorityBySymbol(String symbol) {
         return nearData(nearIndexWhenPrePriorityBySymbol(symbol));
     }
 
-    public T nearDataWhenPrePriority(T t) {
-        return nearData(nearIndexWhenPrePriority(t));
+    public E nearDataWhenPrePriority(E e) {
+        return nearData(nearIndexWhenPrePriority(e));
     }
 
     ///////////////////////////////////////////////////////
@@ -1501,16 +1596,16 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     // toList
     //
     ///////////////////////////////////////////////////////
-    public List<T> toList() {
-        return this.ts;
+    public List<E> toList() {
+        return this.es;
     }
 
-    public T[] toArray() {
+    public E[] toArray() {
         int count = count();
-        T[] newArray = (T[]) java.lang.reflect.Array.newInstance(OtherTool.getFanxing(this, 0), count);
+        E[] newArray = (E[]) java.lang.reflect.Array.newInstance(OtherTool.getFanxing(this, 0), count);
         if (count > 0) {
             for (int i = 0; i < count; i++) {
-                newArray[i] = this.ts.get(i);
+                newArray[i] = this.es.get(i);
             }
         }
         return newArray;
@@ -1525,13 +1620,13 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     /**************************************************
      * 查找最后一个符合条件的元素
      **************************************************/
-    public T findFinal(Ts.IsNow<T> isNow) {
+    public E findFinal(Es.IsNow<E> isNow) {
         if (isNow == null) return null;
 
         int count = count();
-        T last = null;
+        E last = null;
         for (int i = 0; i < count; i++) {
-            T now = this.ts.get(i);
+            E now = this.es.get(i);
             last = last == null ? now : (isNow.isNow(last, now) ? now : last);
         }
         return last;
@@ -1542,34 +1637,113 @@ public abstract class CoreTs<T, THIS extends CoreTs> {
     // ToMap
     //
     ///////////////////////////////////////////////////////
-    public <K, V> Map<K, V> toMap(Ts.ToMap<K, V, T> toMap) {
+    public <K, V> Map<K, V> toMap(Es.ToMap<K, V, E> toMap) {
         Map<K, V> map = new HashMap<>();
         int count = count();
         if (count > 0) {
             for (int i = 0; i < count; i++) {
-                T t = this.ts.get(i);
-                toMap.deal(map, i, t);
+                E e = this.es.get(i);
+                toMap.deal(map, i, e);
             }
         }
         return map;
     }
 
-    public Map<String, T> toMap() {
-        return toMap(new Ts.ToMap<String, T, T>() {
+    public Map<String, E> toMap() {
+        return toMap(new Es.ToMap<String, E, E>() {
             @Override
-            public void deal(Map<String, T> map, int i, T t) {
-                map.put(obtainSymbol(t), t);
+            public void deal(Map<String, E> map, int i, E e) {
+                map.put(obtainSymbol(e), e);
             }
         });
     }
 
-    public Map<T, T> toTMap() {
-        return toMap(new Ts.ToMap<T, T, T>() {
+    public Map<E, E> toTMap() {
+        return toMap(new Es.ToMap<E, E, E>() {
             @Override
-            public void deal(Map<T, T> map, int i, T t) {
-                map.put(t, t);
+            public void deal(Map<E, E> map, int i, E e) {
+                map.put(e, e);
             }
         });
+    }
+
+    ///////////////////////////////////////////////////////
+    //
+    //
+    //
+    ///////////////////////////////////////////////////////
+    public interface GroupSortGetter<T> {
+        String getGroup(int level, T t);
+
+        int getLevels();
+
+        int compare(T o1, T o2);
+
+    }
+
+    public THIS groupSort(GroupSortGetter<E> getter) {
+        ListValueMap<String, String> totalMap = new ListValueMap<>();
+        Map<String, E> tMap = new HashMap<>();
+
+        Collections.sort(this.es, new Comparator<E>() {
+            @Override
+            public int compare(E o1, E o2) {
+                return getter.compare(o1, o2);
+            }
+        });
+
+        ls(new Es.EachEs<E>() {
+            @Override
+            public boolean each(int i, E e) {
+                tMap.put(getter.getGroup(getter.getLevels() - 1, e), e);
+
+                String[] gs = new String[getter.getLevels()];
+                for (int j = 0; j < gs.length; j++) {
+                    gs[j] = getter.getGroup(j, e);
+                }
+
+                List<String> list = totalMap.get(getRootGroupKey());
+
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < gs.length; j++) {
+                    if (j < gs.length - 1) {
+                        sb.append(gs[j]);
+                        List<String> subList = totalMap.get(sb.toString());
+                        if (CountTool.isNull(subList)) {
+                            list.add(gs[j]);
+                        }
+                        list = subList;
+                    } else {
+                        list.add(gs[j]);
+                    }
+
+                }
+                return false;
+            }
+        });
+
+        List<E> as = new ArrayList<>();
+        groupSort(as, getter.getLevels(), 0, totalMap, tMap, getRootGroupKey());
+        this.es = as;
+        return (THIS) this;
+    }
+
+    private void groupSort(List<E> container, int levels, int level, ListValueMap<String, String> categorgMap, Map<String, E> tMap, String key) {
+        Es.strs(categorgMap.get(key)).ls(new Es.EachEs<String>() {
+            @Override
+            public boolean each(int i, String s) {
+                if (level < levels - 1) {
+                    groupSort(container, levels, level + 1, categorgMap, tMap, (getRootGroupKey().equals(key) ? "" : key) + s);
+                } else {
+                    container.add(tMap.get(s));
+                }
+                return false;
+            }
+        });
+    }
+
+    private String getRootGroupKey() {
+        return "root";
     }
 
 }

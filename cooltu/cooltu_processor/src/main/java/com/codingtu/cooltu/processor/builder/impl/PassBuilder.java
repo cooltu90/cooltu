@@ -4,10 +4,10 @@ import com.codingtu.cooltu.constant.Constant;
 import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.builder.base.PassBuilderBase;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 
@@ -57,10 +57,9 @@ public class PassBuilder extends PassBuilderBase {
     protected void dealLines() {
         addTag(pkg, Pkg.CORE_TOOLS);
 
-        Ts.ls(kvs, new Ts.EachTs<KV<String, String>>() {
+        Es.es(kvs).ls(new Es.EachEs<KV<String, String>>() {
             @Override
             public boolean each(int position, KV<String, String> kv) {
-
                 String fieldName = ConvertTool.toStaticType(kv.v);
                 field(position, fieldName, kv.v);
                 if (ClassTool.isInt(kv.k)) {

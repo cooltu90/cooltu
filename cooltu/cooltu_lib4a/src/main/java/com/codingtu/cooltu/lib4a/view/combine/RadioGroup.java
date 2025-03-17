@@ -7,10 +7,10 @@ import android.widget.TextView;
 import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
+import com.codingtu.cooltu.lib4j.es.BaseEs;
+import com.codingtu.cooltu.lib4j.es.Es;
+import com.codingtu.cooltu.lib4j.es.impl.StringEs;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.StringTs;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +23,10 @@ import java.util.List;
 public class RadioGroup implements OnDestroy, View.OnClickListener {
     private boolean hasNull;
     private int selected = -1;
-    private BaseTs<View> bts;
+    private BaseEs<View> bts;
     private List<OnSelectChange> onSelectChanges;
     private OnSetItem onSetItem;
-    private StringTs items;
+    private StringEs items;
     private OnClick onClick;
 
     public RadioGroup() {
@@ -54,8 +54,7 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
     }
 
     public RadioGroup destroys(Destroys destroys) {
-        if (destroys != null)
-            destroys.add(this);
+        if (destroys != null) destroys.add(this);
         return this;
     }
 
@@ -66,8 +65,8 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
     }
 
     public RadioGroup setBts(View... bts) {
-        this.bts = Ts.ts(bts);
-        this.bts.ls(new Ts.EachTs<View>() {
+        this.bts = Es.es(bts);
+        this.bts.ls(new Es.EachEs<View>() {
             @Override
             public boolean each(int position, View view) {
                 view.setTag(R.id.tag_0, position);
@@ -80,7 +79,12 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
 
     public RadioGroup setBts(ViewGroup vp) {
         if (vp.getChildCount() > 0) {
-            this.bts = Ts.get(vp.getChildCount(), new Ts.EachGetter<View>() {
+            this.bts = Es.es(new Es.EachGetter<View>() {
+                @Override
+                public int count() {
+                    return vp.getChildCount();
+                }
+
                 @Override
                 public View get(int i) {
                     View childAt = vp.getChildAt(i);
@@ -94,8 +98,8 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
     }
 
     public RadioGroup initItems() {
-        items = new StringTs();
-        this.bts.ls(new Ts.EachTs<View>() {
+        items = new StringEs();
+        this.bts.ls(new Es.EachEs<View>() {
             @Override
             public boolean each(int position, View view) {
                 if (view instanceof TextView) {
@@ -155,28 +159,26 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
         change();
         for (int i = 0; i < CountTool.count(onSelectChanges); i++) {
             OnSelectChange onSelectChange = onSelectChanges.get(i);
-            if (onSelectChange != null)
-                onSelectChange.onChange(this.selected);
+            if (onSelectChange != null) onSelectChange.onChange(this.selected);
         }
     }
 
     private void change() {
-        if (bts != null)
-            bts.ls(new Ts.EachTs<View>() {
-                @Override
-                public boolean each(int i, View view) {
-                    if (selected == i) {
-                        if (onSetItem != null) {
-                            onSetItem.setSelected(view);
-                        }
-                    } else {
-                        if (onSetItem != null) {
-                            onSetItem.setSelectno(view);
-                        }
+        if (bts != null) bts.ls(new Es.EachEs<View>() {
+            @Override
+            public boolean each(int i, View view) {
+                if (selected == i) {
+                    if (onSetItem != null) {
+                        onSetItem.setSelected(view);
                     }
-                    return false;
+                } else {
+                    if (onSetItem != null) {
+                        onSetItem.setSelectno(view);
+                    }
                 }
-            });
+                return false;
+            }
+        });
     }
 
 
@@ -188,7 +190,7 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
     @Override
     public void destroy() {
         if (bts != null) {
-            bts.ls(new Ts.EachTs<View>() {
+            bts.ls(new Es.EachEs<View>() {
                 @Override
                 public boolean each(int position, View view) {
                     view.setOnClickListener(null);
@@ -204,7 +206,7 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
         onSetItem = null;
     }
 
-    public BaseTs<View> getBts() {
+    public BaseEs<View> getBts() {
         return bts;
     }
 
@@ -216,13 +218,13 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
 
 
     public RadioGroup setItems(String... items) {
-        this.items = Ts.strs(items);
+        this.items = Es.strs(items);
         return this;
     }
 
     public RadioGroup addItems(String item) {
         if (this.items == null) {
-            this.items = Ts.strs(item);
+            this.items = Es.strs(item);
         } else {
             this.items.add(item);
         }
@@ -230,7 +232,7 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
     }
 
     public String getCurrentItem() {
-        return this.items.get(getSelected());
+        return this.items.getByIndex(getSelected());
     }
 
     public int getIndex(String item) {
@@ -239,12 +241,11 @@ public class RadioGroup implements OnDestroy, View.OnClickListener {
 
 
     public String getItem(int selected) {
-        return this.items.get(selected);
+        return this.items.getByIndex(selected);
     }
 
     public int count() {
-        if (this.bts != null)
-            return this.bts.count();
+        if (this.bts != null) return this.bts.count();
         return 0;
     }
 

@@ -7,8 +7,7 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 
 import com.codingtu.cooltu.lib4a.connect.device.ConnectDevice;
-import com.codingtu.cooltu.lib4j.ts.Maps;
-import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.es.Es;
 
 public class ConnectService extends Service {
     /**************************************************
@@ -32,7 +31,7 @@ public class ConnectService extends Service {
     public void onCreate() {
         super.onCreate();
         ConnectTool.SERVICE = this;
-        Maps.map(ConnectTool.preparedDevices()).ls(new Ts.MapEach<Integer, ConnectDevice>() {
+        Es.maps(ConnectTool.preparedDevices()).ls(new Es.MapEach<Integer, ConnectDevice>() {
             @Override
             public boolean each(Integer connectType, ConnectDevice connectDevice) {
                 run(connectDevice);
