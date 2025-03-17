@@ -1,4 +1,4 @@
-package com.codingtu.cooltu.lib4j.ts.pack;
+package com.codingtu.cooltu.lib4j.data.value;
 
 public class BoolValue {
 

@@ -11,8 +11,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.codingtu.cooltu.lib4a.R;
 import com.codingtu.cooltu.lib4a.view.combine.RadioGroup;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 
 public abstract class CoreTagActivity extends CoreActivity {
 
@@ -54,14 +54,14 @@ public abstract class CoreTagActivity extends CoreActivity {
             }
         });
 
-
-        Ts.ls(bts, new Ts.EachTs<View>() {
+        Es.es(bts).ls(new Es.EachEs<View>() {
             @Override
             public boolean each(int position, View view) {
                 view.setTag(R.id.tag_0, position);
                 return false;
             }
         });
+
         radioGroup = RadioGroup.obtain().destroys(this).setBts(bts)
                 .setOnSetItem(new RadioGroup.OnSetItem() {
                     @Override

@@ -11,7 +11,7 @@ import core.vh.MonkeyVH;
 @VH(layout = R.layout.item_monkey, vh = MonkeyVH.class)
 public class MonkeyAdapter extends CoreListAdapter<MonkeyVH, String> {
     @Override
-    protected void onBindVH(@NonNull MonkeyVH vh, int position, String s) {
+    protected void onBindVH(@NonNull MonkeyVH vh, int position, String e) {
 
     }
 }

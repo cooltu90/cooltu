@@ -5,16 +5,15 @@ import android.view.ViewGroup;
 import com.codingtu.cooltu.lib4a.ui.adapter.viewholder.CoreAdapterVH;
 import com.codingtu.cooltu.lib4a.ui.adapter.viewholder.MoreVH;
 import com.codingtu.cooltu.lib4a.ui.adapter.viewholder.NullVH;
+import com.codingtu.cooltu.lib4j.es.BaseEs;
+import com.codingtu.cooltu.lib4j.es.CoreEs;
+import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts.BaseTs;
-import com.codingtu.cooltu.lib4j.ts.CoreTs;
-import com.codingtu.cooltu.lib4j.ts.Ts;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T> extends CoreAdapter<CoreAdapterVH> {
+public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, E> extends CoreAdapter<CoreAdapterVH> {
 
     //条目类型-更多
     protected int TYPE_MORE = -100;
@@ -25,7 +24,7 @@ public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T> extends C
     //当前页
     protected int page = startPage();
     //列表数据
-    protected BaseTs<T> ts;
+    protected BaseEs<E> es;
 
     protected OnUpdate onUpdate;
 
@@ -80,48 +79,49 @@ public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T> extends C
             loadMore(page);
         } else {
             hasMore = true;
-            if (ts != null)
-                ts.clear();
+            if (this.es != null)
+                this.es.clear();
             notifyDataSetChanged();
         }
 
     }
 
     //更新数据
-    public void updateItems(List<T> ts) {
-        updateItems(Ts.ts(ts));
+    public void updateItems(List<E> items) {
+        updateItems(Es.es(items));
     }
 
-    public void updateItems(T... ts) {
-        updateItems(Ts.ts(ts));
+    public void updateItems(E... items) {
+        updateItems(Es.es(items));
     }
 
-    public void updateItems(BaseTs<T> ts) {
-        updateItems(ts, CountTool.count(ts) > 0);
+    public void updateItems(BaseEs<E> items) {
+        updateItems(items, CountTool.count(items) > 0);
     }
 
-    public void updateItems(List<T> ts, boolean hasMore) {
-        updateItems(Ts.ts(ts), hasMore);
+    public void updateItems(List<E> items, boolean hasMore) {
+        updateItems(Es.es(items), hasMore);
     }
 
-    public void updateItems(boolean hasMore, T... ts) {
-        updateItems(Ts.ts(ts), hasMore);
+    public void updateItems(boolean hasMore, E... items) {
+        updateItems(Es.es(items), hasMore);
     }
 
-    public void updateItems(BaseTs<T> ts, boolean hasMore) {
+    public void updateItems(CoreEs<E, ?> items, boolean hasMore) {
 
         if (onUpdate != null)
             onUpdate.onUpdate();
 
-        this.hasMore = CountTool.count(ts) > 0 && hasMore;
+        this.hasMore = CountTool.count(items) > 0 && hasMore;
 
-        if (this.ts == null)
-            this.ts = new BaseTs<>();
+        if (this.es == null)
+            this.es = new BaseEs<>();
         if (page == startPage()) {
-            this.ts.clear();
+            this.es.clear();
         }
-        if (CountTool.count(ts) > 0)
-            this.ts.add(ts);
+        if (CountTool.count(items) > 0) {
+            this.es.addAllKindsOfEs(items);
+        }
 
         notifyDataSetChanged();
 
@@ -130,16 +130,16 @@ public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T> extends C
     }
 
     //获取数据
-    public T getItem(int index) {
+    public E getItem(int index) {
         try {
-            return ts.get(index);
+            return this.es.getByIndex(index);
         } catch (Exception e) {
             return null;
         }
     }
 
-    public BaseTs<T> getItems() {
-        return this.ts;
+    public BaseEs<E> getItems() {
+        return this.es;
     }
 
     //获取hasMore
@@ -199,7 +199,7 @@ public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T> extends C
 
     //处理<<普通>>条目
     protected void onBindVH(CoreAdapterVH vh, int position) {
-        onBindVH((VH) vh, position, ts.get(position));
+        onBindVH((VH) vh, position, this.es.getByIndex(position));
     }
 
     //设置并获取初始页数
@@ -210,7 +210,7 @@ public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T> extends C
     //获取条目数量
     @Override
     public int getItemCount() {
-        return CountTool.count(ts) + 1;
+        return CountTool.count(this.es) + 1;
     }
 
     /************************************************
@@ -219,7 +219,7 @@ public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T> extends C
      *
      ************************************************/
     //处理<<普通>>条目
-    protected abstract void onBindVH(VH vh, int position, T t);
+    protected abstract void onBindVH(VH vh, int position, E e);
 
     //加载更多
     protected abstract void loadMore(int page);

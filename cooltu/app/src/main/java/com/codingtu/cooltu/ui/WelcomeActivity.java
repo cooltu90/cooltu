@@ -17,6 +17,7 @@ import com.codingtu.cooltu.ui.base.BaseWelcomeActivity;
 
 import core.actbase.WelcomeActivityBase;
 import core.actres.WelcomeActivityRes;
+import core.tools.ActStart;
 
 @To(WelcomeActivityRes.class)
 @ToRes(R.layout.activity_welcome)
@@ -32,12 +33,7 @@ public class WelcomeActivity extends WelcomeActivityBase {
 
     @ClickView(R.id.showBt)
     public void showBtClick() {
-        BaseEs<User> es = Es.es();
-        es.add(new User("name1", 11));
-        es.add(new User("name2", 12));
-        es.add(new User("name3", 13));
-        es.add(new User("name4", 14));
-        es.add(new User("name5", 15));
+        ActStart.stepOneActivity(getAct());
     }
 
 

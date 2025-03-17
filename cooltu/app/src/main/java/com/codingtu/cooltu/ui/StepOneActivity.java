@@ -18,8 +18,9 @@ public class StepOneActivity extends StepOneActivityBase {
     @Override
     public void onCreateComplete() {
         super.onCreateComplete();
-        StringEs stringEs = Es.strs("cat1", "cat2", "cat3");
-        catAdapter.updateItems(stringEs);
+//        StringEs stringEs = Es.strs("cat1", "cat2", "cat3");
+//        catAdapter.updateItems(stringEs);
+        catAdapter.updateItems("dog1", "dog2", "dog3");
     }
 
     @Override

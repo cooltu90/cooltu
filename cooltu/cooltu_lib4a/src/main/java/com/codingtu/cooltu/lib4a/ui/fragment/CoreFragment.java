@@ -8,7 +8,7 @@ import com.codingtu.cooltu.lib4a.tools.ToastTool;
 import com.codingtu.cooltu.lib4a.uicore.CoreFragmentInterface;
 import com.codingtu.cooltu.lib4j.destory.Destroys;
 import com.codingtu.cooltu.lib4j.destory.OnDestroy;
-import com.codingtu.cooltu.lib4j.ts.Ts;
+import com.codingtu.cooltu.lib4j.es.Es;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +68,7 @@ public class CoreFragment extends Fragment implements CoreFragmentInterface, Des
     }
 
     public void destroyAll() {
-        Ts.ls(getOnDestroys(), new Ts.EachTs<OnDestroy>() {
+        Es.es(getOnDestroys()).ls(new Es.EachEs<OnDestroy>() {
             @Override
             public boolean each(int position, OnDestroy onDestroy) {
                 onDestroy.destroy();

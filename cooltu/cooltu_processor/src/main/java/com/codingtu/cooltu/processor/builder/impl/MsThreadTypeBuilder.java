@@ -4,7 +4,7 @@ import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.es.BaseEs;
 import com.codingtu.cooltu.lib4j.es.Es;
-import com.codingtu.cooltu.lib4j.ts.pack.IntValue;
+import com.codingtu.cooltu.lib4j.data.value.IntValue;
 import com.codingtu.cooltu.processor.builder.base.MsThreadTypeBuilderBase;
 
 public class MsThreadTypeBuilder extends MsThreadTypeBuilderBase {

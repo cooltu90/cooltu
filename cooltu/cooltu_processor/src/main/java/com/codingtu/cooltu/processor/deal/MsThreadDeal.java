@@ -7,7 +7,7 @@ import com.codingtu.cooltu.lib4j.es.Es;
 import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
-import com.codingtu.cooltu.lib4j.ts.pack.BoolValue;
+import com.codingtu.cooltu.lib4j.data.value.BoolValue;
 import com.codingtu.cooltu.processor.annotation.msthread.MainThread;
 import com.codingtu.cooltu.processor.annotation.msthread.MsThread;
 import com.codingtu.cooltu.processor.annotation.msthread.SubThread;

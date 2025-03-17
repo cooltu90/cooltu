@@ -1,6 +1,5 @@
 package com.codingtu.cooltu.lib4j.tools;
 
-import com.codingtu.cooltu.lib4j.ts.CoreTs;
 import com.codingtu.cooltu.lib4j.es.CoreEs;
 
 import java.util.Collection;
@@ -15,10 +14,6 @@ public class CountTool {
 
     public static int count(CoreEs vs) {
         return vs == null ? 0 : vs.count();
-    }
-
-    public static int count(CoreTs ts) {
-        return ts == null ? 0 : ts.count();
     }
 
     public static int count(Collection cs) {
@@ -78,12 +73,6 @@ public class CountTool {
      * isNull 判断是否为空
      *
      **************************************************/
-
-
-    public static boolean isNull(CoreTs ts) {
-        return count(ts) <= 0;
-    }
-
     public static boolean isNull(CoreEs ts) {
         return count(ts) <= 0;
     }
