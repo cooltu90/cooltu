@@ -50,6 +50,12 @@
         <activity
             android:name="com.codingtu.cooltu.ui.SubThreadActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.codingtu.cooltu.ui.FromActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.codingtu.cooltu.ui.FromBaseActivity"
+            android:screenOrientation="portrait" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

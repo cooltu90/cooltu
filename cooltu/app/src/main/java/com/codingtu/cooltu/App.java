@@ -29,7 +29,7 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
 @DefaultMenuDialogLayout(layout = R.layout.dialog_menu, item = R.layout.dialog_menu_item)
 @DefaultCode("CODE_TEST")
 @CreateAct(
-        name = "sub_thread",
+        name = "from_base",
         packages = "com.codingtu.cooltu.ui",
         baseClass = BaseActivity.class,
         layoutTemp = R.layout.layout_temp
