@@ -7,6 +7,7 @@ public class Net {
     private static final String ADD_OBJ2 = "addObj2Back";
     private static final String ADD_OBJ3 = "addObj3Back";
     private static final String ADD_OBJ4 = "addObj4Back";
+    private static final String DELETE_ITEM = "deleteItemBack";
     private static final String TEST_API_ADD_OBJ = "https://wwww.sddfsdfsd.com";
     private static final String TEST_API_ADD_OBJ1 = "https://wwww.sddfsdfsd.com";
     private static final String TEST_API_ADD_OBJ2 = "https://wwww.sddfsdfsd.com";
@@ -90,6 +91,17 @@ public class Net {
                     com.codingtu.cooltu.lib4a.net.NetTool.toJsonBody(jo.toJson())
             );
         }, ADD_OBJ4, com.codingtu.cooltu.lib4a.CoreConfigs.configs().getBaseUrl(), params);
+    }
+    public static com.codingtu.cooltu.lib4a.net.api.API deleteItem(java.lang.String id) {
+        core.net.params.DeleteItemParams params = new core.net.params.DeleteItemParams();
+        params.id = id;
+        return com.codingtu.cooltu.lib4a.net.NetTool.api((retrofit, ps) -> {
+            core.net.params.DeleteItemParams paramsGet = (core.net.params.DeleteItemParams) ps;
+
+            return retrofit.create(core.net.api.TestApiService.class).deleteItem(
+                    paramsGet.id
+            );
+        }, DELETE_ITEM, com.codingtu.cooltu.lib4a.CoreConfigs.configs().getBaseUrl(), params);
     }
 
 

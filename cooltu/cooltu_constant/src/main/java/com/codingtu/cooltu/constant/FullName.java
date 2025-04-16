@@ -121,6 +121,7 @@ public class FullName {
     public static final String RETROFIT_GET = "retrofit2.http.GET";
     public static final String RETROFIT_POST = "retrofit2.http.POST";
     public static final String RETROFIT_PUT = "retrofit2.http.PUT";
+    public static final String RETROFIT_DELETE = "retrofit2.http.DELETE";
     public static final String RETROFIT_HEADER = "retrofit2.http.Header";
     public static final String RETROFIT_PATH = "retrofit2.http.Path";
     public static final String RETROFIT_QUERY = "retrofit2.http.Query";

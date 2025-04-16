@@ -4,6 +4,7 @@ import com.codingtu.cooltu.lib4j.data.java.JavaInfo;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.net.Apis;
+import com.codingtu.cooltu.processor.annotation.net.method.DELETE;
 import com.codingtu.cooltu.processor.annotation.net.method.GET;
 import com.codingtu.cooltu.processor.annotation.net.method.POST;
 import com.codingtu.cooltu.processor.annotation.net.method.PUT;
@@ -13,6 +14,7 @@ import com.codingtu.cooltu.processor.builder.impl.NetBackBuilder;
 import com.codingtu.cooltu.processor.builder.impl.NetBuilder;
 import com.codingtu.cooltu.processor.builder.impl.NetParamsBuilder;
 import com.codingtu.cooltu.processor.deal.base.TypeBaseDeal;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.path.CurrentPath;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
@@ -49,6 +51,7 @@ public class NetDeal extends TypeBaseDeal {
                 GET get = ee.getAnnotation(GET.class);
                 POST post = ee.getAnnotation(POST.class);
                 PUT put = ee.getAnnotation(PUT.class);
+                DELETE delete = ee.getAnnotation(DELETE.class);
                 NetInfo netInfo = new NetInfo();
                 netInfo.methodName = ElementTools.simpleName(ee);
                 netInfo.apisBaseUrl = apis.baseUrl();
@@ -64,6 +67,10 @@ public class NetDeal extends TypeBaseDeal {
                     netInfo.methodValue = put.value();
                     netInfo.methodBaseUrl = put.baseUrl();
                     netInfo.isJsonBody = put.isJsonBody();
+                } else if (delete != null) {
+                    netInfo.methodValue = delete.value();
+                    netInfo.methodBaseUrl = delete.baseUrl();
+                    netInfo.isJsonBody = delete.isJsonBody();
                 }
                 netInfo.params = ee.getParameters();
 

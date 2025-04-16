@@ -5,6 +5,7 @@ import com.codingtu.cooltu.processor.annotation.net.Apis;
 import com.codingtu.cooltu.processor.annotation.net.Default;
 import com.codingtu.cooltu.processor.annotation.net.Param;
 import com.codingtu.cooltu.processor.annotation.net.ParamType;
+import com.codingtu.cooltu.processor.annotation.net.method.DELETE;
 import com.codingtu.cooltu.processor.annotation.net.method.GET;
 import com.codingtu.cooltu.processor.annotation.net.method.POST;
 import com.codingtu.cooltu.processor.annotation.net.method.PUT;
@@ -44,5 +45,8 @@ public interface TestApi {
     public String addObj4(
             @Param String id
     );
+
+    @DELETE("noise/noise")
+    public String deleteItem(@Param String id);
 
 }

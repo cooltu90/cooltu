@@ -9,10 +9,12 @@ import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.lib4j.ts.Ts;
 import com.codingtu.cooltu.processor.annotation.net.Param;
 import com.codingtu.cooltu.processor.annotation.net.ParamType;
+import com.codingtu.cooltu.processor.annotation.net.method.DELETE;
 import com.codingtu.cooltu.processor.annotation.net.method.GET;
 import com.codingtu.cooltu.processor.annotation.net.method.POST;
 import com.codingtu.cooltu.processor.annotation.net.method.PUT;
 import com.codingtu.cooltu.processor.builder.base.ApiServiceBuilderBase;
+import com.codingtu.cooltu.processor.lib.log.Logs;
 import com.codingtu.cooltu.processor.lib.tools.ElementTools;
 
 import java.util.ArrayList;
@@ -98,6 +100,12 @@ public class ApiServiceBuilder extends ApiServiceBuilderBase {
                 PUT putMethod = ee.getAnnotation(PUT.class);
                 if (putMethod != null) {
                     extracted(methodIndex, ee, putMethod.isJsonBody(), FullName.RETROFIT_PUT, putMethod.value());
+                }
+
+                DELETE deleteMethod = ee.getAnnotation(DELETE.class);
+                if (deleteMethod != null) {
+                    Logs.i("deleteMethod is not null");
+                    extracted(methodIndex, ee, deleteMethod.isJsonBody(), FullName.RETROFIT_DELETE, deleteMethod.value());
                 }
 
 
