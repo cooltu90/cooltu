@@ -13,4 +13,7 @@ public class CacheDMConfigs {
     @Cache(key = "id")
     public BaseTs<Weather> weatherTs;
 
+    @Cache
+    public Weather weather;
+
 }

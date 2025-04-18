@@ -41,23 +41,37 @@ public class CacheBuilder extends CacheBuilderBase {
                     String tag = cache.tag();
                     String key = cache.key();
                     KV<String, String> fieldKv = ElementTools.getFieldKv(ve);
-                    if(StringTool.isBlank(tag)){
-                        tag=fieldKv.v;
+                    if (StringTool.isBlank(tag)) {
+                        tag = fieldKv.v;
                     }
 
 
                     String methodName = ConvertTool.toClassType(fieldKv.v);
 
-                    addLnTag(methods, "    public static void cache[User](Destroys destroys, String [userId], [com.codingtu.cooltu.bean.User] [user]) {\n" +
-                                    "        BaseCacheDM.cache(destroys, \"[user]\" + [userId], [user]);\n" +
-                                    "    }\n" +
-                                    "\n" +
-                                    "    public static [com.codingtu.cooltu.bean.User] get[User](String [userId]) {\n" +
-                                    "        return BaseCacheDM.getCache(\"[user]\" + [userId]);\n" +
-                                    "    }",
-                            methodName, key, fieldKv.k, fieldKv.v, tag, key, fieldKv.v, fieldKv.k, methodName, key, tag, key
-                    );
+                    if (StringTool.isBlank(key)) {
+                        addLnTag(methods, "");
+                        addLnTag(methods, "    public static void cache[Weather](Destroys destroys, [Weather] [weather]) {", methodName, fieldKv.k, fieldKv.v);
+                        addLnTag(methods, "        BaseCacheDM.cache(destroys, \"[weather]\", [weather]);", tag, fieldKv.v);
+                        addLnTag(methods, "    }");
+                        addLnTag(methods, "");
+                        addLnTag(methods, "    public static [Weather] get[Weather]() {", fieldKv.k, methodName);
+                        addLnTag(methods, "        return BaseCacheDM.getCache(\"[weather]\");", tag);
+                        addLnTag(methods, "    }");
 
+                    } else {
+                        addLnTag(methods, "    public static void cache[User](Destroys destroys, String [userId], [User] [user]) {\n" +
+                                        "        BaseCacheDM.cache(destroys, \"[user]\" + [userId], [user]);\n" +
+                                        "    }\n" +
+                                        "\n" +
+                                        "    public static [User] get[User](String [userId]) {\n" +
+                                        "        return BaseCacheDM.getCache(\"[user]\" + [userId]);\n" +
+                                        "    }",
+                                methodName, key, fieldKv.k, fieldKv.v,
+                                tag, key, fieldKv.v,
+                                fieldKv.k, methodName, key,
+                                tag, key
+                        );
+                    }
                 }
 
                 return false;

@@ -20,4 +20,12 @@ public class CacheDM {
         return BaseCacheDM.getCache("weatherTs" + id);
     }
 
+    public static void cacheWeather(Destroys destroys, com.codingtu.cooltu.bean.Weather weather) {
+        BaseCacheDM.cache(destroys, "weather", weather);
+    }
+
+    public static com.codingtu.cooltu.bean.Weather getWeather() {
+        return BaseCacheDM.getCache("weather");
+    }
+
 }

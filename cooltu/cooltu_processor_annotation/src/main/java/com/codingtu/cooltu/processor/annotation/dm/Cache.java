@@ -7,6 +7,6 @@ import java.lang.annotation.RetentionPolicy;
 public @interface Cache {
     String tag() default "";
 
-    String key();
+    String key() default "";
 
 }
