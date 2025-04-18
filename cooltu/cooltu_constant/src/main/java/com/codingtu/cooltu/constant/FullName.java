@@ -87,6 +87,7 @@ public class FullName {
     public static final String NET_BACK = Pkg.LIB4A_NET + ".netback.NetBack";
     //core_tools
     public static final String PASS = Pkg.CORE_TOOLS + ".Pass";
+    public static final String CACHE_DM = Pkg.CORE_TOOLS + ".CacheDM";
     public static final String ACT_START = Pkg.CORE_TOOLS + ".ActStart";
     public static final String NET = Pkg.CORE_NET + ".Net";
     public static final String CODE_4_REQUEST = Pkg.CORE_TOOLS + ".Code4Request";

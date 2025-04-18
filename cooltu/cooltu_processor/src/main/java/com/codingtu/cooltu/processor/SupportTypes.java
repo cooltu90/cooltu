@@ -4,6 +4,7 @@ import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
 import com.codingtu.cooltu.processor.annotation.create.CreateFragment;
+import com.codingtu.cooltu.processor.annotation.dm.Cache;
 import com.codingtu.cooltu.processor.annotation.msthread.MsThread;
 import com.codingtu.cooltu.processor.annotation.net.Apis;
 import com.codingtu.cooltu.processor.annotation.res.ResFor;
@@ -18,6 +19,7 @@ import com.codingtu.cooltu.processor.annotation.ui.DefaultToastDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.FragmentBase;
 import com.codingtu.cooltu.processor.annotation.ui.VH;
 import com.codingtu.cooltu.processor.deal.ActBaseDeal;
+import com.codingtu.cooltu.processor.deal.CacheDeal;
 import com.codingtu.cooltu.processor.deal.CreateActDeal;
 import com.codingtu.cooltu.processor.deal.CreateAdapterDeal;
 import com.codingtu.cooltu.processor.deal.CreateFragmentDeal;
@@ -60,7 +62,8 @@ public class SupportTypes {
                 Apis.class, NetDeal.class,
                 CreateAct.class, CreateActDeal.class,
                 CreateAdapter.class, CreateAdapterDeal.class,
-                CreateFragment.class, CreateFragmentDeal.class
+                CreateFragment.class, CreateFragmentDeal.class,
+                Cache.class, CacheDeal.class
         };
     }
 
