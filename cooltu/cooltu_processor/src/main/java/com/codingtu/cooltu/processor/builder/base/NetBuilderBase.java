@@ -12,6 +12,7 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
     protected java.util.Map<String, Integer> methodCounts;
     protected StringBuilder methodSb;
     protected com.codingtu.cooltu.lib4j.data.map.ListValueMap<String, String> method;
+    protected StringBuilder ioMethods;
 
     public NetBuilderBase(com.codingtu.cooltu.lib4j.data.java.JavaInfo info) {
         super(info);
@@ -24,6 +25,7 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
         methodCounts = new java.util.HashMap<>();
         methodSb = map.get("method");
         method = new com.codingtu.cooltu.lib4j.data.map.ListValueMap<>();
+        ioMethods = map.get("ioMethods");
 
     }
 
@@ -124,9 +126,16 @@ public abstract class NetBuilderBase extends com.codingtu.cooltu.processor.build
         List<String> lines = new ArrayList<>();
         lines.add("package [[pkg]];");
         lines.add("");
+        lines.add("import com.codingtu.cooltu.lib4a.net.bean.CoreSendParams;");
+        lines.add("");
+        lines.add("import okhttp3.ResponseBody;");
+        lines.add("import retrofit2.adapter.rxjava2.Result;");
+        lines.add("");
         lines.add("public class Net {");
         lines.add("[[field]]");
         lines.add("[[method]]");
+        lines.add("");
+        lines.add("[[ioMethods]]");
         lines.add("");
         lines.add("}");
         lines.add("");

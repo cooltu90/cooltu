@@ -1,5 +1,10 @@
 package core.net;
 
+import com.codingtu.cooltu.lib4a.net.bean.CoreSendParams;
+
+import okhttp3.ResponseBody;
+import retrofit2.adapter.rxjava2.Result;
+
 public class Net {
     private static final String GET_OBJ = "getObjBack";
     private static final String ADD_OBJ = "addObjBack";
@@ -8,6 +13,7 @@ public class Net {
     private static final String ADD_OBJ3 = "addObj3Back";
     private static final String ADD_OBJ4 = "addObj4Back";
     private static final String DELETE_ITEM = "deleteItemBack";
+    private static final String DELETE_ITEM11 = "deleteItem11Back";
     private static final String TEST_API_ADD_OBJ = "https://wwww.sddfsdfsd.com";
     private static final String TEST_API_ADD_OBJ1 = "https://wwww.sddfsdfsd.com";
     private static final String TEST_API_ADD_OBJ2 = "https://wwww.sddfsdfsd.com";
@@ -102,6 +108,103 @@ public class Net {
                     paramsGet.id
             );
         }, DELETE_ITEM, com.codingtu.cooltu.lib4a.CoreConfigs.configs().getBaseUrl(), params);
+    }
+    public static com.codingtu.cooltu.lib4a.net.api.API deleteItem11(java.lang.String id) {
+        core.net.params.DeleteItem11Params params = new core.net.params.DeleteItem11Params();
+        params.id = id;
+        return com.codingtu.cooltu.lib4a.net.NetTool.api((retrofit, ps) -> {
+            core.net.params.DeleteItem11Params paramsGet = (core.net.params.DeleteItem11Params) ps;
+
+            return retrofit.create(core.net.api.TestApiService.class).deleteItem11(
+                    paramsGet.id
+            );
+        }, DELETE_ITEM11, com.codingtu.cooltu.lib4a.CoreConfigs.configs().getBaseUrl(), params);
+    }
+
+
+
+    public static com.codingtu.cooltu.bean.User getObjInSubThread(java.lang.String id, java.lang.String order) {
+        com.codingtu.cooltu.lib4j.ts.pack.TValue<com.codingtu.cooltu.bean.User> apiResult = com.codingtu.cooltu.lib4j.ts.pack.TValue.obtain();
+        getObj(id, order).io(new core.net.back.GetObjBack() {
+            @Override
+            public void accept(String code, Result<ResponseBody> result, CoreSendParams params, java.util.List objs) {
+                super.accept(code, result, params, objs);
+                apiResult.value = user;
+            }
+        });
+        return apiResult.value;
+    }
+
+    public static java.util.List<com.codingtu.cooltu.bean.User> addObjInSubThread(java.lang.String name, int age) {
+        com.codingtu.cooltu.lib4j.ts.pack.TValue<java.util.List<com.codingtu.cooltu.bean.User>> apiResult = com.codingtu.cooltu.lib4j.ts.pack.TValue.obtain();
+        addObj(name, age).io(new core.net.back.AddObjBack() {
+            @Override
+            public void accept(String code, Result<ResponseBody> result, CoreSendParams params, java.util.List objs) {
+                super.accept(code, result, params, objs);
+                apiResult.value = users;
+            }
+        });
+        return apiResult.value;
+    }
+
+    public static java.lang.String addObj1InSubThread(com.codingtu.cooltu.bean.User user) {
+        com.codingtu.cooltu.lib4j.ts.pack.TValue<java.lang.String> apiResult = com.codingtu.cooltu.lib4j.ts.pack.TValue.obtain();
+        addObj1(user).io(new core.net.back.AddObj1Back() {
+            @Override
+            public void accept(String code, Result<ResponseBody> result, CoreSendParams params, java.util.List objs) {
+                super.accept(code, result, params, objs);
+                apiResult.value = json;
+            }
+        });
+        return apiResult.value;
+    }
+
+    public static java.lang.String addObj2InSubThread(java.lang.String name, int age, java.lang.String parent) {
+        com.codingtu.cooltu.lib4j.ts.pack.TValue<java.lang.String> apiResult = com.codingtu.cooltu.lib4j.ts.pack.TValue.obtain();
+        addObj2(name, age, parent).io(new core.net.back.AddObj2Back() {
+            @Override
+            public void accept(String code, Result<ResponseBody> result, CoreSendParams params, java.util.List objs) {
+                super.accept(code, result, params, objs);
+                apiResult.value = json;
+            }
+        });
+        return apiResult.value;
+    }
+
+    public static java.lang.String addObj3InSubThread(java.lang.String name) {
+        com.codingtu.cooltu.lib4j.ts.pack.TValue<java.lang.String> apiResult = com.codingtu.cooltu.lib4j.ts.pack.TValue.obtain();
+        addObj3(name).io(new core.net.back.AddObj3Back() {
+            @Override
+            public void accept(String code, Result<ResponseBody> result, CoreSendParams params, java.util.List objs) {
+                super.accept(code, result, params, objs);
+                apiResult.value = json;
+            }
+        });
+        return apiResult.value;
+    }
+
+    public static java.lang.String addObj4InSubThread(java.lang.String id) {
+        com.codingtu.cooltu.lib4j.ts.pack.TValue<java.lang.String> apiResult = com.codingtu.cooltu.lib4j.ts.pack.TValue.obtain();
+        addObj4(id).io(new core.net.back.AddObj4Back() {
+            @Override
+            public void accept(String code, Result<ResponseBody> result, CoreSendParams params, java.util.List objs) {
+                super.accept(code, result, params, objs);
+                apiResult.value = json;
+            }
+        });
+        return apiResult.value;
+    }
+
+    public static java.lang.String deleteItemInSubThread(java.lang.String id) {
+        com.codingtu.cooltu.lib4j.ts.pack.TValue<java.lang.String> apiResult = com.codingtu.cooltu.lib4j.ts.pack.TValue.obtain();
+        deleteItem(id).io(new core.net.back.DeleteItemBack() {
+            @Override
+            public void accept(String code, Result<ResponseBody> result, CoreSendParams params, java.util.List objs) {
+                super.accept(code, result, params, objs);
+                apiResult.value = json;
+            }
+        });
+        return apiResult.value;
     }
 
 

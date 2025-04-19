@@ -45,5 +45,10 @@ public interface TestApiService {
             @retrofit2.http.Query("id") java.lang.String id
     );
 
+    @retrofit2.http.DELETE("noise/noise11")
+    Flowable<Result<ResponseBody>> deleteItem11(
+            @retrofit2.http.Query("id") java.lang.String id
+    );
+
 
 }

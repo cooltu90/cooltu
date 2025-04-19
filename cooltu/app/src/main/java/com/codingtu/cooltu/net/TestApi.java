@@ -49,4 +49,7 @@ public interface TestApi {
     @DELETE("noise/noise")
     public String deleteItem(@Param String id);
 
+    @DELETE("noise/noise11")
+    public void deleteItem11(@Param String id);
+
 }

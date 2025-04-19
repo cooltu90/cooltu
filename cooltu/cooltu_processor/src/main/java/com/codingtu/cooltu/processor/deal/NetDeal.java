@@ -53,6 +53,7 @@ public class NetDeal extends TypeBaseDeal {
                 PUT put = ee.getAnnotation(PUT.class);
                 DELETE delete = ee.getAnnotation(DELETE.class);
                 NetInfo netInfo = new NetInfo();
+                netInfo.ee = ee;
                 netInfo.methodName = ElementTools.simpleName(ee);
                 netInfo.apisBaseUrl = apis.baseUrl();
                 netInfo.apisName = ElementTools.simpleName(te);

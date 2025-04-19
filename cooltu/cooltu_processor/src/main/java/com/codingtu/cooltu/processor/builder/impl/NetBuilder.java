@@ -4,6 +4,7 @@ import com.codingtu.cooltu.constant.FullName;
 import com.codingtu.cooltu.constant.Pkg;
 import com.codingtu.cooltu.constant.Suffix;
 import com.codingtu.cooltu.lib4j.data.kv.KV;
+import com.codingtu.cooltu.lib4j.tools.ClassTool;
 import com.codingtu.cooltu.lib4j.tools.ConvertTool;
 import com.codingtu.cooltu.lib4j.tools.CountTool;
 import com.codingtu.cooltu.lib4j.tools.StringTool;
@@ -124,6 +125,56 @@ public class NetBuilder extends NetBuilderBase {
                 return false;
             }
         });
+        Ts.ts(infos).ls(new Ts.EachTs<NetInfo>() {
+            @Override
+            public boolean each(int position, NetInfo netInfo) {
+
+                Params params = Params.obtain(null);
+                Ts.ls(netInfo.params, (paramIndex, ve) -> {
+                    Default aDefault = ve.getAnnotation(Default.class);
+                    Param param = ve.getAnnotation(Param.class);
+                    KV<String, String> kv = ElementTools.getFieldKv(ve);
+                    if (aDefault == null) {
+                        params.add(kv);
+                    }
+                    return false;
+                });
+
+                String typeName = netInfo.ee.getReturnType().toString();
+
+                String backTypeName = typeName;
+                boolean isVoid = false;
+                String name = null;
+                if (ClassTool.isType(typeName, void.class, Void.class)) {
+                    backTypeName = "void";
+                    isVoid = true;
+                } else if (ClassTool.isList(typeName)) {
+                    String beanType = StringTool.getSub(typeName, "List", "<", ">");
+                    name = ConvertTool.toMethodType(CurrentPath.javaInfo(beanType).name) + "s";
+                } else if (ClassTool.isString(typeName)) {
+                    name = "json";
+                } else {
+                    name = ConvertTool.toMethodType(CurrentPath.javaInfo(typeName).name);
+                }
+
+
+                if (!isVoid) {
+                    addLnTag(ioMethods, "");
+                    addLnTag(ioMethods, "    public static [String] [deleteItem]InSubThread([java.lang.String id]) {", backTypeName, netInfo.methodName, params.getMethodParams());
+                    addLnTag(ioMethods, "        com.codingtu.cooltu.lib4j.ts.pack.TValue<[String]> apiResult = com.codingtu.cooltu.lib4j.ts.pack.TValue.obtain();", backTypeName);
+                    addLnTag(ioMethods, "        [deleteItem]([id]).io(new core.net.back.[DeleteItem]Back() {", netInfo.methodName, params.getParams(), ConvertTool.toClassType(netInfo.methodName));
+                    addLnTag(ioMethods, "            @Override");
+                    addLnTag(ioMethods, "            public void accept(String code, Result<ResponseBody> result, CoreSendParams params, java.util.List objs) {");
+                    addLnTag(ioMethods, "                super.accept(code, result, params, objs);");
+                    addLnTag(ioMethods, "                apiResult.value = [null];", name);
+                    addLnTag(ioMethods, "            }");
+                    addLnTag(ioMethods, "        });");
+                    addLnTag(ioMethods, "        return apiResult.value;");
+                    addLnTag(ioMethods, "    }");
+                }
+                return false;
+            }
+        });
     }
 
     private void addField(String name, String value) {
@@ -136,6 +187,11 @@ public class NetBuilder extends NetBuilderBase {
 }
 /* model_temp_start
 package [[pkg]];
+
+import com.codingtu.cooltu.lib4a.net.bean.CoreSendParams;
+
+import okhttp3.ResponseBody;
+import retrofit2.adapter.rxjava2.Result;
 
 public class Net {
                                                                                                     [<sub>][for][field]
@@ -168,6 +224,8 @@ public class Net {
         }, [methodTag], [baseUrl], [params]);
     }
                                                                                                     [<sub>][for][method]
+
+[[ioMethods]]
 
 }
 

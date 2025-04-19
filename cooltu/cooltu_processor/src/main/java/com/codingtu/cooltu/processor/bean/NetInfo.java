@@ -2,6 +2,7 @@ package com.codingtu.cooltu.processor.bean;
 
 import java.util.List;
 
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 
 public class NetInfo {
@@ -13,4 +14,5 @@ public class NetInfo {
     public String methodValue;
     public List<? extends VariableElement> params;
     public boolean isJsonBody;
+    public ExecutableElement ee;
 }
