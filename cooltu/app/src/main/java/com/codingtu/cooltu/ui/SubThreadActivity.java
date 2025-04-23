@@ -42,7 +42,6 @@ public class SubThreadActivity extends SubThreadActivityBase {
         if (sendMessageForDealToast(str)) {
             return;
         }
-        toast("xxx");
     }
 
     @MainThread

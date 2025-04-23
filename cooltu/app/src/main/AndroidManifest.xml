@@ -40,6 +40,7 @@
 
             </meta-data>
         </provider>
+
         <activity
             android:name="com.codingtu.cooltu.ui.StepOneActivity"
             android:screenOrientation="portrait" />
@@ -49,9 +50,6 @@
 
         <activity
             android:name="com.codingtu.cooltu.ui.SubThreadActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.codingtu.cooltu.ui.TestDelete1Activity"
             android:screenOrientation="portrait" />
     </application>
 

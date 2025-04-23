@@ -23,7 +23,6 @@ public class FragmentBaseBuilder extends FragmentBaseBuilderBase implements UiBa
 
     public FragmentBaseBuilder(JavaInfo info) {
         super(info);
-        LibLogs.i("xxx");
         uiBaseBuilder = new UiBaseBuilder(this) {
             @Override
             protected BaseTools.GetThis<UiBaseBuilder> getChildGetter() {

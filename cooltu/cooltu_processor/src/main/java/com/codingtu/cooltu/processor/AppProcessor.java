@@ -111,6 +111,9 @@ public class AppProcessor extends AbstractProcessor {
                 }
             });
             BuilderMap.create();
+
+            ((App) App.APP).deleteAct();
+
         } catch (Exception e) {
             LibLogs.i(e);
             throw new RuntimeException("报错了");

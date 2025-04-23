@@ -30,7 +30,7 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
 @DefaultMenuDialogLayout(layout = R.layout.dialog_menu, item = R.layout.dialog_menu_item)
 @DefaultCode("CODE_TEST")
 @CreateAct(
-        name = "test_delete_1",
+        name = "welcome",
         packages = "com.codingtu.cooltu.ui",
         baseClass = BaseActivity.class,
         layoutTemp = R.layout.layout_temp
@@ -48,10 +48,10 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
 //        layoutTemp = R.layout.layout_temp
 //)
 
-@DeleteAct(
-        name = "test_delete_1",
-        packages = "com.codingtu.cooltu.ui"
-)
+//@DeleteAct(
+//        name = "test_delete_1",
+//        packages = "com.codingtu.cooltu.ui"
+//)
 public class App extends CoreApp {
     @Override
     public CoreConfigs createConfigs() {
