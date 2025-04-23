@@ -39,5 +39,10 @@ public class ActStart {
         intent.putExtra(Pass.XX, xx);
         com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.WELCOME_ACTIVITY);
     }
+    public static final void testDelete1Activity(Activity act) {
+        Intent intent = new Intent(act, com.codingtu.cooltu.ui.TestDelete1Activity.class);
+        intent.putExtra(Pass.FROM_ACT, act.getClass().getCanonicalName());
+        com.codingtu.cooltu.lib4a.tools.ActTool.startActivityForResult(act, intent, Code4Request.TEST_DELETE1_ACTIVITY);
+    }
 
 }

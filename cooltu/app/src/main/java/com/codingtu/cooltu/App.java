@@ -8,6 +8,7 @@ import com.codingtu.cooltu.lib4a.ui.fragment.CoreFragment;
 import com.codingtu.cooltu.processor.annotation.ModuleInfo;
 import com.codingtu.cooltu.processor.annotation.create.CreateAct;
 import com.codingtu.cooltu.processor.annotation.create.CreateAdapter;
+import com.codingtu.cooltu.processor.annotation.delete.DeleteAct;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultCode;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultDialogLayout;
 import com.codingtu.cooltu.processor.annotation.ui.DefaultEditDialogLayout;
@@ -29,7 +30,7 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
 @DefaultMenuDialogLayout(layout = R.layout.dialog_menu, item = R.layout.dialog_menu_item)
 @DefaultCode("CODE_TEST")
 @CreateAct(
-        name = "sub_thread",
+        name = "test_delete_1",
         packages = "com.codingtu.cooltu.ui",
         baseClass = BaseActivity.class,
         layoutTemp = R.layout.layout_temp
@@ -46,6 +47,11 @@ import com.codingtu.cooltu.ui.base.BaseActivity;
 //        baseClass = CoreFragment.class,
 //        layoutTemp = R.layout.layout_temp
 //)
+
+@DeleteAct(
+        name = "test_delete_1",
+        packages = "com.codingtu.cooltu.ui"
+)
 public class App extends CoreApp {
     @Override
     public CoreConfigs createConfigs() {
