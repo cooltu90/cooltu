@@ -6,6 +6,7 @@ import com.codingtu.cooltu.R;
 import com.codingtu.cooltu.form.TestCallBack;
 import com.codingtu.cooltu.lib4a.cryption.BaseRSA;
 import com.codingtu.cooltu.lib4a.log.Logs;
+import com.codingtu.cooltu.lib4j.tools.StringTool;
 import com.codingtu.cooltu.processor.annotation.net.NetBack;
 import com.codingtu.cooltu.processor.annotation.tools.To;
 import com.codingtu.cooltu.processor.annotation.tools.ToRes;
@@ -34,6 +35,8 @@ public class WelcomeActivity extends WelcomeActivityBase {
 
     @ClickView(R.id.showBt)
     public void showBtClick() {
+        boolean contains = StringTool.contains(true, "Xabc", 'A');
+        toast("contains:"+contains);
     }
 
 

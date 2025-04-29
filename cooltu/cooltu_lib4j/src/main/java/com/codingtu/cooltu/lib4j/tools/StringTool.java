@@ -324,12 +324,33 @@ public class StringTool {
      *
      **************************************************/
     public static boolean contains(String str, char c) {
+        return contains(false, str, c);
+    }
+
+    public static boolean contains(boolean isIgnoreCase, String str, char c) {
         if (StringTool.isBlank(str)) {
             return false;
         }
+        char cNew = c;
+        if (isIgnoreCase) {
+            if (CharTool.isLower(c)) {
+                cNew = ConvertTool.toUpper(c);
+            } else if (CharTool.isUpper(c)) {
+                cNew = ConvertTool.toLower(c);
+            } else {
+                isIgnoreCase = false;
+            }
+        }
+
         for (int i = 0; i < str.length(); i++) {
-            if (c == str.charAt(i)) {
-                return true;
+            if (isIgnoreCase) {
+                if (c == str.charAt(i) || cNew == str.charAt(i)) {
+                    return true;
+                }
+            } else {
+                if (c == str.charAt(i)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -368,7 +389,12 @@ public class StringTool {
         return getColorfulStr(str, keyword, defaultColor, lightColor);
     }
 
-    public static String getColorfulStrStrictMode(String str, String keyword, String defaultColor, String lightColor) {
+    public static String getColorfulStrStrictMode(String str, String keyword,
+                                                  String defaultColor, String lightColor) {
+        return getColorfulStrStrictMode(false, str, keyword, defaultColor, lightColor);
+    }
+
+    public static String getColorfulStrStrictMode(boolean isIgnoreCase, String str, String keyword, String defaultColor, String lightColor) {
         if (isBlank(str)) {
             return null;
         }
@@ -379,20 +405,24 @@ public class StringTool {
 
         for (int i = 0; i < keyword.length(); i++) {
             char key = keyword.charAt(i);
-            if (!contains(str, key)) {
+            if (!contains(isIgnoreCase, str, key)) {
                 return null;
             }
         }
-        return getColorfulStr(str, keyword, defaultColor, lightColor);
+        return getColorfulStr(isIgnoreCase, str, keyword, defaultColor, lightColor);
     }
 
     private static String getColorfulStr(String str, String keyword, String defaultColor, String lightColor) {
+        return getColorfulStr(false, str, keyword, defaultColor, lightColor);
+    }
+
+    private static String getColorfulStr(boolean isIgnoreCase, String str, String keyword, String defaultColor, String lightColor) {
         StringBuilder sb = new StringBuilder();
 
         int length = str.length();
         char c = str.charAt(0);
         boolean isContains = false;
-        if (contains(keyword, c)) {
+        if (contains(isIgnoreCase, keyword, c)) {
             isContains = true;
         }
         if (length == 1) {
@@ -402,7 +432,7 @@ public class StringTool {
         sub.append(c);
         for (int i = 1; i < length; i++) {
             c = str.charAt(i);
-            if (contains(keyword, c)) {
+            if (contains(isIgnoreCase,keyword, c)) {
                 if (!isContains) {
                     //上一个不包含
                     String colorStr = getColorfulStr(sub.toString(), defaultColor);
