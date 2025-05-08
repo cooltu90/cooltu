@@ -36,7 +36,6 @@ public class WelcomeActivity extends WelcomeActivityBase {
     @ClickView(R.id.showBt)
     public void showBtClick() {
         boolean contains = StringTool.contains(true, "Xabc", 'A');
-        toast("contains:"+contains);
     }
 
 

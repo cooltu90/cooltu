@@ -2,14 +2,12 @@ package core.actbase;
 
 import android.view.View;
 
-import com.codingtu.cooltu.constant.Suffix;
-
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
-public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.BaseWelcomeActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI {
+public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.BaseWelcomeActivity implements View.OnClickListener, View.OnLongClickListener, com.codingtu.cooltu.lib4a.net.netback.NetBackI{
     protected com.codingtu.cooltu.form.TestCallBack testCallBack;
     protected java.lang.String testName;
     protected int textColor;
@@ -41,7 +39,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         isTest = core.tools.Pass.isTest(getIntent());
 
 
-        String nowBaseClassName = getClass().getSimpleName() + com.codingtu.cooltu.constant.Suffix.ACT_BASE;
+        String nowBaseClassName = getClass().getSimpleName() + "Base";
         if (nowBaseClassName.equals(baseClassName)) {
             onCreateComplete();
         }
@@ -52,6 +50,8 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         super.onCreateComplete();
 
         showBt.setOnClickListener(this);
+
+
 
 
     }
@@ -81,11 +81,8 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         }
     }
 
-    protected void showBtClick() throws Exception {
-    }
-
-    protected void reportTvClick() throws Exception {
-    }
+    protected void showBtClick() throws Exception {}
+    protected void reportTvClick() throws Exception {}
 
 
     @Override
@@ -115,9 +112,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         }
 
     }
-
-    protected void addObj1Back(java.lang.String json) {
-    }
+    protected void addObj1Back(java.lang.String json) {}
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
@@ -191,7 +186,6 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
     }
 
     protected com.codingtu.cooltu.lib4a.view.dialogview.Dialog dialog;
-
     protected void showDialog() {
         if (dialog == null) {
             dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
@@ -217,7 +211,6 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         dialog.setObject(null);
         dialog.show();
     }
-
     protected void showDialog(String content) {
         if (dialog == null) {
             dialog = new com.codingtu.cooltu.lib4a.view.dialogview.Dialog(getAct())
@@ -245,12 +238,8 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         dialog.setObject(null);
         dialog.show();
     }
-
-    protected void dialogLeft() {
-    }
-
-    protected void dialogRight() {
-    }
+    protected void dialogLeft() { }
+    protected void dialogRight() { }
 
     protected java.lang.String testName() {
         if (testName == null) {
@@ -260,8 +249,7 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         return testName;
     }
 
-    protected void testName(java.lang.String testName) {
-    }
+    protected void testName(java.lang.String testName) {}
 
 
     /**************************************************
@@ -301,31 +289,24 @@ public abstract class WelcomeActivityBase extends com.codingtu.cooltu.ui.base.Ba
         menuDialog.setObj(null);
         menuDialog.show();
     }
-
     protected boolean showReportTv() {
         return true;
     }
-
     protected boolean showDeleteItemBt() {
         return true;
     }
-
     protected boolean showDeleteItemBt1() {
         return true;
     }
-
     public int getDocType() {
         return 1;
     }
-
     public java.lang.String getModule() {
         return "PP\"";
     }
-
     public java.lang.String getXXX() {
         return com.codingtu.cooltu.Constants.PKG_MODULE_APP;
     }
-
     protected com.codingtu.cooltu.form.TestCallBack testCallBack() {
         if (testCallBack == null) {
             testCallBack = testCallBackInit();
