@@ -112,7 +112,11 @@ public class StringTool {
             throw new RuntimeException("bit必须大于等于0");
         }
 
-        if (num == null || num == 0) {
+        if (num == null
+                || num == 0
+                || Double.isInfinite(num)
+                || !Double.isFinite(num)
+                || Double.isNaN(num)) {
             if (bit == 0 || trim) {
                 return "0";
             } else {
