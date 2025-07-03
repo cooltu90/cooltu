@@ -129,6 +129,14 @@ public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T> extends C
             page++;
     }
 
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public void pagePlus() {
+        page++;
+    }
+
     //获取数据
     public T getItem(int index) {
         try {
