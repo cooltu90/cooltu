@@ -113,7 +113,7 @@ public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T> extends C
         if (onUpdate != null)
             onUpdate.onUpdate();
 
-        this.hasMore = CountTool.count(ts) > 0 && hasMore;
+        this.hasMore = hasMore;
 
         if (this.ts == null)
             this.ts = new BaseTs<>();
@@ -125,7 +125,7 @@ public abstract class CoreMoreListAdapter<VH extends CoreAdapterVH, T> extends C
 
         notifyDataSetChanged();
 
-        if (hasMore)
+        if (this.hasMore)
             page++;
     }
 
